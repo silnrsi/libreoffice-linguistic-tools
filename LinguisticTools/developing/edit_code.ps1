@@ -5,6 +5,7 @@
 #
 # 17-Aug-15 JDK  Recursively open files to handle subdirectories.
 # 05-Nov-15 JDK  Module names should be lowercase.
+# 29-Jan-16 JDK  Use relative paths to work on dev machine.
 #
 # Opens all testing code for editing using a text editor, with each package in
 # a separate window.
@@ -14,9 +15,10 @@
 #------------------------------------------------------------------------------
 param ([switch]$tests)
 $block = {
-    Param($subpath, [bool]$editTests)
-    $EDITOR = "${Env:ProgramFiles(x86)}\Vim\vim74\gvim.exe"
-    $inpath = "C:\OurDocs\computing\Office\OOLT\LinguisticTools\"
+    Param($psscriptroot, $subpath, [bool]$editTests)
+    #$EDITOR = "${Env:ProgramFiles(x86)}\Vim\vim74\gvim.exe"
+    $EDITOR = "${Env:ProgramFiles}\Vim\vim74\gvim.exe"
+    $inpath = "$psscriptroot\..\"
     if ($editTests) {
         $inpath = $inpath + "tests\"
         if ($subpath -ne ".")
@@ -27,6 +29,8 @@ $block = {
         $inpath = $inpath + "pythonpath\lingt\"
     }
     $inpath = $inpath + $subpath
+    #echo "EDITOR = $EDITOR"
+    #echo "inpath = '$inpath'"
     if ($subpath -eq ".")
     {
         & $EDITOR $inpath\*.py
@@ -44,6 +48,7 @@ if ($tests.IsPresent) {
 Foreach ($subpath in $SUBPATHS) {
     $ps = [PowerShell]::Create()
     $ps.AddScript($block)
+    $ps.AddArgument($PSScriptRoot)
     $ps.AddArgument($subpath)
     $ps.AddArgument($tests.IsPresent)
     $myjob = $ps.BeginInvoke()
