@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version number="" />
+		<generation date="0001-01-01T00:00:00" />
+		<language type="iru" />
+	</identity>
+	<collations>
+		<collation>
+			<settings normalization="on" />
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType value="CustomICU" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation value="Iru" />
+		<palaso:defaultFontFamily value="Latha" />
+		<palaso:defaultFontSize value="12" />
+		<palaso:defaultKeyboard value="Tamil (India)" />
+		<palaso:languageName value="Vette Kada Irula" />
+	</special>
+</ldml>

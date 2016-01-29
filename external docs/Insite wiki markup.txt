@@ -1,0 +1,40 @@
+# Created by Jim in Oct 2010
+
+{blog-posts:max=5}
+
+----
+h1. Other work
+
+|[^Phonology Handbook 2010.odt]|For a course South Asia|
+|[^Irula Grammar Writeup.odt]|October 2010|
+|[^Irula Phonology Writeup.odt]|November 2008|
+
+E-mail: [jim_kornelsen@sil.org|mailto:jim_kornelsen@sil.org]
+Branch: South Asia
+\\
+\\
+----
+
+#-------------------------------------------------------------------------------
+# Hosted on Insite (old)
+#-------------------------------------------------------------------------------
+
+{section}
+{column}
+!OOoLT_menu.jpg!
+{column}
+{column}
+h2. OpenOffice Linguistic Tools
+
+LinguisticTools.oxt is an add-on to insert grammar and phonology examples by reference number.&nbsp; Data can be exported from Phonology Assistant, Toolbox, and Flex.&nbsp; Also included is Data Conversion for OpenOffice using SIL Converters.
+
+[^README.txt]
+{column}
+{section} *Download latest version*: [^LinguisticTools-1.0.0.oxt] (302 KB) released October 2010 
+
+Help is available from the menu, or you can download it separately: [^Linguistic Tools Help.pdf] (329 KB)
+
+If you need to remove the Linguistics menu and are having problems, use [^RemoveLingMenu.oxt] (only 2 KB)
+
+Older version: [^LinguisticTools-0.9.1.oxt]
+

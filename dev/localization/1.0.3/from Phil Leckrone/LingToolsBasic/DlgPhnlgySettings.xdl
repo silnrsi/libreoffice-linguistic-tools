@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgPhnlgySettings" dlg:left="127" dlg:top="16" dlg:width="201" dlg:height="159" dlg:help-text="&amp;192.DlgPhnlgySettings.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;193.DlgPhnlgySettings.Title">
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="9" dlg:top="8" dlg:width="163" dlg:height="8" dlg:help-text="&amp;194.DlgPhnlgySettings.Label1.HelpText" dlg:value="&amp;195.DlgPhnlgySettings.Label1.Label"/>
+  <dlg:filecontrol dlg:id="FileControl1" dlg:tab-index="1" dlg:left="8" dlg:top="18" dlg:width="176" dlg:height="14" dlg:help-text="&amp;196.DlgPhnlgySettings.FileControl1.HelpText"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="2" dlg:left="8" dlg:top="57" dlg:width="98" dlg:height="18" dlg:help-text="&amp;198.DlgPhnlgySettings.Label2.HelpText" dlg:value="&amp;199.DlgPhnlgySettings.Label2.Label" dlg:multiline="true"/>
+  <dlg:textfield dlg:id="TxtWritingSystem" dlg:tab-index="3" dlg:left="105" dlg:top="57" dlg:width="48" dlg:height="15" dlg:help-text="&amp;200.DlgPhnlgySettings.TxtWritingSystem.HelpText" dlg:value="&amp;201.DlgPhnlgySettings.TxtWritingSystem.Text"/>
+  <dlg:button dlg:id="BtnSelectWS" dlg:tab-index="4" dlg:left="153" dlg:top="57" dlg:width="43" dlg:height="12" dlg:help-text="&amp;202.DlgPhnlgySettings.BtnSelectWS.HelpText" dlg:value="&amp;203.DlgPhnlgySettings.BtnSelectWS.Label"/>
+  <dlg:checkbox dlg:id="CheckboxBrackets" dlg:tab-index="5" dlg:left="8" dlg:top="85" dlg:width="176" dlg:height="10" dlg:help-text="&amp;204.DlgPhnlgySettings.CheckboxBrackets.HelpText" dlg:value="&amp;205.DlgPhnlgySettings.CheckboxBrackets.Label" dlg:checked="true"/>
+  <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="6" dlg:left="8" dlg:top="99" dlg:width="83" dlg:height="26" dlg:help-text="&amp;206.DlgPhnlgySettings.FrameControl1.HelpText">
+   <dlg:title dlg:value="&amp;207.DlgPhnlgySettings.FrameControl1.Label"/>
+  </dlg:titledbox>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="OptPhonemicFirst" dlg:tab-index="7" dlg:left="10" dlg:top="101" dlg:width="78" dlg:height="10" dlg:help-text="&amp;208.DlgPhnlgySettings.OptPhonemicFirst.HelpText" dlg:help-url="http://www.google.com/" dlg:value="&amp;209.DlgPhnlgySettings.OptPhonemicFirst.Label" dlg:checked="true"/>
+   <dlg:radio dlg:id="OptPhoneticFirst" dlg:tab-index="8" dlg:left="10" dlg:top="113" dlg:width="78" dlg:height="10" dlg:help-text="&amp;210.DlgPhnlgySettings.OptPhoneticFirst.HelpText" dlg:value="&amp;211.DlgPhnlgySettings.OptPhoneticFirst.Label"/>
+  </dlg:radiogroup>
+  <dlg:button dlg:id="ButtonOK" dlg:tab-index="9" dlg:left="68" dlg:top="137" dlg:width="53" dlg:height="14" dlg:help-text="&amp;212.DlgPhnlgySettings.ButtonOK.HelpText" dlg:value="&amp;213.DlgPhnlgySettings.ButtonOK.Label"/>
+  <dlg:button dlg:id="ButtonCancel" dlg:tab-index="10" dlg:left="135" dlg:top="137" dlg:width="48" dlg:height="14" dlg:help-text="&amp;214.DlgPhnlgySettings.ButtonCancel.HelpText" dlg:value="&amp;215.DlgPhnlgySettings.ButtonCancel.Label"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="11" dlg:left="8" dlg:top="32" dlg:width="175" dlg:height="10" dlg:help-text="&amp;216.DlgPhnlgySettings.Label3.HelpText" dlg:value="&amp;217.DlgPhnlgySettings.Label3.Label"/>
+ </dlg:bulletinboard>
+</dlg:window>

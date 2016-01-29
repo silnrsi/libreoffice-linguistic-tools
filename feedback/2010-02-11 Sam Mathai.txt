@@ -1,0 +1,16 @@
+[10:02:53 AM] SamSony: Good morning!
+[10:03:33 AM] SamSony: You will be here after half hour?
+[10:03:57 AM] SamSony: I have sent a mail to you..please read it..
+[10:06:28 AM] Jim and Karen Kornelsen: I am available.  Please wait 5 minutes.  Thanks!
+[10:16:19 AM] Jim and Karen Kornelsen: Dear Sam, I read your email.  That sounds possible.  Let me work on it for a few minutes.
+[10:33:52 AM] Jim and Karen Kornelsen: I think you should use the fields in Flex like this: Lexeme Form as Phonemic, Pronunciation as Phonetic, Glosses as Gloss, Reference as Reference.
+[10:34:15 AM] Jim and Karen Kornelsen: When you make a dictionary, the Lexeme Form needs to be phonemic.
+[10:41:14 AM] SamSony: ok
+[10:42:37 AM] SamSony: Jim, i can use the fields in FLEx as you told
+[10:43:18 AM] SamSony: do u have any Q?
+[10:43:41 AM] SamSony: here Power cut time...I  dont have good battery backup..
+[10:43:58 AM] Jim and Karen Kornelsen: Ok, I don't have any more questions right now.  Let me work on it today.
+[10:44:12 AM] SamSony: thank you...
+[10:44:37 AM] Jim and Karen Kornelsen: You're welcome.
+[10:44:50 AM] Jim and Karen Kornelsen: I will email you later.
+[10:45:54 AM] SamSony: ok...bye now

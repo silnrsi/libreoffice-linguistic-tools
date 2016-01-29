@@ -1,0 +1,8 @@
+<manifest:manifest>
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-typelibrary;type=RDB" 
+	manifest:full-path="XCalcFunctions.rdb"/> 
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+	manifest:full-path="CalcAddIns.xcu"/> 
+<manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Python" 
+	manifest:full-path="doobiedoo.py"/> 
+</manifest:manifest> 

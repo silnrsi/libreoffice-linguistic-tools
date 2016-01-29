@@ -1,0 +1,43 @@
+# Created April 23, 2013 by Jim Kornelsen
+#
+# Filename: LinguisticTools-1.9.9.10b.oxt
+#
+# Record all possible errors, limitations or possible needs for improvement
+# here, as well as perhaps instructions for testing.
+# Then record how each issue will be resolved or ignored.
+
+#-------------------------------------------------------------------------------
+# LibreOffice 4.0.1.2 on Ubuntu 12.10 Quantal
+#-------------------------------------------------------------------------------
+
+Phonology
+    Only need to test gloss writing systems.
+    !!! Bug: Gloss writing system still doesn't work.
+Grammar
+    !!! Bug: Line after ex is set to ref no. char style and interlin.
+Abbreviations
+    (doesn't need further testing, except make sure dialogs open)
+Data Conversion
+    (doesn't need further testing, except make sure dialogs open)
+Word list
+    (doesn't need further testing, except make sure dialogs open)
+Spelling
+    (doesn't need further testing, except make sure dialogs open)
+Make spelling changes
+    (doesn't need further testing, except make sure dialogs open)
+Script Practice
+    (doesn't need further testing, except make sure dialog opens)
+
+################################################################################
+# Below was not tested this time.
+################################################################################
+
+Spanish
+    Default Style
+    Try for various error messages
+French
+    Default Style
+    Try for various error messages
+Automated Tests
+Button driven Tests
+

@@ -1,0 +1,5 @@
+For grammar, don't have the actual text wrap.
+It's ok to wrap the grammatical information.
+
+Navigation pane - have to drag in place.
+

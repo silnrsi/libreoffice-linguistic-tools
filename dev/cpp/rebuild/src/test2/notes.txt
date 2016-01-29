@@ -1,0 +1,38 @@
+# These commands don't seem to produce a working result unfortunately.
+cl -c -MT -Zm500 -Zc:forScope,wchar_t- -wd4251 -wd4275 -wd4290 -wd4675 ^
+   -wd4786 -wd4800 -Zc:forScope -GR -EHa -I. ^
+    -Ic:/openoffice.org3.3_sdk/WINlingtools.out/inc-Ic:/openoffice.org3.3_sdk/WINlingtools.out/inc/examples ^
+    -IC:/PROGRA~1/OPENOF~2.ORG/sdk/include -Ic:/openoffice.org3.3_sdk/WINlingtools.out/inc/SEC_Call_Component_Code ^
+    -DWIN32 -DWNT -D_DLL -DCPPU_ENV=msci ^
+    -Fotest2.obj ^
+    test2.cxx
+
+Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 15.00.30729.01 for 80x86
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+link /NODEFAULTLIB /DEBUGTYPE:cv ^
+    /OUT:test2.exe ^
+    test2.obj ^
+    icppuhelper.lib icppu.lib isal.lib stlport_vc71.lib ^
+    msvcrt.lib kernel32.lib uuid.lib user32.lib
+
+#link /NODEFAULTLIB /DLL /DEBUGTYPE:cv ^
+#    /DEF:C:/PROGRA~1/OPENOF~2.ORG/sdk/settings/component.uno.def ^
+#    /OUT:test2.dll ^
+#    /MAP:c:/openoffice.org3.3_sdk/WINlingtools.out/misc/SEC_Call_Component_Code/SEC_Call_Component.uno.map ^
+#    test2.obj ^
+#    icppuhelper.lib icppu.lib isal.lib stlport_vc71.lib ^
+#    msvcrt.lib kernel32.lib uuid.lib user32.lib
+
+Microsoft (R) Incremental Linker Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+   Creating library c:/openoffice.org3.3_sdk/WINlingtools.out/bin/SEC_Call_Compo
+nent.uno.lib and object c:/openoffice.org3.3_sdk/WINlingtools.out/bin/SEC_Call_C
+omponent.uno.exp
+
+"C:\Program Files\OpenOffice.org 3\program\\unopkg" add -f "c:\openoffice.org3.3
+_sdk\WINlingtools.out\bin\SEC_Call_Component.oxt"
+copy C:\\PROGRA~1\\OPENOF~2.ORG\\sdk\\bin\\unoapploader.exe c:\\openoffice.org3.
+3_sdk\\WINlingtools.out\\bin\\Test_SEC_Call_Component.exe
+

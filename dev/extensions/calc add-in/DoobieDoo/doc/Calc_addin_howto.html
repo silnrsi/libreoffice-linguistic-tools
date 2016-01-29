@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="   (Win32)">
+	<META NAME="AUTHOR" CONTENT="Jan Holst Jensen">
+	<META NAME="CREATED" CONTENT="20090320;13055000">
+	<META NAME="CHANGEDBY" CONTENT="Jan Holst Jensen">
+	<META NAME="CHANGED" CONTENT="20090708;1243100">
+	<META NAME="Info 1" CONTENT="">
+	<META NAME="Info 2" CONTENT="">
+	<META NAME="Info 3" CONTENT="">
+	<META NAME="Info 4" CONTENT="">
+	<STYLE TYPE="text/css">
+	<!--
+		H1.western { font-family: "Arial", sans-serif }
+		P.western { font-family: "Verdana", sans-serif }
+		H2.western { font-family: "Arial", sans-serif }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1 CLASS="western">OpenOffice.org (OOo) Calc Add-in How-to</H1>
+<H2 CLASS="western">Introduction</H2>
+<P CLASS="western">The aim of this document is to guide novice users
+through the creation of a full-fledged OpenOffice Calc Add-in.
+&quot;Full-fledged&quot; means that</P>
+<UL>
+	<LI><P CLASS="western">Custom spreadsheet functions will be added to
+	Calc.</P>
+	<LI><P CLASS="western">Calc's Function Wizard will be aware of the
+	custom functions so they can be browsed and tested interactively.</P>
+	<LI><P CLASS="western">The Add-in will be packaged as an .OXT file
+	so an end-user can install the Add-in by simply double-clicking the
+	.OXT package.</P>
+</UL>
+<P CLASS="western">The example Add-in will reflect how an Add-in
+should (to the best of my knowledge) be written and packaged for
+OpenOffice 3.0.1 as of April 2009.</P>
+<P CLASS="western">The <A HREF="DoobieDoo-example.zip"><FONT COLOR="#000080"><U>accompanying
+example</U></FONT></A>, including source code, is released under an
+extremely liberal license. That is:</P>
+<UL>
+	<LI><P CLASS="western">You are absolutely free to adapt the code and
+	the accompanying documentaton for whatever purpose you see fit
+	(obeying any license restrictions of the underlying tools and
+	programs of course).</P>
+	<LI><P CLASS="western">Acknowledgement of origin would be
+	appreciated but is not required.</P>
+	<LI><P CLASS="western">No warranty whatsoever. This code may break
+	your computer, make your kittens eat your socks, spoil your milk,
+	etc. You cannot hold me responsible for it. However, feedback will
+	be appreciated, be it positive or negative.</P>
+</UL>
+<P CLASS="western"><I>Jan Holst Jensen</I></P>
+<P CLASS="western"><I>jan at biochemfusion.com, April 2009 - latest
+update July 2009</I></P>
+<H2 CLASS="western">Overview</H2>
+<P CLASS="western">The steps to follow in creating an Add-in are</P>
+<UL>
+	<LI><P CLASS="western">Define the Add-in functions in UNO IDL
+	(Interface Definition Language) and compile the IDL to create a UNO
+	type library.</P>
+	<LI><P CLASS="western">Implement the specified Add-in functions in
+	Python, Java or C++.</P>
+	<LI><P CLASS="western">Write or generate XML files for the .OXT
+	package.</P>
+	<UL>
+		<LI><P CLASS="western">description.xml - which describes the
+		package (who made it, what is it called, etc.).</P>
+		<LI><P CLASS="western">manifest.xml - which lists the files that
+		the package consists of.</P>
+		<LI><P CLASS="western">CaldAddin.xcu - which describes the Add-in
+		functions (function names and their parameters) that should appear
+		in Calc's Function Wizard.</P>
+	</UL>
+	<LI><P CLASS="western">Create the .OXT file - which is just a zip
+	file of all of the above, with an extension of .OXT instead of .ZIP.</P>
+</UL>
+<H2 CLASS="western">Defining the IDL</H2>
+<P CLASS="western">The interface definition is a text file that
+describes the functions that our Add-in will implement. Below is the
+definition of the <I>DoobieDo</I> interface that I have defined for
+this example. It demonstrates various data types and also how you can
+allow for optional parameters.</P>
+<PRE><FONT COLOR="#0000ff">#include</FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#a31515">&lt;com/sun/star/uno/XInterface.idl&gt;</FONT>
+
+<FONT COLOR="#0000ff"><FONT SIZE=2>module</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>com { </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>module</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>doobiecompany { </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>module</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>examples { </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>module</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>DoobieDoo {</FONT></FONT>
+
+<FONT COLOR="#000000">    </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>interface</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>XDoobieDoo</FONT></FONT>
+    {
+<FONT COLOR="#000000">       </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>long</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>doobieMult( [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>long</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>a, [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>long</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>b );</FONT></FONT>
+<FONT COLOR="#000000">       </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>double</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>doobieDiv( [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>double</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>a, [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>double</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>b );</FONT></FONT>
+<FONT COLOR="#000000">       </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>doobieConcat( [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>s1, [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>s2 );</FONT></FONT>
+<FONT COLOR="#000000">       </FONT><FONT COLOR="#008000"><FONT SIZE=2>// The string 's3' should be optional. Model it as an 'any' </FONT></FONT>
+<FONT COLOR="#008000">       <FONT SIZE=2>// to allow it to be NULL/None/Missing.</FONT></FONT>
+<FONT COLOR="#000000">       </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>doobieConcatOptional( [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>s1, [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>string</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>s2, [</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>in</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>] any s3 ); </FONT></FONT>
+    };
+
+}; }; }; };</PRE><P CLASS="western">
+It used to be that the interface had to inherit from
+<FONT COLOR="#000000"><FONT SIZE=2>com::sun::star::uno::XInterface</FONT></FONT>
+but this is no longer necessary as it is done implicitly (thanks to
+Juergen Schmidt for this tip). By convention all interfaces are named
+XSomething. The above IDL is saved in the file <CODE>idl\XDoobieDo.idl</CODE>
+but as far as I know there is no requirement about the IDL file
+naming convention.</P>
+<P CLASS="western">The '<CODE>module</CODE>' definitions put the
+functions within a well-defined name space so they won't conflict
+with other functions having the same name. Since the extension comes
+from the fictive company that has a domain name that is
+<CODE>doobiecompany.com</CODE> I have chosen the first two module
+levels to be <CODE>com</CODE> and <CODE>doobiecompany</CODE> - in
+line with the standard package/module hierarchy convention used by
+the Java and OpenOffice community.</P>
+<P CLASS="western">OpenOffice will not load an IDL file directly so
+you should compile it into a binary type library file first. After
+compiling the IDL with the '<CODE>idlc</CODE>' tool a <CODE>.URD</CODE>
+file has been produced and the tool '<CODE>regmerge'</CODE> can then
+be used to produce a type library from one or more <CODE>.URD</CODE>
+files. Check the supplied batch file (Windows batch file) <CODE>make.bat</CODE>
+for the syntax for doing this.</P>
+<P CLASS="western">You will have to install the OpenOffice SDK to get
+the '<CODE>idlc</CODE>' and '<CODE>regmerge</CODE>' tools. The SDK
+requirements state that you should have 'GNU make' installed to use
+the SDK tools. However you won't need 'GNU make' to build this
+example. The whole process of compiling the IDL and buidling the <CODE>.OXT</CODE>
+file is so fast in this setup that using a real makefile and resolve
+dependencies to determine what needs to be built is unnecessary. The
+script in <CODE>make.bat</CODE> builds everything from scratch and
+completes in less than half a second on my laptop.</P>
+<P CLASS="western">The OpenOffice SDK is available from
+<FONT COLOR="#000080"><U>http://download.openoffice.org/3.0.0/sdk.html</U></FONT>.</P>
+<H2 CLASS="western">Choice of implementation language(s)</H2>
+<P CLASS="western">OpenOffice directly supports macros and extensions
+written in OOo Basic (roughly equivalent to Microsoft Visual Basic
+for Applications), Python, Java and C++.</P>
+<P CLASS="western">The easiest way to implement simple functions
+would be to write them in OOo Basic. This works fine for macros and
+other functionality that you can trigger from a menu item or a
+button. However, when it comes to creating functions that can be used
+as cell formulas, OOo Basic won't work for you. The only OOo Basic
+functions that Calc can access via cell formulas are those that live
+in the &quot;Standard&quot; library. Unfortunately you are not
+allowed to modify the &quot;Standard&quot; library when installing an
+extension. You could of course ask the end user to manually
+copy/paste code into the &quot;Standard&quot; library, but that sort
+of defeats the purpose of packing the code into an extension package.</P>
+<P CLASS="western">Instead we can implement the interface in Python.
+OpenOffice contains a Python runtime and you won't need to install a
+compiler for the language as you would have to implement the
+interface in Java or C++.</P>
+<P CLASS="western">The implementation of the <I>DoobieDo</I>
+interface in Python is shown below. This code can be found in the
+file <CODE>src\doobiedo.py</CODE>.</P>
+<PRE>import uno
+import unohelper
+from com.doobiecompany.examples.DoobieDoo import XDoobieDoo
+class DoobieDooImpl( unohelper.Base, XDoobieDoo ):
+        def __init__( self, ctx ):
+                self.ctx = ctx
+        def doobieMult( self, a, b ):
+                return a * b
+        def doobieDiv( self, a, b ):
+                return a / b
+        def doobieConcat( self, s1, s2 ):
+                return str(s1) + str(s2)
+        def doobieConcatOptional( self, s1, s2, s3 ):
+                if s3 == None:
+                        return str(s1) + str(s2)
+                else:
+                        return str(s1) + str(s2) + str(s3)
+ 
+def createInstance( ctx ):
+        return DoobieDooImpl( ctx )
+g_ImplementationHelper = unohelper.ImplementationHelper()
+g_ImplementationHelper.addImplementation( \
+        createInstance,&quot;com.doobiecompany.examples.DoobieDoo.python.DoobieDooImpl&quot;,
+                (&quot;com.sun.star.sheet.AddIn&quot;,),) </PRE><P CLASS="western">
+<BR><BR>
+</P>
+<P CLASS="western">Line 3 imports the interface definition from the
+type library using the module path as defined in the IDL.</P>
+<P CLASS="western">The implementation of <CODE>doobieConcatOptional</CODE>
+checks whether the <CODE>s3</CODE> parameter is set to <CODE>None</CODE>.
+This will happen if Calc only supplies two parameters when calling
+the function.</P>
+<P CLASS="western">Note the name that the <CODE>DoobieDoImpl</CODE>
+instance is given when instantiated. This is the name that we need to
+reference in the CalcAddIn.xcu file that defines metadata for the
+function wizard.</P>
+<H2 CLASS="western">Generating XML files</H2>
+<P CLASS="western">I personally find it frustrating to hand-edit XML
+and keep the various XML files in sync so I have created a simple
+Python script to generate the XML files. You can find it as
+<CODE>src\generate_xml.py</CODE>.</P>
+<P CLASS="western">Marking a parameter as optional is seemingly done
+by wrapping the parameter's display name in square brackets. I have
+not seen this documented specifically, but thanks to Ariel
+Constenla-Haile, Argentina for providing me with a Java example
+showing just this. [Update: I may have misunderstood this originally.
+The square brackets do not seem to affect OOo Calc's interpretation
+of the parameter. It seems more likely that the parameter is
+considered optional because it is of type <CODE>any</CODE>.]</P>
+<P CLASS="western">Generating a <CODE>CompatibilityName</CODE> in the
+<CODE>CalcAddIn.xcu</CODE> file is essential! Otherwise your users
+will (silently :-( ) suffer data loss when saving files in XLS format
+since OOo will not be able to map the UNO function names into their
+Excel-equivalents. Reading an XLS file back in without a proper
+<CODE>CompatibilityName</CODE> setup will give you strange results.</P>
+<P CLASS="western">Note that I write a special <CODE>.DONE</CODE>
+file at the end of <CODE>generate_xml.py</CODE> to signal that the
+Python script has completed. This was necessary for me as the python
+interpreter that comes bundled with OpenOffice 3.0 executes
+asynchronously and I have not found a way to call it synchronously
+(this is the behavior on Windows - I don't know if it is different on
+Linux). If I did not wait for the appearance of the <CODE>.DONE</CODE>
+file in <CODE>make.bat</CODE> the rest of the batch file would
+continue to happily execute before the XML generation had completed.
+NOTE: This is no longer necessary in OOo 3.1 - the new Python version
+works synchronously as expected, simplifying scripting a lot.</P>
+<H2 CLASS="western">Packaging the Add-in</H2>
+<P CLASS="western">To zip the files together I am using the 7-zip
+utility. There is zip-functionality built into OpenOffice but I
+haven't bothered to find out how to use it from a batch script, and I
+don't even know if you easily can.</P>
+<P CLASS="western">7-zip can be downloaded from
+<FONT COLOR="#000080"><U>http://www.7-zip.org/</U></FONT>.</P>
+<P CLASS="western">The zip-file is created and renamed to <CODE>.OXT</CODE>.
+And that's it. You can now double-click the <CODE>DoobieDo.oxt</CODE>
+file and install the add-in.</P>
+<H2 CLASS="western">Compatibility with Excel</H2>
+<P CLASS="western">If you implement a corresponding add-in in Excel
+you should do so as a .NET or COM Automation add-in. I first tried to
+implement DoobieDo as a couple of VBA functions in a sheet and saving
+that as an Excel add-in. However, Excel saves references to
+user-defined functions as <CODE>'&lt;filename of add-in
+sheet&gt;'!&lt;function-name&gt;</CODE> (notice the quotes).</P>
+<P CLASS="western">If you attempt to add the filename of the add-in
+as a prefix to the <CODE>CompatibilityName</CODE> it won't work, e.g.
+you define the <CODE>CompatibilityName</CODE> for <CODE>doobieMult</CODE>
+to be <CODE>DoobieDo.xlam!doobieMult</CODE>. The quoting goes wrong
+somewhere in the process and Excel interprets the formula as e.g.
+<CODE>='DoobieDo.xlam!doobieMult'(A1;B1)</CODE>. Trying to quote the
+sheet/add-in name by setting <CODE>CompatibilityName</CODE> to
+<CODE>'DoobieDo.xlam'!doobieMult</CODE> makes Excel read a formula
+like <CODE>=''DoobieDo.xlam'!doobieMult'(A1;B1)</CODE>. That won't do
+either.</P>
+<P CLASS="western">An approach that works is to implement an
+Automation add-in for Excel and prefix functions with the ProgID of
+the interface that implements the functions. I have for instance
+created a standard COM Automation Object in Delphi 2007, its CoClass
+named AutoAddIn having an IDoobieDo interface. Prefixing the
+<CODE>CompatibilityName</CODE> with &quot;<CODE>AutoAddIn.DoobieDo.</CODE>&quot;
+now automagically makes things work, e.g. <CODE>doobieMult</CODE> has
+a <CODE>CompatibilityName</CODE> of <CODE>AutoAddIn.DoobieDo.doobieMult</CODE>.
+</P>
+<P CLASS="western">To get the otherwise completely ordinary COM
+automation server to work as an add-in in Excel you need to add a
+special &quot;Programmable&quot; registry key as a subkey of the
+CoClass GUID key as described at
+<A HREF="http://www.codeproject.com/KB/COM/excelnetauto.aspx">http://www.codeproject.com/KB/COM/excelnetauto.aspx</A>.
+A very simple thing that just took hours to find.</P>
+<P CLASS="western">NOTE: Even with all this, OOo doesn't like add-in
+functions in sheets saved by Excel 2007 as XLSX files - there is an
+extra &quot;_xll.&quot; prefix that it chokes on and you need to
+remove that yourself. Good ol' Excel 97/2000/XP .XLS files work fine
+as far as I can tell.</P>
+</BODY>
+</HTML>

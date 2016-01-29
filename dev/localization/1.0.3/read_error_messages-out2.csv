@@ -1,0 +1,62 @@
+YES|Add '%s' as a new abbreviation?|Ajouter '%s' comme nouvelle abréviation ?
+YES|Cannot be in a header or footer.|Interdit dans un en-tête ou pied de page.
+YES|Cannot be inside a table or frame.|Interdit dans un tableau ou cadre
+YES|Cannot find file %s|Impossible de trouver le fichier %s
+YES|Cannot insert text here.|Impossible d'insérer texte ici.
+YES|Character style '%s' is missing|Style de caractère '%s' introuvable
+YES|Column width is not a number.|La largeur de colonne n'est pas un nombre.
+YES|Converting...|Conversion en cours...
+YES|Could not find ref number %s|Numéro de référence %s introuvable.
+YES|Could not find ref number %s\n\nSuggestions\n%s|Numéro de référence %s introuvable. Suggestion(s) : %s
+YES|Did not find any data in file %s|Aucune donnée n'a été trouvée dans le fichier %s
+YES|Did not find scope of change.|L'étendue de changement n'a pas été trouvée.
+YES|Error parsing %s user variable. Please go to Insert -> Fields and fix the problem.|Erreur en analysant la variable utilisateur %s. Veuillez atteindre Insertion -> Champs pour résoudre le problème.
+YES|Error reading file %s\n\n%s|Erreur en lisant le fichier %s\n\n%s
+YES|Error with file: %s|Erreur de fichier : %s
+YES|Error: Could not create dialog.|Erreur : Impossible de créer dialogue.
+YES|Error: Could not show dialog window.|Erreur : Impossible d'afficher dialogue.
+YES|File does not seem to be from Toolbox or FieldWorks: %s|Il semble que ce fichier n'a pas été créé par Toolbox ou FieldWorks: %s
+YES|File is already in the list.|Le fichier est déjà dans la liste.
+YES|Found %d paragraphs and made %d change(s).|%d paragraphes trouvés et %d changements faits.
+YES|Found a ref number, but it must be in an outer table in order to be updated.|N° de réf. trouvé, mais pour l'actualier il doit être dans un cadre exterieur
+YES|Frame style '%s' is missing|Style de cadre '%s' introuvable
+YES|If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.|Pour utiliser des données LIFT il faut spécifier un fichier LIFT exporté de FieldWorks.
+YES|Made %d changes.|%d changements faits.
+YES|No changes, but modified style of %d paragraph(s).|Pas de changements, mais le style de %d paragraphes a été changé.
+YES|No changes.|Pas de changements.
+YES|No more existing examples found.|Il n'y a plus d'exemples trouvés.
+YES|No more possible abbreviations found.|On ne trouve plus des abréviations possibles.
+YES|No more reference numbers found.|On ne trouve plus des numéros de référence.
+YES|No text is selected.|Aucun texte sélectionné. 
+YES|Paragraph style '%s' is missing|Style de paragraphe '%s' introuvable
+YES|Please do not select individual table cells.|Veuillez ne pas choisir des cellules individuelles.
+YES|Please enter a number for max length.|Veuillez entrer la longueur maximum.
+YES|Please enter a ref number.|Veuillez entrer un numéro de référence.
+YES|Please enter a value for column width.|Veuillez entrer la largeur de colonne.
+YES|Please go to Grammar Settings and specify a file.|Veuillez choisir un fichier dans Configuration de grammaire.
+YES|Please go to Phonology Settings and specify a file.|Veuillez spécifier un fichier dans Configuration de phonologie.
+YES|Please select a converter.|Veuillez choisir un convertisseur.
+YES|Please select a file in the list.|Veuillez choisir un fichier dans la liste.
+YES|Please select a scope character style.|Veuillez choisir un style de caractère pour l'étendue.
+YES|Please select a scope font.|Veuillez choisir une police pour l'étendue.
+YES|Please select a scope paragraph style.|Veuillez choisir un style de paragraphe pour l'étendue.
+YES|Please select a target font.|Veuillez choisir une police cible.
+YES|Please select a target style.|Veuillez choisir un style cible.
+YES|Please select an item in the list.|Veuillez choisir un élément dans la liste.
+YES|Please select the converter again.|Veuillez choisir encore le convertisseur.
+YES|Please specify SFMs.|Veuillez spécifier les balises (SFMs).
+YES|Please specify a scope.|Veuillez spécifier l'étendue.
+YES|Searching for occurrences...|Recherche des occurrences...
+YES|System error: Unable to get UNO object.|Erreur de système : Impossible d'accéder à l'objet UNO.
+YES|The cursor cannot be in a header or footer.|Le curseur ne peut pas se trouver dans un en-tête ou dans un pied de page.
+YES|The cursor cannot be inside a table or frame.|Le curseur ne peut pas se trouver dans un tableau ou dans un cadre.
+YES|There do not seem to be any examples to insert.|Il semble qu'il n'existe pas d'exemples à insérer.
+YES|This will change the case of the entire list from '%s' to '%s.' Continue?|Ceci changera la casse de toute la liste de '%s' à '%s'. Continuer ?
+YES|Unexpected file type %s|Type de fichier %s inattendu
+YES|Unexpected new value %s.|Nouvelle valeur inattendue %s.
+YES|Unexpected value %s|Valeur inattendue %s
+YES|Unknown file type for %s|Type de fichier inconnu pour %s
+YES|Update all examples now?  It is recommended to save a copy of your document first.|Actualiser tous les exemples maintenant ? Il est conseillé d'enregistrer le document d'abord.
+YES|Updated '%s' %d times in a row. Keep going?|'%s' a été actualisé %d fois de suite. Continuer ?
+YES|Value %d for column width is too high.|%d est trop grande comme largeur de colonne.
+YES|Value for column width must be more than zero.|La largeur de colonne doit être supérieure à zéro.

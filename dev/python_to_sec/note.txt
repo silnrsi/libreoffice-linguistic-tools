@@ -1,0 +1,13 @@
+In the ECDriver project, there is something called %(callingConvention) set to cdecl.  I don't see anything that looks like _stdcall is set.
+
+The following also seem to be set:
+_UNICODE
+UNICODE
+WIN32
+_WINDOWS
+_WINDLL
+_DEBUG
+ECDRIVER_EXPORTS
+
+I still can't imagine why the C++ code seems to work from OpenOffice but not my simplified recompiled code run from the command line.
+What about trying the OpenOffice component-testing code?  I'm not sure if it's already compiled or not.

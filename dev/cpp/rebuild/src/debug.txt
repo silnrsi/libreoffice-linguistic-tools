@@ -1,0 +1,11 @@
+Load_DLL_Procs BEGIN
+The current path is: C:\Program Files\OpenOffice.org 3\URE\bin;c:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE;c:\Program Files\Microsoft Visual Studio 9.0\VC\BIN;c:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools;c:\Windows\Microsoft.NET\Framework\v3.5;c:\Windows\Microsoft.NET\Framework\v2.0.50727;c:\Program Files\Microsoft Visual Studio 9.0\VC\VCPackages;C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin;C:\Windows\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft Visual Studio 9.0\VC\bin;C:\Program Files\infozip;C:\Program Files\mingw\bin;c:\openoffice.org3.3_sdk\WINexample.out\bin;C:\Program Files\OpenOffice.org 3 SDK\sdk\bin;\bin;C:\Program Files\OpenOffice.org 3\program;C:\Program Files\OpenOffice.org 3 SDK\sdk\WINexample.out\bin;C:\Program Files\Common Files\SIL\EC_VS9.0.30729Libs;C:\Program Files\Common Files\SIL;C:\Perl\site\bin;C:\Perl\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\MySQL\MySQL Server 5.0\bin;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\python26\;;C:\Program Files\OpenOffice.org 3\URE\bin
+Got handle to DLL.
+Got P_IEI.
+Got P_ECSC.
+Got P_ECIC.
+Got P_ECCS.
+Load_DLLs finished.
+Calling SelectConverter.
+Converter was successfully selected.
+c

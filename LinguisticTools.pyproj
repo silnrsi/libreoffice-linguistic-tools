@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06ec9873-15d8-4071-81b4-e4a095ba3e9a}</ProjectGuid>
+    <ProjectHome>LinguisticTools\</ProjectHome>
+    <StartupFile>tests\ad_hoc_testing.py</StartupFile>
+    <SearchPath>..\..\..\..\..\Program Files (x86)\LibreOffice 5\program\</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Components.py" />
+    <Compile Include="developing\assimilate.py" />
+    <Compile Include="developing\assimilated_code\componentsWrapper.py" />
+    <Compile Include="developing\assimilated_code\runTestSuite.py" />
+    <Compile Include="developing\generating_code\grab_unicode_letters.py" />
+    <Compile Include="pythonpath\grantjenks\tribool.py" />
+    <Compile Include="pythonpath\grantjenks\__init__.py" />
+    <Compile Include="pythonpath\lingt\access\calc\spreadsheet_output.py" />
+    <Compile Include="pythonpath\lingt\access\calc\spreadsheet_reader.py" />
+    <Compile Include="pythonpath\lingt\access\calc\wordlist_io.py" />
+    <Compile Include="pythonpath\lingt\access\calc\__init__.py" />
+    <Compile Include="pythonpath\lingt\access\file_reader.py" />
+    <Compile Include="pythonpath\lingt\access\iteruno.py" />
+    <Compile Include="pythonpath\lingt\access\sec_wrapper.py" />
+    <Compile Include="pythonpath\lingt\access\text\cct_writer.py" />
+    <Compile Include="pythonpath\lingt\access\text\sfm_reader.py" />
+    <Compile Include="pythonpath\lingt\access\text\xslt_writer.py" />
+    <Compile Include="pythonpath\lingt\access\text\__init__.py" />
+    <Compile Include="pythonpath\lingt\access\writer\doc_reader.py" />
+    <Compile Include="pythonpath\lingt\access\writer\doc_to_xml.py" />
+    <Compile Include="pythonpath\lingt\access\writer\ex_updater.py" />
+    <Compile Include="pythonpath\lingt\access\writer\frames.py" />
+    <Compile Include="pythonpath\lingt\access\writer\outputmanager.py" />
+    <Compile Include="pythonpath\lingt\access\writer\search.py" />
+    <Compile Include="pythonpath\lingt\access\writer\styles.py" />
+    <Compile Include="pythonpath\lingt\access\writer\tables.py" />
+    <Compile Include="pythonpath\lingt\access\writer\textchanges.py" />
+    <Compile Include="pythonpath\lingt\access\writer\textsearch.py" />
+    <Compile Include="pythonpath\lingt\access\writer\traveler.py" />
+    <Compile Include="pythonpath\lingt\access\writer\uservars.py" />
+    <Compile Include="pythonpath\lingt\access\writer\__init__.py" />
+    <Compile Include="pythonpath\lingt\access\xml\interlin_reader.py" />
+    <Compile Include="pythonpath\lingt\access\xml\odt_converter.py" />
+    <Compile Include="pythonpath\lingt\access\xml\phon_reader.py" />
+    <Compile Include="pythonpath\lingt\access\xml\words_reader.py" />
+    <Compile Include="pythonpath\lingt\access\xml\writingsys_reader.py" />
+    <Compile Include="pythonpath\lingt\access\xml\xmlutil.py" />
+    <Compile Include="pythonpath\lingt\access\xml\__init__.py" />
+    <Compile Include="pythonpath\lingt\access\__init__.py" />
+    <Compile Include="pythonpath\lingt\app\bulkconv_structs.py" />
+    <Compile Include="pythonpath\lingt\app\calcfunctions.py" />
+    <Compile Include="pythonpath\lingt\app\exceptions.py" />
+    <Compile Include="pythonpath\lingt\app\fileitemlist.py" />
+    <Compile Include="pythonpath\lingt\app\lingex_structs.py" />
+    <Compile Include="pythonpath\lingt\app\svc\abbreviations.py" />
+    <Compile Include="pythonpath\lingt\app\svc\bulkconversion.py" />
+    <Compile Include="pythonpath\lingt\app\svc\dataconversion.py" />
+    <Compile Include="pythonpath\lingt\app\svc\lingexamples.py" />
+    <Compile Include="pythonpath\lingt\app\svc\scriptpractice.py" />
+    <Compile Include="pythonpath\lingt\app\svc\spellingchanges.py" />
+    <Compile Include="pythonpath\lingt\app\svc\spellingchecks.py" />
+    <Compile Include="pythonpath\lingt\app\svc\spellingcomparisons.py" />
+    <Compile Include="pythonpath\lingt\app\svc\wordlist.py" />
+    <Compile Include="pythonpath\lingt\app\svc\__init__.py" />
+    <Compile Include="pythonpath\lingt\app\wordlist_structs.py" />
+    <Compile Include="pythonpath\lingt\app\__init__.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\abbrevs.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\applyconv.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\bulkconv.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\changermaker.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\dataconv.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\grabex.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\gramsettings.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\phonsettings.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\scriptpractice.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\spellingadjustments.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\spellsearch.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\spellstep.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\wordlist.py" />
+    <Compile Include="pythonpath\lingt\ui\comp\__init__.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\spellreplace.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\wordlistfile.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\writingsystem.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\__init__.py" />
+    <Compile Include="pythonpath\lingt\ui\dutil.py" />
+    <Compile Include="pythonpath\lingt\ui\filepicker.py" />
+    <Compile Include="pythonpath\lingt\ui\messagebox.py" />
+    <Compile Include="pythonpath\lingt\ui\progressbar.py" />
+    <Compile Include="pythonpath\lingt\ui\__init__.py" />
+    <Compile Include="pythonpath\lingt\utils\fontsize.py" />
+    <Compile Include="pythonpath\lingt\utils\letters.py" />
+    <Compile Include="pythonpath\lingt\utils\locale.py" />
+    <Compile Include="pythonpath\lingt\utils\util.py" />
+    <Compile Include="pythonpath\lingt\utils\__init__.py" />
+    <Compile Include="pythonpath\lingt\__init__.py" />
+    <Compile Include="tests\ad_hoc_testing.py" />
+    <Compile Include="tests\componentsWrapper.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\ex_updater_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\search_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\tables_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\textchanges_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\uservars_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\xml_readers_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\access\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\spellingchecks_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\visual_test_grammar.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\visual_test_phonology.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\wordlist_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\abbrevs_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\apply_conv_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\dataconv_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\grammar_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\phonology_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\step_through_list.py" />
+    <Compile Include="tests\pythonpath\lingttest\topdown\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\ui\dlg_dataconv_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\ui\dlg_gramsettings_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\ui\messagebox_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\ui\wordlistfile_test.py" />
+    <Compile Include="tests\pythonpath\lingttest\ui\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\utils\testutil.py" />
+    <Compile Include="tests\pythonpath\lingttest\utils\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\__init__.py" />
+    <Compile Include="tests\runTestSuite.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="developing\assim_deploy.ps1" />
+    <Content Include="developing\clean.ps1" />
+    <Content Include="developing\compile_idl.bat" />
+    <Content Include="developing\edit_code.ps1" />
+    <Content Include="developing\pack_deploy.ps1" />
+    <Content Include="developing\README_build.txt" />
+    <Content Include="developing\README_pylint.txt" />
+    <Content Include="help\README.txt" />
+    <Content Include="pkg-desc\pkg-description.txt" />
+    <Content Include="tests\pylint.bat" />
+    <Content Include="tests\pythonpath\lingttest\topdown\abbrevs_test.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\grammar_test.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\phonology_test.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__init__.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\abbrevs_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\apply_conv_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\dataconv_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\grammar_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\phonology_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\wordlist_test.cpython-33.pyc" />
+    <Content Include="tests\pythonpath\lingttest\topdown\__pycache__\__init__.cpython-33.pyc" />
+    <Content Include="tests\README_testing.txt" />
+    <Content Include="tests\run_test.bat" />
+    <Content Include="tests\start_soffice_listening.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="developing" />
+    <Folder Include="developing\assimilated_code" />
+    <Folder Include="developing\generating_code" />
+    <Folder Include="help" />
+    <Folder Include="pkg-desc" />
+    <Folder Include="pythonpath\" />
+    <Folder Include="pythonpath\grantjenks" />
+    <Folder Include="pythonpath\lingt" />
+    <Folder Include="pythonpath\lingt\access" />
+    <Folder Include="pythonpath\lingt\access\calc" />
+    <Folder Include="pythonpath\lingt\access\text" />
+    <Folder Include="pythonpath\lingt\access\writer" />
+    <Folder Include="pythonpath\lingt\access\xml" />
+    <Folder Include="pythonpath\lingt\app" />
+    <Folder Include="pythonpath\lingt\app\svc" />
+    <Folder Include="pythonpath\lingt\ui" />
+    <Folder Include="pythonpath\lingt\ui\comp" />
+    <Folder Include="pythonpath\lingt\ui\dep" />
+    <Folder Include="pythonpath\lingt\utils" />
+    <Folder Include="tests" />
+    <Folder Include="tests\pythonpath\" />
+    <Folder Include="tests\pythonpath\lingttest" />
+    <Folder Include="tests\pythonpath\lingttest\access" />
+    <Folder Include="tests\pythonpath\lingttest\app" />
+    <Folder Include="tests\pythonpath\lingttest\topdown\" />
+    <Folder Include="tests\pythonpath\lingttest\topdown\__pycache__\" />
+    <Folder Include="tests\pythonpath\lingttest\ui" />
+    <Folder Include="tests\pythonpath\lingttest\utils" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

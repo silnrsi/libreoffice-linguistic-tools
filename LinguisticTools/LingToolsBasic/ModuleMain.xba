@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleMain" script:language="StarBasic">REM  *****  BASIC  *****
+Rem ----------------------------------------------------------------------------
+Rem
+Rem ModuleMain.xba
+Rem
+Rem Most of the code in this extension is in Python, but there are a few
+Rem things implemented in Basic.
+Rem
+Rem 09-Sep-10 JDK  Created OpenExtensionHelp routine.
+Rem 21-Sep-10 JDK  Added GoToTableInOtherDoc routine.
+Rem 04-Oct-10 JDK  Don't try to go to the table if the main doc is closed.
+Rem 09-Apr-13 JDK  Use mainDoc instead of ThisComponent in GoToTableInOtherDoc.
+Rem
+Rem ----------------------------------------------------------------------------
+
+Rem ----------------------------------------------------------------------------
+Rem This function simply opens an .odt file.
+Rem Warning: PackageInformationProvider is Undocumented, so it could
+Rem potentially cause problems in a future version of OOo.
+Rem 
+Rem We were doing this before by specifying the file path in Addons.xcu with
+Rem %origin%, but there was a problem.  Apparently when determining the path to
+Rem create the .lock file it could not resolve %origin% correctly.
+Rem This generated a General Error, which was annoying.
+Rem ----------------------------------------------------------------------------
+Sub OpenExtensionHelp
+    'Figure out where the file is located.
+    Dim oPIP As Object
+    Dim sPackageDir as String
+    Dim sHelpfileURL as String
+    oPIP = GetDefaultContext().getByName( _
+        "/singletons/com.sun.star.deployment.PackageInformationProvider")
+    sPackageDir = oPIP.getPackageLocation("name.JimK.LinguisticTools") 
+    sHelpfileURL = sPackageDir &amp; "/help/Linguistic%20Tools%20Help.odt"
+    'MsgBox(sHelpfileURL)   'for debugging only
+
+    'Now open it
+    Dim oDoc as Object
+    oDoc = ThisComponent.CurrentController.Frame
+    oDoc.loadComponentFromUrl(sHelpfileURL, "_blank", 0, Array())
+End Sub
+
+Rem ----------------------------------------------------------------------------
+Rem Go to the main document window and move the view cursor to a table.
+Rem 1. Python code calls setMainDocURL().
+Rem 2. User clicks on a generated button which calls GoToTableInOtherDoc().
+Rem
+Rem Problem: The view doesn't scroll when the view cursor moves.
+Rem ----------------------------------------------------------------------------
+Global MainDocURL as String
+sub setMainDocURL(newVal)
+    MainDocURL = ConvertToURL(newVal)
+    'MsgBox("Setting MainDocURL: " &amp; MainDocURL)
+end sub
+sub displayMainDocURL()
+    MsgBox("MainDocURL = '" &amp; MainDocURL &amp; "'")
+end sub
+
+Sub GoToTableInOtherDoc(evt as com.sun.star.awt.ActionEvent)
+    mainDoc = GetMainDoc()
+    If IsNull(mainDoc) Then
+        MsgBox("Sorry, cannot find the window of the main document.")
+        Exit Sub
+    End If
+    mainController = mainDoc.getCurrentController()
+    StarDesktop.setActiveFrame(mainController.Frame)
+    window = mainController.frame.getContainerWindow()
+    window.setVisible(True)
+    window.toFront()
+    window.setFocus()
+    'oVCurs = mainController.getViewCursor()
+    'oVCurs.collapseToEnd()
+    tableName = evt.Source.Model.HelpText
+    If mainDoc.getTextTables().hasByName(tableName) Then
+        oTable = mainDoc.getTextTables().getByName(tableName)
+        oAnchor = oTable.getAnchor()
+        mainController.select(oTable)
+        'oVCurs.goDown(1, False)
+    Else
+        MsgBox("Cannot find table " &amp; tableName)
+    End If
+end sub
+
+'returns Null if no document is found.
+Function GetMainDoc
+	'MsgBox("Getting other doc: " &amp; MainDocURL)
+	oComponents = StarDesktop.getComponents()
+	oComponentWalker = oComponents.createEnumeration()  
+	Do While oComponentWalker.hasMoreElements()
+    	oComponent = oComponentWalker.nextElement()
+    	' See if the component supports the XServiceInfo interface.
+   		If HasUnoInterfaces(oComponent, "com.sun.star.lang.XServiceInfo") Then
+        	' It supports XServiceInfo.  That means that we can freely call
+        	'  the supportsService() method.
+         	If oComponent.supportsService( _
+                "com.sun.star.document.OfficeDocument") Then 
+				url = oComponent.geturl
+				if url = MainDocURL then
+					'msgbox("Found doc: '" &amp; url &amp; "'")
+                    GetMainDoc = oComponent
+					Exit Function
+				else
+					'msgbox(MainDocURL &amp; " not " &amp; url)
+				EndIf	
+			EndIf
+		EndIf
+	Loop 
+end Function
+</script:module>

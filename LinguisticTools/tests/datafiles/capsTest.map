@@ -1,0 +1,36 @@
+﻿; capsTest.map
+;
+; cre 3 Mar 10 by Jim
+;
+; ******************************************************************************
+
+EncodingName "lowerToCaps"
+
+pass(Unicode)
+latin_small_letter_a <> latin_capital_letter_a
+latin_small_letter_b <> latin_capital_letter_b
+latin_small_letter_c <> latin_capital_letter_c
+latin_small_letter_d <> latin_capital_letter_d
+latin_small_letter_e <> latin_capital_letter_e
+latin_small_letter_f <> latin_capital_letter_f
+latin_small_letter_g <> latin_capital_letter_g
+latin_small_letter_h <> latin_capital_letter_h
+latin_small_letter_i <> latin_capital_letter_i
+latin_small_letter_j <> latin_capital_letter_j
+latin_small_letter_k <> latin_capital_letter_k
+latin_small_letter_l <> latin_capital_letter_l
+latin_small_letter_m <> latin_capital_letter_m
+latin_small_letter_n <> latin_capital_letter_n
+latin_small_letter_o <> latin_capital_letter_o
+latin_small_letter_p <> latin_capital_letter_p
+latin_small_letter_q <> latin_capital_letter_q
+latin_small_letter_r <> latin_capital_letter_r
+latin_small_letter_s <> latin_capital_letter_s
+latin_small_letter_t <> latin_capital_letter_t
+latin_small_letter_u <> latin_capital_letter_u
+latin_small_letter_v <> latin_capital_letter_v
+latin_small_letter_w <> latin_capital_letter_w
+latin_small_letter_x <> latin_capital_letter_x
+latin_small_letter_y <> latin_capital_letter_y
+latin_small_letter_z <> latin_capital_letter_z
+

@@ -1,0 +1,51 @@
+[2/26/2010 7:43:26 PM] SamSony: Hi Jim,I received your mail..I want to chack it...Thank you
+[2/26/2010 7:43:30 PM] SamSony: check*
+[2/26/2010 7:52:58 PM] Jim and Karen Kornelsen: Hello Sam, I just arrived.
+[3:31:22 PM] SamSony: Hi Jim
+[3:31:39 PM] SamSony: you arrived in India?
+[3:32:07 PM] Jim and Karen Kornelsen: Not yet.  We return to India at the end of next week.
+[3:32:56 PM] SamSony: today evening I 'll work on Grammar writeup wusing OO tool
+[3:33:23 PM] SamSony: now they are focusing on Grammar analysis
+[3:33:47 PM] Jim and Karen Kornelsen: Have you tried to install the new .oxt file yet?
+[3:34:06 PM] Jim and Karen Kornelsen: LinguisticTools.oxt
+[3:35:17 PM] SamSony: I have installed it,but I dont check it teams' Grammar write up..today evening I can do it
+[3:36:09 PM] Jim and Karen Kornelsen: Ok.  Any problems when installing?  Did you see if there is now a "Linguistics" menu instead of the old "Writeups" menu?
+[3:37:53 PM] SamSony: I can see it on menu
+[3:38:11 PM] Jim and Karen Kornelsen: Ok, it sounds like it installed correctly.
+[3:38:22 PM] SamSony: I can see data conversion tool
+[3:39:08 PM] Jim and Karen Kornelsen: Ok.  Can you do one thing: Go to Linguistics -> Data Conversion.  Then click the "Select converter" button, and see what happens.
+[3:40:33 PM] SamSony: i tried to select it...but i couldn't select it
+[3:41:21 PM] Jim and Karen Kornelsen: Did anything happen when you clicked "Select converter"?
+[3:43:20 PM] SamSony: first time, I clicked on data conversion,then the message like  " uni.exe" has problem
+[3:43:55 PM] Jim and Karen Kornelsen: Oh, I see.  There are two ways to fix that problem:
+[3:44:02 PM] Jim and Karen Kornelsen: 1. Close OpenOffice and then open it again.
+[3:44:04 PM] SamSony: ok
+[3:44:05 PM | Edited 3:44:17 PM] Jim and Karen Kornelsen: 2. Reboot (if #1 didn't work).
+[3:44:14 PM] SamSony: ok
+[3:45:02 PM] Jim and Karen Kornelsen: After that it should work ok.  If you reboot and it still says the uno.exe problem, then something is wrong.
+[3:45:28 PM] SamSony: may i reboot now?
+[3:45:40 PM] SamSony: reboot the system?
+[3:46:03 PM] Jim and Karen Kornelsen: Well, first just try to close OpenOffice (all windows) and then open it again.  That might fix the problem.
+[3:54:48 PM] SamSony: i rebooted the system...
+[3:55:10 PM] SamSony: now i can select converter
+[3:55:25 PM] SamSony: it is working!!
+[3:56:36 PM] Jim and Karen Kornelsen: Ok, good!  It shouldn't say the uno.exe problem any more until the next time you install a new version of LinguisticTools.oxt
+[3:57:08 PM] SamSony: ok...what is uno.exe?
+[3:57:57 PM] Jim and Karen Kornelsen: It is part of OpenOffice.  It can run C++ code, which I need in order to call Bob Eaton's SIL Converters.
+[3:58:16 PM] SamSony: ok...
+[3:59:07 PM] SamSony: today evening i'll work on Grammar sketch...you'll be here then?
+[3:59:19 PM] Jim and Karen Kornelsen: Yes, that would be fine.
+[3:59:33 PM] SamSony: thank you
+[4:00:19 PM] Jim and Karen Kornelsen: Ok, bye.
+[4:00:34 PM] SamSony: i think this is a great turning point
+[4:00:46 PM] Jim and Karen Kornelsen:  xd
+[4:00:51 PM] Jim and Karen Kornelsen: _
+[4:00:54 PM] SamSony: Congragulation!!
+[4:00:59 PM] SamSony: bye now
+[4:01:31 PM | Edited 4:01:40 PM] Jim and Karen Kornelsen: Thanks!  I'm happy to hear that it is working.  I am glad it works on another computer, not just mine!
+[4:02:52 PM] SamSony: ok...April 1 st to June 30.I'll be at Keral..are you at Coimbatore at that time?
+[4:04:18 PM] Jim and Karen Kornelsen: I should be in Coimbatore from March 8 to April 28.
+[4:05:07 PM] SamSony: If my supervisor permits and your availability, i can visit you one day to learn perl and python
+[4:05:33 PM] Jim and Karen Kornelsen: That sounds like fun.  :)
+[4:05:57 PM] SamSony: thank you Jim...Bye now
+[4:06:09 PM] Jim and Karen Kornelsen: Ok, bye.

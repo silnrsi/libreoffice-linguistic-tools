@@ -1,0 +1,458 @@
+From - Fri Feb 12 13:42:23 2010
+X-Account-Key: account4
+X-UIDL: 10349
+X-Mozilla-Status: 0003
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+X-ExternalMail: External
+X-TrackIDS: IH
+X-ExtScanner: Niversoft's Find_Attachments
+Return-Path: <benjamin_varghese@nlife.in>
+Received: from ma2.wsfo.org ([208.145.81.17] verified)
+  by unipost.net (CommuniGate Pro SMTP 5.2.17)
+  with ESMTPS id 27798942 for jim_kornelsen@packmail.net; Fri, 12 Feb 2010 01:37:20 -0500
+Received: from mail.link77.net (cgp2.mail.link77.net [172.22.65.14])
+	by ma2.wsfo.org (8.13.8/8.13.8) with ESMTP id o1C6bHXV010464
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=FAIL)
+	for <jim-karen_kornelsen@sall.com>; Fri, 12 Feb 2010 01:37:17 -0500
+X-CGP-ClamAV-Result: CLEAN
+X-VirusScanner: Niversoft's CGPClamav Helper v1.9.7a (ClamAV engine v0.95.3)
+X-CGP-ClamAV-Result: CLEAN
+X-VirusScanner: Niversoft's CGPClamav Helper v1.9.7a (ClamAV engine v0.95.3)
+Received: from [117.241.80.238] (account benjamin_varghese HELO sg1)
+  by cgp2.mail.link77.net (CommuniGate Pro SMTP 5.3.1)
+  with ESMTPSA id 23346384 for jim-karen_kornelsen@sall.com; Fri, 12 Feb 2010 01:37:15 -0500
+From: "Benjamin C. Varghese" <benjamin_varghese@nlife.in>
+To: "'Jim and Karen Kornelsen'" <jim-karen_kornelsen@sall.com>
+References: <4B627A6C.7060709@sil.org> <004201caa0cf$cac73dd0$6055b970$@in> <4B74354C.80607@sall.com>
+In-Reply-To: <4B74354C.80607@sall.com>
+Subject: ~RE: Writeup Tools 0.6
+Date: Fri, 12 Feb 2010 12:07:11 +0530
+Message-ID: <008d01caabad$d12e12f0$738a38d0$@in>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_008E_01CAABDB.EAE64EF0"
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AcqrOn72y0i2X4CwR7qwSpUZYdb++QAcGqTg
+Content-Language: en-us
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ma2.wsfo.org [172.22.65.4]); Fri, 12 Feb 2010 01:37:17 -0500 (EST)
+X-Special-Processing: NoLoop-JM
+X-ClamAV-Scanned: Pass ok
+X-Spam-Not-Checked: Messages from internal relays not scanned
+X-Scanned-By: MIMEDefang 2.67 on 172.22.65.4
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_008E_01CAABDB.EAE64EF0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Dear Jim
+
+ 
+
+Thanks for spending time in improving the write-up tools for OOo. 
+
+ 
+
+Right now we are ready to start using it here for our teams. The writeup
+tools have been successfully added to the OOo. 
+
+ 
+
+We exported the Interlinearized XML from FLEx and tried to import it into
+the write-up, but for some reason it didn't work well for us.
+
+ 
+
+Below are the steps we followed and help us understand where we are missing
+the point.
+
+1.  In Flex, interlinearized the story (Texts & Words)
+
+2.  From File > Export Interlinear, chose Interlinear XML and clicked Export
+button
+
+3.  Saved the file with a file name "examples.xml"
+
+4.  In OOo, selected the option Grammar Settings
+
+5.  Added the examples and set the Ref No. prefix to "S1-" without quotes,
+and hit the set prefix button
+
+a.  The other options selected here are "morpheme breaks - true", "part of
+speech - true", "Frames - true", "Don't insert numbering - false" and
+"Numbering Col width - 5"
+
+6.  Hit OK to exit the settings window
+
+7.  Typed #S1-1.1 in the document
+
+8.  Selected Get Grammar Examples from the Writeup tools menu
+
+9.  Hit the button "find next reference" and the Writeup tool found the
+entered text 
+
+10.Clicked on the button "Replace with Example" and the reference number got
+replaced with *nothing*.
+
+ 
+
+I've also tried typing S1-1.1 in the Insert example text box and tried
+inserting it, but that too seems not working for me L.
+
+ 
+
+Would you please help us in setting this up (TeamViewer or Bomgar, Skype or
+Email, whichever works best for you)
+
+ 
+
+Thanks again for your continued support
+
+ 
+
+In Him
+
+Benjamin
+
+ 
+
+-----Original Message-----
+From: Jim and Karen Kornelsen [mailto:jim-karen_kornelsen@sall.com] 
+Sent: Thursday, February 11, 2010 10:21 PM
+To: Benjamin C. Varghese; 'John Jr Mathai'; 'Benjamin C. Varghese'; 'Troy';
+'Paul Arsenault'; 'Bruce Cain'; Beth_Bryson@sil.org; Allan Johnson; Mark and
+Jo Penny
+Subject: Writeup Tools 0.6
+
+ 
+
+Hello,
+
+ 
+
+Since reference numbers do not seem to work between Phonology Assistant and
+Flex, Sam requested a method of getting phonology examples directly from
+Flex.  In this update, it is possible to export LIFT data from Flex and
+import into OpenOffice for Phonology examples.
+
+ 
+
+There are several other changes as well.  For grammar, there is no longer an
+option to set the font in the settings.  Instead just modify the appropriate
+style.
+
+ 
+
+Please let me know if you have any problems with this version.
+
+ 
+
+Jim
+
+ 
+
+
+------=_NextPart_000_008E_01CAABDB.EAE64EF0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii">
+<meta name=3DGenerator content=3D"Microsoft Word 12 (filtered medium)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Kartika;
+	panose-1:2 2 5 3 3 4 4 6 2 3;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-priority:99;
+	mso-style-link:"Plain Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.5pt;
+	font-family:Consolas;}
+span.PlainTextChar
+	{mso-style-name:"Plain Text Char";
+	mso-style-priority:99;
+	mso-style-link:"Plain Text";
+	font-family:Consolas;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:993989472;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1792791360 67698703 67698713 67698715 67698703 =
+67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext=3D"edit">
+  <o:idmap v:ext=3D"edit" data=3D"1" />
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=3DEN-US link=3Dblue vlink=3Dpurple>
+
+<div class=3DSection1>
+
+<p class=3DMsoPlainText>Dear Jim<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Thanks for spending time in improving the =
+write-up tools
+for OOo. <o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Right now we are ready to start using it here =
+for our
+teams. The writeup tools have been successfully added to the OOo. =
+<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>We exported the Interlinearized XML from FLEx =
+and tried
+to import it into the write-up, but for some reason it didn't work well =
+for us.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Below are the steps we followed and help us =
+understand
+where we are missing the point.<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>1.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>In
+Flex, interlinearized the story (Texts &amp; Words)<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>2.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>From
+File &gt; Export Interlinear, chose Interlinear XML and clicked Export =
+button<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>3.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Saved
+the file with a file name &#8220;examples.xml&#8221;<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>4.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>In
+OOo, selected the option Grammar Settings<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>5.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Added
+the examples and set the Ref No. prefix to &#8220;S1-&#8220; without =
+quotes,
+and hit the set prefix button<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:1.0in;text-indent:-.25in;mso-list:
+l0 level2 lfo1'><![if !supportLists]><span =
+style=3D'mso-list:Ignore'>a.<span
+style=3D'font:7.0pt "Times New Roman"'>&nbsp; =
+</span></span><![endif]>The other
+options selected here are &#8220;morpheme breaks &#8211; true&#8221;, =
+&#8220;part
+of speech &#8211; true&#8221;, &#8220;Frames &#8211; true&#8221;, =
+&#8220;Don&#8217;t
+insert numbering &#8211; false&#8221; and &#8220;Numbering Col width =
+&#8211; 5&#8221;<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>6.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Hit
+OK to exit the settings window<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>7.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Typed
+#S1-1.1 in the document<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>8.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Selected
+Get Grammar Examples from the Writeup tools menu<o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>9.<span style=3D'font:7.0pt "Times New =
+Roman"'>&nbsp; </span></span><![endif]>Hit
+the button &#8220;find next reference&#8221; and the Writeup tool found =
+the
+entered text <o:p></o:p></p>
+
+<p class=3DMsoPlainText =
+style=3D'margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 =
+lfo1'><![if !supportLists]><span
+style=3D'mso-list:Ignore'>10.</span><![endif]>Clicked on the button =
+&#8220;Replace
+with Example&#8221; and the reference number got replaced with =
+*<b>nothing</b>*.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>I&#8217;ve also tried typing S1-1.1 in the =
+Insert example
+text box and tried inserting it, but that too seems not working for me =
+<span
+style=3D'font-family:Wingdings'>L</span>.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Would you please help us in setting this up =
+(TeamViewer
+or Bomgar, Skype or Email, whichever works best for you)<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Thanks again for your continued =
+support<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>In Him<o:p></o:p></p>
+
+<p class=3DMsoPlainText>Benjamin<o:p></o:p></p>
+
+<p class=3DMsoPlainText>&nbsp;<o:p></o:p></p>
+
+<p class=3DMsoPlainText>-----Original Message-----<br>
+From: Jim and Karen Kornelsen [mailto:jim-karen_kornelsen@sall.com] <br>
+Sent: Thursday, February 11, 2010 10:21 PM<br>
+To: Benjamin C. Varghese; 'John Jr Mathai'; 'Benjamin C. Varghese'; =
+'Troy';
+'Paul Arsenault'; 'Bruce Cain'; Beth_Bryson@sil.org; Allan Johnson; Mark =
+and Jo
+Penny<br>
+Subject: Writeup Tools 0.6</p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Hello,<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Since reference numbers do not seem to work =
+between
+Phonology Assistant and Flex, Sam requested a method of getting =
+phonology
+examples directly from Flex.&nbsp; In this update, it is possible to =
+export
+LIFT data from Flex and import into OpenOffice for Phonology =
+examples.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>There are several other changes as well.&nbsp; =
+For
+grammar, there is no longer an option to set the font in the =
+settings.&nbsp;
+Instead just modify the appropriate style.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Please let me know if you have any problems with =
+this
+version.<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+<p class=3DMsoPlainText>Jim<o:p></o:p></p>
+
+<p class=3DMsoPlainText><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>
+
+------=_NextPart_000_008E_01CAABDB.EAE64EF0--
+
+
+  GÄx}
+ie  éc h r o m e : / / g l o b a l / c o n t e n t / b i n d i n g s / p r o g r e s s m e t e r . x m l # p r o g r e s s m e t e r   6 4 2 5 5 2 a   : GÄL}
+iÿ à            ≤                                                                              d2                                                    P}
+i   à {J`   @{J`({J`{J`–Wó     F 

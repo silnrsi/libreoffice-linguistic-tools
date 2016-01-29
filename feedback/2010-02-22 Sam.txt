@@ -1,0 +1,12 @@
+[9:33:54 PM] SamSony: Jim,Thank you very much.
+[9:34:08 PM] SamSony: Phonology workshop over
+[9:35:04 PM] SamSony: One of the team used FLEx-PA-Openoffice
+[9:35:22 PM] SamSony: your tools helped them
+[9:37:20 PM] Jim and Karen Kornelsen: That sounds good.  Were there any problems or questions?
+[9:42:09 PM] SamSony: we are facing one problem in OO,that is no data conversion in OO
+[9:42:39 PM] SamSony: Grammar writeup we need dataconversion from Dev to Roman
+[9:42:53 PM] SamSony: we have Teckit map
+[9:44:12 PM] Jim and Karen Kornelsen: I have been trying to get the data conversion macros to work in OOo.  Unfortunately there was a problem calling SIL Converters.  However I think I have found a solution now.  Hopefully in a few days it will be working.  Perhaps by Friday I can send it out.
+[9:45:10 PM] SamSony: Thank you...looking forward to it...
+[9:47:09 PM] Jim and Karen Kornelsen: I think because of the data conversion macro it should be named "Linguistic Tools" instead of "Writeup Tools," and the menu should be changed to say "Linguistics."  Does that sound ok?
+[9:47:55 PM] SamSony: yea...that is ok

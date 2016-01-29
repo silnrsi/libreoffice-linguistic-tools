@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="CalcAddIns" oor:package="org.openoffice.Office">
+<node oor:name="AddInInfo">
+<node oor:name="com.doobiecompany.examples.DoobieDoo.python.DoobieDooImpl" oor:op="replace">
+<node oor:name="AddInFunctions">
+  <node oor:name="doobieRev" oor:op="replace">
+    <prop oor:name="DisplayName"><value xml:lang="en">doobieRev</value></prop>
+    <prop oor:name="Description"><value xml:lang="en">Multiplies two integers quite fantastically.</value></prop>
+    <prop oor:name="Category"><value>Add-In</value></prop>
+    <prop oor:name="CompatibilityName"><value xml:lang="en">AutoAddIn.DoobieDo.doobieMult</value></prop>
+    <node oor:name="Parameters">
+      <node oor:name="s1" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">a</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The first string.</value></prop>
+      </node>
+    </node>
+  </node>
+        <node oor:name="reverseString" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">reverseString</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Flips a string backwards.  For example "apple" becomes "elppa".</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <!-- This won't help, because there is no reverse() in Excel. -->
+          <prop oor:name="CompatibilityName"><value xml:lang="en">reverse</value></prop>
+          <node oor:name="Parameters">
+            <node oor:name="s" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">s</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">The string to reverse.</value></prop>
+            </node>
+          </node>
+        </node>
+</node>
+</node>
+</node>
+</oor:component-data>

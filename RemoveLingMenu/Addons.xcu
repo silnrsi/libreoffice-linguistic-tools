@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:node xmlns:oor="http://openoffice.org/2001/registry"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          oor:name="Addons" oor:package="org.openoffice.Office">
+  <node oor:name="AddonUI">
+    <node oor:name="OfficeMenuBar">
+        <!-- removes Linguistics menu for versions since March 2010 -->
+        <node oor:name="name.JimK.LinguisticTools" oor:op="remove"/>
+
+        <!-- for version 0.6.1 and earlier -->
+        <node oor:name="name.JimK.WriteupTools.PhonologySettings"
+            oor:op="remove"/>
+        <!-- for unreleased version 0.7 beta -->
+        <node oor:name="name.JimK.LinguisticTools.PhonologySettings"
+            oor:op="remove"/>
+    </node>
+  </node>
+</oor:node>

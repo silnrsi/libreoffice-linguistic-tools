@@ -1,0 +1,11 @@
+#include <com/sun/star/uno/XInterface.idl>
+
+module com { module doobiecompany { module examples { module DoobieDoo {
+
+    interface XDoobieDoo
+    {
+      string doobieRev( [in] string s1 );
+      string reverseString( [in] string s );
+    };
+
+}; }; }; };

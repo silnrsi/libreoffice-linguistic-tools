@@ -1,0 +1,2408 @@
+2015-11-10 15:11:15,171 - Made list of 0 words.
+2015-11-10 15:11:17,541 - Spell check finished.
+2015-11-10 15:11:17,748 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-10 15:11:22,334 - Please save the current document first.
+2015-11-10 15:11:24,262 - Please select an item in the list.
+2015-11-10 15:11:34,127 - No more possible abbreviations found.
+2015-11-10 15:11:34,799 - No more possible abbreviations found.
+2015-11-10 15:11:35,439 - No more possible abbreviations found.
+2015-11-10 15:11:36,178 - No more possible abbreviations found.
+2015-11-10 15:11:36,856 - No more possible abbreviations found.
+2015-11-10 15:11:37,511 - No more possible abbreviations found.
+2015-11-10 15:11:38,028 - No more possible abbreviations found.
+2015-11-10 15:11:38,212 - No more possible abbreviations found.
+2015-11-10 15:11:46,466 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-10 15:11:47,154 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-10 15:11:47,732 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-10 15:11:48,329 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-10 15:11:53,692 - Replaced 1 example.
+2015-11-10 15:11:53,692 - Replaced %d example%s.
+2015-11-10 15:11:54,230 - Replaced 1 example.
+2015-11-10 15:11:54,230 - Replaced %d example%s.
+2015-11-10 15:11:54,764 - Replaced 1 example.
+2015-11-10 15:11:54,765 - Replaced %d example%s.
+2015-11-10 15:11:55,264 - Replaced 1 example.
+2015-11-10 15:11:55,264 - Replaced %d example%s.
+2015-11-10 15:11:55,747 - Replaced 1 example.
+2015-11-10 15:11:55,748 - Replaced %d example%s.
+2015-11-10 15:11:56,238 - Replaced 1 example.
+2015-11-10 15:11:56,238 - Replaced %d example%s.
+2015-11-10 15:11:56,738 - Replaced 1 example.
+2015-11-10 15:11:56,738 - Replaced %d example%s.
+2015-11-10 15:11:57,252 - Replaced 1 example.
+2015-11-10 15:11:57,252 - Replaced %d example%s.
+2015-11-10 15:12:03,554 - Updated 4 examples.
+2015-11-10 15:12:03,554 - Updated %d example%s.
+2015-11-10 15:12:16,644 - Replaced 1 example.
+2015-11-10 15:12:16,644 - Replaced %d example%s.
+2015-11-10 15:12:17,731 - Replaced 1 example.
+2015-11-10 15:12:17,731 - Replaced %d example%s.
+2015-11-10 15:12:18,808 - Replaced 1 example.
+2015-11-10 15:12:18,808 - Replaced %d example%s.
+2015-11-10 15:12:20,014 - Replaced 1 example.
+2015-11-10 15:12:20,014 - Replaced %d example%s.
+2015-11-10 15:12:26,464 - Replaced 1 example.
+2015-11-10 15:12:26,464 - Replaced %d example%s.
+2015-11-10 15:12:27,704 - Replaced 1 example.
+2015-11-10 15:12:27,704 - Replaced %d example%s.
+2015-11-10 15:12:28,836 - Replaced 1 example.
+2015-11-10 15:12:28,836 - Replaced %d example%s.
+2015-11-10 15:12:29,967 - Replaced 1 example.
+2015-11-10 15:12:29,967 - Replaced %d example%s.
+2015-11-10 15:12:35,877 - Replaced 1 example.
+2015-11-10 15:12:35,878 - Replaced %d example%s.
+2015-11-10 15:12:37,174 - Replaced 1 example.
+2015-11-10 15:12:37,174 - Replaced %d example%s.
+2015-11-10 15:12:38,515 - Replaced 1 example.
+2015-11-10 15:12:38,515 - Replaced %d example%s.
+2015-11-10 15:12:40,012 - Replaced 1 example.
+2015-11-10 15:12:40,012 - Replaced %d example%s.
+2015-11-10 15:12:46,560 - Replaced 1 example.
+2015-11-10 15:12:46,561 - Replaced %d example%s.
+2015-11-10 15:12:47,743 - Replaced 1 example.
+2015-11-10 15:12:47,743 - Replaced %d example%s.
+2015-11-10 15:12:48,977 - Replaced 1 example.
+2015-11-10 15:12:48,977 - Replaced %d example%s.
+2015-11-10 15:12:50,308 - Replaced 1 example.
+2015-11-10 15:12:50,308 - Replaced %d example%s.
+2015-11-10 15:12:56,011 - Replaced 1 example.
+2015-11-10 15:12:56,012 - Replaced %d example%s.
+2015-11-10 15:12:57,328 - Replaced 1 example.
+2015-11-10 15:12:57,328 - Replaced %d example%s.
+2015-11-10 15:12:58,569 - Replaced 1 example.
+2015-11-10 15:12:58,569 - Replaced %d example%s.
+2015-11-10 15:12:59,787 - Replaced 1 example.
+2015-11-10 15:12:59,788 - Replaced %d example%s.
+2015-11-10 15:13:05,199 - Replaced 1 example.
+2015-11-10 15:13:05,199 - Replaced %d example%s.
+2015-11-10 15:13:06,487 - Replaced 1 example.
+2015-11-10 15:13:06,487 - Replaced %d example%s.
+2015-11-10 15:13:07,807 - Replaced 1 example.
+2015-11-10 15:13:07,807 - Replaced %d example%s.
+2015-11-10 15:13:09,073 - Replaced 1 example.
+2015-11-10 15:13:09,074 - Replaced %d example%s.
+2015-11-10 15:13:55,488 - Updated 4 examples.
+2015-11-10 15:13:55,488 - Updated %d example%s.
+2015-11-10 15:13:56,970 - Found 2 paragraphs and made 1 change.
+2015-11-10 15:13:57,656 - Made 1 change.
+2015-11-10 15:13:58,343 - Made 1 change.
+2015-11-10 15:13:59,925 - No changes, but modified style of 6 paragraphs.
+2015-11-10 15:14:01,320 - Make this change?
+2015-11-10 15:14:01,351 - Make this change?
+2015-11-10 15:14:01,384 - Make this change?
+2015-11-10 15:14:01,417 - Make this change?
+2015-11-10 15:14:01,449 - Make this change?
+2015-11-10 15:14:01,480 - Make this change?
+2015-11-10 15:14:01,614 - No changes, but modified style of 6 paragraphs.
+2015-11-10 15:14:03,168 - No changes, but modified style of 6 paragraphs.
+2015-11-10 15:14:04,336 - Make this change?
+2015-11-10 15:14:04,368 - Make this change?
+2015-11-10 15:14:04,401 - Make this change?
+2015-11-10 15:14:04,435 - Make this change?
+2015-11-10 15:14:04,468 - Make this change?
+2015-11-10 15:14:04,500 - Make this change?
+2015-11-10 15:14:04,636 - No changes, but modified style of 6 paragraphs.
+2015-11-10 15:14:05,540 - Make this change?
+2015-11-10 15:14:05,551 - Make this change?
+2015-11-10 15:14:05,562 - Make this change?
+2015-11-10 15:14:05,572 - Make this change?
+2015-11-10 15:14:05,583 - Make this change?
+2015-11-10 15:14:05,593 - Make this change?
+2015-11-10 15:14:05,707 - No changes, but modified style of 6 paragraphs.
+2015-11-10 15:14:06,415 - Make this change?
+2015-11-10 15:14:06,424 - Make this change?
+2015-11-10 15:14:06,434 - Make this change?
+2015-11-10 15:14:06,444 - Make this change?
+2015-11-10 15:14:06,454 - Make this change?
+2015-11-10 15:14:06,569 - No changes, but modified style of 5 paragraphs.
+2015-11-10 15:14:07,171 - Make this change?
+2015-11-10 15:14:07,281 - No changes.
+2015-11-10 15:14:08,067 - Make this change?
+2015-11-10 15:14:08,189 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:08,789 - Make this change?
+2015-11-10 15:14:09,004 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:09,608 - Make this change?
+2015-11-10 15:14:09,723 - No changes.
+2015-11-10 15:14:10,350 - Make this change?
+2015-11-10 15:14:10,472 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:11,078 - Make this change?
+2015-11-10 15:14:11,217 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:12,085 - Make this change?
+2015-11-10 15:14:12,208 - No changes.
+2015-11-10 15:14:12,826 - Make this change?
+2015-11-10 15:14:12,950 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:13,549 - Make this change?
+2015-11-10 15:14:13,729 - No changes, but modified style of 1 paragraph.
+2015-11-10 15:14:14,372 - Make this change?
+2015-11-10 15:14:14,540 - Made 1 change.
+2015-11-10 15:14:15,188 - Make this change?
+2015-11-10 15:14:15,353 - Made 1 change.
+2015-11-10 15:14:16,028 - Make this change?
+2015-11-10 15:14:16,189 - Made 1 change.
+2015-11-11 12:04:24,203 - Made list of 0 words.
+2015-11-11 12:04:27,103 - Spell check finished.
+2015-11-11 12:04:27,238 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-11 12:04:31,656 - Please save the current document first.
+2015-11-11 12:04:33,468 - Please select an item in the list.
+2015-11-11 12:04:43,177 - No more possible abbreviations found.
+2015-11-11 12:04:43,850 - No more possible abbreviations found.
+2015-11-11 12:04:44,481 - No more possible abbreviations found.
+2015-11-11 12:04:45,199 - No more possible abbreviations found.
+2015-11-11 12:04:45,842 - No more possible abbreviations found.
+2015-11-11 12:04:46,490 - No more possible abbreviations found.
+2015-11-11 12:04:46,997 - No more possible abbreviations found.
+2015-11-11 12:04:47,178 - No more possible abbreviations found.
+2015-11-11 12:04:55,611 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:04:56,298 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:04:56,887 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:04:57,476 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:05:02,870 - Replaced 1 example.
+2015-11-11 12:05:02,870 - Replaced %d example%s.
+2015-11-11 12:05:03,401 - Replaced 1 example.
+2015-11-11 12:05:03,401 - Replaced %d example%s.
+2015-11-11 12:05:03,930 - Replaced 1 example.
+2015-11-11 12:05:03,930 - Replaced %d example%s.
+2015-11-11 12:05:04,424 - Replaced 1 example.
+2015-11-11 12:05:04,424 - Replaced %d example%s.
+2015-11-11 12:05:04,898 - Replaced 1 example.
+2015-11-11 12:05:04,898 - Replaced %d example%s.
+2015-11-11 12:05:05,380 - Replaced 1 example.
+2015-11-11 12:05:05,380 - Replaced %d example%s.
+2015-11-11 12:05:05,863 - Replaced 1 example.
+2015-11-11 12:05:05,863 - Replaced %d example%s.
+2015-11-11 12:05:06,386 - Replaced 1 example.
+2015-11-11 12:05:06,386 - Replaced %d example%s.
+2015-11-11 12:05:12,622 - Updated 4 examples.
+2015-11-11 12:05:12,623 - Updated %d example%s.
+2015-11-11 12:05:25,100 - Replaced 1 example.
+2015-11-11 12:05:25,100 - Replaced %d example%s.
+2015-11-11 12:05:26,166 - Replaced 1 example.
+2015-11-11 12:05:26,166 - Replaced %d example%s.
+2015-11-11 12:05:27,219 - Replaced 1 example.
+2015-11-11 12:05:27,219 - Replaced %d example%s.
+2015-11-11 12:05:28,362 - Replaced 1 example.
+2015-11-11 12:05:28,362 - Replaced %d example%s.
+2015-11-11 12:05:34,314 - Replaced 1 example.
+2015-11-11 12:05:34,314 - Replaced %d example%s.
+2015-11-11 12:05:35,708 - Replaced 1 example.
+2015-11-11 12:05:35,709 - Replaced %d example%s.
+2015-11-11 12:05:36,853 - Replaced 1 example.
+2015-11-11 12:05:36,854 - Replaced %d example%s.
+2015-11-11 12:05:37,945 - Replaced 1 example.
+2015-11-11 12:05:37,945 - Replaced %d example%s.
+2015-11-11 12:05:44,340 - Replaced 1 example.
+2015-11-11 12:05:44,340 - Replaced %d example%s.
+2015-11-11 12:05:45,598 - Replaced 1 example.
+2015-11-11 12:05:45,598 - Replaced %d example%s.
+2015-11-11 12:05:46,963 - Replaced 1 example.
+2015-11-11 12:05:46,964 - Replaced %d example%s.
+2015-11-11 12:05:48,361 - Replaced 1 example.
+2015-11-11 12:05:48,361 - Replaced %d example%s.
+2015-11-11 12:05:54,730 - Replaced 1 example.
+2015-11-11 12:05:54,730 - Replaced %d example%s.
+2015-11-11 12:05:55,894 - Replaced 1 example.
+2015-11-11 12:05:55,894 - Replaced %d example%s.
+2015-11-11 12:05:57,117 - Replaced 1 example.
+2015-11-11 12:05:57,117 - Replaced %d example%s.
+2015-11-11 12:05:58,409 - Replaced 1 example.
+2015-11-11 12:05:58,409 - Replaced %d example%s.
+2015-11-11 12:06:04,010 - Replaced 1 example.
+2015-11-11 12:06:04,011 - Replaced %d example%s.
+2015-11-11 12:06:05,281 - Replaced 1 example.
+2015-11-11 12:06:05,281 - Replaced %d example%s.
+2015-11-11 12:06:06,488 - Replaced 1 example.
+2015-11-11 12:06:06,488 - Replaced %d example%s.
+2015-11-11 12:06:07,696 - Replaced 1 example.
+2015-11-11 12:06:07,696 - Replaced %d example%s.
+2015-11-11 12:06:13,073 - Replaced 1 example.
+2015-11-11 12:06:13,073 - Replaced %d example%s.
+2015-11-11 12:06:14,382 - Replaced 1 example.
+2015-11-11 12:06:14,383 - Replaced %d example%s.
+2015-11-11 12:06:15,748 - Replaced 1 example.
+2015-11-11 12:06:15,748 - Replaced %d example%s.
+2015-11-11 12:06:17,000 - Replaced 1 example.
+2015-11-11 12:06:17,000 - Replaced %d example%s.
+2015-11-11 12:07:01,331 - Updated 4 examples.
+2015-11-11 12:07:01,331 - Updated %d example%s.
+2015-11-11 12:20:12,542 - Made list of 0 words.
+2015-11-11 12:20:17,043 - Spell check finished.
+2015-11-11 12:20:17,265 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-11 12:20:21,654 - Please save the current document first.
+2015-11-11 12:20:23,495 - Please select an item in the list.
+2015-11-11 12:20:33,361 - No more possible abbreviations found.
+2015-11-11 12:20:34,262 - No more possible abbreviations found.
+2015-11-11 12:20:34,877 - No more possible abbreviations found.
+2015-11-11 12:20:35,600 - No more possible abbreviations found.
+2015-11-11 12:20:36,231 - No more possible abbreviations found.
+2015-11-11 12:20:36,848 - No more possible abbreviations found.
+2015-11-11 12:20:37,338 - No more possible abbreviations found.
+2015-11-11 12:20:37,519 - No more possible abbreviations found.
+2015-11-11 12:20:46,148 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:20:46,942 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:20:47,521 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:20:48,120 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-11 12:20:53,681 - Replaced 1 example.
+2015-11-11 12:20:53,681 - Replaced %d example%s.
+2015-11-11 12:20:54,223 - Replaced 1 example.
+2015-11-11 12:20:54,223 - Replaced %d example%s.
+2015-11-11 12:20:54,739 - Replaced 1 example.
+2015-11-11 12:20:54,740 - Replaced %d example%s.
+2015-11-11 12:20:55,427 - Replaced 1 example.
+2015-11-11 12:20:55,427 - Replaced %d example%s.
+2015-11-11 12:20:55,902 - Replaced 1 example.
+2015-11-11 12:20:55,902 - Replaced %d example%s.
+2015-11-11 12:20:56,461 - Replaced 1 example.
+2015-11-11 12:20:56,461 - Replaced %d example%s.
+2015-11-11 12:20:56,957 - Replaced 1 example.
+2015-11-11 12:20:56,957 - Replaced %d example%s.
+2015-11-11 12:20:57,456 - Replaced 1 example.
+2015-11-11 12:20:57,456 - Replaced %d example%s.
+2015-11-11 12:21:03,720 - Updated 4 examples.
+2015-11-11 12:21:03,721 - Updated %d example%s.
+2015-11-11 12:21:16,247 - Replaced 1 example.
+2015-11-11 12:21:16,247 - Replaced %d example%s.
+2015-11-11 12:21:17,408 - Replaced 1 example.
+2015-11-11 12:21:17,408 - Replaced %d example%s.
+2015-11-11 12:21:18,674 - Replaced 1 example.
+2015-11-11 12:21:18,675 - Replaced %d example%s.
+2015-11-11 12:21:19,814 - Replaced 1 example.
+2015-11-11 12:21:19,814 - Replaced %d example%s.
+2015-11-11 12:21:25,615 - Replaced 1 example.
+2015-11-11 12:21:25,615 - Replaced %d example%s.
+2015-11-11 12:21:26,836 - Replaced 1 example.
+2015-11-11 12:21:26,836 - Replaced %d example%s.
+2015-11-11 12:21:27,942 - Replaced 1 example.
+2015-11-11 12:21:27,942 - Replaced %d example%s.
+2015-11-11 12:21:29,017 - Replaced 1 example.
+2015-11-11 12:21:29,017 - Replaced %d example%s.
+2015-11-11 12:21:34,236 - Replaced 1 example.
+2015-11-11 12:21:34,236 - Replaced %d example%s.
+2015-11-11 12:21:35,419 - Replaced 1 example.
+2015-11-11 12:21:35,419 - Replaced %d example%s.
+2015-11-11 12:21:36,674 - Replaced 1 example.
+2015-11-11 12:21:36,675 - Replaced %d example%s.
+2015-11-11 12:21:38,048 - Replaced 1 example.
+2015-11-11 12:21:38,048 - Replaced %d example%s.
+2015-11-11 12:21:44,321 - Replaced 1 example.
+2015-11-11 12:21:44,321 - Replaced %d example%s.
+2015-11-11 12:21:45,503 - Replaced 1 example.
+2015-11-11 12:21:45,503 - Replaced %d example%s.
+2015-11-11 12:21:46,777 - Replaced 1 example.
+2015-11-11 12:21:46,778 - Replaced %d example%s.
+2015-11-11 12:21:48,067 - Replaced 1 example.
+2015-11-11 12:21:48,068 - Replaced %d example%s.
+2015-11-11 12:21:53,550 - Replaced 1 example.
+2015-11-11 12:21:53,550 - Replaced %d example%s.
+2015-11-11 12:21:54,737 - Replaced 1 example.
+2015-11-11 12:21:54,737 - Replaced %d example%s.
+2015-11-11 12:21:55,912 - Replaced 1 example.
+2015-11-11 12:21:55,912 - Replaced %d example%s.
+2015-11-11 12:21:57,084 - Replaced 1 example.
+2015-11-11 12:21:57,085 - Replaced %d example%s.
+2015-11-11 12:22:02,458 - Replaced 1 example.
+2015-11-11 12:22:02,459 - Replaced %d example%s.
+2015-11-11 12:22:03,688 - Replaced 1 example.
+2015-11-11 12:22:03,688 - Replaced %d example%s.
+2015-11-11 12:22:04,986 - Replaced 1 example.
+2015-11-11 12:22:04,987 - Replaced %d example%s.
+2015-11-11 12:22:06,184 - Replaced 1 example.
+2015-11-11 12:22:06,185 - Replaced %d example%s.
+2015-11-11 12:22:52,174 - Updated 4 examples.
+2015-11-11 12:22:52,174 - Updated %d example%s.
+2015-11-11 12:22:59,233 - Found 2 paragraphs and made 1 change.
+2015-11-11 12:23:00,077 - Made 1 change.
+2015-11-11 12:23:01,109 - Made 1 change.
+2015-11-11 12:23:02,717 - No changes, but modified style of 6 paragraphs.
+2015-11-11 12:23:03,916 - Make this change?
+2015-11-11 12:23:03,946 - Make this change?
+2015-11-11 12:23:03,977 - Make this change?
+2015-11-11 12:23:04,018 - Make this change?
+2015-11-11 12:23:04,053 - Make this change?
+2015-11-11 12:23:04,087 - Make this change?
+2015-11-11 12:23:04,219 - No changes, but modified style of 6 paragraphs.
+2015-11-11 12:23:05,716 - No changes, but modified style of 6 paragraphs.
+2015-11-11 12:23:06,973 - Make this change?
+2015-11-11 12:23:07,007 - Make this change?
+2015-11-11 12:23:07,038 - Make this change?
+2015-11-11 12:23:07,076 - Make this change?
+2015-11-11 12:23:07,108 - Make this change?
+2015-11-11 12:23:07,141 - Make this change?
+2015-11-11 12:23:07,273 - No changes, but modified style of 6 paragraphs.
+2015-11-11 12:23:08,197 - Make this change?
+2015-11-11 12:23:08,208 - Make this change?
+2015-11-11 12:23:08,222 - Make this change?
+2015-11-11 12:23:08,233 - Make this change?
+2015-11-11 12:23:08,244 - Make this change?
+2015-11-11 12:23:08,255 - Make this change?
+2015-11-11 12:23:08,370 - No changes, but modified style of 6 paragraphs.
+2015-11-11 12:23:09,086 - Make this change?
+2015-11-11 12:23:09,096 - Make this change?
+2015-11-11 12:23:09,106 - Make this change?
+2015-11-11 12:23:09,117 - Make this change?
+2015-11-11 12:23:09,127 - Make this change?
+2015-11-11 12:23:09,245 - No changes, but modified style of 5 paragraphs.
+2015-11-11 12:23:09,874 - Make this change?
+2015-11-11 12:23:10,055 - No changes.
+2015-11-11 12:23:10,630 - Make this change?
+2015-11-11 12:23:10,774 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:11,402 - Make this change?
+2015-11-11 12:23:11,657 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:12,320 - Make this change?
+2015-11-11 12:23:12,431 - No changes.
+2015-11-11 12:23:13,018 - Make this change?
+2015-11-11 12:23:13,168 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:13,794 - Make this change?
+2015-11-11 12:23:13,927 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:14,728 - Make this change?
+2015-11-11 12:23:14,841 - No changes.
+2015-11-11 12:23:15,401 - Make this change?
+2015-11-11 12:23:15,529 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:16,168 - Make this change?
+2015-11-11 12:23:16,349 - No changes, but modified style of 1 paragraph.
+2015-11-11 12:23:17,043 - Make this change?
+2015-11-11 12:23:17,658 - Made 1 change.
+2015-11-11 12:23:18,297 - Make this change?
+2015-11-11 12:23:18,562 - Made 1 change.
+2015-11-11 12:23:19,184 - Make this change?
+2015-11-11 12:23:19,427 - Made 1 change.
+2015-11-12 12:58:59,541 - Made list of 0 words.
+2015-11-12 12:59:02,739 - Spell check finished.
+2015-11-12 12:59:02,886 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-12 12:59:07,781 - Please save the current document first.
+2015-11-12 12:59:09,715 - Please select an item in the list.
+2015-11-12 12:59:19,910 - No more possible abbreviations found.
+2015-11-12 12:59:20,781 - No more possible abbreviations found.
+2015-11-12 12:59:21,480 - No more possible abbreviations found.
+2015-11-12 12:59:22,566 - No more possible abbreviations found.
+2015-11-12 12:59:23,403 - No more possible abbreviations found.
+2015-11-12 12:59:24,472 - No more possible abbreviations found.
+2015-11-12 12:59:25,060 - No more possible abbreviations found.
+2015-11-12 12:59:25,246 - No more possible abbreviations found.
+2015-11-12 12:59:34,296 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-12 12:59:35,087 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-12 12:59:35,749 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-12 12:59:36,396 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-12 12:59:42,700 - Replaced 1 example.
+2015-11-12 12:59:42,701 - Replaced %d example%s.
+2015-11-12 12:59:43,229 - Replaced 1 example.
+2015-11-12 12:59:43,229 - Replaced %d example%s.
+2015-11-12 12:59:43,812 - Replaced 1 example.
+2015-11-12 12:59:43,812 - Replaced %d example%s.
+2015-11-12 12:59:44,362 - Replaced 1 example.
+2015-11-12 12:59:44,362 - Replaced %d example%s.
+2015-11-12 12:59:44,887 - Replaced 1 example.
+2015-11-12 12:59:44,887 - Replaced %d example%s.
+2015-11-12 12:59:45,433 - Replaced 1 example.
+2015-11-12 12:59:45,433 - Replaced %d example%s.
+2015-11-12 12:59:45,976 - Replaced 1 example.
+2015-11-12 12:59:45,977 - Replaced %d example%s.
+2015-11-12 12:59:46,518 - Replaced 1 example.
+2015-11-12 12:59:46,518 - Replaced %d example%s.
+2015-11-12 12:59:53,668 - Updated 4 examples.
+2015-11-12 12:59:53,668 - Updated %d example%s.
+2015-11-12 13:00:11,241 - Replaced 1 example.
+2015-11-12 13:00:11,241 - Replaced %d example%s.
+2015-11-12 13:00:12,726 - Replaced 1 example.
+2015-11-12 13:00:12,726 - Replaced %d example%s.
+2015-11-12 13:00:14,282 - Replaced 1 example.
+2015-11-12 13:00:14,282 - Replaced %d example%s.
+2015-11-12 13:00:16,040 - Replaced 1 example.
+2015-11-12 13:00:16,040 - Replaced %d example%s.
+2015-11-12 13:00:23,597 - Replaced 1 example.
+2015-11-12 13:00:23,597 - Replaced %d example%s.
+2015-11-12 13:00:25,066 - Replaced 1 example.
+2015-11-12 13:00:25,066 - Replaced %d example%s.
+2015-11-12 13:00:26,570 - Replaced 1 example.
+2015-11-12 13:00:26,570 - Replaced %d example%s.
+2015-11-12 13:00:28,048 - Replaced 1 example.
+2015-11-12 13:00:28,049 - Replaced %d example%s.
+2015-11-12 13:00:36,218 - Replaced 1 example.
+2015-11-12 13:00:36,218 - Replaced %d example%s.
+2015-11-12 13:00:38,287 - Replaced 1 example.
+2015-11-12 13:00:38,287 - Replaced %d example%s.
+2015-11-12 13:00:40,082 - Replaced 1 example.
+2015-11-12 13:00:40,082 - Replaced %d example%s.
+2015-11-12 13:00:41,902 - Replaced 1 example.
+2015-11-12 13:00:41,902 - Replaced %d example%s.
+2015-11-12 13:00:50,348 - Replaced 1 example.
+2015-11-12 13:00:50,348 - Replaced %d example%s.
+2015-11-12 13:00:52,111 - Replaced 1 example.
+2015-11-12 13:00:52,111 - Replaced %d example%s.
+2015-11-12 13:00:53,877 - Replaced 1 example.
+2015-11-12 13:00:53,877 - Replaced %d example%s.
+2015-11-12 13:00:55,713 - Replaced 1 example.
+2015-11-12 13:00:55,713 - Replaced %d example%s.
+2015-11-12 13:01:02,570 - Replaced 1 example.
+2015-11-12 13:01:02,570 - Replaced %d example%s.
+2015-11-12 13:01:04,066 - Replaced 1 example.
+2015-11-12 13:01:04,066 - Replaced %d example%s.
+2015-11-12 13:01:05,587 - Replaced 1 example.
+2015-11-12 13:01:05,587 - Replaced %d example%s.
+2015-11-12 13:01:07,091 - Replaced 1 example.
+2015-11-12 13:01:07,091 - Replaced %d example%s.
+2015-11-12 13:01:14,615 - Replaced 1 example.
+2015-11-12 13:01:14,616 - Replaced %d example%s.
+2015-11-12 13:01:16,224 - Replaced 1 example.
+2015-11-12 13:01:16,225 - Replaced %d example%s.
+2015-11-12 13:01:17,913 - Replaced 1 example.
+2015-11-12 13:01:17,913 - Replaced %d example%s.
+2015-11-12 13:01:19,516 - Replaced 1 example.
+2015-11-12 13:01:19,517 - Replaced %d example%s.
+2015-11-12 13:02:23,223 - Updated 4 examples.
+2015-11-12 13:02:23,223 - Updated %d example%s.
+2015-11-12 13:02:28,977 - Found 2 paragraphs and made 1 change.
+2015-11-12 13:02:29,711 - Made 1 change.
+2015-11-12 13:02:30,742 - Made 1 change.
+2015-11-12 13:02:32,394 - No changes, but modified style of 6 paragraphs.
+2015-11-12 13:02:33,662 - Make this change?
+2015-11-12 13:02:33,697 - Make this change?
+2015-11-12 13:02:33,732 - Make this change?
+2015-11-12 13:02:33,769 - Make this change?
+2015-11-12 13:02:33,804 - Make this change?
+2015-11-12 13:02:33,840 - Make this change?
+2015-11-12 13:02:33,981 - No changes, but modified style of 6 paragraphs.
+2015-11-12 13:02:35,676 - No changes, but modified style of 6 paragraphs.
+2015-11-12 13:02:37,010 - Make this change?
+2015-11-12 13:02:37,046 - Make this change?
+2015-11-12 13:02:37,083 - Make this change?
+2015-11-12 13:02:37,119 - Make this change?
+2015-11-12 13:02:37,157 - Make this change?
+2015-11-12 13:02:37,194 - Make this change?
+2015-11-12 13:02:37,335 - No changes, but modified style of 6 paragraphs.
+2015-11-12 13:02:38,410 - Make this change?
+2015-11-12 13:02:38,422 - Make this change?
+2015-11-12 13:02:38,447 - Make this change?
+2015-11-12 13:02:38,460 - Make this change?
+2015-11-12 13:02:38,473 - Make this change?
+2015-11-12 13:02:38,486 - Make this change?
+2015-11-12 13:02:38,603 - No changes, but modified style of 6 paragraphs.
+2015-11-12 13:02:39,372 - Make this change?
+2015-11-12 13:02:39,385 - Make this change?
+2015-11-12 13:02:39,398 - Make this change?
+2015-11-12 13:02:39,410 - Make this change?
+2015-11-12 13:02:39,423 - Make this change?
+2015-11-12 13:02:39,541 - No changes, but modified style of 5 paragraphs.
+2015-11-12 13:02:40,204 - Make this change?
+2015-11-12 13:02:40,428 - No changes.
+2015-11-12 13:02:41,032 - Make this change?
+2015-11-12 13:02:41,192 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:41,811 - Make this change?
+2015-11-12 13:02:42,023 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:42,706 - Make this change?
+2015-11-12 13:02:42,824 - No changes.
+2015-11-12 13:02:43,394 - Make this change?
+2015-11-12 13:02:43,708 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:44,337 - Make this change?
+2015-11-12 13:02:44,481 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:45,376 - Make this change?
+2015-11-12 13:02:45,494 - No changes.
+2015-11-12 13:02:46,245 - Make this change?
+2015-11-12 13:02:46,407 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:47,036 - Make this change?
+2015-11-12 13:02:47,247 - No changes, but modified style of 1 paragraph.
+2015-11-12 13:02:48,145 - Make this change?
+2015-11-12 13:02:48,773 - Made 1 change.
+2015-11-12 13:02:49,508 - Make this change?
+2015-11-12 13:02:49,914 - Made 1 change.
+2015-11-12 13:02:50,576 - Make this change?
+2015-11-12 13:02:50,833 - Made 1 change.
+2015-11-16 10:26:57,826 - Did not find any words for the list.
+2015-11-16 10:27:52,099 - Did not find any words for the list.
+2015-11-16 10:30:23,462 - Did not find any words for the list.
+2015-11-16 10:40:43,612 - Did not find any words for the list.
+2015-11-16 10:43:14,775 - Did not find any words for the list.
+2015-11-16 11:15:21,007 - Please save the current document first.
+2015-11-16 11:15:31,278 - Please select an item in the list.
+2015-11-16 11:18:00,952 - Error reading file 
+2015-11-16 11:50:56,335 - Did not find any data in file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\styles and fonts.odt
+2015-11-16 11:56:19,991 - Did not find any data in file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\styles and fonts.odt
+2015-11-16 12:02:32,900 - Did not find any data in file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\styles and fonts.odt
+2015-11-16 12:07:19,223 - Did not find any data in file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\styles and fonts.odt
+2015-11-16 12:21:05,347 - Made list of 4 words.
+2015-11-16 12:26:40,598 - Made list of 4 words.
+2015-11-16 12:26:42,932 - Made list of 12 words.
+2015-11-16 12:27:32,793 - Made list of 4 words.
+2015-11-16 12:27:35,243 - Made list of 12 words.
+2015-11-16 12:29:57,704 - Made list of 4 words.
+2015-11-16 12:30:22,292 - Made list of 4 words.
+2015-11-16 12:30:24,738 - Made list of 12 words.
+2015-11-16 12:35:10,501 - Made list of 4 words.
+2015-11-16 12:35:12,920 - Made list of 12 words.
+2015-11-16 12:42:21,408 - Made list of 4 words.
+2015-11-16 12:42:23,815 - Made list of 12 words.
+2015-11-16 13:42:25,110 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:42:27,882 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:42:31,706 - Found 2 paragraphs and made 1 change.
+2015-11-16 13:42:34,582 - Made 1 change.
+2015-11-16 13:42:37,936 - Made 1 change.
+2015-11-16 13:42:43,808 - No changes, but modified style of 6 paragraphs.
+2015-11-16 13:42:48,987 - Make this change?
+2015-11-16 13:42:49,068 - Make this change?
+2015-11-16 13:42:49,177 - Make this change?
+2015-11-16 13:42:49,272 - Make this change?
+2015-11-16 13:42:49,356 - Make this change?
+2015-11-16 13:42:49,497 - Make this change?
+2015-11-16 13:42:49,676 - No changes, but modified style of 6 paragraphs.
+2015-11-16 13:42:55,698 - No changes, but modified style of 6 paragraphs.
+2015-11-16 13:43:01,117 - Make this change?
+2015-11-16 13:43:01,202 - Make this change?
+2015-11-16 13:43:01,310 - Make this change?
+2015-11-16 13:43:01,406 - Make this change?
+2015-11-16 13:43:01,495 - Make this change?
+2015-11-16 13:43:01,582 - Make this change?
+2015-11-16 13:43:01,834 - No changes, but modified style of 6 paragraphs.
+2015-11-16 13:43:05,802 - Make this change?
+2015-11-16 13:43:05,828 - Make this change?
+2015-11-16 13:43:05,861 - Make this change?
+2015-11-16 13:43:05,921 - Make this change?
+2015-11-16 13:43:05,950 - Make this change?
+2015-11-16 13:43:05,980 - Make this change?
+2015-11-16 13:43:06,102 - No changes, but modified style of 6 paragraphs.
+2015-11-16 13:43:09,224 - Make this change?
+2015-11-16 13:43:09,283 - Make this change?
+2015-11-16 13:43:09,314 - Make this change?
+2015-11-16 13:43:09,341 - Make this change?
+2015-11-16 13:43:09,370 - Make this change?
+2015-11-16 13:43:09,493 - No changes, but modified style of 5 paragraphs.
+2015-11-16 13:43:12,358 - Make this change?
+2015-11-16 13:43:12,471 - No changes.
+2015-11-16 13:43:15,184 - Make this change?
+2015-11-16 13:43:15,429 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:18,087 - Make this change?
+2015-11-16 13:43:18,416 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:21,347 - Make this change?
+2015-11-16 13:43:21,462 - No changes.
+2015-11-16 13:43:24,092 - Make this change?
+2015-11-16 13:43:24,259 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:27,009 - Make this change?
+2015-11-16 13:43:27,190 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:30,217 - Make this change?
+2015-11-16 13:43:30,330 - No changes.
+2015-11-16 13:43:33,074 - Make this change?
+2015-11-16 13:43:33,233 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:36,103 - Make this change?
+2015-11-16 13:43:36,418 - No changes, but modified style of 1 paragraph.
+2015-11-16 13:43:39,180 - Make this change?
+2015-11-16 13:43:39,641 - Made 1 change.
+2015-11-16 13:43:42,314 - Make this change?
+2015-11-16 13:43:42,646 - Made 1 change.
+2015-11-16 13:43:45,281 - Make this change?
+2015-11-16 13:43:45,560 - Made 1 change.
+2015-11-16 13:45:33,111 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:45:35,855 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:45:42,538 - No changes.
+2015-11-16 13:47:56,894 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:47:59,630 - Found 2 paragraphs and made 2 changes.
+2015-11-16 13:48:05,607 - No changes.
+2015-11-16 14:10:35,932 - Found 2 paragraphs and made 2 changes.
+2015-11-16 14:10:38,730 - Found 2 paragraphs and made 2 changes.
+2015-11-16 14:10:43,710 - No changes.
+2015-11-17 01:36:04,009 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:36:06,976 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:36:15,550 - No changes.
+2015-11-17 01:37:10,712 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:37:14,929 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:37:23,674 - No changes.
+2015-11-17 01:38:52,384 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:38:55,257 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:39:02,016 - No changes.
+2015-11-17 01:49:33,112 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:49:35,920 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:49:39,520 - Found 2 paragraphs and made 1 change.
+2015-11-17 01:49:42,536 - Made 1 change.
+2015-11-17 01:49:45,565 - Made 1 change.
+2015-11-17 01:50:09,251 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:50:12,119 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:50:57,488 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:51:00,265 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:51:03,392 - Found 2 paragraphs and made 1 change.
+2015-11-17 01:51:06,161 - Made 1 change.
+2015-11-17 01:51:08,936 - Made 1 change.
+2015-11-17 01:51:50,115 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:51:52,951 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:57:40,137 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:57:43,030 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:57:46,141 - Found 2 paragraphs and made 1 change.
+2015-11-17 01:57:48,886 - Made 1 change.
+2015-11-17 01:57:51,659 - Made 1 change.
+2015-11-17 01:59:18,823 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:59:21,597 - Found 2 paragraphs and made 2 changes.
+2015-11-17 01:59:57,534 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:00:00,362 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:00:03,544 - Found 2 paragraphs and made 1 change.
+2015-11-17 02:00:06,322 - Made 1 change.
+2015-11-17 02:00:09,122 - Made 1 change.
+2015-11-17 02:01:20,439 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:01:23,228 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:01:26,282 - Found 2 paragraphs and made 1 change.
+2015-11-17 02:01:29,054 - Made 1 change.
+2015-11-17 02:01:31,855 - Made 1 change.
+2015-11-17 02:02:57,300 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:03:00,058 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:03:03,088 - Found 2 paragraphs and made 1 change.
+2015-11-17 02:03:05,829 - Made 1 change.
+2015-11-17 02:03:08,614 - Made 1 change.
+2015-11-17 02:04:29,826 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:04:32,580 - Found 2 paragraphs and made 2 changes.
+2015-11-17 02:04:35,609 - Found 2 paragraphs and made 1 change.
+2015-11-17 02:04:38,330 - Made 1 change.
+2015-11-17 02:04:41,078 - Made 1 change.
+2015-11-18 11:09:09,687 - Made list of 0 words.
+2015-11-18 11:09:11,912 - Spell check finished.
+2015-11-18 11:09:12,017 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-18 11:09:15,876 - Please save the current document first.
+2015-11-18 11:09:17,417 - Please select an item in the list.
+2015-11-18 11:09:25,097 - No more possible abbreviations found.
+2015-11-18 11:09:26,026 - No more possible abbreviations found.
+2015-11-18 11:09:27,012 - No more possible abbreviations found.
+2015-11-18 11:09:28,169 - No more possible abbreviations found.
+2015-11-18 11:09:29,145 - No more possible abbreviations found.
+2015-11-18 11:09:30,161 - No more possible abbreviations found.
+2015-11-18 11:09:30,890 - No more possible abbreviations found.
+2015-11-18 11:09:31,165 - No more possible abbreviations found.
+2015-11-18 11:09:44,740 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:09:45,874 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:09:46,502 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:09:47,572 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:09:56,146 - Replaced 1 example.
+2015-11-18 11:09:56,149 - Replaced %d example%s.
+2015-11-18 11:09:56,926 - Replaced 1 example.
+2015-11-18 11:09:56,927 - Replaced %d example%s.
+2015-11-18 11:09:57,964 - Replaced 1 example.
+2015-11-18 11:09:57,965 - Replaced %d example%s.
+2015-11-18 11:09:58,921 - Replaced 1 example.
+2015-11-18 11:09:58,922 - Replaced %d example%s.
+2015-11-18 11:09:59,596 - Replaced 1 example.
+2015-11-18 11:09:59,597 - Replaced %d example%s.
+2015-11-18 11:10:00,272 - Replaced 1 example.
+2015-11-18 11:10:00,272 - Replaced %d example%s.
+2015-11-18 11:10:01,190 - Replaced 1 example.
+2015-11-18 11:10:01,191 - Replaced %d example%s.
+2015-11-18 11:10:02,195 - Replaced 1 example.
+2015-11-18 11:10:02,196 - Replaced %d example%s.
+2015-11-18 11:10:13,191 - Updated 4 examples.
+2015-11-18 11:10:13,191 - Updated %d example%s.
+2015-11-18 11:10:44,373 - Replaced 1 example.
+2015-11-18 11:10:44,373 - Replaced %d example%s.
+2015-11-18 11:10:47,224 - Replaced 1 example.
+2015-11-18 11:10:47,230 - Replaced %d example%s.
+2015-11-18 11:10:50,342 - Replaced 1 example.
+2015-11-18 11:10:50,342 - Replaced %d example%s.
+2015-11-18 11:10:53,575 - Replaced 1 example.
+2015-11-18 11:10:53,577 - Replaced %d example%s.
+2015-11-18 11:11:07,702 - Replaced 1 example.
+2015-11-18 11:11:07,702 - Replaced %d example%s.
+2015-11-18 11:11:10,609 - Replaced 1 example.
+2015-11-18 11:11:10,615 - Replaced %d example%s.
+2015-11-18 11:11:13,123 - Replaced 1 example.
+2015-11-18 11:11:13,128 - Replaced %d example%s.
+2015-11-18 11:11:15,765 - Replaced 1 example.
+2015-11-18 11:11:15,766 - Replaced %d example%s.
+2015-11-18 11:11:31,242 - Replaced 1 example.
+2015-11-18 11:11:31,242 - Replaced %d example%s.
+2015-11-18 11:11:34,711 - Replaced 1 example.
+2015-11-18 11:11:34,711 - Replaced %d example%s.
+2015-11-18 11:11:38,285 - Replaced 1 example.
+2015-11-18 11:11:38,288 - Replaced %d example%s.
+2015-11-18 11:11:41,918 - Replaced 1 example.
+2015-11-18 11:11:41,919 - Replaced %d example%s.
+2015-11-18 11:11:58,997 - Replaced 1 example.
+2015-11-18 11:11:58,998 - Replaced %d example%s.
+2015-11-18 11:12:02,064 - Replaced 1 example.
+2015-11-18 11:12:02,064 - Replaced %d example%s.
+2015-11-18 11:12:04,978 - Replaced 1 example.
+2015-11-18 11:12:04,982 - Replaced %d example%s.
+2015-11-18 11:12:08,157 - Replaced 1 example.
+2015-11-18 11:12:08,158 - Replaced %d example%s.
+2015-11-18 11:12:21,214 - Replaced 1 example.
+2015-11-18 11:12:21,215 - Replaced %d example%s.
+2015-11-18 11:12:23,734 - Replaced 1 example.
+2015-11-18 11:12:23,740 - Replaced %d example%s.
+2015-11-18 11:12:26,202 - Replaced 1 example.
+2015-11-18 11:12:26,206 - Replaced %d example%s.
+2015-11-18 11:12:28,591 - Replaced 1 example.
+2015-11-18 11:12:28,592 - Replaced %d example%s.
+2015-11-18 11:12:41,192 - Replaced 1 example.
+2015-11-18 11:12:41,193 - Replaced %d example%s.
+2015-11-18 11:12:43,862 - Replaced 1 example.
+2015-11-18 11:12:43,866 - Replaced %d example%s.
+2015-11-18 11:12:46,443 - Replaced 1 example.
+2015-11-18 11:12:46,444 - Replaced %d example%s.
+2015-11-18 11:12:48,988 - Replaced 1 example.
+2015-11-18 11:12:48,989 - Replaced %d example%s.
+2015-11-18 11:14:45,940 - Updated 4 examples.
+2015-11-18 11:14:45,940 - Updated %d example%s.
+2015-11-18 11:45:52,067 - Made list of 0 words.
+2015-11-18 11:45:53,868 - Spell check finished.
+2015-11-18 11:45:53,947 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-11-18 11:45:58,058 - Please save the current document first.
+2015-11-18 11:45:59,594 - Please select an item in the list.
+2015-11-18 11:46:07,225 - No more possible abbreviations found.
+2015-11-18 11:46:08,214 - No more possible abbreviations found.
+2015-11-18 11:46:09,172 - No more possible abbreviations found.
+2015-11-18 11:46:10,220 - No more possible abbreviations found.
+2015-11-18 11:46:11,156 - No more possible abbreviations found.
+2015-11-18 11:46:12,171 - No more possible abbreviations found.
+2015-11-18 11:46:12,876 - No more possible abbreviations found.
+2015-11-18 11:46:13,148 - No more possible abbreviations found.
+2015-11-18 11:46:23,328 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:46:24,375 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:46:25,072 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:46:25,806 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-11-18 11:46:39,084 - Replaced 1 example.
+2015-11-18 11:46:39,085 - Replaced %d example%s.
+2015-11-18 11:46:41,021 - Replaced 1 example.
+2015-11-18 11:46:41,022 - Replaced %d example%s.
+2015-11-18 11:46:42,404 - Replaced 1 example.
+2015-11-18 11:46:42,405 - Replaced %d example%s.
+2015-11-18 11:46:43,996 - Replaced 1 example.
+2015-11-18 11:46:43,997 - Replaced %d example%s.
+2015-11-18 11:46:45,376 - Replaced 1 example.
+2015-11-18 11:46:45,377 - Replaced %d example%s.
+2015-11-18 11:46:46,674 - Replaced 1 example.
+2015-11-18 11:46:46,679 - Replaced %d example%s.
+2015-11-18 11:46:48,246 - Replaced 1 example.
+2015-11-18 11:46:48,247 - Replaced %d example%s.
+2015-11-18 11:46:49,896 - Replaced 1 example.
+2015-11-18 11:46:49,896 - Replaced %d example%s.
+2015-11-18 11:47:04,121 - Updated 4 examples.
+2015-11-18 11:47:04,122 - Updated %d example%s.
+2015-11-18 11:47:55,653 - Replaced 1 example.
+2015-11-18 11:47:55,662 - Replaced %d example%s.
+2015-11-18 11:48:04,137 - Replaced 1 example.
+2015-11-18 11:48:04,138 - Replaced %d example%s.
+2015-11-18 11:48:11,221 - Replaced 1 example.
+2015-11-18 11:48:11,221 - Replaced %d example%s.
+2015-11-18 11:48:20,222 - Replaced 1 example.
+2015-11-18 11:48:20,223 - Replaced %d example%s.
+2015-11-18 11:48:55,369 - Replaced 1 example.
+2015-11-18 11:48:55,370 - Replaced %d example%s.
+2015-11-18 11:49:03,846 - Replaced 1 example.
+2015-11-18 11:49:03,852 - Replaced %d example%s.
+2015-11-18 11:49:10,025 - Replaced 1 example.
+2015-11-18 11:49:10,026 - Replaced %d example%s.
+2015-11-18 11:49:15,798 - Replaced 1 example.
+2015-11-18 11:49:15,804 - Replaced %d example%s.
+2015-11-18 11:49:51,665 - Replaced 1 example.
+2015-11-18 11:49:51,666 - Replaced %d example%s.
+2015-11-18 11:49:59,214 - Replaced 1 example.
+2015-11-18 11:49:59,214 - Replaced %d example%s.
+2015-11-18 11:50:06,237 - Replaced 1 example.
+2015-11-18 11:50:06,238 - Replaced %d example%s.
+2015-11-18 11:50:13,545 - Replaced 1 example.
+2015-11-18 11:50:13,546 - Replaced %d example%s.
+2015-11-18 11:50:50,833 - Replaced 1 example.
+2015-11-18 11:50:50,838 - Replaced %d example%s.
+2015-11-18 11:50:59,026 - Replaced 1 example.
+2015-11-18 11:50:59,027 - Replaced %d example%s.
+2015-11-18 11:51:06,539 - Replaced 1 example.
+2015-11-18 11:51:06,543 - Replaced %d example%s.
+2015-11-18 11:51:14,039 - Replaced 1 example.
+2015-11-18 11:51:14,039 - Replaced %d example%s.
+2015-11-18 11:51:50,061 - Replaced 1 example.
+2015-11-18 11:51:50,062 - Replaced %d example%s.
+2015-11-18 11:51:58,409 - Replaced 1 example.
+2015-11-18 11:51:58,410 - Replaced %d example%s.
+2015-11-18 11:52:04,860 - Replaced 1 example.
+2015-11-18 11:52:04,861 - Replaced %d example%s.
+2015-11-18 11:52:10,684 - Replaced 1 example.
+2015-11-18 11:52:10,690 - Replaced %d example%s.
+2015-11-18 11:52:45,740 - Replaced 1 example.
+2015-11-18 11:52:45,740 - Replaced %d example%s.
+2015-11-18 11:52:54,459 - Replaced 1 example.
+2015-11-18 11:52:54,460 - Replaced %d example%s.
+2015-11-18 11:52:59,400 - Replaced 1 example.
+2015-11-18 11:52:59,401 - Replaced %d example%s.
+2015-11-18 11:53:04,957 - Replaced 1 example.
+2015-11-18 11:53:04,959 - Replaced %d example%s.
+2015-11-18 11:57:44,552 - Updated 4 examples.
+2015-11-18 11:57:44,552 - Updated %d example%s.
+2015-11-18 11:57:45,531 - Error showing dialog: No chkKnownFonts control.
+2015-11-24 14:12:13,182 - Paragraph style 'Lex Example' is missing
+2015-11-24 14:32:37,437 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\PhoneticCorpus.xml
+2015-11-24 14:32:37,437 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\PhoneticCorpus.xml
+2015-11-24 14:35:13,112 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\PhoneticCorpus.xml
+2015-11-25 13:35:22,653 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\FWtext.xml
+2015-11-25 13:37:37,106 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\Hunt6and39.xml
+2015-11-25 13:43:43,045 - Cannot find file C:\OurDocs\computing\Office\OOLT\LinguisticTools\tests\datafiles\JPDN60.xml
+2015-11-25 14:56:50,094 - Could not find ref number JPDN60.01
+2015-11-25 14:57:26,923 - Could not find ref number JPDN60.01
+2015-11-25 14:59:05,805 - Could not find ref number JPDN60.01
+2015-12-09 09:50:04,726 - Made list of 0 words.
+2015-12-09 09:50:08,575 - Spell check finished.
+2015-12-09 09:50:08,667 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-09 09:50:08,861 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:08,921 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:08,982 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:09,042 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:09,104 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:20,780 - No more possible abbreviations found.
+2015-12-09 09:50:21,418 - No more possible abbreviations found.
+2015-12-09 09:50:21,970 - No more possible abbreviations found.
+2015-12-09 09:50:22,642 - No more possible abbreviations found.
+2015-12-09 09:50:23,209 - No more possible abbreviations found.
+2015-12-09 09:50:23,812 - No more possible abbreviations found.
+2015-12-09 09:50:24,256 - No more possible abbreviations found.
+2015-12-09 09:50:24,417 - No more possible abbreviations found.
+2015-12-09 09:50:32,082 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 09:50:32,762 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 09:50:33,289 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 09:50:33,828 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 09:50:38,723 - Replaced 1 example.
+2015-12-09 09:50:38,723 - Replaced %d example%s.
+2015-12-09 09:50:39,165 - Replaced 1 example.
+2015-12-09 09:50:39,165 - Replaced %d example%s.
+2015-12-09 09:50:39,628 - Replaced 1 example.
+2015-12-09 09:50:39,628 - Replaced %d example%s.
+2015-12-09 09:50:40,108 - Replaced 1 example.
+2015-12-09 09:50:40,108 - Replaced %d example%s.
+2015-12-09 09:50:40,546 - Replaced 1 example.
+2015-12-09 09:50:40,546 - Replaced %d example%s.
+2015-12-09 09:50:40,980 - Replaced 1 example.
+2015-12-09 09:50:40,980 - Replaced %d example%s.
+2015-12-09 09:50:41,417 - Replaced 1 example.
+2015-12-09 09:50:41,417 - Replaced %d example%s.
+2015-12-09 09:50:41,882 - Replaced 1 example.
+2015-12-09 09:50:41,882 - Replaced %d example%s.
+2015-12-09 09:50:47,648 - Updated 4 examples.
+2015-12-09 09:50:47,648 - Updated %d example%s.
+2015-12-09 09:50:47,913 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:48,111 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:48,313 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:48,513 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:48,717 - Error showing dialog: No ChkUseSegnum control.
+2015-12-09 09:50:55,236 - Found 2 paragraphs and made 2 changes.
+2015-12-09 09:50:56,006 - Found 2 paragraphs and made 2 changes.
+2015-12-09 09:50:57,426 - Found 2 paragraphs and made 1 change.
+2015-12-09 09:50:58,255 - Made 1 change.
+2015-12-09 09:50:59,243 - Made 1 change.
+2015-12-09 09:51:00,742 - No changes, but modified style of 6 paragraphs.
+2015-12-09 09:51:01,582 - No changes, but modified style of 5 paragraphs.
+2015-12-09 09:51:02,943 - Made 1 change.
+2015-12-09 09:51:03,914 - Made 1 change.
+2015-12-09 09:51:05,286 - Made 1 change.
+2015-12-09 11:12:06,513 - Made list of 0 words.
+2015-12-09 11:12:08,566 - Spell check finished.
+2015-12-09 11:12:08,658 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-09 11:12:13,161 - Please save the current document first.
+2015-12-09 11:12:14,907 - Please select an item in the list.
+2015-12-09 11:12:22,321 - No more possible abbreviations found.
+2015-12-09 11:12:22,928 - No more possible abbreviations found.
+2015-12-09 11:12:23,479 - No more possible abbreviations found.
+2015-12-09 11:12:24,101 - No more possible abbreviations found.
+2015-12-09 11:12:24,660 - No more possible abbreviations found.
+2015-12-09 11:12:25,219 - No more possible abbreviations found.
+2015-12-09 11:12:25,665 - No more possible abbreviations found.
+2015-12-09 11:12:25,825 - No more possible abbreviations found.
+2015-12-09 11:12:33,569 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:12:34,220 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:12:34,785 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:12:35,328 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:12:39,947 - Replaced 1 example.
+2015-12-09 11:12:39,948 - Replaced %d example%s.
+2015-12-09 11:12:40,401 - Replaced 1 example.
+2015-12-09 11:12:40,401 - Replaced %d example%s.
+2015-12-09 11:12:40,927 - Replaced 1 example.
+2015-12-09 11:12:40,927 - Replaced %d example%s.
+2015-12-09 11:12:41,380 - Replaced 1 example.
+2015-12-09 11:12:41,381 - Replaced %d example%s.
+2015-12-09 11:12:41,848 - Replaced 1 example.
+2015-12-09 11:12:41,848 - Replaced %d example%s.
+2015-12-09 11:12:42,279 - Replaced 1 example.
+2015-12-09 11:12:42,279 - Replaced %d example%s.
+2015-12-09 11:12:42,723 - Replaced 1 example.
+2015-12-09 11:12:42,723 - Replaced %d example%s.
+2015-12-09 11:12:43,168 - Replaced 1 example.
+2015-12-09 11:12:43,168 - Replaced %d example%s.
+2015-12-09 11:12:49,061 - Updated 4 examples.
+2015-12-09 11:12:49,061 - Updated %d example%s.
+2015-12-09 11:13:00,799 - Replaced 1 example.
+2015-12-09 11:13:00,799 - Replaced %d example%s.
+2015-12-09 11:13:01,803 - Replaced 1 example.
+2015-12-09 11:13:01,803 - Replaced %d example%s.
+2015-12-09 11:13:03,079 - Replaced 1 example.
+2015-12-09 11:13:03,079 - Replaced %d example%s.
+2015-12-09 11:13:04,240 - Replaced 1 example.
+2015-12-09 11:13:04,240 - Replaced %d example%s.
+2015-12-09 11:13:09,865 - Replaced 1 example.
+2015-12-09 11:13:09,865 - Replaced %d example%s.
+2015-12-09 11:13:10,898 - Replaced 1 example.
+2015-12-09 11:13:10,898 - Replaced %d example%s.
+2015-12-09 11:13:11,936 - Replaced 1 example.
+2015-12-09 11:13:11,936 - Replaced %d example%s.
+2015-12-09 11:13:12,983 - Replaced 1 example.
+2015-12-09 11:13:12,983 - Replaced %d example%s.
+2015-12-09 11:13:18,368 - Replaced 1 example.
+2015-12-09 11:13:18,368 - Replaced %d example%s.
+2015-12-09 11:13:19,400 - Replaced 1 example.
+2015-12-09 11:13:19,401 - Replaced %d example%s.
+2015-12-09 11:13:20,434 - Replaced 1 example.
+2015-12-09 11:13:20,434 - Replaced %d example%s.
+2015-12-09 11:13:21,516 - Replaced 1 example.
+2015-12-09 11:13:21,516 - Replaced %d example%s.
+2015-12-09 11:13:27,012 - Replaced 1 example.
+2015-12-09 11:13:27,012 - Replaced %d example%s.
+2015-12-09 11:13:28,098 - Replaced 1 example.
+2015-12-09 11:13:28,098 - Replaced %d example%s.
+2015-12-09 11:13:29,176 - Replaced 1 example.
+2015-12-09 11:13:29,176 - Replaced %d example%s.
+2015-12-09 11:13:30,232 - Replaced 1 example.
+2015-12-09 11:13:30,232 - Replaced %d example%s.
+2015-12-09 11:13:35,904 - Replaced 1 example.
+2015-12-09 11:13:35,904 - Replaced %d example%s.
+2015-12-09 11:13:36,994 - Replaced 1 example.
+2015-12-09 11:13:36,994 - Replaced %d example%s.
+2015-12-09 11:13:38,132 - Replaced 1 example.
+2015-12-09 11:13:38,132 - Replaced %d example%s.
+2015-12-09 11:13:39,240 - Replaced 1 example.
+2015-12-09 11:13:39,240 - Replaced %d example%s.
+2015-12-09 11:13:44,933 - Replaced 1 example.
+2015-12-09 11:13:44,933 - Replaced %d example%s.
+2015-12-09 11:13:46,032 - Replaced 1 example.
+2015-12-09 11:13:46,032 - Replaced %d example%s.
+2015-12-09 11:13:47,184 - Replaced 1 example.
+2015-12-09 11:13:47,184 - Replaced %d example%s.
+2015-12-09 11:13:48,306 - Replaced 1 example.
+2015-12-09 11:13:48,306 - Replaced %d example%s.
+2015-12-09 11:14:18,329 - Could not find ref number BP1.S1
+
+Suggestions
+	A1.1
+	B1.1
+	B2.1
+
+2015-12-09 11:14:29,479 - Updated 4 examples.
+2015-12-09 11:14:29,480 - Updated %d example%s.
+2015-12-09 11:14:30,742 - Found 2 paragraphs and made 2 changes.
+2015-12-09 11:14:31,492 - Found 2 paragraphs and made 2 changes.
+2015-12-09 11:14:32,417 - Found 2 paragraphs and made 1 change.
+2015-12-09 11:14:33,174 - Made 1 change.
+2015-12-09 11:14:33,897 - Made 1 change.
+2015-12-09 11:14:36,279 - No changes, but modified style of 6 paragraphs.
+2015-12-09 11:14:37,104 - No changes, but modified style of 5 paragraphs.
+2015-12-09 11:14:37,875 - No changes.
+2015-12-09 11:14:38,632 - No changes, but modified style of 1 paragraph.
+2015-12-09 11:29:30,255 - Made list of 0 words.
+2015-12-09 11:29:32,666 - Spell check finished.
+2015-12-09 11:29:32,752 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-09 11:29:37,340 - Please save the current document first.
+2015-12-09 11:29:39,543 - Please select an item in the list.
+2015-12-09 11:29:49,631 - No more possible abbreviations found.
+2015-12-09 11:29:50,525 - No more possible abbreviations found.
+2015-12-09 11:29:51,246 - No more possible abbreviations found.
+2015-12-09 11:29:52,132 - No more possible abbreviations found.
+2015-12-09 11:29:53,151 - No more possible abbreviations found.
+2015-12-09 11:29:53,883 - No more possible abbreviations found.
+2015-12-09 11:29:54,470 - No more possible abbreviations found.
+2015-12-09 11:29:54,660 - No more possible abbreviations found.
+2015-12-09 11:30:04,393 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:30:05,154 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:30:05,788 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:30:06,490 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:30:12,756 - Replaced 1 example.
+2015-12-09 11:30:12,756 - Replaced %d example%s.
+2015-12-09 11:30:13,322 - Replaced 1 example.
+2015-12-09 11:30:13,322 - Replaced %d example%s.
+2015-12-09 11:30:13,933 - Replaced 1 example.
+2015-12-09 11:30:13,933 - Replaced %d example%s.
+2015-12-09 11:30:14,505 - Replaced 1 example.
+2015-12-09 11:30:14,506 - Replaced %d example%s.
+2015-12-09 11:30:15,153 - Replaced 1 example.
+2015-12-09 11:30:15,153 - Replaced %d example%s.
+2015-12-09 11:30:15,712 - Replaced 1 example.
+2015-12-09 11:30:15,712 - Replaced %d example%s.
+2015-12-09 11:30:16,304 - Replaced 1 example.
+2015-12-09 11:30:16,304 - Replaced %d example%s.
+2015-12-09 11:30:17,161 - Replaced 1 example.
+2015-12-09 11:30:17,161 - Replaced %d example%s.
+2015-12-09 11:30:25,061 - Updated 4 examples.
+2015-12-09 11:30:25,061 - Updated %d example%s.
+2015-12-09 11:30:44,877 - Replaced 1 example.
+2015-12-09 11:30:44,877 - Replaced %d example%s.
+2015-12-09 11:30:46,657 - Replaced 1 example.
+2015-12-09 11:30:46,658 - Replaced %d example%s.
+2015-12-09 11:30:48,364 - Replaced 1 example.
+2015-12-09 11:30:48,364 - Replaced %d example%s.
+2015-12-09 11:30:50,216 - Replaced 1 example.
+2015-12-09 11:30:50,217 - Replaced %d example%s.
+2015-12-09 11:30:58,589 - Replaced 1 example.
+2015-12-09 11:30:58,589 - Replaced %d example%s.
+2015-12-09 11:31:00,431 - Replaced 1 example.
+2015-12-09 11:31:00,431 - Replaced %d example%s.
+2015-12-09 11:31:01,956 - Replaced 1 example.
+2015-12-09 11:31:01,957 - Replaced %d example%s.
+2015-12-09 11:31:03,559 - Replaced 1 example.
+2015-12-09 11:31:03,560 - Replaced %d example%s.
+2015-12-09 11:31:12,381 - Replaced 1 example.
+2015-12-09 11:31:12,382 - Replaced %d example%s.
+2015-12-09 11:31:14,263 - Replaced 1 example.
+2015-12-09 11:31:14,263 - Replaced %d example%s.
+2015-12-09 11:31:16,133 - Replaced 1 example.
+2015-12-09 11:31:16,133 - Replaced %d example%s.
+2015-12-09 11:31:18,117 - Replaced 1 example.
+2015-12-09 11:31:18,117 - Replaced %d example%s.
+2015-12-09 11:31:27,281 - Replaced 1 example.
+2015-12-09 11:31:27,281 - Replaced %d example%s.
+2015-12-09 11:31:29,518 - Replaced 1 example.
+2015-12-09 11:31:29,518 - Replaced %d example%s.
+2015-12-09 11:31:31,420 - Replaced 1 example.
+2015-12-09 11:31:31,420 - Replaced %d example%s.
+2015-12-09 11:31:33,375 - Replaced 1 example.
+2015-12-09 11:31:33,375 - Replaced %d example%s.
+2015-12-09 11:31:40,988 - Replaced 1 example.
+2015-12-09 11:31:40,988 - Replaced %d example%s.
+2015-12-09 11:31:42,741 - Replaced 1 example.
+2015-12-09 11:31:42,741 - Replaced %d example%s.
+2015-12-09 11:31:44,632 - Replaced 1 example.
+2015-12-09 11:31:44,632 - Replaced %d example%s.
+2015-12-09 11:31:46,229 - Replaced 1 example.
+2015-12-09 11:31:46,230 - Replaced %d example%s.
+2015-12-09 11:31:54,054 - Replaced 1 example.
+2015-12-09 11:31:54,054 - Replaced %d example%s.
+2015-12-09 11:31:55,687 - Replaced 1 example.
+2015-12-09 11:31:55,688 - Replaced %d example%s.
+2015-12-09 11:31:57,402 - Replaced 1 example.
+2015-12-09 11:31:57,402 - Replaced %d example%s.
+2015-12-09 11:31:59,052 - Replaced 1 example.
+2015-12-09 11:31:59,052 - Replaced %d example%s.
+2015-12-09 11:32:43,447 - Could not find ref number BP1.S1
+
+Suggestions
+	A1.1
+	B1.1
+	B2.1
+
+2015-12-09 11:33:05,172 - Updated 4 examples.
+2015-12-09 11:33:05,173 - Updated %d example%s.
+2015-12-09 11:33:06,622 - Found 2 paragraphs and made 2 changes.
+2015-12-09 11:55:21,006 - Made list of 0 words.
+2015-12-09 11:55:23,346 - Spell check finished.
+2015-12-09 11:55:23,435 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-09 11:55:28,202 - Please save the current document first.
+2015-12-09 11:55:30,038 - Please select an item in the list.
+2015-12-09 11:55:39,848 - No more possible abbreviations found.
+2015-12-09 11:55:40,567 - No more possible abbreviations found.
+2015-12-09 11:55:41,242 - No more possible abbreviations found.
+2015-12-09 11:55:42,007 - No more possible abbreviations found.
+2015-12-09 11:55:42,697 - No more possible abbreviations found.
+2015-12-09 11:55:43,396 - No more possible abbreviations found.
+2015-12-09 11:55:43,951 - No more possible abbreviations found.
+2015-12-09 11:55:44,140 - No more possible abbreviations found.
+2015-12-09 11:55:54,067 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:55:54,804 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:55:55,457 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:55:56,157 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-09 11:56:02,518 - Replaced 1 example.
+2015-12-09 11:56:02,518 - Replaced %d example%s.
+2015-12-09 11:56:03,131 - Replaced 1 example.
+2015-12-09 11:56:03,131 - Replaced %d example%s.
+2015-12-09 11:56:03,755 - Replaced 1 example.
+2015-12-09 11:56:03,755 - Replaced %d example%s.
+2015-12-09 11:56:04,366 - Replaced 1 example.
+2015-12-09 11:56:04,367 - Replaced %d example%s.
+2015-12-09 11:56:04,953 - Replaced 1 example.
+2015-12-09 11:56:04,953 - Replaced %d example%s.
+2015-12-09 11:56:05,540 - Replaced 1 example.
+2015-12-09 11:56:05,541 - Replaced %d example%s.
+2015-12-09 11:56:06,347 - Replaced 1 example.
+2015-12-09 11:56:06,347 - Replaced %d example%s.
+2015-12-09 11:56:06,947 - Replaced 1 example.
+2015-12-09 11:56:06,947 - Replaced %d example%s.
+2015-12-09 11:56:15,972 - Updated 4 examples.
+2015-12-09 11:56:15,972 - Updated %d example%s.
+2015-12-09 11:56:35,618 - Replaced 1 example.
+2015-12-09 11:56:35,618 - Replaced %d example%s.
+2015-12-09 11:56:37,345 - Replaced 1 example.
+2015-12-09 11:56:37,345 - Replaced %d example%s.
+2015-12-09 11:56:39,292 - Replaced 1 example.
+2015-12-09 11:56:39,292 - Replaced %d example%s.
+2015-12-09 11:56:41,030 - Replaced 1 example.
+2015-12-09 11:56:41,030 - Replaced %d example%s.
+2015-12-09 11:56:48,875 - Replaced 1 example.
+2015-12-09 11:56:48,875 - Replaced %d example%s.
+2015-12-09 11:56:50,440 - Replaced 1 example.
+2015-12-09 11:56:50,440 - Replaced %d example%s.
+2015-12-09 11:56:51,977 - Replaced 1 example.
+2015-12-09 11:56:51,977 - Replaced %d example%s.
+2015-12-09 11:56:53,590 - Replaced 1 example.
+2015-12-09 11:56:53,590 - Replaced %d example%s.
+2015-12-09 11:57:02,200 - Replaced 1 example.
+2015-12-09 11:57:02,200 - Replaced %d example%s.
+2015-12-09 11:57:04,047 - Replaced 1 example.
+2015-12-09 11:57:04,047 - Replaced %d example%s.
+2015-12-09 11:57:05,884 - Replaced 1 example.
+2015-12-09 11:57:05,884 - Replaced %d example%s.
+2015-12-09 11:57:07,819 - Replaced 1 example.
+2015-12-09 11:57:07,819 - Replaced %d example%s.
+2015-12-09 11:57:16,831 - Replaced 1 example.
+2015-12-09 11:57:16,831 - Replaced %d example%s.
+2015-12-09 11:57:18,719 - Replaced 1 example.
+2015-12-09 11:57:18,719 - Replaced %d example%s.
+2015-12-09 11:57:20,579 - Replaced 1 example.
+2015-12-09 11:57:20,579 - Replaced %d example%s.
+2015-12-09 11:57:22,469 - Replaced 1 example.
+2015-12-09 11:57:22,469 - Replaced %d example%s.
+2015-12-09 11:57:30,044 - Replaced 1 example.
+2015-12-09 11:57:30,044 - Replaced %d example%s.
+2015-12-09 11:57:31,669 - Replaced 1 example.
+2015-12-09 11:57:31,670 - Replaced %d example%s.
+2015-12-09 11:57:33,319 - Replaced 1 example.
+2015-12-09 11:57:33,319 - Replaced %d example%s.
+2015-12-09 11:57:34,923 - Replaced 1 example.
+2015-12-09 11:57:34,923 - Replaced %d example%s.
+2015-12-09 11:57:42,270 - Replaced 1 example.
+2015-12-09 11:57:42,270 - Replaced %d example%s.
+2015-12-09 11:57:43,944 - Replaced 1 example.
+2015-12-09 11:57:43,944 - Replaced %d example%s.
+2015-12-09 11:57:45,684 - Replaced 1 example.
+2015-12-09 11:57:45,684 - Replaced %d example%s.
+2015-12-09 11:57:47,362 - Replaced 1 example.
+2015-12-09 11:57:47,362 - Replaced %d example%s.
+2015-12-09 11:58:34,073 - Could not find ref number BP1.S1
+
+Suggestions
+	A1.1
+	B1.1
+	B2.1
+
+2015-12-09 11:58:55,081 - Updated 4 examples.
+2015-12-09 11:58:55,081 - Updated %d example%s.
+2015-12-09 11:58:56,506 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:37:36,224 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:37:39,173 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:37:43,270 - Found 2 paragraphs and made 1 change.
+2015-12-10 11:37:46,798 - Made 1 change.
+2015-12-10 11:37:50,259 - Made 1 change.
+2015-12-10 11:37:56,828 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:38:02,288 - Make this change?
+2015-12-10 11:38:02,372 - Make this change?
+2015-12-10 11:38:02,459 - Make this change?
+2015-12-10 11:38:02,554 - Make this change?
+2015-12-10 11:38:02,642 - Make this change?
+2015-12-10 11:38:02,731 - Make this change?
+2015-12-10 11:38:02,908 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:38:09,146 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:38:14,659 - Make this change?
+2015-12-10 11:38:14,745 - Make this change?
+2015-12-10 11:38:14,832 - Make this change?
+2015-12-10 11:38:14,921 - Make this change?
+2015-12-10 11:38:15,037 - Make this change?
+2015-12-10 11:38:15,127 - Make this change?
+2015-12-10 11:38:15,306 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:38:19,387 - Make this change?
+2015-12-10 11:38:19,515 - Make this change?
+2015-12-10 11:38:19,615 - Make this change?
+2015-12-10 11:38:19,670 - Make this change?
+2015-12-10 11:38:19,701 - Make this change?
+2015-12-10 11:38:19,733 - Make this change?
+2015-12-10 11:38:19,855 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:38:23,142 - Make this change?
+2015-12-10 11:38:23,287 - Make this change?
+2015-12-10 11:38:23,324 - Make this change?
+2015-12-10 11:38:23,355 - Make this change?
+2015-12-10 11:38:23,384 - Make this change?
+2015-12-10 11:38:23,502 - No changes, but modified style of 5 paragraphs.
+2015-12-10 11:38:26,493 - Make this change?
+2015-12-10 11:38:26,606 - No changes.
+2015-12-10 11:38:29,336 - Make this change?
+2015-12-10 11:38:29,511 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:32,594 - Make this change?
+2015-12-10 11:38:33,025 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:36,173 - Make this change?
+2015-12-10 11:38:36,287 - No changes.
+2015-12-10 11:38:38,927 - Make this change?
+2015-12-10 11:38:39,083 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:41,799 - Make this change?
+2015-12-10 11:38:41,981 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:45,173 - Make this change?
+2015-12-10 11:38:45,288 - No changes.
+2015-12-10 11:38:47,968 - Make this change?
+2015-12-10 11:38:48,129 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:50,965 - Make this change?
+2015-12-10 11:38:51,470 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:38:54,670 - Make this change?
+2015-12-10 11:38:54,958 - Made 1 change.
+2015-12-10 11:38:57,843 - Make this change?
+2015-12-10 11:38:58,207 - Made 1 change.
+2015-12-10 11:39:01,115 - Make this change?
+2015-12-10 11:39:01,614 - Made 1 change.
+2015-12-10 11:40:25,463 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:40:28,691 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:40:32,282 - Found 2 paragraphs and made 1 change.
+2015-12-10 11:40:35,618 - Made 1 change.
+2015-12-10 11:40:39,086 - Made 1 change.
+2015-12-10 11:40:49,878 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:40:53,698 - No changes, but modified style of 5 paragraphs.
+2015-12-10 11:40:57,150 - No changes.
+2015-12-10 11:41:00,500 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:52:22,855 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:52:26,283 - Found 2 paragraphs and made 2 changes.
+2015-12-10 11:52:29,907 - Found 2 paragraphs and made 1 change.
+2015-12-10 11:52:33,128 - Made 1 change.
+2015-12-10 11:52:36,364 - Made 1 change.
+2015-12-10 11:52:42,913 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:52:48,812 - Make this change?
+2015-12-10 11:52:48,907 - Make this change?
+2015-12-10 11:52:48,999 - Make this change?
+2015-12-10 11:52:49,092 - Make this change?
+2015-12-10 11:52:49,184 - Make this change?
+2015-12-10 11:52:49,279 - Make this change?
+2015-12-10 11:52:49,487 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:52:56,048 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:53:02,163 - Make this change?
+2015-12-10 11:53:02,253 - Make this change?
+2015-12-10 11:53:02,344 - Make this change?
+2015-12-10 11:53:02,434 - Make this change?
+2015-12-10 11:53:02,532 - Make this change?
+2015-12-10 11:53:02,624 - Make this change?
+2015-12-10 11:53:02,812 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:53:07,312 - Make this change?
+2015-12-10 11:53:07,335 - Make this change?
+2015-12-10 11:53:07,365 - Make this change?
+2015-12-10 11:53:07,392 - Make this change?
+2015-12-10 11:53:07,421 - Make this change?
+2015-12-10 11:53:07,448 - Make this change?
+2015-12-10 11:53:07,578 - No changes, but modified style of 6 paragraphs.
+2015-12-10 11:53:11,177 - Make this change?
+2015-12-10 11:53:11,204 - Make this change?
+2015-12-10 11:53:11,230 - Make this change?
+2015-12-10 11:53:11,256 - Make this change?
+2015-12-10 11:53:11,283 - Make this change?
+2015-12-10 11:53:11,407 - No changes, but modified style of 5 paragraphs.
+2015-12-10 11:53:14,706 - Make this change?
+2015-12-10 11:53:14,822 - No changes.
+2015-12-10 11:53:17,947 - Make this change?
+2015-12-10 11:53:18,073 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:21,338 - Make this change?
+2015-12-10 11:53:21,536 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:24,967 - Make this change?
+2015-12-10 11:53:25,078 - No changes.
+2015-12-10 11:53:28,194 - Make this change?
+2015-12-10 11:53:28,331 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:31,494 - Make this change?
+2015-12-10 11:53:31,686 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:35,033 - Make this change?
+2015-12-10 11:53:35,153 - No changes.
+2015-12-10 11:53:38,286 - Make this change?
+2015-12-10 11:53:38,424 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:41,615 - Make this change?
+2015-12-10 11:53:41,805 - No changes, but modified style of 1 paragraph.
+2015-12-10 11:53:45,163 - Make this change?
+2015-12-10 11:53:45,390 - Made 1 change.
+2015-12-10 11:53:48,519 - Make this change?
+2015-12-10 11:53:48,776 - Made 1 change.
+2015-12-10 11:53:52,022 - Make this change?
+2015-12-10 11:53:52,259 - Made 1 change.
+2015-12-10 12:52:26,579 - Please save the current document first.
+2015-12-10 12:52:28,542 - Please select an item in the list.
+2015-12-10 12:52:36,405 - No more possible abbreviations found.
+2015-12-10 12:52:37,000 - No more possible abbreviations found.
+2015-12-10 12:52:37,546 - No more possible abbreviations found.
+2015-12-10 12:52:38,163 - No more possible abbreviations found.
+2015-12-10 12:52:38,733 - No more possible abbreviations found.
+2015-12-10 12:52:39,289 - No more possible abbreviations found.
+2015-12-10 12:52:39,915 - No more possible abbreviations found.
+2015-12-10 12:52:40,072 - No more possible abbreviations found.
+2015-12-10 12:52:48,470 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 12:52:49,213 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 12:52:49,732 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 12:52:50,572 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 12:52:55,427 - Replaced 1 example.
+2015-12-10 12:52:55,427 - Replaced %d example%s.
+2015-12-10 12:52:55,871 - Replaced 1 example.
+2015-12-10 12:52:55,871 - Replaced %d example%s.
+2015-12-10 12:52:56,322 - Replaced 1 example.
+2015-12-10 12:52:56,322 - Replaced %d example%s.
+2015-12-10 12:52:56,762 - Replaced 1 example.
+2015-12-10 12:52:56,762 - Replaced %d example%s.
+2015-12-10 12:52:57,196 - Replaced 1 example.
+2015-12-10 12:52:57,197 - Replaced %d example%s.
+2015-12-10 12:52:57,684 - Replaced 1 example.
+2015-12-10 12:52:57,686 - Replaced %d example%s.
+2015-12-10 12:52:58,122 - Replaced 1 example.
+2015-12-10 12:52:58,124 - Replaced %d example%s.
+2015-12-10 12:52:58,559 - Replaced 1 example.
+2015-12-10 12:52:58,559 - Replaced %d example%s.
+2015-12-10 12:53:04,674 - Updated 4 examples.
+2015-12-10 12:53:04,674 - Updated %d example%s.
+2015-12-10 12:53:16,178 - Replaced 1 example.
+2015-12-10 12:53:16,178 - Replaced %d example%s.
+2015-12-10 12:53:17,398 - Replaced 1 example.
+2015-12-10 12:53:17,398 - Replaced %d example%s.
+2015-12-10 12:53:18,403 - Replaced 1 example.
+2015-12-10 12:53:18,403 - Replaced %d example%s.
+2015-12-10 12:53:19,395 - Replaced 1 example.
+2015-12-10 12:53:19,395 - Replaced %d example%s.
+2015-12-10 12:53:24,743 - Replaced 1 example.
+2015-12-10 12:53:24,743 - Replaced %d example%s.
+2015-12-10 12:53:25,763 - Replaced 1 example.
+2015-12-10 12:53:25,763 - Replaced %d example%s.
+2015-12-10 12:53:26,880 - Replaced 1 example.
+2015-12-10 12:53:26,880 - Replaced %d example%s.
+2015-12-10 12:53:27,910 - Replaced 1 example.
+2015-12-10 12:53:27,911 - Replaced %d example%s.
+2015-12-10 12:53:33,137 - Replaced 1 example.
+2015-12-10 12:53:33,137 - Replaced %d example%s.
+2015-12-10 12:53:34,171 - Replaced 1 example.
+2015-12-10 12:53:34,171 - Replaced %d example%s.
+2015-12-10 12:53:35,210 - Replaced 1 example.
+2015-12-10 12:53:35,210 - Replaced %d example%s.
+2015-12-10 12:53:36,302 - Replaced 1 example.
+2015-12-10 12:53:36,302 - Replaced %d example%s.
+2015-12-10 12:53:42,486 - Replaced 1 example.
+2015-12-10 12:53:42,486 - Replaced %d example%s.
+2015-12-10 12:53:43,558 - Replaced 1 example.
+2015-12-10 12:53:43,558 - Replaced %d example%s.
+2015-12-10 12:53:44,726 - Replaced 1 example.
+2015-12-10 12:53:44,726 - Replaced %d example%s.
+2015-12-10 12:53:45,813 - Replaced 1 example.
+2015-12-10 12:53:45,813 - Replaced %d example%s.
+2015-12-10 12:53:51,545 - Replaced 1 example.
+2015-12-10 12:53:51,546 - Replaced %d example%s.
+2015-12-10 12:53:52,694 - Replaced 1 example.
+2015-12-10 12:53:52,694 - Replaced %d example%s.
+2015-12-10 12:53:53,885 - Replaced 1 example.
+2015-12-10 12:53:53,885 - Replaced %d example%s.
+2015-12-10 12:53:55,119 - Replaced 1 example.
+2015-12-10 12:53:55,119 - Replaced %d example%s.
+2015-12-10 12:54:01,164 - Replaced 1 example.
+2015-12-10 12:54:01,164 - Replaced %d example%s.
+2015-12-10 12:54:02,292 - Replaced 1 example.
+2015-12-10 12:54:02,292 - Replaced %d example%s.
+2015-12-10 12:54:03,421 - Replaced 1 example.
+2015-12-10 12:54:03,421 - Replaced %d example%s.
+2015-12-10 12:54:04,552 - Replaced 1 example.
+2015-12-10 12:54:04,552 - Replaced %d example%s.
+2015-12-10 12:54:36,456 - Could not find ref number BP1.S1
+
+Suggestions
+	A1.1
+	B1.1
+	B2.1
+
+2015-12-10 12:54:48,397 - Updated 4 examples.
+2015-12-10 12:54:48,397 - Updated %d example%s.
+2015-12-10 12:54:49,944 - Found 2 paragraphs and made 2 changes.
+2015-12-10 12:54:50,678 - Found 2 paragraphs and made 2 changes.
+2015-12-10 12:54:51,865 - Found 2 paragraphs and made 1 change.
+2015-12-10 12:54:52,598 - Made 1 change.
+2015-12-10 12:54:53,546 - Made 1 change.
+2015-12-10 12:54:55,167 - No changes, but modified style of 6 paragraphs.
+2015-12-10 12:54:56,421 - Make this change?
+2015-12-10 12:54:56,448 - Make this change?
+2015-12-10 12:54:56,476 - Make this change?
+2015-12-10 12:54:56,503 - Make this change?
+2015-12-10 12:54:56,530 - Make this change?
+2015-12-10 12:54:56,558 - Make this change?
+2015-12-10 12:54:56,697 - No changes, but modified style of 6 paragraphs.
+2015-12-10 12:54:58,263 - No changes, but modified style of 6 paragraphs.
+2015-12-10 12:54:59,517 - Make this change?
+2015-12-10 12:54:59,546 - Make this change?
+2015-12-10 12:54:59,575 - Make this change?
+2015-12-10 12:54:59,602 - Make this change?
+2015-12-10 12:54:59,634 - Make this change?
+2015-12-10 12:54:59,674 - Make this change?
+2015-12-10 12:54:59,815 - No changes, but modified style of 6 paragraphs.
+2015-12-10 12:55:00,703 - Make this change?
+2015-12-10 12:55:00,713 - Make this change?
+2015-12-10 12:55:00,724 - Make this change?
+2015-12-10 12:55:00,736 - Make this change?
+2015-12-10 12:55:00,747 - Make this change?
+2015-12-10 12:55:00,759 - Make this change?
+2015-12-10 12:55:00,874 - No changes, but modified style of 6 paragraphs.
+2015-12-10 12:55:01,559 - Make this change?
+2015-12-10 12:55:01,569 - Make this change?
+2015-12-10 12:55:01,581 - Make this change?
+2015-12-10 12:55:01,591 - Make this change?
+2015-12-10 12:55:01,601 - Make this change?
+2015-12-10 12:55:01,721 - No changes, but modified style of 5 paragraphs.
+2015-12-10 12:55:02,375 - Make this change?
+2015-12-10 12:55:02,539 - No changes.
+2015-12-10 12:55:03,153 - Make this change?
+2015-12-10 12:55:03,276 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:03,859 - Make this change?
+2015-12-10 12:55:03,996 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:04,799 - Make this change?
+2015-12-10 12:55:04,917 - No changes.
+2015-12-10 12:55:05,493 - Make this change?
+2015-12-10 12:55:05,625 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:06,223 - Make this change?
+2015-12-10 12:55:06,362 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:06,989 - Make this change?
+2015-12-10 12:55:07,153 - No changes.
+2015-12-10 12:55:07,724 - Make this change?
+2015-12-10 12:55:07,858 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:08,519 - Make this change?
+2015-12-10 12:55:08,661 - No changes, but modified style of 1 paragraph.
+2015-12-10 12:55:09,309 - Make this change?
+2015-12-10 12:55:09,467 - Made 1 change.
+2015-12-10 12:55:10,359 - Make this change?
+2015-12-10 12:55:10,552 - Made 1 change.
+2015-12-10 12:55:11,210 - Make this change?
+2015-12-10 12:55:11,381 - Made 1 change.
+2015-12-10 13:07:43,115 - Made list of 0 words.
+2015-12-10 13:07:45,645 - Spell check finished.
+2015-12-10 13:07:45,746 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-10 13:07:50,242 - Please save the current document first.
+2015-12-10 13:07:52,111 - Please select an item in the list.
+2015-12-10 13:07:59,519 - No more possible abbreviations found.
+2015-12-10 13:08:00,101 - No more possible abbreviations found.
+2015-12-10 13:08:00,654 - No more possible abbreviations found.
+2015-12-10 13:08:01,280 - No more possible abbreviations found.
+2015-12-10 13:08:01,845 - No more possible abbreviations found.
+2015-12-10 13:08:02,401 - No more possible abbreviations found.
+2015-12-10 13:08:02,845 - No more possible abbreviations found.
+2015-12-10 13:08:03,003 - No more possible abbreviations found.
+2015-12-10 13:08:10,351 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 13:08:10,990 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 13:08:11,571 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 13:08:12,099 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-10 13:08:16,795 - Replaced 1 example.
+2015-12-10 13:08:16,795 - Replaced %d example%s.
+2015-12-10 13:08:17,236 - Replaced 1 example.
+2015-12-10 13:08:17,236 - Replaced %d example%s.
+2015-12-10 13:08:17,687 - Replaced 1 example.
+2015-12-10 13:08:17,687 - Replaced %d example%s.
+2015-12-10 13:08:18,121 - Replaced 1 example.
+2015-12-10 13:08:18,121 - Replaced %d example%s.
+2015-12-10 13:08:18,592 - Replaced 1 example.
+2015-12-10 13:08:18,594 - Replaced %d example%s.
+2015-12-10 13:08:19,026 - Replaced 1 example.
+2015-12-10 13:08:19,026 - Replaced %d example%s.
+2015-12-10 13:08:19,470 - Replaced 1 example.
+2015-12-10 13:08:19,470 - Replaced %d example%s.
+2015-12-10 13:08:19,907 - Replaced 1 example.
+2015-12-10 13:08:19,907 - Replaced %d example%s.
+2015-12-10 13:08:25,618 - Updated 4 examples.
+2015-12-10 13:08:25,618 - Updated %d example%s.
+2015-12-10 13:08:37,640 - Replaced 1 example.
+2015-12-10 13:08:37,640 - Replaced %d example%s.
+2015-12-10 13:08:38,668 - Replaced 1 example.
+2015-12-10 13:08:38,668 - Replaced %d example%s.
+2015-12-10 13:08:40,078 - Replaced 1 example.
+2015-12-10 13:08:40,078 - Replaced %d example%s.
+2015-12-10 13:08:41,147 - Replaced 1 example.
+2015-12-10 13:08:41,147 - Replaced %d example%s.
+2015-12-10 13:08:46,634 - Replaced 1 example.
+2015-12-10 13:08:46,634 - Replaced %d example%s.
+2015-12-10 13:08:47,789 - Replaced 1 example.
+2015-12-10 13:08:47,789 - Replaced %d example%s.
+2015-12-10 13:08:48,848 - Replaced 1 example.
+2015-12-10 13:08:48,848 - Replaced %d example%s.
+2015-12-10 13:08:49,855 - Replaced 1 example.
+2015-12-10 13:08:49,855 - Replaced %d example%s.
+2015-12-10 13:08:55,255 - Replaced 1 example.
+2015-12-10 13:08:55,255 - Replaced %d example%s.
+2015-12-10 13:08:56,319 - Replaced 1 example.
+2015-12-10 13:08:56,319 - Replaced %d example%s.
+2015-12-10 13:08:57,552 - Replaced 1 example.
+2015-12-10 13:08:57,552 - Replaced %d example%s.
+2015-12-10 13:08:58,638 - Replaced 1 example.
+2015-12-10 13:08:58,638 - Replaced %d example%s.
+2015-12-10 13:09:04,141 - Replaced 1 example.
+2015-12-10 13:09:04,141 - Replaced %d example%s.
+2015-12-10 13:09:05,292 - Replaced 1 example.
+2015-12-10 13:09:05,292 - Replaced %d example%s.
+2015-12-10 13:09:06,339 - Replaced 1 example.
+2015-12-10 13:09:06,339 - Replaced %d example%s.
+2015-12-10 13:09:07,479 - Replaced 1 example.
+2015-12-10 13:09:07,479 - Replaced %d example%s.
+2015-12-10 13:09:13,910 - Replaced 1 example.
+2015-12-10 13:09:13,910 - Replaced %d example%s.
+2015-12-10 13:09:15,084 - Replaced 1 example.
+2015-12-10 13:09:15,084 - Replaced %d example%s.
+2015-12-10 13:09:16,196 - Replaced 1 example.
+2015-12-10 13:09:16,196 - Replaced %d example%s.
+2015-12-10 13:09:17,290 - Replaced 1 example.
+2015-12-10 13:09:17,290 - Replaced %d example%s.
+2015-12-10 13:09:23,507 - Replaced 1 example.
+2015-12-10 13:09:23,507 - Replaced %d example%s.
+2015-12-10 13:09:24,615 - Replaced 1 example.
+2015-12-10 13:09:24,615 - Replaced %d example%s.
+2015-12-10 13:09:25,852 - Replaced 1 example.
+2015-12-10 13:09:25,854 - Replaced %d example%s.
+2015-12-10 13:09:27,230 - Replaced 1 example.
+2015-12-10 13:09:27,230 - Replaced %d example%s.
+2015-12-10 13:09:57,994 - Could not find ref number BP1.S1
+
+Suggestions
+	A1.1
+	B1.1
+	B2.1
+
+2015-12-10 13:10:09,290 - Updated 4 examples.
+2015-12-10 13:10:09,290 - Updated %d example%s.
+2015-12-10 13:10:10,533 - Found 2 paragraphs and made 2 changes.
+2015-12-10 13:10:11,280 - Found 2 paragraphs and made 2 changes.
+2015-12-10 13:10:12,108 - Found 2 paragraphs and made 1 change.
+2015-12-10 13:10:12,875 - Made 1 change.
+2015-12-10 13:10:13,615 - Made 1 change.
+2015-12-10 13:10:15,194 - No changes, but modified style of 6 paragraphs.
+2015-12-10 13:10:16,459 - Make this change?
+2015-12-10 13:10:16,486 - Make this change?
+2015-12-10 13:10:16,513 - Make this change?
+2015-12-10 13:10:16,540 - Make this change?
+2015-12-10 13:10:16,569 - Make this change?
+2015-12-10 13:10:16,595 - Make this change?
+2015-12-10 13:10:16,733 - No changes, but modified style of 6 paragraphs.
+2015-12-10 13:10:18,237 - No changes, but modified style of 6 paragraphs.
+2015-12-10 13:10:19,470 - Make this change?
+2015-12-10 13:10:19,497 - Make this change?
+2015-12-10 13:10:19,526 - Make this change?
+2015-12-10 13:10:19,553 - Make this change?
+2015-12-10 13:10:19,582 - Make this change?
+2015-12-10 13:10:19,609 - Make this change?
+2015-12-10 13:10:19,747 - No changes, but modified style of 6 paragraphs.
+2015-12-10 13:10:20,654 - Make this change?
+2015-12-10 13:10:20,664 - Make this change?
+2015-12-10 13:10:20,676 - Make this change?
+2015-12-10 13:10:20,687 - Make this change?
+2015-12-10 13:10:20,698 - Make this change?
+2015-12-10 13:10:20,710 - Make this change?
+2015-12-10 13:10:20,831 - No changes, but modified style of 6 paragraphs.
+2015-12-10 13:10:21,536 - Make this change?
+2015-12-10 13:10:21,546 - Make this change?
+2015-12-10 13:10:21,556 - Make this change?
+2015-12-10 13:10:21,568 - Make this change?
+2015-12-10 13:10:21,578 - Make this change?
+2015-12-10 13:10:21,698 - No changes, but modified style of 5 paragraphs.
+2015-12-10 13:10:22,322 - Make this change?
+2015-12-10 13:10:22,440 - No changes.
+2015-12-10 13:10:23,039 - Make this change?
+2015-12-10 13:10:23,203 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:23,796 - Make this change?
+2015-12-10 13:10:23,973 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:24,605 - Make this change?
+2015-12-10 13:10:24,723 - No changes.
+2015-12-10 13:10:25,319 - Make this change?
+2015-12-10 13:10:25,450 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:26,055 - Make this change?
+2015-12-10 13:10:26,194 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:26,819 - Make this change?
+2015-12-10 13:10:26,937 - No changes.
+2015-12-10 13:10:27,516 - Make this change?
+2015-12-10 13:10:27,651 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:28,250 - Make this change?
+2015-12-10 13:10:28,413 - No changes, but modified style of 1 paragraph.
+2015-12-10 13:10:29,055 - Make this change?
+2015-12-10 13:10:29,211 - Made 1 change.
+2015-12-10 13:10:29,858 - Make this change?
+2015-12-10 13:10:30,049 - Made 1 change.
+2015-12-10 13:10:30,687 - Make this change?
+2015-12-10 13:10:30,857 - Made 1 change.
+2015-12-12 11:43:24,799 - Replaced 1 example.
+2015-12-12 11:43:25,049 - Replaced %d example%s.
+2015-12-12 11:43:27,174 - Replaced 1 example.
+2015-12-12 11:43:27,174 - Replaced %d example%s.
+2015-12-12 11:43:29,351 - Replaced 1 example.
+2015-12-12 11:43:29,351 - Replaced %d example%s.
+2015-12-12 11:43:31,546 - Replaced 1 example.
+2015-12-12 11:43:31,546 - Replaced %d example%s.
+2015-12-12 11:43:50,430 - Replaced 1 example.
+2015-12-12 11:43:50,430 - Replaced %d example%s.
+2015-12-12 11:43:53,857 - Replaced 1 example.
+2015-12-12 11:43:53,857 - Replaced %d example%s.
+2015-12-12 11:43:57,269 - Replaced 1 example.
+2015-12-12 11:43:57,270 - Replaced %d example%s.
+2015-12-12 11:44:00,717 - Replaced 1 example.
+2015-12-12 11:44:00,719 - Replaced %d example%s.
+2015-12-12 11:44:12,121 - Replaced 1 example.
+2015-12-12 11:44:12,121 - Replaced %d example%s.
+2015-12-12 11:44:14,193 - Replaced 1 example.
+2015-12-12 11:44:14,194 - Replaced %d example%s.
+2015-12-12 11:44:16,272 - Replaced 1 example.
+2015-12-12 11:44:16,272 - Replaced %d example%s.
+2015-12-12 11:44:18,345 - Replaced 1 example.
+2015-12-12 11:44:18,345 - Replaced %d example%s.
+2015-12-12 11:44:29,880 - Replaced 1 example.
+2015-12-12 11:44:29,880 - Replaced %d example%s.
+2015-12-12 11:44:32,115 - Replaced 1 example.
+2015-12-12 11:44:32,115 - Replaced %d example%s.
+2015-12-12 11:44:34,177 - Replaced 1 example.
+2015-12-12 11:44:34,177 - Replaced %d example%s.
+2015-12-12 11:44:36,247 - Replaced 1 example.
+2015-12-12 11:44:36,249 - Replaced %d example%s.
+2015-12-12 11:44:55,114 - Replaced 1 example.
+2015-12-12 11:44:55,114 - Replaced %d example%s.
+2015-12-12 11:44:58,678 - Replaced 1 example.
+2015-12-12 11:44:58,678 - Replaced %d example%s.
+2015-12-12 11:45:02,194 - Replaced 1 example.
+2015-12-12 11:45:02,194 - Replaced %d example%s.
+2015-12-12 11:45:05,711 - Replaced 1 example.
+2015-12-12 11:45:05,711 - Replaced %d example%s.
+2015-12-12 11:45:24,726 - Replaced 1 example.
+2015-12-12 11:45:24,727 - Replaced %d example%s.
+2015-12-12 11:45:28,217 - Replaced 1 example.
+2015-12-12 11:45:28,217 - Replaced %d example%s.
+2015-12-12 11:45:31,775 - Replaced 1 example.
+2015-12-12 11:45:31,775 - Replaced %d example%s.
+2015-12-12 11:45:35,328 - Replaced 1 example.
+2015-12-12 11:45:35,328 - Replaced %d example%s.
+2015-12-12 11:48:21,167 - Updated 4 examples.
+2015-12-12 11:48:21,167 - Updated %d example%s.
+2015-12-12 12:07:40,595 - Made list of 0 words.
+2015-12-12 12:07:42,808 - Spell check finished.
+2015-12-12 12:07:42,946 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-12 12:07:47,647 - Please save the current document first.
+2015-12-12 12:07:49,438 - Please select an item in the list.
+2015-12-12 12:07:57,020 - No more possible abbreviations found.
+2015-12-12 12:07:57,641 - No more possible abbreviations found.
+2015-12-12 12:07:58,190 - No more possible abbreviations found.
+2015-12-12 12:07:58,826 - No more possible abbreviations found.
+2015-12-12 12:07:59,453 - No more possible abbreviations found.
+2015-12-12 12:08:00,039 - No more possible abbreviations found.
+2015-12-12 12:08:00,516 - No more possible abbreviations found.
+2015-12-12 12:08:00,676 - No more possible abbreviations found.
+2015-12-12 12:08:08,236 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 12:08:08,881 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 12:08:09,401 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 12:08:10,002 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 12:08:14,256 - Replaced 1 example.
+2015-12-12 12:08:14,256 - Replaced %d example%s.
+2015-12-12 12:08:14,677 - Replaced 1 example.
+2015-12-12 12:08:14,677 - Replaced %d example%s.
+2015-12-12 12:08:15,085 - Replaced 1 example.
+2015-12-12 12:08:15,086 - Replaced %d example%s.
+2015-12-12 12:08:15,480 - Replaced 1 example.
+2015-12-12 12:08:15,482 - Replaced %d example%s.
+2015-12-12 12:08:15,892 - Replaced 1 example.
+2015-12-12 12:08:15,894 - Replaced %d example%s.
+2015-12-12 12:08:16,342 - Replaced 1 example.
+2015-12-12 12:08:16,342 - Replaced %d example%s.
+2015-12-12 12:08:16,740 - Replaced 1 example.
+2015-12-12 12:08:16,740 - Replaced %d example%s.
+2015-12-12 12:08:17,153 - Replaced 1 example.
+2015-12-12 12:08:17,153 - Replaced %d example%s.
+2015-12-12 12:08:22,778 - Updated 4 examples.
+2015-12-12 12:08:22,778 - Updated %d example%s.
+2015-12-12 12:08:33,690 - Replaced 1 example.
+2015-12-12 12:08:33,690 - Replaced %d example%s.
+2015-12-12 12:08:34,703 - Replaced 1 example.
+2015-12-12 12:08:34,703 - Replaced %d example%s.
+2015-12-12 12:08:35,714 - Replaced 1 example.
+2015-12-12 12:08:35,714 - Replaced %d example%s.
+2015-12-12 12:08:36,724 - Replaced 1 example.
+2015-12-12 12:08:36,724 - Replaced %d example%s.
+2015-12-12 12:08:41,937 - Replaced 1 example.
+2015-12-12 12:08:41,937 - Replaced %d example%s.
+2015-12-12 12:08:42,933 - Replaced 1 example.
+2015-12-12 12:08:42,934 - Replaced %d example%s.
+2015-12-12 12:08:43,931 - Replaced 1 example.
+2015-12-12 12:08:43,931 - Replaced %d example%s.
+2015-12-12 12:08:44,943 - Replaced 1 example.
+2015-12-12 12:08:44,944 - Replaced %d example%s.
+2015-12-12 12:08:50,000 - Replaced 1 example.
+2015-12-12 12:08:50,000 - Replaced %d example%s.
+2015-12-12 12:08:50,999 - Replaced 1 example.
+2015-12-12 12:08:50,999 - Replaced %d example%s.
+2015-12-12 12:08:52,010 - Replaced 1 example.
+2015-12-12 12:08:52,012 - Replaced %d example%s.
+2015-12-12 12:08:53,066 - Replaced 1 example.
+2015-12-12 12:08:53,066 - Replaced %d example%s.
+2015-12-12 12:08:58,388 - Replaced 1 example.
+2015-12-12 12:08:58,388 - Replaced %d example%s.
+2015-12-12 12:08:59,460 - Replaced 1 example.
+2015-12-12 12:08:59,460 - Replaced %d example%s.
+2015-12-12 12:09:00,529 - Replaced 1 example.
+2015-12-12 12:09:00,529 - Replaced %d example%s.
+2015-12-12 12:09:01,614 - Replaced 1 example.
+2015-12-12 12:09:01,615 - Replaced %d example%s.
+2015-12-12 12:09:07,138 - Replaced 1 example.
+2015-12-12 12:09:07,138 - Replaced %d example%s.
+2015-12-12 12:09:08,201 - Replaced 1 example.
+2015-12-12 12:09:08,201 - Replaced %d example%s.
+2015-12-12 12:09:09,332 - Replaced 1 example.
+2015-12-12 12:09:09,334 - Replaced %d example%s.
+2015-12-12 12:09:10,411 - Replaced 1 example.
+2015-12-12 12:09:10,411 - Replaced %d example%s.
+2015-12-12 12:09:15,963 - Replaced 1 example.
+2015-12-12 12:09:15,963 - Replaced %d example%s.
+2015-12-12 12:09:17,062 - Replaced 1 example.
+2015-12-12 12:09:17,062 - Replaced %d example%s.
+2015-12-12 12:09:18,167 - Replaced 1 example.
+2015-12-12 12:09:18,167 - Replaced %d example%s.
+2015-12-12 12:09:19,269 - Replaced 1 example.
+2015-12-12 12:09:19,269 - Replaced %d example%s.
+2015-12-12 12:10:02,197 - Updated 4 examples.
+2015-12-12 12:10:02,197 - Updated %d example%s.
+2015-12-12 12:10:04,240 - Found 2 paragraphs and made 2 changes.
+2015-12-12 12:10:04,976 - Found 2 paragraphs and made 2 changes.
+2015-12-12 12:10:06,098 - Found 2 paragraphs and made 1 change.
+2015-12-12 12:10:06,957 - Made 1 change.
+2015-12-12 12:10:07,740 - Made 1 change.
+2015-12-12 12:10:09,378 - No changes, but modified style of 6 paragraphs.
+2015-12-12 12:10:10,628 - Make this change?
+2015-12-12 12:10:10,655 - Make this change?
+2015-12-12 12:10:10,683 - Make this change?
+2015-12-12 12:10:10,710 - Make this change?
+2015-12-12 12:10:10,736 - Make this change?
+2015-12-12 12:10:10,765 - Make this change?
+2015-12-12 12:10:10,894 - No changes, but modified style of 6 paragraphs.
+2015-12-12 12:10:12,390 - No changes, but modified style of 6 paragraphs.
+2015-12-12 12:10:13,621 - Make this change?
+2015-12-12 12:10:13,648 - Make this change?
+2015-12-12 12:10:13,676 - Make this change?
+2015-12-12 12:10:13,704 - Make this change?
+2015-12-12 12:10:13,736 - Make this change?
+2015-12-12 12:10:13,766 - Make this change?
+2015-12-12 12:10:13,897 - No changes, but modified style of 6 paragraphs.
+2015-12-12 12:10:14,770 - Make this change?
+2015-12-12 12:10:14,779 - Make this change?
+2015-12-12 12:10:14,792 - Make this change?
+2015-12-12 12:10:14,803 - Make this change?
+2015-12-12 12:10:14,815 - Make this change?
+2015-12-12 12:10:14,825 - Make this change?
+2015-12-12 12:10:14,940 - No changes, but modified style of 6 paragraphs.
+2015-12-12 12:10:15,575 - Make this change?
+2015-12-12 12:10:15,585 - Make this change?
+2015-12-12 12:10:15,596 - Make this change?
+2015-12-12 12:10:15,609 - Make this change?
+2015-12-12 12:10:15,619 - Make this change?
+2015-12-12 12:10:15,733 - No changes, but modified style of 5 paragraphs.
+2015-12-12 12:10:16,309 - Make this change?
+2015-12-12 12:10:16,421 - No changes.
+2015-12-12 12:10:16,977 - Make this change?
+2015-12-12 12:10:17,130 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:17,721 - Make this change?
+2015-12-12 12:10:18,173 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:18,792 - Make this change?
+2015-12-12 12:10:18,904 - No changes.
+2015-12-12 12:10:19,444 - Make this change?
+2015-12-12 12:10:19,635 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:20,206 - Make this change?
+2015-12-12 12:10:20,345 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:21,026 - Make this change?
+2015-12-12 12:10:21,138 - No changes.
+2015-12-12 12:10:21,694 - Make this change?
+2015-12-12 12:10:21,822 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:22,392 - Make this change?
+2015-12-12 12:10:22,529 - No changes, but modified style of 1 paragraph.
+2015-12-12 12:10:23,138 - Make this change?
+2015-12-12 12:10:23,290 - Made 1 change.
+2015-12-12 12:10:23,881 - Make this change?
+2015-12-12 12:10:24,144 - Made 1 change.
+2015-12-12 12:10:24,744 - Make this change?
+2015-12-12 12:10:24,911 - Made 1 change.
+2015-12-12 14:23:23,181 - Please save the current document first.
+2015-12-12 14:23:37,009 - Please select an item in the list.
+2015-12-12 15:27:57,329 - Made list of 0 words.
+2015-12-12 15:28:00,009 - Spell check finished.
+2015-12-12 15:28:00,095 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-12 15:28:04,855 - Please save the current document first.
+2015-12-12 15:28:06,641 - Please select an item in the list.
+2015-12-12 15:28:14,319 - No more possible abbreviations found.
+2015-12-12 15:28:14,921 - No more possible abbreviations found.
+2015-12-12 15:28:15,505 - No more possible abbreviations found.
+2015-12-12 15:28:16,141 - No more possible abbreviations found.
+2015-12-12 15:28:16,727 - No more possible abbreviations found.
+2015-12-12 15:28:17,305 - No more possible abbreviations found.
+2015-12-12 15:28:17,762 - No more possible abbreviations found.
+2015-12-12 15:28:17,927 - No more possible abbreviations found.
+2015-12-12 15:28:25,063 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:28:25,641 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:28:26,157 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:28:26,641 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:28:30,903 - Replaced 1 example.
+2015-12-12 15:28:30,903 - Replaced %d example%s.
+2015-12-12 15:28:31,292 - Replaced 1 example.
+2015-12-12 15:28:31,292 - Replaced %d example%s.
+2015-12-12 15:28:31,701 - Replaced 1 example.
+2015-12-12 15:28:31,701 - Replaced %d example%s.
+2015-12-12 15:28:32,111 - Replaced 1 example.
+2015-12-12 15:28:32,111 - Replaced %d example%s.
+2015-12-12 15:28:32,549 - Replaced 1 example.
+2015-12-12 15:28:32,549 - Replaced %d example%s.
+2015-12-12 15:28:32,941 - Replaced 1 example.
+2015-12-12 15:28:32,941 - Replaced %d example%s.
+2015-12-12 15:28:33,335 - Replaced 1 example.
+2015-12-12 15:28:33,335 - Replaced %d example%s.
+2015-12-12 15:28:33,730 - Replaced 1 example.
+2015-12-12 15:28:33,730 - Replaced %d example%s.
+2015-12-12 15:28:39,184 - Updated 4 examples.
+2015-12-12 15:28:39,184 - Updated %d example%s.
+2015-12-12 15:28:50,441 - Replaced 1 example.
+2015-12-12 15:28:50,441 - Replaced %d example%s.
+2015-12-12 15:28:51,430 - Replaced 1 example.
+2015-12-12 15:28:51,430 - Replaced %d example%s.
+2015-12-12 15:28:52,549 - Replaced 1 example.
+2015-12-12 15:28:52,551 - Replaced %d example%s.
+2015-12-12 15:28:53,539 - Replaced 1 example.
+2015-12-12 15:28:53,539 - Replaced %d example%s.
+2015-12-12 15:28:59,635 - Replaced 1 example.
+2015-12-12 15:28:59,635 - Replaced %d example%s.
+2015-12-12 15:29:00,723 - Replaced 1 example.
+2015-12-12 15:29:00,723 - Replaced %d example%s.
+2015-12-12 15:29:01,721 - Replaced 1 example.
+2015-12-12 15:29:01,721 - Replaced %d example%s.
+2015-12-12 15:29:02,733 - Replaced 1 example.
+2015-12-12 15:29:02,733 - Replaced %d example%s.
+2015-12-12 15:29:08,188 - Replaced 1 example.
+2015-12-12 15:29:08,188 - Replaced %d example%s.
+2015-12-12 15:29:09,252 - Replaced 1 example.
+2015-12-12 15:29:09,252 - Replaced %d example%s.
+2015-12-12 15:29:10,493 - Replaced 1 example.
+2015-12-12 15:29:10,493 - Replaced %d example%s.
+2015-12-12 15:29:11,575 - Replaced 1 example.
+2015-12-12 15:29:11,575 - Replaced %d example%s.
+2015-12-12 15:29:17,177 - Replaced 1 example.
+2015-12-12 15:29:17,177 - Replaced %d example%s.
+2015-12-12 15:29:18,220 - Replaced 1 example.
+2015-12-12 15:29:18,221 - Replaced %d example%s.
+2015-12-12 15:29:19,290 - Replaced 1 example.
+2015-12-12 15:29:19,290 - Replaced %d example%s.
+2015-12-12 15:29:20,323 - Replaced 1 example.
+2015-12-12 15:29:20,323 - Replaced %d example%s.
+2015-12-12 15:29:25,809 - Replaced 1 example.
+2015-12-12 15:29:25,809 - Replaced %d example%s.
+2015-12-12 15:29:26,871 - Replaced 1 example.
+2015-12-12 15:29:26,872 - Replaced %d example%s.
+2015-12-12 15:29:28,203 - Replaced 1 example.
+2015-12-12 15:29:28,203 - Replaced %d example%s.
+2015-12-12 15:29:29,302 - Replaced 1 example.
+2015-12-12 15:29:29,302 - Replaced %d example%s.
+2015-12-12 15:29:35,344 - Replaced 1 example.
+2015-12-12 15:29:35,344 - Replaced %d example%s.
+2015-12-12 15:29:36,401 - Replaced 1 example.
+2015-12-12 15:29:36,401 - Replaced %d example%s.
+2015-12-12 15:29:37,528 - Replaced 1 example.
+2015-12-12 15:29:37,528 - Replaced %d example%s.
+2015-12-12 15:29:38,595 - Replaced 1 example.
+2015-12-12 15:29:38,595 - Replaced %d example%s.
+2015-12-12 15:30:23,378 - Updated 4 examples.
+2015-12-12 15:30:23,378 - Updated %d example%s.
+2015-12-12 15:30:25,230 - Found 2 paragraphs and made 2 changes.
+2015-12-12 15:30:25,992 - Found 2 paragraphs and made 2 changes.
+2015-12-12 15:30:27,005 - Found 2 paragraphs and made 1 change.
+2015-12-12 15:30:27,711 - Made 1 change.
+2015-12-12 15:30:28,411 - Made 1 change.
+2015-12-12 15:30:30,000 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:30:31,229 - Make this change?
+2015-12-12 15:30:31,260 - Make this change?
+2015-12-12 15:30:31,289 - Make this change?
+2015-12-12 15:30:31,325 - Make this change?
+2015-12-12 15:30:31,354 - Make this change?
+2015-12-12 15:30:31,382 - Make this change?
+2015-12-12 15:30:31,513 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:30:33,296 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:30:34,565 - Make this change?
+2015-12-12 15:30:34,595 - Make this change?
+2015-12-12 15:30:34,622 - Make this change?
+2015-12-12 15:30:34,651 - Make this change?
+2015-12-12 15:30:34,680 - Make this change?
+2015-12-12 15:30:34,714 - Make this change?
+2015-12-12 15:30:34,845 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:30:35,736 - Make this change?
+2015-12-12 15:30:35,746 - Make this change?
+2015-12-12 15:30:35,757 - Make this change?
+2015-12-12 15:30:35,769 - Make this change?
+2015-12-12 15:30:35,780 - Make this change?
+2015-12-12 15:30:35,792 - Make this change?
+2015-12-12 15:30:35,905 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:30:36,575 - Make this change?
+2015-12-12 15:30:36,588 - Make this change?
+2015-12-12 15:30:36,598 - Make this change?
+2015-12-12 15:30:36,609 - Make this change?
+2015-12-12 15:30:36,621 - Make this change?
+2015-12-12 15:30:36,734 - No changes, but modified style of 5 paragraphs.
+2015-12-12 15:30:37,308 - Make this change?
+2015-12-12 15:30:37,602 - No changes.
+2015-12-12 15:30:38,164 - Make this change?
+2015-12-12 15:30:38,283 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:38,908 - Make this change?
+2015-12-12 15:30:39,059 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:39,661 - Make this change?
+2015-12-12 15:30:39,775 - No changes.
+2015-12-12 15:30:40,344 - Make this change?
+2015-12-12 15:30:40,473 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:41,040 - Make this change?
+2015-12-12 15:30:41,180 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:41,796 - Make this change?
+2015-12-12 15:30:41,907 - No changes.
+2015-12-12 15:30:42,476 - Make this change?
+2015-12-12 15:30:42,608 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:43,298 - Make this change?
+2015-12-12 15:30:43,441 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:30:44,154 - Make this change?
+2015-12-12 15:30:44,315 - Made 1 change.
+2015-12-12 15:30:44,918 - Make this change?
+2015-12-12 15:30:45,125 - Made 1 change.
+2015-12-12 15:30:45,793 - Make this change?
+2015-12-12 15:30:45,967 - Made 1 change.
+2015-12-12 15:45:21,759 - Made list of 0 words.
+2015-12-12 15:45:23,826 - Spell check finished.
+2015-12-12 15:45:23,887 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-12 15:45:28,838 - Please save the current document first.
+2015-12-12 15:45:30,918 - Please select an item in the list.
+2015-12-12 15:45:42,325 - No more possible abbreviations found.
+2015-12-12 15:45:42,918 - No more possible abbreviations found.
+2015-12-12 15:45:43,482 - No more possible abbreviations found.
+2015-12-12 15:45:44,131 - No more possible abbreviations found.
+2015-12-12 15:45:44,706 - No more possible abbreviations found.
+2015-12-12 15:45:45,275 - No more possible abbreviations found.
+2015-12-12 15:45:45,739 - No more possible abbreviations found.
+2015-12-12 15:45:45,900 - No more possible abbreviations found.
+2015-12-12 15:45:53,128 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:45:53,855 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:45:54,358 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:45:54,891 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 15:45:59,240 - Replaced 1 example.
+2015-12-12 15:45:59,240 - Replaced %d example%s.
+2015-12-12 15:45:59,631 - Replaced 1 example.
+2015-12-12 15:45:59,631 - Replaced %d example%s.
+2015-12-12 15:46:00,046 - Replaced 1 example.
+2015-12-12 15:46:00,046 - Replaced %d example%s.
+2015-12-12 15:46:00,453 - Replaced 1 example.
+2015-12-12 15:46:00,453 - Replaced %d example%s.
+2015-12-12 15:46:00,885 - Replaced 1 example.
+2015-12-12 15:46:00,885 - Replaced %d example%s.
+2015-12-12 15:46:01,273 - Replaced 1 example.
+2015-12-12 15:46:01,273 - Replaced %d example%s.
+2015-12-12 15:46:01,667 - Replaced 1 example.
+2015-12-12 15:46:01,667 - Replaced %d example%s.
+2015-12-12 15:46:02,105 - Replaced 1 example.
+2015-12-12 15:46:02,105 - Replaced %d example%s.
+2015-12-12 15:46:07,486 - Updated 4 examples.
+2015-12-12 15:46:07,487 - Updated %d example%s.
+2015-12-12 15:46:18,467 - Replaced 1 example.
+2015-12-12 15:46:18,467 - Replaced %d example%s.
+2015-12-12 15:46:19,448 - Replaced 1 example.
+2015-12-12 15:46:19,448 - Replaced %d example%s.
+2015-12-12 15:46:20,506 - Replaced 1 example.
+2015-12-12 15:46:20,506 - Replaced %d example%s.
+2015-12-12 15:46:21,523 - Replaced 1 example.
+2015-12-12 15:46:21,523 - Replaced %d example%s.
+2015-12-12 15:46:26,923 - Replaced 1 example.
+2015-12-12 15:46:26,923 - Replaced %d example%s.
+2015-12-12 15:46:27,957 - Replaced 1 example.
+2015-12-12 15:46:27,957 - Replaced %d example%s.
+2015-12-12 15:46:28,973 - Replaced 1 example.
+2015-12-12 15:46:28,973 - Replaced %d example%s.
+2015-12-12 15:46:29,948 - Replaced 1 example.
+2015-12-12 15:46:29,948 - Replaced %d example%s.
+2015-12-12 15:46:35,007 - Replaced 1 example.
+2015-12-12 15:46:35,007 - Replaced %d example%s.
+2015-12-12 15:46:36,006 - Replaced 1 example.
+2015-12-12 15:46:36,006 - Replaced %d example%s.
+2015-12-12 15:46:37,042 - Replaced 1 example.
+2015-12-12 15:46:37,042 - Replaced %d example%s.
+2015-12-12 15:46:38,095 - Replaced 1 example.
+2015-12-12 15:46:38,095 - Replaced %d example%s.
+2015-12-12 15:46:43,482 - Replaced 1 example.
+2015-12-12 15:46:43,482 - Replaced %d example%s.
+2015-12-12 15:46:44,546 - Replaced 1 example.
+2015-12-12 15:46:44,546 - Replaced %d example%s.
+2015-12-12 15:46:45,595 - Replaced 1 example.
+2015-12-12 15:46:45,595 - Replaced %d example%s.
+2015-12-12 15:46:46,733 - Replaced 1 example.
+2015-12-12 15:46:46,733 - Replaced %d example%s.
+2015-12-12 15:46:52,273 - Replaced 1 example.
+2015-12-12 15:46:52,273 - Replaced %d example%s.
+2015-12-12 15:46:53,344 - Replaced 1 example.
+2015-12-12 15:46:53,344 - Replaced %d example%s.
+2015-12-12 15:46:54,424 - Replaced 1 example.
+2015-12-12 15:46:54,424 - Replaced %d example%s.
+2015-12-12 15:46:55,526 - Replaced 1 example.
+2015-12-12 15:46:55,526 - Replaced %d example%s.
+2015-12-12 15:47:01,115 - Replaced 1 example.
+2015-12-12 15:47:01,117 - Replaced %d example%s.
+2015-12-12 15:47:02,223 - Replaced 1 example.
+2015-12-12 15:47:02,224 - Replaced %d example%s.
+2015-12-12 15:47:03,351 - Replaced 1 example.
+2015-12-12 15:47:03,351 - Replaced %d example%s.
+2015-12-12 15:47:04,420 - Replaced 1 example.
+2015-12-12 15:47:04,420 - Replaced %d example%s.
+2015-12-12 15:47:46,924 - Updated 4 examples.
+2015-12-12 15:47:46,924 - Updated %d example%s.
+2015-12-12 15:47:48,191 - Found 2 paragraphs and made 2 changes.
+2015-12-12 15:47:48,891 - Found 2 paragraphs and made 2 changes.
+2015-12-12 15:47:49,721 - Found 2 paragraphs and made 1 change.
+2015-12-12 15:47:50,414 - Made 1 change.
+2015-12-12 15:47:51,336 - Made 1 change.
+2015-12-12 15:47:52,844 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:47:54,038 - Make this change?
+2015-12-12 15:47:54,065 - Make this change?
+2015-12-12 15:47:54,092 - Make this change?
+2015-12-12 15:47:54,119 - Make this change?
+2015-12-12 15:47:54,148 - Make this change?
+2015-12-12 15:47:54,174 - Make this change?
+2015-12-12 15:47:54,319 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:47:55,836 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:47:57,068 - Make this change?
+2015-12-12 15:47:57,095 - Make this change?
+2015-12-12 15:47:57,124 - Make this change?
+2015-12-12 15:47:57,160 - Make this change?
+2015-12-12 15:47:57,194 - Make this change?
+2015-12-12 15:47:57,230 - Make this change?
+2015-12-12 15:47:57,365 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:47:58,313 - Make this change?
+2015-12-12 15:47:58,322 - Make this change?
+2015-12-12 15:47:58,335 - Make this change?
+2015-12-12 15:47:58,345 - Make this change?
+2015-12-12 15:47:58,357 - Make this change?
+2015-12-12 15:47:58,368 - Make this change?
+2015-12-12 15:47:58,483 - No changes, but modified style of 6 paragraphs.
+2015-12-12 15:47:59,127 - Make this change?
+2015-12-12 15:47:59,138 - Make this change?
+2015-12-12 15:47:59,148 - Make this change?
+2015-12-12 15:47:59,158 - Make this change?
+2015-12-12 15:47:59,171 - Make this change?
+2015-12-12 15:47:59,288 - No changes, but modified style of 5 paragraphs.
+2015-12-12 15:47:59,875 - Make this change?
+2015-12-12 15:47:59,986 - No changes.
+2015-12-12 15:48:00,569 - Make this change?
+2015-12-12 15:48:00,686 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:01,252 - Make this change?
+2015-12-12 15:48:01,394 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:02,022 - Make this change?
+2015-12-12 15:48:02,134 - No changes.
+2015-12-12 15:48:02,680 - Make this change?
+2015-12-12 15:48:02,803 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:03,540 - Make this change?
+2015-12-12 15:48:03,678 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:04,282 - Make this change?
+2015-12-12 15:48:04,394 - No changes.
+2015-12-12 15:48:04,947 - Make this change?
+2015-12-12 15:48:05,078 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:05,637 - Make this change?
+2015-12-12 15:48:05,783 - No changes, but modified style of 1 paragraph.
+2015-12-12 15:48:06,641 - Make this change?
+2015-12-12 15:48:06,796 - Made 1 change.
+2015-12-12 15:48:07,477 - Make this change?
+2015-12-12 15:48:07,668 - Made 1 change.
+2015-12-12 15:48:08,313 - Make this change?
+2015-12-12 15:48:08,486 - Made 1 change.
+2015-12-12 16:31:14,821 - Made list of 0 words.
+2015-12-12 16:31:17,173 - Spell check finished.
+2015-12-12 16:31:17,267 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-12 16:31:22,291 - Please save the current document first.
+2015-12-12 16:31:24,458 - Please select an item in the list.
+2015-12-12 16:31:35,094 - No more possible abbreviations found.
+2015-12-12 16:31:35,977 - No more possible abbreviations found.
+2015-12-12 16:31:36,841 - No more possible abbreviations found.
+2015-12-12 16:31:37,722 - No more possible abbreviations found.
+2015-12-12 16:31:38,503 - No more possible abbreviations found.
+2015-12-12 16:31:39,287 - No more possible abbreviations found.
+2015-12-12 16:31:39,907 - No more possible abbreviations found.
+2015-12-12 16:31:40,102 - No more possible abbreviations found.
+2015-12-12 16:31:49,731 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 16:31:50,450 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 16:31:51,096 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 16:31:51,758 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-12 16:31:57,686 - Replaced 1 example.
+2015-12-12 16:31:57,686 - Replaced %d example%s.
+2015-12-12 16:31:58,233 - Replaced 1 example.
+2015-12-12 16:31:58,233 - Replaced %d example%s.
+2015-12-12 16:31:58,824 - Replaced 1 example.
+2015-12-12 16:31:58,824 - Replaced %d example%s.
+2015-12-12 16:31:59,416 - Replaced 1 example.
+2015-12-12 16:31:59,416 - Replaced %d example%s.
+2015-12-12 16:31:59,957 - Replaced 1 example.
+2015-12-12 16:31:59,958 - Replaced %d example%s.
+2015-12-12 16:32:00,537 - Replaced 1 example.
+2015-12-12 16:32:00,537 - Replaced %d example%s.
+2015-12-12 16:32:01,136 - Replaced 1 example.
+2015-12-12 16:32:01,136 - Replaced %d example%s.
+2015-12-12 16:32:01,721 - Replaced 1 example.
+2015-12-12 16:32:01,721 - Replaced %d example%s.
+2015-12-12 16:32:10,629 - Updated 4 examples.
+2015-12-12 16:32:10,630 - Updated %d example%s.
+2015-12-12 16:32:29,877 - Replaced 1 example.
+2015-12-12 16:32:29,877 - Replaced %d example%s.
+2015-12-12 16:32:31,649 - Replaced 1 example.
+2015-12-12 16:32:31,649 - Replaced %d example%s.
+2015-12-12 16:32:33,391 - Replaced 1 example.
+2015-12-12 16:32:33,391 - Replaced %d example%s.
+2015-12-12 16:32:35,153 - Replaced 1 example.
+2015-12-12 16:32:35,154 - Replaced %d example%s.
+2015-12-12 16:32:43,163 - Replaced 1 example.
+2015-12-12 16:32:43,163 - Replaced %d example%s.
+2015-12-12 16:32:44,740 - Replaced 1 example.
+2015-12-12 16:32:44,740 - Replaced %d example%s.
+2015-12-12 16:32:46,313 - Replaced 1 example.
+2015-12-12 16:32:46,313 - Replaced %d example%s.
+2015-12-12 16:32:47,985 - Replaced 1 example.
+2015-12-12 16:32:47,985 - Replaced %d example%s.
+2015-12-12 16:32:56,906 - Replaced 1 example.
+2015-12-12 16:32:56,906 - Replaced %d example%s.
+2015-12-12 16:32:58,792 - Replaced 1 example.
+2015-12-12 16:32:58,792 - Replaced %d example%s.
+2015-12-12 16:33:00,680 - Replaced 1 example.
+2015-12-12 16:33:00,680 - Replaced %d example%s.
+2015-12-12 16:33:02,630 - Replaced 1 example.
+2015-12-12 16:33:02,631 - Replaced %d example%s.
+2015-12-12 16:33:11,755 - Replaced 1 example.
+2015-12-12 16:33:11,755 - Replaced %d example%s.
+2015-12-12 16:33:13,705 - Replaced 1 example.
+2015-12-12 16:33:13,705 - Replaced %d example%s.
+2015-12-12 16:33:15,657 - Replaced 1 example.
+2015-12-12 16:33:15,657 - Replaced %d example%s.
+2015-12-12 16:33:17,634 - Replaced 1 example.
+2015-12-12 16:33:17,635 - Replaced %d example%s.
+2015-12-12 16:33:25,298 - Replaced 1 example.
+2015-12-12 16:33:25,298 - Replaced %d example%s.
+2015-12-12 16:33:26,960 - Replaced 1 example.
+2015-12-12 16:33:26,960 - Replaced %d example%s.
+2015-12-12 16:33:28,680 - Replaced 1 example.
+2015-12-12 16:33:28,681 - Replaced %d example%s.
+2015-12-12 16:33:30,337 - Replaced 1 example.
+2015-12-12 16:33:30,337 - Replaced %d example%s.
+2015-12-12 16:33:37,776 - Replaced 1 example.
+2015-12-12 16:33:37,777 - Replaced %d example%s.
+2015-12-12 16:33:39,435 - Replaced 1 example.
+2015-12-12 16:33:39,436 - Replaced %d example%s.
+2015-12-12 16:33:41,232 - Replaced 1 example.
+2015-12-12 16:33:41,232 - Replaced %d example%s.
+2015-12-12 16:33:42,975 - Replaced 1 example.
+2015-12-12 16:33:42,975 - Replaced %d example%s.
+2015-12-12 16:34:56,517 - Updated 4 examples.
+2015-12-12 16:34:56,517 - Updated %d example%s.
+2015-12-12 16:34:58,141 - Found 2 paragraphs and made 2 changes.
+2015-12-12 16:34:58,897 - Found 2 paragraphs and made 2 changes.
+2015-12-12 16:34:59,813 - Found 2 paragraphs and made 1 change.
+2015-12-12 16:35:00,610 - Made 1 change.
+2015-12-12 16:35:01,560 - Made 1 change.
+2015-12-12 16:35:03,307 - No changes, but modified style of 6 paragraphs.
+2015-12-12 16:35:04,603 - Make this change?
+2015-12-12 16:35:04,642 - Make this change?
+2015-12-12 16:35:04,681 - Make this change?
+2015-12-12 16:35:04,720 - Make this change?
+2015-12-12 16:35:04,759 - Make this change?
+2015-12-12 16:35:04,802 - Make this change?
+2015-12-12 16:35:04,944 - No changes, but modified style of 6 paragraphs.
+2015-12-12 16:35:06,577 - No changes, but modified style of 6 paragraphs.
+2015-12-12 16:35:07,842 - Make this change?
+2015-12-12 16:35:07,882 - Make this change?
+2015-12-12 16:35:07,925 - Make this change?
+2015-12-12 16:35:07,970 - Make this change?
+2015-12-12 16:35:08,018 - Make this change?
+2015-12-12 16:35:08,064 - Make this change?
+2015-12-12 16:35:08,206 - No changes, but modified style of 6 paragraphs.
+2015-12-12 16:35:09,128 - Make this change?
+2015-12-12 16:35:09,141 - Make this change?
+2015-12-12 16:35:09,157 - Make this change?
+2015-12-12 16:35:09,171 - Make this change?
+2015-12-12 16:35:09,185 - Make this change?
+2015-12-12 16:35:09,200 - Make this change?
+2015-12-12 16:35:09,315 - No changes, but modified style of 6 paragraphs.
+2015-12-12 16:35:10,028 - Make this change?
+2015-12-12 16:35:10,041 - Make this change?
+2015-12-12 16:35:10,055 - Make this change?
+2015-12-12 16:35:10,068 - Make this change?
+2015-12-12 16:35:10,081 - Make this change?
+2015-12-12 16:35:10,195 - No changes, but modified style of 5 paragraphs.
+2015-12-12 16:35:10,794 - Make this change?
+2015-12-12 16:35:10,904 - No changes.
+2015-12-12 16:35:11,468 - Make this change?
+2015-12-12 16:35:11,633 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:12,231 - Make this change?
+2015-12-12 16:35:12,374 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:12,995 - Make this change?
+2015-12-12 16:35:13,105 - No changes.
+2015-12-12 16:35:13,661 - Make this change?
+2015-12-12 16:35:13,798 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:14,404 - Make this change?
+2015-12-12 16:35:14,547 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:15,194 - Make this change?
+2015-12-12 16:35:15,304 - No changes.
+2015-12-12 16:35:15,900 - Make this change?
+2015-12-12 16:35:16,059 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:16,670 - Make this change?
+2015-12-12 16:35:16,825 - No changes, but modified style of 1 paragraph.
+2015-12-12 16:35:17,447 - Make this change?
+2015-12-12 16:35:17,694 - Made 1 change.
+2015-12-12 16:35:18,349 - Make this change?
+2015-12-12 16:35:18,561 - Made 1 change.
+2015-12-12 16:35:19,229 - Make this change?
+2015-12-12 16:35:19,449 - Made 1 change.
+2015-12-15 16:12:33,854 - Made list of 0 words.
+2015-12-15 16:12:36,989 - Spell check finished.
+2015-12-15 16:12:37,078 - Hello there
+
+	How are you?
+Fine, thank you	
+2015-12-15 16:12:41,644 - Please save the current document first.
+2015-12-15 16:12:43,525 - Please select an item in the list.
+2015-12-15 16:12:53,907 - No more possible abbreviations found.
+2015-12-15 16:12:54,497 - No more possible abbreviations found.
+2015-12-15 16:12:55,065 - No more possible abbreviations found.
+2015-12-15 16:12:55,697 - No more possible abbreviations found.
+2015-12-15 16:12:56,286 - No more possible abbreviations found.
+2015-12-15 16:12:56,861 - No more possible abbreviations found.
+2015-12-15 16:12:57,322 - No more possible abbreviations found.
+2015-12-15 16:12:57,477 - No more possible abbreviations found.
+2015-12-15 16:13:05,352 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-15 16:13:05,992 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-15 16:13:06,519 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-15 16:13:07,099 - If you want to use LIFT data, then first specify a LIFT file exported from FieldWorks.
+2015-12-15 16:13:11,990 - Replaced 1 example.
+2015-12-15 16:13:11,990 - Replaced %d example%s.
+2015-12-15 16:13:12,434 - Replaced 1 example.
+2015-12-15 16:13:12,434 - Replaced %d example%s.
+2015-12-15 16:13:12,887 - Replaced 1 example.
+2015-12-15 16:13:12,887 - Replaced %d example%s.
+2015-12-15 16:13:13,367 - Replaced 1 example.
+2015-12-15 16:13:13,368 - Replaced %d example%s.
+2015-12-15 16:13:13,816 - Replaced 1 example.
+2015-12-15 16:13:13,816 - Replaced %d example%s.
+2015-12-15 16:13:14,250 - Replaced 1 example.
+2015-12-15 16:13:14,252 - Replaced %d example%s.
+2015-12-15 16:13:14,690 - Replaced 1 example.
+2015-12-15 16:13:14,690 - Replaced %d example%s.
+2015-12-15 16:13:15,137 - Replaced 1 example.
+2015-12-15 16:13:15,138 - Replaced %d example%s.
+2015-12-15 16:13:21,026 - Updated 4 examples.
+2015-12-15 16:13:21,026 - Updated %d example%s.
+2015-12-15 16:13:32,380 - Replaced 1 example.
+2015-12-15 16:13:32,380 - Replaced %d example%s.
+2015-12-15 16:13:33,440 - Replaced 1 example.
+2015-12-15 16:13:33,440 - Replaced %d example%s.
+2015-12-15 16:13:34,417 - Replaced 1 example.
+2015-12-15 16:13:34,417 - Replaced %d example%s.
+2015-12-15 16:13:35,423 - Replaced 1 example.
+2015-12-15 16:13:35,423 - Replaced %d example%s.
+2015-12-15 16:13:40,838 - Replaced 1 example.
+2015-12-15 16:13:40,838 - Replaced %d example%s.
+2015-12-15 16:13:41,871 - Replaced 1 example.
+2015-12-15 16:13:41,871 - Replaced %d example%s.
+2015-12-15 16:13:42,901 - Replaced 1 example.
+2015-12-15 16:13:42,901 - Replaced %d example%s.
+2015-12-15 16:13:43,938 - Replaced 1 example.
+2015-12-15 16:13:43,940 - Replaced %d example%s.
+2015-12-15 16:13:49,180 - Replaced 1 example.
+2015-12-15 16:13:49,180 - Replaced %d example%s.
+2015-12-15 16:13:50,203 - Replaced 1 example.
+2015-12-15 16:13:50,203 - Replaced %d example%s.
+2015-12-15 16:13:51,256 - Replaced 1 example.
+2015-12-15 16:13:51,257 - Replaced %d example%s.
+2015-12-15 16:13:52,338 - Replaced 1 example.
+2015-12-15 16:13:52,338 - Replaced %d example%s.
+2015-12-15 16:13:57,809 - Replaced 1 example.
+2015-12-15 16:13:57,809 - Replaced %d example%s.
+2015-12-15 16:13:58,891 - Replaced 1 example.
+2015-12-15 16:13:58,891 - Replaced %d example%s.
+2015-12-15 16:13:59,950 - Replaced 1 example.
+2015-12-15 16:13:59,950 - Replaced %d example%s.
+2015-12-15 16:14:01,026 - Replaced 1 example.
+2015-12-15 16:14:01,026 - Replaced %d example%s.
+2015-12-15 16:14:06,719 - Replaced 1 example.
+2015-12-15 16:14:06,719 - Replaced %d example%s.
+2015-12-15 16:14:07,825 - Replaced 1 example.
+2015-12-15 16:14:07,825 - Replaced %d example%s.
+2015-12-15 16:14:08,950 - Replaced 1 example.
+2015-12-15 16:14:08,950 - Replaced %d example%s.
+2015-12-15 16:14:10,052 - Replaced 1 example.
+2015-12-15 16:14:10,052 - Replaced %d example%s.
+2015-12-15 16:14:15,724 - Replaced 1 example.
+2015-12-15 16:14:15,724 - Replaced %d example%s.
+2015-12-15 16:14:16,818 - Replaced 1 example.
+2015-12-15 16:14:16,818 - Replaced %d example%s.
+2015-12-15 16:14:17,956 - Replaced 1 example.
+2015-12-15 16:14:17,956 - Replaced %d example%s.
+2015-12-15 16:14:19,071 - Replaced 1 example.
+2015-12-15 16:14:19,071 - Replaced %d example%s.
+2015-12-15 16:15:03,542 - Updated 4 examples.
+2015-12-15 16:15:03,542 - Updated %d example%s.
+2015-12-15 16:15:09,614 - Found 2 paragraphs and made 2 changes.
+2015-12-15 16:15:10,440 - Found 2 paragraphs and made 2 changes.
+2015-12-15 16:15:12,082 - Found 2 paragraphs and made 1 change.
+2015-12-15 16:15:13,088 - Made 1 change.
+2015-12-15 16:15:14,098 - Made 1 change.
+2015-12-15 16:15:15,674 - No changes, but modified style of 6 paragraphs.
+2015-12-15 16:15:17,095 - Make this change?
+2015-12-15 16:15:17,121 - Make this change?
+2015-12-15 16:15:17,151 - Make this change?
+2015-12-15 16:15:17,177 - Make this change?
+2015-12-15 16:15:17,204 - Make this change?
+2015-12-15 16:15:17,233 - Make this change?
+2015-12-15 16:15:17,369 - No changes, but modified style of 6 paragraphs.
+2015-12-15 16:15:18,915 - No changes, but modified style of 6 paragraphs.
+2015-12-15 16:15:20,196 - Make this change?
+2015-12-15 16:15:20,223 - Make this change?
+2015-12-15 16:15:20,250 - Make this change?
+2015-12-15 16:15:20,279 - Make this change?
+2015-12-15 16:15:20,306 - Make this change?
+2015-12-15 16:15:20,335 - Make this change?
+2015-12-15 16:15:20,506 - No changes, but modified style of 6 paragraphs.
+2015-12-15 16:15:21,405 - Make this change?
+2015-12-15 16:15:21,414 - Make this change?
+2015-12-15 16:15:21,427 - Make this change?
+2015-12-15 16:15:21,438 - Make this change?
+2015-12-15 16:15:21,450 - Make this change?
+2015-12-15 16:15:21,460 - Make this change?
+2015-12-15 16:15:21,582 - No changes, but modified style of 6 paragraphs.
+2015-12-15 16:15:22,500 - Make this change?
+2015-12-15 16:15:22,512 - Make this change?
+2015-12-15 16:15:22,522 - Make this change?
+2015-12-15 16:15:22,532 - Make this change?
+2015-12-15 16:15:22,545 - Make this change?
+2015-12-15 16:15:22,667 - No changes, but modified style of 5 paragraphs.
+2015-12-15 16:15:23,262 - Make this change?
+2015-12-15 16:15:23,380 - No changes.
+2015-12-15 16:15:23,973 - Make this change?
+2015-12-15 16:15:24,250 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:25,088 - Make this change?
+2015-12-15 16:15:25,295 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:26,078 - Make this change?
+2015-12-15 16:15:26,236 - No changes.
+2015-12-15 16:15:26,821 - Make this change?
+2015-12-15 16:15:26,957 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:27,556 - Make this change?
+2015-12-15 16:15:27,697 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:28,529 - Make this change?
+2015-12-15 16:15:28,645 - No changes.
+2015-12-15 16:15:29,224 - Make this change?
+2015-12-15 16:15:29,358 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:29,992 - Make this change?
+2015-12-15 16:15:30,132 - No changes, but modified style of 1 paragraph.
+2015-12-15 16:15:30,772 - Make this change?
+2015-12-15 16:15:31,111 - Made 1 change.
+2015-12-15 16:15:31,746 - Make this change?
+2015-12-15 16:15:32,046 - Made 1 change.
+2015-12-15 16:15:32,696 - Make this change?
+2015-12-15 16:15:32,931 - Made 1 change.
+2015-12-29 15:36:06,397 - Error: EncConverters returned %d%s.

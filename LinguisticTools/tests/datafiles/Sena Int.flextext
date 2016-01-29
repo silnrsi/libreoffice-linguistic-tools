@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document version="2">
+  <interlinear-text guid="f84bf76e-bb4a-4a6f-bf93-30e2fb66d023">
+    <item type="title" lang="en">Have courage</item>
+    <item type="title" lang="pt">Tenha coragem</item>
+    <item type="title" lang="seh">Phatani ntima</item>
+    <item type="comment" lang="en">  "Phatani ntima" ("Have courage") (c) Luís Nyazeze, used by permission.</item>
+    <item type="comment" lang="pt">"Phatani ntima" ("Have courage") (c) Luís Nyazeze, used by permission.</item>
+    <paragraphs>
+      <paragraph guid="aebd9482-28de-4e63-a4ec-0789e06b9cde">
+        <phrases>
+          <phrase guid="db5956da-a55f-4d54-a57f-fda9090bf181">
+            <item type="segnum" lang="en">P1.S1</item>
+            <words>
+              <word guid="9e2e8700-3b1f-4edc-a081-3d78e32f68f4">
+                <item type="txt" lang="seh">Pisapha</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">pi-</item>
+                    <item type="cf" lang="seh">pi-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">8</item>
+                    <item type="msa" lang="pt">V:(obj)/sbj</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">sa-</item>
+                    <item type="cf" lang="seh">sa-</item>
+                    <item type="gls" lang="pt">HAB</item>
+                    <item type="msa" lang="pt">V:tam1</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ph</item>
+                    <item type="cf" lang="seh">ph</item>
+                    <item type="gls" lang="pt">fazer doer</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">estas coisas doem</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="53621754-d12a-4d7e-9332-767eeaf4fe09">
+                <item type="txt" lang="seh">mbwenye</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mbwenye</item>
+                    <item type="cf" lang="seh">mbwenye</item>
+                    <item type="gls" lang="pt">mas</item>
+                    <item type="msa" lang="pt">Conj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+                <item type="pos" lang="pt">Conj</item>
+              </word>
+              <word guid="7be00ff4-c58d-4feb-927e-847455e36876">
+                <item type="txt" lang="seh">pinafunika</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">pi-</item>
+                    <item type="cf" lang="seh">pi-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">8</item>
+                    <item type="msa" lang="pt">V:(obj)/sbj</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">na-</item>
+                    <item type="cf" lang="seh">na-</item>
+                    <item type="gls" lang="pt">NONPST</item>
+                    <item type="msa" lang="pt">V:tam1/neg/rel  tam1</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">funik</item>
+                    <item type="cf" lang="seh">funik</item>
+                    <item type="gls" lang="pt">precisa</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">o que é necessário</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="9e4ab959-2eb4-4aff-bc55-a0cc9db5988d">
+                <item type="txt" lang="seh">n'khuphata</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ndi</item>
+                    <item type="cf" lang="seh">ndi</item>
+                    <item type="gls" lang="pt">é</item>
+                    <item type="msa" lang="pt">Cop </item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ku-</item>
+                    <item type="cf" lang="seh">ku-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">INF</item>
+                    <item type="msa" lang="pt">V:inf</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">phat</item>
+                    <item type="cf" lang="seh">phat</item>
+                    <item type="gls" lang="pt">pegar</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+              </word>
+              <word guid="09d70790-5f2b-4c8c-ab69-bf7b6e2e6432">
+                <item type="txt" lang="seh">ntima</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">n-</item>
+                    <item type="cf" lang="seh">mu-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">3</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">tima</item>
+                    <item type="cf" lang="seh">tima</item>
+                    <item type="gls" lang="pt">coração</item>
+                    <item type="msa" lang="pt">N 3/4</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Estas coisas doem mas o que é necessário é ter coragem. Pois nós todos vamos morrer.</item>
+          </phrase>
+          <phrase guid="e467f5f6-8af7-4d87-8804-61f508f1abcc">
+            <item type="segnum" lang="en">P1.S2</item>
+            <words>
+              <word guid="e2d2bca0-3dcf-43ae-b0fe-7826198a88f6">
+                <item type="txt" lang="seh">Tonsene</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">t-</item>
+                    <item type="cf" lang="seh">ti-</item>
+                    <item type="gls" lang="pt">1P</item>
+                    <item type="msa" lang="pt">Adj:sbj</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">onsene</item>
+                    <item type="cf" lang="seh">onsene</item>
+                    <item type="gls" lang="pt">todo</item>
+                    <item type="msa" lang="pt">Adj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">nós todos </item>
+                <item type="pos" lang="pt">Adj</item>
+              </word>
+              <word guid="4812d40e-aaff-4831-a6bb-1e6c5cfd8b80">
+                <item type="txt" lang="seh">njira</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">^0-</item>
+                    <item type="cf" lang="seh">dzi-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">5</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">njira</item>
+                    <item type="cf" lang="seh">njira</item>
+                    <item type="gls" lang="pt">caminho</item>
+                    <item type="msa" lang="pt">N 5/6</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="f7e7b4f0-3536-43a9-9aaa-83250bacb9ac">
+                <item type="txt" lang="seh">yathu</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">y-</item>
+                    <item type="cf" lang="seh">i-</item>
+                    <item type="gls" lang="pt">4+5+9</item>
+                    <item type="msa" lang="pt">Poss:possncl</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">6</item>
+                    <item type="gls" lang="pt">assocpx</item>
+                    <item type="msa" lang="pt">Poss:assocpx</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">thu</item>
+                    <item type="cf" lang="seh">thu</item>
+                    <item type="gls" lang="pt">1PL</item>
+                    <item type="msa" lang="pt">Poss </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+                <item type="pos" lang="pt">Poss</item>
+              </word>
+              <word guid="2443061d-c372-493f-9fff-f62be29e1fd8">
+                <item type="txt" lang="seh">ndjeneyi</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ndi</item>
+                    <item type="cf" lang="seh">ndi</item>
+                    <item type="gls" lang="pt">é</item>
+                    <item type="msa" lang="pt">Cop </item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">eneyi</item>
+                    <item type="cf" lang="seh">eneyi</item>
+                    <item type="gls" lang="pt">este mesmo</item>
+                    <item type="msa" lang="pt">dem5 </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt"></item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">[1.2 ft]</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+    </paragraphs>
+    <languages>
+      <language lang="en" font="Times New Roman" />
+      <language lang="pt" font="Times New Roman" />
+      <language lang="seh" font="Doulos SIL" vernacular="true" />
+    </languages>
+  </interlinear-text>
+</document>

@@ -1,0 +1,231 @@
+﻿; ------------------------------------------------------------------------------
+;  
+;  MalUniToTam.map
+;  
+;  Left Side:  Malayalam Unicode font data (e.g. Kartika)
+;              Should work for a unicode 5.1 Malayalam font as well.
+;  Right Side: Tamil (e.g. Latha)
+;  
+;  Created by Jim Kornelsen 17 July 08
+;
+;  DATE       NAME  CHANGE DESCRIPTION
+;  ~~~~~~~~   ~~~~  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;  12/31/08   JDK   Added a "<" to handle the word initial N.
+;  06/26/09   JDK   Only Chillu characters are word final. Others end in bar-i.
+;  10/01/09   JDK   Add reverse environment. Handle atomic chillu characters.
+;  10/09/09   JDK   Voiced characters marked by forward slash in Tamil.
+;  
+; ------------------------------------------------------------------------------
+
+EncodingName "Malayalam-Unicode-to-Tamil"
+
+; ------------------------------------------------------------------------------
+; Voiced consonants that are marked with forward slash (/) because they are
+; unpredictable.
+; ------------------------------------------------------------------------------
+pass(Unicode)
+
+UniClass[TAM_VOWEL]  = ( U+0BBE U+0BBF U+0BC0 U+0BC1 U+0BC2 \
+                            U+0BC6 U+0BC7 U+0BC8 U+0BCA U+0BCB U+0BCC)
+UniClass[MAL_VOWEL]  = ( U+0D3E U+0D3F U+0D40 U+0D41 U+0D42 \
+                            U+0D46 U+0D47 U+0D48 U+0D4A U+0D4B U+0D4C)
+UniClass[TAM_MODIFIER]  = ( [TAM_VOWEL] U+0BCD) ; vowels and virama
+UniClass[MAL_MODIFIER]  = ( [MAL_VOWEL] U+0D4D) ; vowels and chandrakkala
+
+U+0D17 < U+0B95 / _ [TAM_MODIFIER]{0,2} "/"      ; Ga  < Ka  + forward slash
+U+0D21 < U+0B9F / _ [TAM_MODIFIER]{0,2} "/"      ; Dda < Tta + forward slash
+U+0D26 < U+0BA4 / _ [TAM_MODIFIER]{0,2} "/"      ; Da  < Ta  + forward slash
+U+0D2C < U+0BAA / _ [TAM_MODIFIER]{0,2} "/"      ; Ba  < Pa  + forward slash
+
+U+0D17 U+0D4D U+0D17 < U+0B95 U+0BCD U+0B95 \
+                / _ [TAM_MODIFIER]{0,2} "/"      ; Ga.Ga   < Ka.Ka/
+U+0D21 U+0D4D U+0D21 < U+0B9F U+0BCD U+0B9F \
+                / _ [TAM_MODIFIER]{0,2} "/"      ; Dda.Dda < Tta.Tta/
+U+0D26 U+0D4D U+0D26 < U+0BA4 U+0BCD U+0BA4 \
+                / _ [TAM_MODIFIER]{0,2} "/"      ; Da.Da   < Ta.Ta/
+U+0D26 U+0D4D U+0D2C < U+0BAA U+0BCD U+0BAA \
+                / _ [TAM_MODIFIER]{0,2} "/"      ; Ba.Ba   < Pa.Pa/
+
+U+0D17 [MAL_MODIFIER]{0,2}=mod > U+0B95 @mod "/" ; Ga  > Ka  + forward slash
+U+0D21 [MAL_MODIFIER]{0,2}=mod > U+0B9F @mod "/" ; Dda > Tta + forward slash
+U+0D26 [MAL_MODIFIER]{0,2}=mod > U+0BA4 @mod "/" ; Da  > Ta  + forward slash
+U+0D2C [MAL_MODIFIER]{0,2}=mod > U+0BAA @mod "/" ; Ba  > Pa  + forward slash
+
+U+0D17 U+0D4D U+0D17 [MAL_MODIFIER]{0,2}=mod > \
+                U+0B95 U+0BCD U+0B95 @mod "/"    ; Ga.Ga   > Ka.Ka/
+U+0D21 U+0D4D U+0D21 [MAL_MODIFIER]{0,2}=mod > \
+                U+0B9F U+0BCD U+0B9F @mod "/"    ; Dda.Dda > Tta.Tta/
+U+0D26 U+0D4D U+0D26 [MAL_MODIFIER]{0,2}=mod > \
+                U+0BA4 U+0BCD U+0BA4 @mod "/"    ; Da.Da   > Ta.Ta/
+U+0D2C U+0D4D U+0D2C [MAL_MODIFIER]{0,2}=mod > \
+                U+0BAA U+0BCD U+0BAA @mod "/"    ; Ba.Ba   > Pa.Pa/
+
+("") < "/" ; remove forward slashes (the parentheses are required to compile)
+
+
+
+; ------------------------------------------------------------------------------
+; This pass handles everything else, including predictable voicing.
+; ------------------------------------------------------------------------------
+pass(Unicode)
+
+; U+201C <> dup   ; left double quotation mark
+; U+201D <> dup   ; right double quotation mark
+
+; Initial Vowels
+
+U+0D05 <> U+0B85     ; A
+U+0D06 <> U+0B86     ; Aa
+U+0D07 <> U+0B87     ; I
+U+0D08 <> U+0B88     ; Ii
+U+0D09 <> U+0B89     ; U
+U+0D0A <> U+0B8A     ; Uu
+U+0D0E <> U+0B8E     ; E
+U+0D0F <> U+0B8F     ; Ee
+U+0D10 <> U+0B90     ; Ai
+U+0D12 <> U+0B92     ; O
+U+0D13 <> U+0B93     ; Oo
+U+0D14 <> U+0B94     ; Au
+
+; General consonants
+
+U+0D15 <> U+0B95        ; Ka
+U+0D16 <> U+0B95        ; Kha > Ka
+U+0D18 <> U+0B95        ; Gha > Ka
+U+0D19 <> U+0B99        ; Nga
+U+0D1A <> U+0B9A        ; Ca
+U+0D1B <> U+0B9A        ; Cha > Ca
+U+0D1C <> U+0B9C        ; Ja
+U+0D1D <> U+0B9C        ; Jha > Ja
+U+0D1E <> U+0B9E        ; Nya
+U+0D1F <> U+0B9F        ; Tta
+; U+0D20 <> U+0B9F      ; Ttha > Tta    ; our team says this is Chillu M
+U+0D22 <> U+0B9F        ; Ddha > Tta
+U+0D23 <> U+0BA3        ; Nna
+U+0D24 <> U+0BA4        ; Ta - Dental t
+U+0D25 <> U+0BA4        ; Tha > Ta
+U+0D27 <> U+0BA4        ; Dha > Ta
+; U+0D28 <> U+0BA8      ; Word-initial N   # This is handled below
+U+0D28 <> U+0BA9        ; Na
+U+0D2A <> U+0BAA        ; Pa
+U+0D2B <> U+0BAA        ; Pha > Pa
+U+0D2D <> U+0BAA        ; Bha > Pa
+U+0D2E <> U+0BAE        ; Ma
+U+0D2F <> U+0BAF        ; Ya
+U+0D30 <> U+0BB0        ; Ra
+U+0D31 <> U+0BB1        ; Rra
+U+0D32 <> U+0BB2        ; La
+U+0D33 <> U+0BB3        ; Lla
+U+0D34 <> U+0BB4        ; Far back l
+U+0D35 <> U+0BB5        ; Va
+U+0D36 <> U+0BB7        ; Sha > Ssa
+U+0D37 <> U+0BB7        ; Ssa
+U+0D38 <> U+0BB8        ; Sa
+U+0D39 <> U+0BB9        ; Ha
+
+
+; Predictable voicing - intervocalic and in homorganic nasals
+
+UniClass[TAM_INIT_VOWEL] = (U+0B85 U+0B86 U+0B87 U+0B88 U+0B89 U+0B8A \
+                            U+0B8E U+0B8F U+0B90 U+0B92 U+0B93 U+0B94)
+UniClass[TAM_MEDIAL_VOWEL]  = ( U+0BBE U+0BBF U+0BC0 U+0BC1 U+0BC2 \
+                            U+0BC6 U+0BC7 U+0BC8 U+0BCA U+0BCB U+0BCC)
+UniClass[TAM_CONS] = (U+0B95 U+0B99 U+0B9A U+0B9C U+0B9E U+0B9F U+0BA3 \
+                      U+0BA4 U+0BA8 U+0BA9 U+0BAA U+0BAE U+0BAF U+0BB0 \
+                      U+0BB1 U+0BB2 U+0BB3 U+0BB4 U+0BB5 U+0BB7 U+0BB8 \
+                      U+0BB9)
+; consonants are included as a preceeding vowel because that means there is
+; no virama, so there must be a preceeding inherent vowel
+UniClass[TAM_PRE_VOWEL] = ([TAM_INIT_VOWEL] [TAM_MEDIAL_VOWEL] [TAM_CONS])
+
+UniClass[TAM_NASAL] = (tamil_letter_nga \
+                       tamil_letter_na  \
+                       tamil_letter_nya \
+                       tamil_letter_nna \
+                       tamil_letter_ma  \
+                       tamil_letter_nnna)
+
+U+0D17 < U+0B95 /  [TAM_PRE_VOWEL] _ ^U+0BCD ; Ga  < Ka  / V_V
+U+0D21 < U+0B9F /  [TAM_PRE_VOWEL] _ ^U+0BCD ; Dda < Tta / V_V
+U+0D26 < U+0BA4 /  [TAM_PRE_VOWEL] _ ^U+0BCD ; Da  < Ta  / V_V
+U+0D2C < U+0BAA /  [TAM_PRE_VOWEL] _ ^U+0BCD ; Ba  < Pa  / V_V
+
+U+0D17 < U+0B95 / [TAM_NASAL] U+0BCD _ ; Ga  < Ka  / N_
+U+0D21 < U+0B9F / [TAM_NASAL] U+0BCD _ ; Dda < Tta / N_
+U+0D26 < U+0BA4 / [TAM_NASAL] U+0BCD _ ; Da  < Ta  / N_
+U+0D2C < U+0BAA / [TAM_NASAL] U+0BCD _ ; Ba  < Pa  / N_
+
+U+0D17 < U+0B95 / [TAM_NASAL] U+0BCD _ ; Ga  < Ka  / N_
+U+0D21 < U+0B9F / [TAM_NASAL] U+0BCD _ ; Dda < Tta / N_
+U+0D26 < U+0BA4 / [TAM_NASAL] U+0BCD _ ; Da  < Ta  / N_
+U+0D2C < U+0BAA / [TAM_NASAL] U+0BCD _ ; Ba  < Pa  / N_
+
+U+0D15 U+0D4D U+0D15 < U+0B95 U+0BCD U+0B95 \
+                    / [TAM_NASAL] U+0BCD _ ; Ka.Ka  < Ka.Ka    / N_
+U+0D1F U+0D4D U+0D1F < U+0B9F U+0BCD U+0B9F \
+                    / [TAM_NASAL] U+0BCD _ ; Tta.Tta < Tta.Tta / N_
+U+0D24 U+0D4D U+0D24 < U+0BA4 U+0BCD U+0BA4 \
+                    / [TAM_NASAL] U+0BCD _ ; Ta.Ta  < Ta.Ta    / N_
+U+0D2A U+0D4D U+0D2A < U+0BAA U+0BCD U+0BAA \
+                    / [TAM_NASAL] U+0BCD _ ; Pa.Pa  < Pa.Pa    / N_
+
+
+; N like dental t, if word initial
+
+UniClass[CTL]  = ( 0 .. 31 127 )
+DEFINE BOUNDARY (space | [CTL] | ^.)
+
+U+0D28 / BOUNDARY _ > U+0BA8
+U+0D28 < U+0BA8
+
+
+; Virama in Malayalam is pronounced as bar i in Tamil
+
+U+0D4D <> U+0BCD   ; Virama (dot), or Chandrakkala (crescent) in Malyalam
+U+0D4D / _ BOUNDARY <> U+0BC1 / _ BOUNDARY ; word-final Chandrakkala is
+                                           ; pronounced as bar-i
+
+; Medial Vowels
+
+U+0D3E <> U+0BBE   ; Aa
+U+0D3F <> U+0BBF   ; I
+U+0D40 <> U+0BC0   ; Ii
+U+0D41 <> U+0BC1   ; U
+U+0D42 <> U+0BC2   ; Uu
+U+0D46 <> U+0BC6   ; E
+U+0D47 <> U+0BC7   ; Ee
+U+0D48 <> U+0BC8   ; Ai
+U+0D4A <> U+0BCA   ; O
+U+0D4B <> U+0BCB   ; Oo
+U+0D4C <> U+0BCC   ; Au
+
+
+; Chillu characters - word final consonants
+
+DEFINE CHILLU U+0D4D U+200D   ; follows the consonant to denote chillu
+
+U+0D30 CHILLU / _ BOUNDARY <> U+0BB0 U+0BCD / _ BOUNDARY     ; word-final Ra
+U+0D32 CHILLU / _ BOUNDARY <> U+0BB2 U+0BCD / _ BOUNDARY     ; word-final La
+U+0D33 CHILLU / _ BOUNDARY <> U+0BB3 U+0BCD / _ BOUNDARY     ; word-final Lla
+U+0D28 CHILLU / _ BOUNDARY <> U+0BA9 U+0BCD / _ BOUNDARY     ; word-final Na
+U+0D23 CHILLU / _ BOUNDARY <> U+0BA3 U+0BCD / _ BOUNDARY     ; word-final Nna
+
+U+0D20 / _ BOUNDARY \
+         <> U+0BAE U+0BCD / _ BOUNDARY     ; word-final Ma (anusvaaram)
+
+
+; Atomic Chillu characters - new in unicode 5.1
+
+U+0D7A <> U+0BA3 U+0BCD / _ BOUNDARY     ; word-final Nna
+U+0D7B <> U+0BA9 U+0BCD / _ BOUNDARY     ; word-final Na
+U+0D7C <> U+0BB0 U+0BCD / _ BOUNDARY     ; word-final Ra
+U+0D7D <> U+0BB2 U+0BCD / _ BOUNDARY     ; word-final La
+U+0D7E <> U+0BB3 U+0BCD / _ BOUNDARY     ; word-final Lla
+
+
+; Other
+
+U+0D02 <> U+0B82   ; Anusvara
+U+0D03 <> U+0B83   ; Visarga (breath like h)
+
+

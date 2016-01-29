@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--See http://code.google.com/p/lift-standard for more information on the format used here.-->
+<lift producer="SIL.FLEx 3.0.0.40087" version="0.13">
+<header>
+<ranges>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="dialect"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="etymology"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="grammatical-info"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="lexical-relation"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="note-type"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="paradigm"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="reversal-type"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="semantic-domain-ddp4"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="status"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="users"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="locations"></range>
+<!--The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard.--><range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="anthro-code"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="translation-type"></range>
+<!--The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech.--><range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="from-part-of-speech"></range>
+<range href="file://C:/Users/Jim Kornelsen/Desktop/lexicon/lexicon.lift-ranges" id="morph-type"></range>
+</ranges>
+<fields>
+<field tag="cv-pattern"><form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text>
+</form>
+</field>
+<field tag="tone"><form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text>
+</form>
+</field>
+<field tag="comment"><form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text>
+</form>
+</field>
+<field tag="import-residue"><form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text>
+</form>
+</field>
+<field tag="literal-meaning"><form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text>
+</form>
+</field>
+<field tag="summary-definition"><form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text>
+</form>
+</field>
+<field tag="scientific-name"><form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text>
+</form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2009-11-11T08:43:53Z" dateModified="2010-03-23T08:04:16Z" guid="765a7b06-6aa1-4cf0-874d-d368a1e7402f" id="அம்மெ_765a7b06-6aa1-4cf0-874d-d368a1e7402f">
+<lexical-unit>
+<form lang="iru"><text>அம்மெ</text></form>
+<form lang="iru-x-X_ETIC"><text>amman</text></form>
+</lexical-unit>
+<trait name="morph-type" value="stem"></trait>
+<citation>
+<form lang="iru"><text>அம்மே</text></form>
+<form lang="iru-x-X_ETIC"><text>ammanCitForm</text></form>
+</citation>
+<variant>
+<form lang="iru-x-X_ETIC"><text>amme</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<pronunciation>
+<form lang="iru-x-X_ETIC"><text>ammɛ</text></form>
+</pronunciation>
+<sense id="father_98d48803-5d88-473c-a776-5b36b1a72fd7">
+<grammatical-info value="Noun"></grammatical-info>
+<gloss lang="en"><text>father</text></gloss>
+<example source="JPDN21.4">
+<note type="reference"><form lang="en"><text>JPDN21.4</text></form>
+</note>
+</example>
+</sense>
+</entry>
+
+<entry dateCreated="2009-11-11T08:43:59Z" dateModified="2010-03-23T08:05:33Z" guid="ddcc9f82-def8-42f7-9d1f-7debab0df6a9" id="பெண்டு_ddcc9f82-def8-42f7-9d1f-7debab0df6a9">
+<lexical-unit>
+<form lang="iru"><text>பெண்டு</text></form>
+<form lang="iru-x-X_ETIC"><text>penɖu</text></form>
+</lexical-unit>
+<trait name="morph-type" value="stem"></trait>
+<citation>
+<form lang="iru"><text>பெண்ட</text></form>
+<form lang="iru-x-X_ETIC"><text>penduCitForm</text></form>
+</citation>
+<field type="import-residue"><form lang="en"><text>\ Review the Grammatical Info of senses.</text></form>
+</field>
+<variant>
+<form lang="iru-x-X_ETIC"><text>ponɖu</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<variant>
+<form lang="iru-x-X_ETIC"><text>pend̪ugaɾi</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<variant>
+<form lang="iru-x-X_ETIC"><text>ponɖiɾiga</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<variant>
+<form lang="iru-x-X_ETIC"><text>peɳɳu</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<variant>
+<form lang="iru-x-X_ETIC"><text>ponɖu -gaɭ</text></form>
+<trait name="morph-type" value="stem"></trait>
+</variant>
+<relation ref="???_43282a00-4ea0-4897-88b7-ea22b5dd0c54" type="Compare">
+</relation>
+<pronunciation>
+<form lang="iru-x-X_ETIC"><text>pœɳɖu</text></form>
+</pronunciation>
+<sense id="wife_04baea09-5085-4508-83d6-99a69418622d" order="1">
+<grammatical-info value="Noun"></grammatical-info>
+<gloss lang="en"><text>wife</text></gloss>
+<example source="EGAN02.30">
+<note type="reference"><form lang="en"><text>EGAN02.30</text></form>
+</note>
+</example>
+</sense>
+<sense id="lady_a0c3710d-ccfb-40c1-8fa7-6ac068ff0272" order="2">
+<grammatical-info value="Noun"></grammatical-info>
+<gloss lang="en"><text>lady</text></gloss>
+</sense>
+</entry>
+
+</lift>

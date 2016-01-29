@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="CalcAddIns" oor:package="org.openoffice.Office">
+<node oor:name="AddInInfo">
+<node oor:name="com.doobiecompany.examples.DoobieDoo.python.DoobieDooImpl" oor:op="replace">
+<node oor:name="AddInFunctions">
+  <node oor:name="doobieMult" oor:op="replace">
+    <prop oor:name="DisplayName"><value xml:lang="en">doobieMult</value></prop>
+    <prop oor:name="Description"><value xml:lang="en">Multiplies two integers quite fantastically.</value></prop>
+    <prop oor:name="Category"><value>Add-In</value></prop>
+    <prop oor:name="CompatibilityName"><value xml:lang="en">AutoAddIn.DoobieDo.doobieMult</value></prop>
+    <node oor:name="Parameters">
+      <node oor:name="a" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">a</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The first integer.</value></prop>
+      </node>
+      <node oor:name="b" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">b</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The second integer.</value></prop>
+      </node>
+    </node>
+  </node>
+  <node oor:name="doobieDiv" oor:op="replace">
+    <prop oor:name="DisplayName"><value xml:lang="en">doobieDiv</value></prop>
+    <prop oor:name="Description"><value xml:lang="en">Divides two floating point numbers in a marvellous way.</value></prop>
+    <prop oor:name="Category"><value>Add-In</value></prop>
+    <prop oor:name="CompatibilityName"><value xml:lang="en">AutoAddIn.DoobieDo.doobieDiv</value></prop>
+    <node oor:name="Parameters">
+      <node oor:name="a" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">a</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The first floating point number.</value></prop>
+      </node>
+      <node oor:name="b" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">b</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The second floating point number.</value></prop>
+      </node>
+    </node>
+  </node>
+  <node oor:name="doobieConcat" oor:op="replace">
+    <prop oor:name="DisplayName"><value xml:lang="en">doobieConcat</value></prop>
+    <prop oor:name="Description"><value xml:lang="en">Concatenates two strings without hesitation.</value></prop>
+    <prop oor:name="Category"><value>Add-In</value></prop>
+    <prop oor:name="CompatibilityName"><value xml:lang="en">AutoAddIn.DoobieDo.doobieConcat</value></prop>
+    <node oor:name="Parameters">
+      <node oor:name="s1" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">s1</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The first string.</value></prop>
+      </node>
+      <node oor:name="s2" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">s2</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The second string.</value></prop>
+      </node>
+    </node>
+  </node>
+  <node oor:name="doobieConcatOptional" oor:op="replace">
+    <prop oor:name="DisplayName"><value xml:lang="en">doobieConcatOptional</value></prop>
+    <prop oor:name="Description"><value xml:lang="en">Concatenates two, perhaps three, strings without further ado.</value></prop>
+    <prop oor:name="Category"><value>Add-In</value></prop>
+    <prop oor:name="CompatibilityName"><value xml:lang="en">AutoAddIn.DoobieDo.doobieConcatOptional</value></prop>
+    <node oor:name="Parameters">
+      <node oor:name="s1" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">s1</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The very first string.</value></prop>
+      </node>
+      <node oor:name="s2" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">s2</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The second, or middle, string.</value></prop>
+      </node>
+      <node oor:name="s3" oor:op="replace">
+        <prop oor:name="DisplayName"><value xml:lang="en">s3</value></prop>
+        <prop oor:name="Description"><value xml:lang="en">The third string which may, or may not be, present.</value></prop>
+      </node>
+    </node>
+  </node>
+</node>
+</node>
+</node>
+</oor:component-data>

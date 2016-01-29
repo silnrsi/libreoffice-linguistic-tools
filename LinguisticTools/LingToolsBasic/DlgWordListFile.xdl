@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWordListFile" dlg:left="9" dlg:top="32" dlg:width="299" dlg:height="306" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;296.DlgWordListFile.Title">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:background-color="0xffffcc"/>
+  <dlg:style dlg:style-id="1" dlg:font-slant="italic"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="LabelFiles" dlg:tab-index="0" dlg:left="7" dlg:top="14" dlg:width="33" dlg:height="12" dlg:value="&amp;297.DlgWordListFile.LabelFiles.Value"/>
+  <dlg:filecontrol dlg:id="FilePicker" dlg:tab-index="1" dlg:left="60" dlg:top="12" dlg:width="155" dlg:height="14"/>
+  <dlg:button dlg:id="btnCurrentDoc" dlg:tab-index="2" dlg:left="217" dlg:top="12" dlg:width="60" dlg:height="14" dlg:value="&amp;301.DlgWordListFile.btnCurrentDoc.Value"/>
+  <dlg:text dlg:id="LabelFiletype" dlg:tab-index="3" dlg:left="7" dlg:top="34" dlg:width="46" dlg:height="12" dlg:value="&amp;298.DlgWordListFile.LabelFiletype.Value"/>
+  <dlg:menulist dlg:style-id="0" dlg:id="listBoxTypeOfFile" dlg:tab-index="4" dlg:left="60" dlg:top="32" dlg:width="99" dlg:height="14" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:text dlg:id="lblWS" dlg:tab-index="5" dlg:left="6" dlg:top="54" dlg:width="54" dlg:height="12" dlg:value="&amp;315.DlgWordListFile.lblWS.Value"/>
+  <dlg:textfield dlg:id="txtWS" dlg:tab-index="6" dlg:left="60" dlg:top="52" dlg:width="50" dlg:height="14"/>
+  <dlg:button dlg:id="btnSelect" dlg:tab-index="7" dlg:left="112" dlg:top="52" dlg:width="50" dlg:height="14" dlg:value="&amp;304.DlgWordListFile.btnSelect.Value"/>
+  <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="8" dlg:left="6" dlg:top="77" dlg:width="288" dlg:height="149"/>
+  <dlg:text dlg:style-id="1" dlg:id="lblAddItem" dlg:tab-index="9" dlg:left="11" dlg:top="85" dlg:width="137" dlg:height="12" dlg:value="&amp;309.DlgWordListFile.lblAddItem.Value"/>
+  <dlg:text dlg:id="lblAddField" dlg:tab-index="10" dlg:left="10" dlg:top="102" dlg:width="55" dlg:height="12" dlg:value="&amp;308.DlgWordListFile.lblAddField.Value"/>
+  <dlg:menulist dlg:id="listAddField" dlg:tab-index="11" dlg:left="70" dlg:top="101" dlg:width="95" dlg:height="12" dlg:spin="true" dlg:linecount="10"/>
+  <dlg:text dlg:id="lblParaStyle" dlg:tab-index="12" dlg:left="10" dlg:top="118" dlg:width="55" dlg:height="12" dlg:value="&amp;313.DlgWordListFile.lblParaStyle.Value"/>
+  <dlg:combobox dlg:id="comboBoxParaStyle" dlg:tab-index="13" dlg:left="70" dlg:top="117" dlg:width="95" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:text dlg:id="lblCharStyle" dlg:tab-index="14" dlg:left="10" dlg:top="135" dlg:width="55" dlg:height="14" dlg:value="&amp;310.DlgWordListFile.lblCharStyle.Value"/>
+  <dlg:combobox dlg:id="comboBoxCharStyle" dlg:tab-index="15" dlg:left="70" dlg:top="135" dlg:width="95" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:text dlg:id="lblFont" dlg:tab-index="16" dlg:left="10" dlg:top="153" dlg:width="55" dlg:height="18" dlg:value="&amp;312.DlgWordListFile.lblFont.Value" dlg:multiline="true"/>
+  <dlg:combobox dlg:id="comboBoxFont" dlg:tab-index="17" dlg:left="70" dlg:top="154" dlg:width="95" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optFontWestern" dlg:tab-index="18" dlg:left="70" dlg:top="169" dlg:width="37" dlg:height="10" dlg:value="&amp;318.DlgWordListFile.optFontWestern.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optFontCTL" dlg:tab-index="19" dlg:left="108" dlg:top="169" dlg:width="37" dlg:height="10" dlg:value="&amp;317.DlgWordListFile.optFontCTL.Value"/>
+   <dlg:radio dlg:id="optFontAsian" dlg:tab-index="20" dlg:left="146" dlg:top="169" dlg:width="37" dlg:height="10" dlg:value="&amp;316.DlgWordListFile.optFontAsian.Value"/>
+  </dlg:radiogroup>
+  <dlg:text dlg:id="lblSFM" dlg:tab-index="21" dlg:left="10" dlg:top="185" dlg:width="55" dlg:height="12" dlg:value="&amp;314.DlgWordListFile.lblSFM.Value"/>
+  <dlg:textfield dlg:id="txtSFM" dlg:tab-index="22" dlg:left="70" dlg:top="185" dlg:width="50" dlg:height="12"/>
+  <dlg:button dlg:id="btnAddItem" dlg:tab-index="23" dlg:left="70" dlg:top="203" dlg:width="75" dlg:height="14" dlg:value="&amp;299.DlgWordListFile.btnAddItem.Value"/>
+  <dlg:text dlg:id="lblFields" dlg:tab-index="24" dlg:left="184" dlg:top="85" dlg:width="63" dlg:height="12" dlg:value="&amp;311.DlgWordListFile.lblFields.Value"/>
+  <dlg:menulist dlg:id="listBoxFields" dlg:tab-index="25" dlg:left="184" dlg:top="99" dlg:width="105" dlg:height="94" dlg:tabstop="false" dlg:linecount="15"/>
+  <dlg:button dlg:id="btnRemove" dlg:tab-index="26" dlg:left="184" dlg:top="203" dlg:width="97" dlg:height="14" dlg:value="&amp;303.DlgWordListFile.btnRemove.Value"/>
+  <dlg:checkbox dlg:id="checkBoxIncludeMisspelledWords" dlg:tab-index="27" dlg:left="54" dlg:top="235" dlg:width="214" dlg:height="12" dlg:value="&amp;305.DlgWordListFile.checkBoxIncludeMisspelledWords.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="checkboxSkipFirstRow" dlg:tab-index="28" dlg:left="54" dlg:top="249" dlg:width="212" dlg:height="12" dlg:value="&amp;306.DlgWordListFile.checkboxSkipFirstRow.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkSplitByWhitespace" dlg:tab-index="29" dlg:left="54" dlg:top="263" dlg:width="210" dlg:height="12" dlg:value="&amp;307.DlgWordListFile.chkSplitByWhitespace.Value" dlg:checked="false"/>
+  <dlg:button dlg:id="btnOk" dlg:tab-index="30" dlg:left="51" dlg:top="284" dlg:width="56" dlg:height="14" dlg:value="&amp;302.DlgWordListFile.btnOk.Value"/>
+  <dlg:button dlg:id="btnCancel" dlg:tab-index="31" dlg:left="132" dlg:top="282" dlg:width="61" dlg:height="16" dlg:value="&amp;300.DlgWordListFile.btnCancel.Value"/>
+ </dlg:bulletinboard>
+</dlg:window>

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Exec=bash "/media/OurDocs/computing/Office/OOLT/edit_tests.sh"
+Name=edit_code
+Icon=gnome-panel-launcher
+Name[en]=edit_tests

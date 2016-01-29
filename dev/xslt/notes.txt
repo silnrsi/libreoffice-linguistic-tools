@@ -1,0 +1,7 @@
+
+xsltproc -o <outfile> <stylesheet> <infile>
+
+for example:
+
+xsltproc -o 1_out.xml 1.xsl 1_in.xml
+

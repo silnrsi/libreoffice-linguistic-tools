@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version number="" />
+		<generation date="0001-01-01T00:00:00" />
+		<language type="bfy" />
+		<variant type="fonipa" />
+	</identity>
+	<collations>
+		<collation>
+			<base>
+				<alias source="" />
+			</base>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType value="OtherLanguage" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation value="Bag" />
+		<palaso:defaultFontFamily value="Doulos SIL" />
+		<palaso:defaultFontSize value="12" />
+		<palaso:defaultKeyboard value="Icelandic" />
+		<palaso:languageName value="Bagheli (IPA)" />
+	</special>
+</ldml>

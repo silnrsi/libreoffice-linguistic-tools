@@ -1,0 +1,133 @@
+# Created April 17, 2013 by Jim Kornelsen
+#
+# Record all possible errors, limitations or possible needs for improvement
+# here, as well as perhaps instructions for testing.
+# Then record how each issue will be resolved or ignored.
+
+#-------------------------------------------------------------------------------
+# LibreOffice 4.0.1.2 on Ubuntu 12.10 Quantal
+#-------------------------------------------------------------------------------
+
+Phonology
+    Lift
+    Find and Replace
+    !!! Bug: After inserting an example, char style is still Lex Ref Number.
+    !!! Bug: After replacing example, following example has tabs messed up.
+        Same thing occurs if an example is inserted with the cursor at the
+        beginning of a line containing an example.
+    !!! Choked: DlgWritingSystem didn't close when selecting Sena (seh).
+        When Sena (x-etic) is selected, "seh" is erroneously obtained.
+    Were these problems in 1.9.9.5b and we just didn't notice during testing,
+    or were they introduced in 1.9.9.6b somehow?
+    !!! Improvement: When no writing systems are found, writing system selection
+        still appears and just gives option "(none)", rather than displaying
+        an error message.
+    JPDN37.6, JPDN38.7, JPDN38.8
+    JGDN02.3, JGDN02.4
+    0001, 0002
+    Tested JPG files.
+Grammar
+    Numbering width.
+    Updating examples.
+    !!! Improvement: Error message says "Column width is not a number" but then
+        dialog closes anyway, so there's not a good chance to fix it.
+        It resets the value, which makes sense, but still it seems confusing.
+    !!! Bug: Vattalaki was set to ref number char style instead of JPDN.
+        With all settings set to opposite of default.
+        Unsetting free translation in quotes has something to do with it.
+        Making an outer table makes it work.
+    !!! Bug: Replacing deletes the next character.
+        Occurs using tables (not frames) with no outer table.
+    !!! Improvement: Keeps saying "Found a ref number, but needs outer table."
+        Once is enough; then just keep going.
+        Actually, we're in an infinite loop (see next bug).
+    !!! Bug: Find Next for updating gets stuck on the first one if it's not
+        at the end of a line.
+        It keeps searching from the beginning, even when Search from
+        beginning isn't checked, and then it stops at the same place.
+    Buttons from comparison doc seem to be working good enough now.
+    !!! Problem: Spacing again: An example with just one frame shows a big
+        space above the free translation.
+        It disappears if you type something after the frame.
+Abbreviations
+    Change labels
+    Scan
+    Search
+    Change caps
+Data Conversion
+    Caption Characters works.
+    !!! Limitation: Cannot convert by Default Para or Char style.
+Word list
+    !!! Bug: Apply Converter missed final row.
+    Default columns for Apply Converter are working now.
+    !!! Choked: When getting words from SFM file.
+        \ps \ge, \tx
+        Still doesn't work in 1.9.9.6b
+    Tested word list by font.
+    !!! Problem: Words will be counted twice if they match more than one
+        search criteria, for example Arial Bold font and Strong Emphasis style.
+Spelling
+    !!! Bug: Says "No data found" unless data is in row 3 or higher.
+        Can only navigate to maxRow - 1.
+
+    If a word is incorrect, it won't show up in suggestions, nor will the
+    correction if available. That might be best in some situations, though,
+    because the correction might be a phrase rather than a word. It might
+    be just a fix for that occurrence, not a regular word.
+
+    !!! Choked: Step Through List on "word list Irula Mark.ods"
+        when a writer document with non-matching settings was opened.
+        Perhaps initial row num problem?
+
+    Highlighting erroneous row numbers works conveniently now.
+
+    One solution to the small font problem would be to allow font name and
+    size to be changed somehow, either hidden user var or drop-down box.
+
+
+    !!! Bug: Can't tell by looking at checkbox whether row has an "X" in the
+        Correct? column or not.
+    !!! Bug: Cannot change Correct? button unless correction value is different.
+    !!! Bug: Cannot clear Correction column for a row.
+
+    Set Correction button greying is working better now.
+
+    !!! Limitation: Quotes in XPath expressions are not escaped.
+
+    !!! Bug: Date stamp shows year first instead of last.
+
+    Tested XSLT file with and without matching partial strings.
+
+    Test simple CC table again.         # may be easier on Windows
+    Run full CC table on an SFM file.   # may be easier on Windows
+    TODO: Find a built-in XSLT 1.0 processor on windows if possible.
+Make spelling changes
+    !!! Limitation: Cannot search by complex language.
+    !!! Problem: If Word and Correction are the same, keeps changing.
+        Should just ignore it.
+
+    Making corrections by font and para style seemed to work.
+    Complex and asian fonts seemed to work.
+
+    !!! Bug: In spell checking, does not find last word in good list.
+        (Probably related to maxRow - 1 bug mentioned earlier).
+    !!! Improvement: Spell checking dialog font is small for Tamil.
+
+    New hyphen behavior seems better.
+Script Practice
+    !!! Documentation: Mention that word won't be checked until what you
+        typed is long enough.
+
+################################################################################
+# Below was not tested this time.
+################################################################################
+
+Spanish
+    Default Style
+    Try for various error messages
+French
+    Default Style
+    Try for various error messages
+Automated Tests
+Button driven Tests
+

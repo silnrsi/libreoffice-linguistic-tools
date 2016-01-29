@@ -1,0 +1,63 @@
+# Created April 22, 2013 by Jim Kornelsen
+#
+# Record all possible errors, limitations or possible needs for improvement
+# here, as well as perhaps instructions for testing.
+# Then record how each issue will be resolved or ignored.
+
+#-------------------------------------------------------------------------------
+# LibreOffice 4.0.1.2 on Ubuntu 12.10 Quantal
+#-------------------------------------------------------------------------------
+
+Phonology
+    Lift
+    !!! Bug: Updating chokes. (Even though finding seems to work fine).
+    !!! Limitation: Writing system is only for phonetic / phonemic, not gloss.
+        For example Moreira:22 gloss has both "en" and "pt" writing systems.
+    JPDN37.6, JPDN38.7, JPDN38.8
+    JGDN02.3, JGDN02.4
+    0001, 0002
+Grammar
+    !!! Bug: Updated a lot of examples but then at the end said did not
+        find an existing example to update.
+        (Probably last one failed, but the error message doesn't make sense).
+Abbreviations
+    Scan
+    Search
+Data Conversion
+    Ask before making each change.
+    Default Para style.
+Word list
+    Apply Converters.
+Spelling
+    IsCorrect checkbox is working better now.
+    !!! Improvement: Should change extension when radio buttons are changed,
+        not later.
+    !!! Make Change File chokes.
+
+    Test simple CC table again.         # may be easier on Windows
+    Run full CC table on an SFM file.   # may be easier on Windows
+    TODO: Find a built-in XSLT 1.0 processor on windows if possible.
+Make spelling changes
+    !!! Bug: Changing para style Interlin Gloss was doing well but then ended
+        up in an infinite loop after "Yes to All".
+        Apparently same problem with spell checking.
+    !!! Improvement: Keeping Calc settings in Writer is annoying because I
+        save the Calc file but then the settings do not get saved. It is often
+        confusing in various situations.
+Script Practice
+    Bad number of words is being corrected better now.
+    Tested reset and not leaving spaces.
+
+################################################################################
+# Below was not tested this time.
+################################################################################
+
+Spanish
+    Default Style
+    Try for various error messages
+French
+    Default Style
+    Try for various error messages
+Automated Tests
+Button driven Tests
+

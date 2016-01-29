@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006" 
+xmlns:d="http://openoffice.org/extensions/description/2006" 
+xmlns:xlink="http://www.w3.org/1999/xlink"> 
+
+<dependencies> 
+	<OpenOffice.org-minimal-version value="2.4" d:name="OpenOffice.org 2.4"/> 
+</dependencies> 
+
+<identifier value="com.doobiecompany.examples.DoobieDoo" /> 
+<version value="0.25" />
+<display-name><name lang="en">The doobie-tastic Add-In example.</name></display-name>
+<publisher><name xlink:href="http://www.doobiecompany.com" lang="en">Doobie Company</name></publisher>
+
+</description> 

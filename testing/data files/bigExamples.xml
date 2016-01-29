@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document><interlinear-text><item type="title" lang="en">Test</item><item type="title-abbreviation" lang="en">***</item>
+<paragraphs><paragraph><phrases>
+
+<phrase><words>
+    <word><item type="txt" lang="iru__X_ETIC">oɾu</item><morphemes><morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">oɾu</item><item type="cf" lang="iru__X_ETIC">oɾu</item><item type="gls" lang="en">a</item><item type="msa" lang="en">det </item></morph></morphemes><item type="gls" lang="en">a</item><item type="pos" lang="en">det</item></word>
+    <word><item type="txt" lang="iru__X_ETIC">uːɾud̪i</item><morphemes><morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">uːɾu</item><item type="cf" lang="iru__X_ETIC">uːɾu</item><item type="gls" lang="en">village</item><item type="msa" lang="en">n </item></morph><morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">-d̪i</item><item type="cf" lang="iru__X_ETIC">-d̪iaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item><item type="gls" lang="en">LOC.in</item><item type="msa" lang="en">case </item></morph></morphemes><item type="gls" lang="en">village-in</item><item type="pos" lang="en">n</item></word>
+    <word><item type="txt" lang="iru__X_ETIC">muːpa</item><morphemes><morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">muːpa</item><item type="cf" lang="iru__X_ETIC">muːpan</item><item type="gls" lang="en">village.leader</item><item type="msa" lang="en">n </item></morph></morphemes><item type="gls" lang="en">village.leader</item><item type="pos" lang="en">n</item></word>
+    <word><item type="txt" lang="iru__X_ETIC">iɾund̪æ</item><morphemes><morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">iɾu</item><item type="cf" lang="iru__X_ETIC">iɾu</item><item type="gls" lang="en">be</item><item type="msa" lang="en">v </item></morph><morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">-nd̪</item><item type="cf" lang="iru__X_ETIC">-t̪t̪</item><item type="gls" lang="en">past</item><item type="msa" lang="en">asp</item></morph><morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933"><item type="txt" lang="iru__X_ETIC">-æ</item><item type="cf" lang="iru__X_ETIC">-an</item><item type="gls" lang="en">3sm</item><item type="msa" lang="en">s.agr</item></morph></morphemes><item type="gls" lang="en">be-past-3sm</item><item type="pos" lang="en">v</item></word>
+    <word><item type="punct" lang="iru__X_ETIC">.</item></word></words><item type="gls" lang="en"> ‎‎In a village there was a headman.</item></phrase>
+
+<phrase><words>
+    <word><item type="txt" lang="iru__X_ETIC">word1</item>
+    <morphemes>
+        <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+        <item type="cf" lang="iru__X_ETIC">morph1</item>
+        <item type="gls" lang="en">morphgloss1</item>
+        <item type="msa" lang="en">morphpos1</item>
+        </morph>
+    </morphemes>
+    <item type="gls" lang="en">wordgloss1</item>
+    <item type="pos" lang="en">wordpos1</item></word>
+    <word><item type="txt" lang="iru__X_ETIC">word2</item>
+    <morphemes>
+        <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="cf" lang="iru__X_ETIC">morph2</item>
+            <item type="gls" lang="en">gl3</item>
+            <item type="msa" lang="en">mpos3</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph3</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph4</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph5</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph6</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph7</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph8</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph9</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph10</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph11</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph12</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph13</item><item type="msa" lang="en">mpos</item></morph>
+        <morph type="suffix" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+            <item type="gls" lang="en">gls_slkdjl_ldskjlksjdls_dslksjdlksjdlsd_dslkjdlskjsdlkdjs_KLJlkjlkjLKJlkjlkjlkJlkdj</item>
+            <item type="cf" lang="iru__X_ETIC">morph14</item><item type="msa" lang="en">mpos</item></morph>
+    </morphemes>
+        <item type="gls" lang="en">village-in</item>
+        <item type="pos" lang="en">n</item>
+    </word>
+        </words>
+        <item type="gls" lang="en">Ft2.</item></phrase>
+
+</phrases></paragraph></paragraphs><languages><language lang="en" font="Times New Roman" /><language lang="iru__X_ETIC" font="Doulos SIL" vernacular="true" /></languages></interlinear-text></document>

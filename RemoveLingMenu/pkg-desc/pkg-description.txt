@@ -1,0 +1,2 @@
+Jim Kornelsen 2010 for SIL South Asia
+Install this to force the Linguistics menu to go away.

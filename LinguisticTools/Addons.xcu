@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          oor:name="Addons" oor:package="org.openoffice.Office">
+  <node oor:name="AddonUI">
+    <node oor:name="OfficeMenuBar">
+      <node oor:name="name.JimK.LinguisticTools" oor:op="replace">
+        <prop oor:name="Title" oor:type="xs:string">
+          <value/>
+          <value xml:lang="en">Linguistics</value>
+          <value xml:lang="es">Lingüística</value>
+          <value xml:lang="fr">Linguistique</value>
+        </prop>
+        <prop oor:name="Target" oor:type="xs:string">
+          <value>_self</value>
+        </prop>
+        <prop oor:name="ImageIdentifier" oor:type="xs:string">
+          <value/>
+        </prop>
+        <node oor:name="Submenu">
+          <node oor:name="m01" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.PhonologySettings?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Phonology Settings</value>
+              <value xml:lang="es">Configuración de fonología</value>
+              <value xml:lang="fr">Configuration de phonologie</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m02" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+                <value>service:name.JimK.LinguisticTools.PhonologyGrabExamples?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Get Phonology Examples</value>
+              <value xml:lang="es">Obtener ejemplos de fonología</value>
+              <value xml:lang="fr">Obtenir des exemples de phonologie</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m03" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m04" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.GrammarSettings?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Grammar Settings</value>
+              <value xml:lang="es">Configuración de gramática</value>
+              <value xml:lang="fr">Configuration de grammaire</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m05" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.GrammarGrabExamples?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Get Grammar Examples</value>
+              <value xml:lang="es">Obtener ejemplos de gramática</value>
+              <value xml:lang="fr">Obtenir des exemples de grammaire</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m06" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.Abbreviations?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">List of Abbreviations</value>
+              <value xml:lang="es">Lista de abreviaturas</value>
+              <value xml:lang="fr">Liste des abréviations</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m07" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m08" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.DataConversion?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Data Conversion</value>
+              <value xml:lang="es">Conversión de datos</value>
+              <value xml:lang="fr">Conversion des données</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m09" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.BulkConversion?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Bulk Conversion</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m10" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m11" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.WordList?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Word List and Spelling</value>
+              <value xml:lang="es">Lista de palabras y ortografía</value>
+              <value xml:lang="fr">Liste de mots et orthographe</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m12" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.GoodSpellingsCheck?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Make Spelling Changes</value>
+              <value xml:lang="es">Hacer cambios ortográficos</value>
+              <value xml:lang="fr">Effectuer des changements d'orthographe</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m13" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.ScriptPractice?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Script Practice</value>
+              <value xml:lang="es">Practica de script</value>
+              <value xml:lang="fr">Exercices d'écriture</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m14" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.ApplyConverter?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Apply Converter</value>
+              <value xml:lang="es">Aplicar convertidor</value>
+              <value xml:lang="fr">Appliquer convertisseur</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.sheet.SpreadsheetDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m15" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.SpellingCharComp?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Compare Spelling</value>
+              <value xml:lang="es">Comparar ortografía</value>
+              <value xml:lang="fr">Comparer orthographe</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.sheet.SpreadsheetDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m16" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.SpellingStepper?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Step Through List</value>
+              <value xml:lang="es">Pasar a través de la lista</value>
+              <value xml:lang="fr">Traverser la liste pas à pas</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.sheet.SpreadsheetDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m17" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.MakeSpellingChanger?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Make Change File</value>
+              <value xml:lang="es">Hacer archivo de cambios</value>
+              <value xml:lang="fr">Créer fichier de remplacements</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.sheet.SpreadsheetDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m18" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m19" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>vnd.sun.star.script:LingToolsBasic.ModuleMain.OpenExtensionHelp?language=Basic&amp;location=application</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value xml:lang="en">Help</value>
+              <value xml:lang="es">Ayuda (Inglés)</value>
+              <value xml:lang="fr">Aide (Anglais)</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
+            </prop>
+          </node>
+          <!-- remove unused menu names -->
+          <!--
+          <node oor:name="m19" oor:op="remove" />
+          -->
+        </node>
+      </node>
+    </node>
+  </node>
+</oor:component-data>

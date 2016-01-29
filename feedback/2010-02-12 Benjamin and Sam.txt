@@ -1,0 +1,71 @@
+[2:14:08 PM] nissy_benjamin: Hi Jim, this is Benjamin, NLCI
+[2:14:22 PM] Jim and Karen Kornelsen: Good afternoon.
+[2:14:37 PM] Jim and Karen Kornelsen: Jim and Karen Kornelsen has shared contact details with BeNiza.
+[2:14:49 PM] BeNiza: Good afternoon
+[2:14:55 PM] Jim and Karen Kornelsen: I just received your email.
+[2:15:03 PM] BeNiza: the second one too?
+[2:15:24 PM] Jim and Karen Kornelsen: Yes, the one with the zip attachment.
+[2:15:31 PM] BeNiza: ok
+[2:17:46 PM] BeNiza: when we tried to insert examples in a fresh document, the first one came without any issue, but the second one didn't
+[2:18:22 PM] Jim and Karen Kornelsen: Yes, it does look like there is a problem.  I just inserted an example, but it did not look good.
+[2:18:56 PM] Jim and Karen Kornelsen: The tables method works better I think.
+[2:19:36 PM] Jim and Karen Kornelsen: Generally tables seem to work better with .doc format files.  That's why there is an option to select tables.
+[2:20:26 PM] Jim and Karen Kornelsen: But I am curious to know what is causing the problems with frames, because it is converted to an .odt file already.
+[2:20:47 PM] BeNiza: i haven't tried with Table option yet
+[2:22:43 PM] Jim and Karen Kornelsen: I suspect that the problem is that one of the styles has been changed in the Kodaku Writeup (2010).odt.  Perhaps the Table Contents style?  I am looking at it now.
+[2:24:23 PM] Jim and Karen Kornelsen: Yes, that seems to be the problem.  The Table Contents style has been set to a fixed line spacing.  When I change it to "Single," then it fixes the problem.
+[2:26:04 PM | Edited 2:26:09 PM] BeNiza: how do I do that in OO?
+[2:26:54 PM] Jim and Karen Kornelsen: First make sure that the styles pane is showing on the right hand side of the screen.  If it is not, go to Format -> Styles and Formatting.
+[2:27:27 PM] BeNiza: ok i did it
+[2:27:52 PM] Jim and Karen Kornelsen: Now in the bottom, select "Applied Styles"
+[2:28:11 PM] BeNiza: ok
+[2:28:33 PM] Jim and Karen Kornelsen: Now find "Table Contents" in the list.  Right click on it and choose Modify.
+[2:28:56 PM] BeNiza: ok
+[2:29:17 PM] Jim and Karen Kornelsen: Now set line spacing to Single instead of Fixed.
+[2:29:28 PM] BeNiza: ok
+[2:29:34 PM] Jim and Karen Kornelsen: Then press OK.
+[2:29:44 PM] BeNiza: done
+[2:30:11 PM] Jim and Karen Kornelsen: Does it look better now?
+[2:31:44 PM] BeNiza: yes it's better now. :)
+[2:31:54 PM] Jim and Karen Kornelsen: :)
+[2:32:02 PM] BeNiza: thanks a lot
+[2:32:58 PM | Edited 2:33:15 PM] BeNiza: I'll be playing with it after the lunch break... will you be available online this afternoon and can I ping you if we ran into some problem?
+[2:33:13 PM] Jim and Karen Kornelsen: Yes, I should be available.
+[2:33:26 PM] BeNiza: thanks again
+[2:33:44 PM | Edited 2:33:59 PM] Jim and Karen Kornelsen: Certainly, I'm glad I could help.
+[2:36:38 PM] BeNiza: another issues that I noticed is that for all the inserted, the example  number (left top of the inserted example) is showing as 0
+[2:42:07 PM] Jim and Karen Kornelsen: Really.  In the .doc file, or in Kodaku Writeup (2010).odt?  The numbers say 2,3, etc for me in the .odt file.
+[2:42:52 PM] BeNiza: this is the odt
+[2:44:26 PM] Jim and Karen Kornelsen: Two questions:
+[2:44:35 PM] Jim and Karen Kornelsen: - what page are you inserting the examples in?
+[2:44:44 PM] Jim and Karen Kornelsen: - Does it say (0), or ()?
+[2:45:37 PM] BeNiza: it says ()
+[2:46:00 PM] BeNiza: i'm in page no. 14
+[2:47:04 PM] Jim and Karen Kornelsen: Ok.  How did you insert the example?  Did you type in the number and press the Insert Example button, or use find and replace?
+[2:47:47 PM] BeNiza: and tried to insert the examples just below section 1.5 (orthography charts)
+[2:49:15 PM] BeNiza: I'm not sure, now when I tried the 'Find/Replace' method, it added the number
+[2:49:19 PM] BeNiza: :)
+[2:49:41 PM | Edited 2:50:05 PM] Jim and Karen Kornelsen: I think maybe you did not click "Finish" before.  If you click the red "x" to cancel, then it will just insert "()" without a number.
+[2:50:11 PM] BeNiza: ok.. i'll keep that in mind...
+[2:50:30 PM] BeNiza: the bell for lunch rang.
+[2:50:41 PM] Jim and Karen Kornelsen: Ok. Talk to you later.
+[2:51:05 PM] BeNiza: thanks again
+
+
+------------------------
+
+[2:26:30 PM] SamSony: Hi Jim
+[2:27:26 PM] Jim and Karen Kornelsen: Hi!  I am talking with Benjamin from NLCI just now.  Did you get the email I sent?
+[2:28:01 PM] SamSony: yes I got it...now i am trying it...
+[2:43:44 PM] Jim and Karen Kornelsen: Hello, I received your email.  Does it still say "Did not find any data in file ...PhonData.lift?  I tested the file you sent, and it worked fine for me using version 0.6.1
+[3:26:20 PM] SamSony: ok
+[3:30:16 PM] Jim and Karen Kornelsen: Hello.
+[3:30:55 PM] SamSony: hi Jim
+[3:31:06 PM] SamSony: yes..it is working!!
+[3:31:13 PM] SamSony: Thank you very much
+[3:31:13 PM] Jim and Karen Kornelsen: :)
+[3:34:31 PM] SamSony: Benjamin is going to Bangalore on 15th...May be i want your help on next week about Grammar. u r avaible on next week if i need your help?
+[3:35:48 PM] Jim and Karen Kornelsen: Yes, I will be available next week - email, skype etc.
+[3:36:11 PM] SamSony: thanks
+[3:41:51 PM] Jim and Karen Kornelsen: Are you and Benjamin in Nasik now?
+[3:42:24 PM] SamSony: yes...

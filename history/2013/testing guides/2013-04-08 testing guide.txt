@@ -1,0 +1,236 @@
+# Created April 8, 2013 by Jim Kornelsen
+#
+# Record all possible errors, limitations or possible needs for improvement
+# here, as well as perhaps instructions for testing.
+# Then record how each issue will be resolved or ignored.
+
+Spend 1 hour testing on each system.
+= about 5 minutes per feature
+1. manual tests 1/2 hr
+2. automated tests 1/2 hr
+
+#-------------------------------------------------------------------------------
+# LibreOffice 4.0.1.2 on Ubuntu 12.10 Quantal
+#-------------------------------------------------------------------------------
+
+Phonology
+    Lift
+    Find and Replace
+    JGDN02.3, JGDN02.4
+    JGDN02.5, JGDN03.5  # not found
+    0001, 0002
+    !!! Warning: Getting a second phonology file does not automatically clear
+        the writing system field, which leaves it to something that might not
+        be right.
+        # Decision: Ignore this problem. Setting it to blank might not be
+        #           any better.
+    !!! TODO: What about the new version of phonology assistant?
+        # Decision: The test version of PA doesn't yet export a general
+        #           XML format, so there's nothing really to test.
+    !!! Problem: When replacing an example before another example,
+        it ended by applying default style, which messed up the tabs on
+        the last example. For example these two lines using PhoneticCorpus.xml:
+        #JPDN37.6
+        atali...  (JPDN38.7)
+        The same problem occurs when updating one example before another;
+        the example below loses its customized tabs.
+        However Update All does not have this problem, since the example may
+        get messed up but then it gets redone.
+        # Decision: Need to fix this.
+    Tested changing fields manually (ge instead of phm).
+    Did not test PA experimental transcriptions.
+    !!! Question: Phonology updating examples did not make a comparison doc,
+        even though _ComparisonDoc says 1. Is this intentional?
+        # Decision: This is a testing mistake. It didn't appear until running
+        #           Grammar Settings. Phonology does not need a Comp Doc.
+    !!! Numbering width variable appears but I think is used only in grammar.
+        # Decision: Same as above; this is also from Grammar Settings.
+    Tested JPG files.
+    !!! TODO: check help file to see if it matches up with what we are seeing.
+    !!! Confusing: Specifying updating at the top does not mean you cannot
+        still insert examples at the bottom of the dialog.
+        # Decision: Resize the box frame to include everything above.
+Grammar
+    Numbering width.
+    Updating examples.
+    !!! Question: When updating examples, is there not supposed to be a button
+        that goes back to the main document?
+        # Decision: The main document needs to be saved first. Should this be
+        #           mentioned in the help file? Maybe it's fine as is.
+    !!! Improvement: If making a comparsion document, then should highlight the
+        differences using a string comparison algorithm.
+        Have the highlighting color configurable.
+        # Decision: Not needed for version 2.0
+    !!! Improvement: Only create one comparison document for each writeup.
+        Use HasSettings or a similar variable to do this.
+        # Decision: Fix this. Creating so many windows is ugly.
+    Tested prefixes.
+    Tested large example: fromSelvi-all.xml COCO.001
+    Tested all lines.
+    Spacing problems seem to be fixed now.
+    !!! Improvement: Offer suggestion by getting ref no. that is closest
+        string distance to what was entered, not just the first one.
+        But offer the first one as a suggestion too.
+        # Decision: Not needed for version 2.0
+    !!! Error: WrittenTamilTexts.xml.Hunt02 tables does not wrap well.
+        Seems to be a Tamil script problem with mborth=kaliyana,
+        which goes across two lines in frames.
+        Turning off mborth makes it work.
+        # Decision: Look into this.
+    !!! TODO: Test the latest fieldworks and toolbox output formats.
+        # Decision: Yes, test this.
+    Large examples seem to be reasonably fast on this system.
+Abbreviations
+    Search
+    !!! Error: Searching found a blank string and suggested it.
+        # Decision: Fix this.
+    !!! Problem: Search moved the viewcursor. Should return to its original
+        location when finished.
+        # Decision: Not sure if this is really the best behavior or not. In
+        # some cases we may want to end up where the search left off, in order
+        # to make a correction and then continue searching. Don't change for
+        # now.
+Data Conversion
+    Creating styles
+    How to change the font of a style without changing the style.
+    Perhaps just set the new paragraph style the same as the old one?
+    Yes, this works, and it makes sense pretty much.
+    !!! Bug: In "change by style in table.odt", Font in dialog shows up as
+        &82.DlgDataConversion.cmbxScopeFont.Text
+        Likewise for target para style.
+        And char style in another .odt file.
+        # Decision: This was must have been saved in the document due to using
+        #           older versions of OOoLT. No need to fix.
+Word list
+    !!! Bug: Apply Converter is not defaulting to changed columns.
+        1. Open new writer doc.
+        2. Word List, move Word column down 1 (to B)
+        3. Make empty list
+        4. Open Apply Converter dialog. (Should be fine).
+        5. Close spreadsheet.
+        6. Word List, move Word column up 1 (back to A)
+        7. Make empty list.
+        8. Open Apply Converter dialog. Will still say B.
+        # Decision: Fix this.
+    Make a list from lots of different files
+    Change column order
+    Tested Apply Converter with three different encoding types.
+    !!! Bug: Apply Converter is not defaulting to Skip first row (heading).
+        Perhaps when first opened, or perhaps after a second word list is
+        made from the same base document.
+        # Decision: Fix this.
+    !!! Limitation: REVERSE() does not work for complex scripts.
+        # Decision: Fix this.
+    !!! Irritating: If there is only one file in the list, then it should be
+        selected / used by default when changing settings.
+        # Decision: Fix this.
+    !!! Limitation: (but this may already be documented in the help file):
+        Getting words from "Whole Document" does not read contents in frames.
+        # Decision: Not needed for version 2.0
+    !!! Problem: Punctuation contains "[" but "NP[subj" is treated as a single
+        word. Should split on punctuation.
+        In that case I suppose "-" should not be considered punctuation.
+        Well, maybe it is better as is.
+        # Decision: Leave as is for version 2.0
+    !!! Limitation: Punctuation \u201c and \u201d not in list by default.
+        # Decision: Add this.
+    !!! Error: Getting words from SFM files does not seem to work.
+        # Decision: Fix this.
+    !!! Limitation: A word ending in \u200c becomes an empty string in a word
+        list. Now OOo does not render such words properly; however the data
+        should probably not be lost.  For example "కామ్క్‌" in SpellingStatus.
+        # Decision: Don't worry about this for version 2.0
+    !!! Bug: Selecting a writing system did not stay when going back to change
+        settings. It might not have had any effect at all actually.
+        # Decision: Fix this.
+    !!! Bug: Harvesting from .lift files seems to require a ref. no, which is
+        probably not going to be common.
+        # Decision: Fix this if it's not too difficult.
+Spelling
+    !!! Improvement: In Spelling Char Comp, have all boxes checked by default.
+        # Decision: Fix this.
+    !!! Improvement: In Step Through List, keep same row we left off in, until
+        a new word list is generated.
+        # Decision: Fix this.
+    !!! Improvement: In Step Through List, move view to that row, in order to
+        see occurrences for example.
+        # Decision: Not needed for version 2.0
+        # More Info: Check out UNO setFirstVisibleRow.
+    !!! Improvement: In Step Through List, some words are really small in Tamil,
+        too small to see the difference between initial A and AA.
+        However some are just fine.  Does the font size change from row to row?
+        # Decision: Look into this.
+    !!! Improvement: In Step Through List, have a field that shows the number
+        of occurrences of the selected similar word, as well as the number of
+        occurrences of the current word.
+        This will be a fairly complex change.
+        # Decision: Not needed for version 2.0
+    !!! Improvement: (fairly important, also easy): Do not allow setting a
+        correction if the new is the same as the old.
+        # Decision: Fix this.
+    !!! Error: Full CC table splits up markers by individual character,
+        that is, "\ " "l" "x" instead of "\lx".
+        # Decision: Fix this.
+    Check for glides
+    Step through list
+    Test simple CC table again.
+    Run full CC table on an SFM file.
+    Test XSLT file
+    !!! Improvement: XSLT file should require only 1.0
+    !!! Error: XSLT file look4changes should say "name", not "match"
+    !!! Error: XSLT file look4changes should say "node()", not "self"
+        # Decision: Fix all three of these.
+    !!! Improvement: Make look4changes handle partial strings.
+        Should we require punctuation breaks too?
+        But often in XML data it is already broken by punctuation.
+        Actually we probably want an option whether to match partial
+        phrases or not.
+        But if we do match partial phrases, then we will want a way to
+        match word boundaries and punctuation.
+        Probably leave this for a future version, and for now just match
+        full tag contents.
+        That should work for most fieldworks data, although not Toolbox
+        (but that uses SFM).
+        It will not handle free translations.
+        # Decision: Try this.
+    TODO: Find a built-in XSLT 1.0 processor on windows if possible.
+Make spelling changes
+    !!! Error: Spelling Search Options dialog radio buttons do not work right;
+        cannot select both SFM and Apply Corrections.
+        It also fails without an error message, perhaps due to the radio
+        buttons not being selected right but who knows.
+        # Decision: Fix this.
+    Apply list of corrections
+    Spell check
+    Search language
+    Search paragraph style
+    Punctuation
+Script Practice
+    !!! Bug: When returning from adding an input file for script practice the
+        first time, it said "Make List" instead of "Get Words"
+        - Changing settings shows "Get Words"
+        # Decision: Fix this.
+    !!! Improvement: Make practice fields a little wider, in case we want to
+        practice longer sentences.
+        # Decision: Do this.
+    !!! Improvement: Allow generating more than 9 words.
+        # Decision: Do this.
+    Use word list
+    Tamil
+Spanish
+    Default Style
+    Try for various error messages
+French
+    Default Style
+    Try for various error messages
+Automated Tests
+Button driven Tests
+
+2013-04-09 problems:
+    !!! WrittenTamilTexts.hunt02 and hunt03 data are not correctly separated.
+        Probably this is a data problem.
+        But this seemed to work better during testing yesterday.
+        Does it fix the problem to check all of the settings boxes?
+    !!! Comparsion doc buttons do not seem to go to the examples, although they
+        do go to the document.
+

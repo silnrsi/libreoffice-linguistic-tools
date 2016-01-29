@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
+<library:library xmlns:library="http://openoffice.org/2000/library" library:name="LingToolsBasic" library:readonly="false" library:passwordprotected="false">
+ <library:element library:name="DlgAbbreviations"/>
+ <library:element library:name="DlgApplyConverter"/>
+ <library:element library:name="DlgBulkConversion"/>
+ <library:element library:name="DlgDataConversion"/>
+ <library:element library:name="DlgExGrab"/>
+ <library:element library:name="DlgGrammarSettings"/>
+ <library:element library:name="DlgPhnlgySettings"/>
+ <library:element library:name="DlgScriptPractice"/>
+ <library:element library:name="DlgSpellingAdjustments"/>
+ <library:element library:name="DlgWordList"/>
+ <library:element library:name="DlgWordListFile"/>
+ <library:element library:name="DlgWritingSystem"/>
+ <library:element library:name="DlgSpellSearch"/>
+ <library:element library:name="DlgSpellReplace"/>
+ <library:element library:name="DlgSpellStep"/>
+ <library:element library:name="DlgChangerMaker"/>
+</library:library>

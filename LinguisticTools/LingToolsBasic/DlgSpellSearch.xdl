@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellSearch" dlg:left="74" dlg:top="14" dlg:width="225" dlg:height="302" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;230.DlgSpellSearch.Title">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-slant="italic"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="lblFile" dlg:tab-index="0" dlg:left="7" dlg:top="9" dlg:width="197" dlg:height="9" dlg:value="&amp;238.DlgSpellSearch.lblFile.Value"/>
+  <dlg:filecontrol dlg:id="fileWordList" dlg:tab-index="1" dlg:left="7" dlg:top="20" dlg:width="213" dlg:height="14"/>
+  <dlg:button dlg:id="btnCurrentSpreadsheet" dlg:tab-index="2" dlg:left="155" dlg:top="34" dlg:width="64" dlg:height="13" dlg:value="&amp;232.DlgSpellSearch.btnCurrentSpreadsheet.Value"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optApplyCorrections" dlg:tab-index="3" dlg:left="7" dlg:top="49" dlg:width="209" dlg:height="9" dlg:value="&amp;240.DlgSpellSearch.optApplyCorrections.Value" dlg:group-name="taskType" dlg:checked="true"/>
+   <dlg:radio dlg:id="optSpellcheck" dlg:tab-index="4" dlg:left="7" dlg:top="61" dlg:width="209" dlg:height="11" dlg:value="&amp;249.DlgSpellSearch.optSpellcheck.Value" dlg:group-name="taskType"/>
+  </dlg:radiogroup>
+  <dlg:titledbox dlg:id="frameWhatToFind" dlg:tab-index="5" dlg:left="7" dlg:top="81" dlg:width="216" dlg:height="120">
+   <dlg:title dlg:value="&amp;235.DlgSpellSearch.frameWhatToFind.Value"/>
+  </dlg:titledbox>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optWholeDoc" dlg:tab-index="6" dlg:left="13" dlg:top="95" dlg:width="76" dlg:height="11" dlg:value="&amp;250.DlgSpellSearch.optWholeDoc.Value" dlg:group-name="searchType" dlg:checked="true"/>
+   <dlg:radio dlg:id="optParaStyle" dlg:tab-index="7" dlg:left="13" dlg:top="125" dlg:width="74" dlg:height="12" dlg:value="&amp;247.DlgSpellSearch.optParaStyle.Value" dlg:group-name="searchType"/>
+   <dlg:radio dlg:id="optCharStyle" dlg:tab-index="8" dlg:left="13" dlg:top="140" dlg:width="76" dlg:height="10" dlg:value="&amp;241.DlgSpellSearch.optCharStyle.Value" dlg:group-name="searchType"/>
+   <dlg:radio dlg:id="optLanguage" dlg:tab-index="9" dlg:left="13" dlg:top="110" dlg:width="76" dlg:height="11" dlg:value="&amp;246.DlgSpellSearch.optLanguage.Value" dlg:group-name="searchType"/>
+   <dlg:radio dlg:id="optFont" dlg:tab-index="10" dlg:left="13" dlg:top="155" dlg:width="90" dlg:height="12" dlg:value="&amp;242.DlgSpellSearch.optFont.Value" dlg:group-name="searchType"/>
+   <dlg:radio dlg:id="optSFM" dlg:tab-index="11" dlg:left="13" dlg:top="182" dlg:width="59" dlg:height="14" dlg:value="&amp;248.DlgSpellSearch.optSFM.Value" dlg:group-name="searchType"/>
+  </dlg:radiogroup>
+  <dlg:menulist dlg:id="listboxLocale" dlg:tab-index="12" dlg:left="105" dlg:top="110" dlg:width="90" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="comboParaStyle" dlg:tab-index="13" dlg:left="105" dlg:top="125" dlg:width="90" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="comboCharStyle" dlg:tab-index="14" dlg:left="105" dlg:top="140" dlg:width="90" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="comboFont" dlg:tab-index="15" dlg:left="105" dlg:top="155" dlg:width="90" dlg:height="12" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optFontTypeWestern" dlg:tab-index="16" dlg:left="105" dlg:top="170" dlg:width="37" dlg:height="10" dlg:value="&amp;245.DlgSpellSearch.optFontTypeWestern.Value" dlg:group-name="fontType" dlg:checked="true"/>
+   <dlg:radio dlg:id="optFontTypeCTL" dlg:tab-index="17" dlg:left="143" dlg:top="170" dlg:width="37" dlg:height="10" dlg:value="&amp;244.DlgSpellSearch.optFontTypeCTL.Value" dlg:group-name="fontType"/>
+   <dlg:radio dlg:id="optFontTypeAsian" dlg:tab-index="18" dlg:left="182" dlg:top="170" dlg:width="37" dlg:height="10" dlg:value="&amp;243.DlgSpellSearch.optFontTypeAsian.Value" dlg:group-name="fontType"/>
+  </dlg:radiogroup>
+  <dlg:textfield dlg:id="txtSFM" dlg:tab-index="19" dlg:left="105" dlg:top="182" dlg:width="62" dlg:height="12" dlg:value="&amp;251.DlgSpellSearch.txtSFM.Value"/>
+  <dlg:text dlg:id="lblPunctuation" dlg:tab-index="20" dlg:left="13" dlg:top="212" dlg:width="45" dlg:height="11" dlg:value="&amp;239.DlgSpellSearch.lblPunctuation.Value"/>
+  <dlg:textfield dlg:id="txtPunctuation" dlg:tab-index="21" dlg:left="60" dlg:top="211" dlg:width="68" dlg:height="12"/>
+  <dlg:text dlg:id="lblAffixes" dlg:tab-index="22" dlg:left="13" dlg:top="229" dlg:width="45" dlg:height="12" dlg:value="&amp;236.DlgSpellSearch.lblAffixes.Value"/>
+  <dlg:textfield dlg:id="txtAffixes" dlg:tab-index="23" dlg:left="60" dlg:top="229" dlg:width="68" dlg:height="21" dlg:multiline="true"/>
+  <dlg:text dlg:style-id="0" dlg:id="lblAffixes2" dlg:tab-index="24" dlg:left="133" dlg:top="229" dlg:width="49" dlg:height="20" dlg:value="&amp;237.DlgSpellSearch.lblAffixes2.Value" dlg:multiline="true"/>
+  <dlg:checkbox dlg:id="chkMatchCase" dlg:tab-index="25" dlg:left="60" dlg:top="257" dlg:width="117" dlg:height="9" dlg:value="&amp;234.DlgSpellSearch.chkMatchCase.Value" dlg:checked="false"/>
+  <dlg:button dlg:id="btnSearch" dlg:tab-index="26" dlg:left="32" dlg:top="277" dlg:width="63" dlg:height="16" dlg:value="&amp;233.DlgSpellSearch.btnSearch.Value"/>
+  <dlg:button dlg:id="btnCancel" dlg:tab-index="27" dlg:left="100" dlg:top="275" dlg:width="63" dlg:height="18" dlg:value="&amp;231.DlgSpellSearch.btnCancel.Value"/>
+ </dlg:bulletinboard>
+</dlg:window>

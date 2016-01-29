@@ -1,0 +1,30 @@
+Procedure for localizing Jim Kornelsen's Linguistic Tools addon for OpenOffice.org Writer
+8 April 2010
+
+(A) Download and install the current version of Linguistic Tools addon for OpenOffice.org Writer (OOW). 
+
+From https://www.wiki.insitehome.org/display/~JIM_KORNELSEN/Home download LinguisticTools.oxt then double-click on the file to launch OOW and start the installation.
+
+If the addon is already installed, OOW will ask if you want to replace the current version with the one you're installing.
+
+(B) Translation of the dialog boxes
+
+OOW has a built-in dialog editor. From the Tools menu, select Macros, Organize Dialogs. Navigate to "LinguisticToolsBasic", click on the "+" to expand the contents, select one of the "Dlg..." entries and click the Edit button. You'll see the dialog box displayed. If the language you are working on is already included, select it from the list. Otherwise click the "Manage languages" icon to the right of the list.  Click "Add" and select the correct language.  The language needs to be exactly the same as the one that is used for the rest of OOW, for example use "French (France)", not "French (Canada)".
+
+Double-click on each text item in the dialog box to bring up the Properties box. The second item in the Properties box is Label and contains the text for the item. Click on the down arrow to open an edit box. Enter the text in the box. When finished, click outside the Properties box to close it or double-click another item to bring up its information in the Properties box. In either case, the text that you entered is now displayed. 
+
+There are some cases where you may want to copy a string from one place to another. You can bring up the Properties box for the item you want to copy and open the edit box. Use Ctrl+A to select the text, Ctrl+C to copy it. Then go to the target dialog, bring the Properties box for the item where you want to put the text, open the edit box and use Ctrl+A to select the text and Ctrl+V to replace it with the copied text.
+
+When there is a label associated with a grouping box (for example "Scope of change" on DlgDataConversion), it is a little more difficult to select it than to select other items. You need to click a bit further above the text to select the entire grouping box.
+
+The Grammar Settings dialog has blank line under each of the three check box labels in the upper right. This allows a longer translation (such as needed for French) to have an extra line. You can check the French version of the dialog box for an example.
+
+If there is a location where the text you are entering is too long for the available space, let Jim know to see if he can expand the spacing, but prepare an abbreviated version in case he cannot.
+
+The C:\Users\<USERNAME>\AppData\Roaming\OpenOffice.org\3\user\ folder is called the OpenOffice.org "user directory". Extensions are stored in the uno_packages subfolder. When you use File, Save, the information for all the dialogs is saved in .xdl files, which are stored in the folder: C:\Users\<USERNAME>\AppData\Roaming\OpenOffice.org\3\user\uno_packages\cache\uno_packages\<ID>.tmp_\LinguisticTools.oxt\LinguisticToolsBasic, where <ID> is a unique identification assigned when the extension is installed.
+
+These .xdl files together with the .properties files in the same folder contain the translations of the dialog boxes. These files can be sent to Jim Kornelsen to be included in the release version.
+
+(C) Translation of error and information messages and menu items
+
+In addition to the dialogs, there is a list of error and information messages that need to be translated. These are in a list that can be obtained from Jim. Provide a translation for each item.  Also remember to translate the menu itself: "Linguistics", "Phonology Settings", "Abbreviations" etc.

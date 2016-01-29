@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellStep" dlg:left="164" dlg:top="28" dlg:width="263" dlg:height="238" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;252.DlgSpellStep.Title">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-height="14"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="lblRow" dlg:tab-index="0" dlg:left="62" dlg:top="14" dlg:width="22" dlg:height="12" dlg:value="&amp;261.DlgSpellStep.lblRow.Value" dlg:align="right"/>
+  <dlg:textfield dlg:id="txtRowNum" dlg:tab-index="1" dlg:left="89" dlg:top="13" dlg:width="31" dlg:height="14" dlg:value="&amp;265.DlgSpellStep.txtRowNum.Value"/>
+  <dlg:scrollbar dlg:id="scrollbarRow" dlg:tab-index="2" dlg:left="121" dlg:top="13" dlg:width="120" dlg:height="14" dlg:pageincrement="100" dlg:maxpos="2000" dlg:minpos="2"/>
+  <dlg:text dlg:id="lblWord" dlg:tab-index="3" dlg:left="43" dlg:top="38" dlg:width="42" dlg:height="12" dlg:value="&amp;263.DlgSpellStep.lblWord.Value" dlg:align="right"/>
+  <dlg:text dlg:style-id="0" dlg:id="lblWordText" dlg:tab-index="4" dlg:left="91" dlg:top="38" dlg:width="100" dlg:height="16" dlg:value="&amp;264.DlgSpellStep.lblWordText.Value"/>
+  <dlg:text dlg:id="lblConverted" dlg:tab-index="5" dlg:left="40" dlg:top="56" dlg:width="46" dlg:height="12" dlg:value="&amp;257.DlgSpellStep.lblConverted.Value" dlg:align="right"/>
+  <dlg:text dlg:style-id="0" dlg:id="lblConvertedText" dlg:tab-index="6" dlg:left="91" dlg:top="56" dlg:width="99" dlg:height="16" dlg:value="&amp;258.DlgSpellStep.lblConvertedText.Value"/>
+  <dlg:text dlg:id="lblCorrection" dlg:tab-index="7" dlg:left="38" dlg:top="73" dlg:width="48" dlg:height="12" dlg:value="&amp;259.DlgSpellStep.lblCorrection.Value" dlg:align="right"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="txtCorrection" dlg:tab-index="8" dlg:left="91" dlg:top="73" dlg:width="100" dlg:height="14"/>
+  <dlg:button dlg:id="btnSetCorrection" dlg:tab-index="9" dlg:left="189" dlg:top="73" dlg:width="64" dlg:height="14" dlg:value="&amp;254.DlgSpellStep.btnSetCorrection.Value"/>
+  <dlg:checkbox dlg:id="chkIsCorrect" dlg:tab-index="10" dlg:left="91" dlg:top="90" dlg:width="63" dlg:height="12" dlg:value="&amp;256.DlgSpellStep.chkIsCorrect.Value" dlg:tristate="true"/>
+  <dlg:text dlg:id="lblSimilarWords" dlg:tab-index="11" dlg:left="2" dlg:top="112" dlg:width="83" dlg:height="12" dlg:value="&amp;262.DlgSpellStep.lblSimilarWords.Value" dlg:align="right"/>
+  <dlg:menulist dlg:style-id="0" dlg:id="listboxSimilarWords" dlg:tab-index="12" dlg:left="91" dlg:top="110" dlg:width="100" dlg:height="38"/>
+  <dlg:text dlg:id="lblOtherSuggestions" dlg:tab-index="13" dlg:left="28" dlg:top="152" dlg:width="57" dlg:height="12" dlg:value="&amp;260.DlgSpellStep.lblOtherSuggestions.Value" dlg:align="right"/>
+  <dlg:menulist dlg:style-id="0" dlg:id="listboxSuggestions" dlg:tab-index="14" dlg:left="91" dlg:top="148" dlg:width="100" dlg:height="44"/>
+  <dlg:checkbox dlg:id="chkGiveSuggestions" dlg:tab-index="15" dlg:left="91" dlg:top="194" dlg:width="107" dlg:height="12" dlg:value="&amp;255.DlgSpellStep.chkGiveSuggestions.Value" dlg:checked="true"/>
+  <dlg:button dlg:id="btnClose" dlg:tab-index="16" dlg:left="113" dlg:top="214" dlg:width="61" dlg:height="16" dlg:value="&amp;253.DlgSpellStep.btnClose.Value"/>
+ </dlg:bulletinboard>
+</dlg:window>

@@ -1,0 +1,29 @@
+# Created 15-May-2013 by Jim K
+
+On Fedora some tests don't pass because fonts are not installed.
+- Times New Roman (uses Liberation Serif instead)
+- Arial Black (Cantarell works instead)
+- DejaVu Sans is the default complex font, although Lohit Hindi is installed.
+DlgDataConv_test especially depended on this.
+
+Windows Vista OOo and Win8 AO have python 2.6,
+which means unittest is significantly less powerful.
+- setUpClass
+- assertRegex
+- assertNotIn
+
+Several systems had "Default" instead of "Default Style".
+These tests should pass now.
+
+Several tests had repeatability problems that have been fixed now.
+Notable among these was TablesTest.
+
+For every system and app, without exception the tests did not pass at first.
+- paths (all systems)
+- install latest extension (and OOo / AO required restarting)
+- enable complex languages
+- permissions (Fedora)
+
+None of these tests found any actual errors in OOoLT today.
+There were only errors found in the tests and testing setup.
+

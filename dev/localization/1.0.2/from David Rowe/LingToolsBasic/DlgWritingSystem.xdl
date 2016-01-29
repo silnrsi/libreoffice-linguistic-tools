@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWritingSystem" dlg:left="127" dlg:top="16" dlg:width="120" dlg:height="55" dlg:help-text="&amp;221.DlgWritingSystem.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;222.DlgWritingSystem.Title">
+ <dlg:bulletinboard>
+  <dlg:button dlg:id="BtnOK" dlg:tab-index="1" dlg:left="34" dlg:top="34" dlg:width="40" dlg:height="14" dlg:help-text="&amp;223.DlgWritingSystem.BtnOK.HelpText" dlg:value="&amp;224.DlgWritingSystem.BtnOK.Label"/>
+  <dlg:combobox dlg:id="ComboWSList" dlg:tab-index="0" dlg:left="9" dlg:top="12" dlg:width="101" dlg:height="16" dlg:help-text="&amp;225.DlgWritingSystem.ComboWSList.HelpText" dlg:value="&amp;227.DlgWritingSystem.ComboWSList.Text" dlg:spin="true">
+   <dlg:menupopup>
+    <dlg:menuitem dlg:value="&amp;226.ComboWSList.StringItemList"/>
+   </dlg:menupopup>
+  </dlg:combobox>
+ </dlg:bulletinboard>
+</dlg:window>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgAbbreviations" dlg:left="142" dlg:top="41" dlg:width="336" dlg:height="197" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;0.DlgAbbreviations.Title">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-name="Courier New" dlg:font-height="10" dlg:font-stylename="Regular" dlg:font-family="modern"/>
+  <dlg:style dlg:style-id="1" dlg:background-color="0xffffff" dlg:text-color="0x0" dlg:font-name="Tahoma" dlg:font-height="8"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="LabelPossible" dlg:tab-index="0" dlg:left="6" dlg:top="9" dlg:width="118" dlg:height="10" dlg:help-text="" dlg:value="&amp;16.DlgAbbreviations.LabelPossible.Value"/>
+  <dlg:menulist dlg:style-id="0" dlg:id="listboxAbbreviations" dlg:tab-index="1" dlg:left="5" dlg:top="22" dlg:width="148" dlg:height="91" dlg:help-text=""/>
+  <dlg:text dlg:id="LabelAbbr" dlg:tab-index="2" dlg:left="8" dlg:top="117" dlg:width="39" dlg:height="9" dlg:help-text="" dlg:value="&amp;12.DlgAbbreviations.LabelAbbr.Value"/>
+  <dlg:textfield dlg:id="txtAbbrev" dlg:tab-index="3" dlg:left="48" dlg:top="116" dlg:width="27" dlg:height="10" dlg:help-text="" dlg:value="&amp;27.DlgAbbreviations.txtAbbrev.Value"/>
+  <dlg:text dlg:id="LblFullName" dlg:tab-index="4" dlg:left="8" dlg:top="128" dlg:width="61" dlg:height="9" dlg:help-text="" dlg:value="&amp;18.DlgAbbreviations.LblFullName.Value"/>
+  <dlg:textfield dlg:id="txtFullName" dlg:tab-index="5" dlg:left="8" dlg:top="138" dlg:width="109" dlg:height="10" dlg:help-text="" dlg:value="&amp;28.DlgAbbreviations.txtFullName.Value"/>
+  <dlg:checkbox dlg:id="chkForceOutput" dlg:tab-index="6" dlg:left="8" dlg:top="153" dlg:width="103" dlg:height="9" dlg:help-text="" dlg:value="&amp;20.DlgAbbreviations.chkForceOutput.Value" dlg:checked="false"/>
+  <dlg:text dlg:id="LabelOcc" dlg:tab-index="7" dlg:left="7" dlg:top="167" dlg:width="67" dlg:height="9" dlg:help-text="" dlg:value="&amp;15.DlgAbbreviations.LabelOcc.Value"/>
+  <dlg:textfield dlg:id="txtOccurrences" dlg:tab-index="8" dlg:left="74" dlg:top="166" dlg:width="19" dlg:height="10" dlg:help-text="" dlg:readonly="true" dlg:value="&amp;29.DlgAbbreviations.txtOccurrences.Value"/>
+  <dlg:button dlg:id="BtnRescan" dlg:tab-index="9" dlg:left="6" dlg:top="180" dlg:width="81" dlg:height="12" dlg:help-text="" dlg:value="&amp;7.DlgAbbreviations.BtnRescan.Value"/>
+  <dlg:button dlg:id="BtnUpdateAbbrev" dlg:tab-index="10" dlg:left="117" dlg:top="113" dlg:width="54" dlg:height="12" dlg:help-text="" dlg:value="&amp;8.DlgAbbreviations.BtnUpdateAbbrev.Value"/>
+  <dlg:button dlg:id="BtnAddAbbrev" dlg:tab-index="11" dlg:left="117" dlg:top="129" dlg:width="54" dlg:height="12" dlg:help-text="" dlg:value="&amp;1.DlgAbbreviations.BtnAddAbbrev.Value"/>
+  <dlg:button dlg:id="BtnDeleteAbbrev" dlg:tab-index="12" dlg:left="117" dlg:top="145" dlg:width="54" dlg:height="12" dlg:help-text="" dlg:value="&amp;4.DlgAbbreviations.BtnDeleteAbbrev.Value"/>
+  <dlg:button dlg:id="BtnChangeAllCaps" dlg:tab-index="13" dlg:left="116" dlg:top="162" dlg:width="54" dlg:height="12" dlg:help-text="" dlg:value="&amp;2.DlgAbbreviations.BtnChangeAllCaps.Value"/>
+  <dlg:fixedline dlg:id="FixedLine1" dlg:tab-index="14" dlg:left="174" dlg:top="10" dlg:width="5" dlg:height="185" dlg:help-text="" dlg:value="&amp;9.DlgAbbreviations.FixedLine1.Value" dlg:align="vertical"/>
+  <dlg:text dlg:id="LabelSearchUsed" dlg:tab-index="15" dlg:left="184" dlg:top="10" dlg:width="136" dlg:height="9" dlg:help-text="" dlg:value="&amp;17.DlgAbbreviations.LabelSearchUsed.Value"/>
+  <dlg:checkbox dlg:id="chkStartFromBeginning" dlg:tab-index="16" dlg:left="184" dlg:top="25" dlg:width="77" dlg:height="9" dlg:help-text="" dlg:value="&amp;22.DlgAbbreviations.chkStartFromBeginning.Value" dlg:checked="true"/>
+  <dlg:text dlg:id="LabelLook" dlg:tab-index="17" dlg:left="184" dlg:top="42" dlg:width="50" dlg:height="9" dlg:help-text="" dlg:value="&amp;13.DlgAbbreviations.LabelLook.Value"/>
+  <dlg:combobox dlg:style-id="1" dlg:id="cmbxSearchParaStyle" dlg:tab-index="18" dlg:left="234" dlg:top="42" dlg:width="87" dlg:height="11" dlg:help-text="" dlg:tabstop="true" dlg:value="&amp;23.DlgAbbreviations.cmbxSearchParaStyle.Value" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optSearchSuffix" dlg:tab-index="19" dlg:left="188" dlg:top="64" dlg:width="65" dlg:height="9" dlg:help-text="" dlg:value="&amp;26.DlgAbbreviations.optSearchSuffix.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optSearchPrefix" dlg:tab-index="20" dlg:left="188" dlg:top="74" dlg:width="65" dlg:height="9" dlg:help-text="" dlg:value="&amp;25.DlgAbbreviations.optSearchPrefix.Value"/>
+   <dlg:radio dlg:id="optSearchAny" dlg:tab-index="21" dlg:left="188" dlg:top="85" dlg:width="65" dlg:height="9" dlg:help-text="" dlg:value="&amp;24.DlgAbbreviations.optSearchAny.Value"/>
+  </dlg:radiogroup>
+  <dlg:text dlg:id="LabelMaxLen" dlg:tab-index="22" dlg:left="260" dlg:top="63" dlg:width="41" dlg:height="9" dlg:help-text="" dlg:value="&amp;14.DlgAbbreviations.LabelMaxLen.Value"/>
+  <dlg:textfield dlg:id="TxtMaxSearchLength" dlg:tab-index="23" dlg:left="300" dlg:top="63" dlg:width="15" dlg:height="10" dlg:help-text="" dlg:maxlength="2" dlg:value="&amp;19.DlgAbbreviations.TxtMaxSearchLength.Value"/>
+  <dlg:checkbox dlg:id="chkSearchUpperCase" dlg:tab-index="24" dlg:left="260" dlg:top="79" dlg:width="73" dlg:height="9" dlg:help-text="" dlg:value="&amp;21.DlgAbbreviations.chkSearchUpperCase.Value" dlg:checked="false"/>
+  <dlg:button dlg:id="BtnFindNext" dlg:tab-index="25" dlg:left="224" dlg:top="106" dlg:width="65" dlg:height="14" dlg:help-text="" dlg:value="&amp;5.DlgAbbreviations.BtnFindNext.Value"/>
+  <dlg:button dlg:id="BtnInsertList" dlg:tab-index="26" dlg:left="197" dlg:top="173" dlg:width="54" dlg:height="14" dlg:help-text="" dlg:value="&amp;6.DlgAbbreviations.BtnInsertList.Value"/>
+  <dlg:button dlg:id="BtnClose" dlg:tab-index="27" dlg:left="256" dlg:top="173" dlg:width="40" dlg:height="14" dlg:help-text="" dlg:value="&amp;3.DlgAbbreviations.BtnClose.Value"/>
+  <dlg:fixedline dlg:id="FixedLine2" dlg:tab-index="28" dlg:left="179" dlg:top="139" dlg:width="125" dlg:height="4" dlg:help-text="" dlg:value="&amp;10.DlgAbbreviations.FixedLine2.Value"/>
+  <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="29" dlg:left="184" dlg:top="60" dlg:width="72" dlg:height="37" dlg:help-text="">
+   <dlg:title dlg:value="&amp;11.DlgAbbreviations.FrameControl1.Value"/>
+  </dlg:titledbox>
+ </dlg:bulletinboard>
+</dlg:window>

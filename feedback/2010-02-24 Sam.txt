@@ -1,0 +1,69 @@
+[9:37:06 PM] SamSony: Hi Jim,do you know how to remove the frame from MS word?
+[9:39:30 PM] Jim and Karen Kornelsen: Well, I don't have MS Word on my computer.  However if you want to explain more, then I may be able to give an answer.
+[9:42:02 PM] SamSony: Now we export the grammar data from FLEx to MS word 2007 xml ,then we convert the Devanagari to Roman by Data coversion(TECKit).But the data is still in frame.so it is difficult to edit in this frame.
+[9:45:16 PM] Jim and Karen Kornelsen: Can you select the text that is inside the frame and cut and paste it outside of the frame?  Of course, that will take a long time if you have a lot of frames.
+[9:46:23 PM] SamSony: ok...teams has nearly 120 text data!!!
+[9:49:01 PM] Jim and Karen Kornelsen: With tables, you can Convert Table to Text, but I don't know of a way to do this with frames.
+[9:49:43 PM] Jim and Karen Kornelsen: Is there a different export option from Flex that you can use?
+[9:51:58 PM] SamSony: but we can edit it in OO,but no data conversion in OO.
+[9:52:37 PM] Jim and Karen Kornelsen: This may not work very well, but I have one suggestion.  At least this works in OpenOffice, so I think it would work in Word too.  First go to Edit -> Find...
+[9:53:52 PM] Jim and Karen Kornelsen: Then search for a particular style or font that is used in the frames, for example Doulos SIL font.  Press the Find All button, which will select everything.  Then close the dialog box.  Then copy and paste.  That should just paste the text, not the frames.
+[9:54:35 PM] Jim and Karen Kornelsen: If you wait until Friday, I think I will have the OOo data conversion working.
+[9:54:44 PM] SamSony: ok
+[9:55:29 PM] SamSony: we are waiting for that tool...
+[9:55:49 PM] SamSony: it will be helpful to teams
+[9:56:52 PM] Jim and Karen Kornelsen: I will be testing it tomorrow.  Can you describe how you are using the TECkit map?  Are you searching for a particular style to run the map on, or does the map just run on the entire document?
+[9:57:51 PM] SamSony: yes...conversion based on particular style
+[9:59:32 PM] Jim and Karen Kornelsen: Ok.  Are you able to take a picture of the Data Conversion settings that you are using in Word and then send it to me?  For example, I want to know if you check the box next to "Normalize" and things like that.  I am trying to make fewer checkboxes in the OOo data conversion tool.
+[10:00:04 PM] SamSony: ok
+SamSony
+[10:04:44 PM] SamSony: May I send it as attached file..This bmp file..ok?
+[10:05:11 PM] Jim and Karen Kornelsen: That would be fine.  It says "Sending cancelled" -- do you want to try again?
+SamSony
+[10:06:29 PM] SamSony: I am trying once agian
+[10:08:21 PM] SamSony: is it ok?
+[10:08:32 PM] Jim and Karen Kornelsen: Yes, I can see it now.  I have a couple of questions.
+[10:09:12 PM] Jim and Karen Kornelsen: First, it looks like you are searching for a paragraph style.  But then you are trying to set it to a specific font?  Is there a reason why you don't just change the font of the style instead?
+[10:12:41 PM] SamSony: when I export the data from Flex to ms word 2007 xml,we can't read the Dev.then I'll modify the font to Mangal. Then I can read it..After that, I can convert it to Roman by using Data conversion.
+[10:13:38 PM] Jim and Karen Kornelsen: How did you modify the font to Mangal -- with the Data Conversion tool?
+[10:14:59 PM] SamSony: no..select the style and modify that style
+[10:17:27 PM] Jim and Karen Kornelsen: Ok, I see.  I think then that the best approach would be to create a new paragraph style with the Arial Unicode MS font.  Perhaps call it "Interlin Morph bfy__ROM"  The in Target Data, choose the new style, rather than applying a specific font.
+[10:19:01 PM] Jim and Karen Kornelsen: Would that work?  I think that using the "Apply specific font" will cause problems later on.  In the documentation for the Data Conversion macro, there is a warning about this.
+[10:20:38 PM] SamSony: i think 'interlin Morph bfy_Dev' style is from FLEx.
+[10:22:17 PM] Jim and Karen Kornelsen: Yes, I think so.  If you want to convert it to roman, then you will probably want to use a new roman style, rather than the __DEV style.
+[10:23:19 PM] SamSony: ok...Now I am forwarding Bruce's mail to you...
+[10:24:54 PM] SamSony: i have sent it..this is the standard Romanized alphabet for Dev
+[10:25:36 PM] SamSony: if you want its TECKit map, i can send it
+SamSony
+[10:28:01 PM] Jim and Karen Kornelsen: Ok, I received an email and the TECKit map.
+[10:28:55 PM] SamSony: But each teams has slightly changed map table.
+[10:29:33 PM] SamSony: so is it possible to edit your map table depending upon the requirements?
+[10:29:47 PM] Jim and Karen Kornelsen: Yes.  SIL Enc Converters takes care of that.
+[10:30:01 PM] SamSony: ok
+[10:30:29 PM] SamSony: is it Map table?
+[10:32:16 PM] Jim and Karen Kornelsen: Well, you can edit the map table in Notepad and then save it.  Then SIL Enc Converters will use the new map.  The Data Conversion macro just calls SIL Enc Converters.
+[10:33:42 PM] SamSony: ok...i never used it...But by your help, I can try it
+[10:34:37 PM] Jim and Karen Kornelsen: I'm sorry, I don't understand.  You have never used what?
+[10:36:00 PM] SamSony: SIL Enc converters is same the TECKit?
+[10:37:35 PM] Jim and Karen Kornelsen: Kind of.  If you use the Data Conversion macro in Word, then you are actually using SIL Enc Converters.  And you are using TECKit as well I suppose.
+[10:37:51 PM] SamSony: ok...
+[10:38:30 PM] Jim and Karen Kornelsen: You must have SIL Enc Converters installed on your computer, or else the Data Conversion macro will not work.  This is true for Word as well as OpenOffice.
+[10:38:50 PM] SamSony: ok...
+[10:40:02 PM] Jim and Karen Kornelsen: Also SIL Converters will automatically install TECKit for you.
+[10:42:48 PM] Jim and Karen Kornelsen: In the Data Conversion tool, do you ever use the "Edit table" button?
+[10:43:56 PM] SamSony: no..i didn't use it
+[10:45:50 PM | Edited 10:46:19 PM] Jim and Karen Kornelsen: Ok.  You can just edit the TECKit map if you need to make changes.  Is it necessary to see the path to the TECKit file?
+[10:46:30 PM] SamSony: yea...
+[10:46:50 PM] Jim and Karen Kornelsen: Ok.  Is it necessary to see the type - Unicode <> Unicode?
+[10:55:35 PM] SamSony: Jim,Sorry...I had visitor
+[10:57:09 PM] Jim and Karen Kornelsen: Ok.  I was wondering, is it necessary to see the converter type, for example Unicode <> Unicode.
+[10:58:46 PM] SamSony: I can edit the map table as we want when we added it to system repository
+[10:59:05 PM] SamSony: Map table name
+[11:00:43 PM] Jim and Karen Kornelsen: Yes.  Also in the Data Conversion dialog window, it shows the name, type, and path.  I thought perhaps the name is enough, since you can see the other things when you select the converter?
+[11:01:41 PM] SamSony: i think the name is enough
+[11:02:12 PM] Jim and Karen Kornelsen: Ok.
+[11:03:08 PM] Jim and Karen Kornelsen: Thank you for the suggesions.  I will work on it tomorrow.
+[11:04:36 PM] SamSony: yes...May God give you more inputs to do..Thank you
+[11:05:24 PM] Jim and Karen Kornelsen: Ok, have a good night.
+[11:05:37 PM] SamSony: Good night..bye now
+[11:05:41 PM] Jim and Karen Kornelsen: Bye.

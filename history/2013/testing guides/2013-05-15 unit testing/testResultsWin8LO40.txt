@@ -1,0 +1,44 @@
+Calling TextTestRunner...
+testUpdater (ooo_script_framework.ExUpdaterTestCase) ... ok
+testHasWrappingText (ooo_script_framework.TablesTestCase) ... ok
+testOuterTable (ooo_script_framework.TablesTestCase) ... ok
+testTextSearch_wholeDoc (ooo_script_framework.SearchTestCase) ... ok
+testChangeString (ooo_script_framework.TextChangesTestCase) ... ok
+testUserVars (ooo_script_framework.UserVarsTestCase) ... ok
+testPA (ooo_script_framework.XML_Readers_PhonTestCase) ... ok
+testTbx1 (ooo_script_framework.XML_Readers_PhonTestCase) ... ok
+testTbx2 (ooo_script_framework.XML_Readers_PhonTestCase) ... ok
+testFlexText (ooo_script_framework.XML_Readers_GramTestCase) ... ok
+testFw (ooo_script_framework.XML_Readers_GramTestCase) ... ok
+testTbx (ooo_script_framework.XML_Readers_GramTestCase) ... ok
+testTbxOrth (ooo_script_framework.XML_Readers_GramTestCase) ... ok
+testAffixesEN (ooo_script_framework.SpellingChecksTestCase) ... ok
+test1_enableDisable (ooo_script_framework.DlgGramSettingsTestCase) ... ok
+test2_enableDisable (ooo_script_framework.DlgGramSettingsTestCase) ... ok
+test3_enableDisable (ooo_script_framework.DlgGramSettingsTestCase) ... ok
+test4_interlinLines (ooo_script_framework.DlgGramSettingsTestCase) ... ok
+test5_fileList (ooo_script_framework.DlgGramSettingsTestCase) ... ok
+test_scope1 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_scope2 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_scope3 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_scope4 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_target1 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_target2 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_target3 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_target4 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test_target5 (ooo_script_framework.DlgDataConvTestCase) ... ok
+test1_writingSystems (ooo_script_framework.PhonologyTestCase) ... ok
+test2_nonLIFT (ooo_script_framework.PhonologyTestCase) ... ok
+test3_surroundings (ooo_script_framework.PhonologyTestCase) ... ok
+test4_settingsOptions (ooo_script_framework.PhonologyTestCase) ... ok
+test5_updating (ooo_script_framework.PhonologyTestCase) ... ok
+test1_filetypes (ooo_script_framework.GrammarTestCase) ... ok
+test2_surroundings (ooo_script_framework.GrammarTestCase) ... ok
+test3_checkboxes (ooo_script_framework.GrammarTestCase) ... ok
+test4_prefixAndColWidth (ooo_script_framework.GrammarTestCase) ... ok
+test5_updating (ooo_script_framework.GrammarTestCase) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 187.773s
+
+OK
