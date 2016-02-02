@@ -34,12 +34,13 @@ from lingt.ui.comp import wordlist
 # logging should normally be enabled here.
 TOPLEVEL_LOGGING_ENABLED = True
 if platform.system() == "Windows":
-    ROOTDIR = "C:" + os.path.sep + "OurDocs"
+    #ROOTDIR = r"C:\OurDocs"
+    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
 else:
     #ROOTDIR = "/media/winC/OurDocs"
     ROOTDIR = "/media/sf_OurDocs"
-TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-    ROOTDIR, "computing", "Office", "OOLT", "debug.txt")
+    TOPLEVEL_LOGGER_FILEPATH = os.path.join(
+        ROOTDIR, "computing", "Office", "OOLT", "debug.txt")
 
 
 class SimpleLogManager:

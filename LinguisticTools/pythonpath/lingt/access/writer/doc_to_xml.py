@@ -68,6 +68,8 @@ class DocToXml:
                 data = self.readFile()
             else:
                 raise exc
+        except FileNotFoundError as exc:
+            raise exceptions.FileAccessError(str(exc))
         #self.cleanup()
         logger.debug(util.funcName('end'))
         return data
