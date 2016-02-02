@@ -8,6 +8,7 @@
 # 28-Sep-15 JDK  Added uniqueGetSuite().
 # 20-Oct-15 JDK  Move __future__ imports before uno.
 # 04-Nov-15 JDK  Added quiet option.
+# 02-Feb-16 JDK  Use file's directory instead of a manually edited constant.
 
 """
 Reads in python files and assimilates them into independent
@@ -35,12 +36,8 @@ import glob
 import re
 import sys
 
-#BASEDIR = 'D:/dev/OOLT/LinguisticTools/'
-BASEDIR = 'C:/OurDocs/computing/Office/OOLT/LinguisticTools/'
-if platform.system() == "Linux":
-    BASEDIR = re.sub(r"^C:/OurDocs", r"/media/sf_OurDocs", BASEDIR)
-    BASEDIR = re.sub(r"^D:", r"/media/winD", BASEDIR)
-
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+BASEDIR = os.path.join(CURRENT_DIR, "../")
 UNITTEST2 = False
 #print("args: %r" % sys.argv)
 if len(sys.argv) > 1 and sys.argv[1] == "tests":
@@ -398,7 +395,8 @@ def get_actual_path(path):
     # disk letter
     test_path = [dirs[0].upper()]
     for d in dirs[1:]:
-        test_path += ["%s[%s]" % (d[:-1], d[-1])]
+        #test_path += ["%s[%s]" % (d[:-1], d[-1])]
+        test_path += [d]
     res = glob.glob('\\'.join(test_path))
     if not res:
         # File not found.

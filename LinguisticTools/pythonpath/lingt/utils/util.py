@@ -59,11 +59,12 @@ LOGGING_ENABLED = True
 # These paths are used for logging and testing.
 # Change them depending on your system.
 if platform.system() == "Windows":
-    ROOTDIR = "C:" + os.path.sep + "OurDocs"
+    #ROOTDIR = "C:" + os.path.sep + "OurDocs"
+    BASE_FOLDER = r"D:\dev\OOLT"
 else:
     #ROOTDIR = "/media/winC/OurDocs"
     ROOTDIR = "/media/sf_OurDocs"
-BASE_FOLDER = os.path.join(ROOTDIR, "computing", "Office", "OOLT")
+    BASE_FOLDER = os.path.join(ROOTDIR, "computing", "Office", "OOLT")
 LOGGING_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 TESTDATA_FOLDER = os.path.join(
     BASE_FOLDER, "LinguisticTools", "tests", "datafiles")

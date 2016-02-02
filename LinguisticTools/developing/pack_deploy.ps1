@@ -50,7 +50,8 @@ $ZipInput = @(
 if($Deploy)
 {
     #$OFFICEDIR = "${Env:ProgramFiles(x86)}\OpenOffice 4"
-    $OFFICEDIR = "${Env:ProgramFiles(x86)}\LibreOffice 5"
+    #$OFFICEDIR = "${Env:ProgramFiles(x86)}\LibreOffice 5"
+    $OFFICEDIR = "$Env:ProgramFiles\LibreOffice 5"
 
     # The unopkg tool deploys extensions programmatically.
     # This does the same thing as adding in Office from Tools -> Extensions.
