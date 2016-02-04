@@ -105,7 +105,11 @@ class DlgBulkConversion:
         elif self.step == self.STEP_FONTS:
             step2Form.storeUserVars()
         if self.convertOnClose:
-            self.app.doConversions()
+            try:
+                self.app.doConversions()
+            except exceptions.MessageError as exc:
+                self.msgbox.displayExc(exc)
+                return
         self.dlg.dispose()
 
     def isFirstStep(self):

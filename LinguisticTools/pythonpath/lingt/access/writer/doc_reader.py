@@ -107,7 +107,7 @@ class DocReader(FileReader):
             try:
                 oCursor = oSel.getText().createTextCursorByRange(oSel)
             except (RuntimeException, IllegalArgumentException):
-                self.logger.warn("Failed to go to text range.")
+                self.logger.warning("Failed to go to text range.")
                 continue
             text = oCursor.getString()
             self.logger.debug(len(text))

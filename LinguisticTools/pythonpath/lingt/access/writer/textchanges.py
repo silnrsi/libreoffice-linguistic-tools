@@ -91,7 +91,7 @@ class TextChanger:
                     rangeLastChanged = txtRange.sel.getStart()
                 except (RuntimeException, IllegalArgumentException):
                     # Just give up.
-                    logger.warn("Failed to get text range.")
+                    logger.warning("Failed to get text range.")
                     continue
             progressRange.update(rangeNum)
             rangeNum += 1
@@ -103,7 +103,7 @@ class TextChanger:
                 self.unoObjs.viewcursor.gotoRange(rangeLastChanged, False)
         except (RuntimeException, IllegalArgumentException):
             # Just give up; it's not essential.
-            logger.warn("Failed to go to text range.")
+            logger.warning("Failed to go to text range.")
         logger.debug(util.funcName('end'))
         return self.numChanges, self.numStyleChanges
 
@@ -113,7 +113,7 @@ class TextChanger:
         try:
             oCursor = oSel.getText().createTextCursorByRange(oSel)
         except (RuntimeException, IllegalArgumentException):
-            logger.warn("Failed to go to text range.")
+            logger.warning("Failed to go to text range.")
             return
         logger.debug(u"String = '%r'", oCursor.getString())
         if self.askEach:

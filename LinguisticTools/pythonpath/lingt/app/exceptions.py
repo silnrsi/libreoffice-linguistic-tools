@@ -43,7 +43,7 @@ def interpolate_message(message, msg_args):
             # for example "%d%d" % (a, b)
             message = message % msg_args
         except (TypeError, UnicodeDecodeError):
-            logger.warn(
+            logger.warning(
                 "Message '%s' failed to interpolate arguments %r",
                 message, msg_args)
     return message

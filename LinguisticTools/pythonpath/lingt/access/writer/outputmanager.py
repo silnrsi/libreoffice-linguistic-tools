@@ -337,7 +337,7 @@ class InterlinMgr(ExampleManager):
                 self.unoObjs.viewcursor.gotoRange(exnumRange, False)
             except (IllegalArgumentException, RuntimeException):
                 # Give up on this range and go on to the next one.
-                logger.warn("Failed to locate range.")
+                logger.warning("Failed to locate range.")
                 continue
             if (self.config.methodTables and
                     self.config.insertNumbering and

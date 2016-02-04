@@ -131,7 +131,7 @@ def setFontAttrs(styleObj, fontDef, color=None):
                 fontDef.fontSize.setPropSuffix(propSuffix)
                 fontDef.fontSize.changeElemProp(styleObj)
     else:
-        logger.warn("no fontDef specified")
+        logger.warning("no fontDef specified")
     if color is not None:
         styleObj.CharColor = color
 

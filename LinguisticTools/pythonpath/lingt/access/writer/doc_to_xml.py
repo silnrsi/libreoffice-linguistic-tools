@@ -58,12 +58,12 @@ class DocToXml:
         try:
             data = self.readFile()
         except zipfile.BadZipFile as exc:
-            logger.warn(exc)
+            logger.warning(exc)
             self.convert_to_odt()
             data = self.readFile()
         except exceptions.FileAccessError as exc:
             if exc.msg.startswith("Error reading file"):
-                logger.warn(exc)
+                logger.warning(exc)
                 self.convert_to_odt()
                 data = self.readFile()
             else:
@@ -118,7 +118,7 @@ class DocToXml:
         name, dummy_ext = os.path.splitext(basename)
         newpath = os.path.join(self.tempBaseDir, name + "_converted.odt")
         if os.path.exists(newpath):
-            logger.warn("File already exists: %s", newpath)
+            logger.warning("File already exists: %s", newpath)
             self.fileconfig.filepath = newpath
             logger.debug(util.funcName('return'))
             return
@@ -139,7 +139,7 @@ class DocToXml:
         try:
             loaded_doc.document.close(True)
         except CloseVetoException:
-            logger.warn("Could not close %s", newpath)
+            logger.warning("Could not close %s", newpath)
         self.fileconfig.filepath = newpath
         self.incrementProgressPart()
         logger.debug(util.funcName('end'))
@@ -147,7 +147,7 @@ class DocToXml:
     def makeChanges(self, fontChanges):
         logger.debug(util.funcName('begin'))
         if not self.odt_reader:
-            logger.warn("No odt_reader.")
+            logger.warning("No odt_reader.")
         changer = OdtChanger(self.odt_reader, fontChanges)
         numChanges = changer.makeChanges()
 
@@ -184,5 +184,5 @@ class DocToXml:
                 shutil.rmtree(self.tempDir)
                 #os.rmdir(self.tempDir)
         except OSError:
-            logger.warn("Failed to delete %s", self.tempDir)
+            logger.warning("Failed to delete %s", self.tempDir)
 

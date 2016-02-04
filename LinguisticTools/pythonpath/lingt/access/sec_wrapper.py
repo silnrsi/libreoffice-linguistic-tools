@@ -64,6 +64,10 @@ class ConverterSettings(Syncable):
     def __repr__(self):
         return repr(self.attrs())
 
+    def __str__(self):
+        return "Converter '%s' (forward=%s, normalize=%d)" % (
+            self.convName, self.forward, self.normForm)
+
     def storeUserVars(self):
         self.userVars.store('ConverterName', self.convName)
         self.userVars.store('ConvDirectionFw', str(int(self.forward)))
@@ -146,7 +150,7 @@ class SEC_wrapper:
             self.funcAddConverter = getattr(
                 libecdriver, 'EncConverterAddConverter' + wide)
         except AttributeError as exc:
-            logger.warn("Could not load AddConverter function.")
+            logger.warning("Could not load AddConverter function.")
         self.loaded = True
 
     def pickConverter(self):

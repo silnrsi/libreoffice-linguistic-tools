@@ -8,8 +8,10 @@
 
 ## Next
 
-get sil converters call working on dev machine
-change fonts
+Somehow highlight fonts that have changes, maybe with a +.
+
+Change fonts.
+
 
 ## Next OOLT version
 
@@ -24,6 +26,18 @@ Version 3.0:
         With just a link to the help document online,
         and without LinguisticTools/tests.
     Spanish and French translations with help from David and Phil.
+
+
+## bug 2016-02-04
+
+1. For font 1 select CapsTest converter, forward direction.
+2. Next, check show converted, correctly shows upper case.
+3. For font 2 select CapsTest converter, forward direction.
+4. Next, check show converted, correctly shows upper case.
+5. Check Reverse button for font 2.
+   (Maybe this happens only when steps 1-4 loaded from user vars?)
+6. Still shows upper case when "Next" is clicked, which is the bug.
+7. Going to font 1 and then font 2 again removes the problem.
 
 
 ## Bulk Data Conversion

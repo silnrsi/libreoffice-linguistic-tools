@@ -84,8 +84,9 @@ class Step2Controls:
         param paraStyleDispNames: list of paragraph style display names
         """
         logger.debug(util.funcName('begin'))
-        self.chkShowConverted.setState(
-            userVars.getInt('DisplayConverted'))
+        #self.chkShowConverted.setState(
+        #    userVars.getInt('DisplayConverted'))
+        self.chkShowConverted.setState(False)
         self.chkVerify.setState(
             userVars.getInt('AskEachChange'))
 

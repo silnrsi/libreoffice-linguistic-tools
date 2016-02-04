@@ -172,12 +172,13 @@ class SpellingChecker:
             wordLower = self.goodList.firstLower(word)
             wordNoAffix = self.wordAsker.removeAffixes(wordLower)
             suspect = True
-            if (not word
-                    or word.isdigit()
-                    or word.isspace()
-                    or wordLower in self.goodList
-                    or wordNoAffix in self.goodList
-                    or wordLower in self.wordAsker.wordsToIgnore):
+            if not word:
+                suspect = False
+            elif word.isdigit() or word.isspace():
+                suspect = False
+            elif wordLower in self.goodList or wordNoAffix in self.goodList:
+                suspect = False
+            elif wordLower in self.wordAsker.wordsToIgnore:
                 suspect = False
             if self.config.whichTask == 'ApplyCorrections':
                 suspect = wordLower in self.goodList.changeDict

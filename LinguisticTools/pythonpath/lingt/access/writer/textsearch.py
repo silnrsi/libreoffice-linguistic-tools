@@ -429,7 +429,7 @@ class TxRanger:
         prevInText = InText(oVC)
         #logger.debug("oVC moveRight")
         if not oVC.goRight(1, False):
-            logger.warn("cannot go any further")
+            logger.warning("cannot go any further")
             return False
         #logger.debug(util.debug_tellNextChar(oVC))
         nextInText = InText(oVC)

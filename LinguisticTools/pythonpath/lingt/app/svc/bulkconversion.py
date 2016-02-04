@@ -255,9 +255,14 @@ class ConvPool:
                 secCall.setConverter(conv_settings)
                 logger.debug("Did set converter.")
             except exceptions.FileAccessError as exc:
-                self.msgbox.displayExc(exc)
-                raise exceptions.ChoiceProblem(
-                    "Please select the converter again.")
+                msg = (
+                    "%s:\n%s  "
+                    "Please select the converter again." % (
+                        conv_settings, exc.msg))
+                raise exceptions.ChoiceProblem(msg, *exc.msg_args)
+                #self.msgbox.displayExc(exc)
+                #raise exceptions.ChoiceProblem(
+                #    "Please select the converter again.")
         self[key] = secCall
         logger.debug(util.funcName('end'))
         return secCall

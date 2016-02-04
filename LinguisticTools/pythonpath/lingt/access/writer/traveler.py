@@ -36,7 +36,7 @@ class Traveler:
                 # swap
                 cursLeftmost, cursRightmost = cursRightmost, cursLeftmost
         except (RuntimeException, IllegalArgumentException):
-            logger.warn("could not get range from selection")
+            logger.warning("could not get range from selection")
         try:
             cursTmp = text.createTextCursorByRange(cursLeftmost)
         except (RuntimeException, IllegalArgumentException):
@@ -76,7 +76,7 @@ class RangeJumper:
             self.placeCursor = self.text.createTextCursorByRange(
                 oSel.getStart())
         except (RuntimeException, IllegalArgumentException):
-            logger.warn("Failed to go to text range.")
+            logger.warning("Failed to go to text range.")
             raise exceptions.RangeError("Failed to go to text range.")
         logger.debug("String = <<%s>>", self.rangeCursor.getString())
 
@@ -103,20 +103,20 @@ class RangeJumper:
         selectedString = ""
         while len(selectedString) < len(wordString):
             if not self.travelCursor.goRight(1, True):
-                logger.warn("Could not go right.")
+                logger.warning("Could not go right.")
                 raise exceptions.RangeError("Failed to go to text range.")
             try:
                 selectedString = self.travelCursor.getString()
                 logger.debug("'%s'", selectedString)
             except RuntimeException:
-                logger.warn("Could not get string from selection.")
+                logger.warning("Could not get string from selection.")
                 raise exceptions.RangeError("Could not get selection string.")
         logger.debug("selectedString = '%s'", selectedString)
         try:
             # Select the word so the user can see it.
             self.unoObjs.viewcursor.gotoRange(self.travelCursor, False)
         except RuntimeException:
-            logger.warn("Could not go to range.")
+            logger.warning("Could not go to range.")
             raise exceptions.RangeError("Failed to go to text range.")
         return selectedString == wordString
 
@@ -175,7 +175,7 @@ class RangeJumper:
                     # this covers cases where len(stringBeforeWord) < 2
                     delta = 1
                 if oneStepForward and delta == 1:
-                    logger.warn("Couldn't move to exact spot.")
+                    logger.warning("Couldn't move to exact spot.")
                     break
                 cursorGo(self.travelCursor, 'left', delta, True)
                 guessedHigh = True

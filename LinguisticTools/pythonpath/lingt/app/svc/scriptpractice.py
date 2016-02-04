@@ -63,7 +63,7 @@ class Script:
 
     def setCharsetFromScript(self):
         """Sets self.charset"""
-        if not self.scriptName in self.letters.SCRIPT_LETTERS:
+        if self.scriptName not in self.letters.SCRIPT_LETTERS:
             self.init_charset()
             return
         # reference
