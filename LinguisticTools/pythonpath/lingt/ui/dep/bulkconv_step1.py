@@ -138,7 +138,7 @@ class Step1Form:
             return
         self.stepCtrls.txtOutputTo.setText(folderpath)
 
-    def scanFiles(self, listFontsUsed):
+    def scanFiles(self, step2Form):
         logger.debug(util.funcName('begin'))
         self.getResults()
         if not self.outdir:
@@ -166,9 +166,8 @@ class Step1Form:
             else:
                 logger.debug("did not find match for %r", fontChange)
         self.gotoStep2()
-        dutil.fill_list_ctrl(
-            listFontsUsed,
-            [str(fontItem) for fontItem in self.app.fontsFound])
+        step2Form.updateFontsList()
+        step2Form.fill_for_font()
         logger.debug(util.funcName('end'))
 
     def getResults(self):

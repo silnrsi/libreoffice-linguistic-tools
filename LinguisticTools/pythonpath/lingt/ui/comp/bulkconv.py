@@ -4,6 +4,7 @@
 #
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 # 16-Dec-15 JDK  Use folder picker.
+# 04-Feb-16 JDK  Catch error messages for doConversion().
 
 """
 Bulk OpenOffice document conversion dialog,
@@ -131,6 +132,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         self.step2Form = None
         self.step1Ctrls = None
         self.step2Ctrls = None
+        self.handling_event = False
 
     def setCtrls(self, step1Form, step2Form, step1Ctrls, step2Ctrls):
         self.step1Form = step1Form
@@ -139,6 +141,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         self.step2Ctrls = step2Ctrls
 
     @dutil.log_event_handler_exceptions
+    @dutil.do_not_enter_if_handling_event
     def itemStateChanged(self, itemEvent):
         """XItemListener event handler.
         For list controls or enabling and disabling.
@@ -172,17 +175,19 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             logger.warn("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
+    @dutil.do_not_enter_if_handling_event
     def textChanged(self, textEvent):
         """XTextListener event handler."""
         logger.debug(util.funcName())
         src = textEvent.Source
         if dutil.sameName(src, self.step2Ctrls.txtFontSize):
             self.step2Form.getFontFormResults()
-            self.step2Ctrls.enableDisable()
+            self.step2Ctrls.enableDisable(self.step2Form)
         else:
             logger.warn("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
+    @dutil.remember_handling_event
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -195,7 +200,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         elif event.ActionCommand == "ChooseFolder":
             self.step1Form.showFolderPicker()
         elif event.ActionCommand == "ScanFiles":
-            self.step1Form.scanFiles(self.step2Ctrls.listFontsUsed)
+            self.step1Form.scanFiles(self.step2Form)
         elif event.ActionCommand == "NextInput":
             self.step2Form.nextInputSample()
         elif event.ActionCommand == 'ResetFont':

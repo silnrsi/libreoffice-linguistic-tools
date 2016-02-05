@@ -6,6 +6,7 @@
 # 25-Aug-15 JDK  Add FontItem.numberedVar().
 # 18-Dec-15 JDK  Use rich comparisons instead of getID().
 # 24-Dec-15 JDK  Moved part of FontItem to a new FontChange class.
+# 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -45,9 +46,12 @@ class FontItem(FontInfo):
         self.fontChange = None  # type FontChange
 
     def __str__(self):
+        strval = str(self.name)
         if self.styleName:
-            return "%s (%s)" % (self.name, self.styleName)
-        return self.name
+            strval += " (%s)" % self.styleName
+        if self.fontChange:
+            strval = "*  " + strval
+        return strval
 
     def attrs(self):
         """Attributes used for magic methods below."""

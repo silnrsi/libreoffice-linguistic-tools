@@ -8,8 +8,6 @@
 
 ## Next
 
-Somehow highlight fonts that have changes, maybe with a +.
-
 Change fonts.
 
 
@@ -40,27 +38,29 @@ Version 3.0:
 7. Going to font 1 and then font 2 again removes the problem.
 
 
+## issue 2016-02-05
+
+Clicking the Copy button makes an unchanged entry changed.
+This is because it checks the fields for any changes, and creates a FontChange
+object.
+Instead, somehow we need to check each field and only add the FontChange if
+values are different from default.
+Maybe compare it to a generic FontChange object?
+
+Alternatively, make it so "Copy" never creates a FontChange,
+and always create a FontChange if fields are changed,
+even if they are changed to default values.
+That would be easier to implement, and might be just fine for the user.
+
+
 ## Bulk Data Conversion
 
-Menu option below Data Conversion.
-1. Choose Files.  First screen is a list of files, with Add Files using a
-   file selection box allowing multiples.  Can also remove files from the list.
-   Also specify output directory.
-   If output dir textbox is empty, set it when an input file is added.
-   Then press "Scan Files".
-2. In second screen, have list of fonts to convert, and their converter.
-   Will the SEC wrapper be able to handle several converters?
 3. When "Process Files" is pressed, show progress bar.
    If confirmation is checked, then show Data Conversion confirmation dialog.
    When converted, show message box "Done!".
 
-Save files in new folder, and then the user can move them to their old
-location or copy to new names as desired.
-Create subfolder "Converted Documents 001"
 Choose what output format, or only output ODT?
 To start with, only output ODT.
-
-The two files we need to look at are content.xml and styles.xml.
 
 Use current (possibly blank) writer doc for possible destination fonts.
 This is what Data Conversion does -- it allows a new style name,
@@ -99,38 +99,8 @@ Could be more than two entries if a font is used with several styles.
     which will change the list entries to just font instead of font(style).
     This will also grey out the target style fields.
 
-At the bottom it looks somewhat like the target and converter setup of
-the Data Conversion dialog.
-When target font or style is selected, example data will be shown.
-Click button to step through converted example data.
-Can click "Next" to cycle through changes.
-    Warn if not updated, or perhaps "Update? (Y/N)".
-Checkbox to show example data automatically.
-Button "Update" like in Abbreviations.  # But try to automatically update.
-Button "Clear".
-Button "Copy", "Paste" for target and converter.
-
 Maybe this will help in Bulk Conversion for .doc files:
 libreoffice --convert-to
-
-Button to show next input says "Next",
-and a label saying "{num} of {num}".
-
-Somehow in the used fonts listbox, fonts that have changes should be
-highlighted, perhaps with +.
-Then they can be reset if no conversion is desired.
-
-
-## Data Conversion test crashes on Linux 
-
-On Ubuntu VM even test 1 crashes.
-The debug.txt log seems to indicate that AddConverter() crashes.
-That would make sense, since it has not been tested as much as normal Data
-Conversion methods such as InitConverter().
-Maybe AddConverter() just has a bug in the linux ECDriver code,
-such as something simple like a string error when printing a message.
-
-This does not have to be fixed before the 2.9 release.
 
 
 ## Complete (but not exhaustive) set of tests
@@ -155,6 +125,16 @@ Script Practice             # result: (text box contents)
         Word List File
 
 Use bigExamples.xml in a grammar test.
+
+
+## Data Conversion test crashes on Linux 
+
+On Ubuntu VM even test 1 crashes.
+The debug.txt log seems to indicate that AddConverter() crashes.
+That would make sense, since it has not been tested as much as normal Data
+Conversion methods such as InitConverter().
+Maybe AddConverter() just has a bug in the linux ECDriver code,
+such as something simple like a string error when printing a message.
 
 
 ## Data Conversion string type problem

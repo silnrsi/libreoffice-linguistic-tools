@@ -1,6 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created December 24 2015 by Jim Kornelsen
+#
+# 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
 
 """
 Bulk Conversion dialog step 2.
@@ -157,6 +159,14 @@ class Step2Form:
         self.stepCtrls.lblSampleNum.setText("0 / 0")
         self.stepCtrls.lblConverted.setText("(None)")
 
+    def updateFontsList(self):
+        dutil.fill_list_ctrl(
+            self.stepCtrls.listFontsUsed,
+            [str(fontItem) for fontItem in self.app.fontsFound])
+        if self.selectedIndex >= 0:
+            dutil.select_index(
+                self.stepCtrls.listFontsUsed, self.selectedIndex)
+
     def grabSelectedItem(self):
         """Sets self.selectedIndex.
         :returns: selected found font item
@@ -176,21 +186,25 @@ class Step2Form:
         if self.selectedIndex == -1:
             return
         self.app.fontsFound[self.selectedIndex].fontChange = None
+        self.updateFontsList()
         self.fill_for_font()
 
     def copyFont(self):
         logger.debug(util.funcName())
-        self.copiedSettings = copy.copy(self.getFontFormResults())
+        self.copiedSettings = self.getFontFormResults()
 
     def pasteFont(self):
         logger.debug(util.funcName())
         if self.copiedSettings is None:
             self.msgbox.display("First copy font settings.")
             return
-        self.grabSelectedItem()
+        fontItem = self.grabSelectedItem()
         if self.selectedIndex == -1:
             return
-        self.app.fontsFound[self.selectedIndex].fontChange = self.copiedSettings
+        newFontChange = copy.deepcopy(self.copiedSettings)
+        newFontChange.fontItem = fontItem
+        fontItem.fontChange = newFontChange
+        self.updateFontsList()
         self.fill_for_font()
 
     def selectConverter(self):
@@ -285,6 +299,7 @@ class Step2Form:
                 fontChange.styleName = self.charStyleNames[displayName]
             else:
                 logger.warn("unexpected style %s", displayName)
+        self.updateFontsList()
         logger.debug(util.funcName('end'))
         return fontChange
 

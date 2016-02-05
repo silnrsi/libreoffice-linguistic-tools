@@ -132,6 +132,10 @@ class UserVars:
             self.otherLogger.debug("Field not found")
             return False
 
+    def __deepcopy__(self, memo):
+        """UserVar objects are only one per document, so return this one."""
+        return self
+
 
 def setHasSettings(userVars, maxHasSettings, twoDocsHaveMax):
     """Sets HasSettings to the highest value of any open documents.
