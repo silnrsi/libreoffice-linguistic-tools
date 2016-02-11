@@ -6,6 +6,7 @@
 # 06-Aug-15 JDK  Fixed bug: Don't call setText() unless needed.
 # 24-Aug-15 JDK  Don't need a special copy method for this class.
 # 18-Dec-15 JDK  Added comparison methods.
+# 11-Feb-16 JDK  Option to always change control prop.
 
 """
 Operations related to font size defaults and form input.
@@ -46,11 +47,12 @@ class FontSize:
         """
         return self.specified
 
-    def changeCtrlProp(self, ctrl):
+    def changeCtrlProp(self, ctrl, always_change=False):
         """For dialog controls including labels.
         Sets the control's font size.
+        :param always_change: true to change even if size is unspecified
         """
-        if self.specified:
+        if self.specified or always_change:
             logger.debug(
                 "set %s.FontHeight %1.1f", ctrl.getModel().Name, self.size)
             ctrl.getModel().FontHeight = self.size

@@ -17,40 +17,45 @@ Version 3.0:
     New Often-Requested feature (Bulk Data Conversion).
         Really a big change because it uses somewhat of a different
         design, with more processing done outside of Office.
-    Complete set of topdown tests.
+    Grammar Settings improved for Flex - line 1, line 2.
     Make file size much larger by adding screen captures to documentation.
         Actually, make two downloads: one with lots of images, and one with
         almost none.  (That's what LibreOffice 5.0 does).
         With just a link to the help document online,
         and without LinguisticTools/tests.
     Spanish and French translations with help from David and Phil.
+    Complete set of topdown tests.
 
 
-## bug 2016-02-04
+## Rename line checkboxes in Grammar Settings
 
-1. For font 1 select CapsTest converter, forward direction.
-2. Next, check show converted, correctly shows upper case.
-3. For font 2 select CapsTest converter, forward direction.
-4. Next, check show converted, correctly shows upper case.
-5. Check Reverse button for font 2.
-   (Maybe this happens only when steps 1-4 loaded from user vars?)
-6. Still shows upper case when "Next" is clicked, which is the bug.
-7. Going to font 1 and then font 2 again removes the problem.
+Morpheme Line 1
+Morpheme Line 2
 
+Line 1 will be checked by default.
+This will break compatibility with settings,
+requiring the user to change checkboxes.
+The most common use is to just use one line,
+so we want that transition to be smooth.
+So have new user var names,
+and ignore the old ones.
+So it will default to Line 1 checked.
 
-## issue 2016-02-05
+Make sure it doesn't matter to LingTools if for example the Tamil script is
+in Line 2.
 
-Clicking the Copy button makes an unchanged entry changed.
-This is because it checks the fields for any changes, and creates a FontChange
-object.
-Instead, somehow we need to check each field and only add the FontChange if
-values are different from default.
-Maybe compare it to a generic FontChange object?
+Toolbox orthographic tags will be line 1?
+But then the default of using line 1 will use only orthographic
+representation, which doesn't seem right.
+Would it work to say if line 1 and 2 are both checked,
+then we want orthographic text also,
+otherwise just normal text?
+No, because then it wouldn't be possible to show only orthographic text.
+Let's make line 2 be orthographic,
+even though that won't be how it ends up being shown (unless a hidden option
+is set?).
 
-Alternatively, make it so "Copy" never creates a FontChange,
-and always create a FontChange if fields are changed,
-even if they are changed to default values.
-That would be easier to implement, and might be just fine for the user.
+Change the grammar documentation to describe FieldWorks first.
 
 
 ## Bulk Data Conversion

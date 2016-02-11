@@ -169,8 +169,8 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
                 self.step2Form.samples.sampleIndex -= 1
             self.step2Form.nextInputSample()
         elif dutil.sameName(src, self.step2Ctrls.chkReverse):
-            self.step2Form.fill_for_font(
-                self.step2Form.getFontFormResults())
+            self.step2Form.getFontFormResults()
+            self.step2Form.fill_for_font()
         else:
             logger.warn("unexpected source %s", src.Model.Name)
 

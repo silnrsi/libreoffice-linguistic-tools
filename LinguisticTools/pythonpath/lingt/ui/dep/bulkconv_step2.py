@@ -3,6 +3,7 @@
 # This file created December 24 2015 by Jim Kornelsen
 #
 # 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
+# 11-Feb-16 JDK  Show modified font settings when FontItem is selected.
 
 """
 Bulk Conversion dialog step 2.
@@ -191,7 +192,7 @@ class Step2Form:
 
     def copyFont(self):
         logger.debug(util.funcName())
-        self.copiedSettings = self.getFontFormResults()
+        self.copiedSettings = self.getFontFormResults(False)
 
     def pasteFont(self):
         logger.debug(util.funcName())
@@ -220,8 +221,8 @@ class Step2Form:
         if newChange:
             fontItem.fontChange = newChange
             newChange.fontItem = fontItem
-            self.samples.last_settings[
-                newChange.converter.convName] = newChange.converter
+            #self.samples.last_settings[
+            #    newChange.converter.convName] = newChange.converter
             self.fill_for_font(fontItem)
         logger.debug(util.funcName('end'))
 
@@ -257,15 +258,16 @@ class Step2Form:
             listCtrl.selectItemPos(0, True)
         fontSize.changeCtrlVal(self.stepCtrls.txtFontSize)
 
-    def getFontFormResults(self):
+    def getFontFormResults(self, updateFontItem=True):
         """Get form results for the currently selected font.
         Sets currently selected FontItem to the resulting FontChange.
         Returns the FontChange object.
+
+        :param updateFontItem: true to modify item in self.app.fontsFound
         """
         logger.debug(util.funcName('begin'))
         fontItem = self.grabSelectedItem()
         fontChange = FontChange(fontItem, self.userVars)
-        fontItem.fontChange = fontChange
 
         fontChange.converter.convName = self.stepCtrls.txtConvName.getText()
         fontChange.converter.forward = (
@@ -299,7 +301,9 @@ class Step2Form:
                 fontChange.styleName = self.charStyleNames[displayName]
             else:
                 logger.warn("unexpected style %s", displayName)
-        self.updateFontsList()
+        if updateFontItem:
+            fontItem.fontChange = fontChange
+            self.updateFontsList()
         logger.debug(util.funcName('end'))
         return fontChange
 
@@ -318,16 +322,41 @@ class Step2Form:
             #    fontItem = FontItem()
             #else:
             #    fontItem = self.app.fontsFound[itemPos]
+        self.stepCtrls.comboFontName.setText("")
+        self.stepCtrls.comboParaStyle.setText("")
+        self.stepCtrls.comboCharStyle.setText("")
         if fontItem.fontChange:
+            fontChange = fontItem.fontChange
             self.stepCtrls.txtConvName.setText(
-                fontItem.fontChange.converter.convName)
+                fontChange.converter.convName)
             self.stepCtrls.chkReverse.setState(
-                not fontItem.fontChange.converter.forward)
+                not fontChange.converter.forward)
+            self.samples.last_settings[
+                fontChange.converter.convName] = fontChange.converter
+            if fontChange.name and fontChange.name != "(None)":
+                self.stepCtrls.comboFontName.setText(fontChange.name)
+            fontChange.size.changeCtrlVal(self.stepCtrls.txtFontSize)
+            fontChange.size.changeCtrlProp(self.stepCtrls.lblConverted)
+            dutil.selectRadio(
+                self.stepCtrls.radiosFontType, fontChange.fontType)
+            if fontChange.styleName:
+                if fontChange.styleType == 'ParaStyle':
+                    self.stepCtrls.comboParaStyle.setText(fontChange.styleName)
+                elif fontChange.styleType == 'CharStyle':
+                    self.stepCtrls.comboCharStyle.setText(fontChange.styleName)
+            dutil.selectRadio(
+                self.stepCtrls.radiosStyleType, fontChange.styleType)
         else:
             self.stepCtrls.txtConvName.setText("<No converter>")
             self.stepCtrls.chkReverse.setState(False)
-        dutil.selectRadio(self.stepCtrls.radiosFontType, fontItem.fontType)
-        dutil.selectRadio(self.stepCtrls.radiosStyleType, fontItem.styleType)
+            #defaultFontSize = FontSize()
+            fontItem.size.changeCtrlVal(self.stepCtrls.txtFontSize)
+            fontItem.size.changeCtrlProp(
+                self.stepCtrls.lblConverted, True)
+            dutil.selectRadio(
+                self.stepCtrls.radiosFontType, fontItem.fontType)
+            dutil.selectRadio(
+                self.stepCtrls.radiosStyleType, fontItem.styleType)
         self.stepCtrls.enableDisable(self)
         self.samples.set_fontItem(fontItem)
         self.nextInputSample()

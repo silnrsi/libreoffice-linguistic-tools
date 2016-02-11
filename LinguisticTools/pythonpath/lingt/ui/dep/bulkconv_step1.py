@@ -123,9 +123,6 @@ class Step1Form:
 
         if self.stepCtrls.listboxFiles.getItemCount() > 0:
             dutil.select_index(self.stepCtrls.listboxFiles, itemPos)
-        else:
-            ## The list is empty.  Clear the text field.
-            self.stepCtrls.txtPrefix.setText("")
         logger.debug("FileRemove end")
 
     def showFolderPicker(self):
