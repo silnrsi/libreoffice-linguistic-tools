@@ -326,7 +326,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         elif dutil.sameName(src, self.dlgCtrls.txtFontSize):
             self.dlgCtrls.changeFontSize()
         else:
-            logger.warn("unexpected source %s", src.Model.Name)
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
     def actionPerformed(self, event):

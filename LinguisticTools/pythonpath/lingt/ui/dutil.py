@@ -147,17 +147,17 @@ def select_index(listCtrl, itemPos):
     :param listCtrl: the UNO listbox control
     """
     if itemPos is None or itemPos == "":
-        logger.warn("Could not select index %r", itemPos)
+        logger.warning("Could not select index %r", itemPos)
         return
     maxItemPos = listCtrl.getItemCount() - 1
     if itemPos > maxItemPos:
-        logger.warn("Using %d instead of %d", maxItemPos, itemPos)
+        logger.warning("Using %d instead of %d", maxItemPos, itemPos)
         itemPos = maxItemPos
     if itemPos >= 0:
         logger.debug("Selecting index %d", itemPos)
         listCtrl.selectItemPos(itemPos, True)
     else:
-        logger.warn("Could not select index %r", itemPos)
+        logger.warning("Could not select index %r", itemPos)
 
 
 def listbox_items(listboxCtrl):

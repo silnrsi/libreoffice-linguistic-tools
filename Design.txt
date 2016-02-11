@@ -8,7 +8,7 @@
 
 ## Next
 
-Change fonts.
+Change font size.
 
 
 ## Next OOLT version

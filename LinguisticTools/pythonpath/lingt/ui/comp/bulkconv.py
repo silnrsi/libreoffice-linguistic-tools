@@ -172,7 +172,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.getFontFormResults()
             self.step2Form.fill_for_font()
         else:
-            logger.warn("unexpected source %s", src.Model.Name)
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
     @dutil.do_not_enter_if_handling_event
@@ -184,7 +184,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.getFontFormResults()
             self.step2Ctrls.enableDisable(self.step2Form)
         else:
-            logger.warn("unexpected source %s", src.Model.Name)
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
     @dutil.remember_handling_event

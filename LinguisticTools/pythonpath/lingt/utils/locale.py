@@ -1,4 +1,5 @@
 # -*- coding: Latin-1 -*-
+# pylint: disable=too-many-lines
 #
 # This file created Sept 14 2010 by Jim Kornelsen
 #

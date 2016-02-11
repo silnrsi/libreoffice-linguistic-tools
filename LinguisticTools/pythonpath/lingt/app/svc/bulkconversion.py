@@ -124,6 +124,8 @@ class BulkConversion:
         for converter_settings in unique_converter_settings:
             sec_call = self.convPool.loadConverter(
                 converter_settings)
+            if not sec_call:
+                continue
             self.convPool.cleanup_unused()
             for fontItem in converter_fontItems[converter_settings]:
                 fontChange = fontItem.fontChange

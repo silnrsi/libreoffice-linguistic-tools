@@ -462,7 +462,7 @@ class DlgEventHandler(XActionListener, XTextListener, XItemListener,
             if self.dlgCtrls.optTargetCharStyle.getState() == 1:
                 self.mainForm.selectTargetFont(src, 'Character')
         else:
-            logger.warn("unexpected source %s", src.Model.Name)
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @dutil.log_event_handler_exceptions
     def actionPerformed(self, event):

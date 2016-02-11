@@ -17,7 +17,7 @@ import logging
 
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.bulkconv_structs import FontItem, FontChange
+from lingt.app.bulkconv_structs import FontChange
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui import dutil
 from lingt.utils import util
@@ -294,13 +294,13 @@ class Step2Form:
             if displayName in self.paraStyleNames:
                 fontChange.styleName = self.paraStyleNames[displayName]
             else:
-                logger.warn("unexpected style %s", displayName)
+                logger.warning("unexpected style %s", displayName)
         elif fontChange.styleType == 'CharStyle':
             displayName = self.stepCtrls.comboCharStyle.getText()
             if displayName in self.charStyleNames:
                 fontChange.styleName = self.charStyleNames[displayName]
             else:
-                logger.warn("unexpected style %s", displayName)
+                logger.warning("unexpected style %s", displayName)
         if updateFontItem:
             fontItem.fontChange = fontChange
             self.updateFontsList()
@@ -316,12 +316,6 @@ class Step2Form:
             fontItem = self.grabSelectedItem()
             if not fontItem:
                 return
-            #itemPos = self.stepCtrls.listFontsUsed.getSelectedItemPos()
-            #if itemPos is None or itemPos < 0:
-            #    logger.warn("No list item seems to be selected.")
-            #    fontItem = FontItem()
-            #else:
-            #    fontItem = self.app.fontsFound[itemPos]
         self.stepCtrls.comboFontName.setText("")
         self.stepCtrls.comboParaStyle.setText("")
         self.stepCtrls.comboCharStyle.setText("")
@@ -349,7 +343,6 @@ class Step2Form:
         else:
             self.stepCtrls.txtConvName.setText("<No converter>")
             self.stepCtrls.chkReverse.setState(False)
-            #defaultFontSize = FontSize()
             fontItem.size.changeCtrlVal(self.stepCtrls.txtFontSize)
             fontItem.size.changeCtrlProp(
                 self.stepCtrls.lblConverted, True)

@@ -67,7 +67,7 @@ def showFilePicker(genericUnoObjs, save=False, filters=None,
         filepath = unohelper.fileUrlToSystemPath(filepath)
         if os.path.exists(filepath):
             if os.path.isdir(filepath) or os.path.islink(filepath):
-                logger.warn("'%s' is not an ordinary file", filepath)
+                logger.warning("'%s' is not an ordinary file", filepath)
                 filepath = ""
     logger.debug(util.funcName('end', args=filepath))
     return filepath
@@ -91,7 +91,7 @@ def showFolderPicker(genericUnoObjs, defaultFoldername=None):
         folderpath = unohelper.fileUrlToSystemPath(folderpath)
         if os.path.exists(folderpath):
             if os.path.isfile(folderpath) or os.path.islink(folderpath):
-                logger.warn("'%s' is not a folder", folderpath)
+                logger.warning("'%s' is not a folder", folderpath)
                 folderpath = ""
     logger.debug(util.funcName('end', args=folderpath))
     return folderpath

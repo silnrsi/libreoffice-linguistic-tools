@@ -128,7 +128,7 @@ class DlgSpellingStep:
         try:
             rowNum = int(txtVal)
         except ValueError:
-            logger.warn("Couldn't parse '%s' as integer.", txtVal)
+            logger.warning("Couldn't parse '%s' as integer.", txtVal)
             self.dlgCtrls.txtRowNum.getModel().BackgroundColor = lightRedColor
             return
         if rowNum < 2 or rowNum > self.maxRow:

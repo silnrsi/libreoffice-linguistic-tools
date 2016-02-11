@@ -169,11 +169,8 @@ class DocToXml:
             return 0
         logger.debug("Writing to file %s", resultFilepath)
         zipper = zipfile.ZipFile(resultFilepath, 'w')
-        for root, dummy_dirs, filenames in os.walk(self.tempDir):
-            for filename in filenames:
-                abs_path = os.path.join(root, filename)
-                rel_path = os.path.relpath(abs_path, self.tempDir)
-                zipper.write(abs_path, rel_path)
+        for abs_path, rel_path in paths_to_all_files(self.tempDir):
+            zipper.write(abs_path, rel_path)
         zipper.close()
         logger.debug(util.funcName('end'))
         return numChanges
@@ -186,3 +183,15 @@ class DocToXml:
         except OSError:
             logger.warning("Failed to delete %s", self.tempDir)
 
+
+def paths_to_all_files(infolder):
+    """Gets all files in the tree of the given directory.
+    Returns list of tuples (absoulte path, path relative to infolder).
+    """
+    results = []
+    for root, dummy_dirs, filenames in os.walk(infolder):
+        for filename in filenames:
+            abs_path = os.path.join(root, filename)
+            rel_path = os.path.relpath(abs_path, infolder)
+            results.append((abs_path, rel_path))
+    return results

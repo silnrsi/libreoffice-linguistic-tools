@@ -125,7 +125,7 @@ class MessageBox:
         rect = uno.createUnoStruct('com.sun.star.awt.Rectangle')
         message = exceptions.interpolate_message(message, msg_args)
         message += " "  # padding so that it displays better
-        logger.warn(message)
+        logger.warning(message)
         try:
             box = self.toolkit.createMessageBox(
                 self.parent, rect, stype, buttons, title, message)
