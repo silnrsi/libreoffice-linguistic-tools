@@ -115,15 +115,22 @@ class OdtReader(FileReader):
     def readContentFile(self, dom):
         """Read in content.xml."""
         self.logger.debug(util.funcName('begin'))
-        for style in dom.getElementsByTagName("style:style"):
-            xmlStyleName = style.getAttribute("style:name")
-            #self.logger.debug("searching descendents of %s", xmlStyleName)
-            for textprop in style.getElementsByTagName(
-                    "style:text-properties"):
-                fontName = textprop.getAttribute("style:font-name")
-                if fontName:
-                    #self.logger.debug("%r font %r", xmlStyleName, fontName)
-                    self.stylesDict[xmlStyleName] = fontName
+        # Unlike common styles, automatic styles are not visible to the user.
+        auto_styles = dom.getElementsByTagName("office:automatic-styles")[0]
+        if auto_styles:
+            for style in auto_styles.childNodes:
+                xmlStyleName = style.getAttribute("style:name")
+                #self.logger.debug("searching descendents of %s", xmlStyleName)
+                for textprop in style.getElementsByTagName(
+                        "style:text-properties"):
+                    fontName = textprop.getAttribute("style:font-name")
+                    if fontName:
+                        #self.logger.debug("%r font %r", xmlStyleName, fontName)
+                        self.stylesDict[xmlStyleName] = fontName
+                    fontName = textprop.getAttribute("style:font-name-complex")
+                    if fontName:
+                        #self.logger.debug("%r font %r", xmlStyleName, fontName)
+                        self.stylesDict[xmlStyleName] = fontName
         for paragraph in dom.getElementsByTagName("text:p"):
             xmlStyleName = paragraph.getAttribute("text:style-name")
             #self.logger.debug("para style name %s", xmlStyleName)
@@ -136,6 +143,7 @@ class OdtReader(FileReader):
                 spanFontName = self.stylesDict.get(xmlStyleName, paraFontName)
                 span_texts = xmlutil.getElemTextList(span)
                 self.add_data_for_font(spanFontName, span_texts, xmlStyleName)
+        #TODO: look for text:class-name, which is for paragraph styles.
         self.logger.debug(util.funcName('end'))
 
     def add_data_for_font(self, fontName, textvals, xmlStyleName):
@@ -222,13 +230,17 @@ class OdtChanger:
 
     def change_styles(self, contentDom, stylesDom):
         """Change fonts and styles."""
-        for style in contentDom.getElementsByTagName("style:font-face"):
+        for style in (
+                contentDom.getElementsByTagName("style:font-face") + 
+                stylesDom.getElementsByTagName("style:font-face")):
             fontName = style.getAttribute("style:name")
             for fontChange in self.fontChanges:
                 if fontName == fontChange.fontItem.name:
                     style.setAttribute("style:name", fontChange.name)
                     style.setAttribute("svg:font-family", fontChange.name)
-        for style in contentDom.getElementsByTagName("style:style"):
+        for style in (
+                contentDom.getElementsByTagName("style:style") + 
+                stylesDom.getElementsByTagName("style:default-style")):
             for textprop in style.getElementsByTagName(
                     "style:text-properties"):
                 fontName = textprop.getAttribute("style:font-name")
@@ -238,8 +250,9 @@ class OdtChanger:
                             "style:font-name", fontChange.name)
                         #style.setAttribute(
                         #    "style:parent-style-name", fontChange.fontType)
-                        fontSize = textprop.getAttribute("fo:font-size")
-                        if fontSize and fontChange.size.isSpecified():
+                        #fontSize = textprop.getAttribute("fo:font-size")
+                        #if fontSize and fontChange.size.isSpecified():
+                        if fontChange.size.isSpecified():
                             textprop.setAttribute(
                                 "fo:font-size", str(fontChange.size) + "pt")
 
