@@ -27,6 +27,60 @@ Version 3.0:
     Complete set of topdown tests.
 
 
+## Possible Problem 2016-02-15
+
+In the ODT document, a font may have an overridden font-name as well as
+overridden font-name-complex.
+Then it would show up as two different entries in bulk conversion.
+So would the same text potentially get converted twice?
+And it could show that for example Mangal is used,
+when in fact it is only Times New Roman that is used,
+although it was overridden to Mangal, so that's something.
+
+-- A. Possible solution --
+
+If text is marked with a particular font,
+and that font is set to be converted,
+then convert the text.
+(Maybe it's not what the user wants, but that is up to the user to decide.)
+If a particular section of text is marked to be converted twice,
+then check for duplicates and just convert once.
+If they are different then which one to choose?
+Maybe complex preferred over standard.
+(This is something the user can get around by just converting one at a time.)
+All used fonts in the document should be listed, even if a font doesn't end up
+contributing any of its glyphs because a fallback or other type font gets
+used.
+
+What about document default fonts?
+One possibility is to have a "default" category.
+That would make it clear that for example Times New Roman is never explicitly
+used even though it is the default.
+Although in that case, there could still be a lot of Times New Roman text.
+But then that would be apparent in the number of samples.
+
+-- B. Another Possible Solution --
+
+Have one entry in the list be for "Times New Roman / Mangal",
+and a different entry for "Times New Roman / Latha".
+Defaults could be listed, so an entry might say "Default / Latha",
+and another "Times New Roman / Default".
+
+This seems like an accurate solution, but is it necessary?
+
+-- C. Lookup --
+
+It would be nice to avoid guessing by looking up character codes,
+although that's not out of the question.
+But one difficulty with guessing is that there might be an unknown font,
+so we don't know whether to check complex or standard fonts.
+Or can LibreOffice tell us that?
+Wait a minute, we already know that from the XML file.
+So we would just need to look up all characters in the samples and
+determine if the characters are standard, complex or asian.
+Although fonts such as Annapurna would be considered complex, wouldn't they?
+
+
 ## Rename line checkboxes in Grammar Settings
 
 Morpheme Line 1
@@ -103,6 +157,9 @@ Could be more than two entries if a font is used with several styles.
     Checkbox to handle style and custom formatting together,
     which will change the list entries to just font instead of font(style).
     This will also grey out the target style fields.
+
+If a size is not specified, then keep the original size,
+which would allow multiple sizes to not get changed.
 
 Maybe this will help in Bulk Conversion for .doc files:
 libreoffice --convert-to

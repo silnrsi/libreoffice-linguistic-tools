@@ -86,8 +86,7 @@ class OdtReader(FileReader):
         """Read in styles.xml."""
         self.logger.debug(util.funcName('begin'))
         for style in dom.getElementsByTagName("style:default-style"):
-            styleFamily = style.getAttribute("style:family")
-            if styleFamily == "paragraph":
+            if style.getAttribute("style:family") == "paragraph":
                 for textprop in style.getElementsByTagName(
                         "style:text-properties"):
                     fontName = textprop.getAttribute("style:font-name")
