@@ -8,7 +8,8 @@
 
 ## Next
 
-Change font size.
+Load new dialog control changes.
+Get controls to look ok.
 
 
 ## Next OOLT version
@@ -79,6 +80,59 @@ Wait a minute, we already know that from the XML file.
 So we would just need to look up all characters in the samples and
 determine if the characters are standard, complex or asian.
 Although fonts such as Annapurna would be considered complex, wouldn't they?
+
+It would be nice to have an option, disabled by default,
+to convert characters by lookup.
+Lookup would be based on ranges, not lists of characters.
+Use the Unicode database file that tells the ranges.
+0-256 = Latin
+Ignore c.isspace() or c.isdigit() or c in string.punctuation --
+assume it is whatever type the surrounding text is.
+Base the assumption on the preceding character,
+in order to make the code easier -- no lookahead required.
+
+
+-- D. Are fonts such as Annapurna considered complex? --
+
+No, they are considered Western.
+It is all about the character set, which can be determined by finding
+the Unicode block.
+
+Unicode IPA (Doulos SIL) is also considered western.
+CTL: Devanagari (Mangal), Tamil (Latha), Malayalam (Kartika)
+
+
+-- E. A recommended solution. --
+
+Looking at the above, here is a way to do all of this.
+First, do we want to split up and merge sections based on lookup?
+I think the answer is no, because if we do, then things get really
+complicated, requiring lots of options, more difficult code,
+and likely causing problems in the resulting document.
+
+But lookup is useful, because it tells us whether the
+string contains complex or CJK characters.
+If it does, then we can consider the entire string as pertaining to that
+font, and it can be listed that way in the font list,
+without needing to display the other two fonts.
+Now this is only information, because even if the lookup produces incorrect
+results, the converter can still be performed in the same way,
+if the user chooses the right font.
+
+Maybe we should still show all three fonts in a different field.
+I think if I use this, I would want to know what all three are.
+If so, it could show more than one item in the list with the same name.
+That could happen for different sizes as well.
+Maybe two checkboxes:
+[] Separate each font size.
+[] Separate if other font types are different. 
+The second checkbox could be considered an advanced feature.
+
+With those two options, it seems like just about anything is possible that
+someone would want to do.
+If there is some complex and some standard text in a run,
+then a TECkit converter could just convert the complex text,
+so it hopefully won't be a problem.
 
 
 ## Rename line checkboxes in Grammar Settings

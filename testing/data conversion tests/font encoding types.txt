@@ -1,0 +1,13 @@
+Symbol type fonts (probably the most typical use of Data Conversion)
+[mAi nejm Iz dZIm]
+Converted value: “mɑi nejm ɪz dʒɪm”
+
+
+Annapurna Regular (romanized is "mein Jim hun")
+§úà èk§ Ìóß|
+Converted value: “मैं जिम हूँ।”
+
+
+Unicode to Unicode: Tamil to Malayalam script
+இடு நல்லடு இல்லெ.
+Converted value: “ഇഡ് നല്ലഡ് ഇല്ലെ.”
