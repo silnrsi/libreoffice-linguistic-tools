@@ -74,6 +74,8 @@ def sameName(control1, control2):
     This is the control name that is in the dialog designer,
     and also used with dlg.getControl().
     """
+    if control1 is None or control2 is None:
+        return False
     return control1.getModel().Name == control2.getModel().Name
 
 

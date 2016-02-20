@@ -4,6 +4,7 @@
 #
 # 29-Dec-15 JDK  Set and verify sec_call if none exists yet.
 # 29-Dec-15 JDK  Use converter name as key instead of ConverterSettings.
+# 20-Feb-16 JDK  Added FontItemList.
 
 """
 Bulk Conversion will create multiple SEC call objects,
@@ -39,8 +40,9 @@ class BulkConversion:
         self.msgbox = MessageBox(self.unoObjs)
         self.convPool = ConvPool(
             self.userVars, self.msgbox, self.get_all_conv_names)
-        self.fileItems = []  # FileItemList of BulkFileItem
-        self.fontsFound = []  # List of FontItem found in document.
+        self.fileItems = None  # FileItemList of BulkFileItem
+        #self.fontsFound = []  # List of FontItem found in document.
+        self.fontItemList = FontItemList()
         self.outdir = ""
         self.askEach = False
 
@@ -69,10 +71,10 @@ class BulkConversion:
                         uniqueFontsFound[fontItem].inputData)
                 uniqueFontsFound[fontItem] = fontItem
             progressRange.update(fileItemIndex)
-        self.fontsFound = sorted(uniqueFontsFound.values())
+        self.fontItemList.items = uniqueFontsFound.values()
         progressBar.updateFinishing()
         progressBar.close()
-        logger.debug(util.funcName('end', args=len(self.fontsFound)))
+        logger.debug(util.funcName('end', args=len(self.fontItemList.items)))
 
     def doConversions(self):
         logger.debug(util.funcName('begin'))
@@ -111,7 +113,7 @@ class BulkConversion:
 
     def convert_vals(self):
         """Performs whatever encoding conversion needs to be done.
-        Modifies self.fontsFound by setting FontChange.converted_data.
+        Modifies self.fileItemList by setting FontChange.converted_data.
         """
         unique_converter_settings = set(
             [fontChange.converter for fontChange in self.getFontChanges()
@@ -139,7 +141,7 @@ class BulkConversion:
         of found FontItem.
         """
         return [
-            fontItem.fontChange for fontItem in self.fontsFound
+            fontItem.fontChange for fontItem in self.fileItemList.items
             if fontItem.fontChange]
 
     def get_all_conv_names(self):
@@ -148,6 +150,58 @@ class BulkConversion:
             fontChange.converter.convName
             for fontChange in self.getFontChanges()
             if fontChange.converter.convName])
+
+
+class FontItemList:
+    """Manage a list of FontItem objects.  Optionally group similar items."""
+
+    def __init__(self):
+        self.items = []
+        self.groupSizes = True
+        self.groupStyles = True
+        self.groupFontTypes = True
+
+    def get_grouped_list(self):
+        """Returns a list of new FontItem objects,
+        based on those in self.items.
+        """
+        # TODO: Group according to member flags.
+        # Merge data, sorting data by fontItem.inputDataOrder.
+        return sorted(self.items)
+
+    def update_item(self, item_to_update, fontChange, attr_changed):
+        """When controls get changed,
+        update all FontItem objects in the selected group.
+
+        :param item_to_update: type FontItem
+        :param fontChange: type FontChange
+        :param attr_changed: string name of FontChange attribute
+        """
+        conv_attr_changed = ''
+        if attr_changed.startswith('converter_'):
+            conv_attr_changed = [len('converter_'):]
+        for item in self.items:
+            if item == item_to_update:
+                if item.fontChange:
+                    newChange = fontChange
+                else:
+                    newChange = FontChange()
+                if conv_attr_changed:
+                    setattr(newChange.converter, attr_changed)
+                else:
+                    setattr(newChange, attr_changed)
+                item.fontChange = newChange
+                newChange.fontItem = item
+
+    def __getitem__(self, index):
+        """For random access."""
+        return self.get_grouped_list()[index]
+
+    def __iter__(self):
+        """We override __iter__ here for better performance than
+        __getitem__.
+        """
+        return list.__iter__(self.get_grouped_list())
 
 
 class Samples:

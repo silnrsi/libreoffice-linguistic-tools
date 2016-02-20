@@ -8,8 +8,10 @@
 
 ## Next
 
-Load new dialog control changes.
+Pylint new changes.
+Test ungrouped FontItemList.
 Get controls to look ok.
+Write grouping code.
 
 
 ## Next OOLT version
@@ -134,6 +136,46 @@ If there is some complex and some standard text in a run,
 then a TECkit converter could just convert the complex text,
 so it hopefully won't be a problem.
 
+-- F. Another thought --
+
+Actually it might be good to move the checkboxes to step 1,
+because we need it to read in the data correctly.
+[x] Handle each style separately.
+[] Handle each size separately.
+[] Handle fonts of other types separately.  For example, handle
+Devanagari complex data with Arial/Mangal/SimSun separately from Verdana/Mangal/SimSun.
+
+-- G. Contradicting F --
+
+No, let's keep a separating (or joining) checkbox in step 2.
+The app layer will always store all font items as if fully separated,
+and FontItem.attrs() will always return the full list of attributes.
+Have a FontItemList object that somehow joins font items.
+The items can be split or joined as needed.
+If joined, a change to the settings affects each item in the group.
+Joining and splitting does not immediately change any settings,
+which makes it easier to see what the checkboxes do,
+and may be useful for merging and then joining multiple times,
+for example setting the size for everything, then splitting,
+then changing some, then joining by style for a different type of change.
+A box showing more than one setting should say something like "(Various)",
+and maybe be italics, or something brighter like a yellow background.
+
+One disadvantage with this approach is that samples will not necessarily
+be shown in the order they occur in the document.
+A serial number could be stored with each sample text to keep them in
+the same order.
+If there is more than one document, is this important?
+Well, it doesn't seem like it would be that hard to do.
+Actually we would just need to store one integer per font item,
+which would tell the serial number at the beginning of the sample.
+That would allow us to preserve the original order.
+
+First implement everything separated, and then get various joins working.
+But design the code in preparation for joining.
+If the checkbox is named "Join" then it would better reflect what this
+code would be doing.
+ 
 
 ## Rename line checkboxes in Grammar Settings
 

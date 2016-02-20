@@ -152,15 +152,15 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.fill_for_font()
         elif dutil.sameName(src, self.step2Ctrls.comboFontName):
             self.step2Ctrls.optNoStyle.setState(True)
-            self.step2Form.getFontFormResults()
+            self.step2Form.getFontFormResults(ctrl_changed=src)
         elif dutil.sameName(src, self.step2Ctrls.comboParaStyle):
             self.step2Ctrls.optParaStyle.setState(True)
-            self.step2Form.getFontFormResults()
+            self.step2Form.getFontFormResults(ctrl_changed=src)
             if self.step2Ctrls.optParaStyle.getState() == 1:
                 self.step2Form.selectFontFromStyle(src, 'Paragraph')
         elif dutil.sameName(src, self.step2Ctrls.comboCharStyle):
             self.step2Ctrls.optCharStyle.setState(True)
-            self.step2Form.getFontFormResults()
+            self.step2Form.getFontFormResults(ctrl_changed=src)
             if self.step2Ctrls.optCharStyle.getState() == 1:
                 self.step2Form.selectFontFromStyle(src, 'Character')
         elif dutil.sameName(src, self.step2Ctrls.chkShowConverted):
@@ -169,7 +169,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
                 self.step2Form.samples.sampleIndex -= 1
             self.step2Form.nextInputSample()
         elif dutil.sameName(src, self.step2Ctrls.chkReverse):
-            self.step2Form.getFontFormResults()
+            self.step2Form.getFontFormResults(ctrl_changed=src)
             self.step2Form.fill_for_font()
         else:
             logger.warning("unexpected source %s", src.Model.Name)
@@ -181,7 +181,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         logger.debug(util.funcName())
         src = textEvent.Source
         if dutil.sameName(src, self.step2Ctrls.txtFontSize):
-            self.step2Form.getFontFormResults()
+            self.step2Form.getFontFormResults(ctrl_changed=src)
             self.step2Ctrls.enableDisable(self.step2Form)
         else:
             logger.warning("unexpected source %s", src.Model.Name)

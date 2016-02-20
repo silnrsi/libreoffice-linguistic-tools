@@ -7,6 +7,7 @@
 # 18-Dec-15 JDK  Use rich comparisons instead of getID().
 # 24-Dec-15 JDK  Moved part of FontItem to a new FontChange class.
 # 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
+# 19-Feb-16 JDK  Add fonts found of each type.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -26,7 +27,7 @@ from lingt.utils.fontsize import FontSize
 class FontInfo:
     def __init__(self):
         self.name = ""  # font name
-        self.fontType = 'Western'
+        self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
         self.styleType = 'CustomFormatting'
         self.styleName = ""
@@ -41,8 +42,12 @@ class FontItem(FontInfo):
 
     def __init__(self):
         FontInfo.__init__(self)
-        self.name = "(None)"
-        self.inputData = list()
+        self.name = "(None)"  # could be a standard name, complex or asian
+        self.nameStandard = "(None)"  # could be non-Unicode Devanagari
+        self.nameComplex = "(None)"  # CTL fonts such as Unicode Devanagari
+        self.nameAsian = "(None)"  # Chinese, Japanese, Korean (CJK) fonts
+        self.inputData = list()  # data that gets read from the file
+        self.inputDataOrder = 0  # sort order this item occurred in the file
         self.fontChange = None  # type FontChange
 
     def __str__(self):
@@ -54,10 +59,14 @@ class FontItem(FontInfo):
         return strval
 
     def attrs(self):
-        """Attributes used for magic methods below."""
+        """Attributes that uniquely identify this object.
+        Used for magic methods below.
+        """
         return (
-            self.name, self.styleName,
-            self.fontType, self.styleType)
+            self.name, self.fontType,
+            self,styleName, self.styleType,
+            self.size,
+            self.standardType, self.complexType, self.asianType)
 
     def __lt__(self, other):
         return (isinstance(other, FontItem) and

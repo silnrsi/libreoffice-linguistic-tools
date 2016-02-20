@@ -49,7 +49,9 @@ class ConverterSettings(Syncable):
         self.normForm = 0  # for normalization
 
     def attrs(self):
-        """Used for several magic methods below."""
+        """Attributes that uniquely identify this object.
+        Used for several magic methods below.
+        """
         return self.convName, self.forward, self.normForm
 
     def __eq__(self, other):
