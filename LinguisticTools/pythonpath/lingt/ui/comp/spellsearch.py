@@ -29,8 +29,8 @@ from lingt.app import exceptions
 from lingt.app.svc.spellingchecks import SpellingChecker, CheckerSettings
 from lingt.ui import dutil
 from lingt.ui.messagebox import MessageBox
+from lingt.utils import letters
 from lingt.utils import util
-from lingt.utils.letters import Letters
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgspellsearch")
@@ -302,7 +302,7 @@ class DlgControls:
 
         varname = 'Punctuation'
         if userVars.isEmpty(varname):
-            punct = u" ".join(Letters.PUNCTUATION)
+            punct = u" ".join(letters.PUNCTUATION)
             userVars.store(varname, punct)
         else:
             punct = userVars.get(varname)

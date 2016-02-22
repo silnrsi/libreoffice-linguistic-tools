@@ -28,9 +28,9 @@ from lingt.app.svc.scriptpractice import Script
 from lingt.app.svc.spellingcomparisons import SpellingCharClasses
 from lingt.ui import dutil
 from lingt.ui.messagebox import MessageBox
+from lingt.utils import letters
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
-from lingt.utils.letters import Letters
 
 logger = logging.getLogger("lingt.ui.dlgspellingadjustments")
 
@@ -230,7 +230,6 @@ class DlgControls:
                           varname="CompareGeminates")]
 
     def loadValues(self, userVars):
-        letters = Letters()
         scriptNames = sorted(list(letters.SCRIPT_LETTERS.keys()))
         selectedValue = userVars.get("Script")
         if not selectedValue:

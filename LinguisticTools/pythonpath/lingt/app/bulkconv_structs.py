@@ -42,7 +42,7 @@ class FontItem(FontInfo):
 
     def __init__(self):
         FontInfo.__init__(self)
-        self.name = "(None)"  # could be a standard name, complex or asian
+        self.name = "(None)"  # could be a standard name, complex or Asian
         self.nameStandard = "(None)"  # could be non-Unicode Devanagari
         self.nameComplex = "(None)"  # CTL fonts such as Unicode Devanagari
         self.nameAsian = "(None)"  # Chinese, Japanese, Korean (CJK) fonts
@@ -64,7 +64,7 @@ class FontItem(FontInfo):
         """
         return (
             self.name, self.fontType,
-            self,styleName, self.styleType,
+            self.styleName, self.styleType,
             self.size,
             self.standardType, self.complexType, self.asianType)
 

@@ -22,8 +22,9 @@ from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.app import exceptions
 from lingt.app.wordlist_structs import WordInList, ColumnOrder
 from lingt.ui.messagebox import MessageBox
+from lingt.utils import letters
+from lingt.utils import unicode_data
 from lingt.utils import util
-from lingt.utils.letters import Letters
 
 logger = logging.getLogger("lingt.app.spellingcomparisons")
 
@@ -43,7 +44,6 @@ class SpellingCharClasses:
         self.unoObjs = calcUnoObjs
         self.userVars = userVars
         self.msgbox = MessageBox(self.unoObjs)
-        self.letters = Letters()
         self.script = ""
         self.charsComp = []  # lines of chars to compare
         self.datalist = None
@@ -53,11 +53,11 @@ class SpellingCharClasses:
         self.script = newName
 
     def getAvailableScriptKeys(self):
-        if self.script not in self.letters.SIMILAR_CHARS:
+        if self.script not in unicode_data.SIMILAR_CHARS:
             return []
-        charsDict = self.letters.SIMILAR_CHARS[self.script]
+        charsDict = unicode_data.SIMILAR_CHARS[self.script]
         keys = list(charsDict.keys())
-        if 'AnyConsonants' in self.letters.SCRIPT_LETTERS[self.script]:
+        if 'AnyConsonants' in unicode_data.SCRIPT_LETTERS[self.script]:
             keys.append('GEMIN')
         return keys
 
@@ -65,10 +65,10 @@ class SpellingCharClasses:
         """Sets self.charsComp"""
         logger.debug(util.funcName('begin', args=(charCompOpts,)))
         self.charsComp = []
-        if self.script not in self.letters.SIMILAR_CHARS:
+        if self.script not in unicode_data.SIMILAR_CHARS:
             logger.debug("Did not find script '%s'", self.script)
             return
-        charsDict = self.letters.SIMILAR_CHARS[self.script]
+        charsDict = unicode_data.SIMILAR_CHARS[self.script]
         for key in charCompOpts:
             if key in charsDict:
                 setList = charsDict[key]
@@ -76,13 +76,13 @@ class SpellingCharClasses:
                     setList.sort(key=itemgetter(0))
                     self.charsComp.extend(setList)
             elif key == 'GEMIN':
-                if self.script in self.letters.SCRIPT_LETTERS:
-                    consList = self.letters.SCRIPT_LETTERS[
+                if self.script in unicode_data.SCRIPT_LETTERS:
+                    consList = unicode_data.SCRIPT_LETTERS[
                         self.script]['AnyConsonants']
                     gemList = []
                     for cons in consList:
-                        if self.script in self.letters.VIRAMA:
-                            virama = self.letters.VIRAMA[self.script]
+                        if self.script in letters.VIRAMA:
+                            virama = letters.VIRAMA[self.script]
                             gemChars = "".join([cons, virama, cons])
                         else:
                             gemChars = cons * 2

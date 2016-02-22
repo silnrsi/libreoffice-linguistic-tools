@@ -23,8 +23,9 @@ import random
 import time
 
 from lingt.access.writer import styles
+from lingt.utils import letters
+from lingt.utils import unicode_data
 from lingt.utils import util
-from lingt.utils.letters import Letters
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.app.scriptpractice")
@@ -36,7 +37,6 @@ class Script:
         self.scriptName = ""
         self.charset = dict()
         self.allFonts = styles.getListOfFonts(unoObjs)
-        self.letters = Letters()
         self.fontList = []
         self.onlyKnownFonts = True
         theLocale.loadUnoObjs(unoObjs)
@@ -63,19 +63,19 @@ class Script:
 
     def setCharsetFromScript(self):
         """Sets self.charset"""
-        if self.scriptName not in self.letters.SCRIPT_LETTERS:
+        if self.scriptName not in unicode_data.SCRIPT_LETTERS:
             self.init_charset()
             return
         # reference
-        self.charset = self.letters.SCRIPT_LETTERS[self.scriptName]
+        self.charset = unicode_data.SCRIPT_LETTERS[self.scriptName]
 
     def setCharsetFromInput(self, inputString):
         """Sets self.charset from input from user."""
         self.init_charset()
         for char in inputString:
             if not char.isspace():
-                if char in self.letters.LetterIndex:
-                    lettertype = self.letters.LetterIndex[char]
+                if char in letters.LetterIndex:
+                    lettertype = letters.LetterIndex[char]
                 else:
                     lettertype = "AnyConsonants"
                 self.charset[lettertype].append(char)
@@ -88,7 +88,7 @@ class Script:
         return "  ".join(allchars)
 
     def getVirama(self):
-        return self.letters.VIRAMA.get(self.scriptName, "")
+        return letters.VIRAMA.get(self.scriptName, "")
 
     def setOnlyKnownFonts(self, newVal):
         if self.onlyKnownFonts == newVal:
@@ -117,10 +117,10 @@ class Script:
         script, and that are in the system font list.
         """
         scriptFonts = []
-        if self.scriptName in self.letters.SCRIPT_FONTS:
-            scriptFonts.extend(self.letters.SCRIPT_FONTS[self.scriptName])
-        for fontName in self.letters.FONT_SCRIPTS:
-            for scrpt in self.letters.FONT_SCRIPTS[fontName]:
+        if self.scriptName in letters.SCRIPT_FONTS:
+            scriptFonts.extend(letters.SCRIPT_FONTS[self.scriptName])
+        for fontName in letters.FONT_SCRIPTS:
+            for scrpt in letters.FONT_SCRIPTS[fontName]:
                 if scrpt == self.scriptName:
                     scriptFonts.append(fontName)
         # Only keep fonts that are in the system font list

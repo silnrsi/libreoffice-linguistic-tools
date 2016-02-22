@@ -11,12 +11,12 @@ Does the following so that ODT files can be read and modified as XML:
 - Zip back into .odt
 Actual reading and modifying of the XML is done in the odt_converter module.
 """
-
 import logging
 import os
 import shutil
-import uno
 import zipfile
+
+import uno
 from com.sun.star.task import ErrorCodeIOException
 from com.sun.star.util import CloseVetoException
 

@@ -12,9 +12,9 @@
 Manage reading data from a Calc spreadsheet.
 """
 
-import uno
 import logging
 import os
+import uno
 from com.sun.star.sheet.CellFlags import VALUE as NUM_VAL, DATETIME, STRING
 from com.sun.star.uno import RuntimeException
 

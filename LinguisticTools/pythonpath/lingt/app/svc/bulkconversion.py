@@ -179,7 +179,7 @@ class FontItemList:
         """
         conv_attr_changed = ''
         if attr_changed.startswith('converter_'):
-            conv_attr_changed = [len('converter_'):]
+            conv_attr_changed = attr_changed[len('converter_'):]
         for item in self.items:
             if item == item_to_update:
                 if item.fontChange:

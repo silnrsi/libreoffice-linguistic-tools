@@ -34,8 +34,8 @@ from lingt.app.wordlist_structs import ColumnOrder
 from lingt.ui.dep.spellreplace import DlgSpellingReplace
 from lingt.ui.messagebox import MessageBox, FourButtonDialog
 from lingt.ui.progressbar import ProgressBar
+from lingt.utils import letters
 from lingt.utils import util
-from lingt.utils.letters import Letters
 
 logger = logging.getLogger("lingt.app.spellingchecks")
 
@@ -308,10 +308,10 @@ class GoodList:
         if self.matchCase or not wordText:
             return wordText
         c = wordText[0]
-        if c in Letters.CASE_CAPITALS:
+        if c in letters.CASE_CAPITALS:
             # change first letter
-            i = Letters.CASE_CAPITALS.index(c)
-            wordText = Letters.CASE_LOWER[i] + wordText[1:]
+            i = letters.CASE_CAPITALS.index(c)
+            wordText = letters.CASE_LOWER[i] + wordText[1:]
             return wordText
         return wordText
 

@@ -28,8 +28,8 @@ from lingt.app.wordlist_structs import ColumnOrder
 from lingt.ui import dutil
 from lingt.ui.dep.wordlistfile import DlgWordListFile
 from lingt.ui.messagebox import MessageBox
+from lingt.utils import letters
 from lingt.utils import util
-from lingt.utils.letters import Letters
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgWordList")
@@ -276,7 +276,7 @@ class DlgControls:
 
         varname = 'Punctuation'
         if userVars.isEmpty(varname) and len(fileItems) == 0:
-            punctToRemove = u" ".join(Letters.PUNCTUATION)
+            punctToRemove = u" ".join(letters.PUNCTUATION)
             userVars.store(varname, punctToRemove)
         else:
             punctToRemove = userVars.get(varname)

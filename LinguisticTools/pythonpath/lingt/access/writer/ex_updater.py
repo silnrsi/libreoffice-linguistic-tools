@@ -20,9 +20,9 @@ Inserts hyperlinks to the main document.
 For phonology, there is no need to keep copy the old example, so it is
 much simpler.
 """
+import logging
 
 import uno
-import logging
 from com.sun.star.style.BreakType import PAGE_BEFORE
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 from com.sun.star.text.TextContentAnchorType import AS_CHARACTER
@@ -32,6 +32,7 @@ from lingt.access.writer.uservars import UserVars
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.ExUpdater")
+
 
 class ExUpdater:
     """

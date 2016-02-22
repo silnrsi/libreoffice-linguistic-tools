@@ -9,9 +9,9 @@
 Read text docs in Writer that contain words we want to grab.
 Most of the grunt work is done by search.py
 """
+import os
 
 import uno
-import os
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 

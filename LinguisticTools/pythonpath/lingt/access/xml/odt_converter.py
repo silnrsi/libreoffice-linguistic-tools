@@ -7,7 +7,7 @@
 # 22-Dec-15 JDK  Read a list of text nodes.
 # 23-Dec-15 JDK  Added changeContentFile().
 # 24-Dec-15 JDK  Added class OdtChanger.
-# 20-Feb-16 JDK  Read complex and asian font types.
+# 20-Feb-16 JDK  Read complex and Asian font types.
 
 """
 Read and change an ODT file in XML format.
@@ -17,7 +17,7 @@ This module exports:
     OdtReader
     OdtChanger
 """
-
+import copy
 import io
 import os
 import xml.dom.minidom
@@ -37,7 +37,7 @@ class OdtReader(FileReader):
     def __init__(self, srcdir, unoObjs):
         FileReader.__init__(self, unoObjs)
         self.srcdir = srcdir
-        self.defaultFont = ""
+        self.defaultFontItem = None
         self.stylesDom = None
         self.contentDom = None
         self.stylesDict = {}  # keys style name, value FontItem
@@ -118,7 +118,7 @@ class OdtReader(FileReader):
             for xmlAttr, fontItemAttr, fontType in [
                     ("style:font-name", 'nameStandard', 'Western'),
                     ("style:font-name-complex", 'nameComplex', 'Complex'),
-                    ("style:font-name-asian", 'nameAsian', 'Asian')]
+                    ("style:font-name-asian", 'nameAsian', 'Asian')]:
                 fontName = textprop.getAttribute(xmlAttr)
                 if fontName:
                     if xmlStyleName in self.stylesDict:
@@ -153,19 +153,20 @@ class OdtReader(FileReader):
         #TODO: look for text:class-name, which is for paragraph styles.
         self.logger.debug(util.funcName('end'))
 
-    def add_data_for_font(self, fontItem, textvals, xmlStyleName):
+    def add_data_for_font(self, fontItem, textvals, dummy_xmlStyleName):
         """
         Add content of a node for a particular effective font.
 
         :param fontItem: effective font of the node
         :param textvals: text content of nodes
-        :param xmlStyleName: only used for debugging
+        :param dummy_xmlStyleName: only used for debugging
         """
         #self.logger.debug(
-        #    util.funcName('begin', args=(fontName, len(textvals), xmlStyleName)))
+        #    util.funcName('begin', args=(
+        #        fontItem.name, len(textvals), dummy_xmlStyleName)))
         if fontItem.name and fontItem.name != "(None)":
             newItem = copy.deepcopy(fontItem)
-            newItem.name = fontName
+            newItem.name = fontItem.name
             newItem.inputData = textvals
             for item in self.data:
                 if item == newItem:
@@ -208,7 +209,7 @@ class OdtChanger:
             xmlStyleName = paragraph.getAttribute("text:style-name")
             #self.logger.debug("para style name %s", xmlStyleName)
             paraFontItem = self.reader.stylesDict.get(
-                xmlStyleName, self.reader.defaultFont)
+                xmlStyleName, self.reader.defaultFontItem)
             paraFontChange = self.effective_fontChange(paraFontItem)
             if paraFontChange:
                 for para_child in paragraph.childNodes:
@@ -238,7 +239,7 @@ class OdtChanger:
     def change_styles(self, contentDom, stylesDom):
         """Change fonts and styles."""
         for style in (
-                contentDom.getElementsByTagName("style:font-face") + 
+                contentDom.getElementsByTagName("style:font-face") +
                 stylesDom.getElementsByTagName("style:font-face")):
             fontName = style.getAttribute("style:name")
             for fontChange in self.fontChanges:
@@ -246,7 +247,7 @@ class OdtChanger:
                     style.setAttribute("style:name", fontChange.name)
                     style.setAttribute("svg:font-family", fontChange.name)
         for style in (
-                contentDom.getElementsByTagName("style:style") + 
+                contentDom.getElementsByTagName("style:style") +
                 stylesDom.getElementsByTagName("style:default-style")):
             for textprop in style.getElementsByTagName(
                     "style:text-properties"):
@@ -263,11 +264,13 @@ class OdtChanger:
                             textprop.setAttribute(
                                 "fo:font-size", str(fontChange.size) + "pt")
 
-    def effective_fontChange(self, fontItem=""):
+    def effective_fontChange(self, fontItem):
         """Returns the FontChange object for the effective font,
         that is, the font specified by a paragraph node or
         overridden by a span node.
         """
+        if fontItem is None:
+            return None
         for fontChange in self.fontChanges:
             #if fontChange == fontItem:  #TODO
             if (fontChange.name == fontItem.name

@@ -23,9 +23,10 @@
 """
 Create and manage OOo styles.
 """
-import uno
 import logging
 from operator import itemgetter
+
+import uno
 from com.sun.star.style.TabAlign import LEFT
 from com.sun.star.text.SizeType import VARIABLE
 from com.sun.star.text.TextContentAnchorType import AS_CHARACTER

@@ -1,28 +1,44 @@
 #!/usr/bin/python
 # -*- coding: Latin-1 -*-
-
-# grab_unicode_letters.py
 #
-# Change History:
-#   Created on July 8 2015 by Jim Kornelsen.
+# Created on July 8 2015 by Jim Kornelsen.
 #
-#   03-Aug-15 JDK  Moved LineSearcher to a separate class.
-#   06-Aug-15 JDK  Fixed bug: get correct group to check CHARS_TO_SKIP.
-#   13-Aug-15 JDK  Fixed bug: vowel signs should be dependent.
-#   13-Nov-15 JDK  Fixed bug: extend() modifies list in place.
+# 03-Aug-15 JDK  Moved LineSearcher to a separate class.
+# 06-Aug-15 JDK  Fixed bug: get correct group to check CHARS_TO_SKIP.
+# 13-Aug-15 JDK  Fixed bug: vowel signs should be dependent.
+# 13-Nov-15 JDK  Fixed bug: extend() modifies list in place.
+# 22-Feb-16 JDK  Download file automatically.
 
 """
-Parse unicode data and organize by script and linguistic properties.
-Used to generate part of Letters.py.
-
-Before running this script, download the latest Unicode database file (search
-online for UnicodeData.txt).
+Parse data from the Unicode Character Database at http://unicode.org/ucd/.
+Organize by script and linguistic properties.
+Used to generate lingt/utils/unicode_data.py.
 """
 from collections import defaultdict
+import os
 import re
+import shutil
+import sys
+import urllib.request
 
 INFILE = "UnicodeData.txt"
 OUTFILE = "letters_out.py"
+
+
+def download_file():
+    """Downloads the latest character database file if it doesn't exist yet."""
+    if os.path.exists(INFILE):
+        print("Using previously downloaded file.")
+        return
+    print("Downloading file...", end="")
+    sys.stdout.flush()
+    url = "http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+    # Download the file and save it locally.
+    with urllib.request.urlopen(url) as response, open(
+            INFILE, 'wb') as out_file:
+        shutil.copyfileobj(response, out_file)
+    print("done.")
+
 
 class Script:
     """Consonants and vowels of a particular script."""
@@ -350,6 +366,7 @@ class FileWriter:
     """Write results to file"""
     LINEWIDTH = 79  # following PEP8 style guide
     SCRIPTS_TO_SKIP = ["MODIFIER"]
+    START_INDENT = 0
 
     def __init__(self):
         self.outfile = None
@@ -368,11 +385,11 @@ class FileWriter:
             exit()
 
     def writeScriptLetters(self, scripts):
-        self.indent(1)
+        self.indent(self.START_INDENT + 0)
         self.outfile.write("SCRIPT_LETTERS = {\n")
         for scriptName, script in sorted(scripts.items()):
-            self.indent(2)
-            self.numTabs = 3
+            self.indent(self.START_INDENT + 1)
+            self.numTabs = self.START_INDENT + 2
             self.outfile.write('"%s": {\n' % scriptName)
             self.writeCodeList(script.initialVowels, 'WI_Vowels')
             self.writeCodeList(script.dependentVowels, 'DepVowels')
@@ -384,28 +401,28 @@ class FileWriter:
         self.outfile.write("    }\n\n")
 
     def writeOtherKnownLetters(self, otherKnownChars):
-        self.indent(1)
+        self.indent(self.START_INDENT + 0)
         self.outfile.write("OTHER_KNOWN_LETTERS = {\n")
-        self.numTabs = 2
+        self.numTabs = self.START_INDENT + 1
         self.writeCodeList(otherKnownChars.initialVowels, 'WI_Vowels')
         self.writeCodeList(otherKnownChars.dependentVowels, 'DepVowels')
         self.writeCodeList(otherKnownChars.anywhereVowels, 'AnyVowels')
         self.writeCodeList(otherKnownChars.initialConsonants, 'WI_Consonants')
         self.writeCodeList(otherKnownChars.finalConsonants, 'WF_Consonants')
         self.writeCodeList(otherKnownChars.anywhereConsonants, 'AnyConsonants')
-        self.indent(1)
+        self.indent(self.START_INDENT + 0)
         self.outfile.write("}\n\n")
 
     def writeSimilarChars(self, scripts):
-        self.indent(1)
+        self.indent(self.START_INDENT + 0)
         self.outfile.write("SIMILAR_CHARS = {\n")
         for scriptName, script in sorted(scripts.items()):
-            self.indent(2)
+            self.indent(self.START_INDENT + 1)
             self.outfile.write('"%s": {\n' % scriptName)
-            self.numTabs = 3
+            self.numTabs = self.START_INDENT + 2
             for listName in [
                     'NASAL', 'LIQUID', 'VOW_LEN', 'VOW_GLIDE', 'ASP', 'POA']:
-                self.indent(3)
+                self.indent(self.START_INDENT + 2)
                 self.outfile.write('"%s" : [' % listName)
                 if listName == 'NASAL':
                     similarityLists = [script.nasals]
@@ -419,11 +436,11 @@ class FileWriter:
                 self.outfile.write("\n")
                 for sublist in similarityLists:
                     self.writeCodeList(sublist, "")
-                self.indent(3)
+                self.indent(self.START_INDENT + 2)
                 self.outfile.write("],\n")
-            self.indent(2)
+            self.indent(self.START_INDENT + 1)
             self.outfile.write("},\n")
-        self.indent(1)
+        self.indent(self.START_INDENT + 0)
         self.outfile.write("}\n\n")
 
 
@@ -555,6 +572,7 @@ CHARS_TO_SKIP = set([
 
 
 if __name__ == "__main__":
+    download_file()
     FileWriter().writeFile(
         *FileReader().readFile())
     print("Finished!")
