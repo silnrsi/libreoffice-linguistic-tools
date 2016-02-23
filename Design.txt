@@ -8,9 +8,10 @@
 
 ## Next
 
-Pylint new changes.
 Test ungrouped FontItemList.
 Get controls to look ok.
+    Change the three font name boxes to a single 3-line box.
+    Rename checkboxes to "Join"
 Write grouping code.
 
 
@@ -158,7 +159,8 @@ which makes it easier to see what the checkboxes do,
 and may be useful for merging and then joining multiple times,
 for example setting the size for everything, then splitting,
 then changing some, then joining by style for a different type of change.
-A box showing more than one setting should say something like "(Various)",
+A box showing more than one setting should say something like "(Various)"
+or "(Mixed)",
 and maybe be italics, or something brighter like a yellow background.
 
 One disadvantage with this approach is that samples will not necessarily
@@ -283,6 +285,13 @@ Script Practice             # result: (text box contents)
         Word List File
 
 Use bigExamples.xml in a grammar test.
+
+
+## Help text
+
+The dialog shows &328.DlgGrammarSettings.HelpText on mouseover.
+At least we should add an empty string or a space or something to make this
+less ugly.
 
 
 ## Data Conversion test crashes on Linux 

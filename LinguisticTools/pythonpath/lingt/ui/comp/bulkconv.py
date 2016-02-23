@@ -16,6 +16,7 @@ This module exports:
     showDlg()
 """
 import logging
+
 import uno
 import unohelper
 from com.sun.star.awt import XActionListener

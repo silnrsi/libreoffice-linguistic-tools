@@ -21,9 +21,9 @@ This module exports:
 import copy
 import logging
 import string
+
 import uno
 import unohelper
-
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener

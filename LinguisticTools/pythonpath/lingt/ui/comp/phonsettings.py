@@ -22,10 +22,11 @@ Dialog for settings to import Phonology examples.
 This module exports:
     showDlg()
 """
-import uno
-import unohelper
 import logging
 import re
+
+import uno
+import unohelper
 from com.sun.star.awt import XActionListener
 
 from lingt.access.writer.styles import PhonologyStyles

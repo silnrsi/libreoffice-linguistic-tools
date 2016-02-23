@@ -29,6 +29,7 @@ This module exports:
 """
 import collections
 import logging
+
 from com.sun.star.lang import IllegalArgumentException
 from grantjenks.tribool import Tribool
 

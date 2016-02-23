@@ -22,10 +22,11 @@ This module exports:
     MessageBox
     FourButtonDialog
 """
-import uno
-import unohelper
 import collections
 import logging
+
+import uno
+import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.lang import IllegalArgumentException
 

@@ -9,7 +9,23 @@ docs.libreoffice.org/pyuno/html/uno_8py.html
 """
 
 def getComponentContext():
-    pass
+
+    class ServiceManager:
+        def createInstanceWithContext(self, dummy_str, dummy_ComponentContext):
+            return None
+        def createInstanceWithArgumentsAndContext(
+                self, dummy_str, dummy_arguments, dummy_ComponentContext):
+            return None
+        def getAvailableServiceNames(self):
+            return []
+
+    class ComponentContext:
+        def __init__(self):
+            self.ServiceManager = ServiceManager()
+        def getServiceManager(self):
+            return self.ServiceManager
+
+    return ComponentContext()
 
 def getConstantByName():
     return 0

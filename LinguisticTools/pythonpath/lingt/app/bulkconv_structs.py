@@ -42,10 +42,10 @@ class FontItem(FontInfo):
 
     def __init__(self):
         FontInfo.__init__(self)
-        self.name = "(None)"  # could be a standard name, complex or Asian
-        self.nameStandard = "(None)"  # could be non-Unicode Devanagari
-        self.nameComplex = "(None)"  # CTL fonts such as Unicode Devanagari
-        self.nameAsian = "(None)"  # Chinese, Japanese, Korean (CJK) fonts
+        self.name = "(Default)"  # could be a standard name, complex or Asian
+        self.nameStandard = "(Default)"  # could be non-Unicode Devanagari
+        self.nameComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
+        self.nameAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.fontChange = None  # type FontChange
@@ -66,7 +66,7 @@ class FontItem(FontInfo):
             self.name, self.fontType,
             self.styleName, self.styleType,
             self.size,
-            self.standardType, self.complexType, self.asianType)
+            self.nameStandard, self.nameComplex, self.nameAsian)
 
     def __lt__(self, other):
         return (isinstance(other, FontItem) and

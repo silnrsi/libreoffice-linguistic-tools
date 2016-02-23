@@ -12,13 +12,13 @@ Called by WordAsker.checkSpelling() in app.svc.spellingchecks.
 This module exports:
     DlgSpellingReplace
 """
-# uno is required for unohelper
 import logging
+
+# uno is required for unohelper
 # pylint: disable=unused-import
 import uno
 # pylint: enable=unused-import
 import unohelper
-
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 

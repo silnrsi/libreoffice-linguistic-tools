@@ -16,10 +16,11 @@ Settings for making spelling changes in Writer.
 This module exports:
     showDlg()
 """
-import uno
-import unohelper
 import logging
 import operator
+
+import uno
+import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 

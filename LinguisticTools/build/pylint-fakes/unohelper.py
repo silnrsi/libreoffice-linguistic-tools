@@ -29,11 +29,11 @@ def createSingleServiceFactory():
 def writeRegistryInfoHelper():
     pass
  
-def systemPathToFileUrl():
-    pass
+def systemPathToFileUrl(dummy_path):
+    return ""
  
-def fileUrlToSystemPath():
-    pass
+def fileUrlToSystemPath(dummy_url):
+    return ""
  
 def absolutize():
     pass

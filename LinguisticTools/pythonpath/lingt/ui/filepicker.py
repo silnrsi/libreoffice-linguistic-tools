@@ -16,13 +16,10 @@ This module exports:
     showFilePicker()
     showFolderPicker()
 """
-# uno is required for unohelper
-# pylint: disable=unused-import
-import uno
-# pylint: enable=unused-import
-import unohelper
 import logging
 import os.path
+
+import uno
 from com.sun.star.ui.dialogs.TemplateDescription import FILESAVE_SIMPLE
 from com.sun.star.ui.dialogs.TemplateDescription import FILEOPEN_SIMPLE
 from com.sun.star.ui.dialogs.ExecutableDialogResults import OK as _RESULT_OK
@@ -64,7 +61,7 @@ def showFilePicker(genericUnoObjs, save=False, filters=None,
     if filesList != None and len(filesList) > 0:
         filepath = filesList[0]
         # this line is like convertFromURL in OOo Basic
-        filepath = unohelper.fileUrlToSystemPath(filepath)
+        filepath = uno.fileUrlToSystemPath(filepath)
         if os.path.exists(filepath):
             if os.path.isdir(filepath) or os.path.islink(filepath):
                 logger.warning("'%s' is not an ordinary file", filepath)
@@ -88,7 +85,7 @@ def showFolderPicker(genericUnoObjs, defaultFoldername=None):
         # User has clicked "Select" button.
         folderpath = dlg.getDirectory()
         # this line is like convertFromURL in OOo Basic
-        folderpath = unohelper.fileUrlToSystemPath(folderpath)
+        folderpath = uno.fileUrlToSystemPath(folderpath)
         if os.path.exists(folderpath):
             if os.path.isfile(folderpath) or os.path.islink(folderpath):
                 logger.warning("'%s' is not a folder", folderpath)

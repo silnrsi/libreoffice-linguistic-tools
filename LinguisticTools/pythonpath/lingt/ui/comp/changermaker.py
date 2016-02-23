@@ -16,9 +16,10 @@ an XSLT file.
 This module exports:
     showDlg()
 """
+import logging
+
 import uno
 import unohelper
-import logging
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 

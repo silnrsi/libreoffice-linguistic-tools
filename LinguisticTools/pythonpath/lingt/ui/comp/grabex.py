@@ -40,9 +40,10 @@ This module exports:
     showPhonologyDlg()
     showGrammarDlg()
 """
+import logging
+
 import uno
 import unohelper
-import logging
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 

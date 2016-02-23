@@ -45,11 +45,12 @@ This module exports:
     BASE_FOLDER - Convenient location for test results.
     TESTDATA_FOLDER - Input test data files.
 """
-import uno
 import inspect
 import logging
 import os
 import platform
+
+import uno
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 
@@ -264,7 +265,7 @@ def funcName(location=None, obj=None, args='args_unspecified'):
     """
     if not LOGGING_ENABLED:
         return ""
-    callingFrame = None
+    callingFrame = []
     functionName = ""
     try:
         callingFrame = inspect.stack()[1]

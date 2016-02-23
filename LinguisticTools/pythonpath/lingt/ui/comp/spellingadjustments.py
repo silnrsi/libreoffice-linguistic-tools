@@ -14,10 +14,11 @@ Dialog to search a word list in Calc and suggest or make spelling adjustments.
 This module exports:
     showAdjustmentsDlg()
 """
-import uno
-import unohelper
 import collections
 import logging
+
+import uno
+import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
@@ -28,7 +29,7 @@ from lingt.app.svc.scriptpractice import Script
 from lingt.app.svc.spellingcomparisons import SpellingCharClasses
 from lingt.ui import dutil
 from lingt.ui.messagebox import MessageBox
-from lingt.utils import letters
+from lingt.utils import unicode_data
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 
@@ -230,7 +231,7 @@ class DlgControls:
                           varname="CompareGeminates")]
 
     def loadValues(self, userVars):
-        scriptNames = sorted(list(letters.SCRIPT_LETTERS.keys()))
+        scriptNames = sorted(list(unicode_data.SCRIPT_LETTERS.keys()))
         selectedValue = userVars.get("Script")
         if not selectedValue:
             selectedValue = "DEVANAGARI"

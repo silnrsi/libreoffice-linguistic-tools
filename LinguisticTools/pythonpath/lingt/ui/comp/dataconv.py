@@ -31,10 +31,11 @@ Data conversion dialog for a Writer document.
 This module exports:
     showDlg()
 """
-import uno
-import unohelper
 import collections
 import logging
+
+import uno
+import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener

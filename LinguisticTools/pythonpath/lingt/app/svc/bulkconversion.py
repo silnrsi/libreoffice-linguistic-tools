@@ -41,13 +41,12 @@ class BulkConversion:
         self.convPool = ConvPool(
             self.userVars, self.msgbox, self.get_all_conv_names)
         self.fileItems = None  # FileItemList of BulkFileItem
-        #self.fontsFound = []  # List of FontItem found in document.
         self.fontItemList = FontItemList()
         self.outdir = ""
         self.askEach = False
 
     def scanFiles(self, fileItems, outdir):
-        """Sets self.fontsFound"""
+        """Sets self.fontItemList"""
         logger.debug(util.funcName('begin'))
         self.fileItems = fileItems
         self.outdir = outdir
@@ -113,7 +112,7 @@ class BulkConversion:
 
     def convert_vals(self):
         """Performs whatever encoding conversion needs to be done.
-        Modifies self.fileItemList by setting FontChange.converted_data.
+        Modifies self.fontItemList by setting FontChange.converted_data.
         """
         unique_converter_settings = set(
             [fontChange.converter for fontChange in self.getFontChanges()
@@ -141,7 +140,7 @@ class BulkConversion:
         of found FontItem.
         """
         return [
-            fontItem.fontChange for fontItem in self.fileItemList.items
+            fontItem.fontChange for fontItem in self.fontItemList.items
             if fontItem.fontChange]
 
     def get_all_conv_names(self):
@@ -156,7 +155,7 @@ class FontItemList:
     """Manage a list of FontItem objects.  Optionally group similar items."""
 
     def __init__(self):
-        self.items = []
+        self.items = []  # elements are type FontItem
         self.groupSizes = True
         self.groupStyles = True
         self.groupFontTypes = True
@@ -185,13 +184,12 @@ class FontItemList:
                 if item.fontChange:
                     newChange = fontChange
                 else:
-                    newChange = FontChange()
+                    newChange = FontChange(item, None)
                 if conv_attr_changed:
                     setattr(newChange.converter, attr_changed)
                 else:
                     setattr(newChange, attr_changed)
                 item.fontChange = newChange
-                newChange.fontItem = item
 
     def __getitem__(self, index):
         """For random access."""

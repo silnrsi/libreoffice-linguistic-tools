@@ -17,9 +17,10 @@ Script Practice dialog.
 This module exports:
     showDlg()
 """
+import logging
+
 import uno
 import unohelper
-import logging
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
@@ -32,6 +33,7 @@ from lingt.app.svc import scriptpractice
 from lingt.ui import dutil
 from lingt.ui.messagebox import MessageBox
 from lingt.ui.comp.wordlist import DlgWordList
+from lingt.utils import unicode_data
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 from lingt.utils.locale import theLocale
@@ -363,7 +365,7 @@ class DlgControls:
         else:
             self.chkKnownFonts.setState(userVars.getInt(varname))
 
-        scriptNames = sorted(list(self.script.letters.SCRIPT_LETTERS.keys()))
+        scriptNames = sorted(list(unicode_data.SCRIPT_LETTERS.keys()))
         selectedValue = userVars.get("Script")
         if not selectedValue:
             selectedValue = "LATIN"

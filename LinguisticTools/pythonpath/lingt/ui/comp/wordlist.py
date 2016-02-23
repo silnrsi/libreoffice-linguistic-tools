@@ -13,9 +13,10 @@ This module exports:
     showDlg()     - called directly from the menu
     DlgWordList() - called from DlgScriptPractice
 """
+import logging
+
 import uno
 import unohelper
-import logging
 from com.sun.star.awt import XActionListener
 
 from lingt.access.writer import uservars

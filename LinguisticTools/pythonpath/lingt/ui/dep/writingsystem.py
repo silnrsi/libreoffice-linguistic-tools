@@ -14,12 +14,13 @@ A dialog to select a writing system, as in FieldWorks.
 This module exports:
     DlgWritingSystem
 """
+import logging
+
 # uno is required for unohelper
 # pylint: disable=unused-import
 import uno
 # pylint: enable=unused-import
 import unohelper
-import logging
 from com.sun.star.awt import XActionListener
 
 from lingt.access.xml import writingsys_reader

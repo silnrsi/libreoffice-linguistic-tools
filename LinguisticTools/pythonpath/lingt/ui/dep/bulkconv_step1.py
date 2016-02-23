@@ -11,6 +11,7 @@ This module exports:
 """
 import logging
 import os
+
 import uno
 
 from lingt.app.fileitemlist import FileItemList, BulkFileItem
@@ -153,7 +154,7 @@ class Step1Form:
             loaded_item = FontItem()
             fontChange = FontChange(loaded_item, self.userVars, varNum)
             fontChange.loadUserVars()
-            for fontItem in self.app.fontsFound:
+            for fontItem in self.app.fontItemList:
                 if (fontItem.name == loaded_item.name
                         and fontItem.styleName == loaded_item.styleName):
                     logger.debug("found match for %r", fontChange)

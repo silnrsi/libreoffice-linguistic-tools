@@ -48,7 +48,7 @@ class Step2Controls:
         btnSelectConv = dutil.getControl(dlg, 'btnChooseConv')
         self.chkReverse = dutil.getControl(dlg, 'chkReverse')
 
-        self.chkSepFontTypes = dutil.getControl(dlg, 'checkSeparateFontTypes')
+        self.chkSepFontTypes = dutil.getControl(dlg, 'chkSeparateFontTypes')
         self.foundFontStandard = dutil.getControl(dlg, 'foundFontStandard')
         self.foundFontComplex = dutil.getControl(dlg, 'foundFontComplex')
         self.foundFontAsian = dutil.getControl(dlg, 'foundFontAsian')
@@ -57,11 +57,11 @@ class Step2Controls:
         self.optFontComplex = dutil.getControl(dlg, 'optFontComplex')
         self.optFontAsian = dutil.getControl(dlg, 'optFontAsian')
 
-        self.chkSepSize = dutil.getControl(dlg, 'checkSeparateSize')
+        self.chkSepSize = dutil.getControl(dlg, 'chkSeparateSize')
         self.foundFontSize = dutil.getControl(dlg, 'foundFontSize')
         self.txtFontSize = dutil.getControl(dlg, 'txtFontSize')
 
-        self.chkSepStyles = dutil.getControl(dlg, 'checkSeparateStyles')
+        self.chkSepStyles = dutil.getControl(dlg, 'chkSeparateStyles')
         self.optParaStyle = dutil.getControl(dlg, 'optParaStyle')
         self.comboParaStyle = dutil.getControl(dlg, 'comboParaStyle')
         self.optCharStyle = dutil.getControl(dlg, 'optCharStyle')
@@ -347,10 +347,13 @@ class Step2Form:
         self.stepCtrls.comboFontName.setText("")
         self.stepCtrls.comboParaStyle.setText("")
         self.stepCtrls.comboCharStyle.setText("")
-        self.stepCtrls.foundFontStandard.setText(fontItem.standardType)
-        self.stepCtrls.foundFontComplex.setText(fontItem.complexType)
-        self.stepCtrls.foundFontAsian.setText(fontItem.asianType)
-        fontItem.size.changeCtrlVal(self.stepCtrls.foundFontSize)
+        self.stepCtrls.foundFontStandard.setText(fontItem.nameStandard)
+        self.stepCtrls.foundFontComplex.setText(fontItem.nameComplex)
+        self.stepCtrls.foundFontAsian.setText(fontItem.nameAsian)
+        if fontItem.size.isSpecified():
+            fontItem.size.changeCtrlVal(self.stepCtrls.foundFontSize)
+        else:
+            self.stepCtrls.foundFontSize.setText("(Default)")
         if fontItem.fontChange:
             fontChange = fontItem.fontChange
             self.stepCtrls.txtConvName.setText(
