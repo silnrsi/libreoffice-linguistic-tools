@@ -168,28 +168,27 @@ class FontItemList:
         # Merge data, sorting data by fontItem.inputDataOrder.
         return sorted(self.items)
 
-    def update_item(self, item_to_update, fontChange, attr_changed):
+    def update_item(self, item_to_update, changed_values, attr_changed):
         """When controls get changed,
         update all FontItem objects in the selected group.
 
         :param item_to_update: type FontItem
-        :param fontChange: type FontChange
+        :param changed_values: type FontChange
         :param attr_changed: string name of FontChange attribute
         """
-        conv_attr_changed = ''
-        if attr_changed.startswith('converter_'):
-            conv_attr_changed = attr_changed[len('converter_'):]
+        for item in self.items_to_change(item_to_update):
+            item.create_change()
+            item.change.setattr_from_other(changed_values, attr_changed)
+        
+    def items_to_change(self, item_to_update):
+        """Get all FontItem objects in the selected group.
+        :param item_to_update: type FontItem
+        """
+        matching_items = []
         for item in self.items:
             if item == item_to_update:
-                if item.fontChange:
-                    newChange = fontChange
-                else:
-                    newChange = FontChange(item, None)
-                if conv_attr_changed:
-                    setattr(newChange.converter, attr_changed)
-                else:
-                    setattr(newChange, attr_changed)
-                item.fontChange = newChange
+                matching_items.append[item]
+        return matching_items
 
     def __getitem__(self, index):
         """For random access."""

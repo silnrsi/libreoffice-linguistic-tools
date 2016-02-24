@@ -8,10 +8,11 @@
 
 ## Next
 
+Pylint changes.
+Test updating font name -- it should show an asterisk in the list.
+
 Test ungrouped FontItemList.
 Get controls to look ok.
-    Change the three font name boxes to a single 3-line box.
-    Rename checkboxes to "Join"
 Write grouping code.
 
 

@@ -50,6 +50,14 @@ class FontItem(FontInfo):
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.fontChange = None  # type FontChange
 
+    def create_change(self):
+        """Create a new FontChange for this item if it doesn't exist yet.
+        Now this item will be recognized as having a change,
+        even if the values aren't actually any different.
+        """
+        if not self.fontChange:
+            self.fontChange = FontChange(self, None)
+
     def __str__(self):
         strval = str(self.name)
         if self.styleName:
@@ -179,3 +187,27 @@ class FontChange(FontInfo, Syncable):
         self.userVars.delete(self.numberedVar('forward'))
         self.userVars.delete(self.numberedVar("normalize"))
         return foundSomething1 or foundSomething2
+
+    def setattr_from_other(self, other, attr_name):
+        """
+        :param other: FontChange object to read from
+        :param attr_name: for example 'styleName' or 'converter.name'
+        """
+        attr_names = attr_name.split('.')
+        this_container = self._last_container(attr_names)
+        other_container = other._last_container(attr_names)
+        last_attr_name = attr_names[-1]
+        other_value = getattr(other_container, last_attr_name)
+        setattr(this_container, last_attr_name, other_value)
+
+    def _last_container(self, attr_names):
+        """Returns the object that contains the last attribute in
+        attr_names.
+        """
+        if len(attr_names) == 1:
+            return self
+        if attr_names[0] == 'converter':
+            return self.converter
+        raise exceptions.LogicError(
+            "Unexpected attribute names: %r", attr_names)
+

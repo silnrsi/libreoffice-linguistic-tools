@@ -165,7 +165,7 @@ class Step1Form:
                 logger.debug("did not find match for %r", fontChange)
         self.gotoStep2()
         step2Form.updateFontsList()
-        step2Form.fill_for_font()
+        step2Form.fill_for_selected_font()
         logger.debug(util.funcName('end'))
 
     def getResults(self):

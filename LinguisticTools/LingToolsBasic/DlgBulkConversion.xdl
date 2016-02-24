@@ -4,35 +4,36 @@
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:border="simple"/>
   <dlg:style dlg:style-id="1" dlg:background-color="0xcfe7f5"/>
-  <dlg:style dlg:style-id="2" dlg:border="simple" dlg:font-height="10"/>
+  <!--<dlg:style dlg:style-id="2" dlg:border="simple" dlg:font-height="10"/>-->
+  <dlg:style dlg:style-id="2" dlg:border="simple"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:text dlg:id="LabelFiles" dlg:tab-index="1" dlg:left="16" dlg:top="13" dlg:width="222" dlg:height="16" dlg:page="1" dlg:value="&amp;42.DlgBulkConversion.LabelFiles.Value"/>
+  <dlg:text dlg:id="LabelFiles" dlg:tab-index="1" dlg:left="16" dlg:top="13" dlg:width="222" dlg:height="12" dlg:page="1" dlg:value="&amp;42.DlgBulkConversion.LabelFiles.Value"/>
   <dlg:button dlg:id="btnAdd" dlg:tab-index="2" dlg:left="167" dlg:top="62" dlg:width="40" dlg:height="14" dlg:page="1" dlg:value="&amp;43.DlgBulkConversion.btnAdd.Value"/>
   <dlg:button dlg:id="btnRemove" dlg:tab-index="3" dlg:left="167" dlg:top="84" dlg:width="40" dlg:height="14" dlg:page="1" dlg:value="&amp;50.DlgBulkConversion.btnRemove.Value"/>
   <dlg:button dlg:id="btnScan" dlg:tab-index="4" dlg:left="74" dlg:top="201" dlg:width="81" dlg:height="18" dlg:page="1" dlg:value="&amp;52.DlgBulkConversion.btnScan.Value"/>
-  <dlg:text dlg:id="lblOutputTo" dlg:tab-index="6" dlg:left="16" dlg:top="134" dlg:width="100" dlg:height="14" dlg:page="1" dlg:value="&amp;65.DlgBulkConversion.lblOutputTo.Value"/>
-  <dlg:text dlg:id="lblFontsUsed" dlg:tab-index="7" dlg:left="13" dlg:top="13" dlg:width="126" dlg:height="13" dlg:page="2" dlg:value="&amp;62.DlgBulkConversion.lblFontsUsed.Value"/>
+  <dlg:text dlg:id="lblOutputTo" dlg:tab-index="6" dlg:left="16" dlg:top="134" dlg:width="100" dlg:height="12" dlg:page="1" dlg:value="&amp;65.DlgBulkConversion.lblOutputTo.Value"/>
+  <dlg:text dlg:id="lblFontsUsed" dlg:tab-index="7" dlg:left="13" dlg:top="13" dlg:width="126" dlg:height="12" dlg:page="2" dlg:value="&amp;62.DlgBulkConversion.lblFontsUsed.Value"/>
   <dlg:menulist dlg:id="listFontsUsed" dlg:tab-index="8" dlg:left="13" dlg:top="29" dlg:width="128" dlg:height="91" dlg:page="2"/>
-  <dlg:text dlg:id="lblConverterName" dlg:tab-index="9" dlg:left="12" dlg:top="127" dlg:width="135" dlg:height="13" dlg:page="2" dlg:value="&amp;60.DlgBulkConversion.lblConverterName.Value"/>
-  <dlg:button dlg:id="btnChooseConv" dlg:tab-index="10" dlg:left="98" dlg:top="141" dlg:width="48" dlg:height="14" dlg:page="2" dlg:value="&amp;45.DlgBulkConversion.btnChooseConv.Value"/>
-  <dlg:text dlg:id="lblInText" dlg:tab-index="11" dlg:left="13" dlg:top="180" dlg:width="62" dlg:height="13" dlg:page="2" dlg:value="&amp;63.DlgBulkConversion.lblInText.Value"/>
+  <dlg:text dlg:id="lblConverterName" dlg:tab-index="9" dlg:left="12" dlg:top="127" dlg:width="135" dlg:height="12" dlg:page="2" dlg:value="&amp;60.DlgBulkConversion.lblConverterName.Value"/>
+  <dlg:button dlg:id="btnChooseConv" dlg:tab-index="10" dlg:left="98" dlg:top="141" dlg:width="48" dlg:height="12" dlg:page="2" dlg:value="&amp;45.DlgBulkConversion.btnChooseConv.Value"/>
+  <dlg:text dlg:id="lblInText" dlg:tab-index="11" dlg:left="13" dlg:top="180" dlg:width="62" dlg:height="12" dlg:page="2" dlg:value="&amp;63.DlgBulkConversion.lblInText.Value"/>
   <dlg:button dlg:id="btnNextInput" dlg:tab-index="12" dlg:left="75" dlg:top="180" dlg:width="32" dlg:height="12" dlg:page="2" dlg:value="&amp;47.DlgBulkConversion.btnNextInput.Value"/>
-  <dlg:text dlg:id="sampleNum" dlg:tab-index="40" dlg:left="109" dlg:top="180" dlg:width="35" dlg:height="11" dlg:page="2" dlg:value="&amp;343.DlgBulkConversion.sampleNum.Label" dlg:align="center"/>
+  <dlg:text dlg:id="sampleNum" dlg:tab-index="40" dlg:left="109" dlg:top="180" dlg:width="35" dlg:height="12" dlg:page="2" dlg:value="&amp;343.DlgBulkConversion.sampleNum.Label" dlg:align="center"/>
   <dlg:text dlg:style-id="0" dlg:id="inputDisplay" dlg:tab-index="13" dlg:left="13" dlg:top="194" dlg:width="131" dlg:height="14" dlg:page="2" dlg:value="&amp;59.DlgBulkConversion.inputDisplay.Value"/>
-  <dlg:text dlg:style-id="0" dlg:id="convertedDisplay" dlg:tab-index="14" dlg:left="13" dlg:top="226" dlg:width="133" dlg:height="13" dlg:page="2" dlg:value="&amp;56.DlgBulkConversion.convertedDisplay.Value"/>
+  <dlg:text dlg:style-id="0" dlg:id="convertedDisplay" dlg:tab-index="14" dlg:left="13" dlg:top="226" dlg:width="133" dlg:height="14" dlg:page="2" dlg:value="&amp;56.DlgBulkConversion.convertedDisplay.Value"/>
   <dlg:button dlg:id="btnPaste" dlg:tab-index="17" dlg:left="260" dlg:top="13" dlg:width="44" dlg:height="14" dlg:page="2" dlg:value="&amp;48.DlgBulkConversion.btnPaste.Value"/>
-  <dlg:text dlg:id="lblFontSize" dlg:tab-index="19" dlg:left="263" dlg:top="60" dlg:width="31" dlg:height="13" dlg:page="2" dlg:value="&amp;61.DlgBulkConversion.lblFontSize.Value"/>
+  <dlg:text dlg:id="lblFontSize" dlg:tab-index="19" dlg:left="263" dlg:top="60" dlg:width="31" dlg:height="12" dlg:page="2" dlg:value="&amp;61.DlgBulkConversion.lblFontSize.Value"/>
   <dlg:titledbox dlg:id="frameTarget" dlg:tab-index="22" dlg:left="151" dlg:top="131" dlg:width="152" dlg:height="65" dlg:page="2">
    <dlg:title dlg:value="&amp;58.DlgBulkConversion.frameTarget.Value"/>
   </dlg:titledbox>
-  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="25" dlg:left="263" dlg:top="86" dlg:width="30" dlg:height="13" dlg:page="2" dlg:value="&amp;73.DlgBulkConversion.txtFontSize.Value"/>
+  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="25" dlg:left="263" dlg:top="86" dlg:width="30" dlg:height="12" dlg:page="2" dlg:value="&amp;73.DlgBulkConversion.txtFontSize.Value"/>
   <dlg:button dlg:id="btnProcess" dlg:tab-index="29" dlg:left="229" dlg:top="201" dlg:width="64" dlg:height="18" dlg:page="2" dlg:value="&amp;49.DlgBulkConversion.btnProcess.Value"/>
   <dlg:menulist dlg:id="listFiles" dlg:tab-index="0" dlg:left="16" dlg:top="29" dlg:width="150" dlg:height="93" dlg:page="1"/>
   <dlg:button dlg:id="btnCancel" dlg:tab-index="5" dlg:left="164" dlg:top="201" dlg:width="61" dlg:height="18" dlg:value="&amp;44.DlgBulkConversion.btnCancel.Value"/>
-  <dlg:textfield dlg:style-id="1" dlg:id="txtConvName" dlg:tab-index="15" dlg:left="12" dlg:top="141" dlg:width="85" dlg:height="13" dlg:page="2" dlg:value="&amp;72.DlgBulkConversion.txtConvName.Value"/>
+  <dlg:textfield dlg:style-id="1" dlg:id="txtConvName" dlg:tab-index="15" dlg:left="12" dlg:top="141" dlg:width="85" dlg:height="12" dlg:page="2" dlg:value="&amp;72.DlgBulkConversion.txtConvName.Value"/>
   <dlg:checkbox dlg:id="chkVerify" dlg:tab-index="31" dlg:left="164" dlg:top="222" dlg:width="129" dlg:height="18" dlg:page="2" dlg:value="&amp;55.DlgBulkConversion.chkVerify.Value" dlg:multiline="true" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkReverse" dlg:tab-index="18" dlg:left="12" dlg:top="157" dlg:width="67" dlg:height="13" dlg:page="2" dlg:value="&amp;53.DlgBulkConversion.chkReverse.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkReverse" dlg:tab-index="18" dlg:left="12" dlg:top="157" dlg:width="67" dlg:height="12" dlg:page="2" dlg:value="&amp;53.DlgBulkConversion.chkReverse.Value" dlg:checked="false"/>
   <dlg:button dlg:id="btnCopy" dlg:tab-index="16" dlg:left="212" dlg:top="13" dlg:width="46" dlg:height="14" dlg:page="2" dlg:value="&amp;46.DlgBulkConversion.btnCopy.Value"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="optNoStyle" dlg:tab-index="33" dlg:left="160" dlg:top="144" dlg:width="85" dlg:height="13" dlg:page="2" dlg:value="&amp;70.DlgBulkConversion.optNoStyle.Value"/>
@@ -54,16 +55,14 @@
   <dlg:combobox dlg:id="comboCharStyle" dlg:tab-index="20" dlg:left="232" dlg:top="178" dlg:width="64" dlg:height="14" dlg:page="2" dlg:spin="true" dlg:linecount="15"/>
   <dlg:button dlg:id="btnReset" dlg:tab-index="35" dlg:left="151" dlg:top="13" dlg:width="59" dlg:height="14" dlg:page="2" dlg:value="&amp;51.DlgBulkConversion.btnReset.Value"/>
   <dlg:text dlg:id="lblOutText" dlg:tab-index="36" dlg:left="13" dlg:top="212" dlg:width="61" dlg:height="13" dlg:page="2" dlg:value="&amp;64.DlgBulkConversion.lblOutText.Value"/>
-  <dlg:checkbox dlg:id="chkShowConverted" dlg:tab-index="32" dlg:left="75" dlg:top="212" dlg:width="70" dlg:height="13" dlg:page="2" dlg:value="&amp;54.DlgBulkConversion.chkShowConverted.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkShowConverted" dlg:tab-index="32" dlg:left="75" dlg:top="212" dlg:width="70" dlg:height="12" dlg:page="2" dlg:value="&amp;54.DlgBulkConversion.chkShowConverted.Value" dlg:checked="false"/>
   <dlg:button dlg:id="btnAddCurrentDoc" dlg:tab-index="37" dlg:left="167" dlg:top="40" dlg:width="94" dlg:height="14" dlg:page="1" dlg:value="&amp;323.DlgBulkConversion.btnAddCurrentDoc.Label"/>
-  <dlg:textfield dlg:id="txFolderOutputTo" dlg:tab-index="38" dlg:left="16" dlg:top="148" dlg:width="188" dlg:height="14" dlg:page="1" dlg:value="&amp;324.DlgBulkConversion.txFolderOutputTo.Text"/>
+  <dlg:textfield dlg:id="txFolderOutputTo" dlg:tab-index="38" dlg:left="16" dlg:top="148" dlg:width="188" dlg:height="12" dlg:page="1" dlg:value="&amp;324.DlgBulkConversion.txFolderOutputTo.Text"/>
   <dlg:button dlg:id="btnOutputTo" dlg:tab-index="39" dlg:left="204" dlg:top="148" dlg:width="65" dlg:height="14" dlg:page="1" dlg:value="&amp;325.DlgBulkConversion.btnOutputTo.Label"/>
-  <dlg:text dlg:style-id="2" dlg:id="foundFontStandard" dlg:tab-index="41" dlg:left="162" dlg:top="57" dlg:width="94" dlg:height="9" dlg:page="2" dlg:value="&amp;350.DlgBulkConversion.foundFontStandard.Label"/>
-  <dlg:text dlg:style-id="2" dlg:id="foundFontComplex" dlg:tab-index="42" dlg:left="162" dlg:top="66" dlg:width="94" dlg:height="9" dlg:page="2" dlg:value="&amp;352.DlgBulkConversion.foundFontComplex.Label"/>
-  <dlg:text dlg:style-id="2" dlg:id="foundFontAsian" dlg:tab-index="43" dlg:left="162" dlg:top="75" dlg:width="94" dlg:height="9" dlg:page="2" dlg:value="&amp;354.DlgBulkConversion.foundFontAsian.Label"/>
-  <dlg:text dlg:style-id="2" dlg:id="foundFontSize" dlg:tab-index="44" dlg:left="263" dlg:top="75" dlg:width="30" dlg:height="9" dlg:page="2" dlg:value="&amp;356.DlgBulkConversion.foundFontSize.Label"/>
-  <dlg:checkbox dlg:id="chkSeparateFontTypes" dlg:tab-index="45" dlg:left="162" dlg:top="45" dlg:width="93" dlg:height="9" dlg:page="2" dlg:value="&amp;370.DlgBulkConversion.chkSeparateFontTypes.Label" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkSeparateSize" dlg:tab-index="46" dlg:left="263" dlg:top="45" dlg:width="35" dlg:height="12" dlg:page="2" dlg:value="&amp;374.DlgBulkConversion.chkSeparateSize.Label" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkSeparateStyles" dlg:tab-index="47" dlg:left="250" dlg:top="144" dlg:width="45" dlg:height="12" dlg:page="2" dlg:value="&amp;378.DlgBulkConversion.chkSeparateStyles.Label" dlg:checked="false"/>
+  <dlg:text dlg:style-id="2" dlg:id="foundFonts" dlg:tab-index="41" dlg:left="162" dlg:top="55" dlg:width="94" dlg:height="29" dlg:page="2" dlg:value="&amp;350.DlgBulkConversion.foundFont.Label" dlg:multiline="true"/>
+  <dlg:text dlg:style-id="2" dlg:id="foundFontSize" dlg:tab-index="44" dlg:left="263" dlg:top="74" dlg:width="30" dlg:height="12" dlg:page="2" dlg:value="&amp;356.DlgBulkConversion.foundFontSize.Label"/>
+  <dlg:checkbox dlg:id="chkJoinFontTypes" dlg:tab-index="45" dlg:left="162" dlg:top="45" dlg:width="93" dlg:height="9" dlg:page="2" dlg:value="&amp;370.DlgBulkConversion.chkJoinFontTypes.Label" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkJoinSize" dlg:tab-index="46" dlg:left="263" dlg:top="45" dlg:width="35" dlg:height="12" dlg:page="2" dlg:value="&amp;374.DlgBulkConversion.chkJoinSize.Label" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkJoinStyles" dlg:tab-index="47" dlg:left="250" dlg:top="144" dlg:width="45" dlg:height="12" dlg:page="2" dlg:value="&amp;378.DlgBulkConversion.chkJoinStyles.Label" dlg:checked="false"/>
  </dlg:bulletinboard>
 </dlg:window>

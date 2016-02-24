@@ -150,7 +150,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         logger.debug(util.funcName())
         src = itemEvent.Source
         if dutil.sameName(src, self.step2Ctrls.listFontsUsed):
-            self.step2Form.fill_for_font()
+            self.step2Form.fill_for_selected_font()
         elif dutil.sameName(src, self.step2Ctrls.comboFontName):
             self.step2Ctrls.optNoStyle.setState(True)
             self.step2Form.getFontFormResults(ctrl_changed=src)
@@ -171,7 +171,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.nextInputSample()
         elif dutil.sameName(src, self.step2Ctrls.chkReverse):
             self.step2Form.getFontFormResults(ctrl_changed=src)
-            self.step2Form.fill_for_font()
+            self.step2Form.fill_for_selected_font()
         else:
             logger.warning("unexpected source %s", src.Model.Name)
 
