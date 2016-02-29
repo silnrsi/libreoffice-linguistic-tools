@@ -129,7 +129,7 @@ class BulkConversion:
                 continue
             self.convPool.cleanup_unused()
             for fontItem in converter_fontItems[converter_settings]:
-                fontChange = fontItem.fontChange
+                fontChange = fontItem.change
                 for inputText in fontItem.inputData:
                     if inputText not in fontChange.converted_data:
                         converted_val = sec_call.convert(inputText)
@@ -140,8 +140,8 @@ class BulkConversion:
         of found FontItem.
         """
         return [
-            fontItem.fontChange for fontItem in self.fontItemList.items
-            if fontItem.fontChange]
+            fontItem.change for fontItem in self.fontItemList.items
+            if fontItem.change]
 
     def get_all_conv_names(self):
         """Returns all currently used converter names."""
@@ -176,10 +176,11 @@ class FontItemList:
         :param changed_values: type FontChange
         :param attr_changed: string name of FontChange attribute
         """
+        logger.debug(util.funcName('begin', args=attr_changed))
         for item in self.items_to_change(item_to_update):
             item.create_change()
             item.change.setattr_from_other(changed_values, attr_changed)
-        
+
     def items_to_change(self, item_to_update):
         """Get all FontItem objects in the selected group.
         :param item_to_update: type FontItem
@@ -187,7 +188,7 @@ class FontItemList:
         matching_items = []
         for item in self.items:
             if item == item_to_update:
-                matching_items.append[item]
+                matching_items.append(item)
         return matching_items
 
     def __getitem__(self, index):
@@ -216,8 +217,8 @@ class Samples:
         self.sampleIndex = -1
         self.inputData = fontItem.inputData
         self.conv_settings = None
-        if fontItem.fontChange:
-            self.conv_settings = fontItem.fontChange.converter
+        if fontItem.change:
+            self.conv_settings = fontItem.change.converter
 
     def has_more(self):
         """Returns True if there are more samples."""

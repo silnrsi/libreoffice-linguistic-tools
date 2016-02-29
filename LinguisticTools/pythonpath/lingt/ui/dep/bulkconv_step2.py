@@ -25,6 +25,7 @@ from lingt.app.svc.bulkconversion import Samples
 from lingt.ui import dutil
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
+from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2")
 
@@ -200,7 +201,7 @@ class Step2Form:
         self.grabSelectedItem()
         if self.selectedIndex == -1:
             return
-        self.app.fontItemList[self.selectedIndex].fontChange = None
+        self.app.fontItemList[self.selectedIndex].change = None
         self.updateFontsList()
         self.fill_for_selected_font()
 
@@ -218,7 +219,7 @@ class Step2Form:
             return
         newFontChange = copy.deepcopy(self.copiedSettings)
         newFontChange.fontItem = fontItem
-        fontItem.fontChange = newFontChange
+        fontItem.change = newFontChange
         self.updateFontsList()
         self.fill_for_selected_font()
 
@@ -228,18 +229,19 @@ class Step2Form:
         if self.selectedIndex == -1:
             return
         conv_settings = None
-        if fontItem.fontChange:
-            conv_settings = fontItem.fontChange.converter
+        if fontItem.change:
+            conv_settings = fontItem.change.converter
         newChange = self.app.convPool.selectConverter(conv_settings)
         self.app.convPool.cleanup_unused()
         if newChange:
-            #fontItem.fontChange = newChange
+            #fontItem.change = newChange
             #newChange.fontItem = fontItem
             self.app.fontItemList.update_item(
                 fontItem, newChange, 'converter.convName')
             #self.samples.last_settings[
             #    newChange.converter.convName] = newChange.converter
-            self.fill_for_font(fontItem)
+            #self.fill_for_font(fontItem)
+            self.updateFontsList()
         logger.debug(util.funcName('end'))
 
     def selectFontFromStyle(self, control, styleType):
@@ -346,8 +348,8 @@ class Step2Form:
         logger.debug(util.funcName('begin'))
         self.clear_combo_boxes()
         self.fill_found_font_info(fontItem)
-        if fontItem.fontChange:
-            self.fill_for_change(fontItem.fontChange)
+        if fontItem.change:
+            self.fill_for_change(fontItem.change)
         else:
             self.fill_for_no_change(fontItem)
         self.stepCtrls.enableDisable(self)
@@ -364,9 +366,13 @@ class Step2Form:
         """Fill form with information about the font found.
         These values are read-only, for information.
         """
-        foundFontNames = os.linesep.join((
-            fontItem.nameStandard, fontItem.nameComplex,
-            fontItem.nameAsian))
+        foundFontNames = ""
+        for title, fontName in (
+                ("Standard", fontItem.nameStandard),
+                ("Complex", fontItem.nameComplex),
+                ("Asian", fontItem.nameAsian)):
+            foundFontNames += "%s:  %s\n" % (
+                theLocale.getText(title), fontName)
         self.stepCtrls.foundFonts.setText(foundFontNames)
         if fontItem.size.isSpecified():
             fontItem.size.changeCtrlVal(self.stepCtrls.foundFontSize)

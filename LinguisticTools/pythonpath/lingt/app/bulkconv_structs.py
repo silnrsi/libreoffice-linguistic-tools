@@ -21,6 +21,7 @@ import functools
 
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.writer.uservars import Syncable
+from lingt.app import exceptions
 from lingt.utils.fontsize import FontSize
 
 
@@ -48,21 +49,21 @@ class FontItem(FontInfo):
         self.nameAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
-        self.fontChange = None  # type FontChange
+        self.change = None  # type FontChange
 
     def create_change(self):
         """Create a new FontChange for this item if it doesn't exist yet.
         Now this item will be recognized as having a change,
         even if the values aren't actually any different.
         """
-        if not self.fontChange:
-            self.fontChange = FontChange(self, None)
+        if not self.change:
+            self.change = FontChange(self, None)
 
     def __str__(self):
         strval = str(self.name)
         if self.styleName:
             strval += " (%s)" % self.styleName
-        if self.fontChange:
+        if self.change:
             strval = "*  " + strval
         return strval
 
@@ -195,7 +196,9 @@ class FontChange(FontInfo, Syncable):
         """
         attr_names = attr_name.split('.')
         this_container = self._last_container(attr_names)
+        # pylint: disable=protected-access
         other_container = other._last_container(attr_names)
+        # pylint: enable=protected-access
         last_attr_name = attr_names[-1]
         other_value = getattr(other_container, last_attr_name)
         setattr(this_container, last_attr_name, other_value)

@@ -8,12 +8,30 @@
 
 ## Next
 
-Pylint changes.
-Test updating font name -- it should show an asterisk in the list.
+Fix bugs (below).
 
 Test ungrouped FontItemList.
 Get controls to look ok.
 Write grouping code.
+
+
+## bugs 29-Feb-16
+
+itemStateChanged() of bulkconv.py does not expect optParaStyle.
+But if character and paragraph style combo boxes are filled,
+then the radio button change causes an actual difference.
+
+This was found when trying to solve perhaps another problem:
+in getFontFormResults of bulkconv_step2.py, updateFontItem was set to True but
+no attr_changed was set.
+There's probably a bug there,
+but it also seems like awkward coding style to allow such a problem.
+To fix the awkward coding style, a solution could look like changing:
+        if updateFontItem:
+to:
+        if updateFontItem and attr_changed:
+        elif updateFontItem:
+            logger.warn("no attr_changed was set")
 
 
 ## Next OOLT version

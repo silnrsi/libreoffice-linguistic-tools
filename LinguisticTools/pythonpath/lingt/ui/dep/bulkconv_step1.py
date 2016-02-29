@@ -158,7 +158,7 @@ class Step1Form:
                 if (fontItem.name == loaded_item.name
                         and fontItem.styleName == loaded_item.styleName):
                     logger.debug("found match for %r", fontChange)
-                    fontItem.fontChange = fontChange
+                    fontItem.change = fontChange
                     fontChange.fontItem = fontItem
                     break
             else:
