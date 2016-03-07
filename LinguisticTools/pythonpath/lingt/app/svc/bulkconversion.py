@@ -168,18 +168,19 @@ class FontItemList:
         # Merge data, sorting data by fontItem.inputDataOrder.
         return sorted(self.items)
 
-    def update_item(self, item_to_update, changed_values, attr_changed):
+    def update_item(self, item_to_update, changed_values, attrs_changed):
         """When controls get changed,
         update all FontItem objects in the selected group.
 
         :param item_to_update: type FontItem
         :param changed_values: type FontChange
-        :param attr_changed: string name of FontChange attribute
+        :param attrs_changed: list of FontChange attribute names
         """
-        logger.debug(util.funcName('begin', args=attr_changed))
+        logger.debug(util.funcName('begin', args=attrs_changed))
         for item in self.items_to_change(item_to_update):
             item.create_change()
-            item.change.setattr_from_other(changed_values, attr_changed)
+            for attr_changed in attrs_changed:
+                item.change.setattr_from_other(changed_values, attr_changed)
 
     def items_to_change(self, item_to_update):
         """Get all FontItem objects in the selected group.

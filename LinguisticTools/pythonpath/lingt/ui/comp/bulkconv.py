@@ -5,6 +5,7 @@
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 # 16-Dec-15 JDK  Use folder picker.
 # 04-Feb-16 JDK  Catch error messages for doConversion().
+# 07-Mar-16 JDK  Write code for remaining itemStateChanged events.
 
 """
 Bulk OpenOffice document conversion dialog,
@@ -164,6 +165,16 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.getFontFormResults(ctrl_changed=src)
             if self.step2Ctrls.optCharStyle.getState() == 1:
                 self.step2Form.selectFontFromStyle(src, 'Character')
+        elif dutil.sameName(src, self.step2Ctrls.optParaStyle):
+            self.step2Form.getFontFormResults(ctrl_changed=src)
+            if self.step2Ctrls.comboParaStyle.getText():
+                self.step2Form.selectFontFromStyle(src, 'Paragraph')
+        elif dutil.sameName(src, self.step2Ctrls.optCharStyle):
+            self.step2Form.getFontFormResults(ctrl_changed=src)
+            if self.step2Ctrls.comboCharStyle.getText():
+                self.step2Form.selectFontFromStyle(src, 'Character')
+        elif dutil.sameName(src, self.step2Ctrls.optNoStyle):
+            self.step2Form.getFontFormResults(ctrl_changed=src)
         elif dutil.sameName(src, self.step2Ctrls.chkShowConverted):
             if self.step2Form.samples.sampleIndex > -1:
                 # Show the same sample again.
@@ -171,7 +182,15 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.nextInputSample()
         elif dutil.sameName(src, self.step2Ctrls.chkReverse):
             self.step2Form.getFontFormResults(ctrl_changed=src)
-            self.step2Form.fill_for_selected_font()
+            self.step2Form.fill_samples_for_selected_font()
+        elif (dutil.sameName(src, self.step2Ctrls.optFontStandard)
+              or dutil.sameName(src, self.step2Ctrls.optFontComplex)
+              or dutil.sameName(src, self.step2Ctrls.optFontAsian)):
+            self.step2Form.getFontFormResults(ctrl_changed=src)
+        elif (dutil.sameName(src, self.step2Ctrls.chkJoinFontTypes)
+              or dutil.sameName(src, self.step2Ctrls.chkJoinSize)
+              or dutil.sameName(src, self.step2Ctrls.chkJoinStyles)):
+            self.step2Form.fill_for_chkJoin()
         else:
             logger.warning("unexpected source %s", src.Model.Name)
 
