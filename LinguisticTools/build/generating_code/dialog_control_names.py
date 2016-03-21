@@ -1,119 +1,41 @@
 #!/usr/bin/python
 # -*- coding: Latin-1 -*-
 #
-# Created on July 8 2015 by Jim Kornelsen.
-#
-# 03-Aug-15 JDK  Moved LineSearcher to a separate class.
-# 06-Aug-15 JDK  Fixed bug: get correct group to check CHARS_TO_SKIP.
-# 13-Aug-15 JDK  Fixed bug: vowel signs should be dependent.
-# 13-Nov-15 JDK  Fixed bug: extend() modifies list in place.
-# 22-Feb-16 JDK  Download file automatically.
+# Created on March 21 2016 by Jim Kornelsen.
 
 """
-Parse data from the Unicode Character Database at http://unicode.org/ucd/.
-Organize by script and linguistic properties.
-Used to generate lingt/utils/unicode_data.py.
+Parse data from dialog definition files.
+Used to generate lingt/ui/dlg_defs.py.
 """
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 import os
 import re
 import shutil
 import sys
-import urllib.request
 
-INFILE = "UnicodeData.txt"
-OUTFILE = "out/unicode_data_constants.py"
-
-
-def download_file():
-    """Downloads the latest character database file if it doesn't exist yet."""
-    if os.path.exists(INFILE):
-        print("Using previously downloaded file.")
-        return
-    print("Downloading file...", end="")
-    sys.stdout.flush()
-    url = "http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-    # Download the file and save it locally.
-    with urllib.request.urlopen(url) as response, open(
-            INFILE, 'wb') as out_file:
-        shutil.copyfileobj(response, out_file)
-    print("done.")
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+INFOLDER_PATH = os.path.join(CURRENT_DIR, "../LingToolsBasic")
+OUTFILE = "out/control_names.py"
 
 
-class Script:
-    """Consonants and vowels of a particular script."""
-    def __init__(self):
-        self.initialVowels = []
-        self.dependentVowels = []
-        self.anywhereVowels = []
-        self.initialConsonants = []
-        self.finalConsonants = []
-        self.anywhereConsonants = []
+class FolderReader:
+    def readFolder(self):
+        try:
+            self.traverseFolderAndHandleFiles()
+        except (OSError, IOError):
+            print("Couldn't open folder for reading: %s", INFOLDER_PATH)
+            exit()
+        return self.names_dict
 
-        self.similaritySets = SimilaritySets()
-
-        # all nasals are phonetically similar, likewise with liquids
-        self.nasals = []
-        self.liquids = []
-
-    def addLetter(self, code, letterName, flags):
-        if flags.vowel:
-            if flags.initial:
-                self.initialVowels.append(code)
-            elif flags.dependent:
-                self.dependentVowels.append(code)
-            else:
-                self.anywhereVowels.append(code)
-            if flags.candidate and letterName:
-                self.similaritySets.candidateVowels.append(
-                    (letterName, code, repr(flags)))
-        elif flags.consonant:
-            if flags.initial:
-                self.initialConsonants.append(code)
-            elif flags.final:
-                self.finalConsonants.append(code)
-            else:
-                self.anywhereConsonants.append(code)
-            if flags.nasal:
-                self.nasals.append(code)
-            elif flags.liquid:
-                self.liquids.append(code)
-            elif letterName:
-                self.similaritySets.candidateConsonants.append(
-                    (letterName, code, repr(flags)))
+    def traverseFolderAndHandleFiles(self):
+        for filename in os.listdir(INFOLDER_PATH):
+            filepath = os.path.join(INFOLDER_PATH, filename)
+            if os.path.isfile(filepath) and filename.endswith(".xdl"):
+                fileReader = FileReader(FileTuple(filepath, filename))
+                fileReader.readFile()
 
 
-class LetterFlags:
-    def __init__(self):
-        self.consonant = False
-        self.vowel = False
-        self.nasal = False
-        self.liquid = False
-        self.initial = False  # occurs only word initially
-        self.final = False    # occurs only word finally
-        self.dependent = False  # vowel only occurs preceded by a consonant
-        self.candidate = False  # vowel candidate for phonetic similarity
-
-    def __repr__(self):
-        """Return a string to uniquely identify the object."""
-        return repr(self.__dict__)
-
-
-class LineSearcher:
-    """Quick Perl-style pattern match of a line,
-    to make a series of elif statements easier when parsing a file.
-    """
-    def __init__(self):
-        self.matchObj = None
-        self.line = ""
-
-    def searchLine(self, pattern):
-        """Sets self.matchObj"""
-        self.matchObj = re.search(pattern, self.line)
-        if self.matchObj:
-            return True
-        return False
-
+FileTuple = namedtuple('FileTuple', ['path', 'name'])
 
 class FileReader(LineSearcher):
 
@@ -121,10 +43,10 @@ class FileReader(LineSearcher):
         "DEVANAGARI", "TAMIL", "TELEGU", "GUJARATI", "BENGALI", "GURMUKHI",
         "KANNADA", "MALAYALAM", "ORIYA"]
 
-    def __init__(self):
+    def __init__(self, filetuple):
         LineSearcher.__init__(self)
         self.scripts = defaultdict(Script)
-        self.otherKnownChars = Script()  # characters not included in scripts
+        self.filetuple = filetuple
 
     def readFile(self):
         try:
@@ -255,6 +177,83 @@ class FileReader(LineSearcher):
                 flags.vowel = True
                 flags.dependent = True
             self.otherKnownChars.addLetter(code, "", flags)
+
+
+class Script:
+    """Consonants and vowels of a particular script."""
+    def __init__(self):
+        self.initialVowels = []
+        self.dependentVowels = []
+        self.anywhereVowels = []
+        self.initialConsonants = []
+        self.finalConsonants = []
+        self.anywhereConsonants = []
+
+        self.similaritySets = SimilaritySets()
+
+        # all nasals are phonetically similar, likewise with liquids
+        self.nasals = []
+        self.liquids = []
+
+    def addLetter(self, code, letterName, flags):
+        if flags.vowel:
+            if flags.initial:
+                self.initialVowels.append(code)
+            elif flags.dependent:
+                self.dependentVowels.append(code)
+            else:
+                self.anywhereVowels.append(code)
+            if flags.candidate and letterName:
+                self.similaritySets.candidateVowels.append(
+                    (letterName, code, repr(flags)))
+        elif flags.consonant:
+            if flags.initial:
+                self.initialConsonants.append(code)
+            elif flags.final:
+                self.finalConsonants.append(code)
+            else:
+                self.anywhereConsonants.append(code)
+            if flags.nasal:
+                self.nasals.append(code)
+            elif flags.liquid:
+                self.liquids.append(code)
+            elif letterName:
+                self.similaritySets.candidateConsonants.append(
+                    (letterName, code, repr(flags)))
+
+
+class LetterFlags:
+    def __init__(self):
+        self.consonant = False
+        self.vowel = False
+        self.nasal = False
+        self.liquid = False
+        self.initial = False  # occurs only word initially
+        self.final = False    # occurs only word finally
+        self.dependent = False  # vowel only occurs preceded by a consonant
+        self.candidate = False  # vowel candidate for phonetic similarity
+
+    def __repr__(self):
+        """Return a string to uniquely identify the object."""
+        return repr(self.__dict__)
+
+
+class LineSearcher:
+    """Quick Perl-style pattern match of a line,
+    to make a series of elif statements easier when parsing a file.
+    """
+    def __init__(self):
+        self.matchObj = None
+        self.line = ""
+
+    def searchLine(self, pattern):
+        """Sets self.matchObj"""
+        self.matchObj = re.search(pattern, self.line)
+        if self.matchObj:
+            return True
+        return False
+
+
 
 
 class SimilaritySets:
@@ -572,8 +571,7 @@ CHARS_TO_SKIP = set([
 
 
 if __name__ == "__main__":
-    download_file()
     FileWriter().writeFile(
-        *FileReader().readFile())
+        FolderReader().readFolder())
     print("Finished!")
 

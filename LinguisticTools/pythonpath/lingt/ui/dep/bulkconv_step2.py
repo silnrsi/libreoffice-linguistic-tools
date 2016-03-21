@@ -30,6 +30,10 @@ from lingt.utils.locale import theLocale
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2")
 
 
+class Step2ControlNames:
+    LIST_FONTS_USED = 'listFontsUsed'
+
+
 class Step2Controls:
     """Store dialog controls for page step 2."""
 
@@ -38,7 +42,11 @@ class Step2Controls:
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.listFontsUsed = dutil.getControl(dlg, 'listFontsUsed')
+        ctrl_getter = dutil.ControlGetter(dlg)
+        #self.listFontsUsed = dutil.getControl(dlg, 'listFontsUsed')
+        #self.listFontsUsed = ctrl_getter.get('listFontsUsed')
+        self.listFontsUsed = ctrl_getter.get(ctrl_names.LIST_FONTS_USED)
+        #self.listFontsUsed = dlg.getControl(ctrl_names.LIST_FONTS_USED)
         self.btnNextInput = dutil.getControl(dlg, 'btnNextInput')
         self.lblInput = dutil.getControl(dlg, 'inputDisplay')
         self.lblSampleNum = dutil.getControl(dlg, 'sampleNum')

@@ -7,6 +7,7 @@
 # 08-Sep-15 JDK  Set handling_event in finally clause.
 # 29-Sep-15 JDK  Set combo box values to empty string by default.
 # 12-Dec-15 JDK  Added listbox_items().
+# 21-Mar-16 JDK  Changed getControl() to a class to reduce arguments.
 
 """
 Utilities to manage UNO dialogs and controls.
@@ -61,14 +62,17 @@ def createDialog(unoObjs, msgbox, dlgName):
     logger.debug("Created dialog.")
     return dlg
 
+class ControlGetter:
+    def __init__(self, dlg):
+        self.dlg = dlg
 
-def getControl(dlg, name):
-    """raises: LogicError if control is not found"""
-    ctrl = dlg.getControl(name)
-    if not ctrl:
-        raise exceptions.LogicError(
-            "Error showing dialog: No %s control.", name)
-    return ctrl
+    def get(self, ctrl_name):
+        """raises: LogicError if control is not found"""
+        ctrl = dlg.getControl(name)
+        if not ctrl:
+            raise exceptions.LogicError(
+                "Error showing dialog: No %s control.", name)
+        return ctrl
 
 def sameName(control1, control2):
     """Returns True if the UNO controls have the same name.
