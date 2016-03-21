@@ -30,6 +30,7 @@ from lingt.app.svc.bulkconversion import BulkConversion
 from lingt.ui import dutil
 from lingt.ui.dep import bulkconv_step1
 from lingt.ui.dep import bulkconv_step2
+from lingt.ui.dlgdefs import DlgBulkConversion as _dlgdef
 from lingt.ui.messagebox import MessageBox
 from lingt.utils import util
 
@@ -70,24 +71,26 @@ class DlgBulkConversion:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        self.dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgBulkConversion")
+        #self.dlg = dutil.createDialog(
+        #    self.unoObjs, self.msgbox, "DlgBulkConversion")
+        dlg_getter = dutil.DialogGetter(self.unoObjs, self.msgbox, _dlgdef)
+        self.dlg = dlg_getter.create_and_verify()
         if not self.dlg:
             return
         self.dlg.getModel().Step = self.step  # STEP_FILES (the first step)
 
         self.evtHandler = DlgEventHandler(self)
-        step1Ctrls = None
-        step2Ctrls = None
-        try:
-            step1Ctrls = bulkconv_step1.Step1Controls(
-                self.unoObjs, self.dlg, self.evtHandler)
-            step2Ctrls = bulkconv_step2.Step2Controls(
-                self.unoObjs, self.dlg, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            self.dlg.dispose()
-            return
+        #step1Ctrls = None
+        #step2Ctrls = None
+        #try:
+        #    step1Ctrls = bulkconv_step1.Step1Controls(
+        #        self.unoObjs, self.dlg, self.evtHandler)
+        #    step2Ctrls = bulkconv_step2.Step2Controls(
+        #        self.unoObjs, self.dlg, self.evtHandler)
+        #except exceptions.LogicError as exc:
+        #    self.msgbox.displayExc(exc)
+        #    self.dlg.dispose()
+        #    return
         logger.debug("Got controls.")
         step1Form = bulkconv_step1.Step1Form(
             self.unoObjs, step1Ctrls, self.userVars, self.msgbox, self.app,
@@ -132,15 +135,15 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         self.mainDlg = mainDlg
         self.step1Form = None
         self.step2Form = None
-        self.step1Ctrls = None
-        self.step2Ctrls = None
+        #self.step1Ctrls = None
+        #self.step2Ctrls = None
         self.handling_event = False
 
     def setCtrls(self, step1Form, step2Form, step1Ctrls, step2Ctrls):
         self.step1Form = step1Form
         self.step2Form = step2Form
-        self.step1Ctrls = step1Ctrls
-        self.step2Ctrls = step2Ctrls
+        #self.step1Ctrls = step1Ctrls
+        #self.step2Ctrls = step2Ctrls
 
     @dutil.log_event_handler_exceptions
     @dutil.do_not_enter_if_handling_event
@@ -150,7 +153,8 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         """
         logger.debug(util.funcName())
         src = itemEvent.Source
-        if dutil.sameName(src, self.step2Ctrls.listFontsUsed):
+        #if dutil.sameName(src, self.step2Ctrls.listFontsUsed):
+        if dutil.sameName(src, _dlgdef.LIST_FONTS_USED):
             self.step2Form.fill_for_selected_font()
         elif dutil.sameName(src, self.step2Ctrls.comboFontName):
             self.step2Ctrls.optNoStyle.setState(True)

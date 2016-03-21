@@ -48,31 +48,74 @@ UNSPECIFIED = 2
 logger = logging.getLogger("lingt.ui.dutil")
 
 
-def createDialog(unoObjs, msgbox, dlgName):
-    dlg = None
-    try:
-        dlg = unoObjs.dlgprov.createDialog(
-            "vnd.sun.star.script:LingToolsBasic." + dlgName +
-            "?location=application")
-    except IllegalArgumentException:
-        pass
-    if not dlg:
-        msgbox.display("Error: Could not create dialog.")
-        return None
-    logger.debug("Created dialog.")
-    return dlg
+class DialogGetter:
+    def __init__(self, uno_objs, msgbox, definition_class):
+        """
+        :param definition_class: class from lingt.utils.dlgdefs
+        """
+        self.uno_objs = uno_objs
+        self.msgbox = msgbox
+        self.definition = definition_class
+        self.dlg = None
+
+    def create_and_verify(self):
+        self.createDialog()
+        if not self.dlg:
+            msgbox.display("Error: Could not create dialog.")
+            return None
+        logger.debug("Created dialog.")
+        try:
+            self.verify_ctrl_names()
+        except exceptions.LogicError as exc:
+            self.msgbox.displayExc(exc)
+            self.dlg.dispose()
+            return None
+        return self.dlg
+
+    def _createDialog(self):
+        try:
+            self.dlg = unoObjs.dlgprov.createDialog(
+                "vnd.sun.star.script:LingToolsBasic." + self.dlg_name() +
+                "?location=application")
+        except IllegalArgumentException:
+            pass
+        return self.dlg
+
+    def dlg_name(self):
+        return self.definition.__name__
+
+    def verify_ctrl_names(self):
+        ctrl_getter = ControlGetter(self.dlg)
+        for ctrl_name in self.all_ctrl_names():
+            ctrl_getter.verify(ctrl_name)
+
+    def all_ctrl_names(self):
+        return [
+            attr for attr in self.definition.__dict__
+            if not attr.startswith('__')]
+
 
 class ControlGetter:
     def __init__(self, dlg):
         self.dlg = dlg
 
-    def get(self, ctrl_name):
+    def get_and_verify(self, ctrl_name):
         """raises: LogicError if control is not found"""
-        ctrl = dlg.getControl(name)
+        self.verify(ctrl_name)
+        #if not ctrl:
+        #    raise exceptions.LogicError(
+        #        "Error showing dialog: No %s control.", name)
+        return self.get(ctrl_name)
+
+    def verify(self, ctrl_name):
+        """raises: LogicError if control is not found"""
+        ctrl = self.get(ctrl_name)
         if not ctrl:
             raise exceptions.LogicError(
-                "Error showing dialog: No %s control.", name)
-        return ctrl
+                "Error showing dialog: No %s control.", ctrl_name)
+
+    def get(self, ctrl_name):
+        return self.dlg.getControl(name)
 
 def sameName(control1, control2):
     """Returns True if the UNO controls have the same name.
