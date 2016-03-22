@@ -8,6 +8,7 @@
 # 01-Aug-15 JDK  Use tuple unpacking for message arguments list.
 # 19-Oct-15 JDK  Interpolate messages.
 # 04-Nov-15 JDK  A nested empty tuple should not be used for interpolation.
+# 22-Mar-16 JDK  Added DialogError.
 
 """
 Define custom exceptions that can be raised.
@@ -111,5 +112,9 @@ class LogicError(MessageError):
     """Something wrong with program flow; for example, none of several elsif
     conditions were matched.
     """
+    pass
+
+class DialogError(MessageError):
+    """Dialog controls were in an unexpected state."""
     pass
 

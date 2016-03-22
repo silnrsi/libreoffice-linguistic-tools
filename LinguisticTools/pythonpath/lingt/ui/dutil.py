@@ -14,7 +14,7 @@ Utilities to manage UNO dialogs and controls.
 
 This module exports:
     createDialog()
-    getControl()
+    ControlGetter()
     sameName()
     whichSelected()
     selectRadio()
@@ -35,6 +35,7 @@ from com.sun.star.lang import IllegalArgumentException
 from grantjenks.tribool import Tribool
 
 from lingt.app import exceptions
+from lingt.ui.messagebox import MessageBox
 from lingt.utils import util
 
 # checkbox and radio button values
@@ -48,33 +49,42 @@ UNSPECIFIED = 2
 logger = logging.getLogger("lingt.ui.dutil")
 
 
+def createDialog(uno_objs, definition_class):
+    """:param definition_class: class from lingt.utils.dlgdefs"""
+    dlg_getter = DialogGetter(uno_objs, definition_class)
+    dlg = None
+    try:
+        dlg = dlg_getter.create_and_verify()
+    except exceptions.DialogError as exc:
+        msgbox = MessageBox(unoObjs)
+        msgbox.displayExc(exc)
+    return dlg
+
 class DialogGetter:
-    def __init__(self, uno_objs, msgbox, definition_class):
-        """
-        :param definition_class: class from lingt.utils.dlgdefs
-        """
+    def __init__(self, uno_objs, definition_class):
+        """:param definition_class: class from lingt.utils.dlgdefs"""
         self.uno_objs = uno_objs
-        self.msgbox = msgbox
         self.definition = definition_class
         self.dlg = None
 
     def create_and_verify(self):
+        """raises: DialogError if dialog could not be created"""
         self.createDialog()
         if not self.dlg:
-            msgbox.display("Error: Could not create dialog.")
-            return None
+            raise exceptions.DialogError("Error: Could not create dialog.")
         logger.debug("Created dialog.")
         try:
             self.verify_ctrl_names()
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
+        finally:
             self.dlg.dispose()
-            return None
         return self.dlg
 
     def _createDialog(self):
+        dlgprov = self.unoObjs.smgr.createInstanceWithArgumentsAndContext(
+            "com.sun.star.awt.DialogProvider",
+            (self.unoObjs.document,), self.unoObjs.ctx)
         try:
-            self.dlg = unoObjs.dlgprov.createDialog(
+            self.dlg = dlgprov.createDialog(
                 "vnd.sun.star.script:LingToolsBasic." + self.dlg_name() +
                 "?location=application")
         except IllegalArgumentException:
@@ -100,22 +110,19 @@ class ControlGetter:
         self.dlg = dlg
 
     def get_and_verify(self, ctrl_name):
-        """raises: LogicError if control is not found"""
         self.verify(ctrl_name)
-        #if not ctrl:
-        #    raise exceptions.LogicError(
-        #        "Error showing dialog: No %s control.", name)
         return self.get(ctrl_name)
 
     def verify(self, ctrl_name):
-        """raises: LogicError if control is not found"""
+        """raises: DialogError if control is not found"""
         ctrl = self.get(ctrl_name)
         if not ctrl:
-            raise exceptions.LogicError(
+            raise exceptions.DialogError(
                 "Error showing dialog: No %s control.", ctrl_name)
 
     def get(self, ctrl_name):
         return self.dlg.getControl(name)
+
 
 def sameName(control1, control2):
     """Returns True if the UNO controls have the same name.

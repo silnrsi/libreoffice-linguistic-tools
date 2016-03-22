@@ -73,8 +73,7 @@ class DlgBulkConversion:
         logger.debug(util.funcName(obj=self))
         #self.dlg = dutil.createDialog(
         #    self.unoObjs, self.msgbox, "DlgBulkConversion")
-        dlg_getter = dutil.DialogGetter(self.unoObjs, self.msgbox, _dlgdef)
-        self.dlg = dlg_getter.create_and_verify()
+        self.dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not self.dlg:
             return
         self.dlg.getModel().Step = self.step  # STEP_FILES (the first step)

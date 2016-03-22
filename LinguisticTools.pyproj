@@ -6,7 +6,7 @@
     <ProjectGuid>{06ec9873-15d8-4071-81b4-e4a095ba3e9a}</ProjectGuid>
     <ProjectHome>LinguisticTools\</ProjectHome>
     <StartupFile>tests\ad_hoc_testing.py</StartupFile>
-    <SearchPath>..\..\..\..\..\Program Files (x86)\LibreOffice 5\program\</SearchPath>
+    <SearchPath>..\..\..\Program Files (x86)\LibreOffice 5\program\;C:\Program Files\LibreOffice 5\program\;pythonpath\;.</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
@@ -91,6 +91,8 @@
     <Compile Include="pythonpath\lingt\ui\comp\spellstep.py" />
     <Compile Include="pythonpath\lingt\ui\comp\wordlist.py" />
     <Compile Include="pythonpath\lingt\ui\comp\__init__.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\bulkconv_step1.py" />
+    <Compile Include="pythonpath\lingt\ui\dep\bulkconv_step2.py" />
     <Compile Include="pythonpath\lingt\ui\dep\spellreplace.py" />
     <Compile Include="pythonpath\lingt\ui\dep\wordlistfile.py" />
     <Compile Include="pythonpath\lingt\ui\dep\writingsystem.py" />
@@ -115,6 +117,7 @@
     <Compile Include="tests\pythonpath\lingttest\access\uservars_test.py" />
     <Compile Include="tests\pythonpath\lingttest\access\xml_readers_test.py" />
     <Compile Include="tests\pythonpath\lingttest\access\__init__.py" />
+    <Compile Include="tests\pythonpath\lingttest\app\convpool_test.py" />
     <Compile Include="tests\pythonpath\lingttest\app\spellingchecks_test.py" />
     <Compile Include="tests\pythonpath\lingttest\app\visual_test_grammar.py" />
     <Compile Include="tests\pythonpath\lingttest\app\visual_test_phonology.py" />

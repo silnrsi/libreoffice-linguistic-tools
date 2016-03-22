@@ -149,9 +149,6 @@ class UnoObjs:
             raise AttributeError("Could not get document.")
         self.frame = self.controller.getFrame()
         self.window = self.frame.getContainerWindow()
-        self.dlgprov = self.smgr.createInstanceWithArgumentsAndContext(
-            "com.sun.star.awt.DialogProvider",
-            (self.document,), self.ctx)
         self.text = None
         self.viewcursor = None
         self.sheets = None
