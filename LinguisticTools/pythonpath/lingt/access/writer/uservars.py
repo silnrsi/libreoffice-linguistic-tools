@@ -18,6 +18,7 @@
 # 18-Aug-15 JDK  Don't call FieldTags.loadNames() from constructor.
 # 27-Aug-15 JDK  Added Syncable.cleanupUserVars().
 # 08-Oct-15 JDK  Removed UNO imports.
+# 23-Mar-16 JDK  Added Prefix class.
 
 """
 Store persistent settings in user variables of a Writer document.
@@ -39,15 +40,28 @@ from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.access.uservars")
 
+
+class Prefix:
+    """For each module, we use a prefix to the user variable name.
+    LT is short for Linguistic Tools.
+    """
+    PHONOLOGY = "LTp_"
+    GRAMMAR = "LTg_"
+    ABBREVIATIONS = "LTa_"
+    DATA_CONVERSION = "LTc_"
+    BULK_CONVERSION = "LTbc_"
+    WORD_LIST = "LTw_"
+    SPELLING = = "LTsp_"
+    SCRIPT_PRACTICE = "LTscr_"
+
+
 class UserVars:
     """Access to the user variables of the Writer document.
     These can be viewed using Insert -> Fields -> Other.
     """
     def __init__(self, VAR_PREFIX, writer_document, otherLogger):
         """
-        :param VAR_PREFIX: For each module, we use a prefix to the variable
-                           name, for example all variables used in phonology
-                           begin with "LTp_"
+        :param VAR_PREFIX: member of the Prefix class
         :param writer_document: The UNO document object, not available for
                                 Calc.
         :param logger: Logger of the module that is using this class.
@@ -191,13 +205,13 @@ class SettingsDocPreparer:
         oVC = self.unoObjs.viewcursor   # shorthand variable name
         oVC.gotoEnd(False)
         componentName = ""
-        if self.VAR_PREFIX == "LTscr_":
+        if self.VAR_PREFIX == Prefix.SCRIPT_PRACTICE:
             componentName = theLocale.getText("Script Practice")
-        elif self.VAR_PREFIX == "LTw_":
+        elif self.VAR_PREFIX == Prefix.WORD_LIST:
             componentName = theLocale.getText("Word List and Spelling")
-        elif self.VAR_PREFIX == "LTsp_":
+        elif self.VAR_PREFIX == Prefix.SPELLING:
             componentName = theLocale.getText("Spelling")
-        elif self.VAR_PREFIX == "LTbc_":
+        elif self.VAR_PREFIX == Prefix.BULK_CONVERSION:
             componentName = theLocale.getText("Bulk Conversion")
         message = theLocale.getText(
             "This document stores %s settings.  "

@@ -53,7 +53,7 @@ class DlgWordList:
     def __init__(self, unoObjs, newUserVarPrefix=None):
         self.unoObjs = unoObjs
         self.msgbox = MessageBox(unoObjs)  # calls theLocale.loadUnoObjs()
-        userVarPrefix = "LTw_"  # LinguisticTools Word List variables
+        userVarPrefix = uservars.Prefix.WORD_LIST
         if newUserVarPrefix:
             userVarPrefix = newUserVarPrefix
         uservars.SettingsDocPreparer(userVarPrefix, unoObjs).prepare()

@@ -8,6 +8,7 @@
 # 29-Sep-15 JDK  Set combo box values to empty string by default.
 # 12-Dec-15 JDK  Added listbox_items().
 # 21-Mar-16 JDK  Changed getControl() to a class to reduce arguments.
+# 23-Mar-16 JDK  Moved event handling functions to another module.
 
 """
 Utilities to manage UNO dialogs and controls.
@@ -15,7 +16,6 @@ Utilities to manage UNO dialogs and controls.
 This module exports:
     createDialog()
     ControlGetter()
-    sameName()
     whichSelected()
     selectRadio()
     fill_list_ctrl()
@@ -24,9 +24,6 @@ This module exports:
     RadioTuple
     set_tristate_checkbox()
     get_tristate_checkbox()
-    log_event_handler_exceptions()
-    do_not_enter_if_handling_event()
-    remember_handling_event()
 """
 import collections
 import logging
@@ -122,16 +119,6 @@ class ControlGetter:
 
     def get(self, ctrl_name):
         return self.dlg.getControl(name)
-
-
-def sameName(control1, control2):
-    """Returns True if the UNO controls have the same name.
-    This is the control name that is in the dialog designer,
-    and also used with dlg.getControl().
-    """
-    if control1 is None or control2 is None:
-        return False
-    return control1.getModel().Name == control2.getModel().Name
 
 
 RadioTuple = collections.namedtuple('RadioTuple', ['ctrl', 'key'])
@@ -257,66 +244,4 @@ def get_tristate_checkbox(chkCtrl):
         return Tribool(None)
     else:
         return Tribool(bool(chkCtrl.getState()))
-
-
-def log_event_handler_exceptions(func):
-    """Event handlers may swallow exceptions, so we log the exception.
-
-    Wraps event handler methods by decorating them.
-    To use, add @this_function_name before the start of a method definition.
-    If there is more than one decorator, then this should normally be
-    listed first in order to catch exceptions in other decorators.
-    """
-    def wrapper(*args, **kwargs):
-        try:
-            func(*args, **kwargs)
-        except Exception as exc:
-            logger.exception(exc)
-            # Re-raising is proper coding practice when catching all
-            # exceptions, and we do so even though it will probably
-            # have no effect, at least during runtime.
-            raise
-
-    return wrapper
-
-
-def do_not_enter_if_handling_event(func):
-    """Do not enter this method if an event is already being handled.
-    See docstring for remember_handling_event() for further information.
-
-    Wraps event handler methods by decorating them.
-    To use, add @this_function_name before the start of a method definition.
-    """
-    def wrapper(*args, **kwargs):
-        self = args[0]
-        if self.handling_event:
-            logger.debug("An event is already being handled.")
-            return
-        wrapped_func = remember_handling_event(func)
-        wrapped_func(*args, **kwargs)
-
-    return wrapper
-
-def remember_handling_event(func):
-    """Set the instance variable self.handling_event.
-
-    An event handler that modifies a control value may cause another
-    event handler to be called, which can get out of control.
-    So we use an instance variable self.handling_event to check this.
-    The variable should be initialized in __init__().
-
-    Wraps event handler methods by decorating them.
-    To use, add @this_function_name before the start of a method definition.
-    """
-    def wrapper(*args, **kwargs):
-        self = args[0]
-        self.handling_event = True
-        try:
-            func(*args, **kwargs)
-        except:
-            raise
-        finally:
-            self.handling_event = False
-
-    return wrapper
 

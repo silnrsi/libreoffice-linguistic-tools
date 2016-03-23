@@ -159,6 +159,7 @@ def getNamedTuples(buttonList):
             ButtonTuple(index, action, text, name))
     return buttonIter
 
+
 class FourButtonDialog(unohelper.Base, XActionListener):
     """
     toolkit.createMessageBox() only allows up to three buttons of certain

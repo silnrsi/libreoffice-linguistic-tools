@@ -49,9 +49,8 @@ class DlgSpellingSearch:
 
     def __init__(self, writerUnoObjs):
         self.unoObjs = writerUnoObjs
-        USERVAR_PREFIX = "LTsp_"  # LinguisticTools Spelling variables
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, writerUnoObjs.document, logger)
+            uservars.Prefix.SPELLING, writerUnoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
         self.app = SpellingChecker(self.unoObjs, self.userVars)
         self.localeList = []

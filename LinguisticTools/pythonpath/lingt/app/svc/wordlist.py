@@ -22,7 +22,7 @@ from lingt.access.calc.wordlist_io import WordlistIO
 from lingt.access.text.sfm_reader import SFM_Reader
 from lingt.access.writer.textsearch import TextSearchSettings
 from lingt.access.writer.doc_reader import DocReader
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.access.xml.interlin_reader import InterlinReader
 from lingt.access.xml.phon_reader import PhonReader
 from lingt.access.xml.words_reader import WordsReader
@@ -126,8 +126,7 @@ class WordList:
             config.phoneticWS = fileItem.writingSystem
             config.isLexemePhonetic = True
             phonUserVars = UserVars(
-                "LTp_",  # LinguisticTools Phonology variables
-                self.unoObjs.document, logger)
+                Prefix.PHONOLOGY, self.unoObjs.document, logger)
             if phonUserVars.get("FlexLexeme") == 'phonemic':
                 config.isLexemePhonetic = False
             reader = PhonReader(self.unoObjs, self.userVars, config)
@@ -151,9 +150,8 @@ class WordList:
 
         ## Copy some user vars for the Spelling component.
 
-        USERVAR_PREFIX_SP = "LTsp_"  # Ling Tools Spelling variables
         userVarsSp = UserVars(
-            USERVAR_PREFIX_SP, self.unoObjs.document, logger)
+            Prefix.SPELLING, self.unoObjs.document, logger)
         varname = "HasSettings"
         userVarsSp.store(varname, self.userVars.get(varname))
         columnOrderSp = ColumnOrder(userVarsSp)

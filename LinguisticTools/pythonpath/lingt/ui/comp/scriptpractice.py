@@ -61,10 +61,10 @@ class DlgScriptPractice:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = "LTscr_"  # LinguisticTools script practice
-        uservars.SettingsDocPreparer(USERVAR_PREFIX, unoObjs).prepare()
+        uservars.SettingsDocPreparer(
+            uservars.Prefix.SCRIPT_PRACTICE, unoObjs).prepare()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, unoObjs.document, logger)
+            uservars.Prefix.SCRIPT_PRACTICE, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.script = scriptpractice.Script(self.unoObjs)
         self.questions = scriptpractice.PracticeQuestions(

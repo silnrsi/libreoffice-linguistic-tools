@@ -57,10 +57,10 @@ class DlgBulkConversion:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = 'LTbc_'  # LinguisticTools Bulk Conversion vars
-        uservars.SettingsDocPreparer(USERVAR_PREFIX, unoObjs).prepare()
+        uservars.SettingsDocPreparer(
+            uservars.Prefix.BULK_CONVERSION, unoObjs).prepare()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, unoObjs.document, logger)
+            uservars.Prefix.BULK_CONVERSION, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.app = BulkConversion(unoObjs, self.userVars)
         self.dlg = None

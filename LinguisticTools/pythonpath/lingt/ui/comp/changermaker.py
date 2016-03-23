@@ -54,12 +54,12 @@ class DlgChangerMaker:
 
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
-        USERVAR_PREFIX = "LTsp_"  # LinguisticTools Spelling variables
         self.msgbox = MessageBox(self.unoObjs)
-        finder = uservars.SettingsDocFinder(USERVAR_PREFIX, calcUnoObjs)
+        finder = uservars.SettingsDocFinder(
+            uservars.Prefix.SPELLING, calcUnoObjs)
         self.writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, self.writerUnoObjs.document, logger)
+            uservars.Prefix.SPELLING, self.writerUnoObjs.document, logger)
         self.app = ChangerMaker(calcUnoObjs, self.userVars)
         self.exportOnClose = False
         self.dlgCtrls = None

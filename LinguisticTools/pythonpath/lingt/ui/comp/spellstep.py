@@ -49,11 +49,11 @@ class DlgSpellingStep:
 
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
-        USERVAR_PREFIX = "LTsp_"  # LinguisticTools Spelling variables
-        finder = uservars.SettingsDocFinder(USERVAR_PREFIX, calcUnoObjs)
+        finder = uservars.SettingsDocFinder(
+            uservars.Prefix.SPELLING, calcUnoObjs)
         writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, writerUnoObjs.document, logger)
+            uservars.Prefix.SPELLING, writerUnoObjs.document, logger)
         self.app = SpellingStepper(calcUnoObjs, self.userVars)
         self.msgbox = MessageBox(calcUnoObjs)
         self.maxRow = -1

@@ -50,11 +50,11 @@ class DlgApplyConverter:
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
         self.msgbox = MessageBox(self.unoObjs)
-        USERVAR_PREFIX = "LTw_"  # LinguisticTools Word List variables
-        finder = uservars.SettingsDocFinder(USERVAR_PREFIX, calcUnoObjs)
+        finder = uservars.SettingsDocFinder(
+            uservars.Prefix.WORD_LIST, calcUnoObjs)
         writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, writerUnoObjs.document, logger)
+            uservars.Prefix.WORD_LIST, writerUnoObjs.document, logger)
         self.app = DataConversion(calcUnoObjs, self.userVars, styleFonts=None)
         self.sourceCol = ""
         self.targetCol = ""

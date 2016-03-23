@@ -23,15 +23,12 @@ from lingt.app import exceptions
 from lingt.app.bulkconv_structs import FontChange
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui import dutil
+from lingt.ui.dlgdefs import DlgBulkConversion as _dlgdef
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2")
-
-
-class Step2ControlNames:
-    LIST_FONTS_USED = 'listFontsUsed'
 
 
 class Step2Controls:
@@ -504,4 +501,38 @@ class Step2Form:
         self.userVars.store(
             'AskEachChange', "%d" % self.app.askEach)
         logger.debug(util.funcName('end'))
+
+
+
+
+class ListFontsUsed(evt_handler.ItemEventHandler):
+
+    def __init__(self, ctrl_getter, app):
+        super(ListFontsUsed, self).__init__()
+        self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
+        self.msgbox = MessageBox(app.unoObjs)
+        self.selected_index = -1  # selected FontItem
+
+    def load_values(self):
+        """Load initial values, then add listeners."""
+        self.listFontsUsed.addItemListener(self)
+
+    def handle_item_event(self, src):
+        #if dutil.sameName(src, _dlgdef.LIST_FONTS_USED):
+        self.step2Form.fill_for_selected_font()
+
+    def grab_selected_item(self):
+        """Sets self.selected_index.
+        :returns: selected found font item
+        """
+        try:
+            self.selected_index = dutil.get_selected_index(
+                self.listFontsUsed, "a file")
+        except exceptions.ChoiceProblem as exc:
+            self.msgbox.displayExc(exc)
+            self.selected_index = -1
+            return None
+        fontItem = self.app.fontItemList[self.selected_index]
+        return fontItem
+
 

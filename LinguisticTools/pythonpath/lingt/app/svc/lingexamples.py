@@ -25,7 +25,7 @@ from lingt.access.writer import outputmanager
 from lingt.access.writer import search
 from lingt.access.writer import styles
 from lingt.access.writer.ex_updater import ExUpdater
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.access.xml.interlin_reader import InterlinReader
 from lingt.access.xml.phon_reader import PhonReader
 from lingt.app import exceptions
@@ -47,9 +47,9 @@ class ExServices:
         self.exType = exType
         self.unoObjs = unoObjs
         if self.exType == EXTYPE_PHONOLOGY:
-            USERVAR_PREFIX = "LTp_"  # LinguisticTools Phonology variables
+            USERVAR_PREFIX = Prefix.PHONOLOGY
         else:
-            USERVAR_PREFIX = "LTg_"  # LinguisticTools Grammar variables
+            USERVAR_PREFIX = Prefix.GRAMMAR
         self.userVars = UserVars(
             USERVAR_PREFIX, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)

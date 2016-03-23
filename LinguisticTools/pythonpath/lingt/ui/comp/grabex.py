@@ -47,7 +47,7 @@ import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import lingexamples
 from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY, EXTYPE_GRAMMAR
@@ -103,10 +103,10 @@ class DlgGrabExamples:
         logger.debug("DlgGrabExamples() %s", exType)
         self.msgbox = MessageBox(unoObjs)
         if exType == EXTYPE_PHONOLOGY:
-            USERVAR_PREFIX = "LTp_"  # LinguisticTools Phonology variables
+            USERVAR_PREFIX = Prefix.PHONOLOGY
             self.titleText = theLocale.getText("Get Phonology Examples")
         else:
-            USERVAR_PREFIX = "LTg_"  # LinguisticTools Grammar variables
+            USERVAR_PREFIX = Prefix.GRAMMAR
             self.titleText = theLocale.getText(
                 "Get Interlinear Grammar Examples")
         self.userVars = UserVars(USERVAR_PREFIX, unoObjs.document, logger)

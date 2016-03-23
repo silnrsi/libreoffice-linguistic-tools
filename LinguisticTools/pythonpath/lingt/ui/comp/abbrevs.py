@@ -36,7 +36,7 @@ from com.sun.star.awt import XItemListener
 from lingt.access.writer import styles
 from lingt.access.writer import search
 from lingt.access.writer import outputmanager
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import abbreviations
 from lingt.ui import dutil
@@ -62,8 +62,8 @@ class DlgAbbreviations:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = "LTa_"  # LinguisticTools Abbreviations variables
-        self.userVars = UserVars(USERVAR_PREFIX, unoObjs.document, logger)
+        self.userVars = UserVars(
+            Prefix.ABBREVIATIONS, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.abbrevList = abbreviations.AbbrevList(self.unoObjs, self.userVars)
         self.selectedIndex = -1  # position in abbrevList and listboxAbbrevs
@@ -388,9 +388,8 @@ class DlgControls:
         displayNames = [dispName for dispName, name in styleNames]
         selectedValue = userVars.get("SearchParaStyle")
         if selectedValue == "":
-            USERVAR_PREFIX = "LTg_"  # LinguisticTools Grammar variables
             userVarsGrammar = UserVars(
-                USERVAR_PREFIX, self.unoObjs.document, logger)
+                Prefix.GRAMMAR, self.unoObjs.document, logger)
             selectedValue = userVarsGrammar.get("StyleName_Gloss")
         dutil.fill_list_ctrl(
             self.cmbxSearchParaStyle, displayNames, selectedValue)

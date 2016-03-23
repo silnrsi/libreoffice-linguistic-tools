@@ -30,7 +30,7 @@ import unohelper
 from com.sun.star.awt import XActionListener
 
 from lingt.access.writer.styles import PhonologyStyles
-from lingt.access.writer.uservars import UserVars, PhonologyTags
+from lingt.access.writer.uservars import Prefix, UserVars, PhonologyTags
 from lingt.app import exceptions
 from lingt.app import lingex_structs
 from lingt.ui import dutil
@@ -57,7 +57,7 @@ class DlgPhonSettings:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = "LTp_"  # LinguisticTools Phonology variables
+        USERVAR_PREFIX = Prefix.PHONOLOGY
         self.userVars = UserVars(USERVAR_PREFIX, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.dlgCtrls = None
