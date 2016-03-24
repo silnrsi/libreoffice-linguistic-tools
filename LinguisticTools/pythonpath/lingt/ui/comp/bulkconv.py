@@ -78,28 +78,15 @@ class DlgBulkConversion:
             return
         self.dlg.getModel().Step = self.step  # STEP_FILES (the first step)
 
-        self.evtHandler = DlgEventHandler(self)
-        #step1Ctrls = None
-        #step2Ctrls = None
-        #try:
-        #    step1Ctrls = bulkconv_step1.Step1Controls(
-        #        self.unoObjs, self.dlg, self.evtHandler)
-        #    step2Ctrls = bulkconv_step2.Step2Controls(
-        #        self.unoObjs, self.dlg, self.evtHandler)
-        #except exceptions.LogicError as exc:
-        #    self.msgbox.displayExc(exc)
-        #    self.dlg.dispose()
-        #    return
-        logger.debug("Got controls.")
-        step1Form = bulkconv_step1.Step1Form(
-            self.unoObjs, step1Ctrls, self.userVars, self.msgbox, self.app,
-            self.gotoStep2)
-        step2Form = bulkconv_step2.Step2Form(
-            self.unoObjs, step2Ctrls, self.userVars, self.msgbox, self.app)
-        self.evtHandler.setCtrls(
-            step1Form, step2Form, step1Ctrls, step2Ctrls)
-        step1Form.loadData()
-        step2Form.loadData()
+        ctrl_getter = dutil.ControlGetter(dlg)
+        step1Form = FormStep1(ctrl_getter, self.app)
+        step1Form.start_working()
+        step2Form = FormStep2(ctrl_getter, self.app)
+        step2Form.start_working()
+        closingButtons = ClosingButtons(ctrl_getter, dlg)
+        closingButtons.start_working()
+        #step1Form.loadData()
+        #step2Form.loadData()
 
         ## Display the dialog
 
@@ -129,20 +116,6 @@ class DlgBulkConversion:
 class DlgEventHandler(XActionListener, XItemListener, XTextListener,
                       unohelper.Base):
     """Handles dialog events."""
-
-    def __init__(self, mainDlg):
-        self.mainDlg = mainDlg
-        self.step1Form = None
-        self.step2Form = None
-        #self.step1Ctrls = None
-        #self.step2Ctrls = None
-        self.handling_event = False
-
-    def setCtrls(self, step1Form, step2Form, step1Ctrls, step2Ctrls):
-        self.step1Form = step1Form
-        self.step2Form = step2Form
-        #self.step1Ctrls = step1Ctrls
-        #self.step2Ctrls = step2Ctrls
 
     @dutil.log_event_handler_exceptions
     @dutil.do_not_enter_if_handling_event
@@ -222,8 +195,6 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step1Form.removeFile()
         elif event.ActionCommand == "ChooseFolder":
             self.step1Form.showFolderPicker()
-        elif event.ActionCommand == "ScanFiles":
-            self.step1Form.scanFiles(self.step2Form)
         elif event.ActionCommand == "NextInput":
             self.step2Form.nextInputSample()
         elif event.ActionCommand == 'ResetFont':
@@ -234,16 +205,34 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.step2Form.pasteFont()
         elif event.ActionCommand == 'SelectConverter':
             self.step2Form.selectConverter()
-        elif event.ActionCommand == 'Cancel':
-            logger.debug("Action command was Cancel")
-            self.mainDlg.dlgClose()
+        else:
+            raise exceptions.LogicError(
+                "Unknown action command '%s'", event.ActionCommand)
+
+
+class ClosingButtons(evt_handler.ActionEventHandler):
+    def __init__(self, ctrl_getter, dlg):
+        btnScan = dutil.getControl(dlg, 'btnScan')
+        btnProcess = dutil.getControl(dlg, 'btnProcess')
+        btnCancel = dutil.getControl(dlg, 'btnCancel')
+
+    def add_listeners(self):
+        btnScan.setActionCommand('ScanFiles')
+        btnProcess.setActionCommand('Close_and_Convert')
+        btnCancel.setActionCommand('Cancel')
+
+    def handle_action_event(self, action_command):
+        if event.ActionCommand == "ScanFiles":
+            self.step1Form.scanFiles(self.step2Form)
         elif event.ActionCommand == 'Close_and_Convert':
             logger.debug("Closing and Converting...")
             self.mainDlg.convertOnClose = True
             self.mainDlg.dlgClose()
+        elif event.ActionCommand == 'Cancel':
+            logger.debug("Action command was Cancel")
+            self.mainDlg.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            self.raise_unknown_command(action_command)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

@@ -40,15 +40,6 @@ class Step2Controls:
         self.evtHandler = evtHandler
 
         ctrl_getter = dutil.ControlGetter(dlg)
-        #self.listFontsUsed = dutil.getControl(dlg, 'listFontsUsed')
-        #self.listFontsUsed = ctrl_getter.get('listFontsUsed')
-        self.listFontsUsed = ctrl_getter.get(ctrl_names.LIST_FONTS_USED)
-        #self.listFontsUsed = dlg.getControl(ctrl_names.LIST_FONTS_USED)
-        self.btnNextInput = dutil.getControl(dlg, 'btnNextInput')
-        self.lblInput = dutil.getControl(dlg, 'inputDisplay')
-        self.lblSampleNum = dutil.getControl(dlg, 'sampleNum')
-        self.lblConverted = dutil.getControl(dlg, 'convertedDisplay')
-        self.chkShowConverted = dutil.getControl(dlg, 'chkShowConverted')
         btnReset = dutil.getControl(dlg, 'btnReset')
         btnCopy = dutil.getControl(dlg, 'btnCopy')
         btnPaste = dutil.getControl(dlg, 'btnPaste')
@@ -74,7 +65,6 @@ class Step2Controls:
         self.comboCharStyle = dutil.getControl(dlg, 'comboCharStyle')
         self.optNoStyle = dutil.getControl(dlg, 'optNoStyle')
         self.chkVerify = dutil.getControl(dlg, 'chkVerify')
-        btnProcess = dutil.getControl(dlg, 'btnProcess')
         logger.debug("Got step 2 controls.")
 
         ## Command buttons
@@ -84,7 +74,6 @@ class Step2Controls:
         btnCopy.setActionCommand('CopyFont')
         btnPaste.setActionCommand('PasteFont')
         btnSelectConv.setActionCommand('SelectConverter')
-        btnProcess.setActionCommand('Close_and_Convert')
         for ctrl in (
                 btnReset, btnCopy, btnPaste, self.btnNextInput, btnSelectConv,
                 btnProcess):
@@ -104,9 +93,6 @@ class Step2Controls:
         param paraStyleDispNames: list of paragraph style display names
         """
         logger.debug(util.funcName('begin'))
-        #self.chkShowConverted.setState(
-        #    userVars.getInt('DisplayConverted'))
-        self.chkShowConverted.setState(False)
         self.chkJoinFontTypes.setState(userVars.getInt('JoinFontTypes'))
         self.chkJoinSize.setState(userVars.getInt('JoinSize'))
         self.chkJoinStyles.setState(userVars.getInt('JoinStyles'))
@@ -165,7 +151,6 @@ class Step2Form:
         self.charStyleNames = []
         self.copiedSettings = None
         self.selectedIndex = -1  # selected FontItem
-        self.samples = Samples(self.app.convPool)
 
     def loadData(self):
         stylesList = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
@@ -372,20 +357,6 @@ class Step2Form:
         self.samples.set_fontItem(fontItem)
         self.nextInputSample()
 
-    def grabSelectedItem(self):
-        """Sets self.selectedIndex.
-        :returns: selected found font item
-        """
-        try:
-            self.selectedIndex = dutil.get_selected_index(
-                self.stepCtrls.listFontsUsed, "a file")
-        except exceptions.ChoiceProblem as exc:
-            self.msgbox.displayExc(exc)
-            self.selectedIndex = -1
-            return None
-        fontItem = self.app.fontItemList[self.selectedIndex]
-        return fontItem
-
     def updateFontsList(self):
         dutil.fill_list_ctrl(
             self.stepCtrls.listFontsUsed,
@@ -398,23 +369,6 @@ class Step2Form:
         self.stepCtrls.comboFontName.setText("")
         self.stepCtrls.comboParaStyle.setText("")
         self.stepCtrls.comboCharStyle.setText("")
-
-    def fill_found_font_info(self, fontItem):
-        """Fill form with information about the font found.
-        These values are read-only, for information.
-        """
-        foundFontNames = ""
-        for title, fontName in (
-                ("Standard", fontItem.nameStandard),
-                ("Complex", fontItem.nameComplex),
-                ("Asian", fontItem.nameAsian)):
-            foundFontNames += "%s:  %s\n" % (
-                theLocale.getText(title), fontName)
-        self.stepCtrls.foundFonts.setText(foundFontNames)
-        if fontItem.size.isSpecified():
-            fontItem.size.changeCtrlVal(self.stepCtrls.foundFontSize)
-        else:
-            self.stepCtrls.foundFontSize.setText("(Default)")
 
     def fill_for_change(self, fontChange):
         """Fill the form using the values specified in fontChange."""
@@ -448,31 +402,6 @@ class Step2Form:
         dutil.selectRadio(
             self.stepCtrls.radiosStyleType, fontItem.styleType)
 
-    def nextInputSample(self):
-        if self.samples.inputData:
-            if not self.samples.has_more():
-                self.stepCtrls.btnNextInput.getModel().Enabled = False
-                return
-            inputSampleText = self.samples.gotoNext()
-            self.stepCtrls.btnNextInput.getModel().Enabled = (
-                self.samples.has_more())
-            self.stepCtrls.lblInput.setText(inputSampleText)
-            self.stepCtrls.lblSampleNum.setText(
-                "%d / %d" % (
-                    self.samples.sampleNum(),
-                    len(self.samples.inputData)))
-            convertedVal = "(None)"
-            if self.stepCtrls.chkShowConverted.getState() == 1:
-                try:
-                    convertedVal = self.samples.get_converted()
-                except exceptions.MessageError as exc:
-                    self.msgbox.displayExc(exc)
-            self.stepCtrls.lblConverted.setText(convertedVal)
-        else:
-            self.stepCtrls.btnNextInput.getModel().Enabled = False
-            self.stepCtrls.lblInput.setText("(None)")
-            self.stepCtrls.lblSampleNum.setText("0 / 0")
-
     def storeUserVars(self):
         """Store settings in user vars."""
         logger.debug(util.funcName('begin'))
@@ -505,16 +434,29 @@ class Step2Form:
 
 
 
-class ListFontsUsed(evt_handler.ItemEventHandler):
+class FormStep2:
+    """Create control classes and load values."""
 
+    def __init__(self, ctrl_getter, app):
+        listFontsUsed = ListFontsUsed(ctrl_getter, app)
+        sampleControls = SampleControls(ctrl_getter, app)
+        self.controls_to_start = [
+            listFontsUsed, sampleControls]
+        foundFontInfo = FoundFontInfo(ctrl_getter)
+
+    def start_working(self):
+        for control in self.controls_to_start:
+            control.start_working()
+
+
+class ListFontsUsed(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
         super(ListFontsUsed, self).__init__()
         self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
         self.msgbox = MessageBox(app.unoObjs)
         self.selected_index = -1  # selected FontItem
 
-    def load_values(self):
-        """Load initial values, then add listeners."""
+    def add_listeners(self):
         self.listFontsUsed.addItemListener(self)
 
     def handle_item_event(self, src):
@@ -534,5 +476,82 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
             return None
         fontItem = self.app.fontItemList[self.selected_index]
         return fontItem
+
+
+class SampleControls(evt_handler.ActionEventHandler,
+                     evt_handler.ItemEventHandler):
+    """Controls to display sample input and converted text."""
+
+    def __init__(self, ctrl_getter, app):
+        super(SampleControls, self).__init__()
+        self.lblInput = ctrl_getter.get(_dlgdef.INPUT_DISPLAY)
+        self.lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
+        self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
+        self.btnNextInput = ctrl_getter.get(_dlgdef.BTN_NEXT_INPUT)
+        self.chkShowConverted = ctrl_getter.get(_dlgdef.CHK_SHOW_CONVERTED)
+        self.samples = Samples(self.app.convPool)
+        self.msgbox = MessageBox(app.unoObjs)
+
+    def load_values(self):
+        #self.chkShowConverted.setState(
+        #    userVars.getInt('DisplayConverted'))
+        self.chkShowConverted.setState(False)
+
+    def add_listeners(self):
+        self.btnNextInput.addActionListener(self)
+        self.chkShowConverted.addItemListener(self)
+
+    def handle_action_event(self, action_command):
+        if event.ActionCommand == "NextInput":
+            self.nextInputSample()
+        else:
+            self.raise_unknown_command(action_command)
+
+    def nextInputSample(self):
+        if self.samples.inputData:
+            if not self.samples.has_more():
+                self.btnNextInput.getModel().Enabled = False
+                return
+            inputSampleText = self.samples.gotoNext()
+            self.btnNextInput.getModel().Enabled = (
+                self.samples.has_more())
+            self.lblInput.setText(inputSampleText)
+            self.lblSampleNum.setText(
+                "%d / %d" % (
+                    self.samples.sampleNum(),
+                    len(self.samples.inputData)))
+            convertedVal = "(None)"
+            if self.chkShowConverted.getState() == 1:
+                try:
+                    convertedVal = self.samples.get_converted()
+                except exceptions.MessageError as exc:
+                    self.msgbox.displayExc(exc)
+            self.lblConverted.setText(convertedVal)
+        else:
+            self.btnNextInput.getModel().Enabled = False
+            self.lblInput.setText("(None)")
+            self.lblSampleNum.setText("0 / 0")
+
+
+class FoundFontInfo:
+    """Information about the font found.  These values are read-only."""
+
+    def __init__(self, ctrl_getter):
+        self.foundFonts = ctrl_getter.get(_dlgdef.FOUND_FONTS)
+        self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
+
+    def fill_found_font_info(self, fontItem):
+        foundFontNames = ""
+        for title, fontName in (
+                ("Standard", fontItem.nameStandard),
+                ("Complex", fontItem.nameComplex),
+                ("Asian", fontItem.nameAsian)):
+            foundFontNames += "%s:  %s\n" % (
+                theLocale.getText(title), fontName)
+        self.foundFonts.setText(foundFontNames)
+        if fontItem.size.isSpecified():
+            fontItem.size.changeCtrlVal(self.foundFontSize)
+        else:
+            self.foundFontSize.setText("(Default)")
 
 

@@ -37,16 +37,12 @@ class Step1Controls:
         btnFileAdd = dutil.getControl(dlg, 'btnAdd')
         btnFileRemove = dutil.getControl(dlg, 'btnRemove')
         btnOutputTo = dutil.getControl(dlg, 'btnOutputTo')
-        btnScan = dutil.getControl(dlg, 'btnScan')
-        btnCancel = dutil.getControl(dlg, 'btnCancel')
         logger.debug("Got step 1 controls.")
 
         btnAddCurrent.setActionCommand('AddCurrentDoc')
         btnFileAdd.setActionCommand('FileAdd')
         btnFileRemove.setActionCommand('FileRemove')
         btnOutputTo.setActionCommand('ChooseFolder')
-        btnScan.setActionCommand('ScanFiles')
-        btnCancel.setActionCommand('Cancel')
         for ctrl in (
                 btnFileAdd, btnAddCurrent, btnFileRemove, btnOutputTo,
                 btnScan, btnCancel):

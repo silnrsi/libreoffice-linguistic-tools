@@ -1,6 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created March 23 2016 by Jim Kornelsen
+#
+# 24-Mar-16 JDK  Base class methods to load values and add listeners.
 
 """
 Abstract base classes to handle UNO dialog events.
@@ -34,6 +36,19 @@ class EventHandler(unohelper.Base):
         super(EventHandler, self).__init__()
         self.handling_event = False
 
+    def start_working(self):
+        """This method was not designed to be overridden."""
+        self.load_values()
+        self.add_listeners()
+
+    def load_values(self):
+        """Load initial values.  Implement if needed."""
+        pass
+
+    def add_listeners(self):
+        """Add listeners.  Implement if needed."""
+        pass
+
 
 class ActionEventHandler(XActionListener, EventHandler):
     """Abstract base class for handling action events such as button
@@ -56,14 +71,14 @@ class ActionEventHandler(XActionListener, EventHandler):
     def handle_action_event(self, action_command):
         raise NotImplementedError()
 
-    def raiseUnknownCommand(self, event):
+    def raise_unknown_command(self, action_command):
         raise exceptions.LogicError(
-            "Unknown action command '%s'", event.ActionCommand)
+            "Unknown action command '%s'", action_command)
 
 
 class ItemEventHandler(XItemListener, EventHandler):
-    """Abstract base class for handling item events such as list control
-    or radio button changes.
+    """Abstract base class for handling item events including as list control,
+    check box and radio button changes.
     """
 
     def itemStateChanged(self, itemEvent):
