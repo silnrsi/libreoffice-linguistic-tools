@@ -66,7 +66,6 @@ class DlgBulkConversion:
         self.dlg = None
         self.step = self.STEP_FILES
         self.convertOnClose = False
-        self.evtHandler = None
         self.dlgClose = None
 
     def showDlg(self):
@@ -85,8 +84,6 @@ class DlgBulkConversion:
         step2Form.start_working()
         closingButtons = ClosingButtons(ctrl_getter, dlg)
         closingButtons.start_working()
-        #step1Form.loadData()
-        #step2Form.loadData()
 
         ## Display the dialog
 
@@ -113,108 +110,16 @@ class DlgBulkConversion:
         self.dlg.getModel().Step = self.step  # change the dialog
 
 
-class DlgEventHandler(XActionListener, XItemListener, XTextListener,
-                      unohelper.Base):
-    """Handles dialog events."""
-
-    @dutil.log_event_handler_exceptions
-    @dutil.do_not_enter_if_handling_event
-    def itemStateChanged(self, itemEvent):
-        """XItemListener event handler.
-        For list controls or enabling and disabling.
-        """
-        logger.debug(util.funcName())
-        src = itemEvent.Source
-        #if dutil.sameName(src, self.step2Ctrls.listFontsUsed):
-        if dutil.sameName(src, _dlgdef.LIST_FONTS_USED):
-            self.step2Form.fill_for_selected_font()
-        elif dutil.sameName(src, self.step2Ctrls.comboFontName):
-            self.step2Ctrls.optNoStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-        elif dutil.sameName(src, self.step2Ctrls.comboParaStyle):
-            self.step2Ctrls.optParaStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.optParaStyle.getState() == 1:
-                self.step2Form.selectFontFromStyle(src, 'Paragraph')
-        elif dutil.sameName(src, self.step2Ctrls.comboCharStyle):
-            self.step2Ctrls.optCharStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.optCharStyle.getState() == 1:
-                self.step2Form.selectFontFromStyle(src, 'Character')
-        elif dutil.sameName(src, self.step2Ctrls.optParaStyle):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.comboParaStyle.getText():
-                self.step2Form.selectFontFromStyle(src, 'Paragraph')
-        elif dutil.sameName(src, self.step2Ctrls.optCharStyle):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.comboCharStyle.getText():
-                self.step2Form.selectFontFromStyle(src, 'Character')
-        elif dutil.sameName(src, self.step2Ctrls.optNoStyle):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-        elif dutil.sameName(src, self.step2Ctrls.chkShowConverted):
-            if self.step2Form.samples.sampleIndex > -1:
-                # Show the same sample again.
-                self.step2Form.samples.sampleIndex -= 1
-            self.step2Form.nextInputSample()
-        elif dutil.sameName(src, self.step2Ctrls.chkReverse):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            self.step2Form.fill_samples_for_selected_font()
-        elif (dutil.sameName(src, self.step2Ctrls.optFontStandard)
-              or dutil.sameName(src, self.step2Ctrls.optFontComplex)
-              or dutil.sameName(src, self.step2Ctrls.optFontAsian)):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-        elif (dutil.sameName(src, self.step2Ctrls.chkJoinFontTypes)
-              or dutil.sameName(src, self.step2Ctrls.chkJoinSize)
-              or dutil.sameName(src, self.step2Ctrls.chkJoinStyles)):
-            self.step2Form.fill_for_chkJoin()
-        else:
-            logger.warning("unexpected source %s", src.Model.Name)
-
-    @dutil.log_event_handler_exceptions
-    @dutil.do_not_enter_if_handling_event
-    def textChanged(self, textEvent):
-        """XTextListener event handler."""
-        logger.debug(util.funcName())
-        src = textEvent.Source
-        if dutil.sameName(src, self.step2Ctrls.txtFontSize):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            self.step2Ctrls.enableDisable(self.step2Form)
-        else:
-            logger.warning("unexpected source %s", src.Model.Name)
-
-    @dutil.log_event_handler_exceptions
-    @dutil.remember_handling_event
-    def actionPerformed(self, event):
-        """XActionListener event handler.  Handle which button was pressed."""
-        logger.debug("%s %s", util.funcName(), event.ActionCommand)
-        if event.ActionCommand == "AddCurrentDoc":
-            self.step1Form.addCurrentDoc()
-        elif event.ActionCommand == "FileAdd":
-            self.step1Form.addFile()
-        elif event.ActionCommand == "FileRemove":
-            self.step1Form.removeFile()
-        elif event.ActionCommand == "ChooseFolder":
-            self.step1Form.showFolderPicker()
-        elif event.ActionCommand == "NextInput":
-            self.step2Form.nextInputSample()
-        elif event.ActionCommand == 'ResetFont':
-            self.step2Form.resetFont()
-        elif event.ActionCommand == 'CopyFont':
-            self.step2Form.copyFont()
-        elif event.ActionCommand == 'PasteFont':
-            self.step2Form.pasteFont()
-        elif event.ActionCommand == 'SelectConverter':
-            self.step2Form.selectConverter()
-        else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
-
-
-class ClosingButtons(evt_handler.ActionEventHandler):
+class ClosingButtons(evt_handler.ActionEventHandler,
+                     evt_hander.ItemEventHandler):
     def __init__(self, ctrl_getter, dlg):
         btnScan = dutil.getControl(dlg, 'btnScan')
         btnProcess = dutil.getControl(dlg, 'btnProcess')
+        self.chkVerify = dutil.getControl(dlg, 'chkVerify')
         btnCancel = dutil.getControl(dlg, 'btnCancel')
+
+    def load_values(self):
+        self.chkVerify.setState(userVars.getInt('AskEachChange'))
 
     def add_listeners(self):
         btnScan.setActionCommand('ScanFiles')
@@ -233,6 +138,9 @@ class ClosingButtons(evt_handler.ActionEventHandler):
             self.mainDlg.dlgClose()
         else:
             self.raise_unknown_command(action_command)
+
+    def handle_item_event(self, dummy_src):
+        pass
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

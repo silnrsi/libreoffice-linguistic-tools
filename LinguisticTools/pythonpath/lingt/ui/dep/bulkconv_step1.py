@@ -23,6 +23,15 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step1")
 
+        if event.ActionCommand == "AddCurrentDoc":
+            self.step1Form.addCurrentDoc()
+        elif event.ActionCommand == "FileAdd":
+            self.step1Form.addFile()
+        elif event.ActionCommand == "FileRemove":
+            self.step1Form.removeFile()
+        elif event.ActionCommand == "ChooseFolder":
+            self.step1Form.showFolderPicker()
+
 class Step1Controls:
     """Store dialog controls for page step 1."""
 
