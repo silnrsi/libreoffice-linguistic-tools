@@ -159,6 +159,7 @@ class FontItemList:
         self.groupSizes = True
         self.groupStyles = True
         self.groupFontTypes = True
+        self.selected_index = -1  # selected FontItem
 
     def get_grouped_list(self):
         """Returns a list of new FontItem objects,
@@ -168,7 +169,8 @@ class FontItemList:
         # Merge data, sorting data by fontItem.inputDataOrder.
         return sorted(self.items)
 
-    def update_item(self, item_to_update, changed_values, attrs_changed):
+    #def update_item(self, item_to_update, changed_values, attrs_changed):
+    def update_item(self, item_to_update, event_handler):
         """When controls get changed,
         update all FontItem objects in the selected group.
 
@@ -191,6 +193,11 @@ class FontItemList:
             if item == item_to_update:
                 matching_items.append(item)
         return matching_items
+
+    def selected_item(self):
+        if self.selected_index == -1:
+            return None
+        return self[self.selected_index]
 
     def __getitem__(self, index):
         """For random access."""

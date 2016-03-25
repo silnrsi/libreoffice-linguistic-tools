@@ -3,6 +3,7 @@
 # This file created March 23 2016 by Jim Kornelsen
 #
 # 24-Mar-16 JDK  Base class methods to load values and add listeners.
+# 25-Mar-16 JDK  Make handling_event static across all listeners.
 
 """
 Abstract base classes to handle UNO dialog events.
@@ -26,6 +27,8 @@ logger = logging.getLogger("lingt.ui.evt_handler")
 class EventHandler(unohelper.Base):
     """Abstract base class for handling events."""
 
+    handling_event = False
+
     def __init__(self):
         if (self.__class__ is EventHandler or
                 self.__class__ is ActionEventHandler or
@@ -34,10 +37,13 @@ class EventHandler(unohelper.Base):
             # The base classes should not be instantiated.
             raise NotImplementedError
         super(EventHandler, self).__init__()
-        self.handling_event = False
+        self.last_source = None  # control of last event
 
     def start_working(self):
-        """This method was not designed to be overridden."""
+        """Add listeners last because they could cause side effects during
+        load_values().
+        This method was not designed to be overridden.
+        """
         self.load_values()
         self.add_listeners()
 
@@ -49,6 +55,9 @@ class EventHandler(unohelper.Base):
         """Add listeners.  Implement if needed."""
         pass
 
+    def warn_unexpected_source(self, src):
+        logger.warning("unexpected source %s", src.Model.Name)
+
 
 class ActionEventHandler(XActionListener, EventHandler):
     """Abstract base class for handling action events such as button
@@ -57,8 +66,9 @@ class ActionEventHandler(XActionListener, EventHandler):
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
-        self.handling_event = True
+        EventHandler.handling_event = True
         try:
+            self.last_source = event.Source
             self.handle_action_event(event.ActionCommand)
         except:
             logger.exception(exc)
@@ -66,7 +76,7 @@ class ActionEventHandler(XActionListener, EventHandler):
             # probably have no effect, at least during runtime.
             raise
         finally:
-            self.handling_event = False
+            EventHandler.handling_event = False
 
     def handle_action_event(self, action_command):
         raise NotImplementedError()
@@ -81,16 +91,17 @@ class ItemEventHandler(XItemListener, EventHandler):
     check box and radio button changes.
     """
 
-    def itemStateChanged(self, itemEvent):
+    def itemStateChanged(self, event):
         """XItemListener event handler.
         For list controls or enabling and disabling.
         """
         logger.debug(util.funcName())
-        if self.handling_event:
+        if EventHandler.handling_event:
             logger.debug("An event is already being handled.")
             return
         try:
-            self.handle_item_event(itemEvent.Source)
+            self.last_source = event.Source
+            self.handle_item_event(event.Source)
         except:
             logger.exception(exc)
             # Re-raising is proper coding practice, although it will
@@ -106,14 +117,15 @@ class TextEventHandler(XTextListener, EventHandler):
     or radio button changes.
     """
 
-    def textStateChanged(self, textEvent):
+    def textStateChanged(self, event):
         """XTextListener event handler.  For text controls."""
         logger.debug(util.funcName())
-        if self.handling_event:
+        if EventHandler.handling_event:
             logger.debug("An event is already being handled.")
             return
         try:
-            self.handle_text_event(textEvent.Source)
+            self.last_source = event.Source
+            self.handle_text_event(event.Source)
         except:
             logger.exception(exc)
             # Re-raising is proper coding practice, although it will

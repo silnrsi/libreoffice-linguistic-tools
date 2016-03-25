@@ -7,12 +7,12 @@
 # 19-Feb-16 JDK  Add checkboxes to separate font type, size and style.
 # 24-Feb-16 JDK  Use a single foundFonts label instead of three labels.
 # 07-Mar-16 JDK  Handle chkJoin changes.
+# 25-Mar-16 JDK  Split up into separate classes for each control.
 
 """
 Bulk Conversion dialog step 2.
 
 This module exports:
-    Step2Controls()
     Step2Form()
 """
 import copy
@@ -41,10 +41,6 @@ class Step2Form_Old:
         self.msgbox = msgbox
         self.app = app
 
-        self.styleFonts = styles.StyleFonts(self.unoObjs, self.userVars)
-        self.copiedSettings = None
-        self.selectedIndex = -1  # selected FontItem
-
     def getFontFormResults(self, updateFontItem=True, ctrl_changed=None):
         """Get form results for the currently selected font.
         Sets currently selected FontItem to the resulting FontChange.
@@ -62,25 +58,6 @@ class Step2Form_Old:
         #    self.stepCtrls.chkReverse.getState() == 0)
         #if dutil.sameName(ctrl_changed, self.stepCtrls.chkReverse):
         #    attrs_changed = ['converter.forward']
-
-        ## Font
-
-        fontChange.name = self.stepCtrls.comboFontName.getText()
-        if fontChange.name == "(None)":
-            fontChange.name = None
-        if dutil.sameName(ctrl_changed, self.stepCtrls.comboFontName):
-            attrs_changed = ['name']
-        fontChange.size = FontSize()
-        fontChange.size.loadCtrl(self.stepCtrls.txtFontSize)
-        fontChange.size.changeCtrlProp(self.stepCtrls.lblConverted)
-        if dutil.sameName(ctrl_changed, self.stepCtrls.txtFontSize):
-            attrs_changed = ['size']
-        fontChange.fontType = dutil.whichSelected(
-            self.stepCtrls.radiosFontType)
-        if (dutil.sameName(ctrl_changed, self.stepCtrls.optFontStandard)
-                or dutil.sameName(ctrl_changed, self.stepCtrls.optFontComplex)
-                or dutil.sameName(ctrl_changed, self.stepCtrls.optFontAsian)):
-            attrs_changed = ['fontType', 'name']
 
         ## Radio buttons and the corresponding listbox selection
 
@@ -118,27 +95,6 @@ class Step2Form_Old:
         logger.debug(util.funcName('end'))
         return fontChange
 
-    def fill_for_selected_font(self):
-        fontItem = self.grabSelectedItem()
-        if not fontItem:
-            return
-        self.fill_for_font(fontItem)
-
-    def fill_samples_for_selected_font(self):
-        fontItem = self.grabSelectedItem()
-        if not fontItem:
-            return
-        self.fill_samples(fontItem)
-
-    def fill_for_chkJoin(self):
-        self.app.fontItemList.groupFontTypes = bool(
-            self.stepCtrls.chkJoinFontTypes.getState())
-        self.app.fontItemList.groupSizes = bool(
-            self.stepCtrls.chkJoinSize.getState())
-        self.app.fontItemList.groupStyles = bool(
-            self.stepCtrls.chkJoinStyles.getState())
-        self.updateFontsList()
-
     def fill_for_font(self, fontItem):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
@@ -151,27 +107,6 @@ class Step2Form_Old:
         self.stepCtrls.enableDisable(self)
         self.fill_samples(fontItem)
         logger.debug(util.funcName('end'))
-
-    def fill_samples(self, fontItem):
-        """Called when converter changes."""
-        if fontItem.change:
-            converter = fontItem.change.converter
-            self.samples.last_settings[converter.convName] = converter
-        self.samples.set_fontItem(fontItem)
-        self.nextInputSample()
-
-    def updateFontsList(self):
-        dutil.fill_list_ctrl(
-            self.stepCtrls.listFontsUsed,
-            [str(fontItem) for fontItem in self.app.fontItemList])
-        if self.selectedIndex >= 0:
-            dutil.select_index(
-                self.stepCtrls.listFontsUsed, self.selectedIndex)
-
-    def clear_combo_boxes(self):
-        self.stepCtrls.comboFontName.setText("")
-        self.stepCtrls.comboParaStyle.setText("")
-        self.stepCtrls.comboCharStyle.setText("")
 
     def fill_for_change(self, fontChange):
         """Fill the form using the values specified in fontChange."""
@@ -198,6 +133,22 @@ class Step2Form_Old:
             self.stepCtrls.radiosFontType, fontItem.fontType)
         dutil.selectRadio(
             self.stepCtrls.radiosStyleType, fontItem.styleType)
+
+
+class FormStep2:
+    """Create control classes and load values."""
+
+    def __init__(self, ctrl_getter, app):
+        listFontsUsed = ListFontsUsed(ctrl_getter, app)
+        sampleControls = SampleControls(ctrl_getter, app)
+        = ConverterControls(ctrl_getter)
+        self.event_handlers = [
+            listFontsUsed, sampleControls]
+        foundFontInfo = FoundFontInfo(ctrl_getter)
+
+    def start_working(self):
+        for event_handler in self.event_handlers:
+            event_handler.start_working()
 
     def storeUserVars(self):
         """Store settings in user vars."""
@@ -229,56 +180,91 @@ class Step2Form_Old:
         logger.debug(util.funcName('end'))
 
 
-
-
-class FormStep2:
-    """Create control classes and load values."""
+class ControlHandler:
+    """Abstract base class to handle reading and writing of bulk conversion
+    controls.
+    Inherit it alongside one of the evt_handler.EventHandler subclasses.
+    """
 
     def __init__(self, ctrl_getter, app):
-        listFontsUsed = ListFontsUsed(ctrl_getter, app)
-        sampleControls = SampleControls(ctrl_getter, app)
-        = ConverterControls(ctrl_getter)
-        self.event_handlers = [
-            listFontsUsed, sampleControls]
-        foundFontInfo = FoundFontInfo(ctrl_getter)
+        if self.__class__ is ControlHandler:
+            # The base classes should not be instantiated.
+            raise NotImplementedError
+        self.ctrl_getter = ctrl_getter
+        self.app = app
 
-    def start_working(self):
-        for event_handler in self.event_handlers:
-            event_handler.start_working()
+    def handle_action_event(self, src):
+        self.app.update_list(self)
+
+    def handle_item_event(self, src):
+        self.app.update_list(self)
+
+    def handle_text_event(self, src):
+        self.app.update_list(self)
+
+    def read_if_changed(self, fontChange):
+        if not self.last_source:
+            return
+        self.read()
+        self.last_source = None
+
+    def read(self, fontChange):
+        """Read form values and modify fontChange accordingly."""
+        raise NotImplementedError()
+
+    def setval(self, fontItem):
+        """Set form values based on the fontItem values."""
+        raise NotImplementedError()
 
 
 class ListFontsUsed(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
+        evt_hander.ItemEventHandler.__init__(self)
         super(ListFontsUsed, self).__init__()
         self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
         self.msgbox = MessageBox(app.unoObjs)
-        self.selected_index = -1  # selected FontItem
+        self.app = app
 
     def add_listeners(self):
         self.listFontsUsed.addItemListener(self)
 
     def handle_item_event(self, src):
         #if dutil.sameName(src, _dlgdef.LIST_FONTS_USED):
-        self.step2Form.fill_for_selected_font()
+        self.fill_for_selected_font()
 
     def grab_selected_item(self):
-        """Sets self.selected_index.
+        """Sets self.app.selected_index.
         :returns: selected found font item
         """
         try:
-            self.selected_index = dutil.get_selected_index(
+            self.app.selected_index = dutil.get_selected_index(
                 self.listFontsUsed, "a file")
         except exceptions.ChoiceProblem as exc:
             self.msgbox.displayExc(exc)
-            self.selected_index = -1
+            self.app.selected_index = -1
             return None
-        fontItem = self.app.fontItemList[self.selected_index]
-        return fontItem
+        return self.app.fontItemList.selected_item()
+
+    def fill_for_selected_font(self):
+        fontItem = self.grabSelectedItem()
+        if not fontItem:
+            return
+        self.fill_for_font(fontItem)
+
+    def updateFontsList(self):
+        dutil.fill_list_ctrl(
+            self.listFontsUsed,
+            [str(fontItem) for fontItem in self.app.fontItemList])
+        if self.app.selected_index >= 0:
+            dutil.select_index(
+                self.listFontsUsed, self.app.selected_index)
 
 
 class ConverterControls(evt_handler.ActionEventHandler,
                         evt_handler.ItemEventHandler):
-    def __init__(self, ctrl_getter):
+    def __init__(self, ctrl_getter, app):
+        evt_hander.ActionEventHandler.__init__(self)
+        evt_hander.ItemEventHandler.__init__(self)
         self.txtConvName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
         self.chkReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
         self.btnSelectConv = ctrl_getter.get(_dlgdef.BTN_CHOOSE_CONV)
@@ -302,7 +288,7 @@ class ConverterControls(evt_handler.ActionEventHandler,
     def selectConverter(self):
         logger.debug(util.funcName('begin'))
         fontItem = self.grabSelectedItem()
-        if self.selectedIndex == -1:
+        if self.selected_index == -1:
             return
         conv_settings = None
         if fontItem.change:
@@ -344,7 +330,8 @@ class SampleControls(evt_handler.ActionEventHandler,
     """Controls to display sample input and converted text."""
 
     def __init__(self, ctrl_getter, app):
-        super(SampleControls, self).__init__()
+        evt_hander.ActionEventHandler.__init__(self)
+        evt_hander.ItemEventHandler.__init__(self)
         self.lblInput = ctrl_getter.get(_dlgdef.INPUT_DISPLAY)
         self.lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
         self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
@@ -404,15 +391,31 @@ class SampleControls(evt_handler.ActionEventHandler,
             self.lblInput.setText("(None)")
             self.lblSampleNum.setText("0 / 0")
 
+    def fill_samples_for_selected_font(self):
+        fontItem = self.grabSelectedItem()
+        if not fontItem:
+            return
+        self.fill_samples(fontItem)
+
+    def fill_samples(self, fontItem):
+        """Called when converter changes."""
+        if fontItem.change:
+            converter = fontItem.change.converter
+            self.samples.last_settings[converter.convName] = converter
+        self.samples.set_fontItem(fontItem)
+        self.nextInputSample()
+
 
 class ClipboardButtons(evt_handler.ActionEventHandler):
     """This does not actually use the system clipboard, but it implements
     copy/paste functionality.
     """
     def __init__(self, ctrl_getter, app):
+        evt_hander.ActionEventHandler.__init__(self)
         self.btnReset = dutil.getControl(dlg, 'btnReset')
         self.btnCopy = dutil.getControl(dlg, 'btnCopy')
         self.btnPaste = dutil.getControl(dlg, 'btnPaste')
+        self.copiedSettings = None
 
     def add_listeners(self):
         self.btnReset.setActionCommand('ResetFont')
@@ -433,9 +436,9 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
 
     def resetFont(self):
         self.grabSelectedItem()
-        if self.selectedIndex == -1:
+        if self.selected_index == -1:
             return
-        self.app.fontItemList[self.selectedIndex].change = None
+        self.app.fontItemList[self.selected_index].change = None
         self.updateFontsList()
         self.fill_for_selected_font()
 
@@ -449,7 +452,7 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
             self.msgbox.display("First copy font settings.")
             return
         fontItem = self.grabSelectedItem()
-        if self.selectedIndex == -1:
+        if self.selected_index == -1:
             return
         attrs_to_change = [
             'converter.convName', 'converter.forward',
@@ -465,6 +468,7 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
     """Checkboxes that join or split the list."""
 
     def __init__(self, ctrl_getter, app):
+        evt_hander.ItemEventHandler.__init__(self)
         self.chkJoinFontTypes = dutil.getControl(dlg, 'chkJoinFontTypes')
         self.chkJoinSize = dutil.getControl(dlg, 'chkJoinSize')
         self.chkJoinStyles = dutil.getControl(dlg, 'chkJoinStyles')
@@ -485,11 +489,20 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
               or dutil.sameName(src, self.step2Ctrls.chkJoinStyles)):
             self.step2Form.fill_for_chkJoin()
 
+    def fill_for_chkJoin(self):
+        self.app.fontItemList.groupFontTypes = bool(
+            self.stepCtrls.chkJoinFontTypes.getState())
+        self.app.fontItemList.groupSizes = bool(
+            self.stepCtrls.chkJoinSize.getState())
+        self.app.fontItemList.groupStyles = bool(
+            self.stepCtrls.chkJoinStyles.getState())
+        self.updateFontsList()
+
 
 class FoundFontInfo:
     """Information about the font found.  These values are read-only."""
 
-    def __init__(self, ctrl_getter):
+    def __init__(self, ctrl_getter, app):
         self.foundFonts = ctrl_getter.get(_dlgdef.FOUND_FONTS)
         self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
 
@@ -508,51 +521,111 @@ class FoundFontInfo:
             self.foundFontSize.setText("(Default)")
 
 
-class FontSettings(evt_handler.ItemEventHandler,
-                   evt_handler.TextEventListener):
-    def __init__(self, ctrl_getter):
+class FontNameHandler(ControlHandler, evt_handler.ItemEventHandler):
+    def __init__(self, ctrl_getter, app):
+        ControlHandler.__init__(self, ctrl_getter, app)
+        evt_hander.ItemEventHandler.__init__(self)
         self.comboFontName = ctrl_getter.get(_dlgdef.COMBO_FONT_NAME)
-        self.optFontStandard = ctrl_getter.get(_dlgdef.OPT_FONT_STANDARD)
-        self.optFontComplex = ctrl_getter.get(_dlgdef.OPT_FONT_COMPLEX)
-        self.optFontAsian = ctrl_getter.get(_dlgdef.OPT_FONT_ASIAN)
-        self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
-        self.radiosFontType = [
-            dutil.RadioTuple(self.optFontStandard, 'Western'),
-            dutil.RadioTuple(self.optFontComplex, 'Complex'),
-            dutil.RadioTuple(self.optFontAsian, 'Asian')]
 
     def load_values(self):
-        fontNames = styles.getListOfFonts(self.unoObjs, addBlank=True)
+        fontNames = styles.getListOfFonts(self.app.unoObjs, addBlank=True)
         dutil.fill_list_ctrl(self.comboFontName, fontNames)
 
     def add_listeners(self):
         self.comboFontName.addItemListener(self.evtHandler)
-        for ctrl in (
-                self.optFontStandard, self.optFontComplex, self.optFontAsian):
-            ctrl.addItemListener(self)
-        self.txtFontSize.addTextListener(self)
 
     def handle_item_event(self, src):
-        if dutil.sameName(src, self.step2Ctrls.comboFontName):
-            self.step2Ctrls.optNoStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-        elif (dutil.sameName(src, self.step2Ctrls.optFontStandard)
-              or dutil.sameName(src, self.step2Ctrls.optFontComplex)
-              or dutil.sameName(src, self.step2Ctrls.optFontAsian)):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-        else:
-            self.warn_unexpected_source(src)
+        self.app.update_list(self)
+        fontItem = FontItem()
+        self.read(fontItem)
+        self.change_control_prop(fontItem)
 
-    def handle_text_event(self, src):
-        if dutil.sameName(src, self.step2Ctrls.txtFontSize):
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            self.step2Ctrls.enableDisable(self.step2Form)
+    def read_if_changed(self, fontChange):
+        if not self.last_source:
+            return
+        style_type_handler = StyleTypeHandler(self.ctrl_getter, self.app)
+        fontChange.styleType = 'CustomFormatting'
+        style_type_handler.setval(fontChange)
+        self.read()
+        self.last_source = None
+
+    def read(self, fontChange):
+        fontChange.name = self.comboFontName.getText()
+        if fontChange.name == "(None)":
+            fontChange.name = None
+
+    def setval(self, fontItem):
+        if fontChange.name and fontChange.name != "(None)":
+            self.comboFontName.setText(fontChange.name)
         else:
-            self.warn_unexpected_source(src)
+            self.clear_combo_box()
+
+    def clear_combo_box(self):
+        self.stepCtrls.comboFontName.setText("")
+
+    def change_control_prop(self, fontItem):
+        """See also lingt.access.writer.textchanges.changeFont()."""
+        lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
+        lblConverted.getModel().FontName = fontItem.name
+        lblConverted.getModel().FontNameAsian = fontItem.name
+
+
+class FontTypeHandler(ControlHandler, evt_handler.ItemEventHandler):
+    def __init__(self, ctrl_getter, app):
+        ControlHandler.__init__(self, ctrl_getter, app)
+        evt_hander.ItemEventHandler.__init__(self)
+        self.optStandard = ctrl_getter.get(_dlgdef.OPT_FONT_STANDARD)
+        self.optComplex = ctrl_getter.get(_dlgdef.OPT_FONT_COMPLEX)
+        self.optAsian = ctrl_getter.get(_dlgdef.OPT_FONT_ASIAN)
+        self.radios = [
+            dutil.RadioTuple(self.optStandard, 'Western'),
+            dutil.RadioTuple(self.optComplex, 'Complex'),
+            dutil.RadioTuple(self.optAsian, 'Asian')]
+
+    def add_listeners(self):
+        for radio in self.radios:
+            radio.ctrl.addItemListener(self)
+
+    #def read_if_changed(self, fontChange):
+    #    if not self.last_source:
+    #        return
+    #    font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
+    #    font_name_handler.read(fontChange)
+    #    self.read()
+    #    self.last_source = None
+
+    def read(self, fontChange):
+        fontChange.fontType = dutil.whichSelected(self.radios)
+
+    def setval(self, fontItem):
+        dutil.selectRadio(self.radios, fontChange.fontType)
+
+
+class FontSizeHandler(ControlHandler, evt_handler.TextEventHandler):
+    def __init__(self, ctrl_getter, app):
+        ControlHandler.__init__(self, ctrl_getter, app)
+        evt_hander.TextEventHandler.__init__(self)
+        self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
+
+    def add_listeners(self):
+        self.txtFontSize.addTextListener(self)
+
+    def read(self, fontChange):
+        fontChange.size = FontSize()
+        fontChange.size.loadCtrl(self.txtFontSize)
+
+    def setval(self, fontItem):
+        fontItem.size.changeCtrlVal(self.txtFontSize)
+        fontItem.size.changeCtrlProp(self.stepCtrls.lblConverted, True)
+
+    def change_control_prop(self, fontItem):
+        lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
+        fontItem.size.changeCtrlProp(lblConverted)
 
 
 class StyleSettings(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
+        evt_hander.ItemEventHandler.__init__(self)
         self.optParaStyle = dutil.getControl(dlg, 'optParaStyle')
         self.comboParaStyle = dutil.getControl(dlg, 'comboParaStyle')
         self.optCharStyle = dutil.getControl(dlg, 'optCharStyle')
@@ -564,6 +637,7 @@ class StyleSettings(evt_handler.ItemEventHandler):
             dutil.RadioTuple(self.optCharStyle, 'CharStyle')]
         self.paraStyleNames = []
         self.charStyleNames = []
+        self.styleFonts = styles.StyleFonts(app.unoObjs)
 
     def load_values(self):
         logger.debug("Populating font and styles lists")
@@ -643,4 +717,8 @@ class StyleSettings(evt_handler.ItemEventHandler):
         else:
             comboFontName.setText("")
         fontSize.changeCtrlVal(self.stepCtrls.txtFontSize)
+
+    def clear_combo_boxes(self):
+        self.stepCtrls.comboParaStyle.setText("")
+        self.stepCtrls.comboCharStyle.setText("")
 

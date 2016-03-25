@@ -19,6 +19,7 @@
 # 25-Sep-15 JDK  Modify existing styles.
 # 28-Sep-15 JDK  Resizing was not working after refactoring.
 # 05-Oct-15 JDK  Default args for getFontOfStyle().
+# 24-Mar-16 JDK  StyleFonts does not need user vars to specify style name.
 
 """
 Create and manage OOo styles.
@@ -411,11 +412,11 @@ class AbbrevStyles(DocumentStyles):
 
 class StyleFonts(DocumentStyles):
     """Manages the font of a style."""
-    def __init__(self, unoObjs, userVars, styleNames=None):
+    def __init__(self, unoObjs, styleNames=None):
         """
         :param styleNames: specify this when passing styleKey params
         """
-        DocumentStyles.__init__(self, unoObjs, userVars)
+        DocumentStyles.__init__(self, unoObjs, None)
         if styleNames:
             self.styleNames.update(styleNames)
 
@@ -462,7 +463,7 @@ class StyleFonts(DocumentStyles):
         """
         if not styleKey:
             styleKey = styleName
-            self.styleNames[styleKey] = styleName
+            self.styleNames[styleName] = styleName
         return styleKey
 
 
