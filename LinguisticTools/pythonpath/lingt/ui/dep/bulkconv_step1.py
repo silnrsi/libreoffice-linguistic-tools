@@ -63,16 +63,18 @@ class Step1Controls:
         self.txtOutputTo.setText(userVars.get('OutputFolder'))
 
 
-class Step1Form:
+class FormStep1:
     """Handle items and data for page step 1."""
 
-    def __init__(self, unoObjs, stepCtrls, userVars, msgbox, app, gotoStep2):
+    #def __init__(self, unoObjs, stepCtrls, userVars, msgbox, app, gotoStep2):
+    def __init__(self, ctrl_getter, app, stepper):
+        self.stepper = stepper
+
         self.unoObjs = unoObjs
         self.stepCtrls = stepCtrls
         self.userVars = userVars
         self.msgbox = msgbox
         self.app = app
-        self.gotoStep2 = gotoStep2
 
         self.fileItems = FileItemList(BulkFileItem, self.userVars)
         self.outdir = ""
@@ -143,7 +145,7 @@ class Step1Form:
 
     def scanFiles(self, step2Form):
         logger.debug(util.funcName('begin'))
-        self.getResults()
+        self.storeResults()
         if not self.outdir:
             self.msgbox.display("Please select an output folder.")
             return
@@ -168,15 +170,14 @@ class Step1Form:
                     break
             else:
                 logger.debug("did not find match for %r", fontChange)
-        self.gotoStep2()
+        self.stepper.goto_step2()
         step2Form.updateFontsList()
         step2Form.fill_for_selected_font()
         logger.debug(util.funcName('end'))
 
-    def getResults(self):
+    def storeResults(self):
         logger.debug(util.funcName())
         self.fileItems.storeUserVars()
         self.outdir = self.stepCtrls.txtOutputTo.getText()
         self.userVars.store('OutputFolder', self.outdir)
-
 

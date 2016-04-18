@@ -20,6 +20,7 @@ import logging
 
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer import doc_to_xml
+from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.bulkconv_structs import FontChange
 from lingt.ui.messagebox import MessageBox
@@ -31,17 +32,20 @@ logger = logging.getLogger("lingt.app.dataconversion")
 
 class BulkConversion:
 
-    def __init__(self, docUnoObjs, userVars):
+    def __init__(self, docUnoObjs):
         """
         unoObjs needs to be for a writer doc
         """
         self.unoObjs = docUnoObjs
-        self.userVars = userVars
+        uservars.SettingsDocPreparer(
+            uservars.Prefix.BULK_CONVERSION, self.unoObjs).prepare()
+        self.userVars = uservars.UserVars(
+            uservars.Prefix.BULK_CONVERSION, self.unoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
         self.convPool = ConvPool(
             self.userVars, self.msgbox, self.get_all_conv_names)
         self.fileItems = None  # FileItemList of BulkFileItem
-        self.fontItemList = FontItemList()
+        self.fontItemList = FontItemList(self.userVars)
         self.outdir = ""
         self.askEach = False
 
@@ -74,6 +78,11 @@ class BulkConversion:
         progressBar.updateFinishing()
         progressBar.close()
         logger.debug(util.funcName('end', args=len(self.fontItemList.items)))
+
+    def update_list(self, event_handler):
+        """Update self.fontItemList based on the event that just occurred."""
+        item_to_update = self.fontItemList.selected_item()
+        self.fontItemList.update_item(item_to_update, event_handler)
 
     def doConversions(self):
         logger.debug(util.funcName('begin'))
@@ -150,11 +159,15 @@ class BulkConversion:
             for fontChange in self.getFontChanges()
             if fontChange.converter.convName])
 
+    def selected_item(self):
+        return self.fontItemList.selected_item()
+
 
 class FontItemList:
     """Manage a list of FontItem objects.  Optionally group similar items."""
 
-    def __init__(self):
+    def __init__(self, userVars):
+        self.userVars = userVars
         self.items = []  # elements are type FontItem
         self.groupSizes = True
         self.groupStyles = True
@@ -169,7 +182,6 @@ class FontItemList:
         # Merge data, sorting data by fontItem.inputDataOrder.
         return sorted(self.items)
 
-    #def update_item(self, item_to_update, changed_values, attrs_changed):
     def update_item(self, item_to_update, event_handler):
         """When controls get changed,
         update all FontItem objects in the selected group.
@@ -180,9 +192,8 @@ class FontItemList:
         """
         logger.debug(util.funcName('begin', args=attrs_changed))
         for item in self.items_to_change(item_to_update):
-            item.create_change()
-            for attr_changed in attrs_changed:
-                item.change.setattr_from_other(changed_values, attr_changed)
+            item.create_change(self.userVars)
+            event_handler.read(item.change)
 
     def items_to_change(self, item_to_update):
         """Get all FontItem objects in the selected group.

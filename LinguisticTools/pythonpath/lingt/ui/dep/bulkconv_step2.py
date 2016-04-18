@@ -150,7 +150,7 @@ class FormStep2:
         for event_handler in self.event_handlers:
             event_handler.start_working()
 
-    def storeUserVars(self):
+    def storeResults(self):
         """Store settings in user vars."""
         logger.debug(util.funcName('begin'))
         fontChanges = self.app.getFontChanges()
@@ -202,11 +202,11 @@ class ControlHandler:
     def handle_text_event(self, src):
         self.app.update_list(self)
 
-    def read_if_changed(self, fontChange):
-        if not self.last_source:
-            return
-        self.read()
-        self.last_source = None
+    #def read_if_changed(self, fontChange):
+    #    if not self.last_source:
+    #        return
+    #    self.read()
+    #    self.last_source = None
 
     def read(self, fontChange):
         """Read form values and modify fontChange accordingly."""
@@ -263,6 +263,7 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
 class ConverterControls(evt_handler.ActionEventHandler,
                         evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
+        ControlHandler.__init__(self, ctrl_getter, app)
         evt_hander.ActionEventHandler.__init__(self)
         evt_hander.ItemEventHandler.__init__(self)
         self.txtConvName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
@@ -535,19 +536,11 @@ class FontNameHandler(ControlHandler, evt_handler.ItemEventHandler):
         self.comboFontName.addItemListener(self.evtHandler)
 
     def handle_item_event(self, src):
-        self.app.update_list(self)
-        fontItem = FontItem()
-        self.read(fontItem)
-        self.change_control_prop(fontItem)
-
-    def read_if_changed(self, fontChange):
-        if not self.last_source:
-            return
+        ControlHandler.handle_item_event(self, src)
+        self.change_control_prop(app.selected_item())
         style_type_handler = StyleTypeHandler(self.ctrl_getter, self.app)
         fontChange.styleType = 'CustomFormatting'
-        style_type_handler.setval(fontChange)
-        self.read()
-        self.last_source = None
+        style_type_handler.setval(app.selected_item())
 
     def read(self, fontChange):
         fontChange.name = self.comboFontName.getText()
@@ -586,16 +579,10 @@ class FontTypeHandler(ControlHandler, evt_handler.ItemEventHandler):
         for radio in self.radios:
             radio.ctrl.addItemListener(self)
 
-    #def read_if_changed(self, fontChange):
-    #    if not self.last_source:
-    #        return
-    #    font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
-    #    font_name_handler.read(fontChange)
-    #    self.read()
-    #    self.last_source = None
-
     def read(self, fontChange):
         fontChange.fontType = dutil.whichSelected(self.radios)
+        #font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
+        #font_name_handler.read(fontChange)
 
     def setval(self, fontItem):
         dutil.selectRadio(self.radios, fontChange.fontType)
@@ -625,6 +612,7 @@ class FontSizeHandler(ControlHandler, evt_handler.TextEventHandler):
 
 class StyleSettings(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
+        ControlHandler.__init__(self, ctrl_getter, app)
         evt_hander.ItemEventHandler.__init__(self)
         self.optParaStyle = dutil.getControl(dlg, 'optParaStyle')
         self.comboParaStyle = dutil.getControl(dlg, 'comboParaStyle')

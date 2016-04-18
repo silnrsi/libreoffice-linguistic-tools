@@ -6,6 +6,7 @@
 # 16-Dec-15 JDK  Use folder picker.
 # 04-Feb-16 JDK  Catch error messages for doConversion().
 # 07-Mar-16 JDK  Write code for remaining itemStateChanged events.
+# 18-Apr-16 JDK  Handle which step in a separate class.
 
 """
 Bulk OpenOffice document conversion dialog,
@@ -51,75 +52,84 @@ def showDlg(ctx=uno.getComponentContext()):
 class DlgBulkConversion:
     """Main class for this dialog."""
 
-    # which dialog step (which view)
-    STEP_FILES = 1
-    STEP_FONTS = 2
-
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        uservars.SettingsDocPreparer(
-            uservars.Prefix.BULK_CONVERSION, unoObjs).prepare()
-        self.userVars = uservars.UserVars(
-            uservars.Prefix.BULK_CONVERSION, unoObjs.document, logger)
-        self.msgbox = MessageBox(unoObjs)
-        self.app = BulkConversion(unoObjs, self.userVars)
-        self.dlg = None
-        self.step = self.STEP_FILES
-        self.convertOnClose = False
-        self.dlgClose = None
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        #self.dlg = dutil.createDialog(
-        #    self.unoObjs, self.msgbox, "DlgBulkConversion")
-        self.dlg = dutil.createDialog(self.unoObjs, _dlgdef)
-        if not self.dlg:
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
+        if not dlg:
             return
-        self.dlg.getModel().Step = self.step  # STEP_FILES (the first step)
-
+        stepper = DlgStepper(dlg)
         ctrl_getter = dutil.ControlGetter(dlg)
-        step1Form = FormStep1(ctrl_getter, self.app)
+        app = BulkConversion(unoObjs)
+        step1Form = FormStep1(ctrl_getter, app, stepper)
         step1Form.start_working()
-        step2Form = FormStep2(ctrl_getter, self.app)
+        step2Form = FormStep2(ctrl_getter, app)
         step2Form.start_working()
-        closingButtons = ClosingButtons(ctrl_getter, dlg)
+        closingButtons = ClosingButtons(
+            ctrl_getter, app, step1Form, step2Form, dlg.endExecute)
         closingButtons.start_working()
 
         ## Display the dialog
 
-        self.dlgClose = self.dlg.endExecute
-        self.dlg.execute()
-        if self.step == self.STEP_FILES:
-            step1Form.getResults()
-        elif self.step == self.STEP_FONTS:
-            step2Form.storeUserVars()
-        if self.convertOnClose:
+        dlg.execute()
+        if stepper.on_step1():
+            step1Form.storeResults()
+        if stepper.on_step2():
+            step2Form.storeResults()
+        if closingButtons.convertOnClose:
             try:
-                self.app.doConversions()
+                app.doConversions()
             except exceptions.MessageError as exc:
-                self.msgbox.displayExc(exc)
+                msgbox = MessageBox(self.unoObjs)
+                msgbox.displayExc(exc)
                 return
-        self.dlg.dispose()
+        dlg.dispose()
 
-    def isFirstStep(self):
-        return self.step == self.STEP_FILES
 
-    def gotoStep2(self):
-        """Used as a callback."""
-        self.step = self.STEP_FONTS
-        self.dlg.getModel().Step = self.step  # change the dialog
+class DlgStepper:
+    """Manage which step the dialog is on."""
+
+    # which dialog step (which view)
+    STEP_FILES = 1
+    STEP_FONTS = 2
+
+    def __init__(self, dlg):
+        self.dlg = dlg
+        self._step = self.STEP_FILES
+        self._change_dialog_view()
+
+    def on_step1(self):
+        return self._step == self.STEP_FILES
+
+    def on_step2(self):
+        return self._step == self.STEP_FONTS
+
+    def goto_step2(self):
+        self._step = self.STEP_FONTS
+        self._change_dialog_view()
+
+    def _change_dialog_view(self):
+        """Change which controls the dialog shows."""
+        self.dlg.getModel().Step = self._step
 
 
 class ClosingButtons(evt_handler.ActionEventHandler,
                      evt_hander.ItemEventHandler):
-    def __init__(self, ctrl_getter, dlg):
+    def __init__(self, ctrl_getter, app, step1Form, step2Form, dlgClose):
+        self.app = app
+        self.step1Form = step1Form
+        self.step2Form = step2Form
+        self.dlgClose = dlgClose
         btnScan = dutil.getControl(dlg, 'btnScan')
         btnProcess = dutil.getControl(dlg, 'btnProcess')
-        self.chkVerify = dutil.getControl(dlg, 'chkVerify')
         btnCancel = dutil.getControl(dlg, 'btnCancel')
+        self.chkVerify = dutil.getControl(dlg, 'chkVerify')
+        self.convertOnClose = False
 
     def load_values(self):
-        self.chkVerify.setState(userVars.getInt('AskEachChange'))
+        self.chkVerify.setState(self.app.userVars.getInt('AskEachChange'))
 
     def add_listeners(self):
         btnScan.setActionCommand('ScanFiles')
@@ -131,11 +141,12 @@ class ClosingButtons(evt_handler.ActionEventHandler,
             self.step1Form.scanFiles(self.step2Form)
         elif event.ActionCommand == 'Close_and_Convert':
             logger.debug("Closing and Converting...")
-            self.mainDlg.convertOnClose = True
-            self.mainDlg.dlgClose()
+            self.convertOnClose = True
+            self.dlgClose()
         elif event.ActionCommand == 'Cancel':
             logger.debug("Action command was Cancel")
-            self.mainDlg.dlgClose()
+            self.convertOnClose = False
+            self.dlgClose()
         else:
             self.raise_unknown_command(action_command)
 

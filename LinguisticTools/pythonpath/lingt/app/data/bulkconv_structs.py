@@ -51,13 +51,13 @@ class FontItem(FontInfo):
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type FontChange
 
-    def create_change(self):
+    def create_change(self, userVars):
         """Create a new FontChange for this item if it doesn't exist yet.
         Now this item will be recognized as having a change,
         even if the values aren't actually any different.
         """
         if not self.change:
-            self.change = FontChange(self, None)
+            self.change = FontChange(self, userVars)
 
     def __str__(self):
         strval = str(self.name)
