@@ -143,7 +143,7 @@ class FormStep1:
             return
         self.stepCtrls.txtOutputTo.setText(folderpath)
 
-    def scanFiles(self, step2Form):
+    def scanFiles(self):
         logger.debug(util.funcName('begin'))
         self.storeResults()
         if not self.outdir:
@@ -170,9 +170,6 @@ class FormStep1:
                     break
             else:
                 logger.debug("did not find match for %r", fontChange)
-        self.stepper.goto_step2()
-        step2Form.updateFontsList()
-        step2Form.fill_for_selected_font()
         logger.debug(util.funcName('end'))
 
     def storeResults(self):

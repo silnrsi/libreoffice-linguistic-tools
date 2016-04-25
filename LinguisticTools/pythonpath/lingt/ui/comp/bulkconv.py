@@ -67,8 +67,9 @@ class DlgBulkConversion:
         step1Form.start_working()
         step2Form = FormStep2(ctrl_getter, app)
         step2Form.start_working()
+        advancer = Advancer(stepper, step1Form, step2Form)
         closingButtons = ClosingButtons(
-            ctrl_getter, app, step1Form, step2Form, dlg.endExecute)
+            ctrl_getter, app, advancer, dlg.endExecute)
         closingButtons.start_working()
 
         ## Display the dialog
@@ -115,43 +116,44 @@ class DlgStepper:
         self.dlg.getModel().Step = self._step
 
 
-class ClosingButtons(evt_handler.ActionEventHandler,
-                     evt_hander.ItemEventHandler):
-    def __init__(self, ctrl_getter, app, step1Form, step2Form, dlgClose):
-        self.app = app
+class AdvanceHandler(evt_handler.ActionEventHandler):
+    """Handle button to advance to step 2."""
+
+    def __init__(self, ctrl_getter, stepper, step1Form, step2Form):
+        self.stepper = stepper
         self.step1Form = step1Form
         self.step2Form = step2Form
-        self.dlgClose = dlgClose
         btnScan = dutil.getControl(dlg, 'btnScan')
-        btnProcess = dutil.getControl(dlg, 'btnProcess')
-        btnCancel = dutil.getControl(dlg, 'btnCancel')
-        self.chkVerify = dutil.getControl(dlg, 'chkVerify')
-        self.convertOnClose = False
-
-    def load_values(self):
-        self.chkVerify.setState(self.app.userVars.getInt('AskEachChange'))
 
     def add_listeners(self):
-        btnScan.setActionCommand('ScanFiles')
-        btnProcess.setActionCommand('Close_and_Convert')
-        btnCancel.setActionCommand('Cancel')
+        self.btnScan.setActionCommand('ScanFiles')
+
+    def handle_action_event(self, dummy_action_command):
+        self.step1Form.scanFiles()
+        self.stepper.goto_step2()
+        self.step2Form.updateFontsList()
+        self.step2Form.fill_for_selected_font()
+
+
+class ClosingButtons(evt_handler.ActionEventHandler):
+    def __init__(self, ctrl_getter, dlgClose):
+        self.dlgClose = dlgClose
+        btnCancel = dutil.getControl(dlg, 'btnCancel')
+        self.btnProcess = dutil.getControl(dlg, 'btnProcess')
+        self.convertOnClose = False
+
+    def add_listeners(self):
+        self.btnProcess.setActionCommand('Close_and_Convert')
+        self.btnCancel.setActionCommand('Cancel')
 
     def handle_action_event(self, action_command):
-        if event.ActionCommand == "ScanFiles":
-            self.step1Form.scanFiles(self.step2Form)
-        elif event.ActionCommand == 'Close_and_Convert':
-            logger.debug("Closing and Converting...")
+        if event.ActionCommand == 'Close_and_Convert':
             self.convertOnClose = True
-            self.dlgClose()
         elif event.ActionCommand == 'Cancel':
-            logger.debug("Action command was Cancel")
             self.convertOnClose = False
-            self.dlgClose()
         else:
             self.raise_unknown_command(action_command)
-
-    def handle_item_event(self, dummy_src):
-        pass
+        self.dlgClose()
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
