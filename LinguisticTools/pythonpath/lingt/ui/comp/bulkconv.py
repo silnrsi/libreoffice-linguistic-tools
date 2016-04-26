@@ -50,7 +50,9 @@ def showDlg(ctx=uno.getComponentContext()):
     dlg.showDlg()
 
 class DlgBulkConversion:
-    """Main class for this dialog."""
+    """Main class for this dialog.
+    We use a class instead of a simple function to make testing code easier.
+    """
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
@@ -60,16 +62,16 @@ class DlgBulkConversion:
         dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
-        stepper = DlgStepper(dlg)
         ctrl_getter = dutil.ControlGetter(dlg)
         app = BulkConversion(unoObjs)
-        step1Form = FormStep1(ctrl_getter, app, stepper)
+        step1Form = FormStep1(ctrl_getter, app)
         step1Form.start_working()
         step2Form = FormStep2(ctrl_getter, app)
         step2Form.start_working()
+        stepper = DlgStepper(dlg)
         advancer = Advancer(stepper, step1Form, step2Form)
-        closingButtons = ClosingButtons(
-            ctrl_getter, app, advancer, dlg.endExecute)
+        advancer.start_working()
+        closingButtons = ClosingButtons(ctrl_getter, dlg.endExecute)
         closingButtons.start_working()
 
         ## Display the dialog

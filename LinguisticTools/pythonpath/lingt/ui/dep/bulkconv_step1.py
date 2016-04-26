@@ -67,9 +67,7 @@ class FormStep1:
     """Handle items and data for page step 1."""
 
     #def __init__(self, unoObjs, stepCtrls, userVars, msgbox, app, gotoStep2):
-    def __init__(self, ctrl_getter, app, stepper):
-        self.stepper = stepper
-
+    def __init__(self, ctrl_getter, app):
         self.unoObjs = unoObjs
         self.stepCtrls = stepCtrls
         self.userVars = userVars

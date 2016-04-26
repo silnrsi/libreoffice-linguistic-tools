@@ -8,6 +8,7 @@
 # 24-Feb-16 JDK  Use a single foundFonts label instead of three labels.
 # 07-Mar-16 JDK  Handle chkJoin changes.
 # 25-Mar-16 JDK  Split up into separate classes for each control.
+# 26-Apr-16 JDK  Implement separate style classes for combos and radios.
 
 """
 Bulk Conversion dialog step 2.
@@ -15,6 +16,7 @@ Bulk Conversion dialog step 2.
 This module exports:
     Step2Form()
 """
+import collections
 import copy
 import logging
 
@@ -53,39 +55,6 @@ class Step2Form_Old:
         fontItem = self.grabSelectedItem()
         fontChange = FontChange(fontItem, self.userVars)
 
-        #fontChange.converter.convName = self.stepCtrls.txtConvName.getText()
-        #fontChange.converter.forward = (
-        #    self.stepCtrls.chkReverse.getState() == 0)
-        #if dutil.sameName(ctrl_changed, self.stepCtrls.chkReverse):
-        #    attrs_changed = ['converter.forward']
-
-        ## Radio buttons and the corresponding listbox selection
-
-        fontChange.styleType = dutil.whichSelected(
-            self.stepCtrls.radiosStyleType)
-        fontChange.styleName = None
-        if (dutil.sameName(ctrl_changed, self.stepCtrls.optParaStyle)
-                or dutil.sameName(ctrl_changed, self.stepCtrls.optCharStyle)
-                or dutil.sameName(ctrl_changed, self.stepCtrls.optNoStyle)):
-            attrs_changed = ['styleType', 'styleName']
-        if fontChange.styleType == 'ParaStyle':
-            displayName = self.stepCtrls.comboParaStyle.getText()
-            if displayName in self.paraStyleNames:
-                fontChange.styleName = self.paraStyleNames[displayName]
-            else:
-                logger.warning("unexpected style %s", displayName)
-            if dutil.sameName(ctrl_changed, self.stepCtrls.comboParaStyle):
-                attrs_changed = ['styleName']
-        elif fontChange.styleType == 'CharStyle':
-            displayName = self.stepCtrls.comboCharStyle.getText()
-            if displayName in self.charStyleNames:
-                fontChange.styleName = self.charStyleNames[displayName]
-            else:
-                logger.warning("unexpected style %s", displayName)
-            if dutil.sameName(ctrl_changed, self.stepCtrls.comboCharStyle):
-                attrs_changed = ['styleName']
-        else:
-            fontChange.styleName = ""
         if updateFontItem and attrs_changed:
             self.app.fontItemList.update_item(
                 fontItem, fontChange, attrs_changed)
@@ -477,14 +446,15 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
         self.updateFontsList()
         self.fill_for_selected_font()
 
+
 class JoinCheckboxes(evt_handler.ItemEventHandler):
     """Checkboxes that join or split the list."""
 
     def __init__(self, ctrl_getter, app):
         evt_handler.ItemEventHandler.__init__(self)
-        self.chkJoinFontTypes = dutil.getControl(dlg, 'chkJoinFontTypes')
-        self.chkJoinSize = dutil.getControl(dlg, 'chkJoinSize')
-        self.chkJoinStyles = dutil.getControl(dlg, 'chkJoinStyles')
+        self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
+        self.chkJoinSize = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
+        self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
 
     def load_values(self):
         self.chkJoinFontTypes.setState(userVars.getInt('JoinFontTypes'))
@@ -497,18 +467,15 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
             self.addItemListener(self)
 
     def handle_item_event(self, src):
-        if (dutil.sameName(src, self.step2Ctrls.chkJoinFontTypes)
-              or dutil.sameName(src, self.step2Ctrls.chkJoinSize)
-              or dutil.sameName(src, self.step2Ctrls.chkJoinStyles)):
-            self.step2Form.fill_for_chkJoin()
+        self.fill_for_chkJoin()
 
     def fill_for_chkJoin(self):
         self.app.fontItemList.groupFontTypes = bool(
-            self.stepCtrls.chkJoinFontTypes.getState())
+            self.chkJoinFontTypes.getState())
         self.app.fontItemList.groupSizes = bool(
-            self.stepCtrls.chkJoinSize.getState())
+            self.chkJoinSize.getState())
         self.app.fontItemList.groupStyles = bool(
-            self.stepCtrls.chkJoinStyles.getState())
+            self.chkJoinStyles.getState())
         self.updateFontsList()
 
 
@@ -638,104 +605,89 @@ class StyleTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         for radio in self.radios:
             radio.ctrl.addItemListener(self)
 
+    def handle_item_event(self, src):
+        FontChangeControlHandler.handle_item_event(self, src)
+        style_name_handler = StyleName(self.ctrl_getter, self.app)
+        style_name_handler.selectFontFromStyle()
+
     def read(self, fontChange):
         fontChange.fontType = dutil.whichSelected(self.radios)
         style_name_handler = StyleNameHandler(self.ctrl_getter, self.app)
         style_name_handler.read(fontChange)
 
-        if dutil.sameName(self.last_source, self.optParaStyle):
-            if self.step2Ctrls.comboParaStyle.getText():
-                self.step2Form.selectFontFromStyle(src, 'Paragraph')
-        elif dutil.sameName(src, self.optCharStyle):
-            if self.step2Ctrls.comboCharStyle.getText():
-                self.step2Form.selectFontFromStyle(src, 'Character')
-
     def setval(self, fontItem):
         dutil.selectRadio(self.radios, fontChange.fontType)
 
+
+StyleNameTuple = collections.namedtuple(
+    'StyleNameTuple', ['styleType', 'ctrl', 'styleNames'])
 
 class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.ItemEventHandler.__init__(self)
-        self.comboParaStyle = dutil.getControl(dlg, 'comboParaStyle')
-        self.comboCharStyle = dutil.getControl(dlg, 'comboCharStyle')
-        self.paraStyleNames = []
-        self.charStyleNames = []
-        self.styleFonts = styles.StyleFonts(app.unoObjs)
+        comboParaStyle = dutil.getControl(dlg, 'comboParaStyle')
+        comboCharStyle = dutil.getControl(dlg, 'comboCharStyle')
+        self.styledata = [
+            StyleNameTuple('Paragraph', comboParaStyle, []),
+            StyleNameTuple('Character', comboCharStyle, [])]
 
     def load_values(self):
-        logger.debug("Populating font and styles lists")
-        stylesList = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
-        self.paraStyleNames = dict(stylesList)
-        paraStyleDispNames = tuple([dispName for dispName, name in stylesList])
-        stylesList = styles.getListOfStyles('CharacterStyles', self.unoObjs)
-        self.charStyleNames = dict(stylesList)
-        charStyleDispNames = tuple([dispName for dispName, name in stylesList])
-        dutil.fill_list_ctrl(self.comboParaStyle, paraStyleDispNames)
-        dutil.fill_list_ctrl(self.comboCharStyle, charStyleDispNames)
-        logger.debug("Finished populating font and styles lists.")
+        logger.debug(util.funcName())
+        for data in self.styledata:
+            stylesList = styles.getListOfStyles(
+                data.styleType + 'Styles', self.unoObjs)
+            data.styleNames = dict(stylesList)
+            dispNames = tuple([dispName for dispName, name in stylesList])
+            dutil.fill_list_ctrl(data.ctrl, dispNames)
 
     def add_listeners(self):
-        self.comboParaStyle.addItemListener(self.evtHandler)
-        self.comboCharStyle.addItemListener(self.evtHandler)
+        for data in self.styledata:
+            data.ctrl.addItemListener(self.evtHandler)
 
     def handle_item_event(self, src):
-        if dutil.sameName(src, self.step2Ctrls.comboParaStyle):
-            self.step2Ctrls.optParaStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.optParaStyle.getState() == 1:
-                self.step2Form.selectFontFromStyle(src, 'Paragraph')
-        elif dutil.sameName(src, self.step2Ctrls.comboCharStyle):
-            self.step2Ctrls.optCharStyle.setState(True)
-            self.step2Form.getFontFormResults(ctrl_changed=src)
-            if self.step2Ctrls.optCharStyle.getState() == 1:
-                self.step2Form.selectFontFromStyle(src, 'Character')
+        FontChangeControlHandler.handle_item_event(self, src)
+        style_type_handler = StyleTypeHandler(self.ctrl_getter, self.app)
+        style_type_handler.setval(self.app.selected_item())
+        self.selectFontFromStyle(src, self.app.selected_item().styleType)
 
-    def enableDisable(self, stepForm):
-        """Enable or disable controls as appropriate."""
-        logger.debug(util.funcName())
-        if self.optParaStyle.getState() == 1:
-            stepForm.selectFontFromStyle(self.comboParaStyle, 'Paragraph')
-        elif self.optCharStyle.getState() == 1:
-            stepForm.selectFontFromStyle(self.comboCharStyle, 'Character')
+    def read(self, fontChange):
+        fontChange.styleName = ""
+        for data in self.styledata:
+            if dutil.sameName(self.last_source, data.ctrl):
+                fontChange.styleType = data.styleType
+                displayName = data.ctrl.getText()
+                try:
+                    fontChange.styleName = data.styleNames[displayName]
+                except KeyError:
+                    logger.warning("%s is not a known style.", displayName)
+                break
 
-    def selectFontFromStyle(self, style_ctrl, styleType):
-        """Selects the font based on the style specified in style_ctrl.
-        If style_ctrl is None (for initialization or testing), gets values from
-        user variables instead.
-        """
+    def selectFontFromStyle(self):
+        """Selects the font based on the style."""
         logger.debug(util.funcName())
-        fontItem = self.grabSelectedItem()
-        if style_ctrl:
-            fontType = dutil.whichSelected(self.stepCtrls.radiosFontType)
-            displayName = style_ctrl.getText()
-            try:
-                if styleType == 'Paragraph':
-                    styleName = self.paraStyleNames[displayName]
-                elif styleType == 'Character':
-                    styleName = self.charStyleNames[displayName]
-            except KeyError:
-                # Perhaps a new style to be created
-                logger.debug("%s is not a known style.", displayName)
-                return
-            fontName, fontSize = self.styleFonts.getFontOfStyle(
-                styleType, fontType, styleName)
-        else:
-            fontName = fontItem.name
-            fontSize = copy.copy(fontItem.size)
+        fontChange = self.app.selected_item().change
+        if fontChange.styleType == 'CustomFormatting':
+            return
+        self.readFontOfStyle(fontChange)
         font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
-        fontChange.fontName = fontName
-        #font_name_handler.setval(app.selected_item())
         font_name_handler.setval(fontChange)
-        #fontSize.changeCtrlVal(self.stepCtrls.txtFontSize)
-        font_size_handler = FontNameHandler(self.ctrl_getter, self.app)
-        fontChange.size = fontSize
+        font_size_handler = FontSizeHandler(self.ctrl_getter, self.app)
         font_size_handler.setval(fontChange)
 
+    def readFontOfStyle(self, fontChange):
+        """Sets fontChange.fontName and fontChange.fontSize."""
+        styleFonts = styles.StyleFonts(self.app.unoObjs)
+        name, size = styleFonts.getFontOfStyle(
+            fontChange.styleType,
+            fontChange.fontType,
+            fontChange.styleName)
+        fontChange.fontName = name
+        fontChange.fontSize = size
+
     def clear_combo_boxes(self):
-        self.stepCtrls.comboParaStyle.setText("")
-        self.stepCtrls.comboCharStyle.setText("")
+        for data in self.styledata:
+            data.ctrl.setText("")
 
 
 class VerifyHandler(evt_handler.ItemEventHandler):
