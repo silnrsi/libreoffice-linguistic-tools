@@ -4,11 +4,13 @@
 #
 # 24-Mar-16 JDK  Base class methods to load values and add listeners.
 # 25-Mar-16 JDK  Make handling_event static across all listeners.
+# 28-Apr-16 JDK  Added DataControls.
 
 """
 Abstract base classes to handle UNO dialog events.
 
 This module exports:
+    DataControls
     ActionEventHandler
     ItemEventHandler
     TextEventHandler
@@ -24,19 +26,39 @@ from lingt.utils import util
 logger = logging.getLogger("lingt.ui.evt_handler")
 
 
-class EventHandler(unohelper.Base):
-    """Abstract base class for handling events."""
-
-    handling_event = False
-
+class DataControls:
+    """Abstract base class for form controls that have data.
+    It should not be a problem for other controls such as buttons to
+    inherit this class, because implementing these methods is optional.
+    This is somewhat similar to uservars.Syncable, but it is for
+    the user interface layer.
+    """
     def __init__(self):
-        if (self.__class__ is EventHandler or
+        if (self.__class__ is DataControls or
+                self.__class__ is EventHandler or
                 self.__class__ is ActionEventHandler or
                 self.__class__ is ItemEventHandler or:
                 self.__class__ is TextEventHandler):
             # The base classes should not be instantiated.
             raise NotImplementedError
-        super(EventHandler, self).__init__()
+
+    def load_values(self):
+        """Load initial values.  Implement if needed."""
+        pass
+
+    def store_results(self):
+        """Store form data.  Implement if needed."""
+        pass
+
+
+class EventHandler(DataControls, unohelper.Base):
+    """Abstract base class for handling events."""
+
+    handling_event = False
+
+    def __init__(self):
+        DataControl.__init__(self)
+        unohelper.Base.__init__(self)
         self.last_source = None  # control of last event
 
     def start_working(self):
@@ -46,10 +68,6 @@ class EventHandler(unohelper.Base):
         """
         self.load_values()
         self.add_listeners()
-
-    def load_values(self):
-        """Load initial values.  Implement if needed."""
-        pass
 
     def add_listeners(self):
         """Add listeners.  Implement if needed."""

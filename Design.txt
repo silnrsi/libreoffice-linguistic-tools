@@ -19,6 +19,42 @@ Write grouping code.
 Selecting a converter changed "Paragraph Style" to  "Custom Style".
 
 
+## reorganizing idea 28-Apr-16
+
+MessageBox and UserVars go along with the document, like UnoObjs.
+It would be helpful to create another class called MainDocObjs that inherits
+from both.
+UnoObjs would still not be abstract,
+because not all documents are main documents,
+for example the one opened by ExUpdater.
+Many methods would require only UnoObjs,
+but passing MainDocObjs to such a method is perfectly acceptable.
+
+ProgressBar is somewhat temporary but could perhaps be a member as well,
+just not initialized by default.
+
+Would Calc documents be MainDocObjs?
+Yes, if the dialog is called from Calc.
+There would just be no user vars.
+Perhaps that should be a class of its own.
+
+The advantages of all of this are that it would simplify arguments and
+class properties, and would more precisely express what is going on,
+because it would be clearer what each class needs or uses.
+However the disadvantage is that there would be lots of lines like:
+    self.app.mainDoc.userVars.store(...)
+Instead of:
+    self.userVars.store(...)
+And it would not be surprising to find that PyUNO couldn't check it.
+
+Is there some other way to store mainDoc,
+for example as a module level variable?
+Perhaps:
+    util.mainDoc.userVars.store(...)
+Methods that use multiple documents would use variables that are more
+local than util.mainDoc.
+
+
 ## Next OOLT version
 
 Version 3.0:

@@ -78,9 +78,9 @@ class DlgBulkConversion:
 
         dlg.execute()
         if stepper.on_step1():
-            step1Form.storeResults()
+            step1Form.store_results()
         if stepper.on_step2():
-            step2Form.storeResults()
+            step2Form.store_results()
         if closingButtons.convertOnClose:
             try:
                 app.doConversions()

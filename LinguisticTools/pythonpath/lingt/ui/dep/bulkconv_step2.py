@@ -14,7 +14,7 @@
 Bulk Conversion dialog step 2.
 
 This module exports:
-    Step2Form()
+    FormStep2
 """
 import collections
 import copy
@@ -125,11 +125,12 @@ class FormStep2:
             # Instantiate a new object of each class.
             event_handler = event_handler_class(ctrl_getter, app)
             self.event_handlers.append(event_handler)
-        foundFontInfo = FoundFontInfo(ctrl_getter)
+        self.found_font_info = FoundFontInfo(ctrl_getter)
 
     def start_working(self):
         for event_handler in self.event_handlers:
             event_handler.start_working()
+        self.found_font_info.fill(fontItem)
 
     def store_results(self):
         """Store settings in user vars."""
@@ -189,7 +190,7 @@ class FontChangeControlHandler:
         """Read form values and modify fontChange accordingly."""
         raise NotImplementedError()
 
-    def setval(self, fontItem):
+    def set_values(self, fontItem):
         """Set form values based on the fontItem values."""
         raise NotImplementedError()
 
@@ -236,7 +237,8 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
                 self.listFontsUsed, self.app.selected_index)
 
 
-class ConverterControls(evt_handler.ActionEventHandler,
+class ConverterControls(FontChangeControlHandler,
+                        evt_handler.ActionEventHandler,
                         evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
@@ -486,7 +488,7 @@ class FoundFontInfo:
         self.foundFonts = ctrl_getter.get(_dlgdef.FOUND_FONTS)
         self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
 
-    def fill_found_font_info(self, fontItem):
+    def set_values(self, fontItem):
         foundFontNames = ""
         for title, fontName in (
                 ("Standard", fontItem.nameStandard),
@@ -519,14 +521,14 @@ class FontNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         self.change_control_prop(app.selected_item())
         style_type_handler = StyleTypeHandler(self.ctrl_getter, self.app)
         fontChange.styleType = 'CustomFormatting'
-        style_type_handler.setval(app.selected_item())
+        style_type_handler.set_values(app.selected_item())
 
     def read(self, fontChange):
         fontChange.name = self.comboFontName.getText()
         if fontChange.name == "(None)":
             fontChange.name = None
 
-    def setval(self, fontItem):
+    def set_values(self, fontItem):
         if fontChange.name and fontChange.name != "(None)":
             self.comboFontName.setText(fontChange.name)
         else:
@@ -563,7 +565,7 @@ class FontTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         #font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
         #font_name_handler.read(fontChange)
 
-    def setval(self, fontItem):
+    def set_values(self, fontItem):
         dutil.selectRadio(self.radios, fontChange.fontType)
 
 
@@ -580,7 +582,7 @@ class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
         fontChange.size = FontSize()
         fontChange.size.loadCtrl(self.txtFontSize)
 
-    def setval(self, fontItem):
+    def set_values(self, fontItem):
         fontItem.size.changeCtrlVal(self.txtFontSize)
         fontItem.size.changeCtrlProp(self.stepCtrls.lblConverted, True)
 
@@ -615,7 +617,7 @@ class StyleTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         style_name_handler = StyleNameHandler(self.ctrl_getter, self.app)
         style_name_handler.read(fontChange)
 
-    def setval(self, fontItem):
+    def set_values(self, fontItem):
         dutil.selectRadio(self.radios, fontChange.fontType)
 
 
@@ -648,7 +650,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def handle_item_event(self, src):
         FontChangeControlHandler.handle_item_event(self, src)
         style_type_handler = StyleTypeHandler(self.ctrl_getter, self.app)
-        style_type_handler.setval(self.app.selected_item())
+        style_type_handler.set_values(self.app.selected_item())
         self.selectFontFromStyle(src, self.app.selected_item().styleType)
 
     def read(self, fontChange):
@@ -671,9 +673,9 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
             return
         self.readFontOfStyle(fontChange)
         font_name_handler = FontNameHandler(self.ctrl_getter, self.app)
-        font_name_handler.setval(fontChange)
+        font_name_handler.set_values(fontChange)
         font_size_handler = FontSizeHandler(self.ctrl_getter, self.app)
-        font_size_handler.setval(fontChange)
+        font_size_handler.set_values(fontChange)
 
     def readFontOfStyle(self, fontChange):
         """Sets fontChange.fontName and fontChange.fontSize."""
