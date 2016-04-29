@@ -26,9 +26,10 @@ from com.sun.star.awt import XItemListener
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.spellingchanges import ChangerMaker
-from lingt.ui import dutil
-from lingt.ui import filepicker
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common import filepicker
+from lingt.ui.common.dlgdefs import DlgChangerMaker as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgchangermaker")
@@ -68,14 +69,14 @@ class DlgChangerMaker:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgChangerMaker")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -212,20 +213,20 @@ class DlgControls:
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.optReplacementCCT = dutil.getControl(dlg, "optReplacementCCT")
-        self.optSFM_CCT = dutil.getControl(dlg, "optSFM_CCT")
-        self.optXSLT = dutil.getControl(dlg, "optXSLT")
-        self.chkMatchPartial = dutil.getControl(dlg, "chkMatchPartial")
-        self.txtSFM = dutil.getControl(dlg, "txtSFMarkers")
-        self.txtXpath = dutil.getControl(dlg, "txtXpath")
-        self.listXpaths = dutil.getControl(dlg, "listXpathExprs")
-        self.txtFilePath = dutil.getControl(dlg, "txtFilePath")
-        btnBrowse = dutil.getControl(dlg, "btnBrowse")
-        btnRemoveXpath = dutil.getControl(dlg, "btnRemoveXpath")
-        btnAddXpath = dutil.getControl(dlg, "btnAddXpath")
-        btnRemoveXpath = dutil.getControl(dlg, "btnRemoveXpath")
-        btnOK = dutil.getControl(dlg, "btnOK")
-        btnCancel = dutil.getControl(dlg, "btnCancel")
+        self.optReplacementCCT = ctrl_getter.get(_dlgdef.OPT_REPLACEMENT_CCT)
+        self.optSFM_CCT = ctrl_getter.get(_dlgdef.OPT_SFM_CCT)
+        self.optXSLT = ctrl_getter.get(_dlgdef.OPT_XSLT)
+        self.chkMatchPartial = ctrl_getter.get(_dlgdef.CHK_MATCH_PARTIAL)
+        self.txtSFM = ctrl_getter.get(_dlgdef.TXT_SFMARKERS)
+        self.txtXpath = ctrl_getter.get(_dlgdef.TXT_XPATH)
+        self.listXpaths = ctrl_getter.get(_dlgdef.LIST_XPATH_EXPRS)
+        self.txtFilePath = ctrl_getter.get(_dlgdef.TXT_FILE_PATH)
+        btnBrowse = ctrl_getter.get(_dlgdef.BTN_BROWSE)
+        btnRemoveXpath = ctrl_getter.get(_dlgdef.BTN_REMOVE_XPATH)
+        btnAddXpath = ctrl_getter.get(_dlgdef.BTN_ADD_XPATH)
+        btnRemoveXpath = ctrl_getter.get(_dlgdef.BTN_REMOVE_XPATH)
+        btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         btnBrowse.setActionCommand("ShowFilePicker")
         btnAddXpath.setActionCommand("AddXpath")

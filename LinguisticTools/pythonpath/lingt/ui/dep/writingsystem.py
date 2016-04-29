@@ -25,8 +25,9 @@ from com.sun.star.awt import XActionListener
 
 from lingt.access.xml import writingsys_reader
 from lingt.app import exceptions
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgWritingSystem as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 
@@ -55,13 +56,13 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgWritingSystem")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         try:
-            self.listbox = dlg.getControl("WSListBox")
-            btnOK = dlg.getControl("BtnOK")
+            self.listbox = ctrl_getter.get(_dlgdef.WSLIST_BOX)
+            btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()

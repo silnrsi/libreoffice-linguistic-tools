@@ -26,8 +26,9 @@ from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.dataconversion import DataConversion
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgApplyConverter as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgapplyconv")
@@ -66,13 +67,14 @@ class DlgApplyConverter:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgApplyConverter")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
-            self.dlgCtrls = DlgControls(self.unoObjs, dlg, self.evtHandler)
+            self.dlgCtrls = DlgControls(
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -133,20 +135,20 @@ class DlgApplyConverter:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.txtConverterName = dutil.getControl(dlg, "txtConvName")
-        self.chkDirectionReverse = dutil.getControl(dlg, "chkReverse")
-        self.txtSourceCol = dutil.getControl(dlg, "txtSourceColumn")
-        self.txtTargetCol = dutil.getControl(dlg, "txtTargetColumn")
-        self.chkSkipRow = dutil.getControl(dlg, "chkSkipFirstRow")
-        btnSelect = dutil.getControl(dlg, "btnSelect")
-        btnConvert = dutil.getControl(dlg, "btnConvert")
-        btnCancel = dutil.getControl(dlg, "btnCancel")
-        comboHidden = dutil.getControl(dlg, "cmbxHidden")
+        self.txtConverterName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
+        self.chkDirectionReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
+        self.txtSourceCol = ctrl_getter.get(_dlgdef.TXT_SOURCE_COLUMN)
+        self.txtTargetCol = ctrl_getter.get(_dlgdef.TXT_TARGET_COLUMN)
+        self.chkSkipRow = ctrl_getter.get(_dlgdef.CHK_SKIP_FIRST_ROW)
+        btnSelect = ctrl_getter.get(_dlgdef.BTN_SELECT)
+        btnConvert = ctrl_getter.get(_dlgdef.BTN_CONVERT)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
+        comboHidden = ctrl_getter.get(_dlgdef.CMBX_HIDDEN)
 
         ## Listeners
 

@@ -28,11 +28,11 @@ from com.sun.star.awt import XTextListener
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.bulkconversion import BulkConversion
-from lingt.ui import dutil
+from lingt.ui.common import dutil
 from lingt.ui.dep import bulkconv_step1
 from lingt.ui.dep import bulkconv_step2
-from lingt.ui.dlgdefs import DlgBulkConversion as _dlgdef
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv")
@@ -125,7 +125,7 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
         self.stepper = stepper
         self.step1Form = step1Form
         self.step2Form = step2Form
-        btnScan = dutil.getControl(dlg, 'btnScan')
+        btnScan = ctrl_getter.get(_dlgdef.BTN_SCAN)
 
     def add_listeners(self):
         self.btnScan.setActionCommand('ScanFiles')
@@ -140,8 +140,8 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
 class ClosingButtons(evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, dlgClose):
         self.dlgClose = dlgClose
-        btnCancel = dutil.getControl(dlg, 'btnCancel')
-        self.btnProcess = dutil.getControl(dlg, 'btnProcess')
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
+        self.btnProcess = ctrl_getter.get(_dlgdef.BTN_PROCESS)
         self.convertOnClose = False
 
     def add_listeners(self):

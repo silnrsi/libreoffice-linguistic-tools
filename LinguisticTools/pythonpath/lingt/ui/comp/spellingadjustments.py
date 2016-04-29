@@ -27,8 +27,9 @@ from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.scriptpractice import Script
 from lingt.app.svc.spellingcomparisons import SpellingCharClasses
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.dlgdefs import DlgSpellingAdjustments as _dlgdef
 from lingt.utils import unicode_data
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
@@ -72,14 +73,14 @@ class DlgSpellingAdjustments:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgSpellingAdjustments")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler, self.script)
+                self.unoObjs, ctrl_getter, self.evtHandler, self.script)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -182,29 +183,29 @@ class DlgSpellingAdjustments:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler, script):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler, script):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
         self.script = script
 
-        self.lblCharComp = dutil.getControl(dlg, "lblCompList")
-        self.txtCharComp = dutil.getControl(dlg, "txtComparisonList")
-        self.comboScript = dutil.getControl(dlg, "comboScript")
-        self.lblScript = dutil.getControl(dlg, "lblScript")
-        self.comboFont = dutil.getControl(dlg, "comboFont")
-        self.txtFontSize = dutil.getControl(dlg, "txtSize")
-        self.chkVowelLength = dutil.getControl(dlg, "chkVowelLength")
-        self.chkVowelGlides = dutil.getControl(dlg, "chkVowelGlides")
-        self.chkNasals = dutil.getControl(dlg, "chkNasals")
-        self.chkAspiration = dutil.getControl(dlg, "chkAspiration")
-        self.chkPOA = dutil.getControl(dlg, "chkPOA")
-        self.chkGeminates = dutil.getControl(dlg, "chkGeminates")
-        self.chkLiquids = dutil.getControl(dlg, "chkLiquids")
-        self.chkKnownFonts = dutil.getControl(dlg, "chkKnownFonts")
-        self.btnResetChars = dutil.getControl(dlg, "btnReset")
-        btnCompare = dutil.getControl(dlg, "btnCompare")
-        btnClose = dutil.getControl(dlg, "btnClose")
+        self.lblCharComp = ctrl_getter.get(_dlgdef.LBL_COMP_LIST)
+        self.txtCharComp = ctrl_getter.get(_dlgdef.TXT_COMPARISON_LIST)
+        self.comboScript = ctrl_getter.get(_dlgdef.COMBO_SCRIPT)
+        self.lblScript = ctrl_getter.get(_dlgdef.LBL_SCRIPT)
+        self.comboFont = ctrl_getter.get(_dlgdef.COMBO_FONT)
+        self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_SIZE)
+        self.chkVowelLength = ctrl_getter.get(_dlgdef.CHK_VOWEL_LENGTH)
+        self.chkVowelGlides = ctrl_getter.get(_dlgdef.CHK_VOWEL_GLIDES)
+        self.chkNasals = ctrl_getter.get(_dlgdef.CHK_NASALS)
+        self.chkAspiration = ctrl_getter.get(_dlgdef.CHK_ASPIRATION)
+        self.chkPOA = ctrl_getter.get(_dlgdef.CHK_POA)
+        self.chkGeminates = ctrl_getter.get(_dlgdef.CHK_GEMINATES)
+        self.chkLiquids = ctrl_getter.get(_dlgdef.CHK_LIQUIDS)
+        self.chkKnownFonts = ctrl_getter.get(_dlgdef.CHK_KNOWN_FONTS)
+        self.btnResetChars = ctrl_getter.get(_dlgdef.BTN_RESET)
+        btnCompare = ctrl_getter.get(_dlgdef.BTN_COMPARE)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         self.btnResetChars.setActionCommand("RevertChars")
         btnCompare.setActionCommand("Close_and_Compare")

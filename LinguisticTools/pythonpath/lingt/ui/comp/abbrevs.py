@@ -39,8 +39,9 @@ from lingt.access.writer import outputmanager
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import abbreviations
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgAbbreviations as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgabbrevs")
@@ -74,14 +75,15 @@ class DlgAbbreviations:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(self.unoObjs, self.msgbox, "DlgAbbreviations")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.dlgClose = dlg.endExecute
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -337,32 +339,35 @@ class DlgAbbreviations:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.listboxAbbrevs = dutil.getControl(dlg, "listboxAbbreviations")
-        self.txtAbbrev = dutil.getControl(dlg, "txtAbbrev")
-        self.txtFullName = dutil.getControl(dlg, "txtFullName")
-        self.chkForceOutput = dutil.getControl(dlg, "chkForceOutput")
-        self.txtOccurrences = dutil.getControl(dlg, "txtOccurrences")
-        btnUpdateAbbrev = dutil.getControl(dlg, "BtnUpdateAbbrev")
-        btnAddAbbrev = dutil.getControl(dlg, "BtnAddAbbrev")
-        btnDeleteAbbrev = dutil.getControl(dlg, "BtnDeleteAbbrev")
-        btnChangeAllCaps = dutil.getControl(dlg, "BtnChangeAllCaps")
-        btnRescan = dutil.getControl(dlg, "BtnRescan")
-        self.cmbxSearchParaStyle = dutil.getControl(dlg, "cmbxSearchParaStyle")
-        self.optSearchSuffix = dutil.getControl(dlg, "optSearchSuffix")
-        self.optSearchPrefix = dutil.getControl(dlg, "optSearchPrefix")
-        self.optSearchAny = dutil.getControl(dlg, "optSearchAny")
-        self.txtMaxSearchLength = dutil.getControl(dlg, "TxtMaxSearchLength")
-        self.chkSearchUpperCase = dutil.getControl(dlg, "chkSearchUpperCase")
-        self.chkStartFromBeginning = dutil.getControl(
-            dlg, "chkStartFromBeginning")
-        btnFindNext = dutil.getControl(dlg, "BtnFindNext")
-        btnInsertList = dutil.getControl(dlg, "BtnInsertList")
-        btnClose = dutil.getControl(dlg, "BtnClose")
+        self.listboxAbbrevs = ctrl_getter.get(_dlgdef.LISTBOX_ABBREVIATIONS)
+        self.txtAbbrev = ctrl_getter.get(_dlgdef.TXT_ABBREV)
+        self.txtFullName = ctrl_getter.get(_dlgdef.TXT_FULL_NAME)
+        self.chkForceOutput = ctrl_getter.get(_dlgdef.CHK_FORCE_OUTPUT)
+        self.txtOccurrences = ctrl_getter.get(_dlgdef.TXT_OCCURRENCES)
+        btnUpdateAbbrev = ctrl_getter.get(_dlgdef.BTN_UPDATE_ABBREV)
+        btnAddAbbrev = ctrl_getter.get(_dlgdef.BTN_ADD_ABBREV)
+        btnDeleteAbbrev = ctrl_getter.get(_dlgdef.BTN_DELETE_ABBREV)
+        btnChangeAllCaps = ctrl_getter.get(_dlgdef.BTN_CHANGE_ALL_CAPS)
+        btnRescan = ctrl_getter.get(_dlgdef.BTN_RESCAN)
+        self.cmbxSearchParaStyle = ctrl_getter.get(
+            _dlgdef.CMBX_SEARCH_PARA_STYLE)
+        self.optSearchSuffix = ctrl_getter.get(_dlgdef.OPT_SEARCH_SUFFIX)
+        self.optSearchPrefix = ctrl_getter.get(_dlgdef.OPT_SEARCH_PREFIX)
+        self.optSearchAny = ctrl_getter.get(_dlgdef.OPT_SEARCH_ANY)
+        self.txtMaxSearchLength = ctrl_getter.get(
+            _dlgdef.TXT_MAX_SEARCH_LENGTH)
+        self.chkSearchUpperCase = ctrl_getter.get(
+            _dlgdef.CHK_SEARCH_UPPER_CASE)
+        self.chkStartFromBeginning = ctrl_getter.get(
+            _dlgdef.CHK_START_FROM_BEGINNING)
+        btnFindNext = ctrl_getter.get(_dlgdef.BTN_FIND_NEXT)
+        btnInsertList = ctrl_getter.get(_dlgdef.BTN_INSERT_LIST)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         btnUpdateAbbrev.setActionCommand("UpdateAbbrev")
         btnAddAbbrev.setActionCommand("AddAbbrev")

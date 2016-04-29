@@ -23,8 +23,9 @@ from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 
 from lingt.app import exceptions
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgSpellReplace as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgspellreplace")
@@ -50,14 +51,14 @@ class DlgSpellingReplace:
         doExecute() and doDispose().
         """
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgSpellReplace")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -100,21 +101,21 @@ class DlgSpellingReplace:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.listSuggestions = dutil.getControl(dlg, "listboxSuggestions")
-        self.txtChangeTo = dutil.getControl(dlg, "txtChangeTo")
-        self.lblFoundText = dutil.getControl(dlg, "lblFoundText")
-        self.lblContext = dutil.getControl(dlg, "lblContext")
-        btnAdd = dutil.getControl(dlg, "btnAdd")
-        btnChange = dutil.getControl(dlg, "btnChange")
-        btnChangeAll = dutil.getControl(dlg, "btnChangeAll")
-        btnIgnore = dutil.getControl(dlg, "btnIgnore")
-        btnIgnoreAll = dutil.getControl(dlg, "btnIgnoreAll")
-        btnClose = dutil.getControl(dlg, "btnClose")
+        self.listSuggestions = ctrl_getter.get(_dlgdef.LISTBOX_SUGGESTIONS)
+        self.txtChangeTo = ctrl_getter.get(_dlgdef.TXT_CHANGE_TO)
+        self.lblFoundText = ctrl_getter.get(_dlgdef.LBL_FOUND_TEXT)
+        self.lblContext = ctrl_getter.get(_dlgdef.LBL_CONTEXT)
+        btnAdd = ctrl_getter.get(_dlgdef.BTN_ADD)
+        btnChange = ctrl_getter.get(_dlgdef.BTN_CHANGE)
+        btnChangeAll = ctrl_getter.get(_dlgdef.BTN_CHANGE_ALL)
+        btnIgnore = ctrl_getter.get(_dlgdef.BTN_IGNORE)
+        btnIgnoreAll = ctrl_getter.get(_dlgdef.BTN_IGNORE_ALL)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         self.listSuggestions.addItemListener(self.evtHandler)
 

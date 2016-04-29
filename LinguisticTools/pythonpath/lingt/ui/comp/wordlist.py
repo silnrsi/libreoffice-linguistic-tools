@@ -26,9 +26,10 @@ from lingt.app import exceptions
 from lingt.app.fileitemlist import FileItemList, WordListFileItem
 from lingt.app.svc.wordlist import WordList
 from lingt.app.wordlist_structs import ColumnOrder
-from lingt.ui import dutil
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgWordList as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.dep.wordlistfile import DlgWordListFile
-from lingt.ui.messagebox import MessageBox
 from lingt.utils import letters
 from lingt.utils import util
 from lingt.utils.locale import theLocale
@@ -82,14 +83,14 @@ class DlgWordList:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgWordList")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self, self.app)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -243,21 +244,21 @@ class DlgWordList:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.listboxFiles = dutil.getControl(dlg, "ListboxFiles")
-        self.txtRemovePunct = dutil.getControl(dlg, "txtRemovePunct")
-        self.listboxColOrder = dutil.getControl(dlg, "listboxColOrder")
-        self.btnMoveUp = dutil.getControl(dlg, "btnMoveUp")
-        self.btnMoveDown = dutil.getControl(dlg, "btnMoveDown")
-        self.btnMakeList = dutil.getControl(dlg, "btnMakeList")
-        btnAdd = dutil.getControl(dlg, "btnAdd")
-        btnRemove = dutil.getControl(dlg, "btnRemove")
-        btnFileSettings = dutil.getControl(dlg, "btnFileSettings")
-        btnClose = dutil.getControl(dlg, "btnClose")
+        self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
+        self.txtRemovePunct = ctrl_getter.get(_dlgdef.TXT_REMOVE_PUNCT)
+        self.listboxColOrder = ctrl_getter.get(_dlgdef.LISTBOX_COL_ORDER)
+        self.btnMoveUp = ctrl_getter.get(_dlgdef.BTN_MOVE_UP)
+        self.btnMoveDown = ctrl_getter.get(_dlgdef.BTN_MOVE_DOWN)
+        self.btnMakeList = ctrl_getter.get(_dlgdef.BTN_MAKE_LIST)
+        btnAdd = ctrl_getter.get(_dlgdef.BTN_ADD)
+        btnRemove = ctrl_getter.get(_dlgdef.BTN_REMOVE)
+        btnFileSettings = ctrl_getter.get(_dlgdef.BTN_FILE_SETTINGS)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         self.btnMoveUp.setActionCommand("MoveUp")
         self.btnMoveDown.setActionCommand("MoveDown")

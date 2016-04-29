@@ -41,9 +41,10 @@ from lingt.access.writer.styles import GrammarStyles
 from lingt.app import exceptions
 from lingt.app import fileitemlist
 from lingt.app import lingex_structs
-from lingt.ui import dutil
-from lingt.ui import filepicker
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common import filepicker
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.dlgdefs import DlgGrammarSettings as _dlgdef
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlggramsettings")
@@ -78,14 +79,14 @@ class DlgGramSettings:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgGrammarSettings")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -243,35 +244,35 @@ class DlgGramSettings:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
         self.origNumColWidth = 7    # we compare this to the changed value
 
-        self.chkOrthoTextLine = dutil.getControl(dlg, "chkOrthoTextLine")
-        self.chkTextLine = dutil.getControl(dlg, "chkTextLine")
-        self.chkOrthoMorphLine = dutil.getControl(dlg, "chkOrthMorphLine")
-        self.chkMorphLine = dutil.getControl(dlg, "ChkMorphLine")
-        self.chkMorphsSeparate = dutil.getControl(
-            dlg, "chkMorphemesSeparateCols")
-        self.chkPOS_Line = dutil.getControl(dlg, "ChkPOS_Line")
-        self.chkFT_inQuotes = dutil.getControl(dlg, "chkFT_inQuotes")
-        self.chkPOS_aboveGloss = dutil.getControl(dlg, "chkPOS_aboveGloss")
-        self.chkNumbering = dutil.getControl(dlg, "chkInsertNumbering")
-        self.chkOuterTable = dutil.getControl(dlg, "chkOuterTable")
-        self.listboxFiles = dutil.getControl(dlg, "ListboxFiles")
-        self.txtPrefix = dutil.getControl(dlg, "TxtRefPrefix")
-        self.chkUseSegnum = dutil.getControl(dlg, "ChkUseSegnum")
-        self.txtNumColWidth = dutil.getControl(dlg, "TxtNumColWidth")
-        self.lblNumColWidth = dutil.getControl(dlg, "lblNumColWidth")
-        self.optTables = dutil.getControl(dlg, "OptionMethodTables")
-        self.optFrames = dutil.getControl(dlg, "OptionMethodFrames")
-        btnFileAdd = dutil.getControl(dlg, "BtnFileAdd")
-        btnFileRemove = dutil.getControl(dlg, "BtnFileRemove")
-        btnFileUpdate = dutil.getControl(dlg, "BtnFileUpdate")
-        btnOk = dutil.getControl(dlg, "BtnOk")
-        btnCancel = dutil.getControl(dlg, "BtnCancel")
+        self.chkOrthoTextLine = ctrl_getter.get(_dlgdef.CHK_ORTHO_TEXT_LINE)
+        self.chkTextLine = ctrl_getter.get(_dlgdef.CHK_TEXT_LINE)
+        self.chkOrthoMorphLine = ctrl_getter.get(_dlgdef.CHK_ORTH_MORPH_LINE)
+        self.chkMorphLine = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE)
+        self.chkMorphsSeparate = ctrl_getter.get(
+            _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
+        self.chkPOS_Line = ctrl_getter.get(_dlgdef.CHK_POS_LINE)
+        self.chkFT_inQuotes = ctrl_getter.get(_dlgdef.CHK_FT_IN_QUOTES)
+        self.chkPOS_aboveGloss = ctrl_getter.get(_dlgdef.CHK_POS_ABOVE_GLOSS)
+        self.chkNumbering = ctrl_getter.get(_dlgdef.CHK_INSERT_NUMBERING)
+        self.chkOuterTable = ctrl_getter.get(_dlgdef.CHK_OUTER_TABLE)
+        self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
+        self.txtPrefix = ctrl_getter.get(_dlgdef.TXT_REF_PREFIX)
+        self.chkUseSegnum = ctrl_getter.get(_dlgdef.CHK_USE_SEGNUM)
+        self.txtNumColWidth = ctrl_getter.get(_dlgdef.TXT_NUM_COL_WIDTH)
+        self.lblNumColWidth = ctrl_getter.get(_dlgdef.LBL_NUM_COL_WIDTH)
+        self.optTables = ctrl_getter.get(_dlgdef.OPTION_METHOD_TABLES)
+        self.optFrames = ctrl_getter.get(_dlgdef.OPTION_METHOD_FRAMES)
+        btnFileAdd = ctrl_getter.get(_dlgdef.BTN_FILE_ADD)
+        btnFileRemove = ctrl_getter.get(_dlgdef.BTN_FILE_REMOVE)
+        btnFileUpdate = ctrl_getter.get(_dlgdef.BTN_FILE_UPDATE)
+        btnOk = ctrl_getter.get(_dlgdef.BTN_OK)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         ## Buttons
 

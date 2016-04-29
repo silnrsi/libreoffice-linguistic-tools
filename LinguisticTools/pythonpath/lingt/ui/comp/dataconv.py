@@ -45,8 +45,9 @@ from lingt.access.writer import styles
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.dataconversion import DataConversion, ConversionSettings
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgDataConversion as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 
@@ -86,15 +87,15 @@ class DlgDataConversion:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgDataConversion")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         self.dlgCtrls = None
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -273,45 +274,42 @@ class DlgDataConversion:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.txtConverterName = dutil.getControl(dlg, 'txtCnvtrName')
-        self.chkDirectionReverse = dutil.getControl(dlg, 'chkDirectionReverse')
-        self.chkVerify = dutil.getControl(dlg, 'chkVerify')
-        self.optScopeWholeDoc = dutil.getControl(dlg, 'optScopeWholeDoc')
-        self.optScopeSelection = dutil.getControl(dlg, 'optScopeSelection')
-        self.optScopeFont = dutil.getControl(dlg, 'optScopeFont')
-        self.optScopeParaStyle = dutil.getControl(dlg, 'optScopeParaStyle')
-        self.optScopeCharStyle = dutil.getControl(dlg, 'optScopeCharStyle')
-        self.optScopeSFMs = dutil.getControl(dlg, 'optScopeSFMs')
-        self.optScopeFontWestern = dutil.getControl(dlg, 'optScopeFontRegular')
-        self.optScopeFontComplex = dutil.getControl(dlg, 'optScopeFontCTL')
-        self.optScopeFontAsian = dutil.getControl(dlg, 'optScopeFontAsian')
-        self.optTargetFontWestern = dutil.getControl(
-            dlg, 'optTargetFontRegular')
-        self.optTargetFontComplex = dutil.getControl(dlg, 'optTargetFontCTL')
-        self.optTargetFontAsian = dutil.getControl(dlg, 'optTargetFontAsian')
-        self.optTargetNoChange = dutil.getControl(dlg, 'optTargetNoChange')
-        self.optTargetParaStyle = dutil.getControl(dlg, 'optTargetParaStyle')
-        self.optTargetCharStyle = dutil.getControl(dlg, 'optTargetCharStyle')
-        self.optTargetFontOnly = dutil.getControl(dlg, 'optTargetFontOnly')
-        self.comboScopeParaStyle = dutil.getControl(dlg, 'cmbxScopeParaStyle')
-        self.comboScopeCharStyle = dutil.getControl(dlg, 'cmbxScopeCharStyle')
-        self.comboScopeFont = dutil.getControl(dlg, 'cmbxScopeFont')
-        self.comboTargetParaStyle = dutil.getControl(
-            dlg, 'cmbxTargetParaStyle')
-        self.comboTargetCharStyle = dutil.getControl(
-            dlg, 'cmbxTargetCharStyle')
-        self.listTargetStyleFont = dutil.getControl(dlg, 'listStyleFont')
-        self.txtSFM = dutil.getControl(dlg, 'txbxSFM')
-        self.txtFontSize = dutil.getControl(dlg, 'txtFontSize')
-        btnSelectConv = dutil.getControl(dlg, 'BtnSelectConv')
-        btnNoConverter = dutil.getControl(dlg, 'BtnNoConverter')
-        btnOK = dutil.getControl(dlg, 'BtnOK')
-        btnCancel = dutil.getControl(dlg, "BtnCancel")
+        self.txtConverterName = ctrl_getter.get(_dlgdef.TXT_CNVTR_NAME)
+        self.chkDirectionReverse = ctrl_getter.get(_dlgdef.CHK_DIRECTION_REVERSE)
+        self.chkVerify = ctrl_getter.get(_dlgdef.CHK_VERIFY)
+        self.optScopeWholeDoc = ctrl_getter.get(_dlgdef.OPT_SCOPE_WHOLE_DOC)
+        self.optScopeSelection = ctrl_getter.get(_dlgdef.OPT_SCOPE_SELECTION)
+        self.optScopeFont = ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT)
+        self.optScopeParaStyle = ctrl_getter.get(_dlgdef.OPT_SCOPE_PARA_STYLE)
+        self.optScopeCharStyle = ctrl_getter.get(_dlgdef.OPT_SCOPE_CHAR_STYLE)
+        self.optScopeSFMs = ctrl_getter.get(_dlgdef.OPT_SCOPE_SFMS)
+        self.optScopeFontWestern = ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_REGULAR)
+        self.optScopeFontComplex = ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_CTL)
+        self.optScopeFontAsian = ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_ASIAN)
+        self.optTargetFontWestern = ctrl_getter.get(_dlgdef.OPT_TARGET_FONT_REGULAR)
+        self.optTargetFontComplex = ctrl_getter.get(_dlgdef.OPT_TARGET_FONT_CTL)
+        self.optTargetFontAsian = ctrl_getter.get(_dlgdef.OPT_TARGET_FONT_ASIAN)
+        self.optTargetNoChange = ctrl_getter.get(_dlgdef.OPT_TARGET_NO_CHANGE)
+        self.optTargetParaStyle = ctrl_getter.get(_dlgdef.OPT_TARGET_PARA_STYLE)
+        self.optTargetCharStyle = ctrl_getter.get(_dlgdef.OPT_TARGET_CHAR_STYLE)
+        self.optTargetFontOnly = ctrl_getter.get(_dlgdef.OPT_TARGET_FONT_ONLY)
+        self.comboScopeParaStyle = ctrl_getter.get(_dlgdef.CMBX_SCOPE_PARA_STYLE)
+        self.comboScopeCharStyle = ctrl_getter.get(_dlgdef.CMBX_SCOPE_CHAR_STYLE)
+        self.comboScopeFont = ctrl_getter.get(_dlgdef.CMBX_SCOPE_FONT)
+        self.comboTargetParaStyle = ctrl_getter.get(_dlgdef.CMBX_TARGET_PARA_STYLE)
+        self.comboTargetCharStyle = ctrl_getter.get(_dlgdef.CMBX_TARGET_CHAR_STYLE)
+        self.listTargetStyleFont = ctrl_getter.get(_dlgdef.LIST_STYLE_FONT)
+        self.txtSFM = ctrl_getter.get(_dlgdef.TXBX_SFM)
+        self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
+        btnSelectConv = ctrl_getter.get(_dlgdef.BTN_SELECT_CONV)
+        btnNoConverter = ctrl_getter.get(_dlgdef.BTN_NO_CONVERTER)
+        btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         btnSelectConv.setActionCommand('SelectConverter')
         btnNoConverter.setActionCommand('NoConverter')

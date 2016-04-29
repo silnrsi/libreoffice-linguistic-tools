@@ -38,9 +38,10 @@ from lingt.access.xml.words_reader import WordsReader
 from lingt.app import exceptions
 from lingt.app import lingex_structs
 from lingt.app.wordlist_structs import WhatToGrab
-from lingt.ui import dutil
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgWordListFile as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.dep.writingsystem import DlgWritingSystem
-from lingt.ui.messagebox import MessageBox
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 
@@ -79,14 +80,14 @@ class DlgWordListFile:
 
     def showDlg(self):
         logger.debug(util.funcName('begin', obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgWordListFile")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -317,41 +318,40 @@ class DlgWordListFile:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.fileControl = dutil.getControl(dlg, "FilePicker")
-        self.listboxFileType = dutil.getControl(dlg, "listBoxTypeOfFile")
-        self.lblWS = dutil.getControl(dlg, "lblWS")
-        self.txtWS = dutil.getControl(dlg, "txtWS")
-        self.lblAddItem = dutil.getControl(dlg, "lblAddItem")
-        self.lblWhatToGrab = dutil.getControl(dlg, "lblAddField")
-        self.listWhatToGrab = dutil.getControl(dlg, "listAddField")
-        self.lblParaStyle = dutil.getControl(dlg, "lblParaStyle")
-        self.comboParaStyle = dutil.getControl(dlg, "comboBoxParaStyle")
-        self.lblCharStyle = dutil.getControl(dlg, "lblCharStyle")
-        self.comboCharStyle = dutil.getControl(dlg, "comboBoxCharStyle")
-        self.lblFont = dutil.getControl(dlg, "lblFont")
-        self.comboFont = dutil.getControl(dlg, "comboBoxFont")
-        self.lblSFM = dutil.getControl(dlg, "lblSFM")
-        self.txtSFM = dutil.getControl(dlg, "txtSFM")
-        self.checkboxMiss = dutil.getControl(
-            dlg, "checkBoxIncludeMisspelledWords")
-        self.checkboxSkipRow = dutil.getControl(dlg, "checkboxSkipFirstRow")
-        self.checkboxSplit = dutil.getControl(dlg, "chkSplitByWhitespace")
-        self.lblFields = dutil.getControl(dlg, "lblFields")
-        self.listboxFields = dutil.getControl(dlg, "listBoxFields")
-        self.optFontTypeWestern = dutil.getControl(dlg, "optFontWestern")
-        self.optFontTypeComplex = dutil.getControl(dlg, "optFontCTL")
-        self.optFontTypeAsian = dutil.getControl(dlg, "optFontAsian")
-        self.btnAdd = dutil.getControl(dlg, "btnAddItem")
-        self.btnRemove = dutil.getControl(dlg, "btnRemove")
-        self.btnSelectWS = dutil.getControl(dlg, "btnSelect")
-        btnUseCurrent = dutil.getControl(dlg, "btnCurrentDoc")
-        btnOk = dutil.getControl(dlg, "btnOk")
-        btnCancel = dutil.getControl(dlg, "btnCancel")
+        self.fileControl = ctrl_getter.get(_dlgdef.FILE_PICKER)
+        self.listboxFileType = ctrl_getter.get(_dlgdef.LIST_BOX_TYPE_OF_FILE)
+        self.lblWS = ctrl_getter.get(_dlgdef.LBL_WS)
+        self.txtWS = ctrl_getter.get(_dlgdef.TXT_WS)
+        self.lblAddItem = ctrl_getter.get(_dlgdef.LBL_ADD_ITEM)
+        self.lblWhatToGrab = ctrl_getter.get(_dlgdef.LBL_ADD_FIELD)
+        self.listWhatToGrab = ctrl_getter.get(_dlgdef.LIST_ADD_FIELD)
+        self.lblParaStyle = ctrl_getter.get(_dlgdef.LBL_PARA_STYLE)
+        self.comboParaStyle = ctrl_getter.get(_dlgdef.COMBO_BOX_PARA_STYLE)
+        self.lblCharStyle = ctrl_getter.get(_dlgdef.LBL_CHAR_STYLE)
+        self.comboCharStyle = ctrl_getter.get(_dlgdef.COMBO_BOX_CHAR_STYLE)
+        self.lblFont = ctrl_getter.get(_dlgdef.LBL_FONT)
+        self.comboFont = ctrl_getter.get(_dlgdef.COMBO_BOX_FONT)
+        self.lblSFM = ctrl_getter.get(_dlgdef.LBL_SFM)
+        self.txtSFM = ctrl_getter.get(_dlgdef.TXT_SFM)
+        self.checkboxMiss = ctrl_getter.get(_dlgdef.CHECK_BOX_INCLUDE_MISSPELLED_WORDS)
+        self.checkboxSkipRow = ctrl_getter.get(_dlgdef.CHECKBOX_SKIP_FIRST_ROW)
+        self.checkboxSplit = ctrl_getter.get(_dlgdef.CHK_SPLIT_BY_WHITESPACE)
+        self.lblFields = ctrl_getter.get(_dlgdef.LBL_FIELDS)
+        self.listboxFields = ctrl_getter.get(_dlgdef.LIST_BOX_FIELDS)
+        self.optFontTypeWestern = ctrl_getter.get(_dlgdef.OPT_FONT_WESTERN)
+        self.optFontTypeComplex = ctrl_getter.get(_dlgdef.OPT_FONT_CTL)
+        self.optFontTypeAsian = ctrl_getter.get(_dlgdef.OPT_FONT_ASIAN)
+        self.btnAdd = ctrl_getter.get(_dlgdef.BTN_ADD_ITEM)
+        self.btnRemove = ctrl_getter.get(_dlgdef.BTN_REMOVE)
+        self.btnSelectWS = ctrl_getter.get(_dlgdef.BTN_SELECT)
+        btnUseCurrent = ctrl_getter.get(_dlgdef.BTN_CURRENT_DOC)
+        btnOk = ctrl_getter.get(_dlgdef.BTN_OK)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         btnOk.setActionCommand("Ok")
         btnUseCurrent.setActionCommand("UseCurrent")

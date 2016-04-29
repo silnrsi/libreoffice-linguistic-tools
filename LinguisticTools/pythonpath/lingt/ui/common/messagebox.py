@@ -31,7 +31,7 @@ from com.sun.star.awt import XActionListener
 from com.sun.star.lang import IllegalArgumentException
 
 from lingt.app import exceptions
-from lingt.ui import dutil
+from lingt.ui.common import dutil
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.messagebox")

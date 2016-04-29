@@ -33,9 +33,10 @@ from lingt.access.writer.styles import PhonologyStyles
 from lingt.access.writer.uservars import Prefix, UserVars, PhonologyTags
 from lingt.app import exceptions
 from lingt.app import lingex_structs
-from lingt.ui import dutil
+from lingt.ui.common import dutil
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.dlgdefs import DlgPhnlgySettings as _dlgdef
 from lingt.ui.dep.writingsystem import DlgWritingSystem
-from lingt.ui.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgphonsettings")
@@ -66,14 +67,14 @@ class DlgPhonSettings:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgPhnlgySettings")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -130,21 +131,21 @@ class DlgPhonSettings:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.fileControl = dutil.getControl(dlg, "InputFile")
-        self.checkboxBrackets = dutil.getControl(dlg, "CheckboxBrackets")
-        self.txtWritingSys = dutil.getControl(dlg, "TxtWritingSystem")
-        self.optionLexemePht = dutil.getControl(dlg, "optLexemePht")
-        self.optionLexemePhm = dutil.getControl(dlg, "optLexemePhm")
-        self.optionPhonemicFirst = dutil.getControl(dlg, "OptPhonemicFirst")
-        self.optionPhoneticFirst = dutil.getControl(dlg, "OptPhoneticFirst")
-        btnSelectWS = dutil.getControl(dlg, "BtnSelectWS")
-        buttonOK = dutil.getControl(dlg, "ButtonOK")
-        buttonCancel = dutil.getControl(dlg, "ButtonCancel")
+        self.fileControl = ctrl_getter.get(_dlgdef.INPUT_FILE)
+        self.checkboxBrackets = ctrl_getter.get(_dlgdef.CHECKBOX_BRACKETS)
+        self.txtWritingSys = ctrl_getter.get(_dlgdef.TXT_WRITING_SYSTEM)
+        self.optionLexemePht = ctrl_getter.get(_dlgdef.OPT_LEXEME_PHT)
+        self.optionLexemePhm = ctrl_getter.get(_dlgdef.OPT_LEXEME_PHM)
+        self.optionPhonemicFirst = ctrl_getter.get(_dlgdef.OPT_PHONEMIC_FIRST)
+        self.optionPhoneticFirst = ctrl_getter.get(_dlgdef.OPT_PHONETIC_FIRST)
+        btnSelectWS = ctrl_getter.get(_dlgdef.BTN_SELECT_WS)
+        buttonOK = ctrl_getter.get(_dlgdef.BUTTON_OK)
+        buttonCancel = ctrl_getter.get(_dlgdef.BUTTON_CANCEL)
 
         btnSelectWS.setActionCommand("SelectWritingSys")
         buttonOK.setActionCommand("Ok")

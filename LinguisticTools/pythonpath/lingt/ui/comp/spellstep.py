@@ -30,8 +30,9 @@ from com.sun.star.awt import XAdjustmentListener
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.spellingchecks import SpellingStepper
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgSpellStep as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgspellstep")
@@ -64,14 +65,14 @@ class DlgSpellingStep:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgSpellStep")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -199,22 +200,22 @@ class DlgSpellingStep:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.txtRowNum = dutil.getControl(dlg, "txtRowNum")
-        self.txtCorrection = dutil.getControl(dlg, "txtCorrection")
-        self.scrollbarRow = dutil.getControl(dlg, "scrollbarRow")
-        self.lblWordText = dutil.getControl(dlg, "lblWordText")
-        self.lblConvertedText = dutil.getControl(dlg, "lblConvertedText")
-        self.chkIsCorrect = dutil.getControl(dlg, "chkIsCorrect")
-        self.chkSuggestions = dutil.getControl(dlg, "chkGiveSuggestions")
-        self.listSimilarWords = dutil.getControl(dlg, "listboxSimilarWords")
-        self.listSuggestions = dutil.getControl(dlg, "listboxSuggestions")
-        self.btnSetCorrection = dutil.getControl(dlg, "btnSetCorrection")
-        btnClose = dutil.getControl(dlg, "btnClose")
+        self.txtRowNum = ctrl_getter.get(_dlgdef.TXT_ROW_NUM)
+        self.txtCorrection = ctrl_getter.get(_dlgdef.TXT_CORRECTION)
+        self.scrollbarRow = ctrl_getter.get(_dlgdef.SCROLLBAR_ROW)
+        self.lblWordText = ctrl_getter.get(_dlgdef.LBL_WORD_TEXT)
+        self.lblConvertedText = ctrl_getter.get(_dlgdef.LBL_CONVERTED_TEXT)
+        self.chkIsCorrect = ctrl_getter.get(_dlgdef.CHK_IS_CORRECT)
+        self.chkSuggestions = ctrl_getter.get(_dlgdef.CHK_GIVE_SUGGESTIONS)
+        self.listSimilarWords = ctrl_getter.get(_dlgdef.LISTBOX_SIMILAR_WORDS)
+        self.listSuggestions = ctrl_getter.get(_dlgdef.LISTBOX_SUGGESTIONS)
+        self.btnSetCorrection = ctrl_getter.get(_dlgdef.BTN_SET_CORRECTION)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         self.btnSetCorrection.setActionCommand("SetCorrection")
         self.btnSetCorrection.addActionListener(self.evtHandler)

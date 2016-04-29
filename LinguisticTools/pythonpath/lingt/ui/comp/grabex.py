@@ -51,8 +51,9 @@ from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import lingexamples
 from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY, EXTYPE_GRAMMAR
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.dlgdefs import DlgExGrab as _dlgdef
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 
@@ -118,13 +119,14 @@ class DlgGrabExamples:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgExGrab")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self, self.app)
         try:
-            self.dlgCtrls = DlgControls(self.unoObjs, dlg, self.evtHandler)
+            self.dlgCtrls = DlgControls(
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -183,23 +185,22 @@ class DlgGrabExamples:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         """Raises exceptions.LogicError if controls cannot be found."""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.txtRefnum = dutil.getControl(dlg, "TxtRefnum")
-        self.chkStartFromBeginning = dutil.getControl(
-            dlg, "ChkStartFromBeginning")
-        self.optSearchRefNum = dutil.getControl(dlg, "optSearchRefNum")
-        self.optSearchExisting = dutil.getControl(dlg, "optSearchExisting")
-        self.btnReplace = dutil.getControl(dlg, "BtnReplace")
-        self.btnReplaceAll = dutil.getControl(dlg, "BtnReplaceAll")
-        btnFindNext = dutil.getControl(dlg, "BtnFindNext")
-        btnReplace = dutil.getControl(dlg, "BtnReplace")
-        btnReplaceAll = dutil.getControl(dlg, "BtnReplaceAll")
-        btnInsertEx = dutil.getControl(dlg, "BtnInsertEx")
-        btnClose = dutil.getControl(dlg, "BtnClose")
+        self.txtRefnum = ctrl_getter.get(_dlgdef.TXT_REFNUM)
+        self.chkStartFromBeginning = ctrl_getter.get(_dlgdef.CHK_START_FROM_BEGINNING)
+        self.optSearchRefNum = ctrl_getter.get(_dlgdef.OPT_SEARCH_REF_NUM)
+        self.optSearchExisting = ctrl_getter.get(_dlgdef.OPT_SEARCH_EXISTING)
+        self.btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
+        self.btnReplaceAll = ctrl_getter.get(_dlgdef.BTN_REPLACE_ALL)
+        btnFindNext = ctrl_getter.get(_dlgdef.BTN_FIND_NEXT)
+        btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
+        btnReplaceAll = ctrl_getter.get(_dlgdef.BTN_REPLACE_ALL)
+        btnInsertEx = ctrl_getter.get(_dlgdef.BTN_INSERT_EX)
+        btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         btnFindNext.setActionCommand("FindNext")
         btnReplace.setActionCommand("Replace")

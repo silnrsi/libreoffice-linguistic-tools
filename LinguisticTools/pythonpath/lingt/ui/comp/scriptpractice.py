@@ -30,8 +30,9 @@ from com.sun.star.uno import RuntimeException
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc import scriptpractice
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgScriptPractice as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.comp.wordlist import DlgWordList
 from lingt.utils import unicode_data
 from lingt.utils import util
@@ -80,16 +81,16 @@ class DlgScriptPractice:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        self.dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgScriptPractice")
+        self.dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not self.dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(
             self.userVars, self, self.script, self.questions)
         self.dlgClose = self.dlg.endExecute
         try:
             self.dlgCtrls = DlgControls(
-                self.dlg, self.evtHandler, self.script, self.dlgClose,
+                ctrl_getter, self.evtHandler, self.script, self.dlgClose,
                 self.msgbox)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
@@ -291,36 +292,37 @@ class DlgControls:
         self.script = script
         self.charsetAlreadySet = False
 
-        self.lblCharset = dutil.getControl(dlg, "lblCharset")
-        self.txtCharset = dutil.getControl(dlg, "txtCharset")
-        self.txtQuestion = dutil.getControl(dlg, "txtQuestion")
-        self.txtAnswer = dutil.getControl(dlg, "txtAnswer")
-        self.optGenerate = dutil.getControl(dlg, "optGenerate")
-        self.optWordlist = dutil.getControl(dlg, "optWordlist")
-        self.optCheckAtLastChar = dutil.getControl(dlg, "optCheckAtLastChar")
-        self.optCheckTypeSpace = dutil.getControl(dlg, "optCheckTypeSpace")
-        self.comboScript = dutil.getControl(dlg, "cmbxScript")
-        self.lblScript = dutil.getControl(dlg, "lblScript")
-        self.comboFont = dutil.getControl(dlg, "cmbxFont")
-        self.listSyllableSize = dutil.getControl(dlg, "listSyllableSize")
-        self.lblSyllableSize = dutil.getControl(dlg, "lblSyllableSize")
-        self.dispNumWords = dutil.getControl(dlg, "lblDispNumberOfWords")
-        self.dispCorrect = dutil.getControl(dlg, "lblDispCorrect")
-        self.dispIncorrect = dutil.getControl(dlg, "lblDispIncorrect")
-        self.dispAvgTime = dutil.getControl(dlg, "lblDispAvgTime")
-        self.txtNumSyllables = dutil.getControl(dlg, "txtNumSyllables")
-        self.lblNumSyllables = dutil.getControl(dlg, "lblNumSyllables")
-        self.txtNumWords = dutil.getControl(dlg, "txtNumWords")
-        self.lblNumWords = dutil.getControl(dlg, "lblNumWords")
-        self.txtFontSize = dutil.getControl(dlg, "txtFontSize")
-        self.btnResetChars = dutil.getControl(dlg, "btnResetCharacters")
-        self.btnFiles = dutil.getControl(dlg, "btnFiles")
-        self.chkKnownFonts = dutil.getControl(dlg, "chkKnownFonts")
-        self.btnSwitch = dutil.getControl(dlg, "btnSwitch")
-        self.btnRetry = dutil.getControl(dlg, "BtnRetry")
-        self.btnNextWord = dutil.getControl(dlg, "BtnNextWord")
-        btnResetStats = dutil.getControl(dlg, "btnResetStats")
-        btnExit = dutil.getControl(dlg, "btnExit")
+        self.lblCharset = ctrl_getter.get(_dlgdef.LBL_CHARSET)
+        self.txtCharset = ctrl_getter.get(_dlgdef.TXT_CHARSET)
+        self.txtQuestion = ctrl_getter.get(_dlgdef.TXT_QUESTION)
+        self.txtAnswer = ctrl_getter.get(_dlgdef.TXT_ANSWER)
+        self.optGenerate = ctrl_getter.get(_dlgdef.OPT_GENERATE)
+        self.optWordlist = ctrl_getter.get(_dlgdef.OPT_WORDLIST)
+        self.optCheckAtLastChar = ctrl_getter.get(
+            _dlgdef.OPT_CHECK_AT_LAST_CHAR)
+        self.optCheckTypeSpace = ctrl_getter.get(_dlgdef.OPT_CHECK_TYPE_SPACE)
+        self.comboScript = ctrl_getter.get(_dlgdef.CMBX_SCRIPT)
+        self.lblScript = ctrl_getter.get(_dlgdef.LBL_SCRIPT)
+        self.comboFont = ctrl_getter.get(_dlgdef.CMBX_FONT)
+        self.listSyllableSize = ctrl_getter.get(_dlgdef.LIST_SYLLABLE_SIZE)
+        self.lblSyllableSize = ctrl_getter.get(_dlgdef.LBL_SYLLABLE_SIZE)
+        self.dispNumWords = ctrl_getter.get(_dlgdef.LBL_DISP_NUMBER_OF_WORDS)
+        self.dispCorrect = ctrl_getter.get(_dlgdef.LBL_DISP_CORRECT)
+        self.dispIncorrect = ctrl_getter.get(_dlgdef.LBL_DISP_INCORRECT)
+        self.dispAvgTime = ctrl_getter.get(_dlgdef.LBL_DISP_AVG_TIME)
+        self.txtNumSyllables = ctrl_getter.get(_dlgdef.TXT_NUM_SYLLABLES)
+        self.lbl_NumSyllables = ctrl_getter.get(_dlgdef.LBL_NUM_SYLLABLES)
+        self.txtNumWords = ctrl_getter.get(_dlgdef.TXT_NUM_WORDS)
+        self.lbl_NumWords = ctrl_getter.get(_dlgdef.LBL_NUM_WORDS)
+        self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
+        self.btnResetChars = ctrl_getter.get(_dlgdef.BTN_RESET_CHARACTERS)
+        self.btnFiles = ctrl_getter.get(_dlgdef.BTN_FILES)
+        self.chkKnownFonts = ctrl_getter.get(_dlgdef.CHK_KNOWN_FONTS)
+        self.btnSwitch = ctrl_getter.get(_dlgdef.BTN_SWITCH)
+        self.btnRetry = ctrl_getter.get(_dlgdef.BTN_RETRY)
+        self.btnNextWord = ctrl_getter.get(_dlgdef.BTN_NEXT_WORD)
+        btnResetStats = ctrl_getter.get(_dlgdef.BTN_RESET_STATS)
+        btnExit = ctrl_getter.get(_dlgdef.BTN_EXIT)
 
         self.btnResetChars.setActionCommand("ResetChars")
         self.btnFiles.setActionCommand("ChooseFiles")

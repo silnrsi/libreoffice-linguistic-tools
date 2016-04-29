@@ -28,8 +28,9 @@ from lingt.access.writer import styles
 from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.spellingchecks import SpellingChecker, CheckerSettings
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.dlgdefs import DlgSpellSearch as _dlgdef
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import letters
 from lingt.utils import util
 from lingt.utils.locale import theLocale
@@ -63,14 +64,14 @@ class DlgSpellingSearch:
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
-        dlg = dutil.createDialog(
-            self.unoObjs, self.msgbox, "DlgSpellSearch")
+        dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not dlg:
             return
+        ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         try:
             self.dlgCtrls = DlgControls(
-                self.unoObjs, dlg, self.evtHandler)
+                self.unoObjs, ctrl_getter, self.evtHandler)
         except exceptions.LogicError as exc:
             self.msgbox.displayExc(exc)
             dlg.dispose()
@@ -204,31 +205,33 @@ class DlgControls:
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.fileWordList = dutil.getControl(dlg, "fileWordList")
-        self.optApplyCorrections = dutil.getControl(dlg, "optApplyCorrections")
-        self.optSpellcheck = dutil.getControl(dlg, "optSpellcheck")
-        self.optWholeDoc = dutil.getControl(dlg, "optWholeDoc")
-        self.optLocale = dutil.getControl(dlg, "optLanguage")
-        self.optParaStyle = dutil.getControl(dlg, "optParaStyle")
-        self.optCharStyle = dutil.getControl(dlg, "optCharStyle")
-        self.optFont = dutil.getControl(dlg, "optFont")
-        self.optSFMs = dutil.getControl(dlg, "optSFM")
-        self.optFontTypeWestern = dutil.getControl(dlg, "optFontTypeWestern")
-        self.optFontTypeComplex = dutil.getControl(dlg, "optFontTypeCTL")
-        self.optFontTypeAsian = dutil.getControl(dlg, "optFontTypeAsian")
-        self.comboParaStyle = dutil.getControl(dlg, "comboParaStyle")
-        self.comboCharStyle = dutil.getControl(dlg, "comboCharStyle")
-        self.comboFont = dutil.getControl(dlg, "comboFont")
-        self.listLocale = dutil.getControl(dlg, "listboxLocale")
-        self.txtSFM = dutil.getControl(dlg, "txtSFM")
-        self.txtAffixes = dutil.getControl(dlg, "txtAffixes")
-        self.lblAffixes = dutil.getControl(dlg, "lblAffixes")
-        self.lblAffixes2 = dutil.getControl(dlg, "lblAffixes2")
-        self.txtPunct = dutil.getControl(dlg, "txtPunctuation")
-        self.chkMatchCase = dutil.getControl(dlg, "chkMatchCase")
-        btnUseCurrent = dutil.getControl(dlg, "btnCurrentSpreadsheet")
-        btnSearch = dutil.getControl(dlg, "btnSearch")
-        btnCancel = dutil.getControl(dlg, "btnCancel")
+        self.fileWordList = ctrl_getter.get(_dlgdef.FILE_WORD_LIST)
+        self.optApplyCorrections = ctrl_getter.get(
+            _dlgdef.OPT_APPLY_CORRECTIONS)
+        self.optSpellcheck = ctrl_getter.get(_dlgdef.OPT_SPELLCHECK)
+        self.optWholeDoc = ctrl_getter.get(_dlgdef.OPT_WHOLE_DOC)
+        self.optLocale = ctrl_getter.get(_dlgdef.OPT_LANGUAGE)
+        self.optParaStyle = ctrl_getter.get(_dlgdef.OPT_PARA_STYLE)
+        self.optCharStyle = ctrl_getter.get(_dlgdef.OPT_CHAR_STYLE)
+        self.optFont = ctrl_getter.get(_dlgdef.OPT_FONT)
+        self.optSFMs = ctrl_getter.get(_dlgdef.OPT_SFM)
+        self.optFontTypeWestern = ctrl_getter.get(
+            _dlgdef.OPT_FONT_TYPE_WESTERN)
+        self.optFontTypeComplex = ctrl_getter.get(_dlgdef.OPT_FONT_TYPE_CTL)
+        self.optFontTypeAsian = ctrl_getter.get(_dlgdef.OPT_FONT_TYPE_ASIAN)
+        self.comboParaStyle = ctrl_getter.get(_dlgdef.COMBO_PARA_STYLE)
+        self.comboCharStyle = ctrl_getter.get(_dlgdef.COMBO_CHAR_STYLE)
+        self.comboFont = ctrl_getter.get(_dlgdef.COMBO_FONT)
+        self.listLocale = ctrl_getter.get(_dlgdef.LISTBOX_LOCALE)
+        self.txtSFM = ctrl_getter.get(_dlgdef.TXT_SFM)
+        self.txtAffixes = ctrl_getter.get(_dlgdef.TXT_AFFIXES)
+        self.lblAffixes = ctrl_getter.get(_dlgdef.LBL_AFFIXES)
+        self.lblAffixes2 = ctrl_getter.get(_dlgdef.LBL_AFFIXES2)
+        self.txtPunct = ctrl_getter.get(_dlgdef.TXT_PUNCTUATION)
+        self.chkMatchCase = ctrl_getter.get(_dlgdef.CHK_MATCH_CASE)
+        btnUseCurrent = ctrl_getter.get(_dlgdef.BTN_CURRENT_SPREADSHEET)
+        btnSearch = ctrl_getter.get(_dlgdef.BTN_SEARCH)
+        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         btnUseCurrent.setActionCommand("UseCurrent")
         btnSearch.setActionCommand("Close_and_Search")

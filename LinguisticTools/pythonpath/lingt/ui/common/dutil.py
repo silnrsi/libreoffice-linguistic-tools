@@ -32,7 +32,7 @@ from com.sun.star.lang import IllegalArgumentException
 from grantjenks.tribool import Tribool
 
 from lingt.app import exceptions
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 # checkbox and radio button values
