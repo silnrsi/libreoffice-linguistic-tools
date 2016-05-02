@@ -82,7 +82,7 @@ class BulkConversion:
     def update_list(self, event_handler):
         """Update self.fontItemList based on the event that just occurred."""
         item_to_update = self.fontItemList.selected_item()
-        self.fontItemList.update_item(item_to_update, event_handler)
+        self.fontItemList.update_group(item_to_update, event_handler)
 
     def doConversions(self):
         logger.debug(util.funcName('begin'))
@@ -182,7 +182,7 @@ class FontItemList:
         # Merge data, sorting data by fontItem.inputDataOrder.
         return sorted(self.items)
 
-    def update_item(self, item_to_update, event_handler):
+    def update_group(self, item_to_update, event_handler):
         """When controls get changed,
         update all FontItem objects in the selected group.
 
@@ -193,7 +193,7 @@ class FontItemList:
         logger.debug(util.funcName('begin', args=attrs_changed))
         for item in self.items_to_change(item_to_update):
             item.create_change(self.userVars)
-            event_handler.read(item.change)
+            event_handler.update_item(item.change)
 
     def items_to_change(self, item_to_update):
         """Get all FontItem objects in the selected group.
