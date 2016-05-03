@@ -27,6 +27,7 @@ import logging
 
 import uno
 import unohelper
+from com.sun.star.awt import Rectangle
 from com.sun.star.awt import XActionListener
 from com.sun.star.lang import IllegalArgumentException
 
@@ -123,7 +124,7 @@ class MessageBox:
         :arg message: May contain "%" values to interpolate.
         :arg msg_args: Values to use for interpolation.
         """
-        rect = uno.createUnoStruct('com.sun.star.awt.Rectangle')
+        rect = Rectangle()
         message = exceptions.interpolate_message(message, msg_args)
         message += " "  # padding so that it displays better
         logger.warning(message)

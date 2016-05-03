@@ -27,15 +27,15 @@ Create and manage OOo styles.
 import logging
 from operator import itemgetter
 
-import uno
+from com.sun.star.style import TabStop
 from com.sun.star.style.TabAlign import LEFT
 from com.sun.star.text.SizeType import VARIABLE
 from com.sun.star.text.TextContentAnchorType import AS_CHARACTER
 from com.sun.star.text.VertOrientation import LINE_TOP
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.app import exceptions
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 
@@ -262,7 +262,7 @@ class PhonologyStyles(DocumentStyles):
                           INCH_TO_CM * 1.5,
                           INCH_TO_CM * 1.5]:
                 position += width
-                tabStop = uno.createUnoStruct('com.sun.star.style.TabStop')
+                tabStop = TabStop()
                 tabStop.Position = position    # 1/1000cm: 2540 = 1 inch
                 tabStop.Alignment = LEFT
                 tabStop.DecimalChar = "."

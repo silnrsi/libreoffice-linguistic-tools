@@ -33,7 +33,7 @@ then choosing User Field under the Variables tab.
 import logging
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.app import exceptions
 from lingt.utils import util
 from lingt.utils.locale import theLocale
@@ -51,7 +51,7 @@ class Prefix:
     DATA_CONVERSION = "LTc_"
     BULK_CONVERSION = "LTbc_"
     WORD_LIST = "LTw_"
-    SPELLING = = "LTsp_"
+    SPELLING = "LTsp_"
     SCRIPT_PRACTICE = "LTscr_"
 
 

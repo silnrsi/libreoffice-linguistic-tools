@@ -30,10 +30,10 @@ from lingt.access.writer.traveler import RangeJumper
 from lingt.app import exceptions
 from lingt.app.svc import spellingchanges
 from lingt.app.svc.spellingcomparisons import SpellingSuggestions
-from lingt.app.wordlist_structs import ColumnOrder
+from lingt.app.data.wordlist_structs import ColumnOrder
 from lingt.ui.dep.spellreplace import DlgSpellingReplace
-from lingt.ui.messagebox import MessageBox, FourButtonDialog
-from lingt.ui.progressbar import ProgressBar
+from lingt.ui.common.messagebox import MessageBox, FourButtonDialog
+from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import letters
 from lingt.utils import util
 

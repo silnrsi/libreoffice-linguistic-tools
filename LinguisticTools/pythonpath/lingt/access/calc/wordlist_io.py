@@ -16,9 +16,9 @@ from com.sun.star.uno import RuntimeException
 from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.app import exceptions
-from lingt.app.wordlist_structs import WordInList
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar, ProgressRanges
+from lingt.app.data.wordlist_structs import WordInList
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar, ProgressRanges
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 

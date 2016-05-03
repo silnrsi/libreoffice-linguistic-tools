@@ -23,10 +23,10 @@ import os
 import xml.dom.minidom
 import xml.parsers.expat
 
-from lingt.access.file_reader import FileReader
+from lingt.access.common.file_reader import FileReader
 from lingt.access.xml import xmlutil
 from lingt.app import exceptions
-from lingt.app.bulkconv_structs import FontItem
+from lingt.app.data.bulkconv_structs import FontItem
 from lingt.utils import util
 
 

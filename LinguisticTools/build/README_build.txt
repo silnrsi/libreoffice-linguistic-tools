@@ -2,6 +2,7 @@
 #
 # Created on 18-Jul-2011 by Jim Kornelsen.
 # 12-Dec-15 JDK  Added info about dialogs and releasing a new version.
+# 03-May-16 JDK  No need to assimilate code.
 
 #------------------------------------------------------------------------------
 # Building the code
@@ -11,15 +12,13 @@ I use three different methods for building and running the OOLT extension.  The
 first is to manually select the folders, zip it up, rename as .oxt and then
 double-click to deploy in LibreOffice.  This is simple but somewhat tedious.
 
-The second method is similar but more automated.  Run pack_deploy.ps1, which
-zips up the folders and deploys them.
-This is the best general purpose method.
+The second method is similar but more automated.  Run deploy_as_extension.ps1,
+which zips up the folders and deploys them.
+This is a good general purpose method.
 
-The third is a different approach that has several benefits for the developer.
-1. Run assim_deploy.ps1 which puts all of the python code into a few large
-   standalone files, then copies the large files to Scripts/python in the
-   OpenOffice or LibreOffice user directory.
-   Or run assim_deploy_wrapped.ps1, which copies everything in a single file.
+For the third method, do not zip it.  Run it from the user directory:
+1. Run deploy_to_userdir.ps1 which copies the large files to Scripts/python in
+   the OpenOffice or LibreOffice user directory.
 2. From OpenOffice go to Tools -> Macros -> Run macro.
    Do not use the Linguistics menu with this approach.
 

@@ -9,5 +9,6 @@ http://www.openoffice.org/api/docs/common/ref/com/sun/star/task/module-ix.html
 """
 
 class ErrorCodeIOException(Exception):
-    ErrCode = 0
+    """long ErrCode"""
+    pass
 

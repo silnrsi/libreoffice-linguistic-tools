@@ -26,7 +26,7 @@ from grantjenks.tribool import Tribool
 
 from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
-from lingt.app import lingex_structs
+from lingt.app.data import lingex_structs
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.app.wordlist_structs")

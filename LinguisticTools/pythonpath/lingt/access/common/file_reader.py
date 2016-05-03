@@ -23,8 +23,8 @@ Interface to read XML or other files.
 import logging
 
 from lingt.app import exceptions
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
 
 class FileReader:

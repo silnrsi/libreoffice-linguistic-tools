@@ -18,9 +18,9 @@ import uno
 from com.sun.star.sheet.CellFlags import VALUE as NUM_VAL, DATETIME, STRING
 from com.sun.star.uno import RuntimeException
 
-from lingt.access.file_reader import FileReader
+from lingt.access.common.file_reader import FileReader
 from lingt.app import exceptions
-from lingt.app import wordlist_structs
+from lingt.app.data import wordlist_structs
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 

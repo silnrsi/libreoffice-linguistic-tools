@@ -12,7 +12,7 @@ import re
 import xml.dom.minidom
 import xml.parsers.expat
 
-from lingt.access.file_reader import FileReader
+from lingt.access.common.file_reader import FileReader
 from lingt.utils import util
 
 class WritingSystem:

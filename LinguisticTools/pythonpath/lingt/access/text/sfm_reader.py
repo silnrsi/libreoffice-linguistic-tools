@@ -11,8 +11,8 @@ import io
 import os
 
 from lingt.app import exceptions
-from lingt.app import wordlist_structs
-from lingt.access.file_reader import FileReader
+from lingt.app.data import wordlist_structs
+from lingt.access.common.file_reader import FileReader
 
 class SFM_Reader(FileReader):
 

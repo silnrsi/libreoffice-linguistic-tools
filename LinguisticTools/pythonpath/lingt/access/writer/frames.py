@@ -17,7 +17,7 @@ import logging
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 from com.sun.star.text.SizeType import FIX, VARIABLE
 
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.Frames")

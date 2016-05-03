@@ -20,8 +20,8 @@ from operator import itemgetter
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.app import exceptions
-from lingt.app.wordlist_structs import WordInList, ColumnOrder
-from lingt.ui.messagebox import MessageBox
+from lingt.app.data.wordlist_structs import WordInList, ColumnOrder
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import letters
 from lingt.utils import unicode_data
 from lingt.utils import util

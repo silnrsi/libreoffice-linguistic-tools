@@ -27,11 +27,11 @@ from lingt.access.xml.interlin_reader import InterlinReader
 from lingt.access.xml.phon_reader import PhonReader
 from lingt.access.xml.words_reader import WordsReader
 from lingt.app import exceptions
-from lingt.app import fileitemlist
-from lingt.app import lingex_structs
-from lingt.app.wordlist_structs import WordInList, ColumnOrder
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar, ProgressRange
+from lingt.app.data import fileitemlist
+from lingt.app.data import lingex_structs
+from lingt.app.data.wordlist_structs import WordInList, ColumnOrder
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.wordlist")

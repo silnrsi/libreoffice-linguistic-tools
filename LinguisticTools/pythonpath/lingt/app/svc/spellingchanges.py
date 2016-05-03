@@ -27,8 +27,8 @@ from lingt.access.text.cct_writer import CCT_Writer
 from lingt.access.text.xslt_writer import XSLT_Writer
 from lingt.app import exceptions
 from lingt.app.wordlist_structs import ColumnOrder
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.ChangerMaker")

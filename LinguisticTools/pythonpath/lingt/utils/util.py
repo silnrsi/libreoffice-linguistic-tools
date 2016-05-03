@@ -51,6 +51,7 @@ import os
 import platform
 
 import uno
+from com.sun.star.beans import PropertyValue
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 
@@ -215,7 +216,7 @@ class UnoObjs:
 
 def createProp(name, value):
     """Creates an UNO property."""
-    prop = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
+    prop = PropertyValue()
     prop.Name = name
     prop.Value = value
     return prop

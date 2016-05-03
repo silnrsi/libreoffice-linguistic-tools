@@ -23,8 +23,8 @@ import logging
 import re
 
 from lingt.access.writer.uservars import Syncable
-from lingt.app.fileitemlist import ItemList
-from lingt.ui.messagebox import MessageBox
+from lingt.app.data.fileitemlist import ItemList
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.abbreviations")

@@ -13,10 +13,10 @@ Writer document searches such as by font or full document.
 import logging
 import re
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.access.writer.traveler import Traveler
 from lingt.app import exceptions
-from lingt.ui.progressbar import ProgressRange
+from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.TextSearch")

@@ -25,8 +25,8 @@ from com.sun.star.uno import RuntimeException
 from lingt.access.writer.frames import InterlinFrames
 from lingt.access.writer.tables import OuterTable, InterlinTables
 from lingt.app import exceptions
-from lingt.app import lingex_structs
-from lingt.ui.messagebox import MessageBox
+from lingt.app.data import lingex_structs
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.OutputManager")

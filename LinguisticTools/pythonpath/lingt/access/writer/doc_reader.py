@@ -15,10 +15,10 @@ import uno
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 
-from lingt.access.file_reader import FileReader
+from lingt.access.common.file_reader import FileReader
 from lingt.access.writer.textsearch import TextSearchSettings, TextSearch
 from lingt.app import exceptions
-from lingt.app.wordlist_structs import WhatToGrab, WordInList
+from lingt.app.data.wordlist_structs import WhatToGrab, WordInList
 from lingt.utils import util
 from lingt.utils.locale import theLocale
 

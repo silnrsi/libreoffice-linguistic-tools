@@ -27,10 +27,10 @@ import os
 import xml.dom.minidom
 import xml.parsers.expat
 
-from lingt.access.file_reader import FileReader
+from lingt.access.common.file_reader import FileReader
 from lingt.access.xml import xmlutil
 from lingt.app import exceptions
-from lingt.app import wordlist_structs
+from lingt.app.data import wordlist_structs
 
 class WordsReader(FileReader):
     SUPPORTED_FORMATS = [

@@ -32,7 +32,7 @@ import re
 
 from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
-from lingt.app import wordlist_structs
+from lingt.app.data import wordlist_structs
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.fileitemlist")

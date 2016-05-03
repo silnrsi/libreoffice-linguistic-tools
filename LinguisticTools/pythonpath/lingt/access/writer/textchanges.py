@@ -26,11 +26,11 @@ from com.sun.star.beans.PropertyState import DIRECT_VALUE
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.ui.messagebox import FourButtonDialog
-from lingt.ui.progressbar import ProgressRange
+from lingt.ui.common.messagebox import FourButtonDialog
+from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.textchanges")

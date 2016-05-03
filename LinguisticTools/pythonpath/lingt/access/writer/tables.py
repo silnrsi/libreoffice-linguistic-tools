@@ -19,8 +19,8 @@ Create TextTables for interlinear data.
 import logging
 
 from lingt.app import exceptions
-from lingt.app import lingex_structs
-from lingt.ui.messagebox import MessageBox
+from lingt.app.data import lingex_structs
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.Tables")

@@ -22,9 +22,9 @@ from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.bulkconv_structs import FontChange
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar, ProgressRange
+from lingt.app.data.bulkconv_structs import FontChange
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.dataconversion")
@@ -193,7 +193,7 @@ class FontItemList:
         logger.debug(util.funcName('begin', args=attrs_changed))
         for item in self.items_to_change(item_to_update):
             item.create_change(self.userVars)
-            event_handler.update_item(item.change)
+            event_handler.update_change(item.change)
 
     def items_to_change(self, item_to_update):
         """Get all FontItem objects in the selected group.

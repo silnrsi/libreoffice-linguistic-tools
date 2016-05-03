@@ -23,11 +23,14 @@ much simpler.
 import logging
 
 import uno
+from com.sun.star.awt import Point
+from com.sun.star.awt import Size
+from com.sun.star.script import ScriptEventDescriptor
 from com.sun.star.style.BreakType import PAGE_BEFORE
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 from com.sun.star.text.TextContentAnchorType import AS_CHARACTER
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.access.writer.uservars import UserVars
 from lingt.utils import util
 
@@ -343,13 +346,11 @@ class ComparisonDoc:
         logger.debug(util.funcName())
         oControlShape = self.writerDoc.document.createInstance(
             "com.sun.star.drawing.ControlShape")
-        aPoint = uno.createUnoStruct("com.sun.star.awt.Point")
-        aPoint.X = 1000
-        aPoint.Y = 1000
+        aPoint = Point(1000, 1000)
         oControlShape.setPosition(aPoint)
-        aSize = uno.createUnoStruct("com.sun.star.awt.Size")
-        aSize.Width = 6000
-        aSize.Height = 800
+        aSize = Size(6000, 800)
+        #aSize.Width = 6000
+        #aSize.Height = 800
         oControlShape.setSize(aSize)
         oControlShape.AnchorType = AS_CHARACTER
         oButtonModel = self.mainDoc.smgr.createInstance(
@@ -392,8 +393,7 @@ class ComparisonDoc:
         sScriptURL = ("vnd.sun.star.script:"
                       "LingToolsBasic.ModuleMain.GoToTableInOtherDoc?"
                       "language=Basic&location=application")
-        aEvent = uno.createUnoStruct(
-            "com.sun.star.script.ScriptEventDescriptor")
+        aEvent = ScriptEventDescriptor()
         aEvent.AddListenerParam = ""
         aEvent.EventMethod = "actionPerformed"
         aEvent.ListenerType = "XActionListener"

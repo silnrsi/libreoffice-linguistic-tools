@@ -28,8 +28,8 @@ from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.writer.textchanges import TextChanger
 from lingt.access.writer.textsearch import TextSearch, TextSearchSettings
 from lingt.app import exceptions
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.dataconversion")

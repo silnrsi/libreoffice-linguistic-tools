@@ -22,6 +22,7 @@ import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
+from com.sun.star.lang import EventObject
 
 from lingt.access.writer import uservars
 from lingt.app import exceptions
@@ -95,7 +96,7 @@ class DlgSpellingAdjustments:
         else:
             self.charsetAlreadySet = False
 
-        evt = uno.createUnoStruct("com.sun.star.lang.EventObject")
+        evt = EventObject()
         for ctrl in (
                 self.dlgCtrls.comboScript, self.dlgCtrls.comboFont,
                 self.dlgCtrls.txtFontSize):

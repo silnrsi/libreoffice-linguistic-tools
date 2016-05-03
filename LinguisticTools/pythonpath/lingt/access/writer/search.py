@@ -33,10 +33,10 @@ Performs searches for data in the writer document.
 import logging
 import re
 
-from lingt.access import iteruno
+from lingt.access.common import iteruno
 from lingt.access.writer.traveler import VCLocation
-from lingt.ui.messagebox import MessageBox
-from lingt.ui.progressbar import ProgressBar, ProgressRange
+from lingt.ui.common.messagebox import MessageBox
+from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.Search")

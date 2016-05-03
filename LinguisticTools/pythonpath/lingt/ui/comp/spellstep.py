@@ -26,6 +26,7 @@ from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
 from com.sun.star.awt import XAdjustmentListener
+from com.sun.star.lang import EventObject
 
 from lingt.access.writer import uservars
 from lingt.app import exceptions
@@ -246,7 +247,7 @@ class DlgControls:
             ctrl.addItemListener(self.evtHandler)
 
         # Simulate an itemStateChanged event.
-        evt = uno.createUnoStruct("com.sun.star.lang.EventObject")
+        evt = EventObject()
         evt.Source = self.chkSuggestions
         self.evtHandler.itemStateChanged(evt)
 

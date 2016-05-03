@@ -16,8 +16,8 @@ import logging
 import time
 
 from lingt.app import exceptions
-from lingt.ui import dutil
-from lingt.ui.messagebox import MessageBox
+from lingt.ui.common import dutil
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.ad_hoc_testing")
@@ -207,24 +207,26 @@ def doReplace():
     #oDoc.replaceAll(r)
 
 def displayAttrs():
-    unoObj = unoObjs.text
-    oVC = unoObjs.viewcursor
+    #unoObj = unoObjs.text
+    #oVC = unoObjs.viewcursor
     #util.xray(oVC, unoObjs)
     #util.xray(unoObjs.controller, unoObjs)
 
-    from lingt.access.writer import uservars
-    from lingt.ui.dep.wordlistfile import DlgWordListFile
-    from lingt.app.fileitemlist import WordListFileItem
-    userVars = uservars.UserVars("LTw_", unoObjs.document, logger)
-    newItem = WordListFileItem(userVars)
-    dlgFile = DlgWordListFile(newItem, unoObjs, userVars)
-    dlgFile.showDlg()
-    lbox = dlgFile.dlgCtrls.listboxFileType
-    lbox.removeItems(1, 8)
+    util.xray(unoObjs.document, unoObjs)
+
+    #from lingt.access.writer import uservars
+    #from lingt.ui.dep.wordlistfile import DlgWordListFile
+    #from lingt.app.fileitemlist import WordListFileItem
+    #userVars = uservars.UserVars("LTw_", unoObjs.document, logger)
+    #newItem = WordListFileItem(userVars)
+    #dlgFile = DlgWordListFile(newItem, unoObjs, userVars)
+    #dlgFile.showDlg()
+    #lbox = dlgFile.dlgCtrls.listboxFileType
+    #lbox.removeItems(1, 8)
     #util.xray(lbox, unoObjs)
-    items = lbox.getItems()
-    print("repr %r, len %d" % (items, len(items)))
-    dlgFile.dlgDispose()
+    #items = lbox.getItems()
+    #print("repr %r, len %d" % (items, len(items)))
+    #dlgFile.dlgDispose()
 
     #tables = unoObjs.document.getTextTables()
     #table = tables.getByName("Table1");
@@ -273,8 +275,8 @@ def displayAttrs():
 #------------------------------------------------------------------------------
 print("Starting...")
 ctx = util.UnoObjs.getCtxFromSocket()
-unoObjs = util.UnoObjs(ctx)
-#unoObjs = util.UnoObjs(ctx, 'calc')
+#unoObjs = util.UnoObjs(ctx)
+unoObjs = util.UnoObjs(ctx, 'calc')
 #unoObjs = util.UnoObjs(ctx, 'impress')
 #msgbox = MessageBox(unoObjs)
 
