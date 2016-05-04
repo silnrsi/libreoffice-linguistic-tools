@@ -39,9 +39,10 @@ from com.sun.star.awt import XItemListener
 from lingt.access.writer import uservars
 from lingt.access.writer.styles import GrammarStyles
 from lingt.app import exceptions
-from lingt.app import fileitemlist
-from lingt.app import lingex_structs
+from lingt.app.data import fileitemlist
+from lingt.app.data import lingex_structs
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common import filepicker
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.dlgdefs import DlgGrammarSettings as _dlgdef
@@ -84,13 +85,8 @@ class DlgGramSettings:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
         self.dlgCtrls.loadValues(self.userVars, self.fileItems)
         self.dlgCtrls.enableDisable()
@@ -396,8 +392,8 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
-    @dutil.do_not_enter_if_handling_event
+    @evt_handler.log_exceptions
+    @evt_handler.do_not_enter_if_handling_event
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler.
         Could be for the list control or for enabling and disabling.
@@ -406,8 +402,8 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         self.dlgCtrls.enableDisable()
         self.mainForm.viewFile(True)
 
-    @dutil.log_event_handler_exceptions
-    @dutil.remember_handling_event
+    @evt_handler.log_exceptions
+    @evt_handler.remember_handling_event
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -423,8 +419,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

@@ -22,8 +22,8 @@ import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 
-from lingt.app import exceptions
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgSpellReplace as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -56,13 +56,8 @@ class DlgSpellingReplace:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
 
         ## Methods to display and close the dialog
@@ -102,7 +97,6 @@ class DlgControls:
     """Store dialog controls."""
 
     def __init__(self, unoObjs, ctrl_getter, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -140,14 +134,14 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName())
         self.dlgCtrls.txtChangeTo.setText(
             self.dlgCtrls.listSuggestions.getSelectedItem())
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)

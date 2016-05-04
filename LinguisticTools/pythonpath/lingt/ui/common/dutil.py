@@ -53,7 +53,7 @@ def createDialog(uno_objs, definition_class):
     try:
         dlg = dlg_getter.create_and_verify()
     except exceptions.DialogError as exc:
-        msgbox = MessageBox(unoObjs)
+        msgbox = MessageBox(uno_objs)
         msgbox.displayExc(exc)
     return dlg
 
@@ -66,7 +66,7 @@ class DialogGetter:
 
     def create_and_verify(self):
         """raises: DialogError if dialog could not be created"""
-        self.createDialog()
+        self._createDialog()
         if not self.dlg:
             raise exceptions.DialogError("Error: Could not create dialog.")
         logger.debug("Created dialog.")
@@ -77,9 +77,9 @@ class DialogGetter:
         return self.dlg
 
     def _createDialog(self):
-        dlgprov = self.unoObjs.smgr.createInstanceWithArgumentsAndContext(
+        dlgprov = self.uno_objs.smgr.createInstanceWithArgumentsAndContext(
             "com.sun.star.awt.DialogProvider",
-            (self.unoObjs.document,), self.unoObjs.ctx)
+            (self.uno_objs.document,), self.uno_objs.ctx)
         try:
             self.dlg = dlgprov.createDialog(
                 "vnd.sun.star.script:LingToolsBasic." + self.dlg_name() +
@@ -118,7 +118,7 @@ class ControlGetter:
                 "Error showing dialog: No %s control.", ctrl_name)
 
     def get(self, ctrl_name):
-        return self.dlg.getControl(name)
+        return self.dlg.getControl(ctrl_name)
 
 
 RadioTuple = collections.namedtuple('RadioTuple', ['ctrl', 'key'])

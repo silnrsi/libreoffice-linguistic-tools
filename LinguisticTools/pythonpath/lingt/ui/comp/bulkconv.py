@@ -20,17 +20,13 @@ This module exports:
 import logging
 
 import uno
-import unohelper
-from com.sun.star.awt import XActionListener
-from com.sun.star.awt import XItemListener
-from com.sun.star.awt import XTextListener
 
-from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.bulkconversion import BulkConversion
 from lingt.ui.common import dutil
-from lingt.ui.dep import bulkconv_step1
-from lingt.ui.dep import bulkconv_step2
+from lingt.ui.common import evt_handler
+from lingt.ui.dep.bulkconv_step1 import FormStep1
+from lingt.ui.dep.bulkconv_step2 import FormStep2
 from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -63,13 +59,13 @@ class DlgBulkConversion:
         if not dlg:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
-        app = BulkConversion(unoObjs)
+        app = BulkConversion(self.unoObjs)
         step1Form = FormStep1(ctrl_getter, app)
         step1Form.start_working()
         step2Form = FormStep2(ctrl_getter, app)
         step2Form.start_working()
         stepper = DlgStepper(dlg)
-        advancer = Advancer(stepper, step1Form, step2Form)
+        advancer = AdvanceHandler(ctrl_getter, stepper, step1Form, step2Form)
         advancer.start_working()
         closingButtons = ClosingButtons(ctrl_getter, dlg.endExecute)
         closingButtons.start_working()
@@ -125,7 +121,7 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
         self.stepper = stepper
         self.step1Form = step1Form
         self.step2Form = step2Form
-        btnScan = ctrl_getter.get(_dlgdef.BTN_SCAN)
+        self.btnScan = ctrl_getter.get(_dlgdef.BTN_SCAN)
 
     def add_listeners(self):
         self.btnScan.setActionCommand('ScanFiles')
@@ -140,7 +136,7 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
 class ClosingButtons(evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, dlgClose):
         self.dlgClose = dlgClose
-        btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
+        self.btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
         self.btnProcess = ctrl_getter.get(_dlgdef.BTN_PROCESS)
         self.convertOnClose = False
 
@@ -149,12 +145,12 @@ class ClosingButtons(evt_handler.ActionEventHandler):
         self.btnCancel.setActionCommand('Cancel')
 
     def handle_action_event(self, action_command):
-        if event.ActionCommand == 'Close_and_Convert':
+        if action_command == 'Close_and_Convert':
             self.convertOnClose = True
-        elif event.ActionCommand == 'Cancel':
+        elif action_command == 'Cancel':
             self.convertOnClose = False
         else:
-            self.raise_unknown_command(action_command)
+            evt_handler.raise_unknown_action(action_command)
         self.dlgClose()
 
 

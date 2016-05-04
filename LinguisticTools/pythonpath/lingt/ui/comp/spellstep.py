@@ -29,9 +29,9 @@ from com.sun.star.awt import XAdjustmentListener
 from com.sun.star.lang import EventObject
 
 from lingt.access.writer import uservars
-from lingt.app import exceptions
 from lingt.app.svc.spellingchecks import SpellingStepper
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgSpellStep as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -71,13 +71,8 @@ class DlgSpellingStep:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
 
         # This fixes two problems, at least on Ubuntu:
@@ -202,7 +197,6 @@ class DlgControls:
     """Store dialog controls."""
 
     def __init__(self, unoObjs, ctrl_getter, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -263,7 +257,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, itemEvent):
         """XItemListener event handler.
         Could be for the list control or checkboxes.
@@ -271,35 +265,35 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         logger.debug(util.funcName('begin'))
         src = itemEvent.Source
         logger.debug(str(src.getModel().Name))
-        if dutil.sameName(src, self.dlgCtrls.chkSuggestions):
+        if evt_handler.sameName(src, self.dlgCtrls.chkSuggestions):
             self.mainForm.checkSuggestions()
-        elif dutil.sameName(src, self.dlgCtrls.chkIsCorrect):
+        elif evt_handler.sameName(src, self.dlgCtrls.chkIsCorrect):
             logger.debug(
                 "chkIsCorrect %d", self.dlgCtrls.chkIsCorrect.getState())
             self.mainForm.app.setIsCorrect(
                 dutil.get_tristate_checkbox(self.dlgCtrls.chkIsCorrect))
-        elif (dutil.sameName(src, self.dlgCtrls.listSuggestions) or
-              dutil.sameName(src, self.dlgCtrls.listSimilarWords)
+        elif (evt_handler.sameName(src, self.dlgCtrls.listSuggestions) or
+              evt_handler.sameName(src, self.dlgCtrls.listSimilarWords)
              ):
             self.dlgCtrls.txtCorrection.setText(src.getSelectedItem())
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def adjustmentValueChanged(self, dummy_event):
         """XAdjustmentListener event handler."""
         self.mainForm.scrollbarAlreadyMoved = True
         self.dlgCtrls.txtRowNum.setText(self.dlgCtrls.scrollbarRow.getValue())
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def textChanged(self, textEvent):
         """XTextListener event handler."""
         logger.debug(util.funcName('begin'))
         src = textEvent.Source
-        if dutil.sameName(src, self.dlgCtrls.txtRowNum):
+        if evt_handler.sameName(src, self.dlgCtrls.txtRowNum):
             self.mainForm.gotoRow()
-        elif dutil.sameName(src, self.dlgCtrls.txtCorrection):
+        elif evt_handler.sameName(src, self.dlgCtrls.txtCorrection):
             self.mainForm.enableDisable()
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -309,8 +303,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         elif event.ActionCommand == "SetCorrection":
             self.mainForm.setCorrection()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

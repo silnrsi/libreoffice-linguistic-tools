@@ -25,14 +25,13 @@ This module exports:
 import collections
 import logging
 
-import uno
 import unohelper
 from com.sun.star.awt import Rectangle
 from com.sun.star.awt import XActionListener
 from com.sun.star.lang import IllegalArgumentException
 
 from lingt.app import exceptions
-from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.messagebox")
@@ -248,7 +247,7 @@ class FourButtonDialog(unohelper.Base, XActionListener):
         ctrlContainer.dispose()
         return self.result
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """Handle which button was pressed."""
         logger.debug("Button pressed: %s", event.ActionCommand)

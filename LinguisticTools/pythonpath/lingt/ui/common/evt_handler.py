@@ -14,11 +14,15 @@ This module exports:
     ActionEventHandler
     ItemEventHandler
     TextEventHandler
-    log_event_handler_exceptions()
+    log_exceptions()
     do_not_enter_if_handling_event()
     remember_handling_event()
 """
 import logging
+import unohelper
+from com.sun.star.awt import XActionListener
+from com.sun.star.awt import XItemListener
+from com.sun.star.awt import XTextListener
 
 from lingt.app import exceptions
 from lingt.utils import util
@@ -37,7 +41,7 @@ class DataControls:
         if (self.__class__ is DataControls or
                 self.__class__ is EventHandler or
                 self.__class__ is ActionEventHandler or
-                self.__class__ is ItemEventHandler or:
+                self.__class__ is ItemEventHandler or
                 self.__class__ is TextEventHandler):
             # The base classes should not be instantiated.
             raise NotImplementedError
@@ -51,13 +55,16 @@ class DataControls:
         pass
 
 
+def warn_unexpected_source(src):
+    logger.warning("unexpected source %s", src.Model.Name)
+
 class EventHandler(DataControls, unohelper.Base):
     """Abstract base class for handling events."""
 
     handling_event = False
 
     def __init__(self):
-        DataControl.__init__(self)
+        DataControls.__init__(self)
         unohelper.Base.__init__(self)
         self.last_source = None  # control of last event
 
@@ -73,9 +80,10 @@ class EventHandler(DataControls, unohelper.Base):
         """Add listeners.  Implement if needed."""
         pass
 
-    def warn_unexpected_source(self, src):
-        logger.warning("unexpected source %s", src.Model.Name)
 
+def raise_unknown_action(action_command):
+    raise exceptions.LogicError(
+        "Unknown action command '%s'", action_command)
 
 class ActionEventHandler(XActionListener, EventHandler):
     """Abstract base class for handling action events such as button
@@ -88,7 +96,7 @@ class ActionEventHandler(XActionListener, EventHandler):
         try:
             self.last_source = event.Source
             self.handle_action_event(event.ActionCommand)
-        except:
+        except Exception as exc:
             logger.exception(exc)
             # Re-raising is proper coding practice, although it will
             # probably have no effect, at least during runtime.
@@ -98,10 +106,6 @@ class ActionEventHandler(XActionListener, EventHandler):
 
     def handle_action_event(self, action_command):
         raise NotImplementedError()
-
-    def raise_unknown_command(self, action_command):
-        raise exceptions.LogicError(
-            "Unknown action command '%s'", action_command)
 
 
 class ItemEventHandler(XItemListener, EventHandler):
@@ -120,7 +124,7 @@ class ItemEventHandler(XItemListener, EventHandler):
         try:
             self.last_source = event.Source
             self.handle_item_event(event.Source)
-        except:
+        except Exception as exc:
             logger.exception(exc)
             # Re-raising is proper coding practice, although it will
             # probably have no effect, at least during runtime.
@@ -144,7 +148,7 @@ class TextEventHandler(XTextListener, EventHandler):
         try:
             self.last_source = event.Source
             self.handle_text_event(event.Source)
-        except:
+        except Exception as exc:
             logger.exception(exc)
             # Re-raising is proper coding practice, although it will
             # probably have no effect, at least during runtime.
@@ -164,7 +168,7 @@ def sameName(control1, control2):
     return control1.getModel().Name == control2.getModel().Name
 
 
-def log_event_handler_exceptions(func):
+def log_exceptions(func):
     """Event handlers may swallow exceptions, so we log the exception.
 
     Wraps event handler methods by decorating them.

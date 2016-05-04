@@ -7,6 +7,9 @@
 A fake UNO file needed to make PyLint happy.
 """
 
+class EventObject:
+    pass
+
 class IllegalArgumentException(Exception):
     pass
 

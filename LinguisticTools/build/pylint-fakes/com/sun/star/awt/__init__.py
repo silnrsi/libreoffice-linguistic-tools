@@ -13,6 +13,9 @@ class Point:
     def __init__(self, dummy_x, dummy_y):
         pass
 
+class Rectangle:
+    pass
+
 class Size:
     pass
 

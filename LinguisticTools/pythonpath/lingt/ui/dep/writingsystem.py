@@ -24,8 +24,8 @@ import unohelper
 from com.sun.star.awt import XActionListener
 
 from lingt.access.xml import writingsys_reader
-from lingt.app import exceptions
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgWritingSystem as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -60,13 +60,8 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
         if not dlg:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
-        try:
-            self.listbox = ctrl_getter.get(_dlgdef.WSLIST_BOX)
-            btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.listbox = ctrl_getter.get(_dlgdef.WSLIST_BOX)
+        btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
         logger.debug("Got controls.")
 
         def_ws_display = theLocale.getText("(none)")
@@ -88,7 +83,7 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
         self.dlgDispose = dlg.dispose
         dlg.execute()
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
         if event.ActionCommand == "OK":
@@ -100,8 +95,7 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
             self.dlgClose()
             logger.debug("OK finished")
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
     def call_dispose(self):
         logger.debug("disposing")

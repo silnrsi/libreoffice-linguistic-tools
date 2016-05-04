@@ -46,6 +46,7 @@ from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.dataconversion import DataConversion, ConversionSettings
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgDataConversion as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -93,13 +94,8 @@ class DlgDataConversion:
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
         self.dlgCtrls = None
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
 
         logger.debug("Getting styles...")
@@ -275,7 +271,6 @@ class DlgControls:
     """Store dialog controls."""
 
     def __init__(self, unoObjs, ctrl_getter, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -444,26 +439,26 @@ class DlgEventHandler(XActionListener, XTextListener, XItemListener,
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName('begin'))
         self.dlgCtrls.enableDisable(self.mainForm)
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def textChanged(self, textEvent):
         logger.debug(util.funcName('begin'))
         src = textEvent.Source
-        if dutil.sameName(src, self.dlgCtrls.comboTargetParaStyle):
+        if evt_handler.sameName(src, self.dlgCtrls.comboTargetParaStyle):
             if self.dlgCtrls.optTargetParaStyle.getState() == 1:
                 self.mainForm.selectTargetFont(src, 'Paragraph')
-        elif dutil.sameName(src, self.dlgCtrls.comboTargetCharStyle):
+        elif evt_handler.sameName(src, self.dlgCtrls.comboTargetCharStyle):
             if self.dlgCtrls.optTargetCharStyle.getState() == 1:
                 self.mainForm.selectTargetFont(src, 'Character')
         else:
             logger.warning("unexpected source %s", src.Model.Name)
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -477,8 +472,7 @@ class DlgEventHandler(XActionListener, XTextListener, XItemListener,
         elif event.ActionCommand == 'Close_and_Convert':
             self.mainForm.closeAndConvert()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

@@ -101,6 +101,11 @@ class FormStep2:
             fontitem_controls.update_change(fontChange)
         return fontChange
 
+    def copy_change_attrs(self, change_from, change_to):
+        """Set attributes of change_to based on change_from."""
+        for fontitem_controls in self.data_controls:
+            fontitem_controls.copy_change(change_from, change_to)
+
     def fill_for_item(self, fontItem):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
@@ -111,7 +116,7 @@ class FormStep2:
                 fontitem_controls.fill_for_no_change(fontItem)
         for fontitem_controls_class in (
                 SampleControls,
-                FoundFontInfo:,
+                FoundFontInfo,
             ):
                 fontitem_controls = fontitem_controls_class(
                     self.ctrl_getter, self.app)
@@ -119,46 +124,65 @@ class FormStep2:
         logger.debug(util.funcName('end'))
 
 
-class FontChangeControlHandler:
-    """Abstract base class to handle reading and writing of FontItem change
-    controls.
-    Inherit it alongside one of the evt_handler.EventHandler subclasses.
+class ClipboardButtons(evt_handler.ActionEventHandler):
+    """This does not actually use the system clipboard, but it implements
+    copy/paste functionality.
     """
-
     def __init__(self, ctrl_getter, app):
-        if self.__class__ is FontChangeControlHandler:
-            # The base classes should not be instantiated.
-            raise NotImplementedError
-        self.ctrl_getter = ctrl_getter
-        self.app = app
+        evt_handler.ActionEventHandler.__init__(self)
+        self.btnReset = dutil.getControl(dlg, 'btnReset')
+        self.btnCopy = dutil.getControl(dlg, 'btnCopy')
+        self.btnPaste = dutil.getControl(dlg, 'btnPaste')
+        self.copiedSettings = None
 
-    def handle_action_event(self, src):
-        self.app.update_list(self)
+    def add_listeners(self):
+        self.btnReset.setActionCommand('ResetFont')
+        self.btnCopy.setActionCommand('CopyFont')
+        self.btnPaste.setActionCommand('PasteFont')
+        for ctrl in (self.btnReset, self.btnCopy, self.btnPaste):
+            ctrl.addActionListener(self)
 
-    def handle_item_event(self, src):
-        self.app.update_list(self)
+    def handle_action_event(self, action_command):
+        if event.ActionCommand == 'ResetFont':
+            self.step2Form.resetFont()
+        elif event.ActionCommand == 'CopyFont':
+            self.step2Form.copyFont()
+        elif event.ActionCommand == 'PasteFont':
+            self.step2Form.pasteFont()
+        else:
+            evt_handler.raise_unknown_action(action_command)
 
-    def handle_text_event(self, src):
-        self.app.update_list(self)
+    def resetFont(self):
+        if not self.app.selected_item():
+            return
+        fontItemList = self.app.fontItemList
+        item_to_update = fontItemList.selected_item()
+        for item in fontItemList.items_to_change(item_to_update):
+            item.change = None
+        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
+        listFontsUsed.updateFontsList()
+        listFontsUsed.fill_for_selected_item()
 
-    #XXX: Do we need a function like this?
-    #def update_change_if_ctrl_was_changed(self, fontChange):
-    #    if not self.last_source:
-    #        return
-    #    self.read()
-    #    self.last_source = None
+    def copyFont(self):
+        logger.debug(util.funcName())
+        form2 = FormStep2(self.ctrl_getter, self.app)
+        self.copiedSettings = form2.read_change()
 
-    def update_change(self, fontChange):
-        """Read form values and modify fontChange accordingly."""
-        raise NotImplementedError()
-
-    def fill_for_change(self, fontChange):
-        """Set form values based on the fontChange values."""
-        raise NotImplementedError()
-
-    def fill_for_no_change(self, fontItem):
-        """Set form values based on the fontItem values."""
-        raise NotImplementedError()
+    def pasteFont(self):
+        logger.debug(util.funcName())
+        if self.copiedSettings is None:
+            self.msgbox.display("First copy font settings.")
+            return
+        fontItem = self.app.selected_item()
+        if self.app.elected_index == -1:
+            return
+        form2 = FormStep2(self.ctrl_getter, self.app)
+        for item in fontItemList.items_to_change(item_to_update):
+            item.create_change()
+            form2.copy_change_attrs(self.copiedSettings, item.change)
+        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
+        listFontsUsed.updateFontsList()
+        listFontsUsed.fill_for_selected_item()
 
 
 class ListFontsUsed(evt_handler.ItemEventHandler):
@@ -202,6 +226,52 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         if self.app.selected_index >= 0:
             dutil.select_index(
                 self.listFontsUsed, self.app.selected_index)
+
+
+class FontChangeControlHandler:
+    """Abstract base class to handle reading and writing of FontItem change
+    controls.
+    Inherit it alongside one of the evt_handler.EventHandler subclasses.
+    """
+
+    def __init__(self, ctrl_getter, app):
+        if self.__class__ is FontChangeControlHandler:
+            # The base classes should not be instantiated.
+            raise NotImplementedError
+        self.ctrl_getter = ctrl_getter
+        self.app = app
+
+    def handle_action_event(self, src):
+        self.app.update_list(self)
+
+    def handle_item_event(self, src):
+        self.app.update_list(self)
+
+    def handle_text_event(self, src):
+        self.app.update_list(self)
+
+    #XXX: Do we need a function like this?
+    #def update_change_if_ctrl_was_changed(self, fontChange):
+    #    if not self.last_source:
+    #        return
+    #    self.read()
+    #    self.last_source = None
+
+    def update_change(self, fontChange):
+        """Read form values and modify fontChange accordingly."""
+        raise NotImplementedError()
+
+    def fill_for_change(self, fontChange):
+        """Set form values based on the fontChange values."""
+        raise NotImplementedError()
+
+    def fill_for_no_change(self, fontItem):
+        """Set form values based on the fontItem values."""
+        raise NotImplementedError()
+
+    def copy_change(self, change_from, change_to):
+        """Set attributes of change_to based on change_from."""
+        raise NotImplementedError()
 
 
 class ConverterControls(FontChangeControlHandler,
@@ -261,6 +331,9 @@ class ConverterControls(FontChangeControlHandler,
     def fill_for_no_change(self, dummy_fontItem):
         self.txtConvName.setText("<No converter>")
         self.chkReverse.setState(False)
+
+    def copy_change(self, change_from, change_to):
+        change_to.converter = copy.copy(change_from.converter)
 
 
 class SampleControls(evt_handler.ActionEventHandler,
@@ -344,70 +417,6 @@ class SampleControls(evt_handler.ActionEventHandler,
             self.chkShowConverted.getState() == 1)
         self.app.userVars.store(
             'DisplayConverted', "%d" % displayConverted)
-
-
-class ClipboardButtons(evt_handler.ActionEventHandler):
-    """This does not actually use the system clipboard, but it implements
-    copy/paste functionality.
-    """
-    def __init__(self, ctrl_getter, app):
-        evt_handler.ActionEventHandler.__init__(self)
-        self.btnReset = dutil.getControl(dlg, 'btnReset')
-        self.btnCopy = dutil.getControl(dlg, 'btnCopy')
-        self.btnPaste = dutil.getControl(dlg, 'btnPaste')
-        self.copiedSettings = None
-
-    def add_listeners(self):
-        self.btnReset.setActionCommand('ResetFont')
-        self.btnCopy.setActionCommand('CopyFont')
-        self.btnPaste.setActionCommand('PasteFont')
-        for ctrl in (self.btnReset, self.btnCopy, self.btnPaste):
-            ctrl.addActionListener(self)
-
-    def handle_action_event(self, action_command):
-        if event.ActionCommand == 'ResetFont':
-            self.step2Form.resetFont()
-        elif event.ActionCommand == 'CopyFont':
-            self.step2Form.copyFont()
-        elif event.ActionCommand == 'PasteFont':
-            self.step2Form.pasteFont()
-        else:
-            self.raise_unknown_command(action_command)
-
-    def resetFont(self):
-        if not self.app.selected_item():
-            return
-        fontItemList = self.app.fontItemList
-        item_to_update = fontItemList.selected_item()
-        for item in fontItemList.items_to_change(item_to_update):
-            item.change = None
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.updateFontsList()
-        listFontsUsed.fill_for_selected_item()
-
-    def copyFont(self):
-        logger.debug(util.funcName())
-        #self.copiedSettings = self.getFontFormResults(False)
-        form2 = FormStep2(self.ctrl_getter, self.app)
-        self.copiedSettings = form2.read_change(
-
-    def pasteFont(self):
-        logger.debug(util.funcName())
-        if self.copiedSettings is None:
-            self.msgbox.display("First copy font settings.")
-            return
-        fontItem = self.grabSelectedItem()
-        if self.selected_index == -1:
-            return
-        attrs_to_change = [
-            'converter.convName', 'converter.forward',
-            'fontType', 'name', 'size',
-            'styleType', 'styleName']
-        self.app.fontItemList.update_group(
-            fontItem, self.copiedSettings, attrs_to_change)
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.updateFontsList()
-        listFontsUsed.fill_for_selected_item()
 
 
 class JoinCheckboxes(evt_handler.ItemEventHandler):
@@ -498,6 +507,9 @@ class FontNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         else:
             self.clear_combo_box()
 
+    def copy_change(self, change_from, change_to):
+        change_from.name = change_to.name
+
     def clear_combo_box(self):
         self.comboFontName.setText("")
 
@@ -535,6 +547,9 @@ class FontTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def fill_for_change(self, fontChange):
         self.set_values(fontChange.fontType)
 
+    def copy_change(self, change_from, change_to):
+        change_from.fontType = change_to.fontType
+
     def set_values(self, fontType):
         dutil.selectRadio(self.radios, fontChange.fontType)
 
@@ -559,6 +574,9 @@ class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
     def fill_for_change(self, fontChange):
         fontChange.size.changeCtrlVal(self.txtFontSize)
         fontChange.size.changeCtrlProp(self.stepCtrls.lblConverted)
+
+    def copy_change(self, change_from, change_to):
+        change_from.size = copy.copy(change_to.size)
 
     def change_control_prop(self, fontItem):
         lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
@@ -587,18 +605,21 @@ class StyleTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         style_name_handler.selectFontFromStyle()
 
     def update_change(self, fontChange):
-        fontChange.fontType = dutil.whichSelected(self.radios)
+        fontChange.styleType = dutil.whichSelected(self.radios)
         style_name_handler = StyleNameHandler(self.ctrl_getter, self.app)
         style_name_handler.read(fontChange)
 
     def fill_for_change(self, fontChange):
-        self.set_values(fontChange.fontType)
+        self.set_values(fontChange.styleType)
 
     def fill_for_no_change(self, fontItem):
-        self.set_values(fontItem.fontType)
+        self.set_values(fontItem.styleType)
 
-    def set_values(self, fontType):
-        dutil.selectRadio(self.radios, fontType)
+    def copy_change(self, change_from, change_to):
+        change_from.styleType = change_to.styleType
+
+    def set_values(self, styleType):
+        dutil.selectRadio(self.radios, styleType)
 
 
 StyleNameTuple = collections.namedtuple(
@@ -683,6 +704,9 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def clear_combo_boxes(self):
         for data in self.styledata:
             data.ctrl.setText("")
+
+    def copy_change(self, change_from, change_to):
+        change_from.styleName = change_to.styleName
 
 
 class VerifyHandler(evt_handler.ItemEventHandler):

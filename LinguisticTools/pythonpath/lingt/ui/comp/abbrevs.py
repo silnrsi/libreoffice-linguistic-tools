@@ -40,6 +40,7 @@ from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import abbreviations
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgAbbreviations as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -81,13 +82,8 @@ class DlgAbbreviations:
         ctrl_getter = dutil.ControlGetter(dlg)
         self.dlgClose = dlg.endExecute
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         logger.debug("Got controls.")
 
         self.dlgCtrls.loadValues(self.userVars, self.abbrevList)
@@ -438,15 +434,15 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         self.mainForm = mainForm
         self.handling_event = False
 
-    @dutil.log_event_handler_exceptions
-    @dutil.do_not_enter_if_handling_event
+    @evt_handler.log_exceptions
+    @evt_handler.do_not_enter_if_handling_event
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName('begin'))
         self.mainForm.viewAbbrev(True)
 
-    @dutil.log_event_handler_exceptions
-    @dutil.remember_handling_event
+    @evt_handler.log_exceptions
+    @evt_handler.remember_handling_event
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -467,8 +463,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         elif event.ActionCommand == "Close":
             self.mainForm.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

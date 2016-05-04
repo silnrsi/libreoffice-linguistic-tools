@@ -26,7 +26,7 @@ from lingt.access.calc import spreadsheet_reader
 from lingt.access.text.cct_writer import CCT_Writer
 from lingt.access.text.xslt_writer import XSLT_Writer
 from lingt.app import exceptions
-from lingt.app.wordlist_structs import ColumnOrder
+from lingt.app.data.wordlist_structs import ColumnOrder
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util

@@ -15,12 +15,13 @@ import os
 
 import uno
 
-from lingt.app.fileitemlist import FileItemList, BulkFileItem
 from lingt.app import exceptions
-from lingt.app.bulkconv_structs import FontItem, FontChange
-from lingt.ui import dutil
-from lingt.ui import evt_handler
-from lingt.ui import filepicker
+from lingt.app.data.bulkconv_structs import FontItem, FontChange
+from lingt.app.data.fileitemlist import FileItemList, BulkFileItem
+from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
+from lingt.ui.common import filepicker
+from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step1")
@@ -92,7 +93,7 @@ class FilesList(evt_handler.DataControls):
     def load_values(self):
         logger.debug(util.funcName())
         self.fileItems.loadUserVars()
-        fileItemStrings = self.fileItems.getItemTextList())
+        fileItemStrings = self.fileItems.getItemTextList()
         self.listboxFiles.addItems(tuple(fileItemStrings), 0)
 
     def store_results(self):
@@ -145,15 +146,15 @@ class FilesListButtons(evt_handler.ActionEventHandler):
         btnFileAdd.setActionCommand('FileAdd')
         btnFileRemove = self.ctrl_getter.get(_dlgdef.BTN_REMOVE)
         btnFileRemove.setActionCommand('FileRemove')
-        for ctrl in (btnFileAdd, btnAddCurrent, btnFileRemove, btnOutputTo):
+        for ctrl in (btnFileAdd, btnAddCurrent, btnFileRemove):
             ctrl.addActionListener(self)
 
     def handle_action_event(self, action_command):
-        if event.ActionCommand == "AddCurrentDoc":
+        if action_command == "AddCurrentDoc":
             self.addCurrentDoc()
-        elif event.ActionCommand == "FileAdd":
+        elif action_command == "FileAdd":
             self.addFile()
-        elif event.ActionCommand == "FileRemove":
+        elif action_command == "FileRemove":
             self.removeFile()
 
     def addFile(self):
@@ -188,11 +189,11 @@ class OutputTo(evt_handler.ActionEventHandler):
         self.outdir = ""
 
     def add_listeners(self):
-        btnOutputTo = ctrl_getter.get(_dlgdef.BTN_OUTPUT_TO)
+        btnOutputTo = self.ctrl_getter.get(_dlgdef.BTN_OUTPUT_TO)
         btnOutputTo.setActionCommand('ChooseFolder')
         btnOutputTo.addActionListener(self)
 
-    def handle_action_event(self, action_command):
+    def handle_action_event(self, dummy_action_command):
         self.showFolderPicker()
 
     def showFolderPicker(self):
@@ -206,7 +207,7 @@ class OutputTo(evt_handler.ActionEventHandler):
         self.txtOutputTo.setText(folderpath)
 
     def load_values(self):
-        self.txtOutputTo.setText(userVars.get('OutputFolder'))
+        self.txtOutputTo.setText(self.app.userVars.get('OutputFolder'))
 
     def store_results(self):
         logger.debug(util.funcName())

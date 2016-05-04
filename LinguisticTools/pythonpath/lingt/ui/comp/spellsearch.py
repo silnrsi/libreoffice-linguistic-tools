@@ -29,6 +29,7 @@ from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.spellingchecks import SpellingChecker, CheckerSettings
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgSpellSearch as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import letters
@@ -69,13 +70,8 @@ class DlgSpellingSearch:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         logger.debug("Getting styles...")
         styleNames = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
         self.paraStyleNames = dict(styleNames)
@@ -200,8 +196,7 @@ class DlgSpellingSearch:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -328,7 +323,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
     def __init__(self, mainForm):
         self.mainForm = mainForm
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler.
         Could be for the list control or for enabling and disabling.
@@ -336,7 +331,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         logger.debug(util.funcName('begin'))
         self.mainForm.enableDisable()
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -349,8 +344,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         elif event.ActionCommand == "Close_and_Search":
             self.mainForm.closeAndSearch()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

@@ -36,9 +36,10 @@ from lingt.access.xml.interlin_reader import InterlinReader
 from lingt.access.xml.phon_reader import PhonReader
 from lingt.access.xml.words_reader import WordsReader
 from lingt.app import exceptions
-from lingt.app import lingex_structs
-from lingt.app.wordlist_structs import WhatToGrab
+from lingt.app.data import lingex_structs
+from lingt.app.data.wordlist_structs import WhatToGrab
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgWordListFile as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.dep.writingsystem import DlgWritingSystem
@@ -85,13 +86,8 @@ class DlgWordListFile:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
 
         styleNames = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
@@ -319,7 +315,6 @@ class DlgControls:
     """Store dialog controls."""
 
     def __init__(self, unoObjs, ctrl_getter, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -475,18 +470,18 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName('begin'))
 
         src = itemEvent.Source
-        if dutil.sameName(src, self.dlgCtrls.listWhatToGrab):
+        if evt_handler.sameName(src, self.dlgCtrls.listWhatToGrab):
             self.dlgCtrls.ctrlsChanged[src.getModel().Name] = src
             logger.debug(
                 "%d control(s) changed.", len(self.dlgCtrls.ctrlsChanged))
 
-        elif dutil.sameName(src, self.dlgCtrls.listboxFileType):
+        elif evt_handler.sameName(src, self.dlgCtrls.listboxFileType):
 
             ## Change to selected file type
             try:
@@ -508,13 +503,13 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.dlgCtrls.clearWhatToFind()
             self.dlgCtrls.enableDisable(self.mainForm.filetype)
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def textChanged(self, textEvent):
         src = textEvent.Source
         self.dlgCtrls.ctrlsChanged[src.getModel().Name] = src
         logger.debug("%d control(s) changed.", len(self.dlgCtrls.ctrlsChanged))
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -531,6 +526,5 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 

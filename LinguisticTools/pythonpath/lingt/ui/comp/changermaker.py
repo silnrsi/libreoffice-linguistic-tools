@@ -27,6 +27,7 @@ from lingt.access.writer import uservars
 from lingt.app import exceptions
 from lingt.app.svc.spellingchanges import ChangerMaker
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common import filepicker
 from lingt.ui.common.dlgdefs import DlgChangerMaker as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
@@ -74,13 +75,8 @@ class DlgChangerMaker:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
         self.dlgCtrls.loadValues(self.userVars)
 
@@ -208,8 +204,7 @@ class DlgChangerMaker:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, unoObjs, dlg, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
+    def __init__(self, unoObjs, ctrl_getter, evtHandler):
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -294,7 +289,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, dummy_itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName('begin'))
@@ -309,7 +304,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
             filepath = filepath[:-len(XSLT_EXT)] + CCT_EXT  # replace extension
             self.dlgCtrls.txtFilePath.setText(filepath)
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -324,8 +319,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         elif event.ActionCommand == "Close":
             self.mainForm.closeDlg()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

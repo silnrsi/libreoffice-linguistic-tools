@@ -28,9 +28,9 @@ from com.sun.star.uno import RuntimeException
 
 
 from lingt.access.writer import uservars
-from lingt.app import exceptions
 from lingt.app.svc import scriptpractice
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgScriptPractice as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.comp.wordlist import DlgWordList
@@ -84,18 +84,13 @@ class DlgScriptPractice:
         self.dlg = dutil.createDialog(self.unoObjs, _dlgdef)
         if not self.dlg:
             return
-        ctrl_getter = dutil.ControlGetter(dlg)
+        ctrl_getter = dutil.ControlGetter(self.dlg)
         self.evtHandler = DlgEventHandler(
             self.userVars, self, self.script, self.questions)
         self.dlgClose = self.dlg.endExecute
-        try:
-            self.dlgCtrls = DlgControls(
-                ctrl_getter, self.evtHandler, self.script, self.dlgClose,
-                self.msgbox)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            self.dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            ctrl_getter, self.evtHandler, self.script, self.dlgClose,
+            self.msgbox)
         self.dlg.getModel().Step = self.step
         self.evtHandler.setCtrls(self.dlgCtrls)
         self.dlgCtrls.loadValues(self.userVars, self.questions)
@@ -284,8 +279,7 @@ class DlgScriptPractice:
 class DlgControls:
     """Store dialog controls."""
 
-    def __init__(self, dlg, evtHandler, script, dlgClose, msgbox):
-        """raises: exceptions.LogicError if controls cannot be found"""
+    def __init__(self, ctrl_getter, evtHandler, script, dlgClose, msgbox):
         self.dlgClose = dlgClose
         self.msgbox = msgbox
         self.evtHandler = evtHandler
@@ -311,9 +305,9 @@ class DlgControls:
         self.dispIncorrect = ctrl_getter.get(_dlgdef.LBL_DISP_INCORRECT)
         self.dispAvgTime = ctrl_getter.get(_dlgdef.LBL_DISP_AVG_TIME)
         self.txtNumSyllables = ctrl_getter.get(_dlgdef.TXT_NUM_SYLLABLES)
-        self.lbl_NumSyllables = ctrl_getter.get(_dlgdef.LBL_NUM_SYLLABLES)
+        self.lblNumSyllables = ctrl_getter.get(_dlgdef.LBL_NUM_SYLLABLES)
         self.txtNumWords = ctrl_getter.get(_dlgdef.TXT_NUM_WORDS)
-        self.lbl_NumWords = ctrl_getter.get(_dlgdef.LBL_NUM_WORDS)
+        self.lblNumWords = ctrl_getter.get(_dlgdef.LBL_NUM_WORDS)
         self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
         self.btnResetChars = ctrl_getter.get(_dlgdef.BTN_RESET_CHARACTERS)
         self.btnFiles = ctrl_getter.get(_dlgdef.BTN_FILES)
@@ -492,12 +486,12 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
     def setCtrls(self, dlgCtrls):
         self.dlgCtrls = dlgCtrls
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def itemStateChanged(self, itemEvent):
         """XItemListener event handler."""
         logger.debug(util.funcName('begin'))
         src = itemEvent.Source
-        if dutil.sameName(src, self.dlgCtrls.chkKnownFonts):
+        if evt_handler.sameName(src, self.dlgCtrls.chkKnownFonts):
             self.dlgCtrls.setFontList()
             return
         if self.dlgCtrls.optCheckAtLastChar.getState():
@@ -508,23 +502,23 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.userVars.store("WhenToCheck", "Space")
         self.dlgCtrls.enableDisable()
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def textChanged(self, textEvent):
         """XTextListener event handler."""
         src = textEvent.Source
         logger.debug("%s %s", util.funcName(), src.Model.Name)
-        if dutil.sameName(src, self.dlgCtrls.txtAnswer):
+        if evt_handler.sameName(src, self.dlgCtrls.txtAnswer):
             self.mainForm.answerChanged()
-        elif dutil.sameName(src, self.dlgCtrls.comboScript):
+        elif evt_handler.sameName(src, self.dlgCtrls.comboScript):
             self.dlgCtrls.changeScript()
-        elif dutil.sameName(src, self.dlgCtrls.comboFont):
+        elif evt_handler.sameName(src, self.dlgCtrls.comboFont):
             self.dlgCtrls.changeFont()
-        elif dutil.sameName(src, self.dlgCtrls.txtFontSize):
+        elif evt_handler.sameName(src, self.dlgCtrls.txtFontSize):
             self.dlgCtrls.changeFontSize()
         else:
             logger.warning("unexpected source %s", src.Model.Name)
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -544,8 +538,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             logger.debug("Action command was Exit")
             self.mainForm.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

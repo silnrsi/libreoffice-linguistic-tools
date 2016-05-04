@@ -31,9 +31,9 @@ from com.sun.star.awt import XActionListener
 
 from lingt.access.writer.styles import PhonologyStyles
 from lingt.access.writer.uservars import Prefix, UserVars, PhonologyTags
-from lingt.app import exceptions
-from lingt.app import lingex_structs
+from lingt.app.data import lingex_structs
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.dlgdefs import DlgPhnlgySettings as _dlgdef
 from lingt.ui.dep.writingsystem import DlgWritingSystem
@@ -72,13 +72,8 @@ class DlgPhonSettings:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         self.evtHandler = DlgEventHandler(self)
-        try:
-            self.dlgCtrls = DlgControls(
-                self.unoObjs, ctrl_getter, self.evtHandler)
-        except exceptions.LogicError as exc:
-            self.msgbox.displayExc(exc)
-            dlg.dispose()
-            return
+        self.dlgCtrls = DlgControls(
+            self.unoObjs, ctrl_getter, self.evtHandler)
         self.dlgCtrls.loadValues(self.userVars)
 
         self.dlgClose = dlg.endExecute
@@ -132,7 +127,6 @@ class DlgControls:
     """Store dialog controls."""
 
     def __init__(self, unoObjs, ctrl_getter, evtHandler):
-        """raises: exceptions.LogicError if controls cannot be found"""
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
@@ -174,7 +168,7 @@ class DlgEventHandler(XActionListener, unohelper.Base):
     def __init__(self, mainForm):
         self.mainForm = mainForm
 
-    @dutil.log_event_handler_exceptions
+    @evt_handler.log_exceptions
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
@@ -185,8 +179,7 @@ class DlgEventHandler(XActionListener, unohelper.Base):
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()
         else:
-            raise exceptions.LogicError(
-                "Unknown action command '%s'", event.ActionCommand)
+            evt_handler.raise_unknown_action(event.ActionCommand)
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.

@@ -28,7 +28,7 @@ from lingt.access.writer.ex_updater import ExUpdater
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.access.xml.interlin_reader import InterlinReader
 from lingt.access.xml.phon_reader import PhonReader
-from lingt.app.data import exceptions
+from lingt.app import exceptions
 from lingt.app.data import fileitemlist
 from lingt.app.data import lingex_structs
 from lingt.ui.common.messagebox import MessageBox

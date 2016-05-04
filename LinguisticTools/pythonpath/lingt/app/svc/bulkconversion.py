@@ -190,7 +190,7 @@ class FontItemList:
         :param changed_values: type FontChange
         :param attrs_changed: list of FontChange attribute names
         """
-        logger.debug(util.funcName('begin', args=attrs_changed))
+        logger.debug(util.funcName('begin', args=type(event_handler).__name__))
         for item in self.items_to_change(item_to_update):
             item.create_change(self.userVars)
             event_handler.update_change(item.change)
