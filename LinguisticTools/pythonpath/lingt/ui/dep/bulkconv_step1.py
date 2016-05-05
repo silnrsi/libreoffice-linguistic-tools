@@ -83,57 +83,6 @@ class FormStep1:
                 logger.debug("did not find match for %r", fontChange)
 
 
-class FilesList(evt_handler.DataControls):
-    def __init__(self, ctrl_getter, app):
-        self.ctrl_getter = ctrl_getter
-        self.app = app
-        self.listboxFiles = ctrl_getter.get(_dlgdef.LIST_FILES)
-        self.fileItems = FileItemList(BulkFileItem, self.app.userVars)
-
-    def load_values(self):
-        logger.debug(util.funcName())
-        self.fileItems.loadUserVars()
-        fileItemStrings = self.fileItems.getItemTextList()
-        self.listboxFiles.addItems(tuple(fileItemStrings), 0)
-
-    def store_results(self):
-        self.fileItems.storeUserVars()
-
-    def addFile(self, filepath):
-        newItem = BulkFileItem(self.userVars)
-        newItem.filepath = filepath
-        logger.debug("Adding item")
-        try:
-            self.fileItems.addItem(newItem)
-        except exceptions.ChoiceProblem as exc:
-            self.app.msgbox.displayExc(exc)
-            return
-        logger.debug("Successfully added.")
-        dutil.fill_list_ctrl(
-            listCtrl=self.listboxFiles,
-            values=self.fileItems.getItemTextList(),
-            selectedValue=str(newItem))
-        if not self.txtOutputTo.getText().strip():
-            self.txtOutputTo.setText(os.path.dirname(filepath))
-
-    def removeFile(self):
-        logger.debug(util.funcName())
-        try:
-            itemPos = dutil.get_selected_index(
-                self.listboxFiles, "a file")
-            self.fileItems.deleteItem(itemPos)
-        except exceptions.ChoiceProblem as exc:
-            self.app.msgbox.displayExc(exc)
-            return
-        self.listboxFiles.removeItems(itemPos, 1)
-
-        ## Select the next item
-
-        if self.listboxFiles.getItemCount() > 0:
-            dutil.select_index(self.listboxFiles, itemPos)
-        logger.debug("FileRemove end")
-
-
 class FilesListButtons(evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app):
         self.ctrl_getter = ctrl_getter
@@ -159,16 +108,16 @@ class FilesListButtons(evt_handler.ActionEventHandler):
 
     def addFile(self):
         logger.debug(util.funcName())
-        filepath = filepicker.showFilePicker(self.unoObjs)
+        filepath = filepicker.showFilePicker(self.app.unoObjs)
         if filepath:
             filesList = FilesList(self.ctrl_getter, self.app)
             filesList.addFile(filepath)
 
     def addCurrentDoc(self):
         logger.debug(util.funcName())
-        url = self.unoObjs.document.getURL()
+        url = self.app.unoObjs.document.getURL()
         if not url:
-            self.msgbox.display("Please save the current document first.")
+            self.app.msgbox.display("Please save the current document first.")
             return
         syspath = uno.fileUrlToSystemPath(url)
         filesList = FilesList(self.ctrl_getter, self.app)
@@ -177,6 +126,59 @@ class FilesListButtons(evt_handler.ActionEventHandler):
     def removeFile(self):
         filesList = FilesList(self.ctrl_getter, self.app)
         filesList.removeFile()
+
+
+class FilesList(evt_handler.DataControls):
+    def __init__(self, ctrl_getter, app):
+        evt_handler.DataControls.__init__(self)
+        self.ctrl_getter = ctrl_getter
+        self.app = app
+        self.listboxFiles = ctrl_getter.get(_dlgdef.LIST_FILES)
+        self.fileItems = FileItemList(BulkFileItem, self.app.userVars)
+
+    def load_values(self):
+        logger.debug(util.funcName())
+        self.fileItems.loadUserVars()
+        fileItemStrings = self.fileItems.getItemTextList()
+        self.listboxFiles.addItems(tuple(fileItemStrings), 0)
+
+    def store_results(self):
+        self.fileItems.storeUserVars()
+
+    def addFile(self, filepath):
+        newItem = BulkFileItem(self.app.userVars)
+        newItem.filepath = filepath
+        logger.debug("Adding item")
+        try:
+            self.fileItems.addItem(newItem)
+        except exceptions.ChoiceProblem as exc:
+            self.app.msgbox.displayExc(exc)
+            return
+        logger.debug("Successfully added.")
+        dutil.fill_list_ctrl(
+            listCtrl=self.listboxFiles,
+            values=self.fileItems.getItemTextList(),
+            selectedValue=str(newItem))
+        outputTo = OutputTo(self.ctrl_getter, self.app)
+        if not outputTo.read():
+            outputTo.fill(os.path.dirname(filepath))
+
+    def removeFile(self):
+        logger.debug(util.funcName('begin'))
+        try:
+            itemPos = dutil.get_selected_index(
+                self.listboxFiles, "a file")
+            self.fileItems.deleteItem(itemPos)
+        except exceptions.ChoiceProblem as exc:
+            self.app.msgbox.displayExc(exc)
+            return
+        self.listboxFiles.removeItems(itemPos, 1)
+
+        ## Select the next item
+
+        if self.listboxFiles.getItemCount() > 0:
+            dutil.select_index(self.listboxFiles, itemPos)
+        logger.debug(util.funcName('end'))
 
 
 class OutputTo(evt_handler.ActionEventHandler):
@@ -198,19 +200,22 @@ class OutputTo(evt_handler.ActionEventHandler):
 
     def showFolderPicker(self):
         logger.debug(util.funcName('begin'))
-        folderpath = filepicker.showFolderPicker(
-            self.app.unoObjs, self.txtOutputTo.getText().strip())
+        folderpath = filepicker.showFolderPicker(self.app.unoObjs, self.read())
         logger.debug(repr(folderpath))
         if folderpath == "":
             logger.debug("No folderpath specified.")
             return
-        self.txtOutputTo.setText(folderpath)
+        self.fill(folderpath)
 
     def load_values(self):
-        self.txtOutputTo.setText(self.app.userVars.get('OutputFolder'))
+        self.fill(self.app.userVars.get('OutputFolder'))
 
     def store_results(self):
-        logger.debug(util.funcName())
-        self.outdir = self.stepCtrls.txtOutputTo.getText()
-        self.userVars.store('OutputFolder', self.outdir)
+        self.app.userVars.store('OutputFolder', self.read())
+
+    def fill(self, new_val):
+        self.txtOutputTo.setText(new_val)
+
+    def read(self):
+        return self.txtOutputTo.getText().strip()
 

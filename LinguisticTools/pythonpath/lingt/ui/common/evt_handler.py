@@ -54,6 +54,14 @@ class DataControls:
         """Store form data.  Implement if needed."""
         pass
 
+    def fill(self, *args):
+        """Set values of controls to the specified values."""
+        raise NotImplementedError()
+
+    def read(self):
+        """Get values of controls and return them."""
+        raise NotImplementedError()
+
 
 def warn_unexpected_source(src):
     logger.warning("unexpected source %s", src.Model.Name)

@@ -191,17 +191,19 @@ class FontItemList:
         :param attrs_changed: list of FontChange attribute names
         """
         logger.debug(util.funcName('begin', args=type(event_handler).__name__))
-        for item in self.items_to_change(item_to_update):
+        for item in self.matching_items(item_to_update):
             item.create_change(self.userVars)
             event_handler.update_change(item.change)
 
-    def items_to_change(self, item_to_update):
+    def matching_items(self, item_to_match=None):
         """Get all FontItem objects in the selected group.
-        :param item_to_update: type FontItem
+        :param item_to_update: type FontItem, defaults to selected item
         """
         matching_items = []
+        if not item_to_match:
+            item_to_match = self.selected_item()
         for item in self.items:
-            if item == item_to_update:
+            if item == item_to_match:
                 matching_items.append(item)
         return matching_items
 

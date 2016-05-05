@@ -23,9 +23,10 @@ import logging
 
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.bulkconv_structs import FontChange
+from lingt.app.data.bulkconv_structs import FontChange
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui.common import dutil
+from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
@@ -62,28 +63,28 @@ class FormStep2:
             ):
             controls_object = ctrl_class(ctrl_getter, app)  # create new
             self.event_handlers.append(controls_object)
-        self.found_font_info = FoundFontInfo(ctrl_getter)
+        self.found_font_info = FoundFontInfo(ctrl_getter, app)
 
     def start_working(self):
         for event_handler in self.event_handlers:
             event_handler.start_working()
-        self.found_font_info.fill(fontItem)
+        self.found_font_info.load_values()
 
     def store_results(self):
         """Store settings in user vars."""
         logger.debug(util.funcName('begin'))
         fontChanges = self.app.getFontChanges()
-        self.userVars.store('FontChangesCount', str(len(fontChanges)))
+        self.app.userVars.store('FontChangesCount', str(len(fontChanges)))
         varNum = 0
         for fontChange in fontChanges:
             fontChange.setVarNum(varNum)
             varNum += 1
-            fontChange.userVars = self.userVars
+            fontChange.userVars = self.app.userVars
             fontChange.storeUserVars()
 
         MAX_CLEAN = 1000  # should be more than enough
         for varNum in range(len(fontChanges), MAX_CLEAN):
-            fontChange = FontChange(None, self.userVars, varNum)
+            fontChange = FontChange(None, self.app.userVars, varNum)
             foundSomething = fontChange.cleanupUserVars()
             if not foundSomething:
                 break
@@ -95,7 +96,7 @@ class FormStep2:
         logger.debug(util.funcName('end'))
 
     def read_change(self):
-        """Reads the form and returns a FontChange object.""" 
+        """Reads the form and returns a FontChange object."""
         fontChange = FontChange(None, self.app.userVars)
         for fontitem_controls in self.data_controls:
             fontitem_controls.update_change(fontChange)
@@ -118,9 +119,9 @@ class FormStep2:
                 SampleControls,
                 FoundFontInfo,
             ):
-                fontitem_controls = fontitem_controls_class(
-                    self.ctrl_getter, self.app)
-                fontitem_controls.fill_values(fontItem)
+            fontitem_controls = fontitem_controls_class(
+                self.ctrl_getter, self.app)
+            fontitem_controls.fill(fontItem)
         logger.debug(util.funcName('end'))
 
 
@@ -130,9 +131,11 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
     """
     def __init__(self, ctrl_getter, app):
         evt_handler.ActionEventHandler.__init__(self)
-        self.btnReset = dutil.getControl(dlg, 'btnReset')
-        self.btnCopy = dutil.getControl(dlg, 'btnCopy')
-        self.btnPaste = dutil.getControl(dlg, 'btnPaste')
+        self.ctrl_getter = ctrl_getter
+        self.app = app
+        self.btnReset = ctrl_getter.get(_dlgdef.BTN_RESET)
+        self.btnCopy = ctrl_getter.get(_dlgdef.BTN_COPY)
+        self.btnPaste = ctrl_getter.get(_dlgdef.BTN_PASTE)
         self.copiedSettings = None
 
     def add_listeners(self):
@@ -143,21 +146,19 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
             ctrl.addActionListener(self)
 
     def handle_action_event(self, action_command):
-        if event.ActionCommand == 'ResetFont':
-            self.step2Form.resetFont()
-        elif event.ActionCommand == 'CopyFont':
-            self.step2Form.copyFont()
-        elif event.ActionCommand == 'PasteFont':
-            self.step2Form.pasteFont()
+        if action_command == 'ResetFont':
+            self.resetFont()
+        elif action_command == 'CopyFont':
+            self.copyFont()
+        elif action_command == 'PasteFont':
+            self.pasteFont()
         else:
             evt_handler.raise_unknown_action(action_command)
 
     def resetFont(self):
         if not self.app.selected_item():
             return
-        fontItemList = self.app.fontItemList
-        item_to_update = fontItemList.selected_item()
-        for item in fontItemList.items_to_change(item_to_update):
+        for item in self.app.fontItemList.matching_items():
             item.change = None
         listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
         listFontsUsed.updateFontsList()
@@ -171,13 +172,12 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
     def pasteFont(self):
         logger.debug(util.funcName())
         if self.copiedSettings is None:
-            self.msgbox.display("First copy font settings.")
+            self.app.msgbox.display("First copy font settings.")
             return
-        fontItem = self.app.selected_item()
-        if self.app.elected_index == -1:
+        if self.app.selected_index == -1:
             return
         form2 = FormStep2(self.ctrl_getter, self.app)
-        for item in fontItemList.items_to_change(item_to_update):
+        for item in self.app.fontItemList.matching_items():
             item.create_change()
             form2.copy_change_attrs(self.copiedSettings, item.change)
         listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
@@ -189,7 +189,6 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
         evt_handler.ItemEventHandler.__init__(self)
         self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
-        self.msgbox = MessageBox(app.unoObjs)
         self.app = app
 
     def add_listeners(self):
@@ -207,7 +206,7 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
             self.app.selected_index = dutil.get_selected_index(
                 self.listFontsUsed, "a file")
         except exceptions.ChoiceProblem as exc:
-            self.msgbox.displayExc(exc)
+            self.app.msgbox.displayExc(exc)
             self.app.selected_index = -1
             return None
         return self.app.selected_item()
@@ -241,13 +240,13 @@ class FontChangeControlHandler:
         self.ctrl_getter = ctrl_getter
         self.app = app
 
-    def handle_action_event(self, src):
+    def handle_action_event(self, dummy_action_command):
         self.app.update_list(self)
 
-    def handle_item_event(self, src):
+    def handle_item_event(self, dummy_src):
         self.app.update_list(self)
 
-    def handle_text_event(self, src):
+    def handle_text_event(self, dummy_src):
         self.app.update_list(self)
 
     #XXX: Do we need a function like this?
@@ -274,31 +273,29 @@ class FontChangeControlHandler:
         raise NotImplementedError()
 
 
-class ConverterControls(FontChangeControlHandler,
-                        evt_handler.ActionEventHandler,
-                        evt_handler.ItemEventHandler):
+class ConverterControls(FontChangeControlHandler):
+    def __init__(self, ctrl_getter, app):
+        FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        self.convName = ConvName(ctrl_getter, app)
+        self.chkReverse = ChkReverse(ctrl_getter, app)
+    
+
+class ButtonSelectConverter(FontChangeControlHandler,
+                        evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.ActionEventHandler.__init__(self)
-        evt_handler.ItemEventHandler.__init__(self)
-        self.txtConvName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
-        self.chkReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
         self.btnSelectConv = ctrl_getter.get(_dlgdef.BTN_CHOOSE_CONV)
-
+        self.convName = ConvName(ctrl_getter, app)
+    
     def add_listeners(self):
-        self.chkReverse.addItemListener(self)
         btnSelectConv.setActionCommand('SelectConverter')
         self.btnSelectConv.addActionListener(self)
 
     def handle_action_event(self, action_command):
         self.selectConverter()
         FontChangeControlHandler.handle_action_event(self, action_command)
-        sampleControls.fill_values_for_selected_font()
-
-    def handle_item_event(self, src):
-        FontChangeControlHandler.handle_item_event(self, src)
-        sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.fill_values_for_selected_font()
+        sampleControls.fill_for_selected_font()
 
     def selectConverter(self):
         logger.debug(util.funcName('begin'))
@@ -310,30 +307,58 @@ class ConverterControls(FontChangeControlHandler,
             conv_settings = fontItem.change.converter
         newChange = self.app.convPool.selectConverter(conv_settings)
         self.app.convPool.cleanup_unused()
+        checkboxRevese = CheckboxReverse(self.ctrl_getter, self.app)
         if newChange:
             self.fill_for_change(newChange)
+            checkboxReverse.fill_for_change(newChange)
         else:
             self.fill_for_no_change(None)
+            checkboxReverse.fill_for_no_change()
         logger.debug(util.funcName('end'))
 
     def update_change(self, fontChange):
-        converter = ConverterSettings()
+        converter = fontChange.converter
         converter.convName = self.txtConvName.getText()
-        converter.forward = (self.chkReverse.getState() == 0)
-        fontChange.converter = converter
 
     def fill_for_change(self, fontChange):
         self.txtConvName.setText(
             fontChange.converter.convName)
+
+    def fill_for_no_change(self, dummy_fontItem):
+        self.txtConvName.setText("<No converter>")
+
+    def copy_change(self, change_from, change_to):
+        change_to.converter.convName = change_from.converter.convName
+
+
+class CheckboxReverse(FontChangeControlHandler,
+                      evt_handler.ItemEventHandler):
+    def __init__(self, ctrl_getter, app):
+        FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        evt_handler.ItemEventHandler.__init__(self)
+        self.chkReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
+
+    def add_listeners(self):
+        self.chkReverse.addItemListener(self)
+
+    def handle_item_event(self, src):
+        FontChangeControlHandler.handle_item_event(self, src)
+        sampleControls = SampleControls(self.ctrl_getter, self.app)
+        sampleControls.fill_for_selected_font()
+
+    def update_change(self, fontChange):
+        converter = fontChange.converter
+        converter.forward = (self.chkReverse.getState() == 0)
+
+    def fill_for_change(self, fontChange):
         self.chkReverse.setState(
             not fontChange.converter.forward)
 
     def fill_for_no_change(self, dummy_fontItem):
-        self.txtConvName.setText("<No converter>")
         self.chkReverse.setState(False)
 
     def copy_change(self, change_from, change_to):
-        change_to.converter = copy.copy(change_from.converter)
+        change_to.converter.forward = change_from.converter.forward
 
 
 class SampleControls(evt_handler.ActionEventHandler,
@@ -349,7 +374,6 @@ class SampleControls(evt_handler.ActionEventHandler,
         self.btnNextInput = ctrl_getter.get(_dlgdef.BTN_NEXT_INPUT)
         self.chkShowConverted = ctrl_getter.get(_dlgdef.CHK_SHOW_CONVERTED)
         self.samples = Samples(self.app.convPool)
-        self.msgbox = MessageBox(app.unoObjs)
 
     def load_values(self):
         #self.chkShowConverted.setState(
@@ -391,20 +415,20 @@ class SampleControls(evt_handler.ActionEventHandler,
                 try:
                     convertedVal = self.samples.get_converted()
                 except exceptions.MessageError as exc:
-                    self.msgbox.displayExc(exc)
+                    self.app.msgbox.displayExc(exc)
             self.lblConverted.setText(convertedVal)
         else:
             self.btnNextInput.getModel().Enabled = False
             self.lblInput.setText("(None)")
             self.lblSampleNum.setText("0 / 0")
 
-    def fill_values_for_selected_font(self):
+    def fill_for_selected_font(self):
         fontItem = self.app.selected_item()
         if not fontItem:
             return
-        self.fill_values(fontItem)
+        self.fill(fontItem)
 
-    def fill_values(self, fontItem):
+    def fill(self, fontItem):
         """Called when converter changes."""
         if fontItem.change:
             converter = fontItem.change.converter
@@ -458,7 +482,10 @@ class FoundFontInfo:
         self.foundFonts = ctrl_getter.get(_dlgdef.FOUND_FONTS)
         self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
 
-    def fill_values(self, fontItem):
+    def load_values(self):
+        self.fill(FontItem())
+
+    def fill(self, fontItem):
         foundFontNames = ""
         for title, fontName in (
                 ("Standard", fontItem.nameStandard),
@@ -639,7 +666,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         logger.debug(util.funcName())
         for data in self.styledata:
             stylesList = styles.getListOfStyles(
-                data.styleType + 'Styles', self.unoObjs)
+                data.styleType + 'Styles', self.app.unoObjs)
             data.styleNames = dict(stylesList)
             dispNames = tuple([dispName for dispName, name in stylesList])
             dutil.fill_list_ctrl(data.ctrl, dispNames)
