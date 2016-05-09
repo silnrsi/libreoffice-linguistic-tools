@@ -56,11 +56,11 @@ class DataControls:
 
     def fill(self, *args):
         """Set values of controls to the specified values."""
-        raise NotImplementedError()
+        pass
 
     def read(self):
         """Get values of controls and return them."""
-        raise NotImplementedError()
+        pass
 
 
 def warn_unexpected_source(src):

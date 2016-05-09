@@ -213,7 +213,7 @@ class OutputTo(evt_handler.ActionEventHandler):
     def store_results(self):
         self.app.userVars.store('OutputFolder', self.read())
 
-    def fill(self, new_val):
+    def fill(self, new_val, *dummy_args):
         self.txtOutputTo.setText(new_val)
 
     def read(self):

@@ -189,6 +189,7 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
         evt_handler.ItemEventHandler.__init__(self)
         self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
+        self.ctrl_getter = ctrl_getter
         self.app = app
 
     def add_listeners(self):
@@ -258,43 +259,43 @@ class FontChangeControlHandler:
 
     def update_change(self, fontChange):
         """Read form values and modify fontChange accordingly."""
-        raise NotImplementedError()
+        pass
 
     def fill_for_change(self, fontChange):
         """Set form values based on the fontChange values."""
-        raise NotImplementedError()
+        pass
 
     def fill_for_no_change(self, fontItem):
         """Set form values based on the fontItem values."""
-        raise NotImplementedError()
+        pass
 
     def copy_change(self, change_from, change_to):
         """Set attributes of change_to based on change_from."""
-        raise NotImplementedError()
+        pass
 
 
 class ConverterControls(FontChangeControlHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         self.convName = ConvName(ctrl_getter, app)
-        self.chkReverse = ChkReverse(ctrl_getter, app)
-    
+        self.chkReverse = CheckboxReverse(ctrl_getter, app)
 
-class ButtonSelectConverter(FontChangeControlHandler,
-                        evt_handler.ActionEventHandler):
+
+class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.ActionEventHandler.__init__(self)
         self.btnSelectConv = ctrl_getter.get(_dlgdef.BTN_CHOOSE_CONV)
-        self.convName = ConvName(ctrl_getter, app)
-    
+        self.txtConvName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
+
     def add_listeners(self):
-        btnSelectConv.setActionCommand('SelectConverter')
+        self.btnSelectConv.setActionCommand('SelectConverter')
         self.btnSelectConv.addActionListener(self)
 
     def handle_action_event(self, action_command):
         self.selectConverter()
         FontChangeControlHandler.handle_action_event(self, action_command)
+        sampleControls = SampleControls(self.ctrl_getter, self.app)
         sampleControls.fill_for_selected_font()
 
     def selectConverter(self):
@@ -307,7 +308,7 @@ class ButtonSelectConverter(FontChangeControlHandler,
             conv_settings = fontItem.change.converter
         newChange = self.app.convPool.selectConverter(conv_settings)
         self.app.convPool.cleanup_unused()
-        checkboxRevese = CheckboxReverse(self.ctrl_getter, self.app)
+        checkboxReverse = CheckboxReverse(self.ctrl_getter, self.app)
         if newChange:
             self.fill_for_change(newChange)
             checkboxReverse.fill_for_change(newChange)
@@ -318,7 +319,7 @@ class ButtonSelectConverter(FontChangeControlHandler,
 
     def update_change(self, fontChange):
         converter = fontChange.converter
-        converter.convName = self.txtConvName.getText()
+        converter.txtConvName = self.txtConvName.getText()
 
     def fill_for_change(self, fontChange):
         self.txtConvName.setText(
@@ -361,24 +362,31 @@ class CheckboxReverse(FontChangeControlHandler,
         change_to.converter.forward = change_from.converter.forward
 
 
-class SampleControls(evt_handler.ActionEventHandler,
-                     evt_handler.ItemEventHandler):
+class SampleControls(FontChangeControlHandler):
+    def __init__(self, ctrl_getter, app):
+        FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        self.ctrl_getter = ctrl_getter
+        self.app = app
+        self.samples = Samples(self.app.convPool)
+        self.nextInputControls = ButtonNextInput(
+            ctrl_getter, app, self.samples)
+        self.showConvControls = CheckboxShowConverter(
+            ctrl_getter, app, self.nextInputControls)
+
+
+class ButtonNextInput(FontChangeControlHandler,
+                      evt_handler.ActionEventHandler):
     """Controls to display sample input and converted text."""
 
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, samples):
         evt_handler.ActionEventHandler.__init__(self)
-        evt_handler.ItemEventHandler.__init__(self)
+        self.samples = samples
         self.lblInput = ctrl_getter.get(_dlgdef.INPUT_DISPLAY)
         self.lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
         self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
         self.btnNextInput = ctrl_getter.get(_dlgdef.BTN_NEXT_INPUT)
-        self.chkShowConverted = ctrl_getter.get(_dlgdef.CHK_SHOW_CONVERTED)
-        self.samples = Samples(self.app.convPool)
 
     def load_values(self):
-        #self.chkShowConverted.setState(
-        #    userVars.getInt('DisplayConverted'))
-        self.chkShowConverted.setState(False)
         self.lblInput.setText("(None)")
         self.lblSampleNum.setText("0 / 0")
         self.lblConverted.setText("(None)")
@@ -386,16 +394,9 @@ class SampleControls(evt_handler.ActionEventHandler,
     def add_listeners(self):
         self.btnNextInput.setActionCommand('NextInput')
         self.btnNextInput.addActionListener(self)
-        self.chkShowConverted.addItemListener(self)
 
     def handle_action_event(self, action_command):
         self.nextInputSample()
-
-    def handle_item_event(self, src):
-        if self.step2Form.samples.sampleIndex > -1:
-            # Show the same sample again.
-            self.step2Form.samples.sampleIndex -= 1
-        self.step2Form.nextInputSample()
 
     def nextInputSample(self):
         if self.samples.inputData:
@@ -411,7 +412,9 @@ class SampleControls(evt_handler.ActionEventHandler,
                     self.samples.sampleNum(),
                     len(self.samples.inputData)))
             convertedVal = "(None)"
-            if self.chkShowConverted.getState() == 1:
+            showConvControls = CheckboxShowConverter(
+                self.ctrl_getter, self.app, None)
+            if showConvControls.chkShowConverted.getState() == 1:
                 try:
                     convertedVal = self.samples.get_converted()
                 except exceptions.MessageError as exc:
@@ -435,6 +438,31 @@ class SampleControls(evt_handler.ActionEventHandler,
             self.samples.last_settings[converter.convName] = converter
         self.samples.set_fontItem(fontItem)
         self.nextInputSample()
+
+
+
+class CheckboxShowConverter(FontChangeControlHandler,
+                            evt_handler.ItemEventHandler):
+    """Controls to display sample input and converted text."""
+
+    def __init__(self, ctrl_getter, app, next_input_controls):
+        self.next_input_controls = next_input_controls
+        evt_handler.ItemEventHandler.__init__(self)
+        self.chkShowConverted = ctrl_getter.get(_dlgdef.CHK_SHOW_CONVERTED)
+
+    def load_values(self):
+        #self.chkShowConverted.setState(
+        #    userVars.getInt('DisplayConverted'))
+        self.chkShowConverted.setState(False)
+
+    def add_listeners(self):
+        self.chkShowConverted.addItemListener(self)
+
+    def handle_item_event(self, src):
+        if self.step2Form.samples.sampleIndex > -1:
+            # Show the same sample again.
+            self.step2Form.samples.sampleIndex -= 1
+        self.next_input_controls.nextInputSample()
 
     def store_results(self):
         displayConverted = (
