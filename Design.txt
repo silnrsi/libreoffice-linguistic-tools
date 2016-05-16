@@ -8,7 +8,11 @@
 
 ## Next
 
-Pylint App layer.
+Get abbreviations dialog to appear.
+    Dialogs are in <user dir>/basic
+    The pythonpath of the installed extension seems to override the user dir,
+    so don't install one for now.
+    Perhaps modify user dir installation script to put files in /basic.
 
 Fix bug (below).
 

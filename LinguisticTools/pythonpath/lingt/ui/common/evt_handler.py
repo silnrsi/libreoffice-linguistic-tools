@@ -113,7 +113,7 @@ class ActionEventHandler(XActionListener, EventHandler):
             EventHandler.handling_event = False
 
     def handle_action_event(self, action_command):
-        raise NotImplementedError()
+        pass
 
 
 class ItemEventHandler(XItemListener, EventHandler):
@@ -139,7 +139,7 @@ class ItemEventHandler(XItemListener, EventHandler):
             raise
 
     def handle_item_event(self, src):
-        raise NotImplementedError()
+        pass
 
 
 class TextEventHandler(XTextListener, EventHandler):
@@ -163,7 +163,7 @@ class TextEventHandler(XTextListener, EventHandler):
             raise
 
     def handle_text_event(self, src):
-        raise NotImplementedError()
+        pass
 
 
 def sameName(control1, control2):

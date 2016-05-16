@@ -9,6 +9,7 @@
 # 12-Dec-15 JDK  Added listbox_items().
 # 21-Mar-16 JDK  Changed getControl() to a class to reduce arguments.
 # 23-Mar-16 JDK  Moved event handling functions to another module.
+# 16-May-16 JDK  Fixed bug: all_ctrl_names() should return strings, not attrs.
 
 """
 Utilities to manage UNO dialogs and controls.
@@ -48,6 +49,7 @@ logger = logging.getLogger("lingt.ui.dutil")
 
 def createDialog(uno_objs, definition_class):
     """:param definition_class: class from lingt.utils.dlgdefs"""
+    logger.debug("Creating dialog...")
     dlg_getter = DialogGetter(uno_objs, definition_class)
     dlg = None
     try:
@@ -66,24 +68,30 @@ class DialogGetter:
 
     def create_and_verify(self):
         """raises: DialogError if dialog could not be created"""
+        logger.debug("Creating and verifying dialog...")
         self._createDialog()
         if not self.dlg:
             raise exceptions.DialogError("Error: Could not create dialog.")
         logger.debug("Created dialog.")
         try:
+            logger.debug("Verifying names...")
             self.verify_ctrl_names()
+            logger.debug("Verified names.")
         finally:
             self.dlg.dispose()
         return self.dlg
 
     def _createDialog(self):
+        logger.debug(util.funName())
         dlgprov = self.uno_objs.smgr.createInstanceWithArgumentsAndContext(
             "com.sun.star.awt.DialogProvider",
             (self.uno_objs.document,), self.uno_objs.ctx)
+        dlg_string = (
+            "vnd.sun.star.script:LingToolsBasic." + self.dlg_name() +
+            "?location=application")
+        logger.debug(dlg_string)
         try:
-            self.dlg = dlgprov.createDialog(
-                "vnd.sun.star.script:LingToolsBasic." + self.dlg_name() +
-                "?location=application")
+            self.dlg = dlgprov.createDialog(dlg_string)
         except IllegalArgumentException:
             pass
         return self.dlg
@@ -97,8 +105,9 @@ class DialogGetter:
             ctrl_getter.verify(ctrl_name)
 
     def all_ctrl_names(self):
+        class_dict = self.definition.__dict__
         return [
-            attr for attr in self.definition.__dict__
+            class_dict[attr] for attr in class_dict
             if not attr.startswith('__')]
 
 

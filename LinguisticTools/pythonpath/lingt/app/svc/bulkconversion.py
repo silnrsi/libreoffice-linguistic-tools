@@ -232,6 +232,7 @@ class Samples:
         self.sampleIndex = -1  # index of self.inputData
         self.last_settings = {}  # keys conv name, values ConverterSettings
         self.conv_settings = None
+        self.converted_data = None
 
     def set_fontItem(self, fontItem):
         """Use values from a FontItem."""
@@ -255,8 +256,9 @@ class Samples:
 
     def get_converted(self):
         """Convert input sample.  Return converted string."""
+        self.converted_data = "(None)"
         if not self.conv_settings or not self.conv_settings.convName:
-            return "(None)"
+            return self.converted_data
         convName = self.conv_settings.convName
         logger.debug("Using converter %r", self.conv_settings)
         sec_call = self.convPool.loadConverter(self.conv_settings)
@@ -265,9 +267,9 @@ class Samples:
             if self.last_settings[convName] != sec_call.config:
                 sec_call.setConverter()
                 self.last_settings[convName] = sec_call.config
-        convertedVal = sec_call.convert(
+        self.converted_data = sec_call.convert(
             self.inputData[self.sampleIndex])
-        return convertedVal
+        return self.converted_data
 
 
 class ConvPool:
