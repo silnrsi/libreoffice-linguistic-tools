@@ -9,7 +9,7 @@
 #
 # Copy code the LO/AOO user directory, so it can be run from Tools -> Macros.
 #
-# The file componentsWrapper.py uses all of the lingt package.
+# The file ComponentsWrapper.py uses all of the lingt package.
 # Likewise runTestSuite.py uses all of lingttest.
 #
 #------------------------------------------------------------------------------
@@ -19,6 +19,10 @@ $DEPLOYDIR = "$env:APPDATA\$OFFICEAPP\user\Scripts\python"
 $DEPLOY_PYTHONPATH = "$DEPLOYDIR\pythonpath"
 $SRCDIR = "$PSScriptRoot\.."
 $TESTDIR = "$SRCDIR\tests"
+
+# Update timestamp so file will get reloaded.
+$file = Get-Item "$TESTDIR\ComponentsWrapper.py"
+$file.LastWriteTime = (Get-Date)
 
 Foreach ($dir in @("$DEPLOY_PYTHONPATH\lingt",
                    "$DEPLOY_PYTHONPATH\lingttest",
@@ -34,7 +38,7 @@ if(!(Test-Path -PathType Container -Path $DEPLOY_PYTHONPATH)) {
 Copy-Item -recurse "$SRCDIR\pythonpath\*" $DEPLOY_PYTHONPATH
 Copy-Item -recurse "$TESTDIR\pythonpath\*" $DEPLOY_PYTHONPATH
 Copy-Item -recurse "$TESTDIR\runTestSuite.py" $DEPLOYDIR
-Copy-Item -recurse "$TESTDIR\componentsWrapper.py" $DEPLOYDIR
+Copy-Item -recurse "$TESTDIR\ComponentsWrapper.py" $DEPLOYDIR
 
 echo "Copied to $DEPLOYDIR"
 if ((Get-ExecutionPolicy -Scope Process) -eq 'Bypass')

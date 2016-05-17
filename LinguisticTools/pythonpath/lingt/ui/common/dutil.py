@@ -57,6 +57,8 @@ def createDialog(uno_objs, definition_class):
     except exceptions.DialogError as exc:
         msgbox = MessageBox(uno_objs)
         msgbox.displayExc(exc)
+        return None
+    logger.debug("Created dialog.")
     return dlg
 
 class DialogGetter:
@@ -68,21 +70,18 @@ class DialogGetter:
 
     def create_and_verify(self):
         """raises: DialogError if dialog could not be created"""
-        logger.debug("Creating and verifying dialog...")
         self._createDialog()
         if not self.dlg:
             raise exceptions.DialogError("Error: Could not create dialog.")
-        logger.debug("Created dialog.")
         try:
-            logger.debug("Verifying names...")
             self.verify_ctrl_names()
             logger.debug("Verified names.")
-        finally:
+        except exceptions.DialogError as exc:
             self.dlg.dispose()
+            raise exc
         return self.dlg
 
     def _createDialog(self):
-        logger.debug(util.funName())
         dlgprov = self.uno_objs.smgr.createInstanceWithArgumentsAndContext(
             "com.sun.star.awt.DialogProvider",
             (self.uno_objs.document,), self.uno_objs.ctx)

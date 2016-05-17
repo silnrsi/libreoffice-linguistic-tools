@@ -75,7 +75,7 @@ class DlgDataConversion:
         self.userVars = uservars.UserVars(
             USERVAR_PREFIX, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
-        self.styleFonts = styles.StyleFonts(unoObjs, self.userVars)
+        self.styleFonts = styles.StyleFonts(unoObjs)
         self.app = DataConversion(unoObjs, self.userVars, self.styleFonts)
         self.dlgCtrls = None
         self.evtHandler = None

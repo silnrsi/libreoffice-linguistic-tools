@@ -27,7 +27,7 @@ Get-ChildItem "pylint.txt" -Recurse | Remove-Item
 Get-ChildItem -Recurse | ?{ $_.PSIsContainer -And
                            ($_.Name -eq "__pycache__")} | Remove-Item -Recurse
 
-#chdir $OriginalFolder
+chdir $OriginalFolder
 
 if ((Get-ExecutionPolicy -Scope Process) -eq 'Bypass')
 {

@@ -8,11 +8,7 @@
 
 ## Next
 
-Get abbreviations dialog to appear.
-    Dialogs are in <user dir>/basic
-    The pythonpath of the installed extension seems to override the user dir,
-    so don't install one for now.
-    Perhaps modify user dir installation script to put files in /basic.
+Get tests to pass with an unassimilated user directory setup.
 
 Fix bug (below).
 
@@ -23,6 +19,11 @@ Write grouping code.
 ## bug 07-Mar-16
 
 Selecting a converter changed "Paragraph Style" to  "Custom Style".
+
+
+## Sometime
+
+Create put dialog definition files in /basic.
 
 
 ## reorganizing idea 28-Apr-16

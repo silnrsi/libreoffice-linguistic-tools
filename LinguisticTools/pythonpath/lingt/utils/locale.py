@@ -76,6 +76,7 @@ class Locale:
         """
         if message_en is None:
             return ""
+        message_en = str(message_en)
         if self.code == "en":
             return message_en
         key = message_en.lower()
