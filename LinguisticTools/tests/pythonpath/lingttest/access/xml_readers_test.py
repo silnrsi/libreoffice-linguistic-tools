@@ -15,8 +15,8 @@ from lingttest.utils import testutil
 from lingt.access.xml import interlin_reader
 from lingt.access.xml import phon_reader
 from lingt.access.writer.uservars import UserVars
-from lingt.app import lingex_structs
-from lingt.app.fileitemlist import InterlinInputSettings, LingExFileItem
+from lingt.app.data import lingex_structs
+from lingt.app.data.fileitemlist import InterlinInputSettings, LingExFileItem
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.xml_readers_test")
@@ -59,14 +59,14 @@ class PhonTestCase(unittest.TestCase):
         self.assertEqual(xmlReader.get_filetype(), "paxml")
 
         exampleDict = xmlReader.read()
-        self.assert_("JPDN23.1".lower() in exampleDict)
+        self.assertTrue("JPDN23.1".lower() in exampleDict)
         phonEx = exampleDict["JPDN23.1".lower()]
         self.assertEqual(phonEx.refText, "JPDN23.1")
         self.assertEqual(phonEx.gloss, "unmarried cousin")
         self.assertNotEqual(phonEx.phonetic, "")
         self.assertNotEqual(phonEx.phonemic, "")
 
-        self.assert_("JPDN37.4".lower() in exampleDict)
+        self.assertTrue("JPDN37.4".lower() in exampleDict)
         phonEx = exampleDict["JPDN37.4".lower()]
         self.assertEqual(phonEx.refText, "JPDN37.4")
         self.assertEqual(phonEx.gloss, "")
@@ -88,14 +88,14 @@ class PhonTestCase(unittest.TestCase):
         self.assertEqual(xmlReader.get_filetype(), "xml")
 
         exampleDict = xmlReader.read()
-        self.assert_("JPDN21.5".lower() in exampleDict)
+        self.assertTrue("JPDN21.5".lower() in exampleDict)
         phonEx = exampleDict["JPDN21.5".lower()]
         self.assertEqual(phonEx.refText, "JPDN21.5")
         self.assertEqual(phonEx.gloss, "elder sister")
         self.assertNotEqual(phonEx.phonetic, "")
         self.assertNotEqual(phonEx.phonemic, "")
 
-        self.assert_("EGAN03.37".lower() in exampleDict)
+        self.assertTrue("EGAN03.37".lower() in exampleDict)
         phonEx = exampleDict["EGAN03.37".lower()]
         self.assertEqual(phonEx.refText, "EGAN03.37")
         self.assertEqual(phonEx.gloss, "five")
@@ -117,7 +117,7 @@ class PhonTestCase(unittest.TestCase):
             self.unoObjs, self.userVars, config)
 
         exampleDict = xmlReader.read()
-        self.assert_("JPDN21.5".lower() in exampleDict)
+        self.assertTrue("JPDN21.5".lower() in exampleDict)
         phonEx = exampleDict["JPDN21.5".lower()]
         self.assertEqual(phonEx.refText, "JPDN21.5")
         self.assertEqual(phonEx.gloss, "")
@@ -154,7 +154,7 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(
             xmlReader.get_filetype(filepath, xmlReader.dom), "toolbox")
 
-        self.assert_("Hunt06".lower() in exampleDict)
+        self.assertTrue("Hunt06".lower() in exampleDict)
         gramEx = exampleDict["Hunt06".lower()]
         self.assertEqual(gramEx.refText, "Hunt06")
         self.assertEqual(
@@ -230,11 +230,11 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(
             xmlReader.get_filetype(filepath, xmlReader.dom), "fieldworks")
 
-        self.assert_("Prefix-1.1".lower() in exampleDict)
-        self.assert_("Prefix-1.2".lower() in exampleDict)
-        self.assert_(not "Prefix-1.3".lower() in exampleDict)
-        self.assert_("Prefix-2.1".lower() in exampleDict)
-        self.assert_(not "Prefix-2.2".lower() in exampleDict)
+        self.assertTrue("Prefix-1.1".lower() in exampleDict)
+        self.assertTrue("Prefix-1.2".lower() in exampleDict)
+        self.assertTrue(not "Prefix-1.3".lower() in exampleDict)
+        self.assertTrue("Prefix-2.1".lower() in exampleDict)
+        self.assertTrue(not "Prefix-2.2".lower() in exampleDict)
 
         gramEx = exampleDict["Prefix-1.2".lower()]
         self.assertEqual(gramEx.refText, "Prefix-1.2")
@@ -269,9 +269,9 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(
             xmlReader.get_filetype(filepath, xmlReader.dom), "fieldworks")
 
-        self.assert_("ABC 1.1".lower() in exampleDict)
-        self.assert_("ABC 1.2".lower() in exampleDict)
-        self.assert_(not "ABC 2.1".lower() in exampleDict)
+        self.assertTrue("ABC 1.1".lower() in exampleDict)
+        self.assertTrue("ABC 1.2".lower() in exampleDict)
+        self.assertTrue(not "ABC 2.1".lower() in exampleDict)
 
         gramEx = exampleDict["ABC 1.2".lower()]
         self.assertEqual(gramEx.refText, "ABC 1.2")
@@ -296,17 +296,17 @@ class TestHelpersTestCase(unittest.TestCase):
     def testPhonFieldHelper(self):
         exDict = dict()
         helper = phon_reader.PhonFieldHelper(exDict, False)
-        self.assert_(not helper.hasContents())
+        self.assertTrue(not helper.hasContents())
         helper.add("ref", "ABC")
-        self.assert_(helper.hasContents())
+        self.assertTrue(helper.hasContents())
         helper.reset()
-        self.assert_(not helper.hasContents())
+        self.assertTrue(not helper.hasContents())
         helper.add("phonetic", "123")
-        self.assert_(helper.hasContents())
+        self.assertTrue(helper.hasContents())
         helper.addEx()
         self.assertEqual(len(exDict.keys()), 0)
         self.assertEqual(len(helper.suggestions), 0)
-        self.assert_(not helper.hasContents())
+        self.assertTrue(not helper.hasContents())
         helper.add("ref", "ABC")
         helper.add("phonetic", "123")
         helper.addEx()

@@ -20,8 +20,8 @@ from lingttest.utils import testutil
 
 from lingt.access.writer.doc_reader import DocReader
 from lingt.access.writer.textsearch import TextSearch
-from lingt.app import fileitemlist
-from lingt.ui.progressbar import ProgressBar
+from lingt.app.data import fileitemlist
+from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.search_test")
@@ -61,13 +61,13 @@ class SearchTestCase(unittest.TestCase):
         self.textSearch = TextSearch(self.unoObjs, self.progressBar)
         self.textSearch.scopeSelection()
         self.unoObjs.viewcursor.goRight(0, False)  # deselect
-        self.assertEquals(len(self.textSearch.getRanges()), 1)
+        self.assertEqual(len(self.textSearch.getRanges()), 1)
         #self.displayRanges()  # uncomment for debugging
 
     def test2_wholeDoc(self):
         self.textSearch = TextSearch(self.unoObjs, self.progressBar)
         self.textSearch.scopeWholeDoc()
-        self.assertEquals(len(self.textSearch.getRanges()), 20)
+        self.assertEqual(len(self.textSearch.getRanges()), 20)
         #self.displayRanges()  # uncomment for debugging
 
     def displayRanges(self):

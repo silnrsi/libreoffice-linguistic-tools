@@ -60,14 +60,14 @@ class AbbrevsTestCase(unittest.TestCase):
         reading from user vars.
         """
         testutil.modifyMsgboxOkCancel(True)
-        def useDialog(innerSelf):
+        def useDialog_add_abl2(innerSelf):
             self.verifyItems(innerSelf, ABL_I, ["ABL   ablative"])
             updateAbbrev(innerSelf, "ABL2", "ablativ", 1)
             self.verifySelectedItem(innerSelf, ">  ABL2  ablativ")
             self.verifyItems(innerSelf, ABL_I + 1, ["ABS   absolutive"])
-        self.runDlg(useDialog)
+        self.runDlg(useDialog_add_abl2)
 
-        def useDialog(innerSelf):
+        def useDialog_add_abn(innerSelf):
             addAbbrev(innerSelf, "ABM", "abominableSnowman", 0)
             addAbbrev(innerSelf, "ABN", "abnegate", 1)
             expected_strings = [
@@ -82,16 +82,16 @@ class AbbrevsTestCase(unittest.TestCase):
                 MyActionEvent("DeleteAbbrev"))
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("ChangeAllCaps"))
-        self.runDlg(useDialog)
+        self.runDlg(useDialog_add_abn)
 
-        def useDialog(innerSelf):
+        def useDialog_verify_lowercase(innerSelf):
             expected_strings = [
                 ">  abl2  ablativ",
                 ">  abn   abnegate",
                 "abs   absolutive"
                 ]
             self.verifyItems(innerSelf, ABL_I, expected_strings)
-        self.runDlg(useDialog)
+        self.runDlg(useDialog_verify_lowercase)
 
     def test2_search(self):
         """Test controls that search for new abbreviations."""
@@ -103,23 +103,10 @@ class AbbrevsTestCase(unittest.TestCase):
             ("Quotations", 'any', 6, 0, ["DIG", "pig", "wiggle"]),
             ("Quotations", 'suffix', 5, 0, ["DIG"]),
             ("Quotations", 'prefix', 5, 0, ["DIG", "pig"])]
-        for paraStyle, affix, abbrevLen, upperCase, displays in dataSets:
+        for dataSet in dataSets:
             self.setDocContentsForSearch()
-            def useDialog(innerSelf):
-                self.clear_list(innerSelf, ABL_I + 1)
-                innerSelf.dlgCtrls.cmbxSearchParaStyle.setText(paraStyle)
-                if affix == 'any':
-                    innerSelf.dlgCtrls.optSearchAny.setState(1)
-                elif affix == 'suffix':
-                    innerSelf.dlgCtrls.optSearchSuffix.setState(1)
-                elif affix == 'prefix':
-                    innerSelf.dlgCtrls.optSearchPrefix.setState(1)
-                innerSelf.dlgCtrls.txtMaxSearchLength.setText(abbrevLen)
-                innerSelf.dlgCtrls.chkSearchUpperCase.setState(upperCase)
-                self.findAndAddNext(innerSelf, len(displays))
-                expected_strings = ["+  " + display for display in displays]
-                self.verifyItems(innerSelf, ABL_I + 1, expected_strings)
-            self.runDlg(useDialog)
+            func = self.make_useDialog_test2(*dataSet)
+            self.runDlg(func)
 
         ## Search from beginning
 
@@ -137,6 +124,24 @@ class AbbrevsTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkStartFromBeginning.setState(1)
             self.findAndAddNext(innerSelf, 2)
         self.runDlg(useDialog)
+
+    def make_useDialog_test2(self, paraStyle, affix, abbrevLen, upperCase,
+                             displays):
+        def useDialog(innerSelf):
+            self.clear_list(innerSelf, ABL_I + 1)
+            innerSelf.dlgCtrls.cmbxSearchParaStyle.setText(paraStyle)
+            if affix == 'any':
+                innerSelf.dlgCtrls.optSearchAny.setState(1)
+            elif affix == 'suffix':
+                innerSelf.dlgCtrls.optSearchSuffix.setState(1)
+            elif affix == 'prefix':
+                innerSelf.dlgCtrls.optSearchPrefix.setState(1)
+            innerSelf.dlgCtrls.txtMaxSearchLength.setText(abbrevLen)
+            innerSelf.dlgCtrls.chkSearchUpperCase.setState(upperCase)
+            self.findAndAddNext(innerSelf, len(displays))
+            expected_strings = ["+  " + display for display in displays]
+            self.verifyItems(innerSelf, ABL_I + 1, expected_strings)
+        return useDialog
 
     def test3_insertList(self):
         """

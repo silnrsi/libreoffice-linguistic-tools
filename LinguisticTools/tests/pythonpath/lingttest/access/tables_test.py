@@ -13,7 +13,7 @@ from lingttest.utils.testutil import PARAGRAPH_BREAK
 from lingt.access.writer import styles
 from lingt.access.writer import tables
 from lingt.access.writer.uservars import UserVars
-from lingt.app import lingex_structs
+from lingt.app.data import lingex_structs
 
 logger = logging.getLogger("lingttest.tables_test")
 
@@ -80,11 +80,11 @@ class TablesTestCase(unittest.TestCase):
         oCell = oTable.getCellByPosition(0, 0)
         oCellCursor = oCell.createTextCursor()
         oCell.insertString(oCellCursor, "a" * 500, False)
-        self.assert_(self.tableHasWrappingText(oTable))
+        self.assertTrue(self.tableHasWrappingText(oTable))
 
         oCell.setString("")
         oCell.insertString(oCellCursor, "a" * 5, False)
-        self.assert_(not self.tableHasWrappingText(oTable))
+        self.assertTrue(not self.tableHasWrappingText(oTable))
 
         oTable = self.unoObjs.document.createInstance(
             "com.sun.star.text.TextTable")
@@ -99,7 +99,7 @@ class TablesTestCase(unittest.TestCase):
         oCell = oTable.getCellByPosition(2, 1)
         oCellCursor = oCell.createTextCursor()
         oCell.insertString(oCellCursor, "a" * 500, False)
-        self.assert_(self.tableHasWrappingText(oTable))
+        self.assertTrue(self.tableHasWrappingText(oTable))
 
     def tableHasWrappingText(self, oTable):
         return tables.hasWrappingText(oTable, self.unoObjs, self.styles)

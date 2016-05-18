@@ -8,6 +8,7 @@
 
 ## Next
 
+Pylint tests.
 Get tests to pass with an unassimilated user directory setup.
 
 Fix bug (below).

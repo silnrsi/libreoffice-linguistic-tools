@@ -17,7 +17,7 @@ from lingt.access.writer import styles
 from lingt.access.writer.ex_updater import ExUpdater
 from lingt.access.writer.outputmanager import InterlinMgr
 from lingt.access.writer.uservars import UserVars
-from lingt.app import lingex_structs
+from lingt.app.data import lingex_structs
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.ex_updater_test")
@@ -82,8 +82,8 @@ class ExUpdaterTestCase(unittest.TestCase):
         exManager.outputExample(ex, False, False)
         exManager.addExampleNumbers()
         self.enumerateTextContent(self.unoObjs.text)
-        self.assertEquals(self.tableCount, 1)
-        self.assertEquals(self.frameCount, 7)
+        self.assertEqual(self.tableCount, 1)
+        self.assertEqual(self.frameCount, 7)
 
         # move cursor to end of ref number
         self.unoObjs.viewcursor.goUp(1, False)
@@ -98,8 +98,8 @@ class ExUpdaterTestCase(unittest.TestCase):
         updater.moveExNumber()
         updater.moveExamplesToNewDoc()
         self.enumerateTextContent(self.unoObjs.text)
-        self.assertEquals(self.tableCount, 1)
-        self.assertEquals(self.frameCount, 9)
+        self.assertEqual(self.tableCount, 1)
+        self.assertEqual(self.frameCount, 9)
 
         compDoc = updater.compDoc
         self.assertIsNotNone(compDoc)

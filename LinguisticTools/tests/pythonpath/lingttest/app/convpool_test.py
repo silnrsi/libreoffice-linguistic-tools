@@ -22,14 +22,14 @@ from lingttest.topdown import dataconv_test
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer.uservars import UserVars
-from lingt.app.svc.bulkconversion import ConvPool, Samples, BulkConversion
-from lingt.ui.messagebox import MessageBox
+from lingt.app.svc.bulkconversion import ConvPool
+from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 
-logger = logging.getLogger("lingttest.convpool_test")
+# pylint: disable=protected-access
 
+logger = logging.getLogger("lingttest.convpool_test")
 CONV_NAME = "capsTest.tec"
-selectSettings = None
 
 
 def getSuite():
@@ -43,19 +43,21 @@ def getSuite():
     return suite
 
 
-def set_selectSettings(conv_settings):
-    """Call this before using funcSelectConverter via selectConverter()."""
-    global selectSettings
-    selectSettings = conv_settings
+class SelectSettingsCache:
+    """A cache to hold settings for selecting a converter.
+    Change this before using funcSelectConverter via selectConverter().
+    """
+    converter = None
 
 def funcSelectConverter(convName, forward, normForm):
     """Set test values instead of asking the user to select a converter."""
+    converter = SelectSettingsCache.converter
     if platform.system() == "Windows":
-        convName.value = selectSettings.convName
+        convName.value = converter.convName
     else:
-        convName.value = selectSettings.convName.encode("utf-8")
-    forward._obj.value = selectSettings.forward
-    normForm._obj.value = selectSettings.normForm
+        convName.value = converter.convName.encode("utf-8")
+    forward._obj.value = converter.forward
+    normForm._obj.value = converter.normForm
     STATUS_OK = 0
     return STATUS_OK
 
@@ -94,8 +96,8 @@ class ConvPoolTestCase(unittest.TestCase):
         conv_settings = ConverterSettings(self.userVars)
         conv_settings.convName = CONV_NAME
         conv_settings.forward = True
-        set_selectSettings(conv_settings)
-        fontChange = convPool.selectConverter(conv_settings)
+        SelectSettingsCache.converter = conv_settings
+        dummy_fontChange = convPool.selectConverter(conv_settings)
         sec_call = convPool[CONV_NAME]
         convertedVal = sec_call.convert(inputStr)
         self.assertEqual(convertedVal, "ABCDE")
@@ -119,8 +121,8 @@ class ConvPoolTestCase(unittest.TestCase):
         conv_settings1 = ConverterSettings(self.userVars)
         conv_settings1.convName = CONV_NAME
         conv_settings1.forward = True
-        set_selectSettings(conv_settings1)
-        fontChange = convPool.selectConverter(conv_settings1)
+        SelectSettingsCache.converter = conv_settings1
+        dummy_fontChange = convPool.selectConverter(conv_settings1)
         sec_call1 = convPool.loadConverter(conv_settings1)
         convertedVal = sec_call1.convert(inputStr)
         self.assertEqual(convertedVal, "ABCDE")
