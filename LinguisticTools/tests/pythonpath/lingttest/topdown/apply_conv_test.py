@@ -7,6 +7,7 @@ Test all features accessed by Apply Converter dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
 from __future__ import unicode_literals
+import collections
 import logging
 import unittest
 
@@ -61,49 +62,58 @@ class ApplyConvTestCase(unittest.TestCase):
         convName_hex = "Any-Hex"
         self.addConverter(convName_caps)
         self.addConverter(convName_hex)
-        originalStrings = ["aBc", "DeF"]
+        Test1Data = collections.namedtuple('Test1Data', [
+            'convName', 'reverse', 'sourceCol', 'targetCol',
+            'skipRow', 'doIt'])
         dataSets = [
-            (convName_caps, False, "A", "B", False, True),
-            (convName_caps, False, "A", "B", False, False),
-            (convName_caps, False, "B", "D", False, True),
-            (convName_caps, True, "A", "B", True, True),
-            (convName_hex, False, "B", "A", False, True),
+            Test1Data(convName_caps, False, "A", "B", False, True),
+            Test1Data(convName_caps, False, "A", "B", False, False),
+            Test1Data(convName_caps, False, "B", "D", False, True),
+            Test1Data(convName_caps, True, "A", "B", True, True),
+            Test1Data(convName_hex, False, "B", "A", False, True),
             ]
         outputter = spreadsheet_output.SpreadsheetOutput(self.calcUnoObjs)
         reader = spreadsheet_reader.SpreadsheetReader(self.calcUnoObjs)
-        for convName, reverse, sourceCol, targetCol, skipRow, doIt in dataSets:
-            #print("[%s]" % convName)  # to see which data set we're on
-            clear_sheet(self.calcUnoObjs)
-            outputter.outputToColumn(sourceCol, originalStrings, skipRow)
+        for dataSet in dataSets:
+            self.do_test1_dataSet(dataSet, reader, outputter)
 
-            def useDialog(innerSelf):
-                innerSelf.dlgCtrls.txtConverterName.setText(convName)
-                innerSelf.dlgCtrls.chkDirectionReverse.setState(reverse)
-                innerSelf.dlgCtrls.txtSourceCol.setText(sourceCol)
-                innerSelf.dlgCtrls.txtTargetCol.setText(targetCol)
-                innerSelf.dlgCtrls.chkSkipRow.setState(skipRow)
-                if doIt:
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("Close_and_Convert"))
-                else:
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("Cancel"))
+    def do_test1_dataSet(self, data, reader, outputter):
+        #print("[%s]" % data.convName)  # to see which data set we're on
+        clear_sheet(self.calcUnoObjs)
+        originalStrings = ["aBc", "DeF"]
+        outputter.outputToColumn(
+            data.sourceCol, originalStrings, data.skipRow)
 
-            self.runDlg(useDialog)
-            expectedResults = []
-            for originalString in originalStrings:
-                if convName == convName_hex:
-                    expectedVal = "".join(
-                        [dataconv_test.anyToHex(originalChar)
-                         for originalChar in list(originalString)])
-                elif reverse:
-                    expectedVal = originalString.lower()
-                else:
-                    expectedVal = originalString.upper()
-                if doIt:
-                    expectedResults.append(expectedVal)
-            resultStrings = reader.getColumnStringList(targetCol, skipRow)
-            self.assertEqual(resultStrings, expectedResults)
+        def useDialog(innerSelf):
+            innerSelf.dlgCtrls.txtConverterName.setText(data.convName)
+            innerSelf.dlgCtrls.chkDirectionReverse.setState(data.reverse)
+            innerSelf.dlgCtrls.txtSourceCol.setText(data.sourceCol)
+            innerSelf.dlgCtrls.txtTargetCol.setText(data.targetCol)
+            innerSelf.dlgCtrls.chkSkipRow.setState(data.skipRow)
+            if data.doIt:
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("Close_and_Convert"))
+            else:
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("Cancel"))
+        self.runDlg(useDialog)
+
+        expectedResults = []
+        for originalString in originalStrings:
+            convName_hex = "Any-Hex"
+            if data.convName == convName_hex:
+                expectedVal = "".join(
+                    [dataconv_test.anyToHex(originalChar)
+                     for originalChar in list(originalString)])
+            elif data.reverse:
+                expectedVal = originalString.lower()
+            else:
+                expectedVal = originalString.upper()
+            if data.doIt:
+                expectedResults.append(expectedVal)
+        resultStrings = reader.getColumnStringList(
+            data.targetCol, data.skipRow)
+        self.assertEqual(resultStrings, expectedResults)
 
     def addConverter(self, convName):
         dataconv_test.addConverter(

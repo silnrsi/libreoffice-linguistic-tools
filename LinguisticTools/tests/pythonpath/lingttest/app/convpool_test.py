@@ -1,7 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created December 29, 2015 by Jim Kornelsen
-#
+
+# pylint: disable=protected-access
 
 """
 Test using multiple SEC calls.
@@ -25,8 +26,6 @@ from lingt.access.writer.uservars import UserVars
 from lingt.app.svc.bulkconversion import ConvPool
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
-
-# pylint: disable=protected-access
 
 logger = logging.getLogger("lingttest.convpool_test")
 CONV_NAME = "capsTest.tec"

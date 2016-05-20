@@ -5,6 +5,9 @@
 # 09-Oct-15 JDK  Use python 3 string literals.
 # 10-Nov-15 JDK  Now askEach catches all messages.
 # 17-Nov-15 JDK  Reset direction user var at the end of test1.
+# 20-May-16 JDK  Move useDialog definitions out of for loops.
+
+# pylint: disable=no-self-use
 
 """
 Test all features accessed by Data Conversion dialog controls.
@@ -14,6 +17,7 @@ As of November 2015, this test suite crashes on linux,
 perhaps due to the ecdriver.
 """
 from __future__ import unicode_literals
+import collections
 import logging
 import os
 import unittest
@@ -30,7 +34,6 @@ from lingt.ui.comp.dataconv import DlgDataConversion
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.dataconv_test")
-
 addedConverters = set()  # which converters have we added
 
 
@@ -112,15 +115,8 @@ class DataConvTestCase(unittest.TestCase):
         textContent = "abCde\rFghI jkl"
         for reverse in False, True:
             self.setTextContent(textContent)
-
-            def useDialog(innerSelf):
-                innerSelf.dlgCtrls.txtConverterName.setText(convName)
-                innerSelf.dlgCtrls.chkDirectionReverse.setState(reverse)
-                innerSelf.dlgCtrls.optScopeWholeDoc.setState(True)
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("Close_and_Convert"))
-
-            self.runDlg(useDialog)
+            func = self._make_useDialog_test1(reverse, convName)
+            self.runDlg(func)
             expectedContent = textContent.replace("\r", "\r\n")
             if reverse:
                 expectedContent = expectedContent.lower()
@@ -131,53 +127,67 @@ class DataConvTestCase(unittest.TestCase):
         conv = ConverterSettings(self.dlg.userVars)
         conv.storeUserVars()
 
+    def _make_useDialog_test1(self, reverse, convName):
+        def useDialog(innerSelf):
+            innerSelf.dlgCtrls.txtConverterName.setText(convName)
+            innerSelf.dlgCtrls.chkDirectionReverse.setState(reverse)
+            innerSelf.dlgCtrls.optScopeWholeDoc.setState(True)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
+        return useDialog
+
     def test2_scopeFont(self):
         """Test searching for direct formatting, which is perhaps the most
         common use for Data Conversion.
         """
-        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
         convName = "Any-Hex"
         self.addConverter(convName)
-        fontTypeTuples = [
-            ("Western", "optScopeFontWestern", "a"),
-            ("Complex", "optScopeFontComplex", "\u0bae"),  # Tamil letter Ma
-            ("Asian", "optScopeFontAsian", "\ua000")]  # a Chinese character
-        for fontType, ctrlName, testChar in fontTypeTuples:
-            CONTENT_LEN = 5  # arbitrary
-            FORMAT_AT_INDEX = 3  # arbitrary
-            textContent = testChar * CONTENT_LEN
-            self.setTextContent(textContent)
-            oVC = self.unoObjs.viewcursor
-            oVC.gotoStart(False)
-            oVC.goRight(FORMAT_AT_INDEX, False)
-            oVC.goRight(1, True)  # select
-            fontName, dummy = styleFonts.getFontOfStyle(
-                styleName=testutil.getDefaultStyle(), fontType=fontType)
-            fontDef = styles.FontDefStruct(
-                CHANGED_FONT[fontName], fontType)
-            # change font for one character
-            styles.setFontAttrs(oVC, fontDef)
-            oVC.goRight(0, False)  # deselect
+        Test2Data = collections.namedtuple('Test2Data', [
+            'fontType', 'ctrlName', 'testChar'])
+        dataSets = [
+            Test2Data("Western", "optScopeFontWestern", "a"),
+            # Tamil letter Ma
+            Test2Data("Complex", "optScopeFontComplex", "\u0bae"),
+            # a Chinese character
+            Test2Data("Asian", "optScopeFontAsian", "\ua000")]
+        for dataSet in dataSets:
+            self._do_test2_dataSet(dataSet, convName)
 
-            def useDialog(innerSelf):
-                innerSelf.dlgCtrls.txtConverterName.setText(convName)
-                innerSelf.dlgCtrls.optScopeFont.setState(1)
-                getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
-                innerSelf.dlgCtrls.comboScopeFont.setText(fontDef.fontName)
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("Close_and_Convert"))
+    def _do_test2_dataSet(self, data, convName):
+        CONTENT_LEN = 5  # arbitrary
+        FORMAT_AT_INDEX = 3  # arbitrary
+        textContent = data.testChar * CONTENT_LEN
+        self.setTextContent(textContent)
+        oVC = self.unoObjs.viewcursor
+        oVC.gotoStart(False)
+        oVC.goRight(FORMAT_AT_INDEX, False)
+        oVC.goRight(1, True)  # select
+        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        fontName, dummy = styleFonts.getFontOfStyle(
+            styleName=testutil.getDefaultStyle(), fontType=data.fontType)
+        fontDef = styles.FontDefStruct(
+            CHANGED_FONT[fontName], data.fontType)
+        # change font for one character
+        styles.setFontAttrs(oVC, fontDef)
+        oVC.goRight(0, False)  # deselect
 
-            self.runDlg(useDialog)
-            expectedChars = list(textContent)
-            expectedChars[FORMAT_AT_INDEX] = anyToHex(testChar)
-            self.verifyTextContent("".join(expectedChars))
+        def useDialog(innerSelf):
+            innerSelf.dlgCtrls.txtConverterName.setText(convName)
+            innerSelf.dlgCtrls.optScopeFont.setState(1)
+            getattr(innerSelf.dlgCtrls, data.ctrlName).setState(1)
+            innerSelf.dlgCtrls.comboScopeFont.setText(fontDef.fontName)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
+
+        self.runDlg(useDialog)
+        expectedChars = list(textContent)
+        expectedChars[FORMAT_AT_INDEX] = anyToHex(data.testChar)
+        self.verifyTextContent("".join(expectedChars))
 
     def test3_parastyles(self):
         """Test scope paragraph style and SF markers,
         target paragraph style.  Also test asking about each change.
         """
-        PARASTYLE_FROM = "Heading 5"  # source para style
-        PARASTYLE_TO = "Heading 4"  # target para style
         CONVERT_PARAGRAPHS = ROMAN_PARAGRAPHS[1:-1]  #  all but start and end
         markers = []
         for para in CONVERT_PARAGRAPHS:
@@ -185,239 +195,271 @@ class DataConvTestCase(unittest.TestCase):
             marker = paraString.split()[0]
             markers.append(marker.lstrip("\\"))
         testutil.modifyMsgboxFour('yes')
+        Test3Data = collections.namedtuple('Test3Data', [
+            'askEach', 'ctrlName'])
         dataSets = [
-            (False, "optScopeParaStyle"),
-            (True, "optScopeParaStyle"),
-            (False, "optScopeSFMs"),
-            (True, "optScopeSFMs"),
+            Test3Data(False, "optScopeParaStyle"),
+            Test3Data(True, "optScopeParaStyle"),
+            Test3Data(False, "optScopeSFMs"),
+            Test3Data(True, "optScopeSFMs"),
             ]
         for dataSet in dataSets:
-            askEach, ctrlName = dataSet
-            self.setTextContent(ROMAN_PARAGRAPHS, True)
+            self._do_test3_dataSet(dataSet, markers, CONVERT_PARAGRAPHS)
 
-            oVC = self.unoObjs.viewcursor
-            oVC.gotoStart(False)
-            for dummy in range(len(CONVERT_PARAGRAPHS)):
-                oVC.goDown(1, False)
-                oVC.setPropertyValue(
-                    "ParaStyleName", PARASTYLE_FROM)
+    def _do_test3_dataSet(self, data, markers, CONVERT_PARAGRAPHS):
+        PARASTYLE_FROM = "Heading 5"  # source para style
+        PARASTYLE_TO = "Heading 4"  # target para style
+        self.setTextContent(ROMAN_PARAGRAPHS, True)
 
-            def useDialog(innerSelf):
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("NoConverter"))
-                getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
-                innerSelf.dlgCtrls.comboScopeParaStyle.setText(
-                    PARASTYLE_FROM)
-                innerSelf.dlgCtrls.txtSFM.setText(" ".join(markers))
-                innerSelf.dlgCtrls.optTargetParaStyle.setState(1)
-                innerSelf.dlgCtrls.comboTargetParaStyle.setText(
-                    PARASTYLE_TO)
-                innerSelf.dlgCtrls.chkVerify.setState(askEach)
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("Close_and_Convert"))
-
-            testutil.clear_messages_sent()
-            self.runDlg(useDialog)
-            oVC.gotoStart(False)
-            self.assertNotEqual(
-                oVC.getPropertyValue("ParaStyleName"), PARASTYLE_TO,
-                msg=repr(dataSet))
-            for dummy in CONVERT_PARAGRAPHS:
-                oVC.goDown(1, False)
-                self.assertEqual(
-                    oVC.getPropertyValue("ParaStyleName"), PARASTYLE_TO,
-                    msg=repr(dataSet))
+        oVC = self.unoObjs.viewcursor
+        oVC.gotoStart(False)
+        for dummy in range(len(CONVERT_PARAGRAPHS)):
             oVC.goDown(1, False)
-            self.assertNotEqual(
+            oVC.setPropertyValue(
+                "ParaStyleName", PARASTYLE_FROM)
+
+        def useDialog(innerSelf):
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("NoConverter"))
+            getattr(innerSelf.dlgCtrls, data.ctrlName).setState(1)
+            innerSelf.dlgCtrls.comboScopeParaStyle.setText(
+                PARASTYLE_FROM)
+            innerSelf.dlgCtrls.txtSFM.setText(" ".join(markers))
+            innerSelf.dlgCtrls.optTargetParaStyle.setState(1)
+            innerSelf.dlgCtrls.comboTargetParaStyle.setText(
+                PARASTYLE_TO)
+            innerSelf.dlgCtrls.chkVerify.setState(data.askEach)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
+
+        testutil.clear_messages_sent()
+        self.runDlg(useDialog)
+        oVC.gotoStart(False)
+        self.assertNotEqual(
+            oVC.getPropertyValue("ParaStyleName"), PARASTYLE_TO,
+            msg=repr(data))
+        for dummy in CONVERT_PARAGRAPHS:
+            oVC.goDown(1, False)
+            self.assertEqual(
                 oVC.getPropertyValue("ParaStyleName"), PARASTYLE_TO,
-                msg=repr(dataSet))
-            if askEach:
-                self.assertEqual(
-                    len(testutil.messages_sent), len(CONVERT_PARAGRAPHS) + 1,
-                    msg=repr(dataSet))
+                msg=repr(data))
+        oVC.goDown(1, False)
+        self.assertNotEqual(
+            oVC.getPropertyValue("ParaStyleName"), PARASTYLE_TO,
+            msg=repr(data))
+        if data.askEach:
+            self.assertEqual(
+                len(testutil.messages_sent), len(CONVERT_PARAGRAPHS) + 1,
+                msg=repr(data))
 
     def test4_charstyles(self):
         """Test scope current selection and character style,
         target character style.
         """
+        for ctrlName in ("optScopeSelection", "optScopeCharStyle"):
+            self._do_test4_dataSet(ctrlName)
+
+    def _do_test4_dataSet(self, ctrlName):
         CHARSTYLE_FROM = "Emphasis"  # source char style
         CHARSTYLE_TO = "Strong Emphasis"  # target char style
         LEFT, MID = 0, 1  # indices of paragraph splits
-        for ctrlName in ("optScopeSelection", "optScopeCharStyle"):
-            self.setTextContent(ROMAN_PARAGRAPHS, True)
+        self.setTextContent(ROMAN_PARAGRAPHS, True)
+        self._select_multiple_strings(ctrlName, CHARSTYLE_FROM)
 
-            ## Select multiple strings.
+        def useDialog(innerSelf):
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("NoConverter"))
+            getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
+            innerSelf.dlgCtrls.comboScopeCharStyle.setText(CHARSTYLE_FROM)
+            innerSelf.dlgCtrls.optTargetCharStyle.setState(1)
+            innerSelf.dlgCtrls.comboTargetCharStyle.setText(CHARSTYLE_TO)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
 
-            search = self.unoObjs.document.createSearchDescriptor()
-            search.SearchRegularExpression = True
-            # For some reason the first selected string gets collapsed,
-            # so we include an extra one.
-            stringsToFind = ["selsFound1"]
-            stringsToFind.extend(
-                [para[MID] for para in ROMAN_PARAGRAPHS if len(para) > MID])
-            search.SearchString = "|".join(stringsToFind)
-            #print("/%s/" % search.SearchString)
-            selsFound = self.unoObjs.document.findAll(search)
-            self.assertEqual(selsFound.getCount(), len(stringsToFind))
-            oVC = self.unoObjs.viewcursor
-            self.unoObjs.controller.select(selsFound)
-            self.assertEqual(
-                self.unoObjs.controller.getSelection().getCount(),
-                len(stringsToFind))
-            #oSels = self.unoObjs.controller.getSelection()
-            #for oSls in (selsFound, oSels):
-            #    print("selection: ")
-            #    for oSel in iteruno.byIndex(oSls):
-            #        print("%d," % len(oSel.getString()), end="")
-            #    print()
-            #return
-            if ctrlName == "optScopeCharStyle":
-                oVC.setPropertyValue("CharStyleName", CHARSTYLE_FROM)
-                oVC.goRight(0, False)  # deselect
-
-            def useDialog(innerSelf):
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("NoConverter"))
-                getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
-                innerSelf.dlgCtrls.comboScopeCharStyle.setText(CHARSTYLE_FROM)
-                innerSelf.dlgCtrls.optTargetCharStyle.setState(1)
-                innerSelf.dlgCtrls.comboTargetCharStyle.setText(CHARSTYLE_TO)
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("Close_and_Convert"))
-
-            self.runDlg(useDialog)
-            oVC.gotoStart(False)
-            for para in ROMAN_PARAGRAPHS:
-                if len(para) <= MID:
-                    oVC.goDown(1, False)
-                    continue
-                oVC.gotoStartOfLine(False)
-                oVC.goRight(len(para[LEFT]) - 1, False)
-                self.assertNotEqual(
-                    oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
-                oVC.goRight(1, False)
-                oVC.goRight(len(para[MID]), True)
-                self.assertEqual(
-                    oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
-                oVC.goRight(1, False)
-                self.assertNotEqual(
-                    oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
+        self.runDlg(useDialog)
+        oVC = self.unoObjs.viewcursor
+        oVC.gotoStart(False)
+        for para in ROMAN_PARAGRAPHS:
+            if len(para) <= MID:
                 oVC.goDown(1, False)
+                continue
+            oVC.gotoStartOfLine(False)
+            oVC.goRight(len(para[LEFT]) - 1, False)
+            self.assertNotEqual(
+                oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
+            oVC.goRight(1, False)
+            oVC.goRight(len(para[MID]), True)
+            self.assertEqual(
+                oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
+            oVC.goRight(1, False)
+            self.assertNotEqual(
+                oVC.getPropertyValue("CharStyleName"), CHARSTYLE_TO)
+            oVC.goDown(1, False)
+
+    def _select_multiple_strings(self, ctrlName, CHARSTYLE_FROM):
+        dummy_LEFT, MID = 0, 1  # indices of paragraph splits
+        search = self.unoObjs.document.createSearchDescriptor()
+        search.SearchRegularExpression = True
+        # For some reason the first selected string gets collapsed,
+        # so we include an extra one.
+        stringsToFind = ["selsFound1"]
+        stringsToFind.extend(
+            [para[MID] for para in ROMAN_PARAGRAPHS if len(para) > MID])
+        search.SearchString = "|".join(stringsToFind)
+        #print("/%s/" % search.SearchString)
+        selsFound = self.unoObjs.document.findAll(search)
+        self.assertEqual(selsFound.getCount(), len(stringsToFind))
+        oVC = self.unoObjs.viewcursor
+        self.unoObjs.controller.select(selsFound)
+        self.assertEqual(
+            self.unoObjs.controller.getSelection().getCount(),
+            len(stringsToFind))
+        #oSels = self.unoObjs.controller.getSelection()
+        #for oSls in (selsFound, oSels):
+        #    print("selection: ")
+        #    for oSel in iteruno.byIndex(oSls):
+        #        print("%d," % len(oSel.getString()), end="")
+        #    print()
+        #return
+        if ctrlName == "optScopeCharStyle":
+            oVC.setPropertyValue("CharStyleName", CHARSTYLE_FROM)
+            oVC.goRight(0, False)  # deselect
 
     def test5_targetFont(self):
         """Test target font and size, do not change font, changing without
         applying style, applying a paragraph style and changing its font.
         """
-        CHANGED_SIZE = 15.5
-        CONVERT_PARA = 1  # we change only the second paragraph
-        PARASTYLE_FROM = "Heading 5"  # source para style
-        PARASTYLE_TO = "Heading 4"  # target para style
-        fontTypeTuples = [
-            ("Western", "optTargetFontWestern", "a"),
-            ("Complex", "optTargetFontComplex", "\u0bae"),  # Tamil letter Ma
-            ("Asian", "optTargetFontAsian", "\ua000")]  # a Chinese character
-        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
-        for fontType, fontTypeCtrl, testChar in fontTypeTuples:
-            if fontType != fontTypeTuples[0][0]:
+        Test5Data = collections.namedtuple('Test5Data', [
+            'fontType', 'type_ctrl', 'testChar'])
+        dataSets = [
+            Test5Data("Western", "optTargetFontWestern", "a"),
+            # Tamil letter Ma
+            Test5Data("Complex", "optTargetFontComplex", "\u0bae"),
+            # a Chinese character
+            Test5Data("Asian", "optTargetFontAsian", "\ua000")]
+        for dataSet in dataSets:
+            if dataSet != dataSets[0]:
                 # Get a fresh document.
                 self.unoObjs = testutil.unoObjsForCurrentDoc()
                 self.dlg = DlgDataConversion(self.unoObjs)
             for ctrlName in ("optTargetNoChange", "optTargetFontOnly",
                              "optTargetParaStyle"):
-                #print("%s %s" % (fontType, ctrlName))
-                fontName, dummy = styleFonts.getFontOfStyle(
-                    styleName=PARASTYLE_TO, fontType=fontType)
-                paragraphs = [
-                    ("Begin",), (testChar,), ("End",), ]
-                self.setTextContent(paragraphs, True)
-                oVC = self.unoObjs.viewcursor
-                oVC.gotoStart(False)
-                oVC.goDown(1, False)
-                oVC.setPropertyValue("ParaStyleName", PARASTYLE_FROM)
+                self._do_test5_dataSet(dataSet, ctrlName)
 
-                def useDialog(innerSelf):
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("NoConverter"))
-                    innerSelf.dlgCtrls.optScopeParaStyle.setState(1)
-                    innerSelf.dlgCtrls.comboScopeParaStyle.setText(
-                        PARASTYLE_FROM)
-                    innerSelf.dlgCtrls.comboTargetParaStyle.setText(
-                        PARASTYLE_TO)
-                    getattr(innerSelf.dlgCtrls, fontTypeCtrl).setState(1)
-                    innerSelf.dlgCtrls.listTargetStyleFont.selectItem(
-                        CHANGED_FONT[fontName], True)
-                    innerSelf.dlgCtrls.txtFontSize.setText(str(CHANGED_SIZE))
-                    getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("Close_and_Convert"))
+    def _do_test5_dataSet(self, data, ctrlName):
+        CHANGED_SIZE = 15.5
+        PARASTYLE_FROM = "Heading 5"  # source para style
+        PARASTYLE_TO = "Heading 4"  # target para style
+        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        #print("%s %s" % (data.fontType, ctrlName))
+        fontName, dummy = styleFonts.getFontOfStyle(
+            styleName=PARASTYLE_TO, fontType=data.fontType)
+        paragraphs = [("Begin",), (data.testChar,), ("End",), ]
+        self.setTextContent(paragraphs, True)
+        oVC = self.unoObjs.viewcursor
+        oVC.gotoStart(False)
+        oVC.goDown(1, False)
+        oVC.setPropertyValue("ParaStyleName", PARASTYLE_FROM)
 
-                self.runDlg(useDialog)
-                oVC.gotoStart(False)
-                for para_index in range(0, len(paragraphs)):
-                    paraStyle2 = oVC.getPropertyValue("ParaStyleName")
-                    if ctrlName == "optTargetParaStyle":
-                        fontName2, fontSizeObj = styleFonts.getFontOfStyle(
-                            styleName=paraStyle2, fontType=fontType)
-                        fontSize2 = fontSizeObj.size
-                    else:
-                        propSuffix = fontType
-                        if propSuffix == 'Western':
-                            propSuffix = ""
-                        fontName2 = oVC.getPropertyValue(
-                            'CharFontName' + propSuffix)
-                        fontSize2 = oVC.getPropertyValue(
-                            'CharHeight' + propSuffix)
-                    if (ctrlName == "optTargetNoChange"
-                            or para_index != CONVERT_PARA):
-                        self.assertNotEqual(paraStyle2, PARASTYLE_TO)
-                        self.assertNotEqual(fontName2, CHANGED_FONT[fontName])
-                        self.assertNotEqual(fontSize2, CHANGED_SIZE)
-                    elif ctrlName == "optTargetFontOnly":
-                        self.assertNotEqual(paraStyle2, PARASTYLE_TO)
-                        self.assertEqual(fontName2, CHANGED_FONT[fontName])
-                        self.assertEqual(fontSize2, CHANGED_SIZE)
-                    elif ctrlName == "optTargetParaStyle":
-                        self.assertEqual(paraStyle2, PARASTYLE_TO)
-                        self.assertEqual(fontName2, CHANGED_FONT[fontName])
-                        self.assertEqual(fontSize2, CHANGED_SIZE)
-                    oVC.goDown(1, False)
+        def useDialog(innerSelf):
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("NoConverter"))
+            innerSelf.dlgCtrls.optScopeParaStyle.setState(1)
+            innerSelf.dlgCtrls.comboScopeParaStyle.setText(PARASTYLE_FROM)
+            innerSelf.dlgCtrls.comboTargetParaStyle.setText(PARASTYLE_TO)
+            getattr(innerSelf.dlgCtrls, data.type_ctrl).setState(1)
+            innerSelf.dlgCtrls.listTargetStyleFont.selectItem(
+                CHANGED_FONT[fontName], True)
+            innerSelf.dlgCtrls.txtFontSize.setText(str(CHANGED_SIZE))
+            getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
+
+        self.runDlg(useDialog)
+        oVC.gotoStart(False)
+        self._check_test5_dataSet(data, paragraphs, ctrlName, fontName)
+
+    def _check_test5_dataSet(self, data, paragraphs, ctrlName, fontName):
+        CHANGED_SIZE = 15.5
+        CONVERT_PARA = 1  # we change only the second paragraph
+        PARASTYLE_TO = "Heading 4"  # target para style
+        oVC = self.unoObjs.viewcursor
+        for para_index in range(0, len(paragraphs)):
+            paraStyle2 = oVC.getPropertyValue("ParaStyleName")
+            fontName2, fontSize2 = self._get_target_font(
+                paraStyle2, data, ctrlName)
+            if ctrlName == "optTargetNoChange" or para_index != CONVERT_PARA:
+                self.assertNotEqual(paraStyle2, PARASTYLE_TO)
+                self.assertNotEqual(fontName2, CHANGED_FONT[fontName])
+                self.assertNotEqual(fontSize2, CHANGED_SIZE)
+            elif ctrlName == "optTargetFontOnly":
+                self.assertNotEqual(paraStyle2, PARASTYLE_TO)
+                self.assertEqual(fontName2, CHANGED_FONT[fontName])
+                self.assertEqual(fontSize2, CHANGED_SIZE)
+            elif ctrlName == "optTargetParaStyle":
+                self.assertEqual(paraStyle2, PARASTYLE_TO)
+                self.assertEqual(fontName2, CHANGED_FONT[fontName])
+                self.assertEqual(fontSize2, CHANGED_SIZE)
+            oVC.goDown(1, False)
+
+    def _get_target_font(self, paraStyle2, data, ctrlName):
+        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        if ctrlName == "optTargetParaStyle":
+            fontName2, fontSizeObj = styleFonts.getFontOfStyle(
+                styleName=paraStyle2, fontType=data.fontType)
+            fontSize2 = fontSizeObj.size
+        else:
+            propSuffix = data.fontType
+            if propSuffix == 'Western':
+                propSuffix = ""
+            oVC = self.unoObjs.viewcursor
+            fontName2 = oVC.getPropertyValue('CharFontName' + propSuffix)
+            fontSize2 = oVC.getPropertyValue('CharHeight' + propSuffix)
+        return fontName2, fontSize2
 
     def test6_encTypes(self):
         """Test different font encoding types."""
         # These fonts do not need to be present on your system.
         # Really we are only concerned with the encoding,
         # although the font is useful for viewing the data manually.
+        Test6Data = collections.namedtuple('Test6Data', [
+            'convName', 'fromFont', 'fromText', 'toFont', 'toText'])
         dataSets = [
             # Symbol type fonts - IPA (English language)
-            ("SAGIPA2Uni.tec",
-             "SILDoulos IPA93", "mAi nejm Iz dZIm",
-             "Doulos SIL", "m\u0251i nejm \u026az d\u0292\u026am"),
+            Test6Data(
+                "SAGIPA2Uni.tec",
+                "SILDoulos IPA93", "mAi nejm Iz dZIm",
+                "Doulos SIL", "m\u0251i nejm \u026az d\u0292\u026am"),
             # "Annapurna" type fonts - Devanagari (Hindi language)
-            ("Annapurna.tec",
-             "Annapurna", "\xa7\xfa\xe0 \xe8k\xa7 \xcc\xf3\xdf|",
-             "Mangal", "\u092e\u0948\u0902 \u091c\u093f\u092e \u0939"
-             "\u0942\u0901\u0964"),
+            Test6Data(
+                "Annapurna.tec",
+                "Annapurna", "\xa7\xfa\xe0 \xe8k\xa7 \xcc\xf3\xdf|",
+                "Mangal", "\u092e\u0948\u0902 \u091c\u093f\u092e \u0939"
+                "\u0942\u0901\u0964"),
             # Unicode to Unicode - Tamil to Malayalam script (Tamil language)
-            ("MalUniToTam.tec",
-             "Latha", "\u0b87\u0b9f\u0bc1 \u0ba8\u0bb2\u0bcd\u0bb2"
-             "\u0b9f\u0bc1 \u0b87\u0bb2\u0bcd\u0bb2\u0bc6.",
-             "Kartika", "\u0d07\u0d21\u0d4d \u0d28\u0d32\u0d4d\u0d32"
-             "\u0d21\u0d4d \u0d07\u0d32\u0d4d\u0d32\u0d46."),
+            Test6Data(
+                "MalUniToTam.tec",
+                "Latha", "\u0b87\u0b9f\u0bc1 \u0ba8\u0bb2\u0bcd\u0bb2"
+                "\u0b9f\u0bc1 \u0b87\u0bb2\u0bcd\u0bb2\u0bc6.",
+                "Kartika", "\u0d07\u0d21\u0d4d \u0d28\u0d32\u0d4d\u0d32"
+                "\u0d21\u0d4d \u0d07\u0d32\u0d4d\u0d32\u0d46."),
             ]
-        for convName, fromFont, fromText, toFont, toText in dataSets:
-            self.addConverter(convName)
-            self.setTextContent(fromText)
+        for dataSet in dataSets:
+            self._do_test6_dataSet(dataSet)
 
-            def useDialog(innerSelf):
-                innerSelf.dlgCtrls.txtConverterName.setText(convName)
-                if fromFont == "Latha" and toFont == "Kartika":
-                    innerSelf.dlgCtrls.chkDirectionReverse.setState(True)
-                innerSelf.dlgCtrls.optScopeWholeDoc.setState(True)
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("Close_and_Convert"))
+    def _do_test6_dataSet(self, data):
+        self.addConverter(data.convName)
+        self.setTextContent(data.fromText)
 
-            self.runDlg(useDialog)
-            self.verifyTextContent(toText)
+        def useDialog(innerSelf):
+            innerSelf.dlgCtrls.txtConverterName.setText(data.convName)
+            if data.fromFont == "Latha" and data.toFont == "Kartika":
+                innerSelf.dlgCtrls.chkDirectionReverse.setState(True)
+            innerSelf.dlgCtrls.optScopeWholeDoc.setState(True)
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("Close_and_Convert"))
+
+        self.runDlg(useDialog)
+        self.verifyTextContent(data.toText)
 
     def setTextContent(self, textContent, paragraphs=False):
         """Either set paragraphs to true and pass a list of paragraphs as
