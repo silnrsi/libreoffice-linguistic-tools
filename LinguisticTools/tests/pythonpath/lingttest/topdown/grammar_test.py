@@ -4,11 +4,15 @@
 #
 # 15-Sep-15 JDK  Use Latin-1 encoding for this file.
 # 28-Sep-15 JDK  Added getSuite().
+# 21-May-16 JDK  Move useDialog definitions out of for loops.
+
+# pylint: disable=no-self-use
 
 """
 Test all features accessed by Grammar Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
+import collections
 import logging
 import unittest
 import os
@@ -42,6 +46,7 @@ def getSuite():
 class GrammarTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
         unittest.TestCase.__init__(self, testCaseName)
+        testutil.verifyRegexMethods(self)
         self.surroundNum = 0  # number for surroundings
         self.prevFrameCount = 0
         self.prevTableCount = 0
@@ -67,38 +72,47 @@ class GrammarTestCase(unittest.TestCase):
 
     def test1_filetypes(self):
         """Verify that toolbox and flextext files are read correctly."""
+        Test1Data = collections.namedtuple('Test1Data', [
+            'filename', 'refNum', 'numFrames', 'firstWord', 'ft'])
         dataSets = [
-            ("TbxIntJPDN60.xml", "JPDN60.01", 9, u"ce\u028bu\u027eu",
-             "The wall is white."),
-            ("TbxIntJPDN60.xml", "JPDN61.08", 11, u"ce\u027e\u027eune",
-             "Bring the chair."),
-            ("Sena Int.flextext", "1.2", 13, u"Tonsene",
-             u"[1.2 ft]"),
-            ("Sena Int.flextext", "1.1", 20, u"Pisapha,",
-             u"Estas coisas doem mas o que é necessário é ter coragem. Pois "
-             u"nós todos vamos morrer.")]
-        frames = self.unoObjs.document.getTextFrames()
-        self.prevFrameCount = frames.getCount()
-        for filename, refNum, numFrames, firstWord, ft in dataSets:
-            def useDialog(innerSelf):
-                filepath = os.path.join(util.TESTDATA_FOLDER, filename)
-                testutil.modifyFilePicker(filepath)
-                if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("FileRemove"))
-                innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
-                innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            Test1Data(
+                "TbxIntJPDN60.xml", "JPDN60.01", 9, u"ce\u028bu\u027eu",
+                "The wall is white."),
+            Test1Data(
+                "TbxIntJPDN60.xml", "JPDN61.08", 11, u"ce\u027e\u027eune",
+                "Bring the chair."),
+            Test1Data(
+                "Sena Int.flextext", "1.2", 13, u"Tonsene",
+                u"[1.2 ft]"),
+            Test1Data(
+                "Sena Int.flextext", "1.1", 20, u"Pisapha,",
+                u"Estas coisas doem mas o que é necessário é ter coragem. "
+                u"Pois nós todos vamos morrer.")]
+        self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
+        for dataSet in dataSets:
+            useDialog = self._test1_make_useDialog(dataSet)
             DlgGramSettings.useDialog = useDialog
-            DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
+            DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
             self.runDlgSettings(True)
             self.runDlgGrabEx(True)
 
-            frames = self.unoObjs.document.getTextFrames()
-            newFrameCount = frames.getCount()
-            self.assertEqual(newFrameCount - self.prevFrameCount, numFrames)
-            self.verifyFrame(1, firstWord)
-            self.verifyFreeTrans(ft, True)
+            newFrameCount = self.unoObjs.document.getTextFrames().getCount()
+            self.assertEqual(
+                newFrameCount - self.prevFrameCount, dataSet.numFrames)
+            self.verifyFrame(1, dataSet.firstWord)
+            self.verifyFreeTrans(dataSet.ft, True)
             self.prevFrameCount = newFrameCount
+
+    def _test1_make_useDialog(self, data):
+        def useDialog(innerSelf):
+            filepath = os.path.join(util.TESTDATA_FOLDER, data.filename)
+            testutil.modifyFilePicker(filepath)
+            if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("FileRemove"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+        return useDialog
 
     def test2_surroundings(self):
         """Test inserting and replacing examples, verifying that the
@@ -106,98 +120,109 @@ class GrammarTestCase(unittest.TestCase):
         following spacing, formatting and text.
         """
         testutil.blankWriterDoc(self.unoObjs)
-        oVC = self.unoObjs.viewcursor
         # Only test certain combinations in order to save time.
-        gramSettings = [
-            # outerTable, frames, numbering, ftQuoted
-            (True, True, True, True),
-            (True, False, False, False),
-            (False, True, True, True),
-            (False, True, False, False),
-            (False, False, True, True),
-            (False, False, True, False)]
+        Test2Data = collections.namedtuple('Test2Data', [
+            'outerTable', 'useFrames', 'numbering', 'ftQuoted'])
+        dataSets = [
+            Test2Data(True, True, True, True),
+            Test2Data(True, False, False, False),
+            Test2Data(False, True, True, True),
+            Test2Data(False, True, False, False),
+            Test2Data(False, False, True, True),
+            Test2Data(False, False, True, False)]
+        self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
+        self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
+        for dataSet in dataSets:
+            useDialog = self._test2_make_useDialog_gramSettings(dataSet)
+            DlgGramSettings.useDialog = useDialog
+            self.runDlgSettings(True)
+            for action in 'inserting', 'replacing':
+                refNum = "1.1"
+                useDialog = self._test2_make_useDialog_grabExamples(
+                    action, refNum)
+                DlgGrabExamples.useDialog = useDialog
+                self._test2_do_grabExamples(dataSet, action, refNum)
+
+    def _test2_make_useDialog_gramSettings(self, data):
+        def useDialog(innerSelf):
+            filepath = os.path.join(
+                util.TESTDATA_FOLDER, "FWtextPigFox.xml")
+            testutil.modifyFilePicker(filepath)
+            if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("FileRemove"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
+            innerSelf.dlgCtrls.chkOuterTable.setState(
+                1 if data.outerTable else 0)
+            innerSelf.dlgCtrls.chkNumbering.setState(
+                1 if data.numbering else 0)
+            innerSelf.dlgCtrls.chkFT_inQuotes.setState(
+                1 if data.ftQuoted else 0)
+            if data.useFrames:
+                innerSelf.dlgCtrls.optFrames.setState(1)
+            else:
+                innerSelf.dlgCtrls.optTables.setState(1)
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+        return useDialog
+
+    def _test2_make_useDialog_grabExamples(self, action, refNum):
+        def useDialog(innerSelf):
+            if action == 'inserting':
+                innerSelf.dlgCtrls.txtRefnum.setText(refNum)
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("InsertEx"))
+            elif action == 'replacing':
+                try:
+                    innerSelf.evtHandler.actionPerformed(
+                        MyActionEvent("ReplaceAll"))
+                except testutil.MsgSentException as exc:
+                    self.assertTrue(exc.msg.startswith("Replaced"))
+                else:
+                    self.fail("Expected error message.")
+        return useDialog
+
+    def _test2_do_grabExamples(self, data, action, refNum):
         changedAttrs = [
             ('ParaStyleName', "Caption"),
             ('CharStyleName', "Caption characters"),
             ('CharFontName', "Arial Black"),
             ('CharHeight', 9)]
-        frames = self.unoObjs.document.getTextFrames()
-        self.prevFrameCount = frames.getCount()
-        tables = self.unoObjs.document.getTextTables()
-        self.prevTableCount = tables.getCount()
-        for outerTable, useFrames, numbering, ftQuoted in gramSettings:
-            def useDialog(innerSelf):
-                filepath = os.path.join(
-                    util.TESTDATA_FOLDER, "FWtextPigFox.xml")
-                testutil.modifyFilePicker(filepath)
-                if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("FileRemove"))
-                innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
-                innerSelf.dlgCtrls.chkOuterTable.setState(
-                    1 if outerTable else 0)
-                innerSelf.dlgCtrls.chkNumbering.setState(
-                    1 if numbering else 0)
-                innerSelf.dlgCtrls.chkFT_inQuotes.setState(
-                    1 if ftQuoted else 0)
-                if useFrames:
-                    innerSelf.dlgCtrls.optFrames.setState(1)
+        oVC = self.unoObjs.viewcursor
+        for blankLine in True, False:
+            for formatting in 'default', 'change':
+                if formatting == 'change':
+                    for attrName, attrVal in changedAttrs:
+                        oVC.setPropertyValue(attrName, attrVal)
+                self._test2_grabExInSurroundings(
+                    action, blankLine, refNum, data)
+                if formatting == 'default':
+                    self.assertEqual(
+                        oVC.getPropertyValue('ParaStyleName'), "Standard")
+                    self.assertEqual(
+                        oVC.getPropertyValue('CharStyleName'), "")
+                    self.assertEqual(
+                        oVC.getPropertyValue('CharFontName'),
+                        testutil.getDefaultFont())
                 else:
-                    innerSelf.dlgCtrls.optTables.setState(1)
-                innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
-            DlgGramSettings.useDialog = useDialog
-            self.runDlgSettings(True)
-            for action in 'inserting', 'replacing':
-                refNum = "1.1"
-                def useDialog(innerSelf):
-                    if action == 'inserting':
-                        innerSelf.dlgCtrls.txtRefnum.setText(refNum)
-                        innerSelf.evtHandler.actionPerformed(
-                            MyActionEvent("InsertEx"))
-                    elif action == 'replacing':
-                        try:
-                            innerSelf.evtHandler.actionPerformed(
-                                MyActionEvent("ReplaceAll"))
-                        except testutil.MsgSentException as exc:
-                            self.assertTrue(exc.msg.startswith("Replaced"))
-                        else:
-                            self.fail("Expected error message.")
-                DlgGrabExamples.useDialog = useDialog
-                for blankLine in True, False:
-                    for formatting in 'default', 'change':
-                        if formatting == 'change':
-                            for attrName, attrVal in changedAttrs:
-                                oVC.setPropertyValue(attrName, attrVal)
-                        self.grabExInSurroundings(
-                            action, blankLine, refNum,
-                            outerTable, useFrames, numbering, ftQuoted)
-                        if formatting == 'default':
-                            self.assertEqual(
-                                oVC.getPropertyValue('ParaStyleName'),
-                                "Standard")
-                            self.assertEqual(
-                                oVC.getPropertyValue('CharStyleName'), "")
-                            self.assertEqual(
-                                oVC.getPropertyValue('CharFontName'),
-                                testutil.getDefaultFont())
-                        else:
-                            for attrName, attrVal in changedAttrs:
-                                self.assertEqual(
-                                    oVC.getPropertyValue(attrName), attrVal)
-                        if blankLine:
-                            oVC.goDown(1, False)
-                        oVC.gotoEndOfLine(False)
-                        oVC.getText().insertControlCharacter(
-                            oVC, PARAGRAPH_BREAK, False)
-                        oVC.setPropertyValue('ParaStyleName', "Standard")
-                        oVC.setPropertyToDefault('CharStyleName')
-                        oVC.setPropertyToDefault('CharFontName')
+                    for attrName, attrVal in changedAttrs:
+                        self.assertEqual(
+                            oVC.getPropertyValue(attrName), attrVal)
+                if blankLine:
+                    oVC.goDown(1, False)
+                oVC.gotoEndOfLine(False)
+                oVC.getText().insertControlCharacter(
+                    oVC, PARAGRAPH_BREAK, False)
+                oVC.setPropertyValue('ParaStyleName', "Standard")
+                oVC.setPropertyToDefault('CharStyleName')
+                oVC.setPropertyToDefault('CharFontName')
 
-    def grabExInSurroundings(self, action, blankLine, refNum,
-                             outerTable, useFrames, numbering, ftQuoted):
-        firstWord = u"o\u027eu"
-        ft = u" \u200e\u200eIn a village there was a headman."
-        numFrames = 11
+    def _test2_grabExInSurroundings(self, action, blankLine, refNum, data):
+        self._test2_insertSurroundings(action, refNum, blankLine)
+        self.runDlgGrabEx(True)
+        self._test2_verify_ex(data)
+        self._test2_verify_surroundings(data, blankLine, action)
+
+    def _test2_insertSurroundings(self, action, refNum, blankLine):
         oVC = self.unoObjs.viewcursor   # shorthand variable name
         self.surroundNum += 1
         numStr = str(self.surroundNum)
@@ -214,40 +239,43 @@ class GrammarTestCase(unittest.TestCase):
             oVC.goUp(1, False)
         else:
             oVC.gotoStartOfLine(False)
-        self.runDlgGrabEx(True)
 
-        tables = self.unoObjs.document.getTextTables()
-        newTableCount = tables.getCount()
-        if useFrames:
-            numTables = 1 if outerTable else 0
+    def _test2_verify_ex(self, data):
+        firstWord = u"o\u027eu"
+        ft = u" \u200e\u200eIn a village there was a headman."
+        numFrames = 11
+        newTableCount = self.unoObjs.document.getTextTables().getCount()
+        if data.useFrames:
+            numTables = 1 if data.outerTable else 0
             self.assertEqual(newTableCount - self.prevTableCount, numTables)
-            frames = self.unoObjs.document.getTextFrames()
-            newFrameCount = frames.getCount()
+            newFrameCount = self.unoObjs.document.getTextFrames().getCount()
             self.assertEqual(newFrameCount - self.prevFrameCount, numFrames)
             self.verifyFrame(1, firstWord)
             self.prevFrameCount = newFrameCount
         else:
-            numTables = 2 if outerTable else 1
+            numTables = 2 if data.outerTable else 1
             self.assertEqual(newTableCount - self.prevTableCount, numTables)
             column = 0
-            if not outerTable and not useFrames and numbering:
+            if not data.outerTable and not data.useFrames and data.numbering:
                 column = 1
             row = 0
             self.verifyTable(numTables, column, row, firstWord)
-        self.verifyFreeTrans(ft, ftQuoted)
+        self.verifyFreeTrans(ft, data.ftQuoted)
         self.prevTableCount = newTableCount
 
-        ## Verify that beginning and ending strings were not changed.
-
+    def _test2_verify_surroundings(self, data, blankLine, action):
+        """Verify that beginning and ending strings were not changed."""
         exLines = 1  # number of lines used by example according to viewcursor
-        if not outerTable:
+        if not data.outerTable:
             exLines += 1
-            if not useFrames:
+            if not data.useFrames:
                 exLines += 2
+        oVC = self.unoObjs.viewcursor   # shorthand variable name
         oVC.goUp(exLines + 2, False)
         oVC.gotoStartOfLine(False)
         oVC.gotoEndOfLine(True)
         curs = oVC.getText().createTextCursorByRange(oVC)
+        numStr = str(self.surroundNum)
         self.assertEqual(curs.getString(), "begin" + numStr)
         oVC.gotoStartOfLine(False)
         oVC.goDown(exLines + 2, False)
@@ -265,151 +293,177 @@ class GrammarTestCase(unittest.TestCase):
         tested in test2_surroundings() or other places.
         """
         testutil.blankWriterDoc(self.unoObjs)
-        frames = self.unoObjs.document.getTextFrames()
-        self.prevFrameCount = frames.getCount()
-        tables = self.unoObjs.document.getTextTables()
-        self.prevTableCount = tables.getCount()
+        self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
+        self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
         for setting in ['orth', 'text', 'mbOrth', 'mb', 'ps', 'sepCols',
                         'psAbove', 'numbering']:
             for setVal in True, False:
-                def useDialog(innerSelf):
-                    filepath = os.path.join(
-                        util.TESTDATA_FOLDER, "TbxIntHunt06.xml")
-                    testutil.modifyFilePicker(filepath)
-                    if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
-                        innerSelf.evtHandler.actionPerformed(
-                            MyActionEvent("FileRemove"))
-                    innerSelf.evtHandler.actionPerformed(
-                        MyActionEvent("FileAdd"))
-                    TAG_VARS = dict(GrammarTags.TAG_VARS)
-                    innerSelf.userVars.store(TAG_VARS['orth'], 'or')
-                    innerSelf.userVars.store(TAG_VARS['orthm'], 'mbor')
-                    innerSelf.dlgCtrls.chkOrthoTextLine.setState(0)
-                    innerSelf.dlgCtrls.chkTextLine.setState(1)
-                    innerSelf.dlgCtrls.chkOrthoMorphLine.setState(0)
-                    innerSelf.dlgCtrls.chkMorphLine.setState(1)
-                    innerSelf.dlgCtrls.chkPOS_Line.setState(0)
-                    innerSelf.dlgCtrls.chkMorphsSeparate.setState(1)
-                    innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(0)
-                    innerSelf.dlgCtrls.chkNumbering.setState(1)
-                    if setting == 'orth':
-                        innerSelf.dlgCtrls.chkOrthoTextLine.setState(
-                            1 if setVal else 0)
-                    elif setting == 'text':
-                        innerSelf.dlgCtrls.chkTextLine.setState(
-                            1 if setVal else 0)
-                    elif setting == 'mbOrth':
-                        innerSelf.dlgCtrls.chkOrthoMorphLine.setState(
-                            1 if setVal else 0)
-                    elif setting == 'mb':
-                        innerSelf.dlgCtrls.chkMorphLine.setState(
-                            1 if setVal else 0)
-                    elif setting == 'ps':
-                        innerSelf.dlgCtrls.chkPOS_Line.setState(
-                            1 if setVal else 0)
-                    elif setting == 'sepCols':
-                        innerSelf.dlgCtrls.chkMorphsSeparate.setState(
-                            1 if setVal else 0)
-                    elif setting == 'psAbove':
-                        innerSelf.dlgCtrls.chkPOS_Line.setState(1)
-                        innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(
-                            1 if setVal else 0)
-                    elif setting == 'numbering':
-                        innerSelf.dlgCtrls.chkNumbering.setState(
-                            1 if setVal else 0)
-                    innerSelf.dlgCtrls.optTables.setState(1)
-                    self.setOrthographicFont(innerSelf.userVars)
-                    innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+                useDialog = self._test3_make_useDialog(setting, setVal)
                 DlgGramSettings.useDialog = useDialog
                 self.runDlgSettings(True)
                 refNum = "Hunt01"
                 DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
                 self.runDlgGrabEx(True)
+                self._test3_verify(setting, setVal)
 
+    def _test3_make_useDialog(self, setting, setVal):
+        def useDialog(innerSelf):
+            filepath = os.path.join(
+                util.TESTDATA_FOLDER, "TbxIntHunt06.xml")
+            testutil.modifyFilePicker(filepath)
+            if innerSelf.dlgCtrls.listboxFiles.getItemCount() > 0:
+                innerSelf.evtHandler.actionPerformed(
+                    MyActionEvent("FileRemove"))
+            innerSelf.evtHandler.actionPerformed(
+                MyActionEvent("FileAdd"))
+            TAG_VARS = dict(GrammarTags.TAG_VARS)
+            innerSelf.userVars.store(TAG_VARS['orth'], 'or')
+            innerSelf.userVars.store(TAG_VARS['orthm'], 'mbor')
+            innerSelf.dlgCtrls.chkOrthoTextLine.setState(0)
+            innerSelf.dlgCtrls.chkTextLine.setState(1)
+            innerSelf.dlgCtrls.chkOrthoMorphLine.setState(0)
+            innerSelf.dlgCtrls.chkMorphLine.setState(1)
+            innerSelf.dlgCtrls.chkPOS_Line.setState(0)
+            innerSelf.dlgCtrls.chkMorphsSeparate.setState(1)
+            innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(0)
+            innerSelf.dlgCtrls.chkNumbering.setState(1)
+            if setting == 'orth':
+                innerSelf.dlgCtrls.chkOrthoTextLine.setState(
+                    1 if setVal else 0)
+            elif setting == 'text':
+                innerSelf.dlgCtrls.chkTextLine.setState(
+                    1 if setVal else 0)
+            elif setting == 'mbOrth':
+                innerSelf.dlgCtrls.chkOrthoMorphLine.setState(
+                    1 if setVal else 0)
+            elif setting == 'mb':
+                innerSelf.dlgCtrls.chkMorphLine.setState(
+                    1 if setVal else 0)
+            elif setting == 'ps':
+                innerSelf.dlgCtrls.chkPOS_Line.setState(
+                    1 if setVal else 0)
+            elif setting == 'sepCols':
+                innerSelf.dlgCtrls.chkMorphsSeparate.setState(
+                    1 if setVal else 0)
+            elif setting == 'psAbove':
+                innerSelf.dlgCtrls.chkPOS_Line.setState(1)
+                innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(
+                    1 if setVal else 0)
+            elif setting == 'numbering':
+                innerSelf.dlgCtrls.chkNumbering.setState(
+                    1 if setVal else 0)
+            innerSelf.dlgCtrls.optTables.setState(1)
+            self.setOrthographicFont(innerSelf.userVars)
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+        return useDialog
+
+    def _test3_verify(self, setting, setVal):
+        newTableCount = self.unoObjs.document.getTextTables().getCount()
+        numTables = 2
+        numTablesMax = numTables + 1  # some fonts cause wrapping
+        tablesAdded = newTableCount - self.prevTableCount
+        self.assertGreaterEqual(tablesAdded, numTables)
+        self.assertLessEqual(tablesAdded, numTablesMax)
+        ipaOru = u"o\u027eu"  # used in text and mb lines
+        if setting == 'orth':
+            self.verifyTableHasCell(numTables, "A4", setVal)
+            if setVal:
+                tamOru = u"\u0b92\u0bb0\u0bc1"  # Tamil /oru/
+                self.verifyTable(numTables, 0, 0, tamOru)  # orth
+                self.verifyTable(numTables, 0, 1, ipaOru)  # text
+            else:
+                self.verifyTableHasCell(numTables, "A4", False)
+                self.verifyTable(numTables, 0, 0, ipaOru)  # text
+        elif setting == 'text':
+            self.verifyTableHasCell(numTables, "A3", setVal)
+            if setVal:
+                self.verifyTable(numTables, 0, 0, ipaOru)  # text
+                self.verifyTable(numTables, 0, 1, ipaOru)  # mb
+            else:
+                self.verifyTable(numTables, 0, 0, ipaOru)  # mb
+                self.verifyTable(numTables, 0, 1, "a")  # gloss
+        elif setting == 'mbOrth':
+            self.verifyTableHasCell(numTables, "A4", setVal)
+            if setVal:
+                tamTi = u"-\u0ba4\u0bbf"  # Tamil /-ti/
+                self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
+            else:
+                self.verifyTable(numTables, 2, 1, u"-d\u032ai")  # mb
+        elif setting == 'mb':
+            self.verifyTableHasCell(numTables, "A3", setVal)
+            if setVal:
+                self.verifyTable(numTables, 0, 1, ipaOru)  # mb
+            else:
+                self.verifyTable(numTables, 0, 1, "a")  # gloss
+        elif setting == 'ps':
+            self.verifyTableHasCell(numTables, "A4", setVal)
+            if setVal:
+                self.verifyTable(numTables, 0, 3, "det")  # ps
+        elif setting == 'sepCols':
+            self.verifyTableHasCell(numTables, "F1", True)
+            self.verifyTableHasCell(numTables, "G1", False)
+            self.verifyTableHasCell(numTables, "F2", True)
+            self.verifyTableHasCell(numTables, "I2", setVal)
+            if setVal:
+                self.verifyTable(
+                    numTables, 1, 1, u"u\u02d0\u027eu")  # mb
+            else:
+                self.verifyTable(
+                    numTables, 1, 1, u"u\u02d0\u027eu-d\u032ai")  # mb
+        elif setting == 'psAbove':
+            self.verifyTableHasCell(numTables, "A4", True)
+            if setVal:
+                self.verifyTable(numTables, 0, 2, "det")  # ps
+                self.verifyTable(numTables, 0, 3, "a")  # gloss
+            else:
+                self.verifyTable(numTables, 0, 2, "a")  # gloss
+                self.verifyTable(numTables, 0, 3, "det")  # ps
+        elif setting == 'numbering':
+            self.verifyTableHasCell(1, "A1", True)
+            if setVal:
                 tables = self.unoObjs.document.getTextTables()
-                newTableCount = tables.getCount()
-                numTables = 2
-                numTablesMax = numTables + 1  # some fonts cause wrapping
-                tablesAdded = newTableCount - self.prevTableCount
-                self.assertGreaterEqual(tablesAdded, numTables)
-                self.assertLessEqual(tablesAdded, numTablesMax)
-                ipaOru = u"o\u027eu"  # used in text and mb lines
-                if setting == 'orth':
-                    self.verifyTableHasCell(numTables, "A4", setVal)
-                    if setVal:
-                        tamOru = u"\u0b92\u0bb0\u0bc1"  # Tamil /oru/
-                        self.verifyTable(numTables, 0, 0, tamOru)  # orth
-                        self.verifyTable(numTables, 0, 1, ipaOru)  # text
-                    else:
-                        self.verifyTableHasCell(numTables, "A4", False)
-                        self.verifyTable(numTables, 0, 0, ipaOru)  # text
-                elif setting == 'text':
-                    self.verifyTableHasCell(numTables, "A3", setVal)
-                    if setVal:
-                        self.verifyTable(numTables, 0, 0, ipaOru)  # text
-                        self.verifyTable(numTables, 0, 1, ipaOru)  # mb
-                    else:
-                        self.verifyTable(numTables, 0, 0, ipaOru)  # mb
-                        self.verifyTable(numTables, 0, 1, "a")  # gloss
-                elif setting == 'mbOrth':
-                    self.verifyTableHasCell(numTables, "A4", setVal)
-                    if setVal:
-                        tamTi = u"-\u0ba4\u0bbf"  # Tamil /-ti/
-                        self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
-                    else:
-                        self.verifyTable(numTables, 2, 1, u"-d\u032ai")  # mb
-                elif setting == 'mb':
-                    self.verifyTableHasCell(numTables, "A3", setVal)
-                    if setVal:
-                        self.verifyTable(numTables, 0, 1, ipaOru)  # mb
-                    else:
-                        self.verifyTable(numTables, 0, 1, "a")  # gloss
-                elif setting == 'ps':
-                    self.verifyTableHasCell(numTables, "A4", setVal)
-                    if setVal:
-                        self.verifyTable(numTables, 0, 3, "det")  # ps
-                elif setting == 'sepCols':
-                    self.verifyTableHasCell(numTables, "F1", True)
-                    self.verifyTableHasCell(numTables, "G1", False)
-                    self.verifyTableHasCell(numTables, "F2", True)
-                    self.verifyTableHasCell(numTables, "I2", setVal)
-                    if setVal:
-                        self.verifyTable(
-                            numTables, 1, 1, u"u\u02d0\u027eu")  # mb
-                    else:
-                        self.verifyTable(
-                            numTables, 1, 1, u"u\u02d0\u027eu-d\u032ai")  # mb
-                elif setting == 'psAbove':
-                    self.verifyTableHasCell(numTables, "A4", True)
-                    if setVal:
-                        self.verifyTable(numTables, 0, 2, "det")  # ps
-                        self.verifyTable(numTables, 0, 3, "a")  # gloss
-                    else:
-                        self.verifyTable(numTables, 0, 2, "a")  # gloss
-                        self.verifyTable(numTables, 0, 3, "det")  # ps
-                elif setting == 'numbering':
-                    self.verifyTableHasCell(1, "A1", True)
-                    if setVal:
-                        tableWanted = tables.getByIndex(self.prevTableCount)
-                        cellWanted = tableWanted.getCellByPosition(0, 0)
-                        cellCursor = cellWanted.createTextCursor()
-                        cellCursor.gotoEnd(True)
-                        celltext = cellCursor.getString().strip()
-                        self.assertRegexpMatches(celltext, r"^\(\d+\)$")
-                    else:
-                        self.verifyTable(1, 0, 0, "()")  # number
-                self.prevTableCount = newTableCount
+                tableWanted = tables.getByIndex(self.prevTableCount)
+                cellWanted = tableWanted.getCellByPosition(0, 0)
+                cellCursor = cellWanted.createTextCursor()
+                cellCursor.gotoEnd(True)
+                celltext = cellCursor.getString().strip()
+                self.assertRegex(celltext, r"^\(\d+\)$")
+            else:
+                self.verifyTable(1, 0, 0, "()")  # number
+        self.prevTableCount = newTableCount
 
     def test4_prefixAndColWidth(self):
         """Test prefix and column width in Grammar Settings."""
         testutil.blankWriterDoc(self.unoObjs)
-        oVC = self.unoObjs.viewcursor
+        Test4Data = collections.namedtuple('Test4Data', [
+            'refNum', 'numFrames', 'firstWord', 'ft'])
         dataSets = [
-            ("A1.1", 20, u"Pisapha,",
-             u"Estas coisas doem mas o que é necessário é ter coragem. Pois "
-             u"nós todos vamos morrer."),
-            ("BP1.S1", 11, u"o\u027eu",
-             u" \u200e\u200eIn a village there was a headman.")]
+            Test4Data(
+                "A1.1", 20, u"Pisapha,",
+                u"Estas coisas doem mas o que é necessário é ter coragem. "
+                u"Pois nós todos vamos morrer."),
+            Test4Data(
+                "BP1.S1", 11, u"o\u027eu",
+                u" \u200e\u200eIn a village there was a headman.")]
+        useDialog = self._test4_make_useDialog_gramSettingsA()
+        DlgGramSettings.useDialog = useDialog
+        self.runDlgSettings(True)
+        self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
+        oVC = self.unoObjs.viewcursor
+        oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
+        for dataSet in dataSets:
+            DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
+            self.runDlgGrabEx(True)
+
+            newFrameCount = self.unoObjs.document.getTextFrames().getCount()
+            self.assertEqual(
+                newFrameCount - self.prevFrameCount, dataSet.numFrames)
+            self.verifyFrame(1, dataSet.firstWord)
+            self.verifyFreeTrans(dataSet.ft, True)
+            self.prevFrameCount = newFrameCount
+        self._test4_verify_resize(dataSets)
+
+    def _test4_make_useDialog_gramSettingsA(self):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "Sena Int.flextext")
@@ -426,22 +480,10 @@ class GrammarTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkUseSegnum.setState(True)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("FileUpdate"))
             innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
-        DlgGramSettings.useDialog = useDialog
-        self.runDlgSettings(True)
-        frames = self.unoObjs.document.getTextFrames()
-        self.prevFrameCount = frames.getCount()
-        oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-        for refNum, numFrames, firstWord, ft in dataSets:
-            DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
-            self.runDlgGrabEx(True)
+        return useDialog
 
-            frames = self.unoObjs.document.getTextFrames()
-            newFrameCount = frames.getCount()
-            self.assertEqual(newFrameCount - self.prevFrameCount, numFrames)
-            self.verifyFrame(1, firstWord)
-            self.verifyFreeTrans(ft, True)
-            self.prevFrameCount = newFrameCount
-
+    def _test4_verify_resize(self, dataSets):
+        oVC = self.unoObjs.viewcursor
         oVC.goUp(2, False)   # move into second table
         self.unoObjs.dispatcher.executeDispatch(
             self.unoObjs.frame, ".uno:SelectTable", "", 0, ())
@@ -449,13 +491,15 @@ class GrammarTestCase(unittest.TestCase):
             self.unoObjs.frame, ".uno:DeleteTable", "", 0, ())
         for resize in False, True:
             if resize:
+
                 def useDialog(innerSelf):
                     innerSelf.dlgCtrls.txtNumColWidth.setText("30")
                     innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+
                 DlgGramSettings.useDialog = useDialog
                 self.runDlgSettings(True)
             oVC.goLeft(2, False)  # move into first table after ref num
-            ft = dataSets[1][3]
+            ft = dataSets[1].ft
             oVC.goLeft(len(ft), False)
             oVC.gotoStartOfLine(False)
             tableName = "Table1"
@@ -472,23 +516,67 @@ class GrammarTestCase(unittest.TestCase):
 
     def test5_updating(self):
         """
-        Test updating examples. Verify that:
+        Test updating examples.  Verify that:
         - the example is actually updated
         - the correct example number is updated
         - the old example isn't still there
         - surrounding spacing, formatting and text doesn't get messed up
         """
         testutil.blankWriterDoc(self.unoObjs)
+        Test5Data = collections.namedtuple('Test5Data', [
+            'refNum', 'numFrames', 'firstWord', 'attrName', 'attrVal'])
+        dataSets = [
+            Test5Data(
+                "AJPDN60.01", 9, u"ce\u028bu\u027eu", 'Default', ''),
+            Test5Data(
+                "AJPDN61.08", 11, u"ce\u027e\u027eune", 'ParaStyleName',
+                "Caption"),
+            Test5Data(
+                "B1.1", 11, u"o\u027eu", 'CharStyleName',
+                "Caption characters"),
+            Test5Data(
+                "B1.2", 21, u"a\u028bant\u032au", 'CharFontName',
+                "Arial Black")]
+        self._test5_insert_original_examples(dataSets)
+        self._test5_update_examples()
+        self._test5_check_comparisondoc(dataSets)
+        self._test5_check_examples(dataSets)
+
+    def _test5_insert_original_examples(self, dataSets):
+        useDialog = self._test5_make_useDialoga()
+        DlgGramSettings.useDialog = useDialog
+        self.surroundNum = 0
+        self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
-        examples = [
-            ("AJPDN60.01", 9, u"ce\u028bu\u027eu", 'Default', ''),
-            ("AJPDN61.08", 11, u"ce\u027e\u027eune", 'ParaStyleName',
-             "Caption"),
-            ("B1.1", 11, u"o\u027eu", 'CharStyleName', "Caption characters"),
-            ("B1.2", 21, u"a\u028bant\u032au", 'CharFontName', "Arial Black")]
+        for data in dataSets:
+            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
+            self.runDlgSettings(True)
 
-        ## Insert original examples
+            self.surroundNum += 1
+            numStr = str(self.surroundNum)
+            if data.attrName != 'Default':
+                oVC.setPropertyValue(data.attrName, data.attrVal)
+            oVC.getText().insertString(oVC, "begin" + numStr, False)
+            oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
+            oVC.getText().insertString(oVC, "end" + numStr, False)
+            oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
+            oVC.goUp(1, False)
+            oVC.gotoStartOfLine(False)
+            self.runDlgGrabEx(True)
+            newFrameCount = self.unoObjs.document.getTextFrames().getCount()
+            self.assertEqual(
+                newFrameCount - self.prevFrameCount, data.numFrames)
+            self.verifyFrame(1, data.firstWord)
+            self.prevFrameCount = newFrameCount
+            oVC.goDown(1, False)
+            oVC.setPropertyValue("ParaStyleName", "Standard")
+            oVC.setPropertyToDefault("CharStyleName")
+            oVC.setPropertyToDefault("CharFontName")
+        oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
+        tables = self.unoObjs.document.getTextTables()
+        self.assertEqual(tables.getCount(), len(dataSets))
 
+    def _test5_make_useDialoga(self):
         def useDialog(innerSelf):
             if len(innerSelf.fileItems) == 0:
                 filepath = os.path.join(
@@ -507,45 +595,18 @@ class GrammarTestCase(unittest.TestCase):
                     MyActionEvent("FileUpdate"))
             innerSelf.dlgCtrls.optFrames.setState(1)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
-        DlgGramSettings.useDialog = useDialog
-        self.surroundNum = 0
-        frames = self.unoObjs.document.getTextFrames()
-        self.prevFrameCount = frames.getCount()
-        for refNum, numFrames, firstWord, attrName, attrVal in examples:
-            DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
-            self.runDlgSettings(True)
+        return useDialog
 
-            self.surroundNum += 1
-            numStr = str(self.surroundNum)
-            if attrName != 'Default':
-                oVC.setPropertyValue(attrName, attrVal)
-            oVC.getText().insertString(oVC, "begin" + numStr, False)
-            oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-            oVC.getText().insertString(oVC, "end" + numStr, False)
-            oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-            oVC.goUp(1, False)
-            oVC.gotoStartOfLine(False)
-            self.runDlgGrabEx(True)
-            frames = self.unoObjs.document.getTextFrames()
-            newFrameCount = frames.getCount()
-            self.assertEqual(newFrameCount - self.prevFrameCount, numFrames)
-            self.verifyFrame(1, firstWord)
-            self.prevFrameCount = newFrameCount
-            oVC.goDown(1, False)
-            oVC.setPropertyValue("ParaStyleName", "Standard")
-            oVC.setPropertyToDefault("CharStyleName")
-            oVC.setPropertyToDefault("CharFontName")
-        oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-        tables = self.unoObjs.document.getTextTables()
-        self.assertEqual(tables.getCount(), len(examples))
+    def _test5_update_examples(self):
 
-        ## Update examples
-
-        def useDialog(innerSelf):
+        def useDialog_gramSettings(innerSelf):
             innerSelf.dlgCtrls.optTables.setState(1)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
-        DlgGramSettings.useDialog = useDialog
-        def useDialog(innerSelf):
+
+        DlgGramSettings.useDialog = useDialog_gramSettings
+        self.runDlgSettings(True)
+
+        def useDialog_grabExamples(innerSelf):
             innerSelf.dlgCtrls.optSearchExisting.setState(1)
             innerSelf.dlgCtrls.enableDisable(innerSelf.app, innerSelf.userVars)
             try:
@@ -556,33 +617,33 @@ class GrammarTestCase(unittest.TestCase):
                 self.assertTrue(exc.msg.startswith("Updated"))
             else:
                 self.fail("Expected error message.")
-        DlgGrabExamples.useDialog = useDialog
-        self.runDlgSettings(True)
+
+        DlgGrabExamples.useDialog = useDialog_grabExamples
         self.runDlgGrabEx(False)
 
-        # check comparison doc
-
+    def _test5_check_comparisondoc(self, dataSets):
         compDoc = self.dlgGrabEx.app.operations.exUpdater.compDoc
         self.assertIsNotNone(compDoc)
         self.assertIsNotNone(compDoc.writerDoc)
         self.assertIsNotNone(compDoc.writerDoc.document)
         numTables = compDoc.writerDoc.document.getTextTables().getCount()
         multiLineExs = 1  # number of examples that have another line
-        self.assertEqual(numTables, 3 * len(examples) + multiLineExs)
+        self.assertEqual(numTables, 3 * len(dataSets) + multiLineExs)
         compDoc.writerDoc.document.close(True)
         testutil.do_dispose(self.dlgGrabEx)
         self.dlgGrabEx = None
 
-        ## Check examples
-
+    def _test5_check_examples(self, dataSets):
         tables = self.unoObjs.document.getTextTables()
-        self.assertEqual(tables.getCount(), 2 * len(examples) + multiLineExs)
+        multiLineExs = 1  # number of examples that have another line
+        self.assertEqual(tables.getCount(), 2 * len(dataSets) + multiLineExs)
 
+        oVC = self.unoObjs.viewcursor
         oVC.gotoStart(False)
         self.surroundNum = 0
         tableNum = 1
-        for refNum, dummy, firstWord, attrName, attrVal in examples:
-            self.verifyTable(tableNum + 1, 0, 0, firstWord)
+        for data in dataSets:
+            self.verifyTable(tableNum + 1, 0, 0, data.firstWord)
             self.surroundNum += 1
             numStr = str(self.surroundNum)
             oVC.gotoStartOfLine(False)
@@ -597,7 +658,7 @@ class GrammarTestCase(unittest.TestCase):
             self.assertEqual(curs.getString(), "end" + numStr)
             oVC.collapseToEnd()
             oVC.gotoStartOfLine(False)
-            if attrName == 'Default':
+            if data.attrName == 'Default':
                 self.assertEqual(
                     oVC.getPropertyValue('ParaStyleName'), "Standard")
                 self.assertEqual(
@@ -606,7 +667,8 @@ class GrammarTestCase(unittest.TestCase):
                     oVC.getPropertyValue('CharFontName'),
                     testutil.getDefaultFont())
             else:
-                self.assertEqual(oVC.getPropertyValue(attrName), attrVal)
+                self.assertEqual(
+                    oVC.getPropertyValue(data.attrName), data.attrVal)
             oVC.goDown(1, False)  # to next "begin" line
             tableNum += 2
 
@@ -684,7 +746,7 @@ class GrammarTestCase(unittest.TestCase):
         grammarStyles.createStyles()
         logger.debug(util.funcName() + ": Created grammar styles.")
         styleFonts = styles.StyleFonts(
-            self.unoObjs, userVars, grammarStyles.styleNames)
+            self.unoObjs, grammarStyles.styleNames)
         styleFonts.setParaStyleWithFont(fontDef, styleKey="orth")
         styleFonts.setParaStyleWithFont(fontDef, styleKey="orthm")
 

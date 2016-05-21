@@ -24,17 +24,19 @@ import platform
 import re
 import sys
 import unittest
-# pylint: disable=import-error
-import uno
-# pylint: enable=import-error
+# pylint: disable=import-error,unused-import
+#import uno  # This may no longer be needed.  Remove if tests pass.
+# pylint: enable=import-error,unused-import
+
+# Used in modules that import testutil.
+# pylint: disable=unused-import
+from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
+# pylint: enable=unused-import
 
 from lingt.app import exceptions
-from lingt.ui import filepicker
-from lingt.ui.messagebox import MessageBox, FourButtonDialog
+from lingt.ui.common import filepicker
+from lingt.ui.common.messagebox import MessageBox, FourButtonDialog
 from lingt.utils import util
-
-PARAGRAPH_BREAK = uno.getConstantByName(
-    "com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK")
 
 logger = logging.getLogger("lingttest.testutil")
 
@@ -281,8 +283,7 @@ def modifyFilePicker(retval):
 
 
 def verifyRegexMethods(selfParam):
-    """
-    unittest prior to 2.7 was very incomplete.
+    """unittest prior to 2.7 was very incomplete.
     In newer versions names of some methods have changed as well.
     This function renames some methods to support different python versions.
     """

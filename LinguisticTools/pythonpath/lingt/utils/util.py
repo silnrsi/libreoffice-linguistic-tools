@@ -49,8 +49,8 @@ import inspect
 import logging
 import os
 import platform
-
 import uno
+
 from com.sun.star.beans import PropertyValue
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException

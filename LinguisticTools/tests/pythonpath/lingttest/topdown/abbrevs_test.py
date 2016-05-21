@@ -105,7 +105,7 @@ class AbbrevsTestCase(unittest.TestCase):
             ("Quotations", 'prefix', 5, 0, ["DIG", "pig"])]
         for dataSet in dataSets:
             self.setDocContentsForSearch()
-            func = self.make_useDialog_test2(*dataSet)
+            func = self.make_test2_useDialog(*dataSet)
             self.runDlg(func)
 
         ## Search from beginning
@@ -125,7 +125,7 @@ class AbbrevsTestCase(unittest.TestCase):
             self.findAndAddNext(innerSelf, 2)
         self.runDlg(useDialog)
 
-    def make_useDialog_test2(self, paraStyle, affix, abbrevLen, upperCase,
+    def make_test2_useDialog(self, paraStyle, affix, abbrevLen, upperCase,
                              displays):
         def useDialog(innerSelf):
             self.clear_list(innerSelf, ABL_I + 1)

@@ -13,7 +13,7 @@ To do this, use ad_hoc_testing.py, adding code similar to below.
 import logging
 import unittest
 
-from lingt.ui import messagebox
+from lingt.ui.common import messagebox
 from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.messagebox_test")

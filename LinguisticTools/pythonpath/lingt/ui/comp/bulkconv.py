@@ -52,6 +52,8 @@ class DlgBulkConversion:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
+        self.step1Form = None
+        self.step2Form = None
 
     def showDlg(self):
         logger.debug(util.funcName(obj=self))
@@ -60,12 +62,13 @@ class DlgBulkConversion:
             return
         ctrl_getter = dutil.ControlGetter(dlg)
         app = BulkConversion(self.unoObjs)
-        step1Form = FormStep1(ctrl_getter, app)
-        step1Form.start_working()
-        step2Form = FormStep2(ctrl_getter, app)
-        step2Form.start_working()
+        self.step1Form = FormStep1(ctrl_getter, app)
+        self.step1Form.start_working()
+        self.step2Form = FormStep2(ctrl_getter, app)
+        self.step2Form.start_working()
         stepper = DlgStepper(dlg)
-        advancer = AdvanceHandler(ctrl_getter, stepper, step1Form, step2Form)
+        advancer = AdvanceHandler(
+            ctrl_getter, stepper, self.step1Form, self.step2Form)
         advancer.start_working()
         closingButtons = ClosingButtons(ctrl_getter, dlg.endExecute)
         closingButtons.start_working()
@@ -74,9 +77,9 @@ class DlgBulkConversion:
 
         dlg.execute()
         if stepper.on_step1():
-            step1Form.store_results()
+            self.step1Form.store_results()
         if stepper.on_step2():
-            step2Form.store_results()
+            self.step2Form.store_results()
         if closingButtons.convertOnClose:
             try:
                 app.doConversions()

@@ -75,9 +75,9 @@ class ApplyConvTestCase(unittest.TestCase):
         outputter = spreadsheet_output.SpreadsheetOutput(self.calcUnoObjs)
         reader = spreadsheet_reader.SpreadsheetReader(self.calcUnoObjs)
         for dataSet in dataSets:
-            self.do_test1_dataSet(dataSet, reader, outputter)
+            self._test1_do_dataSet(dataSet, reader, outputter)
 
-    def do_test1_dataSet(self, data, reader, outputter):
+    def _test1_do_dataSet(self, data, reader, outputter):
         #print("[%s]" % data.convName)  # to see which data set we're on
         clear_sheet(self.calcUnoObjs)
         originalStrings = ["aBc", "DeF"]

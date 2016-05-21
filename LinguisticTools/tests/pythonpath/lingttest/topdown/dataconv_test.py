@@ -115,7 +115,7 @@ class DataConvTestCase(unittest.TestCase):
         textContent = "abCde\rFghI jkl"
         for reverse in False, True:
             self.setTextContent(textContent)
-            func = self._make_useDialog_test1(reverse, convName)
+            func = self._test1_make_useDialog(reverse, convName)
             self.runDlg(func)
             expectedContent = textContent.replace("\r", "\r\n")
             if reverse:
@@ -127,7 +127,7 @@ class DataConvTestCase(unittest.TestCase):
         conv = ConverterSettings(self.dlg.userVars)
         conv.storeUserVars()
 
-    def _make_useDialog_test1(self, reverse, convName):
+    def _test1_make_useDialog(self, reverse, convName):
         def useDialog(innerSelf):
             innerSelf.dlgCtrls.txtConverterName.setText(convName)
             innerSelf.dlgCtrls.chkDirectionReverse.setState(reverse)
@@ -151,9 +151,9 @@ class DataConvTestCase(unittest.TestCase):
             # a Chinese character
             Test2Data("Asian", "optScopeFontAsian", "\ua000")]
         for dataSet in dataSets:
-            self._do_test2_dataSet(dataSet, convName)
+            self._test2_do_dataSet(dataSet, convName)
 
-    def _do_test2_dataSet(self, data, convName):
+    def _test2_do_dataSet(self, data, convName):
         CONTENT_LEN = 5  # arbitrary
         FORMAT_AT_INDEX = 3  # arbitrary
         textContent = data.testChar * CONTENT_LEN
@@ -204,9 +204,9 @@ class DataConvTestCase(unittest.TestCase):
             Test3Data(True, "optScopeSFMs"),
             ]
         for dataSet in dataSets:
-            self._do_test3_dataSet(dataSet, markers, CONVERT_PARAGRAPHS)
+            self._test3_do_dataSet(dataSet, markers, CONVERT_PARAGRAPHS)
 
-    def _do_test3_dataSet(self, data, markers, CONVERT_PARAGRAPHS):
+    def _test3_do_dataSet(self, data, markers, CONVERT_PARAGRAPHS):
         PARASTYLE_FROM = "Heading 5"  # source para style
         PARASTYLE_TO = "Heading 4"  # target para style
         self.setTextContent(ROMAN_PARAGRAPHS, True)
@@ -257,9 +257,9 @@ class DataConvTestCase(unittest.TestCase):
         target character style.
         """
         for ctrlName in ("optScopeSelection", "optScopeCharStyle"):
-            self._do_test4_dataSet(ctrlName)
+            self._test4_do_dataSet(ctrlName)
 
-    def _do_test4_dataSet(self, ctrlName):
+    def _test4_do_dataSet(self, ctrlName):
         CHARSTYLE_FROM = "Emphasis"  # source char style
         CHARSTYLE_TO = "Strong Emphasis"  # target char style
         LEFT, MID = 0, 1  # indices of paragraph splits
@@ -344,9 +344,9 @@ class DataConvTestCase(unittest.TestCase):
                 self.dlg = DlgDataConversion(self.unoObjs)
             for ctrlName in ("optTargetNoChange", "optTargetFontOnly",
                              "optTargetParaStyle"):
-                self._do_test5_dataSet(dataSet, ctrlName)
+                self._test5_do_dataSet(dataSet, ctrlName)
 
-    def _do_test5_dataSet(self, data, ctrlName):
+    def _test5_do_dataSet(self, data, ctrlName):
         CHANGED_SIZE = 15.5
         PARASTYLE_FROM = "Heading 5"  # source para style
         PARASTYLE_TO = "Heading 4"  # target para style
@@ -376,9 +376,9 @@ class DataConvTestCase(unittest.TestCase):
 
         self.runDlg(useDialog)
         oVC.gotoStart(False)
-        self._check_test5_dataSet(data, paragraphs, ctrlName, fontName)
+        self._test5_check_dataSet(data, paragraphs, ctrlName, fontName)
 
-    def _check_test5_dataSet(self, data, paragraphs, ctrlName, fontName):
+    def _test5_check_dataSet(self, data, paragraphs, ctrlName, fontName):
         CHANGED_SIZE = 15.5
         CONVERT_PARA = 1  # we change only the second paragraph
         PARASTYLE_TO = "Heading 4"  # target para style
@@ -444,9 +444,9 @@ class DataConvTestCase(unittest.TestCase):
                 "\u0d21\u0d4d \u0d07\u0d32\u0d4d\u0d32\u0d46."),
             ]
         for dataSet in dataSets:
-            self._do_test6_dataSet(dataSet)
+            self._test6_do_dataSet(dataSet)
 
-    def _do_test6_dataSet(self, data):
+    def _test6_do_dataSet(self, data):
         self.addConverter(data.convName)
         self.setTextContent(data.fromText)
 
