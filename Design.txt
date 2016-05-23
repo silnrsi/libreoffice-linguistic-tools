@@ -8,8 +8,8 @@
 
 ## Next
 
-Pylint tests.
-Get tests to pass with an unassimilated user directory setup.
+Get dataconv_test.py test 2 to pass.
+    In AOO, failed to add Any-Hex.
 
 Fix bug (below).
 

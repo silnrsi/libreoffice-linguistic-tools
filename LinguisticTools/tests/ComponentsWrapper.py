@@ -179,11 +179,11 @@ def aaa_del_sys_modules():
     logManager.spacer()
     modules_count = 0
     for mod in list(sys.modules.keys()):
-        if mod.startswith('lingt.'):
+        if mod.startswith('lingt.') or mod.startswith('lingttest.'):
             del sys.modules[mod]
             modules_count += 1
     ctx = uno.getComponentContext()
-    uno_objs = util.UnoObjs(ctx)
+    uno_objs = util.UnoObjs(ctx, util.UnoObjs.DOCTYPE_GENERIC)
     msgbox = messagebox.MessageBox(uno_objs)
     msgbox.display("Deleted " + str(modules_count) + " modules.")
 

@@ -44,10 +44,10 @@ def getSuite():
     for method_name in (
             'test1_toUpper',
             'test2_scopeFont',
-            'test3_parastyles',
-            'test4_charstyles',
-            'test5_targetFont',
-            'test6_encTypes',
+            #'test3_parastyles',
+            #'test4_charstyles',
+            #'test5_targetFont',
+            #'test6_encTypes',
         ):
         suite.addTest(DataConvTestCase(method_name))
     return suite
@@ -162,7 +162,7 @@ class DataConvTestCase(unittest.TestCase):
         oVC.gotoStart(False)
         oVC.goRight(FORMAT_AT_INDEX, False)
         oVC.goRight(1, True)  # select
-        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        styleFonts = styles.StyleFonts(self.unoObjs)
         fontName, dummy = styleFonts.getFontOfStyle(
             styleName=testutil.getDefaultStyle(), fontType=data.fontType)
         fontDef = styles.FontDefStruct(
@@ -350,7 +350,7 @@ class DataConvTestCase(unittest.TestCase):
         CHANGED_SIZE = 15.5
         PARASTYLE_FROM = "Heading 5"  # source para style
         PARASTYLE_TO = "Heading 4"  # target para style
-        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        styleFonts = styles.StyleFonts(self.unoObjs)
         #print("%s %s" % (data.fontType, ctrlName))
         fontName, dummy = styleFonts.getFontOfStyle(
             styleName=PARASTYLE_TO, fontType=data.fontType)
@@ -402,7 +402,7 @@ class DataConvTestCase(unittest.TestCase):
             oVC.goDown(1, False)
 
     def _get_target_font(self, paraStyle2, data, ctrlName):
-        styleFonts = styles.StyleFonts(self.unoObjs, self.dlg.userVars)
+        styleFonts = styles.StyleFonts(self.unoObjs)
         if ctrlName == "optTargetParaStyle":
             fontName2, fontSizeObj = styleFonts.getFontOfStyle(
                 styleName=paraStyle2, fontType=data.fontType)

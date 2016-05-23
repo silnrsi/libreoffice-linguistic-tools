@@ -17,6 +17,12 @@
 # Disable warnings related to modifying code dynamically, useful for testing.
 # pylint: disable=exec-used,unused-argument
 
+"""
+Utilities for the test suite.
+
+Also consider using unittest.mock.
+"""
+
 import inspect
 import logging
 import os
@@ -235,10 +241,20 @@ def modifyMsgboxDisplay():
     instead of actually displaying a message.
     Also log messages so we can check them manually if needed.
     """
-    def newFunc(self, message, *msg_args, **kwargs):
-        record_message(message, msg_args)
-        raise MsgSentException(message, msg_args)
-    MessageBox.display = newFunc
+    if not hasattr(MessageBox, 'display_original'):
+        MessageBox.display_original = MessageBox.display
+
+        def newFunc(self, message, *msg_args, **kwargs):
+            record_message(message, msg_args)
+            raise MsgSentException(message, msg_args)
+
+        MessageBox.display = newFunc
+
+def restoreMsgboxDisplay():
+    """Reverses what modifyMsgboxDisplay() did."""
+    if hasattr(MessageBox, 'display_original'):
+        MessageBox.display = MessageBox.display_original
+        del MessageBox.display_original
 
 def modifyMsgboxFour(retval):
     """Modify lingt.ui.messagebox.FourButtonDialog.display() to return the

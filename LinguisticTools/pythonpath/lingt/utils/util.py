@@ -22,6 +22,7 @@
 # 15-Jul-15 JDK  Removed safeStr().  Use "%s" instead.
 # 07-Aug-15 JDK  Added setupLogging().
 # 14-Oct-15 JDK  Uno objects for Impress.
+# 23-May-16 JDK  Added a generic UnoObjs doc type.
 
 """
 This module is used by most OOLT modules:
@@ -112,6 +113,7 @@ class UnoObjs:
     DOCTYPE_WRITER = 'writer'
     DOCTYPE_CALC = 'calc'
     DOCTYPE_IMPRESS = 'impress'
+    DOCTYPE_GENERIC = 'generic'
 
     def __init__(self, ctx, doctype=DOCTYPE_WRITER,
                  loadFromContext=True, loadDocObjs=True):
@@ -172,6 +174,8 @@ class UnoObjs:
                 self.presentation = self.document.getPresentation()
             except AttributeError:
                 raise AttributeError("Could not get Impress presentation.")
+        elif doctype == self.DOCTYPE_GENERIC:
+            pass
         else:
             raise AttributeError("Unexpected doc type %s" % doctype)
 

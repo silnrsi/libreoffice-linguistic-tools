@@ -57,6 +57,7 @@ class SearchTestCase(unittest.TestCase):
         self.progressBar = ProgressBar(self.unoObjs, "TestSearch")
 
     def test1_selection(self):
+        self.unoObjs.viewcursor.gotoStart(False)  # needed for AOO 23-May-16
         self.unoObjs.viewcursor.goRight(1, True)  # select
         self.textSearch = TextSearch(self.unoObjs, self.progressBar)
         self.textSearch.scopeSelection()

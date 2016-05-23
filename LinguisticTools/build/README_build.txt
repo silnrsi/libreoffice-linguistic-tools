@@ -17,19 +17,27 @@ which zips up the folders and deploys them.
 This is a good general purpose method.
 
 For the third method, do not zip it.  Run it from the user directory:
-1. Run deploy_to_userdir.ps1 which copies the large files to Scripts/python in
+1. Go to Tools -> Extension Manager and remove Linguistic Tools if it exists.
+2. Go to Tools -> Macros -> Organize Dialogs.
+   Under the Library tab, create a library named LingToolsBasic.
+   Also under the Dialogs tab, I selected LingToolsBasic and created a new
+   dialog, because otherwise it didn't seem to notice the new library.
+   Also, copy the LinguisticTools/LingToolsBasic folder to <user dir>/basic.
+3. Run deploy_to_userdir.ps1 which copies the large files to Scripts/python in
    the OpenOffice or LibreOffice user directory.
-2. From OpenOffice go to Tools -> Macros -> Run macro.
+4. From OpenOffice go to Tools -> Macros -> Run macro.
    Do not use the Linguistics menu with this approach.
 
 The benefits of the third approach are:
 - Shows helpful error messages instead of silently failing
-- Can instantly make small changes for debugging by editing the assimilated
-  file in the OpenOffice user directory
+- Can instantly make small changes for debugging by editing the files in the
+  user directory
 - Does not deploy as an uno package, so there is less chance of the uno
   package registry getting corrupt when making a large number of changes.
 - No need to restart OpenOffice to deploy changes (an important consideration
   when using older versions such as OOo 3.2)
+  However, to avoid restarting, it is necessary to run aaa_del_sys_modules().
+  See tests/ComponentsWrapper.py for details about this function.
 
 
 #------------------------------------------------------------------------------

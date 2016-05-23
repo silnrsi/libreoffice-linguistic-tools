@@ -7,6 +7,7 @@
 # 13-May-13 JDK  Allow component context from argument as well as socket.
 # 15-Sep-15 JDK  Output file encoded for unicode.
 # 28-Sep-15 JDK  Load tests from modules rather than classes.
+# 23-May-16 JDK  Added functions to run individual modules.
 
 """
 This file runs a suite of automated tests all together.
@@ -43,7 +44,44 @@ from lingttest.ui import wordlistfile_test
 
 from lingt.utils import util
 
-def runTests(outputToFile=False):
+
+def get_master_suite():
+    masterSuite = unittest.TestSuite()
+    for module in (
+            ex_updater_test,
+            tables_test,
+            search_test,
+            textchanges_test,
+            uservars_test,
+            xml_readers_test,
+
+            spellingchecks_test,
+            #convpool_test,
+
+            messagebox_test,
+            dlg_gramsettings_test,
+            dlg_dataconv_test,
+            wordlistfile_test,
+
+            abbrevs_test,
+            phonology_test,
+            grammar_test,
+            dataconv_test,
+            step_through_list,
+        ):
+        masterSuite.addTest(module.getSuite())
+    # Uncomment to run only this test.
+    #masterSuite = visual_test_phonology.getSuite()
+    return masterSuite
+
+
+def run_to_outfile(suite):
+    run_suite(suite, True)
+
+def run_to_stdout(suite):
+    run_suite(suite, False)
+
+def run_suite(suite, outputToFile):
 
     ## Make sure a writer document is open
 
@@ -53,59 +91,121 @@ def runTests(outputToFile=False):
         unoObjs.desktop.loadComponentFromURL(
             "private:factory/swriter", "_blank", 0, ())
 
-    ## Load and run the test suite
-
-    masterSuite = unittest.TestSuite()
-    for moduleSuite in (
-            ex_updater_test.getSuite(),
-            tables_test.getSuite(),
-            search_test.getSuite(),
-            textchanges_test.getSuite(),
-            uservars_test.getSuite(),
-            xml_readers_test.getSuite(),
-
-            spellingchecks_test.getSuite(),
-            #convpool_test.getSuite(),
-
-            messagebox_test.getSuite(),
-            dlg_gramsettings_test.getSuite(),
-            dlg_dataconv_test.getSuite(),
-            wordlistfile_test.getSuite(),
-
-            abbrevs_test.getSuite(),
-            phonology_test.getSuite(),
-            grammar_test.getSuite(),
-            dataconv_test.getSuite(),
-            step_through_list.getSuite(),
-        ):
-        masterSuite.addTest(moduleSuite)
-    # Uncomment to run only this test.
-    #masterSuite = visual_test_phonology.getSuite()
+    ## Load and run the suite
 
     if outputToFile:
-        outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
-        #outfile = io.open(outfilepath, mode='w', encoding='UTF8')
-        #outfile.write(u"Calling TextTestRunner...\n")
-        outfile = open(outfilepath, mode='w')
-        outfile.write("Calling TextTestRunner...\n")
-        outfile.flush()
-        unittest.TextTestRunner(stream=outfile, verbosity=2).run(masterSuite)
-        outfile.close()
+        run_suite_to_outfile(suite)
     else:
-        unittest.TextTestRunner(verbosity=2).run(masterSuite)
+        unittest.TextTestRunner(verbosity=2).run(suite)
 
     unoObjs = testutil.unoObjsForCurrentDoc()
     oVC = unoObjs.viewcursor
     oVC.gotoEnd(False)
     oVC.getText().insertString(oVC, "Testing finished.\n", False)
+    testutil.restoreMsgboxDisplay()
+
+
+def run_suite_to_outfile(suite):
+    outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
+    #outfile = io.open(outfilepath, mode='w', encoding='UTF8')
+    #outfile.write(u"Calling TextTestRunner...\n")
+    outfile = open(outfilepath, mode='w')
+    outfile.write("Calling TextTestRunner...\n")
+    outfile.flush()
+    unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)
+    outfile.close()
+
 
 if __name__ == '__main__':
     testutil.stored.getContext()
-    runTests()
+    run_to_stdout(get_master_suite())
 
-def runTests_myMacros():
+
+def aaa_run_all_tests():
     testutil.stored.ctx = uno.getComponentContext()
-    runTests(outputToFile=True)
+    run_to_outfile(get_master_suite())
+
+
+def run_module_suite(module):
+    """Run tests from a single module only."""
+    testutil.stored.ctx = uno.getComponentContext()
+    run_to_outfile(module.getSuite())
+
+
+def run_ex_updater_test():
+    run_module_suite(ex_updater_test)
+
+def run_search_test():
+    run_module_suite(search_test)
+
+def run_tables_test():
+    run_module_suite(tables_test)
+
+def run_textchanges_test():
+    run_module_suite(textchanges_test)
+
+def run_uservars_test():
+    run_module_suite(uservars_test)
+
+def run_xml_readers_test():
+    run_module_suite(xml_readers_test)
+
+def run_spellingchecks_test():
+    run_module_suite(spellingchecks_test)
+
+def run_visual_test_grammar():
+    run_module_suite(visual_test_grammar)
+
+def run_visual_test_phonology():
+    run_module_suite(visual_test_phonology)
+
+def run_abbrevs_test():
+    run_module_suite(abbrevs_test)
+
+def run_dataconv_test():
+    run_module_suite(dataconv_test)
+
+def run_grammar_test():
+    run_module_suite(grammar_test)
+
+def run_phonology_test():
+    run_module_suite(phonology_test)
+
+def run_step_through_list():
+    run_module_suite(step_through_list)
+
+def run_dlg_dataconv_test():
+    run_module_suite(dlg_dataconv_test)
+
+def run_dlg_gramsettings_test():
+    run_module_suite(dlg_gramsettings_test)
+
+def run_messagebox_test():
+    run_module_suite(messagebox_test)
+
+def run_wordlistfile_test():
+    run_module_suite(wordlistfile_test)
+
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = runTests_myMacros,
+g_exportedScripts = (
+    aaa_run_all_tests,
+    run_ex_updater_test,
+    run_search_test,
+    run_tables_test,
+    run_textchanges_test,
+    run_uservars_test,
+    run_xml_readers_test,
+    run_spellingchecks_test,
+    run_visual_test_grammar,
+    run_visual_test_phonology,
+    run_abbrevs_test,
+    run_dataconv_test,
+    run_grammar_test,
+    run_phonology_test,
+    run_step_through_list,
+    run_dlg_dataconv_test,
+    run_dlg_gramsettings_test,
+    run_messagebox_test,
+    run_wordlistfile_test,
+    )

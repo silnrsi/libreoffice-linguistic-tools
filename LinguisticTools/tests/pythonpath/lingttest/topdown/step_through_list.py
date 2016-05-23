@@ -6,6 +6,7 @@
 Exercise the Spelling Character Comparison and Spelling Step dialog controls,
 and verify Calc contents.
 """
+from __future__ import unicode_literals
 import logging
 import unittest
 
@@ -102,7 +103,9 @@ class CharCompareTestCase(unittest.TestCase):
                 innerSelf.updateCharCompOpts()
                 ctrl = innerSelf.dlgCtrls.txtCharComp
                 firstline = ctrl.getText().splitlines()[0]
-                self.assertEqual(firstline, firstline_expected, msg=ctrlname)
+                self.assertEqual(
+                    firstline, firstline_expected,
+                    msg=repr([ctrlname, firstline]))
             innerSelf.evtHandler.actionPerformed(MyActionEvent("Close"))
 
         self.runDlg(useDialog)
