@@ -281,11 +281,15 @@ class FontChangeControlHandler:
         pass
 
 
-class ConverterControls(FontChangeControlHandler):
+class ConverterControls(FontChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         self.convName = ConvName(ctrl_getter, app)
         self.chkReverse = CheckboxReverse(ctrl_getter, app)
+
+    def start_working(self):
+        self.convName.start_working()
+        self.chkReverse.start_working()
 
 
 class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
@@ -366,7 +370,7 @@ class CheckboxReverse(FontChangeControlHandler,
         change_to.converter.forward = change_from.converter.forward
 
 
-class SampleControls(FontChangeControlHandler):
+class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         self.ctrl_getter = ctrl_getter
@@ -377,6 +381,11 @@ class SampleControls(FontChangeControlHandler):
             ctrl_getter, app, self.samples, self.sampleLabels)
         self.showConvControls = CheckboxShowConverter(
             ctrl_getter, app, self.nextInputControls)
+
+    def start_working(self):
+        self.sampleLabels.load_values()
+        self.nextInputControls.start_working()
+        self.showConvControls.start_working()
 
     def store_results(self):
         self.showConvControls.store_results()
@@ -389,6 +398,45 @@ class SampleControls(FontChangeControlHandler):
 
     def change_font_size(self, fontSize):
         self.sampleLabels.change_font_size(fontSize)
+
+
+class SampleLabels(FontChangeControlHandler):
+    """Label controls to display sample input and converted text."""
+
+    def __init__(self, ctrl_getter, app):
+        FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        self.lblInput = ctrl_getter.get(_dlgdef.INPUT_DISPLAY)
+        self.lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
+        self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
+
+    def load_values(self):
+        self.lblInput.setText("(None)")
+        self.lblSampleNum.setText("0 / 0")
+        self.lblConverted.setText("(None)")
+
+    def fill_for_data(self, samples):
+        inputSampleText = samples.inputData[samples.sampleIndex]
+        self.lblInput.setText(inputSampleText)
+        self.lblSampleNum.setText(
+            "%d / %d" % (
+                samples.sampleNum(),
+                len(samples.inputData)))
+        self.lblConverted.setText(samples.converted_data)
+
+    def fill_for_no_data(self):
+        self.lblInput.setText("(None)")
+        self.lblSampleNum.setText("0 / 0")
+        self.lblConverted.setText("(None)")
+
+    def change_font(self, fontItem):
+        """See also lingt.access.writer.textchanges.changeFont()."""
+        self.lblConverted.getModel().FontName = fontItem.name
+        self.lblConverted.getModel().FontNameAsian = fontItem.name
+
+    def change_font_size(self, fontSize):
+        """:param fontSize: type lingt.utils.FontSize"""
+        fontSize.changeCtrlProp(self.lblConverted)
+        #fontSize.changeCtrlProp(self.lblConverted, True)
 
 
 class ButtonNextInput(FontChangeControlHandler,
@@ -444,45 +492,6 @@ class ButtonNextInput(FontChangeControlHandler,
             self.samples.last_settings[converter.convName] = converter
         self.samples.set_fontItem(fontItem)
         self.nextInputSample()
-
-
-class SampleLabels(FontChangeControlHandler):
-    """Label controls to display sample input and converted text."""
-
-    def __init__(self, ctrl_getter, app):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app)
-        self.lblInput = ctrl_getter.get(_dlgdef.INPUT_DISPLAY)
-        self.lblConverted = ctrl_getter.get(_dlgdef.CONVERTED_DISPLAY)
-        self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
-
-    def load_values(self):
-        self.lblInput.setText("(None)")
-        self.lblSampleNum.setText("0 / 0")
-        self.lblConverted.setText("(None)")
-
-    def fill_for_data(self, samples):
-        inputSampleText = samples.inputData[samples.sampleIndex]
-        self.lblInput.setText(inputSampleText)
-        self.lblSampleNum.setText(
-            "%d / %d" % (
-                samples.sampleNum(),
-                len(samples.inputData)))
-        self.lblConverted.setText(samples.converted_data)
-
-    def fill_for_no_data(self):
-        self.lblInput.setText("(None)")
-        self.lblSampleNum.setText("0 / 0")
-        self.lblConverted.setText("(None)")
-
-    def change_font(self, fontItem):
-        """See also lingt.access.writer.textchanges.changeFont()."""
-        self.lblConverted.getModel().FontName = fontItem.name
-        self.lblConverted.getModel().FontNameAsian = fontItem.name
-
-    def change_font_size(self, fontSize):
-        """:param fontSize: type lingt.utils.FontSize"""
-        fontSize.changeCtrlProp(self.lblConverted)
-        #fontSize.changeCtrlProp(self.lblConverted, True)
 
 
 class CheckboxShowConverter(FontChangeControlHandler,
@@ -733,15 +742,15 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         comboParaStyle = ctrl_getter.get(_dlgdef.COMBO_PARA_STYLE)
         comboCharStyle = ctrl_getter.get(_dlgdef.COMBO_CHAR_STYLE)
         self.styledata = [
-            StyleNameTuple('Paragraph', comboParaStyle, []),
-            StyleNameTuple('Character', comboCharStyle, [])]
+            StyleNameTuple('Paragraph', comboParaStyle, {}),
+            StyleNameTuple('Character', comboCharStyle, {})]
 
     def load_values(self):
         logger.debug(util.funcName())
         for data in self.styledata:
             stylesList = styles.getListOfStyles(
                 data.styleType + 'Styles', self.app.unoObjs)
-            data.styleNames = dict(stylesList)
+            data.styleNames.update(dict(stylesList))
             dispNames = tuple([dispName for dispName, name in stylesList])
             dutil.fill_list_ctrl(data.ctrl, dispNames)
 

@@ -79,7 +79,6 @@ class EventHandler(DataControls, unohelper.Base):
     def start_working(self):
         """Add listeners last because they could cause side effects during
         load_values().
-        This method was not designed to be overridden.
         """
         self.load_values()
         self.add_listeners()

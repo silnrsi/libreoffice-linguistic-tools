@@ -128,6 +128,7 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
 
     def add_listeners(self):
         self.btnScan.setActionCommand('ScanFiles')
+        self.btnScan.addActionListener(self)
 
     def handle_action_event(self, dummy_action_command):
         self.step1Form.scanFiles()
@@ -146,6 +147,8 @@ class ClosingButtons(evt_handler.ActionEventHandler):
     def add_listeners(self):
         self.btnProcess.setActionCommand('Close_and_Convert')
         self.btnCancel.setActionCommand('Cancel')
+        for ctrl in (self.btnProcess, self.btnCancel):
+            ctrl.addActionListener(self)
 
     def handle_action_event(self, action_command):
         if action_command == 'Close_and_Convert':

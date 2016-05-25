@@ -29,6 +29,7 @@ from lingttest.access import tables_test
 from lingttest.access import textchanges_test
 from lingttest.access import uservars_test
 from lingttest.access import xml_readers_test
+from lingttest.app import fileitemlist_test
 from lingttest.app import spellingchecks_test
 from lingttest.app import visual_test_grammar
 from lingttest.app import visual_test_phonology
@@ -55,6 +56,7 @@ def get_master_suite():
             uservars_test,
             xml_readers_test,
 
+            fileitemlist_test,
             spellingchecks_test,
             #convpool_test,
 
@@ -150,6 +152,9 @@ def run_uservars_test():
 def run_xml_readers_test():
     run_module_suite(xml_readers_test)
 
+def run_fileitemlist_test():
+    run_module_suite(fileitemlist_test)
+
 def run_spellingchecks_test():
     run_module_suite(spellingchecks_test)
 
@@ -196,6 +201,7 @@ g_exportedScripts = (
     run_textchanges_test,
     run_uservars_test,
     run_xml_readers_test,
+    run_fileitemlist_test,
     run_spellingchecks_test,
     run_visual_test_grammar,
     run_visual_test_phonology,
