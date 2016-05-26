@@ -131,10 +131,12 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
         self.btnScan.addActionListener(self)
 
     def handle_action_event(self, dummy_action_command):
-        self.step1Form.scanFiles()
+        try:
+            self.step1Form.scanFiles()
+        except exceptions.MessageError:
+            return
         self.stepper.goto_step2()
-        self.step2Form.updateFontsList()
-        self.step2Form.fill_for_selected_font()
+        self.step2Form.refresh_and_fill_list()
 
 
 class ClosingButtons(evt_handler.ActionEventHandler):

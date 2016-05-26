@@ -32,9 +32,10 @@ class FormStep1:
         self.ctrl_getter = ctrl_getter
         self.app = app
 
-        self.filesList = FilesList(ctrl_getter, app)
-        self.filesListButtons = FilesListButtons(ctrl_getter, app)
         self.outputTo = OutputTo(ctrl_getter, app)
+        self.filesList = FilesList(ctrl_getter, app, self.outputTo)
+        self.filesListButtons = FilesListButtons(
+            ctrl_getter, app, self.filesList)
 
         self.event_handlers = [self.filesListButtons, self.outputTo]
         self.data_controls = [self.filesList, self.outputTo]
@@ -56,7 +57,7 @@ class FormStep1:
             self.app.scanFiles(self.filesList.fileItems, self.outputTo.outdir)
         except exceptions.MessageError as exc:
             self.app.msgbox.displayExc(exc)
-            return
+            raise exc
         self.load_changes()
         logger.debug(util.funcName('end'))
 
@@ -84,9 +85,10 @@ class FormStep1:
 
 
 class FilesListButtons(evt_handler.ActionEventHandler):
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, filesList):
         self.ctrl_getter = ctrl_getter
         self.app = app
+        self.filesList = filesList
 
     def add_listeners(self):
         btnAddCurrent = self.ctrl_getter.get(_dlgdef.BTN_ADD_CURRENT_DOC)
@@ -110,8 +112,7 @@ class FilesListButtons(evt_handler.ActionEventHandler):
         logger.debug(util.funcName())
         filepath = filepicker.showFilePicker(self.app.unoObjs)
         if filepath:
-            filesList = FilesList(self.ctrl_getter, self.app)
-            filesList.addFile(filepath)
+            self.filesList.addFile(filepath)
 
     def addCurrentDoc(self):
         logger.debug(util.funcName())
@@ -120,19 +121,18 @@ class FilesListButtons(evt_handler.ActionEventHandler):
             self.app.msgbox.display("Please save the current document first.")
             return
         syspath = uno.fileUrlToSystemPath(url)
-        filesList = FilesList(self.ctrl_getter, self.app)
-        filesList.addFile(syspath)
+        self.filesList.addFile(syspath)
 
     def removeFile(self):
-        filesList = FilesList(self.ctrl_getter, self.app)
-        filesList.removeFile()
+        self.filesList.removeFile()
 
 
 class FilesList(evt_handler.DataControls):
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, outputTo):
         evt_handler.DataControls.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
+        self.outputTo = outputTo
         self.listboxFiles = ctrl_getter.get(_dlgdef.LIST_FILES)
         self.fileItems = FileItemList(BulkFileItem, self.app.userVars)
 
@@ -159,9 +159,8 @@ class FilesList(evt_handler.DataControls):
             listCtrl=self.listboxFiles,
             values=self.fileItems.getItemTextList(),
             selectedValue=str(newItem))
-        outputTo = OutputTo(self.ctrl_getter, self.app)
-        if not outputTo.read():
-            outputTo.fill(os.path.dirname(filepath))
+        if not self.outputTo.read():
+            self.outputTo.fill(os.path.dirname(filepath))
 
     def removeFile(self):
         logger.debug(util.funcName('begin'))
@@ -214,8 +213,9 @@ class OutputTo(evt_handler.ActionEventHandler):
         self.app.userVars.store('OutputFolder', self.read())
 
     def fill(self, new_val, *dummy_args):
-        self.txtOutputTo.setText(new_val)
+        self.outdir = new_val
+        self.txtOutputTo.setText(self.outdir)
 
     def read(self):
-        return self.txtOutputTo.getText().strip()
-
+        self.outdir = self.txtOutputTo.getText().strip()
+        return self.outdir

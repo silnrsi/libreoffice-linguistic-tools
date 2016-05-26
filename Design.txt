@@ -8,17 +8,10 @@
 
 ## Next
 
-Fix 25-May-16 bug below.
 Fix 07-Mar-16 bug below.
 
 Test ungrouped FontItemList.
 Write grouping code.
-
-
-## bug 25-May-16
-
-Bulk conv step 1 did not save and load the file list correctly,
-although it did save and load the outputTo.
 
 
 ## bug 07-Mar-16

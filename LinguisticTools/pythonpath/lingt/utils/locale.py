@@ -375,6 +375,12 @@ class Locale:
             'fr' :
             u"(aucun mot trouvé)",
         },
+        u"(No data)" : {
+            'es' :
+            u"(No hay datos)",
+            'fr' :
+            u"(Aucune donnée)",
+        },
         u"Whole Document" : {
             'es' :
             u"Documento completo",

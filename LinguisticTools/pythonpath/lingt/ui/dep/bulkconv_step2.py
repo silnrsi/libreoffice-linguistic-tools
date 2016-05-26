@@ -108,6 +108,10 @@ class FormStep2:
         for fontitem_controls in self.data_controls:
             fontitem_controls.copy_change(change_from, change_to)
 
+    def refresh_and_fill_list(self):
+        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
+        listFontsUsed.refresh_and_fill()
+
     def fill_for_item(self, fontItem):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
@@ -171,7 +175,7 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
         if self.copiedSettings is None:
             self.app.msgbox.display("First copy font settings.")
             return
-        if self.app.selected_index == -1:
+        if not self.app.selected_item():
             return
         form2 = FormStep2(self.ctrl_getter, self.app)
         for item in self.app.fontItemList.matching_items():
@@ -196,15 +200,15 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         self.updateFontsList()
 
     def grab_selected_item(self):
-        """Sets self.app.selected_index.
+        """Sets the app's selected_index.
         :returns: selected found font item
         """
         try:
-            self.app.selected_index = dutil.get_selected_index(
-                self.listFontsUsed, "a file")
+            self._set_app_index(
+                dutil.get_selected_index(self.listFontsUsed, "a file"))
         except exceptions.ChoiceProblem as exc:
             self.app.msgbox.displayExc(exc)
-            self.app.selected_index = -1
+            self._set_app_index(-1)
             return None
         return self.app.selected_item()
 
@@ -217,16 +221,26 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         dutil.fill_list_ctrl(
             self.listFontsUsed,
             [str(fontItem) for fontItem in self.app.fontItemList])
-        if self.app.selected_index >= 0:
+        if self.app.fontItemList.items:
+            if self._get_app_index() == -1:
+                self._set_app_index(0)
             dutil.select_index(
-                self.listFontsUsed, self.app.selected_index)
+                self.listFontsUsed, self._get_app_index())
 
     def fill_for_selected_item(self):
+        logger.debug(util.funcName('begin'))
         fontItem = self.app.selected_item()
         if not fontItem:
+            logger.debug("No fontItem selected.")
             return
         form2 = FormStep2(self.ctrl_getter, self.app)
         form2.fill_for_item(fontItem)
+
+    def _set_app_index(self, index):
+        self.app.fontItemList.selected_index = index
+
+    def _get_app_index(self):
+        return self.app.fontItemList.selected_index
 
 
 class FontChangeControlHandler:
@@ -284,6 +298,7 @@ class FontChangeControlHandler:
 class ConverterControls(FontChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        evt_handler.EventHandler.__init__(self)
         self.convName = ConvName(ctrl_getter, app)
         self.chkReverse = CheckboxReverse(ctrl_getter, app)
 
@@ -373,6 +388,7 @@ class CheckboxReverse(FontChangeControlHandler,
 class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
+        evt_handler.EventHandler.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
         self.samples = Samples(self.app.convPool)
@@ -393,6 +409,9 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
     def fill_for_selected_font(self):
         self.nextInputControls.fill_for_selected_font()
 
+    def fill(self, fontItem, *dummy_args):
+        self.nextInputControls.fill(fontItem)
+
     def change_font(self, fontItem):
         self.sampleLabels.change_font(fontItem)
 
@@ -410,9 +429,9 @@ class SampleLabels(FontChangeControlHandler):
         self.lblSampleNum = ctrl_getter.get(_dlgdef.SAMPLE_NUM)
 
     def load_values(self):
-        self.lblInput.setText("(None)")
+        self.lblInput.setText(Samples.NO_DATA)
         self.lblSampleNum.setText("0 / 0")
-        self.lblConverted.setText("(None)")
+        self.lblConverted.setText(Samples.NO_DATA)
 
     def fill_for_data(self, samples):
         inputSampleText = samples.inputData[samples.sampleIndex]
@@ -424,9 +443,9 @@ class SampleLabels(FontChangeControlHandler):
         self.lblConverted.setText(samples.converted_data)
 
     def fill_for_no_data(self):
-        self.lblInput.setText("(None)")
+        self.lblInput.setText(Samples.NO_DATA)
         self.lblSampleNum.setText("0 / 0")
-        self.lblConverted.setText("(None)")
+        self.lblConverted.setText(Samples.NO_DATA)
 
     def change_font(self, fontItem):
         """See also lingt.access.writer.textchanges.changeFont()."""

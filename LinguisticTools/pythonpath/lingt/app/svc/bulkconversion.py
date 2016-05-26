@@ -26,6 +26,7 @@ from lingt.app.data.bulkconv_structs import FontChange
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
+from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.app.dataconversion")
 
@@ -226,13 +227,15 @@ class FontItemList:
 class Samples:
     """Display samples of input data."""
 
+    NO_DATA = theLocale.getText("(No data)")
+
     def __init__(self, convPool):
         self.convPool = convPool
         self.inputData = []  # from currently selected FontItem
         self.sampleIndex = -1  # index of self.inputData
         self.last_settings = {}  # keys conv name, values ConverterSettings
         self.conv_settings = None
-        self.converted_data = None
+        self.converted_data = Samples.NO_DATA
 
     def set_fontItem(self, fontItem):
         """Use values from a FontItem."""
@@ -256,7 +259,7 @@ class Samples:
 
     def get_converted(self):
         """Convert input sample.  Return converted string."""
-        self.converted_data = "(None)"
+        self.converted_data = Samples.NO_DATA
         if not self.conv_settings or not self.conv_settings.convName:
             return self.converted_data
         convName = self.conv_settings.convName
