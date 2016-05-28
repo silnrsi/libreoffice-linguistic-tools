@@ -11,6 +11,7 @@
 # 26-Apr-16 JDK  Implement separate style classes for combos and radios.
 # 29-Apr-16 JDK  Add methods for filling to each control class.
 # 16-May-16 JDK  Separate class for sample labels because ctrl props change.
+# 28-May-16 JDK  Added Step2Master.
 
 """
 Bulk Conversion dialog step 2.
@@ -42,34 +43,20 @@ class FormStep2:
     def __init__(self, ctrl_getter, app):
         self.ctrl_getter = ctrl_getter
         self.app = app
-        self.event_handlers = []  # controls that handle events
-        self.data_controls = []  # controls that store FontItem data
-        for ctrl_class in (
-                ConverterControls,
-                FontNameHandler,
-                FontTypeHandler,
-                FontSizeHandler,
-                StyleTypeHandler,
-                StyleNameHandler,
-            ):
-            controls_object = ctrl_class(ctrl_getter, app)  # create new
-            self.data_controls.append(controls_object)
-            self.event_handlers.append(controls_object)
-        for ctrl_class in (
-                ListFontsUsed,
-                SampleControls,
-                ClipboardButtons,
-                JoinCheckboxes,
-                VerifyHandler,
-            ):
-            controls_object = ctrl_class(ctrl_getter, app)  # create new
-            self.event_handlers.append(controls_object)
-        self.found_font_info = FoundFontInfo(ctrl_getter, app)
+        self.step2Master = Step2Master(ctrl_getter, app)
+        self.event_handlers = []
+        self.event_handlers.extend(self.step2Master.get_event_handlers())
+        self.event_handlers.extend([
+            ClipboardButtons(ctrl_getter, app, self.step2Master),
+            JoinCheckboxes(ctrl_getter, app, self.step2Master),
+            VerifyHandler(ctrl_getter, app)
+            ])
 
     def start_working(self):
         for event_handler in self.event_handlers:
             event_handler.start_working()
-        self.found_font_info.load_values()
+        found_font_info = FoundFontInfo(self.ctrl_getter, self.app)
+        found_font_info.load_values()
 
     def store_results(self):
         """Store settings in user vars."""
@@ -90,11 +77,39 @@ class FormStep2:
             if not foundSomething:
                 break
 
-        sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.store_results()
+        checkboxShowConverter = CheckboxShowConverter(
+            self.ctrl_getter, self.app)
+        checkboxShowConverter.store_results()
         verifyHandler = VerifyHandler(self.ctrl_getter, self.app)
         verifyHandler.store_results()
         logger.debug(util.funcName('end'))
+
+    def refresh_and_fill_list(self):
+        self.step2Master.refresh_and_fill_list()
+
+
+class Step2Master:
+    """Controls that need to be called by events.  The controls objects are
+    maintained across events.
+    """
+    def __init__(self, ctrl_getter, app):
+        self.ctrl_getter = ctrl_getter
+        self.app = app
+        self.listFontsUsed = ListFontsUsed(ctrl_getter, app, self)
+        self.data_controls = []  # controls that store FontItem data
+        for ctrl_class in (
+                ConverterControls,
+                FontNameHandler,
+                FontTypeHandler,
+                FontSizeHandler,
+                StyleTypeHandler,
+                StyleNameHandler,
+            ):
+            controls_object = ctrl_class(ctrl_getter, app)  # create new
+            self.data_controls.append(controls_object)
+
+    def get_event_handlers(self):
+        return [self.listFontsUsed] + self.data_controls
 
     def read_change(self):
         """Reads the form and returns a FontChange object."""
@@ -109,21 +124,14 @@ class FormStep2:
             fontitem_controls.copy_change(change_from, change_to)
 
     def refresh_and_fill_list(self):
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.refresh_and_fill()
+        self.listFontsUsed.refresh_and_fill()
 
     def fill_for_item(self, fontItem):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
-        for fontitem_controls in self.data_controls:
+        foundFontInfo = FoundFontInfo(self.ctrl_getter, self.app)
+        for fontitem_controls in self.data_controls + [foundFontInfo]:
             fontitem_controls.fill_for_item(fontItem)
-        for fontitem_controls_class in (
-                SampleControls,
-                FoundFontInfo,
-            ):
-            fontitem_controls = fontitem_controls_class(
-                self.ctrl_getter, self.app)
-            fontitem_controls.fill(fontItem)
         logger.debug(util.funcName('end'))
 
 
@@ -131,10 +139,11 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
     """This does not actually use the system clipboard, but it implements
     copy/paste functionality.
     """
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, step2Master):
         evt_handler.ActionEventHandler.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
+        self.step2Master = step2Master
         self.btnReset = ctrl_getter.get(_dlgdef.BTN_RESET)
         self.btnCopy = ctrl_getter.get(_dlgdef.BTN_COPY)
         self.btnPaste = ctrl_getter.get(_dlgdef.BTN_PASTE)
@@ -162,13 +171,11 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
             return
         for item in self.app.fontItemList.matching_items():
             item.change = None
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.refresh_and_fill()
+        self.step2Master.refresh_and_fill_list()
 
     def copyFont(self):
         logger.debug(util.funcName())
-        form2 = FormStep2(self.ctrl_getter, self.app)
-        self.copiedSettings = form2.read_change()
+        self.copiedSettings = self.step2Master.read_change()
 
     def pasteFont(self):
         logger.debug(util.funcName())
@@ -177,26 +184,26 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
             return
         if not self.app.selected_item():
             return
-        form2 = FormStep2(self.ctrl_getter, self.app)
         for item in self.app.fontItemList.matching_items():
             item.create_change()
-            form2.copy_change_attrs(self.copiedSettings, item.change)
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.refresh_and_fill()
+            self.step2Master.copy_change_attrs(
+                self.copiedSettings, item.change)
+        self.step2Master.refresh_and_fill_list()
 
 
 class ListFontsUsed(evt_handler.ItemEventHandler):
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, step2Master):
         evt_handler.ItemEventHandler.__init__(self)
-        self.listFontsUsed = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
         self.ctrl_getter = ctrl_getter
         self.app = app
+        self.step2Master = step2Master
+        self.list_ctrl = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
 
     def add_listeners(self):
-        self.listFontsUsed.addItemListener(self)
+        self.list_ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
-        self.fill_for_selected_item()
+        self.fill_form_for_selected_item()
         self.updateFontsList()
 
     def grab_selected_item(self):
@@ -205,7 +212,7 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         """
         try:
             self._set_app_index(
-                dutil.get_selected_index(self.listFontsUsed, "a file"))
+                dutil.get_selected_index(self.list_ctrl, "a file"))
         except exceptions.ChoiceProblem as exc:
             self.app.msgbox.displayExc(exc)
             self._set_app_index(-1)
@@ -214,27 +221,28 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
 
     def refresh_and_fill(self):
         self.updateFontsList()
-        self.fill_for_selected_item()
+        self.fill_form_for_selected_item()
 
     def updateFontsList(self):
         """Redraw the list and select the same item."""
         dutil.fill_list_ctrl(
-            self.listFontsUsed,
+            self.list_ctrl,
             [str(fontItem) for fontItem in self.app.fontItemList])
         if self.app.fontItemList.items:
             if self._get_app_index() == -1:
                 self._set_app_index(0)
             dutil.select_index(
-                self.listFontsUsed, self._get_app_index())
+                self.list_ctrl, self._get_app_index())
 
-    def fill_for_selected_item(self):
+    def fill_form_for_selected_item(self):
+        """Fills step 2 form data controls based on the item selected in the
+        list."""
         logger.debug(util.funcName('begin'))
         fontItem = self.app.selected_item()
         if not fontItem:
             logger.debug("No fontItem selected.")
             return
-        form2 = FormStep2(self.ctrl_getter, self.app)
-        form2.fill_for_item(fontItem)
+        self.step2Master.fill_for_item(fontItem)
 
     def _set_app_index(self, index):
         self.app.fontItemList.selected_index = index
@@ -299,18 +307,28 @@ class ConverterControls(FontChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.EventHandler.__init__(self)
-        self.convName = ConvName(ctrl_getter, app)
-        self.chkReverse = CheckboxReverse(ctrl_getter, app)
+        self.sampleControls = SampleControls(self.ctrl_getter, self.app)
+        self.convName = ConvName(
+            ctrl_getter, app, self.sampleControls)
+        self.chkReverse = CheckboxReverse(
+            ctrl_getter, app, self.sampleControls)
+        self.controls_objects = (
+            self.convName, self.chkReverse, self.sampleControls)
 
     def start_working(self):
-        self.convName.start_working()
-        self.chkReverse.start_working()
+        for controls_object in self.controls_objects:
+            controls_object.start_working()
+
+    def fill_for_item(self, fontItem):
+        for controls_object in self.controls_objects:
+            controls_object.fill_for_item(fontItem)
 
 
 class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, sample_controls):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.ActionEventHandler.__init__(self)
+        self.sample_controls = sample_controls
         self.btnSelectConv = ctrl_getter.get(_dlgdef.BTN_CHOOSE_CONV)
         self.txtConvName = ctrl_getter.get(_dlgdef.TXT_CONV_NAME)
 
@@ -321,8 +339,7 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
     def handle_action_event(self, action_command):
         self.selectConverter()
         FontChangeControlHandler.handle_action_event(self, action_command)
-        sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.fill_for_selected_font()
+        self.sample_controls.fill_for_selected_font()
 
     def selectConverter(self):
         logger.debug(util.funcName('begin'))
@@ -335,7 +352,8 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
         newChange = self.app.convPool.selectConverter(conv_settings)
         fontItem.change = newChange
         self.app.convPool.cleanup_unused()
-        checkboxReverse = CheckboxReverse(self.ctrl_getter, self.app)
+        checkboxReverse = CheckboxReverse(
+            self.ctrl_getter, self.app, self.sample_controls)
         self.fill_for_item(fontItem)
         checkboxReverse.fill_for_item(fontItem)
         logger.debug(util.funcName('end'))
@@ -357,9 +375,10 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
 
 class CheckboxReverse(FontChangeControlHandler,
                       evt_handler.ItemEventHandler):
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, sample_controls):
         FontChangeControlHandler.__init__(self, ctrl_getter, app)
         evt_handler.ItemEventHandler.__init__(self)
+        self.sample_controls = sample_controls
         self.chkReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
 
     def add_listeners(self):
@@ -367,8 +386,7 @@ class CheckboxReverse(FontChangeControlHandler,
 
     def handle_item_event(self, src):
         FontChangeControlHandler.handle_item_event(self, src)
-        sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.fill_for_selected_font()
+        self.sample_controls.fill_for_selected_font()
 
     def update_change(self, fontChange):
         converter = fontChange.converter
@@ -545,10 +563,11 @@ class CheckboxShowConverter(FontChangeControlHandler,
 class JoinCheckboxes(evt_handler.ItemEventHandler):
     """Checkboxes that join or split the list."""
 
-    def __init__(self, ctrl_getter, app):
+    def __init__(self, ctrl_getter, app, step2Master):
         evt_handler.ItemEventHandler.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
+        self.step2Master = step2Master
         self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
         self.chkJoinSize = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
         self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
@@ -574,8 +593,7 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
             self.chkJoinSize.getState())
         self.app.fontItemList.groupStyles = bool(
             self.chkJoinStyles.getState())
-        listFontsUsed = ListFontsUsed(self.ctrl_getter, self.app)
-        listFontsUsed.refresh_and_fill()
+        self.step2Master.refresh_and_fill_list()
 
 
 class FoundFontInfo:
@@ -586,9 +604,9 @@ class FoundFontInfo:
         self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
 
     def load_values(self):
-        self.fill(FontItem())
+        self.fill_for_item(FontItem())
 
-    def fill(self, fontItem, *dummy_args):
+    def fill_for_item(self, fontItem):
         foundFontNames = ""
         for title, fontName in (
                 ("Standard", fontItem.nameStandard),
