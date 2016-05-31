@@ -8,8 +8,9 @@
 
 ## Next
 
-Fix 07-Mar-16 bug below.
+Pylint and test changes to filling method names.
 
+Fix 07-Mar-16 bug below.
 Test ungrouped FontItemList.
 Write grouping code.
 

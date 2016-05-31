@@ -128,6 +128,7 @@ class ItemEventHandler(XItemListener, EventHandler):
         if EventHandler.handling_event:
             logger.debug("An event is already being handled.")
             return
+        EventHandler.handling_event = True
         try:
             self.last_source = event.Source
             self.handle_item_event(event.Source)
@@ -136,6 +137,8 @@ class ItemEventHandler(XItemListener, EventHandler):
             # Re-raising is proper coding practice, although it will
             # probably have no effect, at least during runtime.
             raise
+        finally:
+            EventHandler.handling_event = False
 
     def handle_item_event(self, src):
         pass
@@ -152,6 +155,7 @@ class TextEventHandler(XTextListener, EventHandler):
         if EventHandler.handling_event:
             logger.debug("An event is already being handled.")
             return
+        EventHandler.handling_event = True
         try:
             self.last_source = event.Source
             self.handle_text_event(event.Source)
@@ -160,6 +164,8 @@ class TextEventHandler(XTextListener, EventHandler):
             # Re-raising is proper coding practice, although it will
             # probably have no effect, at least during runtime.
             raise
+        finally:
+            EventHandler.handling_event = False
 
     def handle_text_event(self, src):
         pass

@@ -49,18 +49,17 @@
 
 package org.openoffice.sdk.example.text;
 
+import com.sun.star.beans.XPropertySet;
+import com.sun.star.container.XContentEnumerationAccess;
+import com.sun.star.container.XEnumeration;
 import com.sun.star.container.XNameAccess;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
 import com.sun.star.text.XText;
 import com.sun.star.text.XTextRange;
-import com.sun.star.xforms.XFormsSupplier;
-import com.sun.star.xforms.XForms;
-import com.sun.star.container.XNameContainer;
-import com.sun.star.table.XCellRange;
-import com.sun.star.table.XColumnRowRange;
-import com.sun.star.table.XTableRows;
-import com.sun.star.text.XTextTable;
+import com.sun.star.lang.XServiceInfo;
+import com.sun.star.text.XBookmarksSupplier;
+import com.sun.star.text.XTextContent;
 import com.sun.star.text.XTextTablesSupplier;
 //import com.sun.star.container.XNamed;
 
@@ -75,11 +74,12 @@ public class BookmarkInsertion {
        
         // create text document
         XTextDocument xTextDocument = null;
+        com.sun.star.lang.XComponent xComponent = null;
         //xTextDocument = createTextdocument(xDesktop);
         
           try {
         // open current document
-        com.sun.star.lang.XComponent xComponent = xDesktop.getCurrentComponent();
+        xComponent = xDesktop.getCurrentComponent();
         xTextDocument =(XTextDocument)UnoRuntime.queryInterface(XTextDocument.class, xComponent);
                 /*
                     com.sun.star.frame.XComponentLoader xCompLoader =
@@ -103,11 +103,48 @@ public class BookmarkInsertion {
             e.printStackTrace(System.err);
             System.exit(1);
         }
+
+		try {
+			XBookmarksSupplier xBookmarksSupplier =
+				(XBookmarksSupplier)UnoRuntime.queryInterface(
+				XBookmarksSupplier.class, xComponent);
+				XNameAccess xNamedBookmarks = xBookmarksSupplier.getBookmarks();
+			Object bookmark = xNamedBookmarks.getByName("TextAndTable");
+			XTextContent xBookmarkContent = (XTextContent)UnoRuntime.queryInterface(
+				XTextContent.class, bookmark);
+			XTextRange xTextRange = xBookmarkContent.getAnchor();
+            //XTextCursor xTextCursor = (XTextCursor)
+            //    xTextDocument.getText().createTextCursorByRange(xTextRange);
+            //TextRange textRange = (TextRange)UnoRuntime.queryInterface(
+            //    TextRange.class, xTextRange);
+            XContentEnumerationAccess xContentEnum = (XContentEnumerationAccess)
+                UnoRuntime.queryInterface(
+                XContentEnumerationAccess.class, xTextRange);
+            XEnumeration xTextTableEnum = (XEnumeration)
+               xContentEnum.createContentEnumeration(
+               "com::sun::star::text::TextTable");
+            //XContentEnumerationAccess xTextTableEnum = (XContentEnumerationAccess)
+            //   xTextCursor.createContentEnumeration(
+            //   "com::sun::star::text::TextTable");
+            while (xTextTableEnum.hasMoreElements()) {
+                XServiceInfo xInfo = (XServiceInfo) UnoRuntime.queryInterface(
+                    XServiceInfo.class, xTextTableEnum.nextElement());
+                if (xInfo.supportsService("com.sun.star.text.TextTable")) {
+                    XPropertySet xSet = (XPropertySet) UnoRuntime.queryInterface(
+                    XPropertySet.class, xInfo);
+                    System.out.println(xSet.getPropertyValue("Name"));
+                }
+			}
+        } catch( Exception e) {
+            e.printStackTrace(System.err);
+            System.exit(1);
+        }
+
         try
         {
         XText xText = (XText)xTextDocument.getText();
         XTextRange xTextRange = xText.getEnd();
-        xTextRange.setString( "(JavaBegin)" );
+        xTextRange.setString( "(JavaBegin1)" );
 /*
         XFormsSupplier xFormsSupplier = UnoRuntime.queryInterface(XFormsSupplier.class, xComponent);
         //XNameContainer xforms = xFormsSupplier.getXForms();
@@ -123,7 +160,6 @@ public class BookmarkInsertion {
             e.printStackTrace(System.err);
             System.exit(1);
         }
-        /*
         // put example text in document
         createExampleData(xTextDocument);
         
@@ -137,7 +173,6 @@ public class BookmarkInsertion {
         
         markList(xTextDocument, mOffending, sOffendPrefix);
         markList(xTextDocument, mBad, sBadPrefix);
-        */
         String tblName = "Table1";
         boolean flag = true;
         int size = 5;
@@ -146,6 +181,28 @@ public class BookmarkInsertion {
 
     XNameAccess xNamedTables = xTablesSupplier.getTextTables();
     try {
+		/*
+		//XPropertySet propSet = UnoRuntime.queryInterface(XPropertySet.class, xTextDocument);
+		//propSet.setPropertyValue("HeaderIsOn", Boolean.FALSE);
+		//propSet.setPropertyValue("FooterIsOn", Boolean.FALSE);
+         XStyleFamiliesSupplier xSupplier = (XStyleFamiliesSupplier)UnoRuntime.queryInterface(
+             XStyleFamiliesSupplier.class, xTextDocument);
+         XNameAccess xFamilies = (XNameAccess) UnoRuntime.queryInterface ( 
+             XNameAccess.class, xSupplier.getStyleFamilies());
+         XNameContainer xFamily = (XNameContainer) UnoRuntime.queryInterface( 
+             XNameContainer.class, xFamilies.getByName("PageStyles"));
+		//XStyle xStyle = (XStyle)xFamily.getByName("Default");
+		//XStyle xStyle = (XStyle)xFamily.getByName("Default Style");
+		XStyle xStyle = (XStyle) UnoRuntime.queryInterface(XStyle.class, xFamily.getByName("Default Style"));
+		XPropertySet xStyleProps = (XPropertySet) UnoRuntime.queryInterface(
+        	XPropertySet.class, xStyle);
+        xStyleProps.setPropertyValue ("HeaderIsOn", Boolean.FALSE);
+        xStyleProps.setPropertyValue ("FooterIsOn", Boolean.FALSE);
+        //xStyleProps.setPropertyValue ("HeaderIsOn", Boolean.TRUE);
+        //xStyleProps.setPropertyValue ("FooterIsOn", Boolean.TRUE);
+		*/
+
+		/*
         Object table = xNamedTables.getByName(tblName);
         //XTextTable xTable = (XTextTable) UnoRuntime.queryInterface(XTextTable.class, table);
         //XCellRange xCellRange = (XCellRange) UnoRuntime.queryInterface(XCellRange.class, table);
@@ -155,12 +212,13 @@ public class BookmarkInsertion {
                 //        UnoRuntime.queryInterface(XColumnRowRange.class, xCellRange);
                                 UnoRuntime.queryInterface(XColumnRowRange.class, table);
                 XTableRows rows = xCollumnAndRowRange.getRows();
-                //        */
+                // 
                 //XTableRows rows = xTable.getRows();
 
                 System.out.println("Testing if this works");
                 rows.insertByIndex(4, size-4);
             }
+		*/
         } catch( Exception e) {
             e.printStackTrace(System.err);
             System.exit(1);
