@@ -213,3 +213,4 @@ ModelManifest.xml
 
 # Python compiled files
 *.pyc
+/dev/extensions/java/BookmarkInsertion/API/Samples/Java/Text/BookmarkInsertion/build/

@@ -261,6 +261,7 @@ class Samples:
         """Convert input sample.  Return converted string."""
         self.converted_data = Samples.NO_DATA
         if not self.conv_settings or not self.conv_settings.convName:
+            logger.debug("No converter.")
             return self.converted_data
         convName = self.conv_settings.convName
         logger.debug("Using converter %r", self.conv_settings)
@@ -272,6 +273,7 @@ class Samples:
                 self.last_settings[convName] = sec_call.config
         self.converted_data = sec_call.convert(
             self.inputData[self.sampleIndex])
+        logger.debug("Got converted data.")
         return self.converted_data
 
 

@@ -543,8 +543,8 @@ class Locale:
             'fr' :
             u"EncConverters semble être mal installé",
         },
-        u"Error parsing %s user variable.  Please go to Insert -> Fields and "
-        u"fix the problem." : {
+        u"Error parsing %s user variable.  Please go to \"Insert -> Field -> "
+        u"More Fields\" and fix the problem." : {
             'es' :
             u"Error al analizar %s variable de usuario.  Por favor, vaya a "
             u"Insertar -> Campos y solucionar el problema.",

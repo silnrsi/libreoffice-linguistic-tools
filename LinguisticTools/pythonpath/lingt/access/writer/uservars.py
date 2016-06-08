@@ -27,7 +27,7 @@ Note that this cannot be done in the same way in Calc.
 So for Calc we open a minimized Writer document to store settings.
 
 User variables can be edited manually from within Writer by
-going to Insert -> Fields -> More Fields,
+going to Insert -> Field -> More Fields,
 then choosing User Field under the Variables tab.
 """
 import logging
@@ -57,7 +57,7 @@ class Prefix:
 
 class UserVars:
     """Access to the user variables of the Writer document.
-    These can be viewed using Insert -> Fields -> Other.
+    These can be viewed using Insert -> Field -> More Fields.
     """
     def __init__(self, VAR_PREFIX, writer_document, otherLogger):
         """
@@ -321,8 +321,8 @@ class Syncable:
     @staticmethod
     def noUserVarData(varName):
         return exceptions.DataNotFoundError(
-            u"Error parsing %s user variable.  Please go to Insert -> "
-            u"Fields and fix the problem.", varName)
+            u"Error parsing %s user variable.  Please go to \"Insert -> "
+            u"Field -> More Fields\" and fix the problem.", varName)
 
 
 class FieldTags:

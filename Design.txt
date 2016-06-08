@@ -8,7 +8,7 @@
 
 ## Next
 
-Pylint and test changes to filling method names.
+textStateChanged() is not getting called when the font size changes.
 
 Fix 07-Mar-16 bug below.
 Test ungrouped FontItemList.

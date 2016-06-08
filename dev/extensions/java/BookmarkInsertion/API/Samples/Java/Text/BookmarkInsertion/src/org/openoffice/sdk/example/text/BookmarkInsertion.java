@@ -49,23 +49,26 @@
 
 package org.openoffice.sdk.example.text;
 
-import com.sun.star.beans.XPropertySet;
-import com.sun.star.container.XContentEnumerationAccess;
-import com.sun.star.container.XEnumeration;
+import com.sun.star.beans.PropertyValue;
 import com.sun.star.container.XNameAccess;
+import com.sun.star.frame.XDesktop;
+import com.sun.star.frame.XDispatchHelper;
+import com.sun.star.frame.XDispatchProvider;
+import com.sun.star.lang.XMultiComponentFactory;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
-import com.sun.star.text.XText;
-import com.sun.star.text.XTextRange;
-import com.sun.star.lang.XServiceInfo;
-import com.sun.star.text.XBookmarksSupplier;
-import com.sun.star.text.XTextContent;
-import com.sun.star.text.XTextTablesSupplier;
+import com.sun.star.view.XPrintJobBroadcaster;
+import com.sun.star.view.XPrintJobListener;
+//import javax.print.event.PrintJobEvent;
+import com.sun.star.view.PrintJobEvent;
 //import com.sun.star.container.XNamed;
 
 public class BookmarkInsertion {
-    
+
+	static XDispatchHelper dispatcher = null;
+
     public static void main(String args[]) {
+		System.out.println("main() BEGIN");
         // You need the desktop to create a document
         // The getDesktop method does the UNO bootstrapping, gets the
         // remote servie manager and the desktop object.
@@ -104,6 +107,29 @@ public class BookmarkInsertion {
             System.exit(1);
         }
 
+
+	  	PropertyValue[] printProperties = new PropertyValue[1];
+		printProperties[0] = new PropertyValue();
+		printProperties[0].Name = "Print";
+		printProperties[0].Value = new Boolean(true);
+
+		XDispatchProvider xDispatchProvider = (XDispatchProvider)
+			UnoRuntime.queryInterface (XDispatchProvider.class, xDesktop);
+
+	XPrintJobBroadcaster xPrintJobBroadcaster = (XPrintJobBroadcaster)
+		UnoRuntime.queryInterface(XPrintJobBroadcaster.class, xComponent);  
+	xPrintJobBroadcaster.addPrintJobListener(new MyPrintJobListener());
+
+	com.sun.star.view.XPrintable xPrintable =
+		(com.sun.star.view.XPrintable)UnoRuntime.queryInterface(
+			com.sun.star.view.XPrintable.class, xComponent);
+	xPrintable.print(printProperties);
+
+		//dispatcher.executeDispatch(
+		//	xDispatchProvider, ".uno:Print","_self", 0, printProperties);
+
+		//try { Thread.sleep(10000); } catch (Exception e) {}
+		  /*
 		try {
 			XBookmarksSupplier xBookmarksSupplier =
 				(XBookmarksSupplier)UnoRuntime.queryInterface(
@@ -145,7 +171,6 @@ public class BookmarkInsertion {
         XText xText = (XText)xTextDocument.getText();
         XTextRange xTextRange = xText.getEnd();
         xTextRange.setString( "(JavaBegin1)" );
-/*
         XFormsSupplier xFormsSupplier = UnoRuntime.queryInterface(XFormsSupplier.class, xComponent);
         //XNameContainer xforms = xFormsSupplier.getXForms();
         XNameContainer xforms = xFormsSupplier.getXForms();
@@ -155,7 +180,6 @@ public class BookmarkInsertion {
         
         Object aForm = xforms.getByName(formName);
         XForms xform = (XForms) UnoRuntime.queryInterface(XForms.class, aForm);
-        */
         } catch( Exception e) {
             e.printStackTrace(System.err);
             System.exit(1);
@@ -178,8 +202,9 @@ public class BookmarkInsertion {
         int size = 5;
         XTextTablesSupplier xTablesSupplier = (XTextTablesSupplier)
                 UnoRuntime.queryInterface(XTextTablesSupplier.class, xTextDocument);
+        */
 
-    XNameAccess xNamedTables = xTablesSupplier.getTextTables();
+    //XNameAccess xNamedTables = xTablesSupplier.getTextTables();
     try {
 		/*
 		//XPropertySet propSet = UnoRuntime.queryInterface(XPropertySet.class, xTextDocument);
@@ -223,7 +248,7 @@ public class BookmarkInsertion {
             e.printStackTrace(System.err);
             System.exit(1);
         }
-        System.out.println("Done");
+		System.out.println("main() END");
         
         System.exit(0);        
     }
@@ -374,6 +399,13 @@ public class BookmarkInsertion {
                     "com.sun.star.frame.Desktop", xContext);
                 xDesktop = (com.sun.star.frame.XDesktop) UnoRuntime.queryInterface(
                     com.sun.star.frame.XDesktop.class, oDesktop);
+
+				XDesktop xd = (XDesktop)UnoRuntime.queryInterface(
+					XDesktop.class, oDesktop);
+				final Object helper = xMCF.createInstanceWithContext(
+					"com.sun.star.frame.DispatchHelper", xContext);
+				dispatcher = (XDispatchHelper)UnoRuntime.queryInterface(
+					XDispatchHelper.class, helper);
             }
             else
                 System.out.println( "Can't create a desktop. No connection, no remote office servicemanager available!" );
@@ -435,3 +467,13 @@ public class BookmarkInsertion {
         return xComponent ;
     }
 }
+
+	class MyPrintJobListener implements XPrintJobListener {
+		public void printJobEvent(PrintJobEvent printJobEvent) {
+			//AppletLogger.log("printing");
+			System.out.println("print status: " + printJobEvent.State.getValue());
+		}
+		public void disposing(com.sun.star.lang.EventObject eventObject) {
+			System.out.println("disposing");
+		}
+	}

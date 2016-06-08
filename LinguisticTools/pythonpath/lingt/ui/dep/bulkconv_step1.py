@@ -55,10 +55,10 @@ class FormStep1:
         try:
             self.verify_results()
             self.app.scanFiles(self.filesList.fileItems, self.outputTo.outdir)
+            self.load_changes()
         except exceptions.MessageError as exc:
             self.app.msgbox.displayExc(exc)
             raise exc
-        self.load_changes()
         logger.debug(util.funcName('end'))
 
     def verify_results(self):
@@ -69,6 +69,7 @@ class FormStep1:
 
     def load_changes(self):
         """Load stored FontChange data from any previous scans."""
+        logger.debug(util.funcName('begin'))
         for varNum in range(0, self.app.userVars.getInt('FontChangesCount')):
             loaded_item = FontItem()
             fontChange = FontChange(loaded_item, self.app.userVars, varNum)
@@ -82,6 +83,7 @@ class FormStep1:
                     break
             else:
                 logger.debug("did not find match for %r", fontChange)
+        logger.debug(util.funcName('end'))
 
 
 class FilesListButtons(evt_handler.ActionEventHandler):

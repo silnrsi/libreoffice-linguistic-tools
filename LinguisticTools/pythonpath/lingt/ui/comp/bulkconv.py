@@ -136,7 +136,7 @@ class AdvanceHandler(evt_handler.ActionEventHandler):
         except exceptions.MessageError:
             return
         self.stepper.goto_step2()
-        self.step2Form.refresh_and_fill_list()
+        self.step2Form.refresh_list_and_fill()
 
 
 class ClosingButtons(evt_handler.ActionEventHandler):

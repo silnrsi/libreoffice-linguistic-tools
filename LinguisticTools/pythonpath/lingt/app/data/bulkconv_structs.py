@@ -36,6 +36,13 @@ class FontInfo:
     def __repr__(self):
         return repr(self.name, self.styleName)
 
+    def getPropSuffix(self):
+        """For use in UNO properties such as CharFontComplex."""
+        if self.fontType == 'Western':
+            return ""
+        else:
+            return self.fontType
+
 
 @functools.total_ordering
 class FontItem(FontInfo):
@@ -58,6 +65,10 @@ class FontItem(FontInfo):
         """
         if not self.change:
             self.change = FontChange(self, userVars)
+
+    def set_change(self, fontChange):
+        self.change = fontChange
+        fontChange.fontItem = self
 
     def __str__(self):
         strval = str(self.name)
