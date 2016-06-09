@@ -307,7 +307,6 @@ class Syncable:
         # All derived classes should implement this method.
         raise NotImplementedError()
 
-    # pylint: disable=no-self-use
     def cleanupUserVars(self):
         """Delete everything that was stored by storeUserVars().
         Returns True if something was cleaned up.
@@ -316,7 +315,6 @@ class Syncable:
         so they are not required to override this method.
         """
         return False
-        # pylint: enable=no-self-use
 
     @staticmethod
     def noUserVarData(varName):

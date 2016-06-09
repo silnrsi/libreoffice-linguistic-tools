@@ -5,6 +5,7 @@
 # 24-Mar-16 JDK  Base class methods to load values and add listeners.
 # 25-Mar-16 JDK  Make handling_event static across all listeners.
 # 28-Apr-16 JDK  Added DataControls.
+# 09-Jun-16 JDK  Fixed bug: Method must be named textChanged().
 
 """
 Abstract base classes to handle UNO dialog events.
@@ -149,7 +150,7 @@ class TextEventHandler(XTextListener, EventHandler):
     or radio button changes.
     """
 
-    def textStateChanged(self, event):
+    def textChanged(self, event):
         """XTextListener event handler.  For text controls."""
         logger.debug(util.funcName())
         if EventHandler.handling_event:

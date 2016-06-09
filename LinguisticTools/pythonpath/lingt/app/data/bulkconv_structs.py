@@ -30,7 +30,7 @@ class FontInfo:
         self.name = ""  # font name
         self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
-        self.styleType = 'CustomFormatting'
+        self.styleType = 'CustomFormatting'  # or 'ParaStyle' or 'CharStyle'
         self.styleName = ""
 
     def __repr__(self):

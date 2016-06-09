@@ -85,11 +85,9 @@ class FileReader:
             raise exceptions.DataNotFoundError(
                 "Did not find any data in file %s", self.filepath)
 
-    # pylint: disable=no-self-use
     def getSuggestions(self):
         """Get suggested ref numbers.  Intended for linguistic examples only,
         so derived classes are not required to override this method.
         """
         return []
-        # pylint: enable=no-self-use
 

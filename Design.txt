@@ -8,7 +8,12 @@
 
 ## Next
 
-textStateChanged() is not getting called when the font size changes.
+Do not use a new StyleNameHandler object in StyleTypeHandler.update_change().
+Instead, probably make a class that comprises StyleNameHandler and
+StyleTypeHandler, something like ConverterControls.  "StyleControls" perhaps.
+
+Then see if choosing a style radio will correctly set the style name from that
+list box.
 
 Fix 07-Mar-16 bug below.
 Test ungrouped FontItemList.

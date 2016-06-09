@@ -468,8 +468,7 @@ class StyleFonts(DocumentStyles):
 
 
 def getListOfStyles(familyName, unoObjs):
-    """
-    Returns a list of tuples (underlying name, display name)
+    """Returns a list of tuples (display name, underlying name)
     The display name may be localized or changed for readability.
     """
     logger.debug(util.funcName())
