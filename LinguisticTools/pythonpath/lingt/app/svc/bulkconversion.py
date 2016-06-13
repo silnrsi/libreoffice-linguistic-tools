@@ -81,7 +81,7 @@ class BulkConversion:
         logger.debug(util.funcName('end', args=len(self.fontItemList.items)))
 
     def update_list(self, event_handler):
-        """Update self.fontItemList based on the event that just occurred."""
+        """Update self.fontItemList based on the event that occurred."""
         item_to_update = self.fontItemList.selected_item()
         self.fontItemList.update_group(item_to_update, event_handler)
 
