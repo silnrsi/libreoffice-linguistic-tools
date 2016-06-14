@@ -26,11 +26,15 @@ from lingt.utils.fontsize import FontSize
 
 
 class FontInfo:
+    STYLETYPE_CUSTOM = 'CustomFormatting'
+    STYLETYPE_PARA = 'ParaStyle'
+    STYLETYPE_CHAR = 'CharStyle'
+
     def __init__(self):
         self.name = ""  # font name
         self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
-        self.styleType = 'CustomFormatting'  # or 'ParaStyle' or 'CharStyle'
+        self.styleType = self.STYLETYPE_CUSTOM
         self.styleName = ""
 
     def __repr__(self):
@@ -69,6 +73,13 @@ class FontItem(FontInfo):
     def set_change(self, fontChange):
         self.change = fontChange
         fontChange.fontItem = self
+
+    def effective_info(self):
+        """Gets the FontInfo object that is currently effective."""
+        if self.change:
+            return self.change
+        else:
+            return self
 
     def __str__(self):
         strval = str(self.name)
