@@ -35,7 +35,8 @@ class FontInfo:
         self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
         self.styleType = self.STYLETYPE_CUSTOM
-        self.styleName = ""
+        self.styleDisplayName = ""  # for example "Default Style"
+        self.styleName = ""  # internal name of styleDisplayName, "Standard"
 
     def __repr__(self):
         return repr(self.name, self.styleName)
@@ -182,7 +183,8 @@ class FontChange(FontInfo, Syncable):
         self.userVars.store(self.numberedVar("fontNameTo"), self.name)
         self.userVars.store(
             self.numberedVar("styleNameFrom"), self.fontItem.styleName)
-        self.userVars.store(self.numberedVar("styleNameTo"), self.styleName)
+        self.userVars.store(
+            self.numberedVar("styleNameTo"), self.styleDisplayName)
         self.userVars.store(self.numberedVar("fontType"), self.fontType)
         self.userVars.store(self.numberedVar("styleType"), self.styleType)
         if self.size.isSpecified():
