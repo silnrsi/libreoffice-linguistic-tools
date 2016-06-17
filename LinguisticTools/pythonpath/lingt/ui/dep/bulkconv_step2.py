@@ -22,20 +22,15 @@ Bulk Conversion dialog step 2.
 This module exports:
     FormStep2
 """
-import copy
 import logging
 
-from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem, FontChange
-from lingt.app.svc.bulkconversion import Samples
+from lingt.app.data.bulkconv_structs import FontChange
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
-from lingt.ui.dep import bulkconv_step2ctrls as _stepctrls
+from lingt.ui.dep import bulkconv_step2items as _itemctrls
 from lingt.utils import util
-from lingt.utils.fontsize import FontSize
-from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2")
 
@@ -58,7 +53,7 @@ class FormStep2:
     def start_working(self):
         for event_handler in self.event_handlers:
             event_handler.start_working()
-        found_font_info = FoundFontInfo(self.ctrl_getter, self.app)
+        found_font_info = _itemctrls.FoundFontInfo(self.ctrl_getter, self.app)
         found_font_info.load_values()
 
     def store_results(self):
@@ -80,7 +75,7 @@ class FormStep2:
             if not foundSomething:
                 break
 
-        checkboxShowConverter = CheckboxShowConverter(
+        checkboxShowConverter = _itemctrls.CheckboxShowConverter(
             self.ctrl_getter, self.app)
         checkboxShowConverter.store_results()
         verifyHandler = VerifyHandler(self.ctrl_getter, self.app)
@@ -99,9 +94,10 @@ class Step2Master:
         self.ctrl_getter = ctrl_getter
         self.app = app
         self.listFontsUsed = ListFontsUsed(ctrl_getter, app, self)
-        converter_controls = ConverterControls(ctrl_getter, app, self)
-        style_controls = StyleControls(ctrl_getter, app, self)
-        font_controls = FontControls(
+        converter_controls = _itemctrls.ConverterControls(
+            ctrl_getter, app, self)
+        style_controls = _itemctrls.StyleControls(ctrl_getter, app, self)
+        font_controls = _itemctrls.FontControls(
             ctrl_getter, app, self, style_controls.get_style_type_handler())
         # controls that store FontItem data
         self.data_controls = [
@@ -131,7 +127,7 @@ class Step2Master:
     def fill_for_item(self, fontItem):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
-        foundFontInfo = FoundFontInfo(self.ctrl_getter, self.app)
+        foundFontInfo = _itemctrls.FoundFontInfo(self.ctrl_getter, self.app)
         for fontitem_controls in self.data_controls + [foundFontInfo]:
             fontitem_controls.fill_for_item(fontItem)
         logger.debug(util.funcName('end'))
@@ -335,3 +331,55 @@ class AggregateControlHandler(FontChangeControlHandler):
         for controls_object in self.controls_objects:
             meth = getattr(controls_object, methodName)
             meth(*args, **kwargs)
+
+
+class JoinCheckboxes(evt_handler.ItemEventHandler):
+    """Checkboxes that join or split the list."""
+
+    def __init__(self, ctrl_getter, app, step2Master):
+        evt_handler.ItemEventHandler.__init__(self)
+        self.app = app
+        self.step2Master = step2Master
+        self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
+        self.chkJoinSize = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
+        self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
+
+    def load_values(self):
+        userVars = self.app.userVars
+        self.chkJoinFontTypes.setState(userVars.getInt('JoinFontTypes'))
+        self.chkJoinSize.setState(userVars.getInt('JoinSize'))
+        self.chkJoinStyles.setState(userVars.getInt('JoinStyles'))
+
+    def add_listeners(self):
+        for ctrl in (
+                self.chkJoinFontTypes, self.chkJoinSize, self.chkJoinStyles):
+            ctrl.addItemListener(self)
+
+    def handle_item_event(self, src):
+        self.read()
+        self.step2Master.refresh_list_and_fill()
+
+    def read(self):
+        self.app.fontItemList.groupFontTypes = bool(
+            self.chkJoinFontTypes.getState())
+        self.app.fontItemList.groupSizes = bool(
+            self.chkJoinSize.getState())
+        self.app.fontItemList.groupStyles = bool(
+            self.chkJoinStyles.getState())
+
+
+class VerifyHandler(evt_handler.ItemEventHandler):
+    def __init__(self, ctrl_getter, app):
+        self.chkVerify = ctrl_getter.get(_dlgdef.CHK_VERIFY)
+        self.app = app
+
+    def load_values(self):
+        self.chkVerify.setState(self.app.userVars.getInt('AskEachChange'))
+
+    def store_results(self):
+        self.app.askEach = (
+            self.chkVerify.getState() == 1)
+        self.app.userVars.store(
+            'AskEachChange', "%d" % self.app.askEach)
+
+

@@ -3,15 +3,12 @@
 # This file created June 16 2016 by Jim Kornelsen
 
 """
-Bulk Conversion dialog step 2 control classes.
+Bulk Conversion classes that hold controls for FontItem data.
 
-This module exports:
+This module exports all of its classes, including the following aggregates:
     ConverterControls
     StyleControls
     FontControls
-    ClipboardButtons
-    JoinCheckboxes
-    VerifyHandler
 """
 import copy
 import logging
@@ -23,11 +20,13 @@ from lingt.app.svc.bulkconversion import Samples
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
+from lingt.ui.dep.bulkconv_step2 import AggregateControlHandler
+from lingt.ui.dep.bulkconv_step2 import FontChangeControlHandler
 from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 from lingt.utils.locale import theLocale
 
-logger = logging.getLogger("lingt.ui.dlgbulkconv_step2")
+logger = logging.getLogger("lingt.ui.dlgbulkconv_step2items")
 
 
 class ConverterControls(AggregateControlHandler):
@@ -308,41 +307,6 @@ class CheckboxShowConverter(FontChangeControlHandler,
             'DisplayConverted', "%d" % displayConverted)
 
 
-class JoinCheckboxes(evt_handler.ItemEventHandler):
-    """Checkboxes that join or split the list."""
-
-    def __init__(self, ctrl_getter, app, step2Master):
-        evt_handler.ItemEventHandler.__init__(self)
-        self.app = app
-        self.step2Master = step2Master
-        self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
-        self.chkJoinSize = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
-        self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
-
-    def load_values(self):
-        userVars = self.app.userVars
-        self.chkJoinFontTypes.setState(userVars.getInt('JoinFontTypes'))
-        self.chkJoinSize.setState(userVars.getInt('JoinSize'))
-        self.chkJoinStyles.setState(userVars.getInt('JoinStyles'))
-
-    def add_listeners(self):
-        for ctrl in (
-                self.chkJoinFontTypes, self.chkJoinSize, self.chkJoinStyles):
-            ctrl.addItemListener(self)
-
-    def handle_item_event(self, src):
-        self.read()
-        self.step2Master.refresh_list_and_fill()
-
-    def read(self):
-        self.app.fontItemList.groupFontTypes = bool(
-            self.chkJoinFontTypes.getState())
-        self.app.fontItemList.groupSizes = bool(
-            self.chkJoinSize.getState())
-        self.app.fontItemList.groupStyles = bool(
-            self.chkJoinStyles.getState())
-
-
 class FoundFontInfo:
     """Information about the font found.  These values are read-only."""
 
@@ -560,6 +524,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
 
     def update_change(self, fontChange):
         fontChange.styleName = ""
+        fontChange.styleDisplayName = ""
         for stylelist in self.stylelists:
             if stylelist.same_ctrl(self.last_source):
                 stylelist.update_change(fontChange)
@@ -567,6 +532,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def update_change_for_type(self, fontChange, styleType):
         logger.debug(util.funcName())
         fontChange.styleName = ""
+        fontChange.styleDisplayName = ""
         if fontChange.styleType == FontItem.STYLETYPE_CUSTOM:
             font_name_handler = FontNameHandler(
                 self.ctrl_getter, self.app, self.step2Master,
@@ -619,7 +585,7 @@ class StyleList:
         self.styleType = styleType
         self.ctrl = ctrl
         self.unoObjs = unoObjs
-        self.styleNames = {}  # internal names, not display names
+        self.styleNames = {}  # keys display name, values underlying name
 
     def load_values(self):
         family = 'ParagraphStyles'
@@ -627,7 +593,7 @@ class StyleList:
             family = 'CharacterStyles'
         namesList = styles.getListOfStyles(family, self.unoObjs)
         self.styleNames.update(dict(namesList))
-        displayNames = tuple([dispName for dispName, name in namesList])
+        displayNames = tuple([dispName for dispName, dummy_name in namesList])
         dutil.fill_list_ctrl(self.ctrl, displayNames)
 
     def update_change(self, fontChange):
@@ -684,20 +650,5 @@ class StyleTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
 
     def copy_change(self, change_from, change_to):
         change_from.styleType = change_to.styleType
-
-
-class VerifyHandler(evt_handler.ItemEventHandler):
-    def __init__(self, ctrl_getter, app):
-        self.chkVerify = ctrl_getter.get(_dlgdef.CHK_VERIFY)
-        self.app = app
-
-    def load_values(self):
-        self.chkVerify.setState(self.app.userVars.getInt('AskEachChange'))
-
-    def store_results(self):
-        self.app.askEach = (
-            self.chkVerify.getState() == 1)
-        self.app.userVars.store(
-            'AskEachChange', "%d" % self.app.askEach)
 
 

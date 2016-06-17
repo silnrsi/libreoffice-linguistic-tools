@@ -470,6 +470,7 @@ class StyleFonts(DocumentStyles):
 def getListOfStyles(familyName, unoObjs):
     """Returns a list of tuples (display name, underlying name)
     The display name may be localized or changed for readability.
+    In the rest of this module, the underlying name is used.
     """
     logger.debug(util.funcName())
     families = unoObjs.document.getStyleFamilies()

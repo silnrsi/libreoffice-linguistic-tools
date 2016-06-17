@@ -36,7 +36,7 @@ class FontInfo:
         self.size = FontSize()
         self.styleType = self.STYLETYPE_CUSTOM
         self.styleDisplayName = ""  # for example "Default Style"
-        self.styleName = ""  # internal name of styleDisplayName, "Standard"
+        self.styleName = ""  # underlying name of styleDisplayName, "Standard"
 
     def __repr__(self):
         return repr(self.name, self.styleName)
@@ -84,8 +84,8 @@ class FontItem(FontInfo):
 
     def __str__(self):
         strval = str(self.name)
-        if self.styleName:
-            strval += " (%s)" % self.styleName
+        if self.styleDisplayName:
+            strval += " (%s)" % self.styleDisplayName
         if self.change:
             strval = "*  " + strval
         return strval
@@ -153,18 +153,20 @@ class FontChange(FontInfo, Syncable):
     def loadUserVars(self):
         self.fontItem.name = self.userVars.get(
             self.numberedVar("fontNameFrom"))
-        self.fontItem.styleName = self.userVars.get(
+        self.fontItem.styleDisplayName = self.userVars.get(
             self.numberedVar("styleNameFrom"))
-        if not self.fontItem.name and not self.fontItem.styleName:
+        if not self.fontItem.name and not self.fontItem.styleDisplayName:
             raise self.noUserVarData(self.numberedVar("fontNameFrom"))
         self.name = self.userVars.get(self.numberedVar("fontNameTo"))
-        self.styleName = self.userVars.get(self.numberedVar("styleNameTo"))
+        self.styleDisplayName = self.userVars.get(
+            self.numberedVar("styleNameTo"))
         self.fontType = self.userVars.get(self.numberedVar("fontType"))
         self.size = FontSize()
         if not self.userVars.isEmpty(self.numberedVar("size")):
             self.size.loadUserVar(self.userVars, self.numberedVar("size"))
         self.styleType = self.userVars.get(self.numberedVar("styleType"))
-        self.styleName = self.userVars.get(self.numberedVar("styleName"))
+        self.styleDisplayName = self.userVars.get(
+            self.numberedVar("styleName"))
         self.converter.convName = self.userVars.get(
             self.numberedVar("convName"))
         self.converter.normForm = self.userVars.getInt(
@@ -182,7 +184,7 @@ class FontChange(FontInfo, Syncable):
         self.userVars.store(self.numberedVar("fontNameFrom"), fontNameFrom)
         self.userVars.store(self.numberedVar("fontNameTo"), self.name)
         self.userVars.store(
-            self.numberedVar("styleNameFrom"), self.fontItem.styleName)
+            self.numberedVar("styleNameFrom"), self.fontItem.styleDisplayName)
         self.userVars.store(
             self.numberedVar("styleNameTo"), self.styleDisplayName)
         self.userVars.store(self.numberedVar("fontType"), self.fontType)

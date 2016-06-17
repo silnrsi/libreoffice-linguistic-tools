@@ -18,6 +18,8 @@ Create TextTables for interlinear data.
 """
 import logging
 
+from com.sun.star.table import BorderLine
+
 from lingt.app import exceptions
 from lingt.app.data import lingex_structs
 from lingt.ui.common.messagebox import MessageBox
@@ -521,30 +523,18 @@ class InnerTable:
 
 def set_noTableBorders(table):
     """Sets a table to have no borders."""
-    BORDER_WIDTH = 0
-    v = table.getPropertyValue("TableBorder")
-    x = v.TopLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.TopLine = x
-    x = v.LeftLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.LeftLine = x
-    x = v.RightLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.RightLine = x
-    x = v.TopLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.TopLine = x
-    x = v.VerticalLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.VerticalLine = x
-    x = v.HorizontalLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.HorizontalLine = x
-    x = v.BottomLine
-    x.OuterLineWidth = BORDER_WIDTH
-    v.BottomLine = x
-    table.setPropertyValue("TableBorder", v)
+    borderLine = BorderLine()
+    borderLine.OuterLineWidth = 0
+
+    tableBorder = table.getPropertyValue("TableBorder")
+    tableBorder.VerticalLine = borderLine
+    tableBorder.HorizontalLine = borderLine
+    tableBorder.LeftLine = borderLine
+    tableBorder.RightLine = borderLine
+    tableBorder.TopLine = borderLine
+    tableBorder.BottomLine = borderLine
+    table.setPropertyValue("TableBorder", tableBorder)
+
 
 def set_noTableSpacing(table, unoObjs):
     """Sets a table to have no spacing.  As a side effect, this function
