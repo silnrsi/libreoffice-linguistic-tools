@@ -46,6 +46,7 @@ class DocToXml:
     def read(self):
         """Read in the data.
         Returns list with elements of type FontItem.
+        Tries to overcome several zipfile reading exceptions that may occur.
         """
         logger.debug(util.funcName('begin'))
         try:

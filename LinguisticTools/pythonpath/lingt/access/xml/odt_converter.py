@@ -8,6 +8,7 @@
 # 23-Dec-15 JDK  Added changeContentFile().
 # 24-Dec-15 JDK  Added class OdtChanger.
 # 20-Feb-16 JDK  Read complex and Asian font types.
+# 21-Jun-16 JDK  Choose font type based on Unicode block.
 
 """
 Read and change an ODT file in XML format.
@@ -27,6 +28,7 @@ from lingt.access.common.file_reader import FileReader
 from lingt.access.xml import xmlutil
 from lingt.app import exceptions
 from lingt.app.data.bulkconv_structs import FontItem
+from lingt.utils import letters
 from lingt.utils import util
 
 
@@ -113,20 +115,23 @@ class OdtReader(FileReader):
         Returns the FontItem for that style.
         """
         xmlStyleName = styleNode.getAttribute("style:name")
+        if xmlStyleName in self.stylesDict:
+            fontItem = self.stylesDict[xmlStyleName]
+        else:
+            fontItem = FontItem()
         for textprop in styleNode.getElementsByTagName(
                 "style:text-properties"):
+            # Western is last in the list because it is the default.
+            # The others will only be used if there are Complex or Asian
+            # characters in the text.
             for xmlAttr, fontItemAttr, fontType in [
-                    ("style:font-name", 'nameStandard', 'Western'),
+                    ("style:font-name-asian", 'nameAsian', 'Asian'),
                     ("style:font-name-complex", 'nameComplex', 'Complex'),
-                    ("style:font-name-asian", 'nameAsian', 'Asian')]:
+                    ("style:font-name", 'nameStandard', 'Western')]:
                 fontName = textprop.getAttribute(xmlAttr)
                 if fontName:
-                    if xmlStyleName in self.stylesDict:
-                        fontItem = self.stylesDict[xmlStyleName]
-                    else:
-                        fontItem = FontItem()
                     fontItem.name = fontName
-                    setattr(fontItem, 'fontType', fontType)
+                    fontItem.fontType = fontType
                     setattr(fontItem, fontItemAttr, fontName)
                     self.stylesDict[xmlStyleName] = fontItem
         return self.stylesDict.get(xmlStyleName, FontItem())
@@ -144,38 +149,106 @@ class OdtReader(FileReader):
             paraFontItem = self.stylesDict.get(
                 xmlStyleName, self.defaultFontItem)
             para_texts = xmlutil.getElemTextList(paragraph)
-            self.add_data_for_font(paraFontItem, para_texts, xmlStyleName)
+            fontItemAppender = FontItemAppender(self.data, paraFontItem)
+            fontItemAppender.add_texts(para_texts)
             for span in paragraph.getElementsByTagName("text:span"):
                 xmlStyleName = span.getAttribute("text:style-name")
                 spanFontItem = self.stylesDict.get(xmlStyleName, paraFontItem)
                 span_texts = xmlutil.getElemTextList(span)
-                self.add_data_for_font(spanFontItem, span_texts, xmlStyleName)
+                fontItemAppender = FontItemAppender(self.data, spanFontItem)
+                fontItemAppender.add_texts(span_texts)
         #TODO: look for text:class-name, which is for paragraph styles.
         self.logger.debug(util.funcName('end'))
 
-    def add_data_for_font(self, fontItem, textvals, dummy_xmlStyleName):
-        """
-        Add content of a node for a particular effective font.
 
-        :param fontItem: effective font of the node
-        :param textvals: text content of nodes
-        :param dummy_xmlStyleName: only used for debugging
+class FontItemAppender:
+    """Adds information to a list of FontItem objects.  Modifies the list."""
+
+    FONT_TYPE_NUM_TO_NAME = {
+        letters.TYPE_INDETERMINATE : 'Western',
+        letters.TYPE_STANDARD : 'Western',
+        letters.TYPE_COMPLEX : 'Complex',
+        letters.TYPE_CJK : 'Asian',
+        }
+
+    def __init__(self, fontItems, baseFontItem):
         """
-        #self.logger.debug(
-        #    util.funcName('begin', args=(
-        #        fontItem.name, len(textvals), dummy_xmlStyleName)))
-        if fontItem.name and fontItem.name != "(None)":
-            newItem = copy.deepcopy(fontItem)
-            newItem.name = fontItem.name
-            newItem.inputData = textvals
-            for item in self.data:
-                if item == newItem:
-                    item.inputData.extend(newItem.inputData)
-                    break
-            else:
-                # newItem was not in self.data, so add it.
-                self.logger.debug("appended font item %s", fontItem)
-                self.data.append(newItem)
+        :param fontItems: list of FontItem objects to modify
+        :param baseFontItem: effective font of the node
+        """
+        self.fontItems = fontItems
+        self.baseFontItem = baseFontItem
+        self.fontItemDict = None
+
+    def add_for_font_with_debug(self, textvals, xmlStyleName):
+        self.logger.debug(
+            util.funcName(args=(
+                self.baseFontItem.name, len(textvals), xmlStyleName)))
+        self.add_for_font(textvals)
+
+    def add_texts(self, textvals):
+        """Add content of a node for a particular effective font.
+        :param textvals: text content of nodes
+        """
+        if not self.baseFontItem.name or self.baseFontItem.name == "(None)":
+            return
+        for newItem in self.get_items_for_each_type(textvals):
+            self.add_item_data(newItem)
+
+    def get_items_for_each_type(self, textvals):
+        self.fontItemDict = {
+            'Western' : None, 'Complex' : None, 'Asian' : None}
+        text_of_one_type = ""
+        for textval in textvals:
+            curFontType = letters.TYPE_INDETERMINATE
+            for c in textval:
+                nextFontType = letters.getFontType(c, curFontType)
+                if nextFontType == curFontType:
+                    text_of_one_type += c
+                elif text_of_one_type:
+                    self.append_text_of_one_type(text_of_one_type, curFontType)
+                    text_of_one_type = ""
+                curFontType = nextFontType
+            if text_of_one_type:
+                self.append_text_of_one_type(text_of_one_type, curFontType)
+        return list(self.fontItemDict.values())
+
+    def append_text_of_one_type(self, textval, curFontType):
+        fontTypeName = self.FONT_TYPE_NUM_TO_NAME[curFontType]
+        fontItem = self.get_item_for_type(fontTypeName)
+        fontItem.inputData.append(textval)
+
+    def self.get_item_for_type(self, fontType):
+        """
+        Sets fontItem.fontType and fontItem.name.
+
+        The font type is based on the unicode block of a character,
+        not just based on formatting.
+        Because the font name may just fall back to defaults.
+        """
+        if fontType in self.fontItemDict:
+            return self.fontItemDict[fontType]
+        attr_of_fontType = {
+            'Asian' : 'nameAsian',
+            'Complex' : 'nameComplex',
+            'Western' : 'nameStandard'}
+        newItem = copy.deepcopy(self.baseFontItem)
+        #if (nextFontType == letters.TYPE_COMPLEX
+        #        or nextFontType == letters.TYPE_CJK):
+        newItem.fontType = fontType
+        newItem.name = getattr(self.baseFontItem, attr_of_font_type[fontType])
+        self.fontItemDict[fontType] = newItem
+        return newItem
+
+    def add_item_data(self, newItem):
+        for item in self.fontItems:
+            if item == newItem:
+                item.inputData.extend(newItem.inputData)
+                break
+        else:
+            # newItem was not in self.fontItems, so add it.
+            self.logger.debug("appending FontItem %s", newItem)
+            self.fontItems.append(newItem)
 
 
 class OdtChanger:
