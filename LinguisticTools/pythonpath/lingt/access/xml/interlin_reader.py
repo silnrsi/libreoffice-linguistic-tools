@@ -13,6 +13,7 @@
 """
 Read interlinear examples, typically used for grammar writeups.
 """
+import logging
 import os
 import re
 import xml.dom.minidom
@@ -26,6 +27,9 @@ from lingt.app.data import lingex_structs
 from lingt.app.data import wordlist_structs
 from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
+
+logger = logging.getLogger("lingt.access.interlin_reader")
+
 
 class InterlinReader(FileReader):
     SUPPORTED_FORMATS = [
@@ -63,7 +67,7 @@ class InterlinReader(FileReader):
         self.suggestions = []
         list_index = 1   # 1-based index of current element in list
         for fileItem in self.config.fileList:
-            self.logger.debug("Parsing file %s", fileItem.filepath)
+            logger.debug("Parsing file %s", fileItem.filepath)
             self.prefix = fileItem.prefix
             self.use_segnum = fileItem.use_segnum
             self.dom = None
@@ -76,7 +80,7 @@ class InterlinReader(FileReader):
                 raise exceptions.FileAccessError(
                     "Error reading file %s\n\n%s",
                     fileItem.filepath, str(exc).capitalize())
-            self.logger.debug("Parse finished.")
+            logger.debug("Parse finished.")
             progressRange.updatePart(1)
             filetype = self.get_filetype(fileItem.filepath, self.dom)
             progressRange.updatePart(2)
@@ -86,7 +90,7 @@ class InterlinReader(FileReader):
                 ToolboxXML(self).read()
             elif filetype == "fieldworks":
                 FieldworksXML(self).read()
-            self.logger.debug("Read %d examples.", len(self.data))
+            logger.debug("Read %d examples.", len(self.data))
             if len(self.data) == prevLen:
                 raise exceptions.DataNotFoundError(
                     "Did not find any data in file %s", fileItem.filepath)
@@ -98,7 +102,7 @@ class InterlinReader(FileReader):
         self.generateRefIDs = True
         self.read()
         words = []
-        self.logger.debug("Grabbing %s thing(s).", len(thingsToGrab))
+        logger.debug("Grabbing %s thing(s).", len(thingsToGrab))
         for gramEx in self.data.values():
             for whatToGrab in thingsToGrab:
                 if whatToGrab.grabType == wordlist_structs.WhatToGrab.FIELD:
@@ -112,14 +116,14 @@ class InterlinReader(FileReader):
                         newWord.text = text
                         newWord.source = self.config.fileList[0].filepath
                         words.append(newWord)
-        self.logger.debug("got %d words", len(words))
+        logger.debug("got %d words", len(words))
         return words
 
     def get_filetype(self, filepath, dom):
         """Note to developer: Try to make it so that this function
         can never silently fail, even if for example a JPEG file is attempted.
         """
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         filetype = ""
         if dom is None:
             raise exceptions.FileAccessError("Error with file: %s", filepath)
@@ -144,13 +148,12 @@ class InterlinReader(FileReader):
             raise exceptions.FileAccessError(
                 "File does not seem to be from Toolbox or FieldWorks: %s",
                 filepath)
-        self.logger.debug("File type is %s", filetype)
+        logger.debug("File type is %s", filetype)
         return filetype
 
 
 class ToolboxXML:
-    """
-    Toolbox XML seems to follow this rule:
+    """Toolbox XML seems to follow this rule:
     If a marker has children, then it occurs within a group named after
     itself, and it is the first item.
     If there are other things associated with it,
@@ -161,14 +164,13 @@ class ToolboxXML:
         self.data = mainReader.data
         self.suggestions = mainReader.suggestions
         self.config = mainReader.config
-        self.logger = mainReader.logger
         self.generateRefIDs = mainReader.generateRefIDs
         self.prefix = mainReader.prefix
         self.fieldTags = GrammarTags(mainReader.userVars).loadUserVars()
         self.ex = None  # the current example
 
     def read(self):
-        self.logger.debug("reading toolbox XML file")
+        logger.debug("reading toolbox XML file")
         addedSuggestion = False
         sentences = self.dom.getElementsByTagName(
             self.fieldTags['ref'] + "Group")
@@ -258,13 +260,12 @@ class FieldworksXML:
         self.data = mainReader.data
         self.suggestions = mainReader.suggestions
         self.config = mainReader.config
-        self.logger = mainReader.logger
         self.prefix = mainReader.prefix
         self.use_segnum = mainReader.use_segnum
         self.ex = None  # the current example
 
     def read(self):
-        self.logger.debug("reading fieldworks XML file")
+        logger.debug("reading fieldworks XML file")
         paragraphs = self.dom.getElementsByTagName("paragraph")
         refTextPara = 1
         addedSuggestion = False
@@ -285,7 +286,7 @@ class FieldworksXML:
             refTextPara += 1
 
     def handleSentence(self, sentence):
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         if self.use_segnum:
             for childNode in sentence.childNodes:
                 if not childNode.attributes:
@@ -305,7 +306,7 @@ class FieldworksXML:
             self.ex.refText = self.prefix + self.ex.refText
 
     def handleWord(self, word):
-        #self.logger.debug(util.funcName('begin'))
+        #logger.debug(util.funcName('begin'))
         wordOrth = ""
         wordText = ""
         punct = None
@@ -324,7 +325,7 @@ class FieldworksXML:
                 self.ex.addPunctuation(punct)
             else:
                 self.ex.appendWord(punct, punct)
-            #self.logger.debug(util.funcName('return', args=punct))
+            #logger.debug(util.funcName('return', args=punct))
             return
         morphemes = word.getElementsByTagName("morph")
         if len(morphemes):
@@ -332,10 +333,10 @@ class FieldworksXML:
         else:
             self.ex.appendMorphObj(singleMorphemeWord(word))
         self.ex.appendWord(wordText, wordOrth)
-        #self.logger.debug(util.funcName('end', args=wordText))
+        #logger.debug(util.funcName('end', args=wordText))
 
     def handleWordMorphemes(self, morphemes):
-        #self.logger.debug(util.funcName('begin'))
+        #logger.debug(util.funcName('begin'))
         mergedMorphemes = MergedMorphemes()
         for morpheme in morphemes:
             items = morpheme.getElementsByTagName("item")
@@ -355,10 +356,10 @@ class FieldworksXML:
 
             if self.config.separateMorphColumns:
                 ## store each morpheme separately
-                #self.logger.debug(morph.text)
+                #logger.debug(morph.text)
                 self.ex.appendMorphObj(morph)
             else:
-                #self.logger.debug(morph.text)
+                #logger.debug(morph.text)
                 mergedMorphemes.add(morph)
         if not self.config.separateMorphColumns:
             self.ex.appendMorphObj(

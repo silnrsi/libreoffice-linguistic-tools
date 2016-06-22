@@ -9,6 +9,7 @@
 Read text docs in Writer that contain words we want to grab.
 Most of the grunt work is done by search.py
 """
+import logging
 import os
 
 import uno
@@ -21,6 +22,8 @@ from lingt.app import exceptions
 from lingt.app.data.wordlist_structs import WhatToGrab, WordInList
 from lingt.utils import util
 from lingt.utils.locale import theLocale
+
+logger = logging.getLogger("lingt.access.doc_reader")
 
 class DocReader(FileReader):
 
@@ -47,11 +50,11 @@ class DocReader(FileReader):
                 "Error reading file %s", self.filepath)
         self.progressBar.updatePercent(60)
         self.read_document()
-        self.logger.debug("Setting visible.")
+        logger.debug("Setting visible.")
         self.doc.window.setVisible(True)
 
     def loadDoc(self, filepath):
-        self.logger.debug(util.funcName('begin', args=filepath))
+        logger.debug(util.funcName('begin', args=filepath))
         if not os.path.exists(filepath):
             raise exceptions.FileAccessError(
                 "Cannot find file %s", filepath)
@@ -70,11 +73,11 @@ class DocReader(FileReader):
             self.doc = self.unoObjs.getDocObjs(newDoc)
         except AttributeError:
             raise exceptions.DocAccessError()
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
 
     def read_document(self):
         """Sets self.data to list of WordInList objects."""
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         textRanges = []
         textSearch = TextSearch(
             self.doc, self.progressBar, checkForFormatting=False)
@@ -101,21 +104,21 @@ class DocReader(FileReader):
                 continue
             textRanges.extend(textSearch.getRanges())
 
-        self.logger.debug("Got %d ranges.", len(textRanges))
+        logger.debug("Got %d ranges.", len(textRanges))
         for txtRange in textRanges:    # txtRange is of type search.TxtRange
             oSel = txtRange.sel
             try:
                 oCursor = oSel.getText().createTextCursorByRange(oSel)
             except (RuntimeException, IllegalArgumentException):
-                self.logger.warning("Failed to go to text range.")
+                logger.warning("Failed to go to text range.")
                 continue
             text = oCursor.getString()
-            self.logger.debug(len(text))
+            logger.debug(len(text))
             if text != "":
                 ## Add word
                 word = WordInList()
                 word.text = text
                 word.source = self.fileconfig.filepath
                 self.data.append(word)
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
 

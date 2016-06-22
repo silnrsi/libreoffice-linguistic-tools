@@ -22,7 +22,7 @@ Probably we don't care about:
 - context
 - relation to other words or data
 """
-
+import logging
 import os
 import xml.dom.minidom
 import xml.parsers.expat
@@ -31,6 +31,9 @@ from lingt.access.common.file_reader import FileReader
 from lingt.access.xml import xmlutil
 from lingt.app import exceptions
 from lingt.app.data import wordlist_structs
+
+logger = logging.getLogger("lingt.access.words_reader")
+
 
 class WordsReader(FileReader):
     SUPPORTED_FORMATS = [
@@ -47,7 +50,7 @@ class WordsReader(FileReader):
         self.data = []
 
     def _read(self):
-        self.logger.debug("Parsing file %s", self.filepath)
+        logger.debug("Parsing file %s", self.filepath)
         if not os.path.exists(self.filepath):
             raise exceptions.FileAccessError(
                 "Cannot find file %s", self.filepath)
@@ -57,7 +60,7 @@ class WordsReader(FileReader):
             raise exceptions.FileAccessError(
                 "Error reading file %s\n\n%s",
                 self.filepath, str(exc).capitalize())
-        self.logger.debug("Parse finished.")
+        logger.debug("Parse finished.")
         self.progressBar.updatePercent(60)
         if self.fileconfig.filetype == 'spellingStatus':
             self.read_spellingStatus_file()
@@ -67,7 +70,7 @@ class WordsReader(FileReader):
 
     def read_spellingStatus_file(self):
         """Modifies self.data"""
-        self.logger.debug("reading Spelling Status file")
+        logger.debug("reading Spelling Status file")
         statuses = self.dom.getElementsByTagName("Status")
         for status in statuses:
             if not status.attributes:
@@ -88,7 +91,7 @@ class WordsReader(FileReader):
                 correction = xmlutil.getTextByTagName(status, "Correction")
                 if correction:
                     word.correction = correction
-                    self.logger.debug("got correction")
+                    logger.debug("got correction")
             self.data.append(word)
-        self.logger.debug("finished reading file")
+        logger.debug("finished reading file")
 

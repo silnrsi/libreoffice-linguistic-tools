@@ -15,7 +15,7 @@ import logging
 
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem, FontChange
+from lingt.app.data.bulkconv_structs import FontItem
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler

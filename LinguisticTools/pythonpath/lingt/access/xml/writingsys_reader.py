@@ -7,6 +7,7 @@
 """
 Read XML files describing writing systems.
 """
+import logging
 import os
 import re
 import xml.dom.minidom
@@ -14,6 +15,9 @@ import xml.parsers.expat
 
 from lingt.access.common.file_reader import FileReader
 from lingt.utils import util
+
+logger = logging.getLogger("lingt.access.writingsys_reader")
+
 
 class WritingSystem:
     """Information about a writing system."""
@@ -49,7 +53,7 @@ class WritingSysReader(FileReader):
 
     def _getWritingSystemFromFile(self, folder, filename):
         """Read an .ldml LIFT file.  Add its info to self.data."""
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         ws = WritingSystem()
 
         ## Get the internal code from the filename
@@ -104,5 +108,5 @@ class WritingSysReader(FileReader):
             if not ws.name:
                 ws.name = ws.internalCode
             self.data.append(ws)
-            self.logger.debug("Got %s, %s", ws.name, ws.internalCode)
+            logger.debug("Got %s, %s", ws.name, ws.internalCode)
 

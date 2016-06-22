@@ -8,8 +8,7 @@
 
 ## Next
 
-Write code to look up characters to guess FontItem type.
-Then write grouping code for font name.
+Write grouping code for font name.
 
 
 ## Sometime

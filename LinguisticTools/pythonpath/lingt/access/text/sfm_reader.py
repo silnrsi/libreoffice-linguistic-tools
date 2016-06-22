@@ -8,11 +8,15 @@
 Read SFM files and grab specified fields.
 """
 import io
+import logging
 import os
 
 from lingt.app import exceptions
 from lingt.app.data import wordlist_structs
 from lingt.access.common.file_reader import FileReader
+
+logger = logging.getLogger("lingt.access.sfm_reader")
+
 
 class SFM_Reader(FileReader):
 
@@ -33,7 +37,7 @@ class SFM_Reader(FileReader):
 
     def _read(self):
         """Read in the data.  Modifies self.data"""
-        self.logger.debug("Parsing file %s", self.filepath)
+        logger.debug("Parsing file %s", self.filepath)
         if not os.path.exists(self.filepath):
             raise exceptions.FileAccessError(
                 "Cannot find file %s", self.filepath)
@@ -56,7 +60,7 @@ class SFM_Reader(FileReader):
 
         Modifies self.rawData
         """
-        self.logger.debug("reading SFM file")
+        logger.debug("reading SFM file")
         infile = io.open(self.filepath, mode='r', encoding='UTF8')
 
         sfMarkerList = list()
@@ -67,12 +71,12 @@ class SFM_Reader(FileReader):
         lineNum = 1
         try:
             for line in infile:
-                self.logger.debug("Line #%d.", lineNum)
+                logger.debug("Line #%d.", lineNum)
                 lineNum += 1
                 for marker in sfMarkerList:
                     markerWithSpace = marker + " "
                     if line.startswith(markerWithSpace):
-                        self.logger.debug("^%s", markerWithSpace)
+                        logger.debug("^%s", markerWithSpace)
                         data = line[len(markerWithSpace):]
                         data = data.strip() # is this needed?
                         self.rawData.append((marker, data))
@@ -82,5 +86,5 @@ class SFM_Reader(FileReader):
                 self.filepath, str(exc))
         finally:
             infile.close()
-        self.logger.debug("Found %d words.", len(self.rawData))
+        logger.debug("Found %d words.", len(self.rawData))
 

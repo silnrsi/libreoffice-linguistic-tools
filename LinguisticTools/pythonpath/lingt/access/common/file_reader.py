@@ -16,6 +16,7 @@
 # 29-Oct-12 JDK  Make XML_Reader a more definite abstract class.
 # 09-Nov-12 JDK  Generalize for other file types besides XML.
 # 22-Jul-15 JDK  read() can close progressBar in finally clause.
+# 22-Jun-16 JDK  Move logger to a module variable.
 
 """
 Interface to read XML or other files.
@@ -26,6 +27,9 @@ from lingt.app import exceptions
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
+
+logger = logging.getLogger("lingt.access.file_reader")
+
 
 class FileReader:
     """Abstract base class for XML file readers.
@@ -39,7 +43,6 @@ class FileReader:
             # The base class should not be instantiated.
             raise NotImplementedError()
         self.unoObjs = unoObjs
-        self.logger = logging.getLogger("lingt.access.file_reader")
         self.msgbox = MessageBox(unoObjs)
         self.progressBar = ProgressBar(unoObjs, "Loading data...")
         self.data = None
@@ -52,7 +55,7 @@ class FileReader:
         return names
 
     def read(self):
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         if self.progressBar:
             self.progressBar.show()
             self.progressBar.updateBeginning()
@@ -66,7 +69,7 @@ class FileReader:
         finally:
             if self.progressBar:
                 self.progressBar.close()
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
         return self.data
 
     def _initData(self):

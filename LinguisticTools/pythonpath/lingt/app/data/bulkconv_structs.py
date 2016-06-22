@@ -8,6 +8,7 @@
 # 24-Dec-15 JDK  Moved part of FontItem to a new FontChange class.
 # 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
 # 19-Feb-16 JDK  Add fonts found of each type.
+# 22-Jun-16 JDK  Add method to group items.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -17,6 +18,7 @@ This module exports:
     FontItem
     FontChange
 """
+import copy
 import functools
 
 from lingt.access.sec_wrapper import ConverterSettings
@@ -62,6 +64,7 @@ class FontItem(FontInfo):
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type FontChange
+        self.grouped_items = []  # list of FontItem objects if this is a group
 
     def create_change(self, userVars):
         """Create a new FontChange for this item if it doesn't exist yet.
@@ -239,4 +242,34 @@ class FontChange(FontInfo, Syncable):
             return self.converter
         raise exceptions.LogicError(
             "Unexpected attribute names: %r", attr_names)
+
+
+#@functools.total_ordering
+#class FontItemGroup(FontItem):
+#    """Holds one or more related FontItem objects.
+#    This is what gets displayed in the list.
+#    """
+#    def __init__(self):
+#        FontItem.__init__(self)
+#        self.items = []
+#
+#    @classmethod
+def get_group(fontItems):
+    """Creates a group with the shared attributes of the given FontItem
+    objects.
+    """
+    group = copy.deepcopy(fontItems[0])
+    group.grouped_items = fontItems
+    for item in fontItems[1:]:
+        if item.change:
+            group.create_change(item.change.userVars)
+        for attr in ('name', 
+        self.name
+        self.nameStandard
+        self.nameComplex
+        self.nameAsian
+            ):
+            if getattr(group, attr) != getattr(item, attr):
+                setattr(group, attr, '(Various)')
+    return group
 

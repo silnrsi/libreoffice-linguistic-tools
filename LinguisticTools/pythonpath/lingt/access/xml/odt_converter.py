@@ -20,6 +20,7 @@ This module exports:
 """
 import copy
 import io
+import logging
 import os
 import xml.dom.minidom
 import xml.parsers.expat
@@ -31,6 +32,7 @@ from lingt.app.data.bulkconv_structs import FontItem
 from lingt.utils import letters
 from lingt.utils import util
 
+logger = logging.getLogger("lingt.access.odt_converter")
 
 class OdtReader(FileReader):
 
@@ -68,7 +70,7 @@ class OdtReader(FileReader):
 
     def loadFile(self, filepath):
         """Returns dom, raises exceptions.FileAccessError."""
-        self.logger.debug(util.funcName('begin', args=filepath))
+        logger.debug(util.funcName('begin', args=filepath))
         if not os.path.exists(filepath):
             raise exceptions.FileAccessError(
                 "Cannot find file %s", filepath)
@@ -82,12 +84,12 @@ class OdtReader(FileReader):
         if dom is None:
             raise exceptions.FileAccessError(
                 "Error reading file %s", filepath)
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
         return dom
 
     def readStylesFile(self, dom):
         """Read in styles.xml."""
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         for style in dom.getElementsByTagName("style:default-style"):
             if style.getAttribute("style:family") == "paragraph":
                 self.defaultFontItem = self.read_text_props(style)
@@ -108,7 +110,7 @@ class OdtReader(FileReader):
                     fontItem = parentFontItem
                 self.stylesDict[xmlStyleName] = fontItem
             self.read_text_props(style)
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
 
     def read_text_props(self, styleNode):
         """Read style:text-properties nodes and store in self.stylesDict.
@@ -138,7 +140,7 @@ class OdtReader(FileReader):
 
     def readContentFile(self, dom):
         """Read in content.xml."""
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         # Unlike common styles, automatic styles are not visible to the user.
         auto_styles = dom.getElementsByTagName("office:automatic-styles")[0]
         if auto_styles:
@@ -158,18 +160,11 @@ class OdtReader(FileReader):
                 fontItemAppender = FontItemAppender(self.data, spanFontItem)
                 fontItemAppender.add_texts(span_texts)
         #TODO: look for text:class-name, which is for paragraph styles.
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
 
 
 class FontItemAppender:
     """Adds information to a list of FontItem objects.  Modifies the list."""
-
-    FONT_TYPE_NUM_TO_NAME = {
-        letters.TYPE_INDETERMINATE : 'Western',
-        letters.TYPE_STANDARD : 'Western',
-        letters.TYPE_COMPLEX : 'Complex',
-        letters.TYPE_CJK : 'Asian',
-        }
 
     def __init__(self, fontItems, baseFontItem):
         """
@@ -178,13 +173,13 @@ class FontItemAppender:
         """
         self.fontItems = fontItems
         self.baseFontItem = baseFontItem
-        self.fontItemDict = None
+        self.fontItemDict = {}  # keys like 'Western', values are FontItem
 
-    def add_for_font_with_debug(self, textvals, xmlStyleName):
-        self.logger.debug(
+    def add_texts_with_debug(self, textvals, xmlStyleName):
+        logger.debug(
             util.funcName(args=(
                 self.baseFontItem.name, len(textvals), xmlStyleName)))
-        self.add_for_font(textvals)
+        self.add_texts(textvals)
 
     def add_texts(self, textvals):
         """Add content of a node for a particular effective font.
@@ -196,14 +191,19 @@ class FontItemAppender:
             self.add_item_data(newItem)
 
     def get_items_for_each_type(self, textvals):
-        self.fontItemDict = {
-            'Western' : None, 'Complex' : None, 'Asian' : None}
-        text_of_one_type = ""
+        """The font type is based on the unicode block of a character,
+        not just based on formatting.
+        Because the font name may just fall back to defaults.
+        """
+        self.fontItemDict = {}
         for textval in textvals:
+            text_of_one_type = ""
             curFontType = letters.TYPE_INDETERMINATE
             for c in textval:
                 nextFontType = letters.getFontType(c, curFontType)
-                if nextFontType == curFontType:
+                if (nextFontType == curFontType
+                        or curFontType == letters.TYPE_INDETERMINATE
+                        or nextFontType == letters.TYPE_INDETERMINATE):
                     text_of_one_type += c
                 elif text_of_one_type:
                     self.append_text_of_one_type(text_of_one_type, curFontType)
@@ -214,21 +214,20 @@ class FontItemAppender:
         return list(self.fontItemDict.values())
 
     def append_text_of_one_type(self, textval, curFontType):
-        fontTypeName = self.FONT_TYPE_NUM_TO_NAME[curFontType]
+        FONT_TYPE_NUM_TO_NAME = {
+            letters.TYPE_INDETERMINATE : 'Western',
+            letters.TYPE_STANDARD : 'Western',
+            letters.TYPE_COMPLEX : 'Complex',
+            letters.TYPE_CJK : 'Asian'}
+        fontTypeName = FONT_TYPE_NUM_TO_NAME[curFontType]
         fontItem = self.get_item_for_type(fontTypeName)
         fontItem.inputData.append(textval)
 
-    def self.get_item_for_type(self, fontType):
-        """
-        Sets fontItem.fontType and fontItem.name.
-
-        The font type is based on the unicode block of a character,
-        not just based on formatting.
-        Because the font name may just fall back to defaults.
-        """
+    def get_item_for_type(self, fontType):
+        """Sets fontItem.fontType and fontItem.name."""
         if fontType in self.fontItemDict:
             return self.fontItemDict[fontType]
-        attr_of_fontType = {
+        ATTR_OF_FONT_TYPE = {
             'Asian' : 'nameAsian',
             'Complex' : 'nameComplex',
             'Western' : 'nameStandard'}
@@ -236,7 +235,7 @@ class FontItemAppender:
         #if (nextFontType == letters.TYPE_COMPLEX
         #        or nextFontType == letters.TYPE_CJK):
         newItem.fontType = fontType
-        newItem.name = getattr(self.baseFontItem, attr_of_font_type[fontType])
+        newItem.name = getattr(self.baseFontItem, ATTR_OF_FONT_TYPE[fontType])
         self.fontItemDict[fontType] = newItem
         return newItem
 
@@ -247,7 +246,7 @@ class FontItemAppender:
                 break
         else:
             # newItem was not in self.fontItems, so add it.
-            self.logger.debug("appending FontItem %s", newItem)
+            logger.debug("appending FontItem %s", newItem)
             self.fontItems.append(newItem)
 
 
@@ -258,11 +257,10 @@ class OdtChanger:
         :param fontChanges: list of elements type FontChange
         """
         self.reader = reader
-        self.logger = reader.logger
         self.fontChanges = fontChanges
 
     def makeChanges(self):
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         num_changes = self.change_text(self.reader.contentDom)
         self.change_styles(self.reader.contentDom, self.reader.stylesDom)
         with io.open(os.path.join(self.reader.srcdir, 'styles.xml'),
@@ -271,16 +269,16 @@ class OdtChanger:
         with io.open(os.path.join(self.reader.srcdir, 'content.xml'),
                      mode="wt", encoding="utf-8") as f:
             self.reader.contentDom.writexml(f, encoding="utf-8")
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
         return num_changes
 
     def change_text(self, dom):
         """Convert text in content.xml with EncConverters."""
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         num_changes = 0
         for paragraph in dom.getElementsByTagName("text:p"):
             xmlStyleName = paragraph.getAttribute("text:style-name")
-            #self.logger.debug("para style name %s", xmlStyleName)
+            #logger.debug("para style name %s", xmlStyleName)
             paraFontItem = self.reader.stylesDict.get(
                 xmlStyleName, self.reader.defaultFontItem)
             paraFontChange = self.effective_fontChange(paraFontItem)
@@ -293,7 +291,7 @@ class OdtChanger:
                             num_changes += 1
             for span in paragraph.getElementsByTagName("text:span"):
                 xmlStyleName = span.getAttribute("text:style-name")
-                #self.logger.debug("span style name %s", xmlStyleName)
+                #logger.debug("span style name %s", xmlStyleName)
                 spanFontItem = self.reader.stylesDict.get(
                     xmlStyleName, paraFontItem)
                 spanFontChange = self.effective_fontChange(spanFontItem)
@@ -306,7 +304,7 @@ class OdtChanger:
                                     spanFontChange.converted_data[
                                         span_child.data])
                             num_changes += 1
-        self.logger.debug(util.funcName('end'))
+        logger.debug(util.funcName('end'))
         return num_changes
 
     def change_styles(self, contentDom, stylesDom):

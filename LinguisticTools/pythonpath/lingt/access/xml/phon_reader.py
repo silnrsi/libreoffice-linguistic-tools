@@ -13,6 +13,7 @@ Read XML files that typically contain phonology corpus data.
 It is possible to use it for other uses besides phonology, but phonology is
 expected to be the basic structure of the data.
 """
+import logging
 import os
 import re
 import xml.dom.minidom
@@ -25,6 +26,9 @@ from lingt.app import exceptions
 from lingt.app.data import lingex_structs
 from lingt.app.data import wordlist_structs
 from lingt.utils import util
+
+logger = logging.getLogger("lingt.access.phon_reader")
+
 
 class PhonReader(FileReader):
     """For Phonology examples."""
@@ -55,7 +59,7 @@ class PhonReader(FileReader):
     def _read(self):
         filetype = self.get_filetype()
         self.progressBar.updatePercent(30)
-        self.logger.debug("Parsing file %s", self.filepath)
+        logger.debug("Parsing file %s", self.filepath)
         if not os.path.exists(self.filepath):
             raise exceptions.FileAccessError(
                 "Cannot find file %s", self.filepath)
@@ -65,7 +69,7 @@ class PhonReader(FileReader):
             raise exceptions.FileAccessError(
                 "Error reading file %s\n\n%s",
                 self.filepath, str(exc).capitalize())
-        self.logger.debug("Parse finished.")
+        logger.debug("Parse finished.")
         self.progressBar.updatePercent(60)
         if filetype == 'paxml':
             self.read_paxml_file()
@@ -95,14 +99,14 @@ class PhonReader(FileReader):
                         newWord.text = text
                         newWord.source = self.filepath
                         words.append(newWord)
-        self.logger.debug("got %d words", len(words))
+        logger.debug("got %d words", len(words))
         return words
 
     def get_filetype(self):
         """Determines file type based on extension.
         Does not read file contents.
         """
-        self.logger.debug(util.funcName('begin'))
+        logger.debug(util.funcName('begin'))
         filename = os.path.basename(self.filepath)
         filetype = ""
         if re.search(r"\.paxml$", filename):
@@ -114,34 +118,34 @@ class PhonReader(FileReader):
         else:
             raise exceptions.FileAccessError(
                 "Unknown file type for %s", filename)
-        self.logger.debug("File type %s.", filetype)
+        logger.debug("File type %s.", filetype)
         return filetype
 
     def read_paxml_file(self):
         """Read in the data from Phonology Assistant.
         Modifies self.examplesDict
         """
-        self.logger.debug("reading Phonology Assistant file")
+        logger.debug("reading Phonology Assistant file")
         PaXML(self.dom, self.fieldHelper, self.userVars).read()
-        self.logger.debug("finished reading PA file")
+        logger.debug("finished reading PA file")
 
     def read_lift_file(self):
         """Read in the LIFT data from FieldWorks.
         Modifies self.examplesDict
         """
-        self.logger.debug("reading LIFT file")
-        reader = LiftXML(self.dom, self.fieldHelper, self.config, self.logger)
+        logger.debug("reading LIFT file")
+        reader = LiftXML(self.dom, self.fieldHelper, self.config)
         reader.read()
-        self.logger.debug("finished reading LIFT file")
+        logger.debug("finished reading LIFT file")
 
     def read_toolbox_file(self):
         """Read in the data exported directly from Toolbox.
         Modifies self.examplesDict
         """
-        self.logger.debug("reading Toolbox file")
+        logger.debug("reading Toolbox file")
         fieldTags = PhonologyTags(self.userVars).loadUserVars()
         groups = self.dom.getElementsByTagName("phtGroup")
-        self.logger.debug("%d pht groups.", len(groups))
+        logger.debug("%d pht groups.", len(groups))
         for group in groups:
             self.fieldHelper.reset()
             for fieldName, tagName in fieldTags.items():
@@ -150,15 +154,14 @@ class PhonReader(FileReader):
                     self.fieldHelper.add(fieldName, txt)
             if self.fieldHelper.hasContents():
                 self.fieldHelper.addEx()
-        self.logger.debug("finished reading Toolbox file")
+        logger.debug("finished reading Toolbox file")
 
 
 class LiftXML:
-    def __init__(self, dom, fieldHelper, config, logger):
+    def __init__(self, dom, fieldHelper, config):
         self.dom = dom
         self.fieldHelper = fieldHelper
         self.config = config
-        self.logger = logger
 
     def read(self):
         entries = self.dom.getElementsByTagName("entry")
