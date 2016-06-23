@@ -64,7 +64,6 @@ class FontItem(FontInfo):
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type FontChange
-        self.grouped_items = []  # list of FontItem objects if this is a group
 
     def create_change(self, userVars):
         """Create a new FontChange for this item if it doesn't exist yet.
@@ -244,32 +243,109 @@ class FontChange(FontInfo, Syncable):
             "Unexpected attribute names: %r", attr_names)
 
 
-#@functools.total_ordering
-#class FontItemGroup(FontItem):
-#    """Holds one or more related FontItem objects.
-#    This is what gets displayed in the list.
-#    """
-#    def __init__(self):
-#        FontItem.__init__(self)
-#        self.items = []
-#
-#    @classmethod
-def get_group(fontItems):
-    """Creates a group with the shared attributes of the given FontItem
-    objects.
+def _generic_item_attrs():
+    """Returns all attribute names of the FontItem class."""
+    return FontItem().__dict__.keys()
+
+def _generic_change_attrs():
+    """Returns all attribute names of the FontChange class."""
+    generic_item = FontItem()
+    generic_change = FontChange(generic_item, None)
+    return generic_change.__dict__.keys()
+
+@functools.total_ordering
+class FontItemGroup():
+    """Holds one or more related FontItem objects.
+    This is what gets displayed in the list.
     """
-    group = copy.deepcopy(fontItems[0])
-    group.grouped_items = fontItems
-    for item in fontItems[1:]:
+    def __init__(self, fontItems):
+        """:param fontItems: list of FontItem objects for one group."""
+        self.grouped_items = fontItems
+        self.different_item_attrs = set()  # names of FontItem attrs
+        self.different_change_attrs = set()  # names of FontChange attrs
+        self._determine_variations()
+
+    def _determine_variations(self):
+        """Find any attributes that vary across items in the group."""
+        if len(self.grouped_items) <= 1:
+            # No variations since there are not multiple items.
+            return
+        first_item = self.grouped_items[0]
+        first_change = first_item.change
+        for attr in _generic_item_attrs():
+            for item in self.grouped_items[1:]:
+                if getattr(first_item, attr) != getattr(item, attr):
+                    self.different_item_attrs.add(attr)
+                    break
+        for attr in _generic_change_attrs():
+            for item in self.grouped_items[1:]:
+                if not first_change and not item.change:
+                    continue
+                if ((first_change and not item.change)
+                        or (item.change and not first_change)
+                        or (getattr(first_change, attr) !=
+                            getattr(item.change, attr))):
+                    self.different_change_attrs.add(attr)
+                    break
+
+    def itemattr(self, attr):
+        """Get a FontItem attribute."""
+        return self._get_attr_or_various(
+            self.first_item(), attr, self.itemattr_varies(attr))
+
+    def changeattr(self, attr):
+        """Get a FontChange attribute."""
+        return self._get_attr_or_various(
+            self.first_change(), attr, self.changeattr_varies(attr))
+
+    def _get_attr_or_various(self, info, attr, varies):
+        if attr in different_attrs:
+            # Be sure not to treat this as a numeric value,
+            # for example if this value is used instead of FontItem.size.
+            return "(Various)"
+        return getattr(info, attr)
+
+    def first_item(self):
+        """Attributes of the first item can be used to display the information
+        unless the attributes are in self.different_attrs.
+        """
+        if len(self.grouped_items):
+            return self.grouped_items[0]
+        return FontItem()
+
+    def first_change(self):
+        item = self.first_item()
         if item.change:
-            group.create_change(item.change.userVars)
-        for attr in ('name', 
-        self.name
-        self.nameStandard
-        self.nameComplex
-        self.nameAsian
-            ):
-            if getattr(group, attr) != getattr(item, attr):
-                setattr(group, attr, '(Various)')
-    return group
+            return item.change
+        return FontChange(item, None)
+
+    def itemattr_varies(self, attr):
+        """Returns true if values vary across items in the group."""
+        return attr in different_item_attrs:
+
+    def changeattr_varies(self, attr):
+        return attr in different_change_attrs:
+
+    def __lt__(self, other):
+        # < calls FontItem.__lt__() defined in this module.
+        return (isinstance(other, FontItemGroup) and
+                self.effective_item() < other.effective_item())
+
+    def __eq__(self, other):
+        # == calls FontItem.__eq__() defined in this module.
+        return (isinstance(other, FontItemGroup) and
+                self.effective_item() == other.effective_item())
+
+    def effective_item(self):
+        """Returns an item with this group's values, where values that vary are
+        marked as such.
+        """
+        fontItem = FontItem()
+        for attr in _generic_item_attrs():
+            setattr(fontItem, attr, self.itemattr(attr))
+        if fontItem.change or self.itemattr_varies('change'):
+            fontItem.change = FontChange(fontItem, None)
+            for attr in _generic_change_attrs():
+                setattr(fontItem.change, attr, self.changeattr(attr))
+        return fontItem
 

@@ -8,6 +8,7 @@
 
 ## Next
 
+Change FontItemList to use FontItemGroup.
 Write grouping code for font name.
 
 
