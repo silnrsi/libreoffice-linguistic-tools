@@ -9,6 +9,7 @@
 # 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
 # 19-Feb-16 JDK  Add fonts found of each type.
 # 22-Jun-16 JDK  Add method to group items.
+# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -258,27 +259,36 @@ class FontItemGroup():
     """Holds one or more related FontItem objects.
     This is what gets displayed in the list.
     """
+    VARIOUS = "(Various)"
+
     def __init__(self, fontItems):
         """:param fontItems: list of FontItem objects for one group."""
-        self.grouped_items = fontItems
+        self.items = fontItems
         self.different_item_attrs = set()  # names of FontItem attrs
         self.different_change_attrs = set()  # names of FontChange attrs
+        self.effective_item = None
+        self.reload()
+
+    def reload(self):
         self._determine_variations()
+        self._determine_effective_item()
 
     def _determine_variations(self):
         """Find any attributes that vary across items in the group."""
-        if len(self.grouped_items) <= 1:
+        self.different_item_attrs = set()
+        self.different_change_attrs = set()
+        if len(self.items) <= 1:
             # No variations since there are not multiple items.
             return
-        first_item = self.grouped_items[0]
+        first_item = self.items[0]
         first_change = first_item.change
         for attr in _generic_item_attrs():
-            for item in self.grouped_items[1:]:
+            for item in self.items[1:]:
                 if getattr(first_item, attr) != getattr(item, attr):
                     self.different_item_attrs.add(attr)
                     break
         for attr in _generic_change_attrs():
-            for item in self.grouped_items[1:]:
+            for item in self.items[1:]:
                 if not first_change and not item.change:
                     continue
                 if ((first_change and not item.change)
@@ -288,55 +298,7 @@ class FontItemGroup():
                     self.different_change_attrs.add(attr)
                     break
 
-    def itemattr(self, attr):
-        """Get a FontItem attribute."""
-        return self._get_attr_or_various(
-            self.first_item(), attr, self.itemattr_varies(attr))
-
-    def changeattr(self, attr):
-        """Get a FontChange attribute."""
-        return self._get_attr_or_various(
-            self.first_change(), attr, self.changeattr_varies(attr))
-
-    def _get_attr_or_various(self, info, attr, varies):
-        if attr in different_attrs:
-            # Be sure not to treat this as a numeric value,
-            # for example if this value is used instead of FontItem.size.
-            return "(Various)"
-        return getattr(info, attr)
-
-    def first_item(self):
-        """Attributes of the first item can be used to display the information
-        unless the attributes are in self.different_attrs.
-        """
-        if len(self.grouped_items):
-            return self.grouped_items[0]
-        return FontItem()
-
-    def first_change(self):
-        item = self.first_item()
-        if item.change:
-            return item.change
-        return FontChange(item, None)
-
-    def itemattr_varies(self, attr):
-        """Returns true if values vary across items in the group."""
-        return attr in different_item_attrs:
-
-    def changeattr_varies(self, attr):
-        return attr in different_change_attrs:
-
-    def __lt__(self, other):
-        # < calls FontItem.__lt__() defined in this module.
-        return (isinstance(other, FontItemGroup) and
-                self.effective_item() < other.effective_item())
-
-    def __eq__(self, other):
-        # == calls FontItem.__eq__() defined in this module.
-        return (isinstance(other, FontItemGroup) and
-                self.effective_item() == other.effective_item())
-
-    def effective_item(self):
+    def _determine_effective_item(self):
         """Returns an item with this group's values, where values that vary are
         marked as such.
         """
@@ -347,5 +309,64 @@ class FontItemGroup():
             fontItem.change = FontChange(fontItem, None)
             for attr in _generic_change_attrs():
                 setattr(fontItem.change, attr, self.changeattr(attr))
-        return fontItem
+        #TODO: merge inputData lists
+        #TODO: if two items have different converters, then don't perform
+        #      any conversion -- leave converted text blank
+        self.effective_item = fontItem
 
+    def itemattr(self, attr):
+        """Get a FontItem attribute."""
+        return self._get_attr_or_various(
+            self.get_first_item(), attr, self.itemattr_varies(attr))
+
+    def changeattr(self, attr):
+        """Get a FontChange attribute."""
+        return self._get_attr_or_various(
+            self.get_first_change(), attr, self.changeattr_varies(attr))
+
+    def _get_attr_or_various(self, info, attr, varies):
+        if not varies:
+            return getattr(info, attr)
+        if attr == 'size':
+            return FontSize()
+        if attr == 'inputData':
+            return []
+        if attr == 'change':
+            return FontChange(FontItem(), None)
+        if attr == 'converter':
+            return ConverterSettings(None)
+        if attr == 'converted_data':
+            return dict()
+        # Must be an attribute of type string.
+        return self.VARIOUS
+
+    def get_first_item(self):
+        """Attributes of the first item can be used to display the information
+        unless the attributes are in self.different_attrs.
+        """
+        if len(self.items):
+            return self.items[0]
+        return FontItem()
+
+    def get_first_change(self):
+        item = self.first_item()
+        if item.change:
+            return item.change
+        return FontChange(item, None)
+
+    def itemattr_varies(self, attr):
+        """Returns true if values vary across items in the group."""
+        return attr in different_item_attrs
+
+    def changeattr_varies(self, attr):
+        return attr in different_change_attrs
+
+    def __lt__(self, other):
+        # < calls FontItem.__lt__() defined in this module.
+        return (isinstance(other, FontItemGroup) and
+                self.effective_item() < other.effective_item())
+
+    def __eq__(self, other):
+        # == calls FontItem.__eq__() defined in this module.
+        return (isinstance(other, FontItemGroup) and
+                self.effective_item() == other.effective_item())

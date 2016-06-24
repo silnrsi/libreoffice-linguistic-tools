@@ -1,6 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created June 16 2016 by Jim Kornelsen
+#
+# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 
 """
 Bulk Conversion classes that hold controls for FontItem data.
@@ -15,7 +17,7 @@ import logging
 
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem
+from lingt.app.data.bulkconv_structs import FontItem, FontItemGroup
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
@@ -53,6 +55,11 @@ class FontChangeControlHandler:
         self.app.update_list(self)
         self.step2Master.refresh_list()
 
+    def update_group_changes(self, group):
+        for item in group.items:
+            item.create_change(self.app.userVars)
+            self.update_change(fontChange)
+
     def update_change(self, fontChange):
         """Read form values and modify fontChange accordingly."""
         pass
@@ -60,6 +67,9 @@ class FontChangeControlHandler:
     def copy_change(self, change_from, change_to):
         """Set attributes of change_to based on change_from."""
         pass
+
+    def fill_for_group(self, fontGroup):
+        self.fill_for_item(fontGroup.effective_item)
 
     def fill_for_item(self, fontItem):
         if fontItem.change:
@@ -131,23 +141,26 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
     def handle_action_event(self, action_command):
         self.selectConverter()
         FontChangeControlHandler.handle_action_event(self, action_command)
-        self.sample_controls.fill_for_selected_item()
+        self.sample_controls.fill_for_selected_group()
 
     def selectConverter(self):
         logger.debug(util.funcName('begin'))
-        fontItem = self.app.selected_item()
-        if not fontItem:
+        group = self.app.selected_group()
+        if not group:
             return
         conv_settings = None
-        if fontItem.change:
+        if (group.effective_item.change
+                and not group.itemattr_varies('change')
+                and not group.changeattr_varies('converter')):
             conv_settings = fontItem.change.converter
         newChange = self.app.convPool.selectConverter(conv_settings)
-        fontItem.set_change(newChange)
+        for item in group.items:
+            item.set_change(newChange)
         self.app.convPool.cleanup_unused()
         checkboxReverse = CheckboxReverse(
             self.ctrl_getter, self.app, self.step2Master, self.sample_controls)
-        self.fill_for_item(fontItem)
-        checkboxReverse.fill_for_item(fontItem)
+        self.fill_for_group(group)
+        checkboxReverse.fill_for_group(group)
         logger.debug(util.funcName('end'))
 
     def update_change(self, fontChange):
@@ -178,7 +191,7 @@ class CheckboxReverse(FontChangeControlHandler,
 
     def handle_item_event(self, src):
         FontChangeControlHandler.handle_item_event(self, src)
-        self.sample_controls.fill_for_selected_item()
+        self.sample_controls.fill_for_selected_group()
 
     def update_change(self, fontChange):
         converter = fontChange.converter
@@ -216,11 +229,11 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
     def store_results(self):
         self.showConvControls.store_results()
 
-    def fill_for_selected_item(self):
-        fontItem = self.app.selected_item()
-        if not fontItem:
+    def fill_for_selected_group(self):
+        group = self.app.selected_group()
+        if not group:
             return
-        self.fill_for_item(fontItem)
+        self.fill_for_item(group.effective_item)
 
     def fill_for_item(self, fontItem):
         if fontItem.change:
@@ -298,7 +311,7 @@ class SampleLabels:
         """See also lingt.access.writer.textchanges.changeFont().
         :param fontInfo: either a FontItem or a FontChange
         """
-        if not fontName:
+        if not fontName or fontName == FontItemGroup.VARIOUS:
             fontName = " "
         logger.debug("set %s.FontName %s", ctrl.getModel().Name, fontName)
         ctrl.getModel().setPropertyValue('FontName', fontName)
@@ -466,14 +479,15 @@ class FontNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
 
     def change_control_prop(self):
         sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.change_font_name(self.app.selected_item())
+        sampleControls.change_font_name(
+            self.app.selected_group().effective_item)
 
     def set_style_radio(self):
         """Sets the style type radio buttons to Custom Formatting."""
-        font_item = self.app.selected_item()
-        self.style_type_handler.fill_for_item(font_item)
+        font_group = self.app.selected_group()
+        self.style_type_handler.fill_for_group(font_group)
         # Calling update_change() gets the style name.
-        self.style_type_handler.update_change(font_item.change)
+        self.style_type_handler.update_group_changes(font_group)
         self.app.update_list(self.style_type_handler)
 
 
@@ -541,7 +555,8 @@ class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
 
     def change_control_prop(self):
         sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.change_font_size(self.app.selected_item())
+        sampleControls.change_font_size(
+            self.app.selected_group().effective_item)
 
 
 class StyleControls(AggregateControlHandler):
@@ -595,7 +610,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
 
     def handle_item_event(self, src):
         FontChangeControlHandler.handle_item_event(self, src)
-        self.style_type_handler.fill_for_item(self.app.selected_item())
+        self.style_type_handler.fill_for_group(self.app.selected_group())
         self.selectFontFromStyle()
 
     def update_change(self, fontChange):
@@ -625,7 +640,7 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
     def selectFontFromStyle(self):
         """Selects the font based on the style."""
         logger.debug(util.funcName())
-        fontItem = self.app.selected_item()
+        fontItem = self.app.selected_group().effective_item
         fontChange = fontItem.change
         if fontChange.styleType == FontItem.STYLETYPE_CUSTOM:
             return

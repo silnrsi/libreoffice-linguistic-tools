@@ -15,6 +15,7 @@
 # 31-May-16 JDK  Standardize names of filling methods.
 # 13-Jun-16 JDK  Aggregate related controls so that they can call each other.
 # 16-Jun-16 JDK  Moved controls classes to their own module.
+# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 
 """
 Bulk Conversion dialog step 2.
@@ -165,9 +166,10 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
             evt_handler.raise_unknown_action(action_command)
 
     def resetFont(self):
-        if not self.app.selected_item():
+        group = self.app.selected_group()
+        if not group:
             return
-        for item in self.app.fontItemList.matching_items():
+        for item in group.items:
             item.change = None
         self.step2Master.refresh_list_and_fill()
 
@@ -180,10 +182,11 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
         if self.copiedSettings is None:
             self.app.msgbox.display("First copy font settings.")
             return
-        if not self.app.selected_item():
+        group = self.app.selected_group()
+        if not group:
             return
-        for item in self.app.fontItemList.matching_items():
-            item.create_change()
+        for item in group.items:
+            item.create_change(self.app.userVars)
             self.step2Master.copy_change_attrs(
                 self.copiedSettings, item.change)
         self.step2Master.refresh_list_and_fill()
@@ -201,11 +204,11 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         self.list_ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
-        self._read_selected_item()
-        self.fill_form_for_selected_item()
+        self._read_selected_group()
+        self.fill_form_for_selected_group()
         self.refresh()
 
-    def _read_selected_item(self):
+    def _read_selected_group(self):
         """Sets the app's selected_index."""
         try:
             self._set_app_index(
@@ -217,14 +220,14 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
 
     def refresh_and_fill(self):
         self.refresh()
-        self.fill_form_for_selected_item()
+        self.fill_form_for_selected_group()
 
     def refresh(self):
         """Redraw the list and select the same item."""
         dutil.fill_list_ctrl(
             self.list_ctrl,
-            [str(fontItem) for fontItem in self.app.fontItemList])
-        if self.app.fontItemList.items:
+            [str(group.effective_item) for group in self.app.fontItemList])
+        if self.app.fontItemList.groups:
             if self._get_app_index() == -1:
                 self._set_app_index(0)
             dutil.select_index(
@@ -235,18 +238,18 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         if index == -1:
             self.refresh()
             return
-        fontItem = self.app.selected_item()
-        self.list_ctrl.addItem(str(fontItem), index)
+        effective_item = self.app.selected_group().effective_item
+        self.list_ctrl.addItem(str(effective_item), index)
         self.list_ctrl.removeItems(index + 1, 1)
 
-    def fill_form_for_selected_item(self):
+    def fill_form_for_selected_group(self):
         """Fills data controls based on the item selected in the list."""
         logger.debug(util.funcName('begin'))
-        fontItem = self.app.selected_item()
-        if not fontItem:
+        group = self.app.selected_group()
+        if not group:
             logger.debug("No fontItem selected.")
             return
-        self.step2Master.fill_for_item(fontItem)
+        self.step2Master.fill_for_item(group.effective_item)
 
     def _set_app_index(self, index):
         self.app.fontItemList.selected_index = index

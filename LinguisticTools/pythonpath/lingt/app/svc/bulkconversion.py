@@ -5,6 +5,7 @@
 # 29-Dec-15 JDK  Set and verify sec_call if none exists yet.
 # 29-Dec-15 JDK  Use converter name as key instead of ConverterSettings.
 # 20-Feb-16 JDK  Added FontItemList.
+# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 
 """
 Bulk Conversion will create multiple SEC call objects,
@@ -17,12 +18,13 @@ This module exports:
 """
 import collections
 import logging
+from operator import attrgetter
 
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontChange
+from lingt.app.data.bulkconv_structs import FontItemGroup, FontChange
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
@@ -75,15 +77,15 @@ class BulkConversion:
                         uniqueFontsFound[fontItem].inputData)
                 uniqueFontsFound[fontItem] = fontItem
             progressRange.update(fileItemIndex)
-        self.fontItemList.items = uniqueFontsFound.values()
+        self.fontItemList.set_items(uniqueFontsFound.values())
         progressBar.updateFinishing()
         progressBar.close()
         logger.debug(util.funcName('end', args=len(self.fontItemList.items)))
 
     def update_list(self, event_handler):
         """Update self.fontItemList based on the event that occurred."""
-        item_to_update = self.fontItemList.selected_item()
-        self.fontItemList.update_group(item_to_update, event_handler)
+        group_to_update = self.fontItemList.selected_group()
+        self.fontItemList.update_group(group_to_update, event_handler)
 
     def doConversions(self):
         logger.debug(util.funcName('begin'))
@@ -149,9 +151,8 @@ class BulkConversion:
         """Returns a list of all non-empty FontChange objects for the list
         of found FontItem.
         """
-        return [
-            fontItem.change for fontItem in self.fontItemList.items
-            if fontItem.change]
+        return [item.change for item in self.fontItemList.all_items()
+                if item.change]
 
     def get_all_conv_names(self):
         """Returns all currently used converter names."""
@@ -160,68 +161,96 @@ class BulkConversion:
             for fontChange in self.getFontChanges()
             if fontChange.converter.convName])
 
-    def selected_item(self):
-        return self.fontItemList.selected_item()
+    def selected_group(self):
+        return self.fontItemList.selected_group()
 
 
 class FontItemList:
-    """Manage a list of FontItem objects.  Optionally group similar items."""
-
+    """Manage a list of FontItemGroup objects.  Optionally group similar
+    items.
+    """
     def __init__(self, userVars):
         self.userVars = userVars
-        self.items = []  # elements are type FontItem
+        self.groups = []  # elements are type FontItemGroup
         self.groupSizes = True
         self.groupStyles = True
         self.groupFontTypes = True
-        self.selected_index = -1  # selected FontItem
+        self.selected_index = -1  # selected FontItemGroup
 
-    def get_grouped_list(self):
-        """Returns a list of new FontItem objects,
-        based on those in self.items.
+    def set_items(self, allFontItems):
+        """Groups items according to member flags.  Sets self.groups.
+        Merge data, sorting data by fontItem.inputDataOrder.
+        :param allFontItems: ungrouped list of FontItem objects
         """
-        # TODO: Group according to member flags.
-        # Merge data, sorting data by fontItem.inputDataOrder.
-        return sorted(self.items)
+        similar_items = {}  # key FontItem, value list of similar FontItem
+        for item in allFontItems: 
+            for similar_item in self.similar_items:
+                if self.is_item_similar(item, similar_item):
+                    similar_items[similar_item].append(item)
+                    break
+            else:
+                self.similar_items[item] = [item]
+        for fontItems in similar_items.values():
+            fontItems.sort(key=attrgetter('inputDataOrder'))
+            group = FontItemGroup(fontItems) 
+            self.groups.append(group)
+        self.groups.sort()
 
-    def update_group(self, item_to_update, event_handler):
+    def regroup_items(self):
+        """This is useful if the grouping flags change."""
+        self.set_items(self.all_items())
+
+    def is_item_similar(self, item, item2):
+        """Use member flags to test whether items are basically equal.
+        Make a fuzzy item that conditionally has differences removed.
+        See also FontItem.attrs() -- any attrs except 'name' can be ignored.
+        """
+        fuzzy_item = copy.deepcopy(item2)
+        attrs_to_ignore = []
+        if self.groupFontTypes:
+            attrs_to_ignore.append(
+                'fontType', 'nameStandard', 'nameComplex', 'nameAsian')
+        if self.groupStyles:
+            attrs_to_ignore.append('styleName', 'styleType')
+        if self.groupSizes:
+            attrs_to_ignore.append('size')
+        for attr in attrs_to_ignore:
+            setattr(fuzzy_item, attr, getattr(item, attr))
+        return item == fuzzy_item
+
+    def update_group(self, group_to_update, event_handler):
         """When controls get changed,
         update all FontItem objects in the selected group.
 
-        :param item_to_update: type FontItem
+        :param group_to_update: type FontItemGroup
         :param changed_values: type FontChange
         :param attrs_changed: list of FontChange attribute names
         """
         logger.debug(util.funcName('begin', args=type(event_handler).__name__))
-        for item in self.matching_items(item_to_update):
+        for item in group_to_update.items:
             item.create_change(self.userVars)
             event_handler.update_change(item.change)
 
-    def matching_items(self, item_to_match=None):
-        """Get all FontItem objects in the selected group.
-        :param item_to_update: type FontItem, defaults to selected item
-        """
-        matching_items = []
-        if not item_to_match:
-            item_to_match = self.selected_item()
-        for item in self.items:
-            if item == item_to_match:
-                matching_items.append(item)
-        return matching_items
-
-    def selected_item(self):
+    def selected_group(self):
         if self.selected_index == -1:
             return None
         return self[self.selected_index]
 
+    def all_items(self):
+        """Generator function to return all items in the list."""
+        for group in self.groups:
+            for item in group.items:
+                yield item
+
     def __getitem__(self, index):
         """For random access."""
-        return self.get_grouped_list()[index]
+        return self.groups[index]
 
     def __iter__(self):
         """We override __iter__ here for better performance than
         __getitem__.
         """
-        return list.__iter__(self.get_grouped_list())
+        return list.__iter__(self.groups)
 
 
 class Samples:
