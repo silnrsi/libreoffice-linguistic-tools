@@ -6,6 +6,7 @@
 # 29-Dec-15 JDK  Use converter name as key instead of ConverterSettings.
 # 20-Feb-16 JDK  Added FontItemList.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
+# 01-Jul-16 JDK  Samples reads from FontItemGroup instead of FontItem.
 
 """
 Bulk Conversion will create multiple SEC call objects,
@@ -17,6 +18,7 @@ This module exports:
     ConvPool
 """
 import collections
+import copy
 import logging
 from operator import attrgetter
 
@@ -24,7 +26,7 @@ from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItemGroup, FontChange
+from lingt.app.data.bulkconv_structs import FontItemGroup
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
@@ -80,7 +82,7 @@ class BulkConversion:
         self.fontItemList.set_items(uniqueFontsFound.values())
         progressBar.updateFinishing()
         progressBar.close()
-        logger.debug(util.funcName('end', args=len(self.fontItemList.items)))
+        logger.debug(util.funcName('end', args=len(self.fontItemList.groups)))
 
     def update_list(self, event_handler):
         """Update self.fontItemList based on the event that occurred."""
@@ -183,16 +185,16 @@ class FontItemList:
         :param allFontItems: ungrouped list of FontItem objects
         """
         similar_items = {}  # key FontItem, value list of similar FontItem
-        for item in allFontItems: 
-            for similar_item in self.similar_items:
+        for item in allFontItems:
+            for similar_item in similar_items:
                 if self.is_item_similar(item, similar_item):
                     similar_items[similar_item].append(item)
                     break
             else:
-                self.similar_items[item] = [item]
+                similar_items[item] = [item]
         for fontItems in similar_items.values():
             fontItems.sort(key=attrgetter('inputDataOrder'))
-            group = FontItemGroup(fontItems) 
+            group = FontItemGroup(fontItems)
             self.groups.append(group)
         self.groups.sort()
 
@@ -266,13 +268,18 @@ class Samples:
         self.conv_settings = None
         self.converted_data = Samples.NO_DATA
 
-    def set_fontItem(self, fontItem):
+    def set_fontItemGroup(self, fontItemGroup):
         """Use values from a FontItem."""
         self.sampleIndex = -1
-        self.inputData = fontItem.inputData
+        self.inputData = fontItemGroup.inputData
         self.conv_settings = None
-        if fontItem.change:
-            self.conv_settings = fontItem.change.converter
+        # If two items have different converters, then don't perform
+        # any conversion -- leave converted text blank.
+        if fontItemGroup.change:
+            if fontItemGroup.changeattr_varies('converter'):
+                self.converted_data = FontItemGroup.VARIOUS
+            else:
+                self.conv_settings = fontItemGroup.change.converter
 
     def has_more(self):
         """Returns True if there are more samples."""
@@ -323,9 +330,7 @@ class ConvPool:
         self._secCallObjs = dict()  # the main dict for this class
 
     def selectConverter(self, key):
-        """Returns a FontChange with EncConverter fields set, or None if
-        cancelled.
-        """
+        """Returns ConverterSettings, or None if cancelled."""
         logger.debug(util.funcName('begin'))
         if key in self:
             secCall = self[key]
@@ -335,14 +340,13 @@ class ConvPool:
             secCall.pickConverter()
         except exceptions.FileAccessError as exc:
             self.msgbox.displayExc(exc)
-        if not secCall.config.convName:
+        conv_settings = secCall.config
+        if not conv_settings.convName:
             return None
         logger.debug("Picked converter.")
-        self[secCall.config.convName] = secCall
-        fontChange = FontChange(None, self.userVars)
-        fontChange.converter = secCall.config
-        logger.debug("Converter name '%s'", fontChange.converter.convName)
-        return fontChange
+        self[conv_settings.convName] = secCall
+        logger.debug("Converter name '%s'", conv_settings.convName)
+        return conv_settings
 
     def loadConverter(self, conv_settings):
         """Call this method before calling one of the doConversion() methods.

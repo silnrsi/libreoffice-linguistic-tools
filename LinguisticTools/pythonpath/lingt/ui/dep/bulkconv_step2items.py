@@ -7,10 +7,12 @@
 """
 Bulk Conversion classes that hold controls for FontItem data.
 
-This module exports all of its classes, including the following aggregates:
+This module exports:
     ConverterControls
     StyleControls
     FontControls
+    FoundFontInfo
+    CheckboxShowConverter
 """
 import copy
 import logging
@@ -58,7 +60,7 @@ class FontChangeControlHandler:
     def update_group_changes(self, group):
         for item in group.items:
             item.create_change(self.app.userVars)
-            self.update_change(fontChange)
+            self.update_change(item.change)
 
     def update_change(self, fontChange):
         """Read form values and modify fontChange accordingly."""
@@ -152,10 +154,11 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
         if (group.effective_item.change
                 and not group.itemattr_varies('change')
                 and not group.changeattr_varies('converter')):
-            conv_settings = fontItem.change.converter
-        newChange = self.app.convPool.selectConverter(conv_settings)
+            conv_settings = group.effective_item.change.converter
+        new_conv_settings = self.app.convPool.selectConverter(conv_settings)
         for item in group.items:
-            item.set_change(newChange)
+            item.create_change(self.app.userVars)
+            item.change.converter = new_conv_settings
         self.app.convPool.cleanup_unused()
         checkboxReverse = CheckboxReverse(
             self.ctrl_getter, self.app, self.step2Master, self.sample_controls)
@@ -233,13 +236,11 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
         group = self.app.selected_group()
         if not group:
             return
-        self.fill_for_item(group.effective_item)
-
-    def fill_for_item(self, fontItem):
+        fontItem = group.effective_item
         if fontItem.change:
             converter = fontItem.change.converter
             self.samples.last_settings[converter.convName] = converter
-        self.samples.set_fontItem(fontItem)
+        self.samples.set_fontItemGroup(self.app.selected_group())
         self.change_font_name(fontItem)
         self.change_font_size(fontItem)
         self.nextInputControls.nextInputSample()
@@ -405,6 +406,9 @@ class FoundFontInfo:
 
     def load_values(self):
         self.fill_for_item(FontItem())
+
+    def fill_for_group(self, fontGroup):
+        self.fill_for_item(fontGroup.effective_item)
 
     def fill_for_item(self, fontItem):
         foundFontNames = ""

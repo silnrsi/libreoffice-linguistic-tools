@@ -125,12 +125,12 @@ class Step2Master:
     def refresh_list(self):
         self.listFontsUsed.refresh_selected()
 
-    def fill_for_item(self, fontItem):
+    def fill_for_group(self, fontItemGroup):
         """Fill form according to specified font settings."""
         logger.debug(util.funcName('begin'))
         foundFontInfo = _itemctrls.FoundFontInfo(self.ctrl_getter, self.app)
         for fontitem_controls in self.data_controls + [foundFontInfo]:
-            fontitem_controls.fill_for_item(fontItem)
+            fontitem_controls.fill_for_group(fontItemGroup)
         logger.debug(util.funcName('end'))
 
 
@@ -249,7 +249,7 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         if not group:
             logger.debug("No fontItem selected.")
             return
-        self.step2Master.fill_for_item(group.effective_item)
+        self.step2Master.fill_for_group(group)
 
     def _set_app_index(self, index):
         self.app.fontItemList.selected_index = index

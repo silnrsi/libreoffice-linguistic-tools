@@ -19,13 +19,14 @@ This module exports:
     FontItem
     FontChange
 """
-import copy
 import functools
+from operator import attrgetter
 
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
 from lingt.utils.fontsize import FontSize
+from lingt.utils.locale import theLocale
 
 
 class FontInfo:
@@ -259,7 +260,7 @@ class FontItemGroup():
     """Holds one or more related FontItem objects.
     This is what gets displayed in the list.
     """
-    VARIOUS = "(Various)"
+    VARIOUS = theLocale.getText("(Various)")
 
     def __init__(self, fontItems):
         """:param fontItems: list of FontItem objects for one group."""
@@ -309,9 +310,8 @@ class FontItemGroup():
             fontItem.change = FontChange(fontItem, None)
             for attr in _generic_change_attrs():
                 setattr(fontItem.change, attr, self.changeattr(attr))
-        #TODO: merge inputData lists
-        #TODO: if two items have different converters, then don't perform
-        #      any conversion -- leave converted text blank
+        for item in sorted(self.items, key=attrgetter('inputDataOrder')):
+            fontItem.inputData.extend(item.inputData)
         self.effective_item = fontItem
 
     def itemattr(self, attr):
@@ -325,20 +325,23 @@ class FontItemGroup():
             self.get_first_change(), attr, self.changeattr_varies(attr))
 
     def _get_attr_or_various(self, info, attr, varies):
+        """Return the requested value.  If the value varies, then returns a
+        generic value of the appropriate type.
+        """
         if not varies:
             return getattr(info, attr)
+        various_val = self.VARIOUS  # for string types
         if attr == 'size':
-            return FontSize()
-        if attr == 'inputData':
-            return []
-        if attr == 'change':
-            return FontChange(FontItem(), None)
-        if attr == 'converter':
-            return ConverterSettings(None)
-        if attr == 'converted_data':
-            return dict()
-        # Must be an attribute of type string.
-        return self.VARIOUS
+            various_val = FontSize()
+        elif attr == 'inputData':
+            various_val = []
+        elif attr == 'change':
+            various_val = FontChange(FontItem(), None)
+        elif attr == 'converter':
+            various_val = ConverterSettings(None)
+        elif attr == 'converted_data':
+            various_val = dict()
+        return various_val
 
     def get_first_item(self):
         """Attributes of the first item can be used to display the information
@@ -349,17 +352,17 @@ class FontItemGroup():
         return FontItem()
 
     def get_first_change(self):
-        item = self.first_item()
+        item = self.get_first_item()
         if item.change:
             return item.change
         return FontChange(item, None)
 
     def itemattr_varies(self, attr):
         """Returns true if values vary across items in the group."""
-        return attr in different_item_attrs
+        return attr in self.different_item_attrs
 
     def changeattr_varies(self, attr):
-        return attr in different_change_attrs
+        return attr in self.different_change_attrs
 
     def __lt__(self, other):
         # < calls FontItem.__lt__() defined in this module.

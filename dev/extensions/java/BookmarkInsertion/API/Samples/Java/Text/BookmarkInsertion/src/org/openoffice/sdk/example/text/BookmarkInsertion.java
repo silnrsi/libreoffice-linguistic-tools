@@ -50,13 +50,14 @@
 package org.openoffice.sdk.example.text;
 
 import com.sun.star.beans.PropertyValue;
-import com.sun.star.container.XNameAccess;
 import com.sun.star.frame.XDesktop;
 import com.sun.star.frame.XDispatchHelper;
 import com.sun.star.frame.XDispatchProvider;
-import com.sun.star.lang.XMultiComponentFactory;
+import com.sun.star.text.XText;
+import com.sun.star.text.XTextCursor;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
+import com.sun.star.text.XTextRange;
 import com.sun.star.view.XPrintJobBroadcaster;
 import com.sun.star.view.XPrintJobListener;
 //import javax.print.event.PrintJobEvent;
@@ -68,6 +69,7 @@ public class BookmarkInsertion {
 	static XDispatchHelper dispatcher = null;
 
     public static void main(String args[]) {
+    //public static void was_main(String args[]) {
 		System.out.println("main() BEGIN");
         // You need the desktop to create a document
         // The getDesktop method does the UNO bootstrapping, gets the
@@ -77,6 +79,7 @@ public class BookmarkInsertion {
        
         // create text document
         XTextDocument xTextDocument = null;
+		XText xText = null;
         com.sun.star.lang.XComponent xComponent = null;
         //xTextDocument = createTextdocument(xDesktop);
         
@@ -84,6 +87,21 @@ public class BookmarkInsertion {
         // open current document
         xComponent = xDesktop.getCurrentComponent();
         xTextDocument =(XTextDocument)UnoRuntime.queryInterface(XTextDocument.class, xComponent);
+        //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
+        //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
+        //xText = (XText)UnoRuntime.queryInterface(XText.class, xTextDocument);
+		xText = xTextDocument.getText();
+		//XTextRange xTextRange = xText.getStart();
+		//XTextCursor xTextCursor = xText.createTextCursorByRange(xTextRange);
+		XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
+		//XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
+		//XTextCursor xTextCursor = xTextDocument.getText().createTextCursorByRange(xText.getStart());
+		//xTextCursor.collapseToStart();
+		int num_chars = 0;
+        while (xTextCursor.goRight((short)1, false)) { num_chars++; }
+		System.out.println("Found " + num_chars + " characters.");
+		System.exit(0);
+
                 /*
                     com.sun.star.frame.XComponentLoader xCompLoader =
                 (com.sun.star.frame.XComponentLoader)
