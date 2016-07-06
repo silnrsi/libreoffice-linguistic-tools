@@ -22,7 +22,7 @@ import copy
 import logging
 from operator import attrgetter
 
-from lingt.access.sec_wrapper import SEC_wrapper
+from lingt.access.sec_wrapper import ConverterSettings, SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
@@ -210,10 +210,10 @@ class FontItemList:
         fuzzy_item = copy.deepcopy(item2)
         attrs_to_ignore = []
         if self.groupFontTypes:
-            attrs_to_ignore.append(
-                'fontType', 'nameStandard', 'nameComplex', 'nameAsian')
+            attrs_to_ignore.extend(
+                ['fontType', 'nameStandard', 'nameComplex', 'nameAsian'])
         if self.groupStyles:
-            attrs_to_ignore.append('styleName', 'styleType')
+            attrs_to_ignore.extend(['styleName', 'styleType'])
         if self.groupSizes:
             attrs_to_ignore.append('size')
         for attr in attrs_to_ignore:
@@ -265,21 +265,18 @@ class Samples:
         self.inputData = []  # from currently selected FontItem
         self.sampleIndex = -1  # index of self.inputData
         self.last_settings = {}  # keys conv name, values ConverterSettings
-        self.conv_settings = None
+        self.conv_settings = ConverterSettings(None)
         self.converted_data = Samples.NO_DATA
 
     def set_fontItemGroup(self, fontItemGroup):
         """Use values from a FontItem."""
         self.sampleIndex = -1
-        self.inputData = fontItemGroup.inputData
-        self.conv_settings = None
-        # If two items have different converters, then don't perform
-        # any conversion -- leave converted text blank.
-        if fontItemGroup.change:
-            if fontItemGroup.changeattr_varies('converter'):
-                self.converted_data = FontItemGroup.VARIOUS
-            else:
-                self.conv_settings = fontItemGroup.change.converter
+        self.inputData = fontItemGroup.effective_item.inputData
+        self.conv_settings = fontItemGroup.changeattr('converter')
+        if fontItemGroup.changeattr_varies('converter'):
+            # If two items have different converters, then don't perform
+            # any conversion -- leave converted text blank.
+            self.converted_data = FontItemGroup.VARIOUS
 
     def has_more(self):
         """Returns True if there are more samples."""
@@ -296,7 +293,7 @@ class Samples:
     def get_converted(self):
         """Convert input sample.  Return converted string."""
         self.converted_data = Samples.NO_DATA
-        if not self.conv_settings or not self.conv_settings.convName:
+        if not self.conv_settings.convName:
             logger.debug("No converter.")
             return self.converted_data
         convName = self.conv_settings.convName

@@ -367,9 +367,9 @@ class FontItemGroup():
     def __lt__(self, other):
         # < calls FontItem.__lt__() defined in this module.
         return (isinstance(other, FontItemGroup) and
-                self.effective_item() < other.effective_item())
+                self.effective_item < other.effective_item)
 
     def __eq__(self, other):
         # == calls FontItem.__eq__() defined in this module.
         return (isinstance(other, FontItemGroup) and
-                self.effective_item() == other.effective_item())
+                self.effective_item == other.effective_item)

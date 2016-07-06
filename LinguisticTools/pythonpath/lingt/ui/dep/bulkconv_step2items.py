@@ -107,6 +107,9 @@ class AggregateControlHandler(FontChangeControlHandler):
     def copy_change(self, *args, **kwargs):
         self._invoke_for_each('copy_change', *args, **kwargs)
 
+    def fill_for_group(self, *args, **kwargs):
+        self._invoke_for_each('fill_for_group', *args, **kwargs)
+
     def fill_for_item(self, *args, **kwargs):
         self._invoke_for_each('fill_for_item', *args, **kwargs)
 
@@ -233,8 +236,12 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
         self.showConvControls.store_results()
 
     def fill_for_selected_group(self):
-        group = self.app.selected_group()
+        self.fill_for_group(self.app.selected_group())
+
+    def fill_for_group(self, group):
+        logger.debug(util.funcName('begin'))
         if not group:
+            logger.debug(util.funcName('return'))
             return
         fontItem = group.effective_item
         if fontItem.change:
@@ -244,6 +251,7 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
         self.change_font_name(fontItem)
         self.change_font_size(fontItem)
         self.nextInputControls.nextInputSample()
+        logger.debug(util.funcName('end'))
 
     def change_font_name(self, fontItem):
         self.sampleLabels.change_font_name(fontItem)

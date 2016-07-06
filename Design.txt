@@ -9,6 +9,7 @@
 ## Next
 
 Test grouping.
+    "Next" sample button not working correctly.
 
 
 ## Sometime
@@ -30,6 +31,13 @@ Version 3.0:
         and without LinguisticTools/tests.
     Spanish and French translations with help from David and Phil.
     Complete set of topdown tests.
+
+
+## Question 2016-07-06
+
+If processing changes the currently open document,
+does it need to be reopened?
+Perhaps it needs to be closed first in order to avoid write errors.
 
 
 ## Possible Problem 2016-02-15
