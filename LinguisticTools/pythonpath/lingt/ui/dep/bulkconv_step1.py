@@ -74,7 +74,7 @@ class FormStep1:
             loaded_item = FontItem()
             fontChange = FontChange(loaded_item, self.app.userVars, varNum)
             fontChange.loadUserVars()
-            for fontItem in self.app.fontItemList:
+            for fontItem in self.app.fontItemList.all_items():
                 if (fontItem.name == loaded_item.name
                         and fontItem.styleName == loaded_item.styleName):
                     logger.debug("found match for %r", fontChange)

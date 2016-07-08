@@ -61,6 +61,7 @@ class FontChangeControlHandler:
         for item in group.items:
             item.create_change(self.app.userVars)
             self.update_change(item.change)
+        group.reload()
 
     def update_change(self, fontChange):
         """Read form values and modify fontChange accordingly."""
@@ -162,11 +163,15 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
         for item in group.items:
             item.create_change(self.app.userVars)
             item.change.converter = new_conv_settings
-        self.app.convPool.cleanup_unused()
+        group.reload()
+        self.fill_for_group(group)
         checkboxReverse = CheckboxReverse(
             self.ctrl_getter, self.app, self.step2Master, self.sample_controls)
-        self.fill_for_group(group)
         checkboxReverse.fill_for_group(group)
+        self.app.convPool.cleanup_unused()
+        logger.debug("len(fontChanges) = %d", len(self.app.getFontChanges()))
+        logger.debug(
+            repr([repr(change) for change in self.app.getFontChanges()]))
         logger.debug(util.funcName('end'))
 
     def update_change(self, fontChange):

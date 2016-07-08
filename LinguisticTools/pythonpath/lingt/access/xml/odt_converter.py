@@ -283,12 +283,15 @@ class OdtChanger:
                 xmlStyleName, self.reader.defaultFontItem)
             paraFontChange = self.effective_fontChange(paraFontItem)
             if paraFontChange:
+                logger.debug("Change for [%s]", xmlStyleName)
                 for para_child in paragraph.childNodes:
                     if para_child.nodeType == para_child.TEXT_NODE:
                         if para_child.data in paraFontChange.converted_data:
                             para_child.data = paraFontChange.converted_data[
                                 para_child.data]
                             num_changes += 1
+            else:
+                logger.debug("No change for [%s]", xmlStyleName)
             for span in paragraph.getElementsByTagName("text:span"):
                 xmlStyleName = span.getAttribute("text:style-name")
                 #logger.debug("span style name %s", xmlStyleName)
@@ -341,11 +344,16 @@ class OdtChanger:
         overridden by a span node.
         """
         if fontItem is None:
+            logger.debug("fontItem is None")
             return None
         for fontChange in self.fontChanges:
             #if fontChange == fontItem:  #TODO
-            if (fontChange.name == fontItem.name
-                    and fontChange.nameComplex == fontItem.nameComplex):
+            logger.debug("Checking %r", fontChange.fontItem)
+            if (fontChange.fontItem.name == fontItem.name
+                    and fontChange.fontItem.nameComplex ==
+                    fontItem.nameComplex):
+                logger.debug("Found %r", fontChange.fontItem)
                 return fontChange
+        logger.debug("Did not find fontItem.")
         return None
 

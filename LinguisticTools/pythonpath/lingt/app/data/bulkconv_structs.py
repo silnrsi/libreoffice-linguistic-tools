@@ -20,6 +20,7 @@ This module exports:
     FontChange
 """
 import functools
+import logging
 from operator import attrgetter
 
 from lingt.access.sec_wrapper import ConverterSettings
@@ -27,6 +28,8 @@ from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
 from lingt.utils.fontsize import FontSize
 from lingt.utils.locale import theLocale
+
+logger = logging.getLogger("lingt.app.dataconversion")
 
 
 class FontInfo:
@@ -43,7 +46,7 @@ class FontInfo:
         self.styleName = ""  # underlying name of styleDisplayName, "Standard"
 
     def __repr__(self):
-        return repr(self.name, self.styleName)
+        return repr([self.name, self.styleName])
 
     def getPropSuffix(self):
         """For use in UNO properties such as CharFontComplex."""
@@ -310,6 +313,7 @@ class FontItemGroup():
             fontItem.change = FontChange(fontItem, None)
             for attr in _generic_change_attrs():
                 setattr(fontItem.change, attr, self.changeattr(attr))
+        fontItem.inputData = []
         for item in sorted(self.items, key=attrgetter('inputDataOrder')):
             fontItem.inputData.extend(item.inputData)
         self.effective_item = fontItem
