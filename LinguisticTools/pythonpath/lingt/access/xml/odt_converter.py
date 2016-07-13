@@ -9,6 +9,7 @@
 # 24-Dec-15 JDK  Added class OdtChanger.
 # 20-Feb-16 JDK  Read complex and Asian font types.
 # 21-Jun-16 JDK  Choose font type based on Unicode block.
+# 13-Jul-16 JDK  Read font size.
 
 """
 Read and change an ODT file in XML format.
@@ -135,6 +136,20 @@ class OdtReader(FileReader):
                     fontItem.name = fontName
                     fontItem.fontType = fontType
                     setattr(fontItem, fontItemAttr, fontName)
+                    self.stylesDict[xmlStyleName] = fontItem
+            for xmlAttr, fontItemAttr, fontType in [
+                    ("style:font-size-asian", 'sizeAsian', 'Asian'),
+                    ("style:font-size-complex", 'sizeComplex', 'Complex'),
+                    ("fo:font-size", 'sizeStandard', 'Western')]:
+                fontSize = textprop.getAttribute(xmlAttr)
+                if fontSize and fontSize.endswith("pt"):
+                    propSuffix = fontType
+                    if propSuffix == 'Western':
+                        propSuffix = ""
+                    fontSizeObj = FontSize(fontSize, propSuffix, True)
+                    fontItem.size = fontSizeObj
+                    fontItem.fontType = fontType
+                    setattr(fontItem, fontItemAttr, fontSizeObj)
                     self.stylesDict[xmlStyleName] = fontItem
         return self.stylesDict.get(xmlStyleName, FontItem())
 

@@ -432,10 +432,16 @@ class FoundFontInfo:
             foundFontNames += "%s:  %s\n" % (
                 theLocale.getText(title), fontName)
         self.foundFonts.setText(foundFontNames)
-        if fontItem.size.isSpecified():
-            fontItem.size.changeCtrlVal(self.foundFontSize)
-        else:
-            self.foundFontSize.setText("(Default)")
+        foundFontSizes = ""
+        for fontSize in (
+                fontItem.sizeStandard,
+                fontItem.sizeComplex,
+                fontItem.sizeAsian):
+            fontSizeString = "(Default)"
+            if fontSize.isSpecified():
+                fontSizeString = str(fontSize)
+            foundFontSizes += fontSizeString + "\n"
+        self.foundFontSize.setText(foundFontSizes)
 
 
 class FontControls(AggregateControlHandler):

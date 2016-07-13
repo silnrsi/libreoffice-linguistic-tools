@@ -10,6 +10,7 @@
 # 19-Feb-16 JDK  Add fonts found of each type.
 # 22-Jun-16 JDK  Add method to group items.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
+# 13-Jul-16 JDK  Each kind of font can have its own size.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -66,6 +67,9 @@ class FontItem(FontInfo):
         self.nameStandard = "(Default)"  # could be non-Unicode Devanagari
         self.nameComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
         self.nameAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
+        self.sizeStandard = FontSize()
+        self.sizeComplex = FontSize()
+        self.sizeAsian = FontSize()
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type FontChange
@@ -102,10 +106,10 @@ class FontItem(FontInfo):
         Used for magic methods below.
         """
         return (
-            self.name, self.fontType,
+            self.name, self.fontType, self.size,
             self.styleName, self.styleType,
-            self.size,
             self.nameStandard, self.nameComplex, self.nameAsian)
+            self.sizeStandard, self.sizeComplex, self.sizeAsian)
 
     def __lt__(self, other):
         return (isinstance(other, FontItem) and

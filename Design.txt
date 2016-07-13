@@ -8,6 +8,7 @@
 
 ## Next
 
+Continue implementing font size for each type.
 Test with an example with two FontItem objects in a single group.
 
 

@@ -31,7 +31,7 @@ class FontSize:
                      the first parameter and set spec to True.
         """
         self.defaultVal = default
-        self.size = default  # floating point number
+        self.size = float(default)
         self.propSuffix = propSuffix
         self.specified = spec
 

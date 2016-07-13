@@ -16,6 +16,7 @@
 # 13-Jun-16 JDK  Aggregate related controls so that they can call each other.
 # 16-Jun-16 JDK  Moved controls classes to their own module.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
+# 13-Jul-16 JDK  Remember state of group check boxes.
 
 """
 Bulk Conversion dialog step 2.
@@ -79,6 +80,9 @@ class FormStep2:
         checkboxShowConverter = _itemctrls.CheckboxShowConverter(
             self.ctrl_getter, self.app)
         checkboxShowConverter.store_results()
+        joinCheckboxes = JoinCheckboxes(
+            self.ctrl_getter, self.app, self.step2Master)
+        joinCheckboxes.store_results()
         verifyHandler = VerifyHandler(self.ctrl_getter, self.app)
         verifyHandler.store_results()
         logger.debug(util.funcName('end'))
@@ -266,18 +270,25 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
         self.app = app
         self.step2Master = step2Master
         self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
-        self.chkJoinSize = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
+        self.chkJoinSizes = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
         self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
 
     def load_values(self):
         userVars = self.app.userVars
-        self.chkJoinFontTypes.setState(userVars.getInt('JoinFontTypes'))
-        self.chkJoinSize.setState(userVars.getInt('JoinSize'))
-        self.chkJoinStyles.setState(userVars.getInt('JoinStyles'))
+        fontItemList = self.app.fontItemList
+        for attr, varname, ctrl in (
+                ('groupFontTypes', 'JoinFontTypes', self.chkJoinFontTypes),
+                ('groupSizes', 'JoinSizes', self.chkJoinSizes),
+                ('groupStyles', 'JoinStyles', self.chkJoinStyles),
+            ):
+            if not userVars.isEmpty(varname):
+                state = bool(userVars.getInt(varname))
+                setattr(fontItemList, attr, state)
+                ctrl.setState(state)
 
     def add_listeners(self):
         for ctrl in (
-                self.chkJoinFontTypes, self.chkJoinSize, self.chkJoinStyles):
+                self.chkJoinFontTypes, self.chkJoinSizes, self.chkJoinStyles):
             ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
@@ -285,12 +296,19 @@ class JoinCheckboxes(evt_handler.ItemEventHandler):
         self.step2Master.refresh_list_and_fill()
 
     def read(self):
-        self.app.fontItemList.groupFontTypes = bool(
-            self.chkJoinFontTypes.getState())
-        self.app.fontItemList.groupSizes = bool(
-            self.chkJoinSize.getState())
-        self.app.fontItemList.groupStyles = bool(
-            self.chkJoinStyles.getState())
+        fontItemList = self.app.fontItemList
+        fontItemList.groupFontTypes = bool(self.chkJoinFontTypes.getState())
+        fontItemList.groupSizes = bool(self.chkJoinSizes.getState())
+        fontItemList.groupStyles = bool(self.chkJoinStyles.getState())
+
+    def store_results(self):
+        fontItemList = self.app.fontItemList
+        for varname, val in (
+                ('JoinFontTypes', fontItemList.groupFontTypes),
+                ('JoinSizes', fontItemList.groupSizes),
+                ('JoinStyles', fontItemList.groupStyles),
+            ):
+            self.app.userVars.store(varname, "%d" % val)
 
 
 class VerifyHandler(evt_handler.ItemEventHandler):
