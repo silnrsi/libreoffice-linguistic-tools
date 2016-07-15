@@ -3,6 +3,7 @@
 # This file created December 24 2015 by Jim Kornelsen
 #
 # 28-Apr-16 JDK  Organize classes by controls.
+# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 
 """
 Bulk Conversion dialog step 1.
@@ -16,7 +17,7 @@ import os
 import uno
 
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem, FontChange
+from lingt.app.data.bulkconv_structs import FontItem, FontChange, ScopeType
 from lingt.app.data.fileitemlist import FileItemList, BulkFileItem
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
@@ -36,9 +37,12 @@ class FormStep1:
         self.filesList = FilesList(ctrl_getter, app, self.outputTo)
         self.filesListButtons = FilesListButtons(
             ctrl_getter, app, self.filesList)
+        self.scopeTypeRadios = ScopeTypeRadios(ctrl_getter, app)
 
-        self.event_handlers = [self.filesListButtons, self.outputTo]
-        self.data_controls = [self.filesList, self.outputTo]
+        self.event_handlers = [
+            self.filesListButtons, self.outputTo, self.scopeTypeRadios]
+        self.data_controls = [
+            self.filesList, self.outputTo, self.scopeTypeRadios]
 
     def start_working(self):
         for event_handler in self.event_handlers:
@@ -54,7 +58,9 @@ class FormStep1:
         self.store_results()
         try:
             self.verify_results()
-            self.app.scanFiles(self.filesList.fileItems, self.outputTo.outdir)
+            self.app.scanFiles(
+                self.filesList.fileItems, self.outputTo.outdir,
+                self.scopeTypeRadios.whichScope)
             self.load_changes()
         except exceptions.MessageError as exc:
             self.app.msgbox.displayExc(exc)
@@ -221,3 +227,43 @@ class OutputTo(evt_handler.ActionEventHandler):
     def read(self):
         self.outdir = self.txtOutputTo.getText().strip()
         return self.outdir
+
+
+class ScopeTypeRadios(evt_handler.ItemEventHandler):
+    def __init__(self, ctrl_getter, app):
+        evt_handler.ItemEventHandler.__init__(self)
+        self.radios = [
+            dutil.RadioTuple(
+                ctrl_getter.get(_dlgdef.OPT_SCOPE_WHOLE_DOC),
+                ScopeType.FONT_WITH_STYLE),
+            dutil.RadioTuple(
+                ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_INCLUDING_STYLE),
+                ScopeType.FONT_WITH_STYLE),
+            dutil.RadioTuple(
+                ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_EXCLUDING_STYLE),
+                ScopeType.FONT_WITH_STYLE),
+            dutil.RadioTuple(
+                ctrl_getter.get(_dlgdef.OPT_SCOPE_PARA_STYLE),
+                ScopeType.FONT_WITH_STYLE),
+            dutil.RadioTuple(
+                ctrl_getter.get(_dlgdef.OPT_SCOPE_CHAR_STYLE),
+                ScopeType.FONT_WITH_STYLE)]
+        self.whichScope = ScopeType.FONT_WITH_STYLE
+
+    def add_listeners(self):
+        for radio in self.radios:
+            radio.ctrl.addItemListener(self)
+
+    def handle_item_event(self, src):
+        self.whichScope = dutil.whichSelected(self.radios)
+
+    def load_values(self):
+        userVars = self.app.userVars
+        varname = 'ScopeType'
+        if not userVars.isEmpty(varname):
+            self.whichScope = userVars.getInt(varname)
+        dutil.selectRadio(self.radios, self.whichScope)
+
+    def store_results(self):
+        self.app.userVars.store('ScopeType', self.whichScope)
+

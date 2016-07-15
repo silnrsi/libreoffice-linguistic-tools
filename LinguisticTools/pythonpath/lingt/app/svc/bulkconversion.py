@@ -7,6 +7,7 @@
 # 20-Feb-16 JDK  Added FontItemList.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 # 01-Jul-16 JDK  Samples reads from FontItemGroup instead of FontItem.
+# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 
 """
 Bulk Conversion will create multiple SEC call objects,
@@ -26,7 +27,7 @@ from lingt.access.sec_wrapper import ConverterSettings, SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItemGroup
+from lingt.app.data.bulkconv_structs import StyleItemGroup, ScopeType
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
@@ -38,9 +39,7 @@ logger = logging.getLogger("lingt.app.dataconversion")
 class BulkConversion:
 
     def __init__(self, docUnoObjs):
-        """
-        unoObjs needs to be for a writer doc
-        """
+        """docUnoObjs needs to be for a writer doc"""
         self.unoObjs = docUnoObjs
         uservars.SettingsDocPreparer(
             uservars.Prefix.BULK_CONVERSION, self.unoObjs).prepare()
@@ -50,15 +49,17 @@ class BulkConversion:
         self.convPool = ConvPool(
             self.userVars, self.msgbox, self.get_all_conv_names)
         self.fileItems = None  # FileItemList of BulkFileItem
-        self.fontItemList = FontItemList(self.userVars)
+        self.styleItemList = StyleItemList(self.userVars)
         self.outdir = ""
         self.askEach = False
+        self.scopeType = ScopeType.FONT_WITH_STYLE
 
-    def scanFiles(self, fileItems, outdir):
-        """Sets self.fontItemList"""
+    def scanFiles(self, fileItems, outdir, scopeType):
+        """Sets self.styleItemList"""
         logger.debug(util.funcName('begin'))
         self.fileItems = fileItems
         self.outdir = outdir
+        self.scopeType = scopeType
         progressBar = ProgressBar(self.unoObjs, "Reading files...")
         progressBar.show()
         progressBar.updateBeginning()
@@ -66,28 +67,28 @@ class BulkConversion:
             ops=len(self.fileItems), pbar=progressBar)
         #progressRange.partSize = 10
         progressRange.partSize = 4
-        uniqueFontsFound = dict()
+        uniqueStylesFound = dict()
         for fileItemIndex, fileItem in enumerate(self.fileItems):
             fileItem.fileEditor = doc_to_xml.DocToXml(
                 self.unoObjs, self.msgbox, fileItem, self.outdir,
                 progressRange)
-            fontsFound = fileItem.fileEditor.read()
-            logger.debug("found %d fonts", len(fontsFound))
-            for fontItem in fontsFound:
-                if fontItem in uniqueFontsFound:
-                    fontItem.inputData.extend(
-                        uniqueFontsFound[fontItem].inputData)
-                uniqueFontsFound[fontItem] = fontItem
+            stylesFound = fileItem.fileEditor.read()
+            logger.debug("found %d styles", len(stylesFound))
+            for styleItem in stylesFound:
+                if styleItem in uniqueStylesFound:
+                    styleItem.inputData.extend(
+                        uniqueStylesFound[styleItem].inputData)
+                uniqueStylesFound[styleItem] = styleItem
             progressRange.update(fileItemIndex)
-        self.fontItemList.set_items(uniqueFontsFound.values())
+        self.styleItemList.set_items(uniqueStylesFound.values())
         progressBar.updateFinishing()
         progressBar.close()
-        logger.debug(util.funcName('end', args=len(self.fontItemList.groups)))
+        logger.debug(util.funcName('end', args=len(self.styleItemList.groups)))
 
     def update_list(self, event_handler):
-        """Update self.fontItemList based on the event that occurred."""
-        group_to_update = self.fontItemList.selected_group()
-        self.fontItemList.update_group(group_to_update, event_handler)
+        """Update self.styleItemList based on the event that occurred."""
+        item_to_update = self.styleItemList.selected_item()
+        self.styleItemList.update_item(item_to_update, event_handler)
 
     def doConversions(self):
         logger.debug(util.funcName('begin'))
@@ -99,9 +100,14 @@ class BulkConversion:
 
         totalChanges = 0
         totalFilesChanged = 0
+        #logger.debug(
+        #   repr([repr(change) for change in self.getStyleChanges()]))
+        logger.debug(
+            repr([change.converter.convName
+                  for change in self.getStyleChanges()]))
         for fileItem in self.fileItems:
             numChanges = fileItem.fileEditor.makeChanges(
-                self.getFontChanges())
+                self.getStyleChanges())
             if numChanges > 0:
                 totalChanges += numChanges
                 totalFilesChanged += 1
@@ -126,15 +132,15 @@ class BulkConversion:
 
     def convert_vals(self):
         """Performs whatever encoding conversion needs to be done.
-        Modifies self.fontItemList by setting FontChange.converted_data.
+        Modifies self.styleItemList by setting StyleChange.converted_data.
         """
         unique_converter_settings = set(
-            [fontChange.converter for fontChange in self.getFontChanges()
-             if fontChange.converter.convName])
-        converter_fontItems = collections.defaultdict(list)
-        for fontChange in self.getFontChanges():
-            converter_fontItems[fontChange.converter].append(
-                fontChange.fontItem)
+            [styleChange.converter for styleChange in self.getStyleChanges()
+             if styleChange.converter.convName])
+        converter_styleItems = collections.defaultdict(list)
+        for styleChange in self.getStyleChanges():
+            converter_styleItems[styleChange.converter].append(
+                styleChange.styleItem)
 
         for converter_settings in unique_converter_settings:
             sec_call = self.convPool.loadConverter(
@@ -142,117 +148,65 @@ class BulkConversion:
             if not sec_call:
                 continue
             self.convPool.cleanup_unused()
-            for fontItem in converter_fontItems[converter_settings]:
-                fontChange = fontItem.change
-                for inputText in fontItem.inputData:
-                    if inputText not in fontChange.converted_data:
+            for styleItem in converter_styleItems[converter_settings]:
+                styleChange = styleItem.change
+                for inputText in styleItem.inputData:
+                    if inputText not in styleChange.converted_data:
                         converted_val = sec_call.convert(inputText)
-                        fontChange.converted_data[inputText] = converted_val
+                        styleChange.converted_data[inputText] = converted_val
 
-    def getFontChanges(self):
-        """Returns a list of all non-empty FontChange objects for the list
-        of found FontItem.
+    def getStyleChanges(self):
+        """Returns a list of all non-empty StyleChange objects for the list
+        of found StyleItem.
         """
-        return [item.change for item in self.fontItemList.all_items()
+        return [item.change for item in self.styleItemList.all_items()
                 if item.change]
 
     def get_all_conv_names(self):
         """Returns all currently used converter names."""
         return set([
-            fontChange.converter.convName
-            for fontChange in self.getFontChanges()
-            if fontChange.converter.convName])
+            styleChange.converter.convName
+            for styleChange in self.getStyleChanges()
+            if styleChange.converter.convName])
 
-    def selected_group(self):
-        return self.fontItemList.selected_group()
+    def selected_item(self):
+        return self.styleItemList.selected_item()
 
 
-class FontItemList:
-    """Manage a list of FontItemGroup objects.  Optionally group similar
-    items.
-    """
+class StyleItemList:
+    """Manage a list of StyleItemGroup objects."""
     def __init__(self, userVars):
         self.userVars = userVars
-        self.groups = []  # elements are type FontItemGroup
-        self.groupSizes = True
-        self.groupStyles = True
-        self.groupFontTypes = True
-        self.selected_index = -1  # selected FontItemGroup
+        self.items = []  # elements are type StyleItemGroup
+        self.selected_index = -1  # selected StyleItemGroup
 
-    def set_items(self, allFontItems):
-        """Groups items according to member flags.  Sets self.groups.
-        Merge data, sorting data by fontItem.inputDataOrder.
-        :param allFontItems: ungrouped list of FontItem objects
-        """
-        similar_items = {}  # key FontItem, value list of similar FontItem
-        for item in allFontItems:
-            for similar_item in similar_items:
-                if self.is_item_similar(item, similar_item):
-                    similar_items[similar_item].append(item)
-                    break
-            else:
-                similar_items[item] = [item]
-        for fontItems in similar_items.values():
-            fontItems.sort(key=attrgetter('inputDataOrder'))
-            group = FontItemGroup(fontItems)
-            self.groups.append(group)
-        self.groups.sort()
+    def set_items(self, allStyleItems):
+        self.items = allStyleItems
+        self.items.sort()
 
-    def regroup_items(self):
-        """This is useful if the grouping flags change."""
-        self.set_items(self.all_items())
-
-    def is_item_similar(self, item, item2):
-        """Use member flags to test whether items are basically equal.
-        Make a fuzzy item that conditionally has differences removed.
-        See also FontItem.attrs() -- any attrs except 'name' can be ignored.
-        """
-        fuzzy_item = copy.deepcopy(item2)
-        attrs_to_ignore = []
-        if self.groupFontTypes:
-            attrs_to_ignore.extend(
-                ['fontType', 'nameStandard', 'nameComplex', 'nameAsian'])
-        if self.groupStyles:
-            attrs_to_ignore.extend(['styleName', 'styleType'])
-        if self.groupSizes:
-            attrs_to_ignore.append('size')
-        for attr in attrs_to_ignore:
-            setattr(fuzzy_item, attr, getattr(item, attr))
-        return item == fuzzy_item
-
-    def update_group(self, group_to_update, event_handler):
-        """When controls get changed,
-        update all FontItem objects in the selected group.
-
-        :param group_to_update: type FontItemGroup
-        :param changed_values: type FontChange
-        :param attrs_changed: list of FontChange attribute names
+    def update_item(self, item, event_handler):
+        """When controls get changed, update StyleItem object.
+        :param item: type StyleItemGroup
+        :param event_handler: type StyleChangeControlHandler
         """
         logger.debug(util.funcName('begin', args=type(event_handler).__name__))
-        for item in group_to_update.items:
-            item.create_change(self.userVars)
-            event_handler.update_change(item.change)
+        item.create_change(self.userVars)
+        event_handler.update_change(item.change)
 
-    def selected_group(self):
+    def selected_item(self):
         if self.selected_index == -1:
             return None
         return self[self.selected_index]
 
-    def all_items(self):
-        """Generator function to return all items in the list."""
-        for group in self.groups:
-            for item in group.items:
-                yield item
-
     def __getitem__(self, index):
         """For random access."""
-        return self.groups[index]
+        return self.items[index]
 
     def __iter__(self):
         """We override __iter__ here for better performance than
         __getitem__.
         """
-        return list.__iter__(self.groups)
+        return list.__iter__(self.items)
 
 
 class Samples:
@@ -262,21 +216,21 @@ class Samples:
 
     def __init__(self, convPool):
         self.convPool = convPool
-        self.inputData = []  # from currently selected FontItem
+        self.inputData = []  # from currently selected StyleItem
         self.sampleIndex = -1  # index of self.inputData
         self.last_settings = {}  # keys conv name, values ConverterSettings
         self.conv_settings = ConverterSettings(None)
         self.converted_data = Samples.NO_DATA
 
-    def set_fontItemGroup(self, fontItemGroup):
-        """Use values from a FontItem."""
+    def set_styleItemGroup(self, styleItemGroup):
+        """Use values from a StyleItem."""
         self.sampleIndex = -1
-        self.inputData = fontItemGroup.effective_item.inputData
-        self.conv_settings = fontItemGroup.changeattr('converter')
-        if fontItemGroup.changeattr_varies('converter'):
+        self.inputData = styleItemGroup.effective_item.inputData
+        self.conv_settings = styleItemGroup.changeattr('converter')
+        if styleItemGroup.changeattr_varies('converter'):
             # If two items have different converters, then don't perform
             # any conversion -- leave converted text blank.
-            self.converted_data = FontItemGroup.VARIOUS
+            self.converted_data = StyleItemGroup.VARIOUS
 
     def has_more(self):
         """Returns True if there are more samples."""

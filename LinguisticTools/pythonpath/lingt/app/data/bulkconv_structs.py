@@ -11,14 +11,15 @@
 # 22-Jun-16 JDK  Add method to group items.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 # 13-Jul-16 JDK  Each kind of font can have its own size.
+# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
 To avoid cyclic imports, these are not defined in the BulkConversion module.
 
 This module exports:
-    FontItem
-    FontChange
+    StyleItem
+    StyleChange
 """
 import functools
 import logging
@@ -33,13 +34,25 @@ from lingt.utils.locale import theLocale
 logger = logging.getLogger("lingt.app.dataconversion")
 
 
-class FontInfo:
+class ScopeType:
+    """How to search through the document.
+    This will determine what items are shown in StyleItemList.
+    """
+    WHOLE_DOC = 0
+    FONT_WITH_STYLE = 1  # custom formatting or font of style
+    FONT_WITHOUT_STYLE = 2  # custom formatting regardless of user style
+    PARASTYLE = 3
+    CHARSTYLE = 4
+
+
+class StyleInfo:
+    """Information about a particular font or user defined style."""
     STYLETYPE_CUSTOM = 'CustomFormatting'
     STYLETYPE_PARA = 'ParaStyle'
     STYLETYPE_CHAR = 'CharStyle'
 
     def __init__(self):
-        self.name = ""  # font name
+        self.fontName = ""
         self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
         self.styleType = self.STYLETYPE_CUSTOM
@@ -58,36 +71,36 @@ class FontInfo:
 
 
 @functools.total_ordering
-class FontItem(FontInfo):
+class StyleItem(StyleInfo):
     """A structure to hold input data for one font."""
 
     def __init__(self):
-        FontInfo.__init__(self)
-        self.name = "(Default)"  # could be a standard name, complex or Asian
-        self.nameStandard = "(Default)"  # could be non-Unicode Devanagari
-        self.nameComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
-        self.nameAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
+        StyleInfo.__init__(self)
+        self.fontName = "(Default)"  # could be a standard name, complex or Asian
+        self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
+        self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
+        self.fontAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
         self.sizeStandard = FontSize()
         self.sizeComplex = FontSize()
         self.sizeAsian = FontSize()
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
-        self.change = None  # type FontChange
+        self.change = None  # type StyleChange
 
     def create_change(self, userVars):
-        """Create a new FontChange for this item if it doesn't exist yet.
+        """Create a new StyleChange for this item if it doesn't exist yet.
         Now this item will be recognized as having a change,
         even if the values aren't actually any different.
         """
         if not self.change:
-            self.change = FontChange(self, userVars)
+            self.change = StyleChange(self, userVars)
 
     def set_change(self, fontChange):
         self.change = fontChange
         fontChange.fontItem = self
 
     def effective_info(self):
-        """Gets the FontInfo object that is currently effective."""
+        """Gets the StyleInfo object that is currently effective."""
         if self.change:
             return self.change
         else:
@@ -112,7 +125,7 @@ class FontItem(FontInfo):
             self.sizeStandard, self.sizeComplex, self.sizeAsian)
 
     def __lt__(self, other):
-        return (isinstance(other, FontItem) and
+        return (isinstance(other, StyleItem) and
                 self.attrs() < other.attrs())
 
     def __eq__(self, other):
@@ -120,7 +133,7 @@ class FontItem(FontInfo):
         as odt_converter.py does.
         """
         #pylint: disable=protected-access
-        return (isinstance(other, FontItem) and
+        return (isinstance(other, StyleItem) and
                 self.attrs() == other.attrs())
         #pylint: enable=protected-access
 
@@ -129,16 +142,16 @@ class FontItem(FontInfo):
         return hash(self.attrs())
 
 
-class FontChange(FontInfo, Syncable):
+class StyleChange(StyleInfo, Syncable):
     """A structure to hold form data for changing one font."""
 
     def __init__(self, font_from, userVars, varNum=0):
         """
-        :param font_from: FontItem being converted from
+        :param font_from: StyleItem being converted from
         :param userVars: for persistent storage
         :param varNum: a user variable number unique to this change
         """
-        FontInfo.__init__(self)
+        StyleInfo.__init__(self)
         Syncable.__init__(self, userVars)
         self.fontItem = font_from
         self.varNum = varNum  # for storage in user variables
@@ -228,7 +241,7 @@ class FontChange(FontInfo, Syncable):
 
     def setattr_from_other(self, other, attr_name):
         """
-        :param other: FontChange object to read from
+        :param other: StyleChange object to read from
         :param attr_name: for example 'styleName' or 'converter.name'
         """
         attr_names = attr_name.split('.')
@@ -251,133 +264,3 @@ class FontChange(FontInfo, Syncable):
         raise exceptions.LogicError(
             "Unexpected attribute names: %r", attr_names)
 
-
-def _generic_item_attrs():
-    """Returns all attribute names of the FontItem class."""
-    return FontItem().__dict__.keys()
-
-def _generic_change_attrs():
-    """Returns all attribute names of the FontChange class."""
-    generic_item = FontItem()
-    generic_change = FontChange(generic_item, None)
-    return generic_change.__dict__.keys()
-
-@functools.total_ordering
-class FontItemGroup():
-    """Holds one or more related FontItem objects.
-    This is what gets displayed in the list.
-    """
-    VARIOUS = theLocale.getText("(Various)")
-
-    def __init__(self, fontItems):
-        """:param fontItems: list of FontItem objects for one group."""
-        self.items = fontItems
-        self.different_item_attrs = set()  # names of FontItem attrs
-        self.different_change_attrs = set()  # names of FontChange attrs
-        self.effective_item = None
-        self.reload()
-
-    def reload(self):
-        self._determine_variations()
-        self._determine_effective_item()
-
-    def _determine_variations(self):
-        """Find any attributes that vary across items in the group."""
-        self.different_item_attrs = set()
-        self.different_change_attrs = set()
-        if len(self.items) <= 1:
-            # No variations since there are not multiple items.
-            return
-        first_item = self.items[0]
-        first_change = first_item.change
-        for attr in _generic_item_attrs():
-            for item in self.items[1:]:
-                if getattr(first_item, attr) != getattr(item, attr):
-                    self.different_item_attrs.add(attr)
-                    break
-        for attr in _generic_change_attrs():
-            for item in self.items[1:]:
-                if not first_change and not item.change:
-                    continue
-                if ((first_change and not item.change)
-                        or (item.change and not first_change)
-                        or (getattr(first_change, attr) !=
-                            getattr(item.change, attr))):
-                    self.different_change_attrs.add(attr)
-                    break
-
-    def _determine_effective_item(self):
-        """Returns an item with this group's values, where values that vary are
-        marked as such.
-        """
-        fontItem = FontItem()
-        for attr in _generic_item_attrs():
-            setattr(fontItem, attr, self.itemattr(attr))
-        if fontItem.change or self.itemattr_varies('change'):
-            fontItem.change = FontChange(fontItem, None)
-            for attr in _generic_change_attrs():
-                setattr(fontItem.change, attr, self.changeattr(attr))
-        fontItem.inputData = []
-        for item in sorted(self.items, key=attrgetter('inputDataOrder')):
-            fontItem.inputData.extend(item.inputData)
-        self.effective_item = fontItem
-
-    def itemattr(self, attr):
-        """Get a FontItem attribute."""
-        return self._get_attr_or_various(
-            self.get_first_item(), attr, self.itemattr_varies(attr))
-
-    def changeattr(self, attr):
-        """Get a FontChange attribute."""
-        return self._get_attr_or_various(
-            self.get_first_change(), attr, self.changeattr_varies(attr))
-
-    def _get_attr_or_various(self, info, attr, varies):
-        """Return the requested value.  If the value varies, then returns a
-        generic value of the appropriate type.
-        """
-        if not varies:
-            return getattr(info, attr)
-        various_val = self.VARIOUS  # for string types
-        if attr == 'size':
-            various_val = FontSize()
-        elif attr == 'inputData':
-            various_val = []
-        elif attr == 'change':
-            various_val = FontChange(FontItem(), None)
-        elif attr == 'converter':
-            various_val = ConverterSettings(None)
-        elif attr == 'converted_data':
-            various_val = dict()
-        return various_val
-
-    def get_first_item(self):
-        """Attributes of the first item can be used to display the information
-        unless the attributes are in self.different_attrs.
-        """
-        if len(self.items):
-            return self.items[0]
-        return FontItem()
-
-    def get_first_change(self):
-        item = self.get_first_item()
-        if item.change:
-            return item.change
-        return FontChange(item, None)
-
-    def itemattr_varies(self, attr):
-        """Returns true if values vary across items in the group."""
-        return attr in self.different_item_attrs
-
-    def changeattr_varies(self, attr):
-        return attr in self.different_change_attrs
-
-    def __lt__(self, other):
-        # < calls FontItem.__lt__() defined in this module.
-        return (isinstance(other, FontItemGroup) and
-                self.effective_item < other.effective_item)
-
-    def __eq__(self, other):
-        # == calls FontItem.__eq__() defined in this module.
-        return (isinstance(other, FontItemGroup) and
-                self.effective_item == other.effective_item)

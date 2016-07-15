@@ -8,8 +8,7 @@
 
 ## Next
 
-Continue implementing font size for each type.
-Test with an example with two FontItem objects in a single group.
+Continue changing to StyleItem instead of FontItem.
 
 
 ## Sometime
@@ -31,6 +30,23 @@ Version 3.0:
         and without LinguisticTools/tests.
     Spanish and French translations with help from David and Phil.
     Complete set of topdown tests.
+
+
+## Simplifying
+
+It's time to simplify the bulk converter.
+- Ignore size altogether, as the Word converter does.
+- Do not display all three font types -- just the effective one,
+  based on the unicode range lookup. 
+
+This would give a simple answer to "What are all fonts used in the document?"
+And it would be simple (in the UI layer) to run a converter for each one.
+
+Allow the option of either changing the font or changing to a style.
+It would be nice to be able to create a new style,
+with document defaults except using the specified font.
+
+Texts with more than one font type will still need to be split up.
 
 
 ## Possible Problem 2016-02-15
@@ -260,6 +276,9 @@ Could be more than two entries if a font is used with several styles.
 
 If a size is not specified, then keep the original size,
 which would allow multiple sizes to not get changed.
+
+Delete folder with XML files when processing is finished.
+Perhaps put such files in the Temp folder instead.
 
 Maybe this will help in Bulk Conversion for .doc files:
 libreoffice --convert-to
