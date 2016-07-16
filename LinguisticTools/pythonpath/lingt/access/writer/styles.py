@@ -22,7 +22,12 @@
 # 24-Mar-16 JDK  StyleFonts does not need user vars to specify style name.
 
 """
-Create and manage OOo styles.
+Create and manage styles.
+Note on terminology:
+    "Style" in this module means a named style.
+    Automatic styles (also known as custom formatting) are just called fonts.
+    This terminology is in contrast with modules such as
+    writer/odt_converter.py that deal with the XML file format.
 """
 import logging
 from operator import itemgetter

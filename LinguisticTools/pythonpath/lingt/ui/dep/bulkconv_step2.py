@@ -17,6 +17,7 @@
 # 16-Jun-16 JDK  Moved controls classes to their own module.
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 # 13-Jul-16 JDK  Remember state of group check boxes.
+# 16-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 
 """
 Bulk Conversion dialog step 2.
@@ -48,7 +49,7 @@ class FormStep2:
         self.event_handlers.extend(self.step2Master.get_event_handlers())
         self.event_handlers.extend([
             ClipboardButtons(ctrl_getter, app, self.step2Master),
-            JoinCheckboxes(ctrl_getter, app, self.step2Master),
+            CheckboxRemoveCustom(ctrl_getter, app),
             VerifyHandler(ctrl_getter, app)
             ])
 
@@ -76,15 +77,6 @@ class FormStep2:
             foundSomething = fontChange.cleanupUserVars()
             if not foundSomething:
                 break
-
-        checkboxShowConverter = _itemctrls.CheckboxShowConverter(
-            self.ctrl_getter, self.app)
-        checkboxShowConverter.store_results()
-        joinCheckboxes = JoinCheckboxes(
-            self.ctrl_getter, self.app, self.step2Master)
-        joinCheckboxes.store_results()
-        verifyHandler = VerifyHandler(self.ctrl_getter, self.app)
-        verifyHandler.store_results()
         logger.debug(util.funcName('end'))
 
     def refresh_list_and_fill(self):
@@ -262,67 +254,53 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
         return self.app.fontItemList.selected_index
 
 
-class JoinCheckboxes(evt_handler.ItemEventHandler):
-    """Checkboxes that join or split the list."""
+class CheckboxRemoveCustom(evt_handler.ItemEventHandler):
+    """If checked, then set style and remove custom formatting."""
 
-    def __init__(self, ctrl_getter, app, step2Master):
+    def __init__(self, ctrl_getter, app):
         evt_handler.ItemEventHandler.__init__(self)
         self.app = app
-        self.step2Master = step2Master
-        self.chkJoinFontTypes = ctrl_getter.get(_dlgdef.CHK_JOIN_FONT_TYPES)
-        self.chkJoinSizes = ctrl_getter.get(_dlgdef.CHK_JOIN_SIZE)
-        self.chkJoinStyles = ctrl_getter.get(_dlgdef.CHK_JOIN_STYLES)
+        self.chkRemoveCustom = ctrl_getter.get(
+            _dlgdef.CHK_REMOVE_CUSTOM_FORMATTING)
 
     def load_values(self):
-        userVars = self.app.userVars
-        fontItemList = self.app.fontItemList
-        for attr, varname, ctrl in (
-                ('groupFontTypes', 'JoinFontTypes', self.chkJoinFontTypes),
-                ('groupSizes', 'JoinSizes', self.chkJoinSizes),
-                ('groupStyles', 'JoinStyles', self.chkJoinStyles),
-            ):
-            if not userVars.isEmpty(varname):
-                state = bool(userVars.getInt(varname))
-                setattr(fontItemList, attr, state)
-                ctrl.setState(state)
+        self.chkRemoveCustom.setState(
+            userVars.getInt('RemoveCustomFormatting'))
+        self.get_results()
 
     def add_listeners(self):
-        for ctrl in (
-                self.chkJoinFontTypes, self.chkJoinSizes, self.chkJoinStyles):
-            ctrl.addItemListener(self)
+        self.chkRemoveCustom.addItemListener(self)
 
-    def handle_item_event(self, src):
-        self.read()
-        self.step2Master.refresh_list_and_fill()
+    def handle_item_event(self, dummy_src):
+        self.store_results()
 
-    def read(self):
-        fontItemList = self.app.fontItemList
-        fontItemList.groupFontTypes = bool(self.chkJoinFontTypes.getState())
-        fontItemList.groupSizes = bool(self.chkJoinSizes.getState())
-        fontItemList.groupStyles = bool(self.chkJoinStyles.getState())
+    def get_results(self):
+        self.app.removeCustomFormatting = bool(self.chkRemoveCustom.getState())
 
     def store_results(self):
-        fontItemList = self.app.fontItemList
-        for varname, val in (
-                ('JoinFontTypes', fontItemList.groupFontTypes),
-                ('JoinSizes', fontItemList.groupSizes),
-                ('JoinStyles', fontItemList.groupStyles),
-            ):
-            self.app.userVars.store(varname, "%d" % val)
+        self.get_results()
+        self.app.userVars.store(
+            'RemoveCustomFormatting', "%d" % self.app.removeCustomFormatting)
 
 
 class VerifyHandler(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
-        self.chkVerify = ctrl_getter.get(_dlgdef.CHK_VERIFY)
+        evt_handler.ItemEventHandler.__init__(self)
         self.app = app
+        self.chkVerify = ctrl_getter.get(_dlgdef.CHK_VERIFY)
 
     def load_values(self):
         self.chkVerify.setState(self.app.userVars.getInt('AskEachChange'))
+        self.get_results()
+
+    def handle_item_event(self, dummy_src):
+        self.store_results()
+
+    def get_results(self):
+        self.app.askEach = bool(self.chkVerify.getState())
 
     def store_results(self):
-        self.app.askEach = (
-            self.chkVerify.getState() == 1)
+        self.get_results()
         self.app.userVars.store(
             'AskEachChange', "%d" % self.app.askEach)
-
 

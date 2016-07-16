@@ -15,8 +15,8 @@
   <dlg:textfield dlg:id="txFolderOutputTo" dlg:tab-index="6" dlg:left="9" dlg:top="119" dlg:width="188" dlg:height="12" dlg:page="1" dlg:value="&amp;324.DlgBulkConversion.txFolderOutputTo.Text"/>
   <dlg:button dlg:id="btnOutputTo" dlg:tab-index="7" dlg:left="197" dlg:top="119" dlg:width="65" dlg:height="14" dlg:page="1" dlg:value="&amp;325.DlgBulkConversion.btnOutputTo.Label"/>
   <dlg:button dlg:id="btnScan" dlg:tab-index="8" dlg:left="155" dlg:top="224" dlg:width="81" dlg:height="18" dlg:page="1" dlg:value="&amp;52.DlgBulkConversion.btnScan.Value"/>
-  <dlg:text dlg:id="lblFontsUsed" dlg:tab-index="9" dlg:left="10" dlg:top="8" dlg:width="133" dlg:height="12" dlg:page="2" dlg:value="&amp;62.DlgBulkConversion.lblFontsUsed.Value"/>
-  <dlg:menulist dlg:id="listFontsUsed" dlg:tab-index="10" dlg:left="10" dlg:top="24" dlg:width="128" dlg:height="102" dlg:page="2"/>
+  <dlg:text dlg:id="lblStylesUsed" dlg:tab-index="9" dlg:left="10" dlg:top="8" dlg:width="133" dlg:height="12" dlg:page="2" dlg:value="&amp;62.DlgBulkConversion.lblStylesUsed.Value"/>
+  <dlg:menulist dlg:id="listStylesUsed" dlg:tab-index="10" dlg:left="10" dlg:top="24" dlg:width="128" dlg:height="102" dlg:page="2"/>
   <dlg:textfield dlg:style-id="0" dlg:id="txtConvName" dlg:tab-index="11" dlg:left="151" dlg:top="19" dlg:width="94" dlg:height="12" dlg:page="2" dlg:value="&amp;72.DlgBulkConversion.txtConvName.Value"/>
   <dlg:button dlg:id="btnChooseConv" dlg:tab-index="12" dlg:left="245" dlg:top="19" dlg:width="53" dlg:height="12" dlg:page="2" dlg:value="&amp;45.DlgBulkConversion.btnChooseConv.Value"/>
   <dlg:checkbox dlg:id="chkReverse" dlg:tab-index="13" dlg:left="151" dlg:top="34" dlg:width="67" dlg:height="12" dlg:page="2" dlg:value="&amp;53.DlgBulkConversion.chkReverse.Value" dlg:checked="false"/>

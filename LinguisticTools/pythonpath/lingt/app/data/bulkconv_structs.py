@@ -34,6 +34,13 @@ from lingt.utils.locale import theLocale
 logger = logging.getLogger("lingt.app.dataconversion")
 
 
+class StyleType:
+    """What type of style."""
+    CUSTOM = 'CustomFormatting'  # also known as automatic style
+    PARA = 'ParaStyle'
+    CHAR = 'CharStyle'
+
+
 class ScopeType:
     """How to search through the document.
     This will determine what items are shown in StyleItemList.
@@ -47,9 +54,6 @@ class ScopeType:
 
 class StyleInfo:
     """Information about a particular font or user defined style."""
-    STYLETYPE_CUSTOM = 'CustomFormatting'
-    STYLETYPE_PARA = 'ParaStyle'
-    STYLETYPE_CHAR = 'CharStyle'
 
     def __init__(self):
         self.fontName = ""

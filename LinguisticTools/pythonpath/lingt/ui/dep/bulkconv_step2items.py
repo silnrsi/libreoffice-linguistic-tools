@@ -3,23 +3,22 @@
 # This file created June 16 2016 by Jim Kornelsen
 #
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
+# 16-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 
 """
-Bulk Conversion classes that hold controls for FontItem data.
+Bulk Conversion classes that hold controls for StyleItem data.
 
 This module exports:
     ConverterControls
     StyleControls
     FontControls
-    FoundFontInfo
-    CheckboxShowConverter
 """
 import copy
 import logging
 
 from lingt.access.writer import styles
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem, FontItemGroup
+from lingt.app.data.bulkconv_structs import StyleItem, StyleType
 from lingt.app.svc.bulkconversion import Samples
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
@@ -31,14 +30,14 @@ from lingt.utils.locale import theLocale
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2items")
 
 
-class FontChangeControlHandler:
-    """Abstract base class to handle reading and writing of FontItem change
-    controls.
+class StyleChangeControlHandler:
+    """Abstract base class to handle controls that display and
+    modify StyleChange objects.
     Inherit it alongside one of the evt_handler.EventHandler subclasses.
     """
 
     def __init__(self, ctrl_getter, app, step2Master):
-        if self.__class__ is FontChangeControlHandler:
+        if self.__class__ is StyleChangeControlHandler:
             # The base classes should not be instantiated.
             raise NotImplementedError
         self.ctrl_getter = ctrl_getter
@@ -57,46 +56,37 @@ class FontChangeControlHandler:
         self.app.update_list(self)
         self.step2Master.refresh_list()
 
-    def update_group_changes(self, group):
-        for item in group.items:
-            item.create_change(self.app.userVars)
-            self.update_change(item.change)
-        group.reload()
-
-    def update_change(self, fontChange):
-        """Read form values and modify fontChange accordingly."""
-        pass
+    def update_change(self, styleChange):
+        """Read form values and modify styleChange accordingly."""
+        item.create_change(self.app.userVars)
 
     def copy_change(self, change_from, change_to):
         """Set attributes of change_to based on change_from."""
         pass
 
-    def fill_for_group(self, fontGroup):
-        self.fill_for_item(fontGroup.effective_item)
-
-    def fill_for_item(self, fontItem):
-        if fontItem.change:
-            self._fill_for_item_change(fontItem.change)
+    def fill_for_item(self, styleItem):
+        if styleItem.change:
+            self._fill_for_item_change(styleItem.change)
         else:
-            self._fill_for_item_no_change(fontItem)
+            self._fill_for_item_no_change(styleItem)
 
-    def _fill_for_item_change(self, fontChange):
-        """Set form values based on the fontChange values."""
+    def _fill_for_item_change(self, styleChange):
+        """Set form values based on the styleChange values."""
         pass
 
-    def _fill_for_item_no_change(self, fontItem):
-        """Set form values based on the fontItem values."""
+    def _fill_for_item_no_change(self, styleItem):
+        """Set form values based on the styleItem values."""
         pass
 
 
-class AggregateControlHandler(FontChangeControlHandler):
+class AggregateControlHandler(StyleChangeControlHandler):
     """Holds a group of handlers."""
 
     def __init__(self, ctrl_getter, app, step2Master):
         if self.__class__ is AggregateControlHandler:
             # The base classes should not be instantiated.
             raise NotImplementedError
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         self.controls_objects = []
 
     def start_working(self, *args, **kwargs):
@@ -107,9 +97,6 @@ class AggregateControlHandler(FontChangeControlHandler):
 
     def copy_change(self, *args, **kwargs):
         self._invoke_for_each('copy_change', *args, **kwargs)
-
-    def fill_for_group(self, *args, **kwargs):
-        self._invoke_for_each('fill_for_group', *args, **kwargs)
 
     def fill_for_item(self, *args, **kwargs):
         self._invoke_for_each('fill_for_item', *args, **kwargs)
@@ -132,9 +119,9 @@ class ConverterControls(AggregateControlHandler):
             convName, chkReverse, sampleControls)
 
 
-class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
+class ConvName(StyleChangeControlHandler, evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, sample_controls):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ActionEventHandler.__init__(self)
         self.sample_controls = sample_controls
         self.btnSelectConv = ctrl_getter.get(_dlgdef.BTN_CHOOSE_CONV)
@@ -146,53 +133,49 @@ class ConvName(FontChangeControlHandler, evt_handler.ActionEventHandler):
 
     def handle_action_event(self, action_command):
         self.selectConverter()
-        FontChangeControlHandler.handle_action_event(self, action_command)
-        self.sample_controls.fill_for_selected_group()
+        StyleChangeControlHandler.handle_action_event(self, action_command)
+        self.sample_controls.fill_for_selected_item()
 
     def selectConverter(self):
         logger.debug(util.funcName('begin'))
-        group = self.app.selected_group()
-        if not group:
+        item = self.app.selected_item()
+        if not item:
             return
         conv_settings = None
-        if (group.effective_item.change
-                and not group.itemattr_varies('change')
-                and not group.changeattr_varies('converter')):
-            conv_settings = group.effective_item.change.converter
+        if item.change:
+            conv_settings = item.change.converter
         new_conv_settings = self.app.convPool.selectConverter(conv_settings)
-        for item in group.items:
-            item.create_change(self.app.userVars)
-            item.change.converter = new_conv_settings
-        group.reload()
-        self.fill_for_group(group)
+        item.create_change(self.app.userVars)
+        item.change.converter = new_conv_settings
+        self.fill_for_item(item)
         checkboxReverse = CheckboxReverse(
             self.ctrl_getter, self.app, self.step2Master, self.sample_controls)
-        checkboxReverse.fill_for_group(group)
+        checkboxReverse.fill_for_item(item)
         self.app.convPool.cleanup_unused()
-        logger.debug("len(fontChanges) = %d", len(self.app.getFontChanges()))
+        logger.debug("len(styleChanges) = %d", len(self.app.getStyleChanges()))
         logger.debug(
-            repr([repr(change) for change in self.app.getFontChanges()]))
+            repr([repr(change) for change in self.app.getStyleChanges()]))
         logger.debug(util.funcName('end'))
 
-    def update_change(self, fontChange):
-        converter = fontChange.converter
+    def update_change(self, styleChange):
+        converter = styleChange.converter
         converter.txtConvName = self.txtConvName.getText()
 
-    def _fill_for_item_change(self, fontChange):
+    def _fill_for_item_change(self, styleChange):
         self.txtConvName.setText(
-            fontChange.converter.convName)
+            styleChange.converter.convName)
 
-    def _fill_for_item_no_change(self, dummy_fontItem):
+    def _fill_for_item_no_change(self, dummy_styleItem):
         self.txtConvName.setText("<No converter>")
 
     def copy_change(self, change_from, change_to):
         change_to.converter.convName = change_from.converter.convName
 
 
-class CheckboxReverse(FontChangeControlHandler,
+class CheckboxReverse(StyleChangeControlHandler,
                       evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, sample_controls):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ItemEventHandler.__init__(self)
         self.sample_controls = sample_controls
         self.chkReverse = ctrl_getter.get(_dlgdef.CHK_REVERSE)
@@ -201,27 +184,27 @@ class CheckboxReverse(FontChangeControlHandler,
         self.chkReverse.addItemListener(self)
 
     def handle_item_event(self, src):
-        FontChangeControlHandler.handle_item_event(self, src)
-        self.sample_controls.fill_for_selected_group()
+        StyleChangeControlHandler.handle_item_event(self, src)
+        self.sample_controls.fill_for_selected_item()
 
-    def update_change(self, fontChange):
-        converter = fontChange.converter
+    def update_change(self, styleChange):
+        converter = styleChange.converter
         converter.forward = (self.chkReverse.getState() == 0)
 
-    def _fill_for_item_change(self, fontChange):
+    def _fill_for_item_change(self, styleChange):
         self.chkReverse.setState(
-            not fontChange.converter.forward)
+            not styleChange.converter.forward)
 
-    def _fill_for_item_no_change(self, dummy_fontItem):
+    def _fill_for_item_no_change(self, dummy_styleItem):
         self.chkReverse.setState(False)
 
     def copy_change(self, change_from, change_to):
         change_to.converter.forward = change_from.converter.forward
 
 
-class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
+class SampleControls(StyleChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, None)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, None)
         evt_handler.EventHandler.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
@@ -229,7 +212,7 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
         self.sampleLabels = SampleLabels(ctrl_getter, app)
         self.nextInputControls = ButtonNextInput(
             ctrl_getter, app, self.samples, self.sampleLabels)
-        self.showConvControls = CheckboxShowConverter(
+        self.showConvControls = CheckboxShowConverted(
             ctrl_getter, app, self.nextInputControls)
 
     def start_working(self):
@@ -240,29 +223,28 @@ class SampleControls(FontChangeControlHandler, evt_handler.EventHandler):
     def store_results(self):
         self.showConvControls.store_results()
 
-    def fill_for_selected_group(self):
-        self.fill_for_group(self.app.selected_group())
+    def fill_for_selected_item(self):
+        self.fill_for_item(self.app.selected_item())
 
-    def fill_for_group(self, group):
+    def fill_for_item(self, styleItem):
         logger.debug(util.funcName('begin'))
-        if not group:
+        if not styleItem:
             logger.debug(util.funcName('return'))
             return
-        fontItem = group.effective_item
-        if fontItem.change:
-            converter = fontItem.change.converter
+        if styleItem.change:
+            converter = styleItem.change.converter
             self.samples.last_settings[converter.convName] = converter
-        self.samples.set_fontItemGroup(self.app.selected_group())
-        self.change_font_name(fontItem)
-        self.change_font_size(fontItem)
+        self.samples.set_styleItem(self.app.selected_item())
+        self.change_font_name(styleItem)
+        self.change_font_size(styleItem)
         self.nextInputControls.nextInputSample()
         logger.debug(util.funcName('end'))
 
-    def change_font_name(self, fontItem):
-        self.sampleLabels.change_font_name(fontItem)
+    def change_font_name(self, styleItem):
+        self.sampleLabels.change_font_name(styleItem)
 
-    def change_font_size(self, fontItem):
-        self.sampleLabels.change_font_size(fontItem)
+    def change_font_size(self, styleItem):
+        self.sampleLabels.change_font_size(styleItem)
 
 
 class SampleLabels:
@@ -294,52 +276,51 @@ class SampleLabels:
         self.lblSampleNum.setText("0 / 0")
         self.lblConverted.setText(Samples.NO_DATA)
 
-    def change_font_name(self, fontItem):
-        fontItemName, dummy_size = self._effective_font(fontItem)
-        self._change_font_name(fontItemName, self.lblInput)
-        convertedFontName = fontItemName
-        fontChangeName, dummy_size = self._effective_font(fontItem.change)
-        if fontChangeName and fontChangeName != "(Default)":
-            convertedFontName = fontChangeName
+    def change_font_name(self, styleItem):
+        styleItem_font_name, dummy_size = self._effective_font(styleItem)
+        self._change_font_name(styleItem_font_name, self.lblInput)
+        convertedFontName = styleItem_font_name
+        styleChange_font_name, dummy_size = self._effective_font(
+            styleItem.change)
+        if styleChange_font_name and styleChange_font_name != "(Default)":
+            convertedFontName = styleChange_font_name
         self._change_font_name(convertedFontName, self.lblConverted)
 
-    def change_font_size(self, fontItem):
-        dummy_fontName, fontItemSize = self._effective_font(fontItem)
-        self._change_font_size(fontItemSize, self.lblInput)
-        convertedFontSize = fontItemSize
-        dummy_fontName, fontChangeSize = self._effective_font(fontItem.change)
-        if fontChangeSize and fontChangeSize.isSpecified():
-            convertedFontSize = fontChangeSize
-        self._change_font_size(convertedFontSize, self.lblConverted)
+    def change_font_size(self, styleItem):
+        dummy_fontName, styleItemSize = self._effective_font(styleItem)
+        self._change_font_size(styleItemSize, self.lblInput)
+        convertedSize = styleItemSize
+        dummy_fontName, styleChangeSize = self._effective_font(
+            styleItem.change)
+        if styleChangeSize and styleChangeSize.isSpecified():
+            convertedSize = styleChangeSize
+        self._change_font_size(convertedSize, self.lblConverted)
 
-    def _effective_font(self, fontInfo):
+    def _effective_font(self, styleInfo):
         """Returns font name and size, from the style if possible."""
-        if not fontInfo:
+        if not styleInfo:
             return "", None
-        if fontInfo.styleType == FontItem.STYLETYPE_CUSTOM:
-            return fontInfo.name, fontInfo.size
+        if styleInfo.styleType == StyleType.CUSTOM:
+            return styleInfo.fontName, styleInfo.size
         else:
-            return getFontOfStyle(fontInfo, self.app.unoObjs)
+            return getFontOfStyle(styleInfo, self.app.unoObjs)
 
     def _change_font_name(self, fontName, ctrl):
-        """See also lingt.access.writer.textchanges.changeFont().
-        :param fontInfo: either a FontItem or a FontChange
-        """
-        if not fontName or fontName == FontItemGroup.VARIOUS:
+        """See also lingt.access.writer.textchanges.changeFont()."""
+        if not fontName:
             fontName = " "
         logger.debug("set %s.FontName %s", ctrl.getModel().Name, fontName)
         ctrl.getModel().setPropertyValue('FontName', fontName)
 
     def _change_font_size(self, fontSize, ctrl):
-        """:param fontInfo: either a FontItem or a FontChange"""
         logger.debug("Font size '%s'", fontSize.getString())
         fontSize.changeCtrlProp(ctrl, always_change=True)
 
 
-class ButtonNextInput(FontChangeControlHandler,
+class ButtonNextInput(StyleChangeControlHandler,
                       evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app, samples, sampleLabels):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, None)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, None)
         evt_handler.ActionEventHandler.__init__(self)
         self.samples = samples
         self.sampleLabels = sampleLabels
@@ -366,7 +347,7 @@ class ButtonNextInput(FontChangeControlHandler,
         self.samples.gotoNext()
         self.btnNextInput.getModel().Enabled = (
             self.samples.has_more())
-        controls = CheckboxShowConverter(self.ctrl_getter, self.app, None)
+        controls = CheckboxShowConverted(self.ctrl_getter, self.app, self)
         if controls.chkShowConverted.getState() == 1:
             try:
                 self.samples.get_converted()
@@ -381,67 +362,31 @@ class ButtonNextInput(FontChangeControlHandler,
         self.nextInputSample()
 
 
-class CheckboxShowConverter(FontChangeControlHandler,
+class CheckboxShowConverted(StyleChangeControlHandler,
                             evt_handler.ItemEventHandler):
-    """Controls to display sample input and converted text."""
+    """Display converted text if checked."""
 
-    def __init__(self, ctrl_getter, app, next_input_controls=None):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, None)
+    def __init__(self, ctrl_getter, app, next_input_controls):
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, None)
         evt_handler.ItemEventHandler.__init__(self)
         self.next_input_controls = next_input_controls
-        evt_handler.ItemEventHandler.__init__(self)
         self.chkShowConverted = ctrl_getter.get(_dlgdef.CHK_SHOW_CONVERTED)
 
     def load_values(self):
-        #self.chkShowConverted.setState(
-        #    userVars.getInt('DisplayConverted'))
-        self.chkShowConverted.setState(False)
+        self.chkShowConverted.setState(
+            userVars.getInt('DisplayConverted'))
+        #self.chkShowConverted.setState(False)
 
     def add_listeners(self):
         self.chkShowConverted.addItemListener(self)
 
     def handle_item_event(self, dummy_src):
+        self.store_results()
         self.next_input_controls.show_sample_again()
 
     def store_results(self):
-        displayConverted = (
-            self.chkShowConverted.getState() == 1)
         self.app.userVars.store(
-            'DisplayConverted', "%d" % displayConverted)
-
-
-class FoundFontInfo:
-    """Information about the font found.  These values are read-only."""
-
-    def __init__(self, ctrl_getter, dummy_app):
-        self.foundFonts = ctrl_getter.get(_dlgdef.FOUND_FONTS)
-        self.foundFontSize = ctrl_getter.get(_dlgdef.FOUND_FONT_SIZE)
-
-    def load_values(self):
-        self.fill_for_item(FontItem())
-
-    def fill_for_group(self, fontGroup):
-        self.fill_for_item(fontGroup.effective_item)
-
-    def fill_for_item(self, fontItem):
-        foundFontNames = ""
-        for title, fontName in (
-                ("Standard", fontItem.nameStandard),
-                ("Complex", fontItem.nameComplex),
-                ("Asian", fontItem.nameAsian)):
-            foundFontNames += "%s:  %s\n" % (
-                theLocale.getText(title), fontName)
-        self.foundFonts.setText(foundFontNames)
-        foundFontSizes = ""
-        for fontSize in (
-                fontItem.sizeStandard,
-                fontItem.sizeComplex,
-                fontItem.sizeAsian):
-            fontSizeString = "(Default)"
-            if fontSize.isSpecified():
-                fontSizeString = str(fontSize)
-            foundFontSizes += fontSizeString + "\n"
-        self.foundFontSize.setText(foundFontSizes)
+            'DisplayConverted', str(self.chkShowConverted.getState()))
 
 
 class FontControls(AggregateControlHandler):
@@ -457,9 +402,9 @@ class FontControls(AggregateControlHandler):
             font_name_handler, font_type_handler, font_size_handler)
 
 
-class FontNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
+class FontNameHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, style_type_handler):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ItemEventHandler.__init__(self)
         self.style_type_handler = style_type_handler
         self.comboFontName = ctrl_getter.get(_dlgdef.COMBO_FONT_NAME)
@@ -472,51 +417,50 @@ class FontNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         self.comboFontName.addItemListener(self)
 
     def handle_item_event(self, src):
-        FontChangeControlHandler.handle_item_event(self, src)
+        StyleChangeControlHandler.handle_item_event(self, src)
         self.change_control_prop()
         self.set_style_radio()
 
-    def update_change(self, fontChange):
-        fontChange.name = self.comboFontName.getText()
-        if fontChange.name == "(None)":
-            fontChange.name = ""
+    def update_change(self, styleChange):
+        styleChange.fontName = self.comboFontName.getText()
+        if styleChange.fontName == "(None)":
+            styleChange.fontName = ""
         else:
-            fontChange.styleType = FontItem.STYLETYPE_CUSTOM
+            styleChange.styleType = StyleType.CUSTOM
 
-    def _fill_for_item_no_change(self, dummy_fontItem):
+    def _fill_for_item_no_change(self, dummy_styleItem):
         self.clear_combo_box()
         self.change_control_prop()
 
-    def _fill_for_item_change(self, fontChange):
-        if fontChange.name and fontChange.name != "(None)":
-            self.comboFontName.setText(fontChange.name)
+    def _fill_for_item_change(self, styleChange):
+        if styleChange.fontName and styleChange.fontName != "(None)":
+            self.comboFontName.setText(styleChange.fontName)
         else:
             self.clear_combo_box()
         self.change_control_prop()
 
     def copy_change(self, change_from, change_to):
-        change_from.name = change_to.name
+        change_from.fontName = change_to.fontName
 
     def clear_combo_box(self):
         self.comboFontName.setText("")
 
     def change_control_prop(self):
         sampleControls = SampleControls(self.ctrl_getter, self.app)
-        sampleControls.change_font_name(
-            self.app.selected_group().effective_item)
+        sampleControls.change_font_name(self.app.selected_item())
 
     def set_style_radio(self):
         """Sets the style type radio buttons to Custom Formatting."""
-        font_group = self.app.selected_group()
-        self.style_type_handler.fill_for_group(font_group)
+        style_item = self.app.selected_item()
+        self.style_type_handler.fill_for_item(style_item)
         # Calling update_change() gets the style name.
-        self.style_type_handler.update_group_changes(font_group)
+        self.style_type_handler.update_item_changes(style_item)
         self.app.update_list(self.style_type_handler)
 
 
-class FontTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
+class FontTypeHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, font_name_handler):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ItemEventHandler.__init__(self)
         self.font_name_handler = font_name_handler
         self.optStandard = ctrl_getter.get(_dlgdef.OPT_FONT_STANDARD)
@@ -531,15 +475,15 @@ class FontTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         for radio in self.radios:
             radio.ctrl.addItemListener(self)
 
-    def update_change(self, fontChange):
-        fontChange.fontType = dutil.whichSelected(self.radios)
-        self.font_name_handler.update_change(fontChange)
+    def update_change(self, styleChange):
+        styleChange.fontType = dutil.whichSelected(self.radios)
+        self.font_name_handler.update_change(styleChange)
 
-    def _fill_for_item_no_change(self, fontItem):
-        self.fill(fontItem.fontType)
+    def _fill_for_item_no_change(self, styleItem):
+        self.fill(styleItem.fontType)
 
-    def _fill_for_item_change(self, fontChange):
-        self.fill(fontChange.fontType)
+    def _fill_for_item_change(self, styleChange):
+        self.fill(styleChange.fontType)
 
     def copy_change(self, change_from, change_to):
         change_from.fontType = change_to.fontType
@@ -548,9 +492,9 @@ class FontTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
         dutil.selectRadio(self.radios, fontType)
 
 
-class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
+class FontSizeHandler(StyleChangeControlHandler, evt_handler.TextEventHandler):
     def __init__(self, ctrl_getter, app, step2Master):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.TextEventHandler.__init__(self)
         self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
 
@@ -558,16 +502,16 @@ class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
         self.txtFontSize.addTextListener(self)
 
     def handle_text_event(self, src):
-        FontChangeControlHandler.handle_text_event(self, src)
+        StyleChangeControlHandler.handle_text_event(self, src)
         self.change_control_prop()
 
-    def update_change(self, fontChange):
-        fontChange.size = FontSize(propSuffix=fontChange.getPropSuffix())
-        fontChange.size.loadCtrl(self.txtFontSize)
+    def update_change(self, styleChange):
+        styleChange.size = FontSize(propSuffix=styleChange.getPropSuffix())
+        styleChange.size.loadCtrl(self.txtFontSize)
 
-    def fill_for_item(self, fontItem):
-        if fontItem.change:
-            fontSize = fontItem.change.size
+    def fill_for_item(self, styleItem):
+        if styleItem.change:
+            fontSize = styleItem.change.size
             fontSize.changeCtrlVal(self.txtFontSize)
         else:
             self.txtFontSize.setText("")
@@ -579,7 +523,7 @@ class FontSizeHandler(FontChangeControlHandler, evt_handler.TextEventHandler):
     def change_control_prop(self):
         sampleControls = SampleControls(self.ctrl_getter, self.app)
         sampleControls.change_font_size(
-            self.app.selected_group().effective_item)
+            self.app.selected_item())
 
 
 class StyleControls(AggregateControlHandler):
@@ -589,31 +533,36 @@ class StyleControls(AggregateControlHandler):
             ctrl_getter, app, step2Master)
         self.style_type_handler = StyleTypeHandler(
             ctrl_getter, app, step2Master, style_name_handler)
+        style_checkbox_handler = StyleCheckboxHandler(
+            ctrl_getter, app, step2Master)
         style_name_handler.set_style_type_handler(self.style_type_handler)
-        self.controls_objects = (self.style_type_handler, style_name_handler)
+        self.controls_objects = (
+            self.style_type_handler, style_name_handler,
+            style_checkbox_handler)
 
     def get_style_type_handler(self):
         return self.style_type_handler
 
 
-def getFontOfStyle(fontInfo, unoObjs):
+def getFontOfStyle(styleInfo, unoObjs):
     styleFonts = styles.StyleFonts(unoObjs)
     return styleFonts.getFontOfStyle(
-        fontInfo.styleType, fontInfo.fontType, fontInfo.styleName)
+        styleInfo.styleType, styleInfo.fontType, styleInfo.styleName)
 
-def readFontOfStyle(fontChange, unoObjs):
-    fontChange.fontName, fontChange.fontSize = getFontOfStyle(
-        fontChange, unoObjs)
+def readFontOfStyle(styleChange, unoObjs):
+    styleChange.fontName, styleChange.fontSize = getFontOfStyle(
+        styleChange, unoObjs)
 
-class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
+class StyleNameHandler(StyleChangeControlHandler,
+                       evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ItemEventHandler.__init__(self)
         para_list = StyleList(
-            FontItem.STYLETYPE_PARA, ctrl_getter.get(_dlgdef.COMBO_PARA_STYLE),
+            StyleType.PARA, ctrl_getter.get(_dlgdef.COMBO_PARA_STYLE),
             self.app.unoObjs)
         char_list = StyleList(
-            FontItem.STYLETYPE_CHAR, ctrl_getter.get(_dlgdef.COMBO_CHAR_STYLE),
+            StyleType.CHAR, ctrl_getter.get(_dlgdef.COMBO_CHAR_STYLE),
             self.app.unoObjs)
         self.stylelists = [para_list, char_list]
         self.style_type_handler = None
@@ -632,57 +581,57 @@ class StyleNameHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
             stylelist.ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
-        FontChangeControlHandler.handle_item_event(self, src)
-        self.style_type_handler.fill_for_group(self.app.selected_group())
+        StyleChangeControlHandler.handle_item_event(self, src)
+        self.style_type_handler.fill_for_item(self.app.selected_item())
         self.selectFontFromStyle()
 
-    def update_change(self, fontChange):
-        fontChange.styleName = ""
-        fontChange.styleDisplayName = ""
+    def update_change(self, styleChange):
+        styleChange.styleName = ""
+        styleChange.styleDisplayName = ""
         for stylelist in self.stylelists:
             if stylelist.same_ctrl(self.last_source):
-                stylelist.update_change(fontChange)
+                stylelist.update_change(styleChange)
 
-    def update_change_for_type(self, fontChange, styleType):
+    def update_change_for_type(self, styleChange, styleType):
         logger.debug(util.funcName())
-        fontChange.styleName = ""
-        fontChange.styleDisplayName = ""
-        if fontChange.styleType == FontItem.STYLETYPE_CUSTOM:
+        styleChange.styleName = ""
+        styleChange.styleDisplayName = ""
+        if styleChange.styleType == StyleType.CUSTOM:
             font_name_handler = FontNameHandler(
                 self.ctrl_getter, self.app, self.step2Master,
                 self.style_type_handler)
-            font_name_handler.update_change(fontChange)
+            font_name_handler.update_change(styleChange)
             font_size_handler = FontSizeHandler(
                 self.ctrl_getter, self.app, self.step2Master)
-            font_size_handler.update_change(fontChange)
+            font_size_handler.update_change(styleChange)
             return
         for stylelist in self.stylelists:
             if stylelist.same_type(styleType):
-                stylelist.update_change(fontChange)
+                stylelist.update_change(styleChange)
 
     def selectFontFromStyle(self):
         """Selects the font based on the style."""
         logger.debug(util.funcName())
-        fontItem = self.app.selected_group().effective_item
-        fontChange = fontItem.change
-        if fontChange.styleType == FontItem.STYLETYPE_CUSTOM:
+        styleItem = self.app.selected_item()
+        styleChange = styleItem.change
+        if styleChange.styleType == StyleType.CUSTOM:
             return
-        readFontOfStyle(fontChange, self.app.unoObjs)
+        readFontOfStyle(styleChange, self.app.unoObjs)
         font_name_handler = FontNameHandler(
             self.ctrl_getter, self.app, self.step2Master,
             self.style_type_handler)
-        font_name_handler.fill_for_item(fontItem)
+        font_name_handler.fill_for_item(styleItem)
         font_size_handler = FontSizeHandler(
             self.ctrl_getter, self.app, self.step2Master)
-        font_size_handler.fill_for_item(fontItem)
+        font_size_handler.fill_for_item(styleItem)
 
-    def _fill_for_item_no_change(self, fontItem):
+    def _fill_for_item_no_change(self, dummy_styleItem):
         self.clear_combo_boxes()
 
-    def _fill_for_item_change(self, fontChange):
+    def _fill_for_item_change(self, styleChange):
         for stylelist in self.stylelists:
-            if stylelist.same_type(fontChange.styleType):
-                stylelist.ctrl.setText(fontChange.styleDisplayName)
+            if stylelist.same_type(styleChange.styleType):
+                stylelist.ctrl.setText(styleChange.styleDisplayName)
 
     def clear_combo_boxes(self):
         for stylelist in self.stylelists:
@@ -703,19 +652,19 @@ class StyleList:
 
     def load_values(self):
         family = 'ParagraphStyles'
-        if self.styleType == FontItem.STYLETYPE_CHAR:
+        if self.styleType == StyleType.CHAR:
             family = 'CharacterStyles'
         namesList = styles.getListOfStyles(family, self.unoObjs)
         self.styleNames.update(dict(namesList))
         displayNames = tuple([dispName for dispName, dummy_name in namesList])
         dutil.fill_list_ctrl(self.ctrl, displayNames)
 
-    def update_change(self, fontChange):
-        fontChange.styleType = self.styleType
+    def update_change(self, styleChange):
+        styleChange.styleType = self.styleType
         displayName = self.ctrl.getText()
-        fontChange.styleDisplayName = displayName
+        styleChange.styleDisplayName = displayName
         try:
-            fontChange.styleName = self.styleNames[displayName]
+            styleChange.styleName = self.styleNames[displayName]
         except KeyError:
             logger.warning(
                 "%s is not a known %s.", displayName, self.styleType)
@@ -727,37 +676,38 @@ class StyleList:
         return styleType == self.styleType
 
 
-class StyleTypeHandler(FontChangeControlHandler, evt_handler.ItemEventHandler):
+class StyleTypeHandler(StyleChangeControlHandler,
+                       evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, style_name_handler):
-        FontChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
+        StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
         evt_handler.ItemEventHandler.__init__(self)
         self.style_name_handler = style_name_handler
         self.optParaStyle = ctrl_getter.get(_dlgdef.OPT_PARA_STYLE)
         self.optCharStyle = ctrl_getter.get(_dlgdef.OPT_CHAR_STYLE)
         self.optNoStyle = ctrl_getter.get(_dlgdef.OPT_NO_STYLE)
         self.radios = [
-            dutil.RadioTuple(self.optNoStyle, FontItem.STYLETYPE_CUSTOM),
-            dutil.RadioTuple(self.optParaStyle, FontItem.STYLETYPE_PARA),
-            dutil.RadioTuple(self.optCharStyle, FontItem.STYLETYPE_CHAR)]
+            dutil.RadioTuple(self.optNoStyle, StyleType.CUSTOM),
+            dutil.RadioTuple(self.optParaStyle, StyleType.PARA),
+            dutil.RadioTuple(self.optCharStyle, StyleType.CHAR)]
 
     def add_listeners(self):
         for radio in self.radios:
             radio.ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
-        FontChangeControlHandler.handle_item_event(self, src)
+        StyleChangeControlHandler.handle_item_event(self, src)
         self.style_name_handler.selectFontFromStyle()
 
-    def update_change(self, fontChange):
-        fontChange.styleType = dutil.whichSelected(self.radios)
+    def update_change(self, styleChange):
+        styleChange.styleType = dutil.whichSelected(self.radios)
         self.style_name_handler.update_change_for_type(
-            fontChange, fontChange.styleType)
+            styleChange, styleChange.styleType)
 
-    def _fill_for_item_change(self, fontChange):
-        self.fill(fontChange.styleType)
+    def _fill_for_item_change(self, styleChange):
+        self.fill(styleChange.styleType)
 
-    def _fill_for_item_no_change(self, fontItem):
-        self.fill(fontItem.styleType)
+    def _fill_for_item_no_change(self, styleItem):
+        self.fill(styleItem.styleType)
 
     def fill(self, styleType, *dummy_args):
         dutil.selectRadio(self.radios, styleType)
