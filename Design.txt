@@ -8,7 +8,8 @@
 
 ## Next
 
-Continue changing to StyleItem instead of FontItem.
+Pylint.
+Test new changes for ScopeType.FONT_WITH_STYLE.
 
 
 ## Sometime
@@ -22,6 +23,7 @@ Version 3.0:
     New Often-Requested feature (Bulk Data Conversion).
         Really a big change because it uses somewhat of a different
         design, with more processing done outside of Office.
+        Possibly release it only for ScopeType.FONT_WITH_STYLE.
     Grammar Settings improved for Flex - line 1, line 2.
     Make file size much larger by adding screen captures to documentation.
         Actually, make two downloads: one with lots of images, and one with
@@ -49,7 +51,22 @@ with document defaults except using the specified font.
 Texts with more than one font type will still need to be split up.
 
 
-## Possible Problem 2016-02-15
+## Thought 21-Jul-2016
+
+In odt_converter.py,
+currently we use OdtReader.py to figure out what the values are for OdtChanger.
+
+Instead, perhaps OdtChanger should:
+1. Use OdtReader to find which converted string to use.
+2. Parse the XML in a slightly different way to figure out what the current
+   font and size is, to know whether we need to change it.
+
+Or, we could just always set the font name, style name, and
+size that are specified in StyleChange.
+Yes, just set it, based on scope type and the step 2 check boxes.
+
+
+## Possible Problem 15-Feb-2016
 
 In the ODT document, a font may have an overridden font-name as well as
 overridden font-name-complex.

@@ -12,6 +12,7 @@
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 # 13-Jul-16 JDK  Each kind of font can have its own size.
 # 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
+# 21-Jul-16 JDK  Add ProcessingStyleItem, only needed for lingt.access layer.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -64,7 +65,7 @@ class StyleInfo:
         self.styleName = ""  # underlying name of styleDisplayName, "Standard"
 
     def __repr__(self):
-        return repr([self.name, self.styleName])
+        return repr([self.fontName, self.styleName])
 
     def getPropSuffix(self):
         """For use in UNO properties such as CharFontComplex."""
@@ -76,17 +77,13 @@ class StyleInfo:
 
 @functools.total_ordering
 class StyleItem(StyleInfo):
-    """A structure to hold input data for one font."""
-
-    def __init__(self):
+    """A structure to hold input data for one font.
+    Used to display items in the main list box.
+    """
+    def __init__(self, scopeType=ScopeType.FONT_WITH_STYLE):
         StyleInfo.__init__(self)
-        self.fontName = "(Default)"  # could be a standard name, complex or Asian
-        self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
-        self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
-        self.fontAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
-        self.sizeStandard = FontSize()
-        self.sizeComplex = FontSize()
-        self.sizeAsian = FontSize()
+        self.scopeType = scopeType
+        self.fontName = "(Default)"  # either a standard name, complex or Asian
         self.inputData = list()  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type StyleChange
@@ -99,9 +96,9 @@ class StyleItem(StyleInfo):
         if not self.change:
             self.change = StyleChange(self, userVars)
 
-    def set_change(self, fontChange):
-        self.change = fontChange
-        fontChange.fontItem = self
+    def set_change(self, styleChange):
+        self.change = styleChange
+        styleChange.styleItem = self
 
     def effective_info(self):
         """Gets the StyleInfo object that is currently effective."""
@@ -111,9 +108,19 @@ class StyleItem(StyleInfo):
             return self
 
     def __str__(self):
-        strval = str(self.name)
-        if self.styleDisplayName:
-            strval += " (%s)" % self.styleDisplayName
+        if self.scopeType == ScopeType.WHOLE_DOC:
+            strval = "Whole Document"
+        elif (self.scopeType == ScopeType.FONT_WITH_STYLE
+                or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+            strval = str(self.fontName)
+        elif (self.scopeType == ScopeType.CHARSTYLE
+                or self.scopeType == ScopeType.PARASTYLE):
+            strval = str(self.styleName)
+            if self.styleDisplayName:
+                strval = self.styleDisplayName
+        else:
+            raise Exceptions.LogicError(
+                "Unexpected value %s", self.scopeType)
         if self.change:
             strval = "*  " + strval
         return strval
@@ -122,11 +129,17 @@ class StyleItem(StyleInfo):
         """Attributes that uniquely identify this object.
         Used for magic methods below.
         """
-        return (
-            self.name, self.fontType, self.size,
-            self.styleName, self.styleType,
-            self.nameStandard, self.nameComplex, self.nameAsian)
-            self.sizeStandard, self.sizeComplex, self.sizeAsian)
+        if self.scopeType = ScopeType.WHOLE_DOC:
+            return 'WholeDoc'  # only one unique value for all items
+        elif (self.scopeType == ScopeType.FONT_WITH_STYLE
+                or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+            return (self.fontName, self.fontType)
+        elif (self.scopeType == ScopeType.CHARSTYLE
+                or self.scopeType == ScopeType.PARASTYLE):
+            return (self.styleName, self.styleType)
+        else:
+            raise Exceptions.LogicError(
+                "Unexpected value %s", self.scopeType)
 
     def __lt__(self, other):
         return (isinstance(other, StyleItem) and
@@ -146,6 +159,47 @@ class StyleItem(StyleInfo):
         return hash(self.attrs())
 
 
+class ProcessingStyleItem(StyleInfo):
+    """Used in the lingt.access layer for processing XML data."""
+
+    def __init__(self):
+        StyleItem.__init__(self)
+        self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
+        self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
+        self.fontAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
+        self.sizeStandard = FontSize()
+        self.sizeComplex = FontSize()
+        self.sizeAsian = FontSize()
+
+    def getStyleItem(self, scopeType):
+        """Returns a StyleItem object useful for higher layers."""
+        styleItem = StyleItem(scopeType)
+        styleItem.inputData = self.inputData
+        styleItem.inputDataOrder = self.inputDataOrder
+        if scopeType == ScopeType.WHOLE_DOC:
+            pass
+        elif (scopeType = ScopeType.FONT_WITH_STYLE:
+                or scopeType = ScopeType.FONT_WITHOUT_STYLE):
+            styleItem.fontName = self.fontName
+            styleItem.fontType = self.fontType
+        elif (scopeType = ScopeType.PARASTYLE or
+                scopeType = ScopeType.CHARSTYLE):
+            styleItem.styleType = self.styleType
+            styleItem.styleDisplayName = self.styleDisplayName
+            styleItem.styleName = self.styleName
+        else:
+            raise exceptions.LogicError("Unexpected value %s", scopeType)
+        return styleItem
+
+    def attrs(self):
+        """Attributes that uniquely identify this object."""
+        return (
+            self.fontName, self.fontType,
+            self.styleName, self.styleType,
+            self.fontStandard, self.fontComplex, self.fontAsian,
+            self.sizeStandard, self.sizeComplex, self.sizeAsian)
+
+
 class StyleChange(StyleInfo, Syncable):
     """A structure to hold form data for changing one font."""
 
@@ -157,7 +211,7 @@ class StyleChange(StyleInfo, Syncable):
         """
         StyleInfo.__init__(self)
         Syncable.__init__(self, userVars)
-        self.fontItem = font_from
+        self.styleItem = font_from
         self.varNum = varNum  # for storage in user variables
         self.converter = ConverterSettings(userVars)
         self.converted_data = dict()  # key inputString, value convertedString
@@ -179,13 +233,13 @@ class StyleChange(StyleInfo, Syncable):
         return "font%s_%s" % (self.varNumStr(), suffix)
 
     def loadUserVars(self):
-        self.fontItem.name = self.userVars.get(
+        self.styleItem.fontName = self.userVars.get(
             self.numberedVar("fontNameFrom"))
-        self.fontItem.styleDisplayName = self.userVars.get(
+        self.styleItem.styleDisplayName = self.userVars.get(
             self.numberedVar("styleNameFrom"))
-        if not self.fontItem.name and not self.fontItem.styleDisplayName:
+        if not self.styleItem.fontName and not self.styleItem.styleDisplayName:
             raise self.noUserVarData(self.numberedVar("fontNameFrom"))
-        self.name = self.userVars.get(self.numberedVar("fontNameTo"))
+        self.fontName = self.userVars.get(self.numberedVar("fontNameTo"))
         self.styleDisplayName = self.userVars.get(
             self.numberedVar("styleNameTo"))
         self.fontType = self.userVars.get(self.numberedVar("fontType"))
@@ -206,13 +260,13 @@ class StyleChange(StyleInfo, Syncable):
 
     def storeUserVars(self):
         """Sets the user vars for this item."""
-        fontNameFrom = self.fontItem.name
+        fontNameFrom = self.styleItem.fontName
         if fontNameFrom == "(None)":
             fontNameFrom = None  #TESTME
         self.userVars.store(self.numberedVar("fontNameFrom"), fontNameFrom)
-        self.userVars.store(self.numberedVar("fontNameTo"), self.name)
+        self.userVars.store(self.numberedVar("fontNameTo"), self.fontName)
         self.userVars.store(
-            self.numberedVar("styleNameFrom"), self.fontItem.styleDisplayName)
+            self.numberedVar("styleNameFrom"), self.styleItem.styleDisplayName)
         self.userVars.store(
             self.numberedVar("styleNameTo"), self.styleDisplayName)
         self.userVars.store(self.numberedVar("fontType"), self.fontType)

@@ -32,11 +32,13 @@ class DocToXml:
     SUPPORTED_FORMATS = [
         ('writerdoc', "Document (.odt .doc .docx .rtf) for Writer")]
 
-    def __init__(self, unoObjs, msgbox, fileconfig, outdir, progressRange):
+    def __init__(self, unoObjs, msgbox, fileconfig, outdir, scopeType,
+                 progressRange):
         self.unoObjs = unoObjs
         self.msgbox = msgbox
         self.fileconfig = fileconfig   # type fileitemlist.BulkFileItem
         self.outdir = outdir
+        self.scopeType = scopeType
         self.progressRange = progressRange
         self.progressRange_partNum = 0
         self.tempDir = ""
@@ -108,7 +110,7 @@ class DocToXml:
             zipper.extractall(self.tempDir)
         self.incrementProgressPart()
         self.odt_reader = OdtReader(
-            self.tempDir, self.unoObjs)
+            self.tempDir, self.scopeType, self.unoObjs)
         return self.odt_reader.read()
 
     def convert_to_odt(self):

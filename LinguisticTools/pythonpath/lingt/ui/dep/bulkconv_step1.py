@@ -235,19 +235,19 @@ class ScopeTypeRadios(evt_handler.ItemEventHandler):
         self.radios = [
             dutil.RadioTuple(
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_WHOLE_DOC),
-                ScopeType.FONT_WITH_STYLE),
+                ScopeType.WHOLE_DOC),
             dutil.RadioTuple(
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_INCLUDING_STYLE),
                 ScopeType.FONT_WITH_STYLE),
             dutil.RadioTuple(
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_FONT_EXCLUDING_STYLE),
-                ScopeType.FONT_WITH_STYLE),
+                ScopeType.FONT_WITHOUT_STYLE),
             dutil.RadioTuple(
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_PARA_STYLE),
-                ScopeType.FONT_WITH_STYLE),
+                ScopeType.PARASTYLE),
             dutil.RadioTuple(
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_CHAR_STYLE),
-                ScopeType.FONT_WITH_STYLE)]
+                ScopeType.CHARSTYLE)]
         self.whichScope = ScopeType.FONT_WITH_STYLE
 
     def add_listeners(self):

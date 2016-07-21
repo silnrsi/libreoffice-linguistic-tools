@@ -71,10 +71,11 @@ class BulkConversion:
         for fileItemIndex, fileItem in enumerate(self.fileItems):
             fileItem.fileEditor = doc_to_xml.DocToXml(
                 self.unoObjs, self.msgbox, fileItem, self.outdir,
-                progressRange)
-            stylesFound = fileItem.fileEditor.read()
-            logger.debug("found %d styles", len(stylesFound))
-            for styleItem in stylesFound:
+                self.scopeType, progressRange)
+            processingStylesFound = fileItem.fileEditor.read()
+            logger.debug("found %d styles", len(processingStylesFound))
+            for processingStyleItem in processingStylesFound:
+                styleItem = processingStyleItem.getStyleItem(self.scopeType)
                 if styleItem in uniqueStylesFound:
                     styleItem.inputData.extend(
                         uniqueStylesFound[styleItem].inputData)
