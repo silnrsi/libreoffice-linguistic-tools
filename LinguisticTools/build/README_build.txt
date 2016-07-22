@@ -23,7 +23,7 @@ For the third method, do not zip it.  Run it from the user directory:
    Also under the Dialogs tab, I selected LingToolsBasic and created a new
    dialog, because otherwise it didn't seem to notice the new library.
    Also, copy the LinguisticTools/LingToolsBasic folder to <user dir>/basic.
-3. Run deploy_to_userdir.ps1 which copies the large files to Scripts/python in
+3. Run deploy_to_userdir.ps1 which copies files to Scripts/python in
    the OpenOffice or LibreOffice user directory.
 4. From OpenOffice go to Tools -> Macros -> Run macro.
    Do not use the Linguistics menu with this approach.

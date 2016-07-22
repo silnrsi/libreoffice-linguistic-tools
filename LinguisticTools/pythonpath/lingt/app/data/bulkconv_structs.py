@@ -13,6 +13,7 @@
 # 13-Jul-16 JDK  Each kind of font can have its own size.
 # 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
 # 21-Jul-16 JDK  Add ProcessingStyleItem, only needed for lingt.access layer.
+# 22-Jul-16 JDK  Add StyleChange.removeCustomFormatting.
 
 """
 Data structures for Bulk Conversion used by lower layer packages.
@@ -24,22 +25,21 @@ This module exports:
 """
 import functools
 import logging
-from operator import attrgetter
 
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
 from lingt.utils.fontsize import FontSize
-from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.app.dataconversion")
 
 
 class StyleType:
     """What type of style."""
-    CUSTOM = 'CustomFormatting'  # also known as automatic style
+    NO_CHANGE = 'NoChange'
     PARA = 'ParaStyle'
     CHAR = 'CharStyle'
+    CUSTOM = 'CustomFormatting'  # also known as automatic style
 
 
 class ScopeType:
@@ -60,7 +60,7 @@ class StyleInfo:
         self.fontName = ""
         self.fontType = 'Western'  # 'Western' (Standard), 'Complex' or 'Asian'
         self.size = FontSize()
-        self.styleType = self.STYLETYPE_CUSTOM
+        self.styleType = StyleType.NO_CHANGE
         self.styleDisplayName = ""  # for example "Default Style"
         self.styleName = ""  # underlying name of styleDisplayName, "Standard"
 
@@ -111,15 +111,15 @@ class StyleItem(StyleInfo):
         if self.scopeType == ScopeType.WHOLE_DOC:
             strval = "Whole Document"
         elif (self.scopeType == ScopeType.FONT_WITH_STYLE
-                or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+              or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
             strval = str(self.fontName)
         elif (self.scopeType == ScopeType.CHARSTYLE
-                or self.scopeType == ScopeType.PARASTYLE):
+              or self.scopeType == ScopeType.PARASTYLE):
             strval = str(self.styleName)
             if self.styleDisplayName:
                 strval = self.styleDisplayName
         else:
-            raise Exceptions.LogicError(
+            raise exceptions.LogicError(
                 "Unexpected value %s", self.scopeType)
         if self.change:
             strval = "*  " + strval
@@ -129,16 +129,17 @@ class StyleItem(StyleInfo):
         """Attributes that uniquely identify this object.
         Used for magic methods below.
         """
-        if self.scopeType = ScopeType.WHOLE_DOC:
+        logger.debug("StyleItem.attrs()")
+        if self.scopeType == ScopeType.WHOLE_DOC:
             return 'WholeDoc'  # only one unique value for all items
         elif (self.scopeType == ScopeType.FONT_WITH_STYLE
-                or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+              or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
             return (self.fontName, self.fontType)
         elif (self.scopeType == ScopeType.CHARSTYLE
-                or self.scopeType == ScopeType.PARASTYLE):
+              or self.scopeType == ScopeType.PARASTYLE):
             return (self.styleName, self.styleType)
         else:
-            raise Exceptions.LogicError(
+            raise exceptions.LogicError(
                 "Unexpected value %s", self.scopeType)
 
     def __lt__(self, other):
@@ -159,11 +160,11 @@ class StyleItem(StyleInfo):
         return hash(self.attrs())
 
 
-class ProcessingStyleItem(StyleInfo):
+class ProcessingStyleItem(StyleItem):
     """Used in the lingt.access layer for processing XML data."""
 
-    def __init__(self):
-        StyleItem.__init__(self)
+    def __init__(self, scopeType=ScopeType.FONT_WITH_STYLE):
+        StyleItem.__init__(self, scopeType)
         self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
         self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
         self.fontAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts
@@ -178,12 +179,12 @@ class ProcessingStyleItem(StyleInfo):
         styleItem.inputDataOrder = self.inputDataOrder
         if scopeType == ScopeType.WHOLE_DOC:
             pass
-        elif (scopeType = ScopeType.FONT_WITH_STYLE:
-                or scopeType = ScopeType.FONT_WITHOUT_STYLE):
+        elif (scopeType == ScopeType.FONT_WITH_STYLE
+              or scopeType == ScopeType.FONT_WITHOUT_STYLE):
             styleItem.fontName = self.fontName
             styleItem.fontType = self.fontType
-        elif (scopeType = ScopeType.PARASTYLE or
-                scopeType = ScopeType.CHARSTYLE):
+        elif (scopeType == ScopeType.PARASTYLE or
+              scopeType == ScopeType.CHARSTYLE):
             styleItem.styleType = self.styleType
             styleItem.styleDisplayName = self.styleDisplayName
             styleItem.styleName = self.styleName
@@ -193,6 +194,7 @@ class ProcessingStyleItem(StyleInfo):
 
     def attrs(self):
         """Attributes that uniquely identify this object."""
+        logger.debug("ProcessingStyleItem.attrs()")
         return (
             self.fontName, self.fontType,
             self.styleName, self.styleType,
@@ -215,6 +217,7 @@ class StyleChange(StyleInfo, Syncable):
         self.varNum = varNum  # for storage in user variables
         self.converter = ConverterSettings(userVars)
         self.converted_data = dict()  # key inputString, value convertedString
+        self.remove_custom_formatting = True
 
     def setVarNum(self, varNum):
         self.varNum = varNum
@@ -257,6 +260,10 @@ class StyleChange(StyleInfo, Syncable):
         if (not self.userVars.isEmpty(varname) and
                 self.userVars.getInt(varname) == 0):
             self.converter.forward = False
+        varname = self.numberedVar('removeCustomFormatting')
+        if (not self.userVars.isEmpty(varname) and
+                self.userVars.getInt(varname) == 0):
+            self.remove_custom_formatting = False
 
     def storeUserVars(self):
         """Sets the user vars for this item."""
@@ -280,6 +287,9 @@ class StyleChange(StyleInfo, Syncable):
             self.numberedVar('forward'), str(int(self.converter.forward)))
         self.userVars.store(
             self.numberedVar("normalize"), str(self.converter.normForm))
+        self.userVars.store(
+            self.numberedVar('removeCustomFormatting'),
+            str(int(self.remove_custom_formatting)))
 
     def cleanupUserVars(self):
         """Returns True if something was cleaned up."""
@@ -295,6 +305,7 @@ class StyleChange(StyleInfo, Syncable):
         self.userVars.delete(self.numberedVar("convName"))
         self.userVars.delete(self.numberedVar('forward'))
         self.userVars.delete(self.numberedVar("normalize"))
+        self.userVars.delete(self.numberedVar('removeCustomFormatting'))
         return foundSomething1 or foundSomething2
 
     def setattr_from_other(self, other, attr_name):

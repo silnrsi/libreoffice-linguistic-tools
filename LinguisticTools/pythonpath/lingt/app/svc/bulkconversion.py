@@ -19,15 +19,13 @@ This module exports:
     ConvPool
 """
 import collections
-import copy
 import logging
-from operator import attrgetter
 
 from lingt.access.sec_wrapper import ConverterSettings, SEC_wrapper
 from lingt.access.writer import doc_to_xml
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import StyleItemGroup, ScopeType
+from lingt.app.data.bulkconv_structs import ScopeType
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.common.progressbar import ProgressBar, ProgressRange
 from lingt.utils import util
@@ -84,7 +82,7 @@ class BulkConversion:
         self.styleItemList.set_items(uniqueStylesFound.values())
         progressBar.updateFinishing()
         progressBar.close()
-        logger.debug(util.funcName('end', args=len(self.styleItemList.groups)))
+        logger.debug(util.funcName('end', args=len(self.styleItemList.items)))
 
     def update_list(self, event_handler):
         """Update self.styleItemList based on the event that occurred."""
@@ -160,7 +158,7 @@ class BulkConversion:
         """Returns a list of all non-empty StyleChange objects for the list
         of found StyleItem.
         """
-        return [item.change for item in self.styleItemList.all_items()
+        return [item.change for item in self.styleItemList
                 if item.change]
 
     def get_all_conv_names(self):
@@ -175,19 +173,19 @@ class BulkConversion:
 
 
 class StyleItemList:
-    """Manage a list of StyleItemGroup objects."""
+    """Manage a list of StyleItem objects."""
     def __init__(self, userVars):
         self.userVars = userVars
-        self.items = []  # elements are type StyleItemGroup
-        self.selected_index = -1  # selected StyleItemGroup
+        self.items = []  # elements are type StyleItem
+        self.selected_index = -1  # selected StyleItem
 
     def set_items(self, allStyleItems):
-        self.items = allStyleItems
+        self.items = list(allStyleItems)
         self.items.sort()
 
     def update_item(self, item, event_handler):
         """When controls get changed, update StyleItem object.
-        :param item: type StyleItemGroup
+        :param item: type StyleItem
         :param event_handler: type StyleChangeControlHandler
         """
         logger.debug(util.funcName('begin', args=type(event_handler).__name__))
@@ -209,6 +207,9 @@ class StyleItemList:
         """
         return list.__iter__(self.items)
 
+    def __len__(self):
+        return len(self.items)
+
 
 class Samples:
     """Display samples of input data."""
@@ -223,15 +224,14 @@ class Samples:
         self.conv_settings = ConverterSettings(None)
         self.converted_data = Samples.NO_DATA
 
-    def set_styleItemGroup(self, styleItemGroup):
+    def set_styleItem(self, styleItem):
         """Use values from a StyleItem."""
         self.sampleIndex = -1
-        self.inputData = styleItemGroup.effective_item.inputData
-        self.conv_settings = styleItemGroup.changeattr('converter')
-        if styleItemGroup.changeattr_varies('converter'):
-            # If two items have different converters, then don't perform
-            # any conversion -- leave converted text blank.
-            self.converted_data = StyleItemGroup.VARIOUS
+        self.inputData = styleItem.inputData
+        self.conv_settings = ConverterSettings(None)
+        if styleItem.change:
+            self.conv_settings = styleItem.change.converter
+        self.converted_data = ""
 
     def has_more(self):
         """Returns True if there are more samples."""

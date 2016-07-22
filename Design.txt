@@ -8,8 +8,11 @@
 
 ## Next
 
-Pylint.
-Test new changes for ScopeType.FONT_WITH_STYLE.
+odt_converter.py line 383:
+    if styleChange.styleItem == processingStyleItem:
+Uses StyleItem.attrs() for LHS and ProcessingStyleItem.attrs() for RHS.
+Because StyleItem.__eq__() calls .attrs() on each object.
+Perhaps __eq__() should cast the other object first.
 
 
 ## Sometime

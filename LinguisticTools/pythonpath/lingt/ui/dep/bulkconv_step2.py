@@ -28,7 +28,7 @@ This module exports:
 import logging
 
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontChange
+from lingt.app.data.bulkconv_structs import StyleChange
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgBulkConversion as _dlgdef
@@ -56,25 +56,23 @@ class FormStep2:
     def start_working(self):
         for event_handler in self.event_handlers:
             event_handler.start_working()
-        found_font_info = _itemctrls.FoundFontInfo(self.ctrl_getter, self.app)
-        found_font_info.load_values()
 
     def store_results(self):
         """Store settings in user vars."""
         logger.debug(util.funcName('begin'))
-        fontChanges = self.app.getFontChanges()
-        self.app.userVars.store('FontChangesCount', str(len(fontChanges)))
+        styleChanges = self.app.getStyleChanges()
+        self.app.userVars.store('StyleChangesCount', str(len(styleChanges)))
         varNum = 0
-        for fontChange in fontChanges:
-            fontChange.setVarNum(varNum)
+        for styleChange in styleChanges:
+            styleChange.setVarNum(varNum)
             varNum += 1
-            fontChange.userVars = self.app.userVars
-            fontChange.storeUserVars()
+            styleChange.userVars = self.app.userVars
+            styleChange.storeUserVars()
 
         MAX_CLEAN = 1000  # should be more than enough
-        for varNum in range(len(fontChanges), MAX_CLEAN):
-            fontChange = FontChange(None, self.app.userVars, varNum)
-            foundSomething = fontChange.cleanupUserVars()
+        for varNum in range(len(styleChanges), MAX_CLEAN):
+            styleChange = StyleChange(None, self.app.userVars, varNum)
+            foundSomething = styleChange.cleanupUserVars()
             if not foundSomething:
                 break
         logger.debug(util.funcName('end'))
@@ -90,43 +88,42 @@ class Step2Master:
     def __init__(self, ctrl_getter, app):
         self.ctrl_getter = ctrl_getter
         self.app = app
-        self.listFontsUsed = ListFontsUsed(ctrl_getter, app, self)
+        self.listStylesUsed = ListStylesUsed(ctrl_getter, app, self)
         converter_controls = _itemctrls.ConverterControls(
             ctrl_getter, app, self)
         style_controls = _itemctrls.StyleControls(ctrl_getter, app, self)
         font_controls = _itemctrls.FontControls(
             ctrl_getter, app, self, style_controls.get_style_type_handler())
-        # controls that store FontItem data
+        # controls that store StyleItem data
         self.data_controls = [
             converter_controls, font_controls, style_controls]
 
     def get_event_handlers(self):
-        return [self.listFontsUsed] + self.data_controls
+        return [self.listStylesUsed] + self.data_controls
 
     def read_change(self):
-        """Reads the form and returns a FontChange object."""
-        fontChange = FontChange(None, self.app.userVars)
-        for fontitem_controls in self.data_controls:
-            fontitem_controls.update_change(fontChange)
-        return fontChange
+        """Reads the form and returns a StyleChange object."""
+        styleChange = StyleChange(None, self.app.userVars)
+        for styleitem_controls in self.data_controls:
+            styleitem_controls.update_change(styleChange)
+        return styleChange
 
     def copy_change_attrs(self, change_from, change_to):
         """Set attributes of change_to based on change_from."""
-        for fontitem_controls in self.data_controls:
-            fontitem_controls.copy_change(change_from, change_to)
+        for styleitem_controls in self.data_controls:
+            styleitem_controls.copy_change(change_from, change_to)
 
     def refresh_list_and_fill(self):
-        self.listFontsUsed.refresh_and_fill()
+        self.listStylesUsed.refresh_and_fill()
 
     def refresh_list(self):
-        self.listFontsUsed.refresh_selected()
+        self.listStylesUsed.refresh_selected()
 
-    def fill_for_group(self, fontItemGroup):
-        """Fill form according to specified font settings."""
+    def fill_for_item(self, styleItem):
+        """Fill form according to specified styleItem."""
         logger.debug(util.funcName('begin'))
-        foundFontInfo = _itemctrls.FoundFontInfo(self.ctrl_getter, self.app)
-        for fontitem_controls in self.data_controls + [foundFontInfo]:
-            fontitem_controls.fill_for_group(fontItemGroup)
+        for styleitem_controls in self.data_controls:
+            styleitem_controls.fill_for_item(styleItem)
         logger.debug(util.funcName('end'))
 
 
@@ -145,66 +142,64 @@ class ClipboardButtons(evt_handler.ActionEventHandler):
         self.copiedSettings = None
 
     def add_listeners(self):
-        self.btnReset.setActionCommand('ResetFont')
-        self.btnCopy.setActionCommand('CopyFont')
-        self.btnPaste.setActionCommand('PasteFont')
+        self.btnReset.setActionCommand('ResetItem')
+        self.btnCopy.setActionCommand('CopyItem')
+        self.btnPaste.setActionCommand('PasteItem')
         for ctrl in (self.btnReset, self.btnCopy, self.btnPaste):
             ctrl.addActionListener(self)
 
     def handle_action_event(self, action_command):
-        if action_command == 'ResetFont':
-            self.resetFont()
-        elif action_command == 'CopyFont':
-            self.copyFont()
-        elif action_command == 'PasteFont':
-            self.pasteFont()
+        if action_command == 'ResetItem':
+            self.resetItem()
+        elif action_command == 'CopyItem':
+            self.copyItem()
+        elif action_command == 'PasteItem':
+            self.pasteItem()
         else:
             evt_handler.raise_unknown_action(action_command)
 
-    def resetFont(self):
-        group = self.app.selected_group()
-        if not group:
+    def resetItem(self):
+        item = self.app.selected_item()
+        if not item:
             return
-        for item in group.items:
-            item.change = None
+        item.change = None
         self.step2Master.refresh_list_and_fill()
 
-    def copyFont(self):
+    def copyItem(self):
         logger.debug(util.funcName())
         self.copiedSettings = self.step2Master.read_change()
 
-    def pasteFont(self):
+    def pasteItem(self):
         logger.debug(util.funcName())
         if self.copiedSettings is None:
-            self.app.msgbox.display("First copy font settings.")
+            self.app.msgbox.display("First press Copy.")
             return
-        group = self.app.selected_group()
-        if not group:
+        item = self.app.selected_item()
+        if not item:
             return
-        for item in group.items:
-            item.create_change(self.app.userVars)
-            self.step2Master.copy_change_attrs(
-                self.copiedSettings, item.change)
+        item.create_change(self.app.userVars)
+        self.step2Master.copy_change_attrs(
+            self.copiedSettings, item.change)
         self.step2Master.refresh_list_and_fill()
 
 
-class ListFontsUsed(evt_handler.ItemEventHandler):
+class ListStylesUsed(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master):
         evt_handler.ItemEventHandler.__init__(self)
         self.ctrl_getter = ctrl_getter
         self.app = app
         self.step2Master = step2Master
-        self.list_ctrl = ctrl_getter.get(_dlgdef.LIST_FONTS_USED)
+        self.list_ctrl = ctrl_getter.get(_dlgdef.LIST_STYLES_USED)
 
     def add_listeners(self):
         self.list_ctrl.addItemListener(self)
 
     def handle_item_event(self, src):
-        self._read_selected_group()
-        self.fill_form_for_selected_group()
+        self._read_selected_item()
+        self.fill_form_for_selected_item()
         self.refresh()
 
-    def _read_selected_group(self):
+    def _read_selected_item(self):
         """Sets the app's selected_index."""
         try:
             self._set_app_index(
@@ -216,42 +211,41 @@ class ListFontsUsed(evt_handler.ItemEventHandler):
 
     def refresh_and_fill(self):
         self.refresh()
-        self.fill_form_for_selected_group()
+        self.fill_form_for_selected_item()
 
     def refresh(self):
         """Redraw the list and select the same item."""
         dutil.fill_list_ctrl(
             self.list_ctrl,
-            [str(group.effective_item) for group in self.app.fontItemList])
-        if self.app.fontItemList.groups:
+            [str(item) for item in self.app.styleItemList])
+        if len(self.app.styleItemList) > 0:
             if self._get_app_index() == -1:
                 self._set_app_index(0)
-            dutil.select_index(
-                self.list_ctrl, self._get_app_index())
+            dutil.select_index(self.list_ctrl, self._get_app_index())
 
     def refresh_selected(self):
         index = self._get_app_index()
         if index == -1:
             self.refresh()
             return
-        effective_item = self.app.selected_group().effective_item
-        self.list_ctrl.addItem(str(effective_item), index)
+        item = self.app.selected_item()
+        self.list_ctrl.addItem(str(item), index)
         self.list_ctrl.removeItems(index + 1, 1)
 
-    def fill_form_for_selected_group(self):
+    def fill_form_for_selected_item(self):
         """Fills data controls based on the item selected in the list."""
         logger.debug(util.funcName('begin'))
-        group = self.app.selected_group()
-        if not group:
-            logger.debug("No fontItem selected.")
+        item = self.app.selected_item()
+        if not item:
+            logger.debug("No styleItem selected.")
             return
-        self.step2Master.fill_for_group(group)
+        self.step2Master.fill_for_item(item)
 
     def _set_app_index(self, index):
-        self.app.fontItemList.selected_index = index
+        self.app.styleItemList.selected_index = index
 
     def _get_app_index(self):
-        return self.app.fontItemList.selected_index
+        return self.app.styleItemList.selected_index
 
 
 class CheckboxRemoveCustom(evt_handler.ItemEventHandler):
@@ -265,7 +259,7 @@ class CheckboxRemoveCustom(evt_handler.ItemEventHandler):
 
     def load_values(self):
         self.chkRemoveCustom.setState(
-            userVars.getInt('RemoveCustomFormatting'))
+            self.app.userVars.getInt('RemoveCustomFormatting'))
         self.get_results()
 
     def add_listeners(self):

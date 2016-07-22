@@ -118,51 +118,51 @@ def doShowDlg(showDlgFunc):
     showDlgFunc(ctx)
 
 
-def abbreviations():
+def abbreviations(dummy_int=0):
     doShowDlg(abbrevs.showDlg)
 
-def applyConverter():
+def applyConverter(dummy_int=0):
     doShowDlg(applyconv.showDlg)
 
-def bulkConversion():
+def bulkConversion(dummy_int=0):
     doShowDlg(bulkconv.showDlg)
 
-def dataConversion():
+def dataConversion(dummy_int=0):
     doShowDlg(dataconv.showDlg)
 
-def goodSpellingsCheck():
+def goodSpellingsCheck(dummy_int=0):
     doShowDlg(spellsearch.showDlg)
 
-def grammarGrabEx():
+def grammarGrabEx(dummy_int=0):
     doShowDlg(grabex.showGrammarDlg)
 
-def grammarSettings():
+def grammarSettings(dummy_int=0):
     doShowDlg(gramsettings.showDlg)
 
-def makeSpellingChanger():
+def makeSpellingChanger(dummy_int=0):
     doShowDlg(changermaker.showDlg)
 
-def phonSettings():
+def phonSettings(dummy_int=0):
     doShowDlg(phonsettings.showDlg)
 
-def phonologyGrabEx():
+def phonologyGrabEx(dummy_int=0):
     doShowDlg(grabex.showPhonologyDlg)
 
-def scriptPractice():
+def scriptPractice(dummy_int=0):
     doShowDlg(scriptpractice.showDlg)
 
-def spellingAdjustments():
+def spellingAdjustments(dummy_int=0):
     doShowDlg(spellingadjustments.showDlg)
 
-def spellingStepper():
+def spellingStepper(dummy_int=0):
     doShowDlg(spellstep.showDlg)
 
-def wordList():
+def wordList(dummy_int=0):
     doShowDlg(wordlist.showDlg)
 
 
 @logManager.log_exceptions
-def aaa_del_sys_modules():
+def aaa_del_sys_modules(dummy_int=0):
     """Normally it is necessary to restart Office in order to reload modules.
     To make a change to a lingt module without restarting, do the following:
     1. Run this function.
@@ -188,7 +188,7 @@ def aaa_del_sys_modules():
     msgbox.display("Deleted " + str(modules_count) + " modules.")
 
 @logManager.log_exceptions
-def aab_disp_sys_modules():
+def aab_disp_sys_modules(dummy_int=0):
     logManager.spacer()
     ctx = uno.getComponentContext()
     uno_objs = util.UnoObjs(ctx)

@@ -33,6 +33,7 @@ from lingt.app import exceptions
 from lingt.app.data.bulkconv_structs import ProcessingStyleItem, ScopeType
 from lingt.utils import letters
 from lingt.utils import util
+from lingt.utils.fontsize import FontSize
 
 logger = logging.getLogger("lingt.access.odt_converter")
 
@@ -40,13 +41,13 @@ class OdtReader(FileReader):
 
     SUPPORTED_FORMATS = [("xml", "Unzipped Open Document Format (.odt)"),]
 
-    def __init__(self, srcdir, unoObjs):
+    def __init__(self, srcdir, scopeType, unoObjs):
         FileReader.__init__(self, unoObjs)
         self.srcdir = srcdir
         self.defaultStyleItem = None
         self.stylesDom = None
         self.contentDom = None
-        self.scopeType = ScopeType.FONT_WITH_STYLE
+        self.scopeType = scopeType
         self.stylesDict = {}  # keys style name, value ProcessingStyleItem
 
     def _initData(self):
@@ -123,7 +124,7 @@ class OdtReader(FileReader):
         if xmlStyleName in self.stylesDict:
             styleItem = self.stylesDict[xmlStyleName]
         else:
-            styleItem = ProcessingStyleItem()
+            styleItem = ProcessingStyleItem(self.scopeType)
         for textprop in styleNode.getElementsByTagName(
                 "style:text-properties"):
             # Western is last in the list because it is the default.
@@ -145,6 +146,7 @@ class OdtReader(FileReader):
                     ("fo:font-size", 'sizeStandard', 'Western')]:
                 fontSize = textprop.getAttribute(xmlAttr)
                 if fontSize and fontSize.endswith("pt"):
+                    fontSize = fontSize[:-len("pt")]
                     propSuffix = fontType
                     if propSuffix == 'Western':
                         propSuffix = ""
@@ -153,7 +155,8 @@ class OdtReader(FileReader):
                     styleItem.fontType = fontType
                     setattr(styleItem, styleItemAttr, fontSizeObj)
                     self.stylesDict[xmlStyleName] = styleItem
-        return self.stylesDict.get(xmlStyleName, ProcessingStyleItem())
+        emptyStyleItem = ProcessingStyleItem(self.scopeType)
+        return self.stylesDict.get(xmlStyleName, emptyStyleItem)
 
     def readContentFile(self, dom):
         """Read in content.xml."""
@@ -373,10 +376,12 @@ class OdtChanger:
         if processingStyleItem is None:
             logger.debug("processingStyleItem is None")
             return None
+        #logger.debug("Looking for %r (%d)", processingStyleItem)
+        logger.debug("Looking for %r (%d)", processingStyleItem, processingStyleItem.scopeType)
         for styleChange in self.styleChanges:
-            logger.debug("Checking %r", styleChange.styleItem)
+            logger.debug("Checking %r (%d)", styleChange.styleItem, styleChange.styleItem.scopeType)
             if styleChange.styleItem == processingStyleItem:
-                logger.debug("Found %r", styleChange.styleItem)
+                logger.debug("Found %r (%d)", styleChange.styleItem, styleChange.styleItem.scopeType)
                 return styleChange
         logger.debug("Did not find processingStyleItem.")
         return None

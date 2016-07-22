@@ -17,7 +17,7 @@ import os
 import uno
 
 from lingt.app import exceptions
-from lingt.app.data.bulkconv_structs import FontItem, FontChange, ScopeType
+from lingt.app.data.bulkconv_structs import StyleItem, StyleChange, ScopeType
 from lingt.app.data.fileitemlist import FileItemList, BulkFileItem
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
@@ -74,21 +74,21 @@ class FormStep1:
             raise exceptions.ChoiceProblem("Please add files to scan.")
 
     def load_changes(self):
-        """Load stored FontChange data from any previous scans."""
+        """Load stored StyleChange data from any previous scans."""
         logger.debug(util.funcName('begin'))
-        for varNum in range(0, self.app.userVars.getInt('FontChangesCount')):
-            loaded_item = FontItem()
-            fontChange = FontChange(loaded_item, self.app.userVars, varNum)
-            fontChange.loadUserVars()
-            for fontItem in self.app.fontItemList.all_items():
-                if (fontItem.name == loaded_item.name
-                        and fontItem.styleName == loaded_item.styleName):
-                    logger.debug("found match for %r", fontChange)
-                    fontItem.change = fontChange
-                    fontChange.fontItem = fontItem
+        for varNum in range(0, self.app.userVars.getInt('StyleChangesCount')):
+            loaded_item = StyleItem()
+            styleChange = StyleChange(loaded_item, self.app.userVars, varNum)
+            styleChange.loadUserVars()
+            for styleItem in self.app.styleItemList:
+                if (styleItem.fontName == loaded_item.fontName
+                        and styleItem.styleName == loaded_item.styleName):
+                    logger.debug("found match for %r", styleChange)
+                    styleItem.change = styleChange
+                    styleChange.styleItem = styleItem
                     break
             else:
-                logger.debug("did not find match for %r", fontChange)
+                logger.debug("did not find match for %r", styleChange)
         logger.debug(util.funcName('end'))
 
 
@@ -231,6 +231,7 @@ class OutputTo(evt_handler.ActionEventHandler):
 
 class ScopeTypeRadios(evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app):
+        self.app = app
         evt_handler.ItemEventHandler.__init__(self)
         self.radios = [
             dutil.RadioTuple(
