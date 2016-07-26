@@ -376,12 +376,12 @@ class OdtChanger:
         if processingStyleItem is None:
             logger.debug("processingStyleItem is None")
             return None
-        #logger.debug("Looking for %r (%d)", processingStyleItem)
-        logger.debug("Looking for %r (%d)", processingStyleItem, processingStyleItem.scopeType)
+        logger.debug("Looking for %r", processingStyleItem)
         for styleChange in self.styleChanges:
-            logger.debug("Checking %r (%d)", styleChange.styleItem, styleChange.styleItem.scopeType)
-            if styleChange.styleItem == processingStyleItem:
-                logger.debug("Found %r (%d)", styleChange.styleItem, styleChange.styleItem.scopeType)
+            logger.debug("Checking %r", styleChange.styleItem)
+            # This calls the overridden ProcessingStyleItem.__eq__().
+            if processingStyleItem == styleChange.styleItem:
+                logger.debug("Found %r", styleChange.styleItem)
                 return styleChange
         logger.debug("Did not find processingStyleItem.")
         return None

@@ -8,13 +8,6 @@
 
 ## Next
 
-odt_converter.py line 383:
-    if styleChange.styleItem == processingStyleItem:
-Uses StyleItem.attrs() for LHS and ProcessingStyleItem.attrs() for RHS.
-Because StyleItem.__eq__() calls .attrs() on each object.
-Perhaps __eq__() should cast the other object first.
-
-
 ## Sometime
 
 Create dialog definition files in /basic.

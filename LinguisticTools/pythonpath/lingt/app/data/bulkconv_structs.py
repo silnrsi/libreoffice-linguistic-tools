@@ -150,10 +150,8 @@ class StyleItem(StyleInfo):
         """This method gets used when testing for membership using *in*,
         as odt_converter.py does.
         """
-        #pylint: disable=protected-access
         return (isinstance(other, StyleItem) and
                 self.attrs() == other.attrs())
-        #pylint: enable=protected-access
 
     def __hash__(self):
         """Make instances with identical attributes use the same hash."""
@@ -200,6 +198,13 @@ class ProcessingStyleItem(StyleItem):
             self.styleName, self.styleType,
             self.fontStandard, self.fontComplex, self.fontAsian,
             self.sizeStandard, self.sizeComplex, self.sizeAsian)
+
+    def __eq__(self, other):
+        if isinstance(other, ProcessingStyleItem):
+            return self.attrs() == other.attrs()
+        elif isinstance(other, StyleItem):
+            return StyleItem.attrs(self) == other.attrs()
+        return False
 
 
 class StyleChange(StyleInfo, Syncable):
