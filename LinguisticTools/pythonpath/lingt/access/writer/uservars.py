@@ -196,7 +196,7 @@ class SettingsDocPreparer:
         # Empty docs have one paragraph.  Skip the paragraph.
         next(oParCounter, None)
         parCount = len(list(oParCounter))
-        logger.debug("Found %d paragraphs in current doc.", parCount)
+        logger.debug("Found %d paragraphs in current doc.", parCount + 1)
         if not parCount:
             self.addContents()
 

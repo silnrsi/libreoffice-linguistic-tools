@@ -48,13 +48,13 @@ class ScopeType:
     """
     WHOLE_DOC = 0
     FONT_WITH_STYLE = 1  # custom formatting or font of style
-    FONT_WITHOUT_STYLE = 2  # custom formatting regardless of user style
+    FONT_WITHOUT_STYLE = 2  # custom formatting regardless of named style
     PARASTYLE = 3
     CHARSTYLE = 4
 
 
 class StyleInfo:
-    """Information about a particular font or user defined style."""
+    """Information about a particular font or named style."""
 
     def __init__(self):
         self.fontName = ""
@@ -129,7 +129,7 @@ class StyleItem(StyleInfo):
         """Attributes that uniquely identify this object.
         Used for magic methods below.
         """
-        logger.debug("StyleItem.attrs()")
+        #logger.debug("StyleItem.attrs()")
         if self.scopeType == ScopeType.WHOLE_DOC:
             return 'WholeDoc'  # only one unique value for all items
         elif (self.scopeType == ScopeType.FONT_WITH_STYLE
@@ -161,7 +161,7 @@ class StyleItem(StyleInfo):
 class ProcessingStyleItem(StyleItem):
     """Used in the lingt.access layer for processing XML data."""
 
-    def __init__(self, scopeType=ScopeType.FONT_WITH_STYLE):
+    def __init__(self, scopeType, named):
         StyleItem.__init__(self, scopeType)
         self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
         self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
@@ -169,6 +169,7 @@ class ProcessingStyleItem(StyleItem):
         self.sizeStandard = FontSize()
         self.sizeComplex = FontSize()
         self.sizeAsian = FontSize()
+        self.named = named  # True = named style, False = automatic style
 
     def getStyleItem(self, scopeType):
         """Returns a StyleItem object useful for higher layers."""
@@ -192,7 +193,7 @@ class ProcessingStyleItem(StyleItem):
 
     def attrs(self):
         """Attributes that uniquely identify this object."""
-        logger.debug("ProcessingStyleItem.attrs()")
+        #logger.debug("ProcessingStyleItem.attrs()")
         return (
             self.fontName, self.fontType,
             self.styleName, self.styleType,

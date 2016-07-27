@@ -37,6 +37,14 @@ from lingt.utils.fontsize import FontSize
 
 logger = logging.getLogger("lingt.access.odt_converter")
 
+
+class BasicStyleType:
+    """Not to be confused with bulkconv_structs.StyleType"""
+    DEFAULT = 0  # document defaults, which perhaps are a kind of named style
+    NAMED = 1  # for example "Heading 1"
+    AUTOMATIC = 2  # also known as custom formatting
+
+
 class OdtReader(FileReader):
 
     SUPPORTED_FORMATS = [("xml", "Unzipped Open Document Format (.odt)"),]
@@ -92,71 +100,92 @@ class OdtReader(FileReader):
         return dom
 
     def readStylesFile(self, dom):
-        """Read in styles.xml."""
+        """Read in styles.xml which defines named styles."""
         logger.debug(util.funcName('begin'))
         for style in dom.getElementsByTagName("style:default-style"):
             if style.getAttribute("style:family") == "paragraph":
-                self.defaultStyleItem = self.read_text_props(style)
+                self.defaultStyleItem = self.read_text_props(
+                    style, BasicStyleType.DEFAULT)
         for style in dom.getElementsByTagName("style:style"):
             xmlStyleName = style.getAttribute("style:name")
             parentStyleName = style.getAttribute("style:parent-style-name")
-            if parentStyleName in self.stylesDict:
-                parentStyleItem = self.stylesDict[parentStyleName]
-                if xmlStyleName in self.stylesDict:
-                    styleItem = self.stylesDict[xmlStyleName]
-                    for attrName in (
-                            'nameStandard', 'nameComplex', 'nameAsian'):
-                        if parentStyleItem.getattr(attrName) != "(None)":
-                            setattr(
-                                styleItem, attrName,
-                                parentStyleItem.getattr(attrName))
-                else:
-                    styleItem = parentStyleItem
-                self.stylesDict[xmlStyleName] = styleItem
-            self.read_text_props(style)
+            self.add_named_style_from_parent(xmlStyleName, parentStyleName)
+            self.read_text_props(style, BasicStyleType.NAMED)
         logger.debug(util.funcName('end'))
 
-    def read_text_props(self, styleNode):
+    def read_text_props(self, styleNode, basicStyleType):
         """Read style:text-properties nodes and store in self.stylesDict.
         Returns the ProcessingStyleItem for that style.
         """
+        if (self.scopeType == ScopeType.PARASTYLE
+                or self.scopeType == ScopeType.CHARSTYLE):
+            if basicStyleType == BasicStyleType.AUTOMATIC:
+                return
+        elif self.scopeType == ScopeType.FONT_WITHOUT_STYLE:
+            if basicStyleType == BasicStyleType.NAMED:
+                return
         xmlStyleName = styleNode.getAttribute("style:name")
         if xmlStyleName in self.stylesDict:
             styleItem = self.stylesDict[xmlStyleName]
         else:
-            styleItem = ProcessingStyleItem(self.scopeType)
+            styleItem = ProcessingStyleItem(self.scopeType, named)
         for textprop in styleNode.getElementsByTagName(
                 "style:text-properties"):
-            # Western is last in the list because it is the default.
-            # The others will only be used if there are Complex or Asian
-            # characters in the text.
-            for xmlAttr, styleItemAttr, fontType in [
-                    ("style:font-name-asian", 'nameAsian', 'Asian'),
-                    ("style:font-name-complex", 'nameComplex', 'Complex'),
-                    ("style:font-name", 'nameStandard', 'Western')]:
-                fontName = textprop.getAttribute(xmlAttr)
-                if fontName:
-                    styleItem.fontName = fontName
-                    styleItem.fontType = fontType
-                    setattr(styleItem, styleItemAttr, fontName)
-                    self.stylesDict[xmlStyleName] = styleItem
-            for xmlAttr, styleItemAttr, fontType in [
-                    ("style:font-size-asian", 'sizeAsian', 'Asian'),
-                    ("style:font-size-complex", 'sizeComplex', 'Complex'),
-                    ("fo:font-size", 'sizeStandard', 'Western')]:
-                fontSize = textprop.getAttribute(xmlAttr)
-                if fontSize and fontSize.endswith("pt"):
-                    fontSize = fontSize[:-len("pt")]
-                    propSuffix = fontType
-                    if propSuffix == 'Western':
-                        propSuffix = ""
-                    fontSizeObj = FontSize(fontSize, propSuffix, True)
-                    styleItem.size = fontSizeObj
-                    styleItem.fontType = fontType
-                    setattr(styleItem, styleItemAttr, fontSizeObj)
-                    self.stylesDict[xmlStyleName] = styleItem
-        emptyStyleItem = ProcessingStyleItem(self.scopeType)
+            self.read_font_name(styleItem, textprop)
+            self.read_font_size(styleItem, textprop)
+        emptyStyleItem = ProcessingStyleItem(self.scopeType, named)
         return self.stylesDict.get(xmlStyleName, emptyStyleItem)
+
+    def read_font_name(self, styleItem, textprop):
+        """Modifies styleItem and self.stylesDict."""
+        # Western is last in the list because it is the default.
+        # The others will only be used if there are Complex or Asian
+        # characters in the text.
+        for xmlAttr, styleItemAttr, fontType in [
+                ("style:font-name-asian", 'nameAsian', 'Asian'),
+                ("style:font-name-complex", 'nameComplex', 'Complex'),
+                ("style:font-name", 'nameStandard', 'Western')]:
+            fontName = textprop.getAttribute(xmlAttr)
+            if fontName:
+                styleItem.fontName = fontName
+                styleItem.fontType = fontType
+                setattr(styleItem, styleItemAttr, fontName)
+                self.stylesDict[xmlStyleName] = styleItem
+
+    def read_font_size(self, styleItem, textprop):
+        """Modifies styleItem and self.stylesDict."""
+        for xmlAttr, styleItemAttr, fontType in [
+                ("style:font-size-asian", 'sizeAsian', 'Asian'),
+                ("style:font-size-complex", 'sizeComplex', 'Complex'),
+                ("fo:font-size", 'sizeStandard', 'Western')]:
+            fontSize = textprop.getAttribute(xmlAttr)
+            if fontSize and fontSize.endswith("pt"):
+                fontSize = fontSize[:-len("pt")]
+                propSuffix = fontType
+                if propSuffix == 'Western':
+                    propSuffix = ""
+                fontSizeObj = FontSize(fontSize, propSuffix, True)
+                styleItem.size = fontSizeObj
+                styleItem.fontType = fontType
+                setattr(styleItem, styleItemAttr, fontSizeObj)
+                self.stylesDict[xmlStyleName] = styleItem
+
+    def add_named_style_from_parent(self, xmlStyleName, parentStyleName):
+        """Add named style with attributes inherited from parent."""
+        if parentStyleName not in self.stylesDict:
+            return
+        parentStyleItem = self.stylesDict[parentStyleName]
+        if xmlStyleName in self.stylesDict:
+            styleItem = self.stylesDict[xmlStyleName]
+            for attrName in (
+                    'nameStandard', 'nameComplex', 'nameAsian'):
+                if parentStyleItem.getattr(attrName) != "(None)":
+                    setattr(
+                        styleItem, attrName,
+                        parentStyleItem.getattr(attrName))
+        else:
+            styleItem = parentStyleItem
+        self.stylesDict[xmlStyleName] = styleItem
 
     def readContentFile(self, dom):
         """Read in content.xml."""
@@ -165,8 +194,9 @@ class OdtReader(FileReader):
         auto_styles = dom.getElementsByTagName("office:automatic-styles")[0]
         if auto_styles:
             for style in auto_styles.childNodes:
-                self.read_text_props(style)
-        for paragraph in dom.getElementsByTagName("text:p"):
+                self.read_text_props(style, BasicStyleType.AUTOMATIC)
+        for paragraph in xmlutil.getElementsByTagNames(
+                dom, ["text:h", "text:p"]):
             xmlStyleName = paragraph.getAttribute("text:style-name")
             paraStyleItem = self.stylesDict.get(
                 xmlStyleName, self.defaultStyleItem)
@@ -305,7 +335,8 @@ class OdtChanger:
         """Convert text in content.xml with EncConverters."""
         logger.debug(util.funcName('begin'))
         num_changes = 0
-        for paragraph in dom.getElementsByTagName("text:p"):
+        for paragraph in xmlutil.getElementsByTagNames(
+                dom, ["text:h", "text:p"]):
             xmlStyleName = paragraph.getAttribute("text:style-name")
             #logger.debug("para style name %s", xmlStyleName)
             paraStyleItem = self.reader.stylesDict.get(

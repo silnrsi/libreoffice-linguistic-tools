@@ -8,6 +8,8 @@
 
 ## Next
 
+Continue implementing paragraph style searching.
+
 ## Sometime
 
 Create dialog definition files in /basic.

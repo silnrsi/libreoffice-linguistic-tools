@@ -3,10 +3,12 @@
 # This file created Oct 23 2012 by Jim Kornelsen
 #
 # 22-Dec-15 JDK  Added getElemTextList().
+# 27-Jul-16 JDK  Added getElementsByTagNames().
 
 """
 Functions to help read XML files.
 """
+import itertools
 import logging
 
 logger = logging.getLogger("lingt.access.xmlutil")
@@ -34,9 +36,7 @@ def getElemTextList(elem):
     return rc
 
 def getTextByWS(parent, preferredWS):
-    """
-    Returns the text content for the specified writing system.
-
+    """Returns the text content for the specified writing system.
     Expected structure <form lang="en"><text></text></form>
     This is handled too: <text></text>
 
@@ -58,4 +58,16 @@ def getTextByWS(parent, preferredWS):
                 return getTextByTagName(form, "text")
     logger.debug("could not get lang %s", preferredWS)
     return getTextByTagName(forms[0], "text")
+
+def getElementsByTagNames(parent, tag_names):
+    """For example, get all elements that have tag name 'x' and all elements
+    that have tag name 'y'.
+
+    :param parent: a DOM element
+    :param tag_names: list of strings ['x', 'y']
+    """
+    iterables = []
+    for tag_name in tag_names:
+        iterables.append(parent.getElementsByTagName(tag_name))
+    return itertools.chain(iterables)
 
