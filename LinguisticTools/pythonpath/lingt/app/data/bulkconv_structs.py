@@ -47,8 +47,8 @@ class ScopeType:
     This will determine what items are shown in StyleItemList.
     """
     WHOLE_DOC = 0
-    FONT_WITH_STYLE = 1  # custom formatting or font of style
-    FONT_WITHOUT_STYLE = 2  # custom formatting regardless of named style
+    FONT_WITHOUT_STYLE = 1  # custom formatting regardless of named style
+    FONT_WITH_STYLE = 2  # custom formatting or font of style
     PARASTYLE = 3
     CHARSTYLE = 4
 
@@ -313,29 +313,4 @@ class StyleChange(StyleInfo, Syncable):
         self.userVars.delete(self.numberedVar("normalize"))
         self.userVars.delete(self.numberedVar('removeCustomFormatting'))
         return foundSomething1 or foundSomething2
-
-    def setattr_from_other(self, other, attr_name):
-        """
-        :param other: StyleChange object to read from
-        :param attr_name: for example 'styleName' or 'converter.name'
-        """
-        attr_names = attr_name.split('.')
-        this_container = self._last_container(attr_names)
-        # pylint: disable=protected-access
-        other_container = other._last_container(attr_names)
-        # pylint: enable=protected-access
-        last_attr_name = attr_names[-1]
-        other_value = getattr(other_container, last_attr_name)
-        setattr(this_container, last_attr_name, other_value)
-
-    def _last_container(self, attr_names):
-        """Returns the object that contains the last attribute in
-        attr_names.
-        """
-        if len(attr_names) == 1:
-            return self
-        if attr_names[0] == 'converter':
-            return self.converter
-        raise exceptions.LogicError(
-            "Unexpected attribute names: %r", attr_names)
 

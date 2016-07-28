@@ -8,7 +8,7 @@
 
 ## Next
 
-Continue implementing paragraph style searching.
+Continue testing paragraph style searching.
 
 ## Sometime
 

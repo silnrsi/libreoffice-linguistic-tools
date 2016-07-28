@@ -180,7 +180,10 @@ class StyleItemList:
         self.selected_index = -1  # selected StyleItem
 
     def set_items(self, allStyleItems):
-        self.items = list(allStyleItems)
+        self.items = []
+        for styleItem in allStyleItems:
+            if styleItem.inputData:
+                self.items.append(styleItem)
         self.items.sort()
 
     def update_item(self, item, event_handler):
