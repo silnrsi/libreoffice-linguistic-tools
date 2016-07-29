@@ -743,17 +743,18 @@ class StyleCheckboxHandler(StyleChangeControlHandler,
         self.chkRemoveCustom.addItemListener(self)
 
     def update_change(self, styleChange):
-        styleChange.removeCustomFormatting = bool(
+        styleChange.remove_custom_formatting = bool(
             self.chkRemoveCustom.getState())
 
     def _fill_for_item_change(self, styleChange):
-        self.chkRemoveCustom.setState(styleChange.removeCustomFormatting)
+        self.chkRemoveCustom.setState(styleChange.remove_custom_formatting)
 
     def _fill_for_item_no_change(self, dummy_styleItem):
         self.chkRemoveCustom.setState(True)
 
     def copy_change(self, change_from, change_to):
-        change_to.removeCustomFormatting = change_from.removeCustomFormatting
+        change_to.remove_custom_formatting = (
+            change_from.remove_custom_formatting)
 
     def enableDisable(self, styleType):
         if (styleType == StyleType.NO_CHANGE

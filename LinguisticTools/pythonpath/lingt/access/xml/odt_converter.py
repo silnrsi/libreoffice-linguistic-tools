@@ -12,6 +12,7 @@
 # 13-Jul-16 JDK  Read font size.
 # 21-Jul-16 JDK  Use ProcessingStyleItem instead of FontItem.
 # 28-Jul-16 JDK  Handle ScopeType.PARASTYLE.
+# 29-Jul-16 JDK  Handle any ScopeType value.
 
 """
 Read and change an ODT file in XML format.
@@ -67,8 +68,12 @@ class OdtReader(FileReader):
 
     def _verifyDataFound(self):
         if not self.data:
+            scope_string = ScopeType.TO_STRING[self.scopeType]
+            logger.debug(
+                "Searched by %s in folder %s but did not find anything.",
+                scope_string, self.srcdir)
             raise exceptions.DataNotFoundError(
-                "Did not find any fonts in folder %s", self.srcdir)
+                "Searched by %s but did not find anything.", scope_string)
 
     def _read(self):
         self.stylesDom = self.loadFile(
@@ -172,7 +177,7 @@ class StyleReader:
         if styleFamily == "paragraph":
             if self.scopeType == ScopeType.CHARSTYLE:
                 return
-        elif styleFamily == "character":
+        elif styleFamily == "text":
             if self.scopeType == ScopeType.PARASTYLE:
                 return
         else:
@@ -214,6 +219,7 @@ class StyleReader:
             self.stylesDict[xmlStyleName] = styleItem
 
     def _read_text_properties(self, styleItem, styleNode):
+        has_props = False
         for textprop in styleNode.getElementsByTagName(
                 "style:text-properties"):
             if self._read_font_name(styleItem, textprop):
@@ -323,7 +329,8 @@ class StyleItemAppender:
             letters.TYPE_CJK : 'Asian'}
         fontTypeName = FONT_TYPE_NUM_TO_NAME[curFontType]
         styleItem = self._get_item_for_type(fontTypeName)
-        styleItem.inputData.append(textval)
+        if styleItem:
+            styleItem.inputData.append(textval)
 
     def _get_item_for_type(self, fontType):
         """Sets styleItem.fontType and styleItem.fontName."""
@@ -341,6 +348,10 @@ class StyleItemAppender:
         else:
             newItem.fontName = getattr(
                 self.baseStyleItem, ATTR_OF_FONT_TYPE[fontType])
+        if (self.scopeType == ScopeType.PARASTYLE or
+                self.scopeType == ScopeType.CHARSTYLE):
+            if not newItem.styleName:
+                return
         self.styleItemDict[fontType] = newItem
         return newItem
 
@@ -355,6 +366,14 @@ class StyleItemAppender:
             self.styleItems.append(newItem)
 
 
+def setNodeAttribute(node, xmlattr, newval):
+    """Returns number of changes made."""
+    current_val = node.getAttribute(xmlattr)
+    if current_val != newval:
+        node.setAttribute(xmlattr, newval)
+        return 1
+    return 0
+
 class OdtChanger:
     def __init__(self, reader, styleChanges):
         """
@@ -368,7 +387,10 @@ class OdtChanger:
     def makeChanges(self):
         logger.debug(util.funcName('begin'))
         num_changes = self.change_text(self.reader.contentDom)
-        self.change_styles(self.reader.contentDom, self.reader.stylesDom)
+        num_changes += self.change_styles(
+            self.reader.contentDom, self.reader.stylesDom)
+        if num_changes == 0:
+            return num_changes
         with io.open(os.path.join(self.reader.srcdir, 'styles.xml'),
                      mode="wt", encoding="utf-8") as f:
             self.reader.stylesDom.writexml(f, encoding="utf-8")
@@ -419,6 +441,7 @@ class OdtChanger:
 
     def change_styles(self, contentDom, stylesDom):
         """Change fonts and named styles."""
+        num_changes = 0
         #TODO: Distinguish between automatic and named styles.
         for style in (
                 contentDom.getElementsByTagName("style:font-face") +
@@ -426,8 +449,10 @@ class OdtChanger:
             fontName = style.getAttribute("style:name")
             for styleChange in self.styleChanges:
                 if fontName == styleChange.styleItem.fontName:
-                    style.setAttribute("style:name", styleChange.fontName)
-                    style.setAttribute("svg:font-family", styleChange.fontName)
+                    num_changes += setNodeAttribute(
+                        style, "style:name", styleChange.fontName)
+                    num_changes += setNodeAttribute(
+                        style, "svg:font-family", styleChange.fontName)
         for style in (
                 contentDom.getElementsByTagName("style:style") +
                 stylesDom.getElementsByTagName("style:default-style")):
@@ -436,15 +461,18 @@ class OdtChanger:
                 fontName = textprop.getAttribute("style:font-name")
                 for styleChange in self.styleChanges:
                     if fontName == styleChange.styleItem.fontName:
-                        textprop.setAttribute(
-                            "style:font-name", styleChange.fontName)
-                        #style.setAttribute(
-                        #    "style:parent-style-name", styleChange.fontType)
+                        num_changes += setNodeAttribute(
+                            textprop, "style:font-name", styleChange.fontName)
+                        #num_changes += setNodeAttribute(
+                        #   style, "style:parent-style-name",
+                        #   styleChange.fontType)
                         #fontSize = textprop.getAttribute("fo:font-size")
                         #if fontSize and styleChange.size.isSpecified():
                         if styleChange.size.isSpecified():
-                            textprop.setAttribute(
-                                "fo:font-size", str(styleChange.size) + "pt")
+                            num_changes += setNodeAttribute(
+                                textprop, "fo:font-size",
+                                str(styleChange.size) + "pt")
+        return num_changes
 
     def effective_styleChange(self, processingStyleItem):
         """Returns the StyleChange object for the effective style,

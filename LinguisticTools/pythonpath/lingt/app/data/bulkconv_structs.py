@@ -51,6 +51,13 @@ class ScopeType:
     FONT_WITH_STYLE = 2  # custom formatting or font of style
     PARASTYLE = 3
     CHARSTYLE = 4
+    TO_STRING = {
+        WHOLE_DOC : "Whole Document",
+        FONT_WITHOUT_STYLE : "Font Not Including Style",
+        FONT_WITH_STYLE : "Font Including Style",
+        PARASTYLE : "Paragraph Style",
+        CHARSTYLE : "Character Style",
+        }
 
 
 class StyleInfo:

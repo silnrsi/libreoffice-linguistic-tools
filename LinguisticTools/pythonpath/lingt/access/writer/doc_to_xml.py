@@ -153,6 +153,8 @@ class DocToXml:
             logger.warning("No odt_reader.")
         changer = OdtChanger(self.odt_reader, fontChanges)
         numChanges = changer.makeChanges()
+        if numChanges == 0:
+            return numChanges
 
         ## Zip the XML files back into a single ODT file
 

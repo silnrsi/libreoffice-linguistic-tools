@@ -18,6 +18,7 @@
 # 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
 # 13-Jul-16 JDK  Remember state of group check boxes.
 # 16-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
+# 29-Jul-16 JDK  RemoveCustomFormatting is checked per item, not globally.
 
 """
 Bulk Conversion dialog step 2.
@@ -49,7 +50,6 @@ class FormStep2:
         self.event_handlers.extend(self.step2Master.get_event_handlers())
         self.event_handlers.extend([
             ClipboardButtons(ctrl_getter, app, self.step2Master),
-            CheckboxRemoveCustom(ctrl_getter, app),
             VerifyHandler(ctrl_getter, app)
             ])
 
@@ -246,35 +246,6 @@ class ListStylesUsed(evt_handler.ItemEventHandler):
 
     def _get_app_index(self):
         return self.app.styleItemList.selected_index
-
-
-class CheckboxRemoveCustom(evt_handler.ItemEventHandler):
-    """If checked, then set style and remove custom formatting."""
-
-    def __init__(self, ctrl_getter, app):
-        evt_handler.ItemEventHandler.__init__(self)
-        self.app = app
-        self.chkRemoveCustom = ctrl_getter.get(
-            _dlgdef.CHK_REMOVE_CUSTOM_FORMATTING)
-
-    def load_values(self):
-        self.chkRemoveCustom.setState(
-            self.app.userVars.getInt('RemoveCustomFormatting'))
-        self.get_results()
-
-    def add_listeners(self):
-        self.chkRemoveCustom.addItemListener(self)
-
-    def handle_item_event(self, dummy_src):
-        self.store_results()
-
-    def get_results(self):
-        self.app.removeCustomFormatting = bool(self.chkRemoveCustom.getState())
-
-    def store_results(self):
-        self.get_results()
-        self.app.userVars.store(
-            'RemoveCustomFormatting', "%d" % self.app.removeCustomFormatting)
 
 
 class VerifyHandler(evt_handler.ItemEventHandler):

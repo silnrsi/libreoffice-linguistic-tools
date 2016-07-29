@@ -8,7 +8,9 @@
 
 ## Next
 
-Continue testing paragraph style searching.
+Make a minimal test verifying that each of the different scope types
+has an expected result.
+
 
 ## Sometime
 

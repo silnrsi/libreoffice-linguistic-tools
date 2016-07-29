@@ -19,6 +19,7 @@
 # 27-Aug-15 JDK  Added Syncable.cleanupUserVars().
 # 08-Oct-15 JDK  Removed UNO imports.
 # 23-Mar-16 JDK  Added Prefix class.
+# 29-Jul-16 JDK  Documents with one long line are not considered empty.
 
 """
 Store persistent settings in user variables of a Writer document.
@@ -191,14 +192,35 @@ class SettingsDocPreparer:
             userVars, maxHasSettings, twoDocsHaveMax)
         if alreadyHasSettings:
             return
-
-        oParCounter = iteruno.byEnum(self.unoObjs.text)
-        # Empty docs have one paragraph.  Skip the paragraph.
-        next(oParCounter, None)
-        parCount = len(list(oParCounter))
-        logger.debug("Found %d paragraphs in current doc.", parCount + 1)
-        if not parCount:
+        if self._doc_is_empty():
             self.addContents()
+
+    def _doc_is_empty(self):
+        """Returns true if the current document is practically empty.
+        This may not recognize some objects such as frames.
+        However it does work for tables.
+        """
+        oTextEnum = iteruno.byEnum(self.unoObjs.text)
+        paragraphs = list(oTextEnum)
+        parCount = len(paragraphs)
+        logger.debug("Found %d paragraphs in current doc.", parCount)
+        if parCount > 2:
+            return False
+        for oPar in paragraphs:
+            oParEnum = iteruno.byEnum(oPar)
+            par_elems = list(oParEnum)
+            parElemCount = len(par_elems)
+            logger.debug("Found %d paragraph elements.", parElemCount)
+            if parElemCount > 2:
+                return False
+        oVC = self.unoObjs.viewcursor
+        oVC.gotoStart(False)
+        CHARS_REQUIRED = 10
+        for dummy in range(CHARS_REQUIRED):
+            if not oVC.goRight(1, False):
+                return True
+        logger.debug("Document has at least %d characters.", CHARS_REQUIRED)
+        return False
 
     def addContents(self):
         """Add explanation text to the document."""

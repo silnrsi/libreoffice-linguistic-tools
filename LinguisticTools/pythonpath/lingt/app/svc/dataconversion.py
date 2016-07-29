@@ -200,7 +200,7 @@ class DataConversion:
                 "CharStyleName", self.config.targetStyle)
         elif self.config.whichTarget == "FontOnly":
             textChanger.setFontToChange(self.config.targetFont)
-        numChanges, numStyleChanges = textChanger.doChanges(
+        numDataChanges, numStyleChanges = textChanger.doChanges(
             rangesFound, self.config.askEach)
 
         progressBar.updateFinishing()
@@ -211,7 +211,7 @@ class DataConversion:
         paragraphsFound = len(rangesFound)
         if paragraphsFound == 0:
             self.msgbox.display("Did not find scope of change.")
-        elif numChanges == 0:
+        elif numDataChanges == 0:
             if numStyleChanges == 0:
                 self.msgbox.display("No changes.")
             else:
@@ -221,13 +221,13 @@ class DataConversion:
                     "No changes, but modified style of %d paragraph%s.",
                     numStyleChanges, plural)
         elif paragraphsFound == 1:
-            plural = "" if numChanges == 1 else "s" # add "s" if plural
-            self.msgbox.display("Made %d change%s.", numChanges, plural)
+            plural = "" if numDataChanges == 1 else "s" # add "s" if plural
+            self.msgbox.display("Made %d change%s.", numDataChanges, plural)
         else:
-            plural = "" if numChanges == 1 else "s" # add "s" if plural
+            plural = "" if numDataChanges == 1 else "s" # add "s" if plural
             self.msgbox.display(
                 "Found %d paragraphs and made %d change%s.",
-                paragraphsFound, numChanges, plural)
+                paragraphsFound, numDataChanges, plural)
 
     def doConversions_calc(self, sourceCol, destCol, skipFirstRow):
         """For converting data in a Calc spreadsheet."""
@@ -261,13 +261,13 @@ class DataConversion:
 
         outList = []
         problems = False
-        numChanges = 0
+        numDataChanges = 0
         for inValue in inputList:
             try:
                 outValue = self.secCall.convert(inValue)
                 outList.append(outValue)
                 if outValue != inValue:
-                    numChanges += 1
+                    numDataChanges += 1
             except exceptions.MessageError as exc:
                 self.msgbox.displayExc(exc)
                 problems = True
@@ -288,7 +288,7 @@ class DataConversion:
         ## Display results
 
         if not problems:
-            if numChanges == 0:
+            if numDataChanges == 0:
                 self.msgbox.display("No changes.")
             else:
                 self.msgbox.display("Successfully finished conversion.")
