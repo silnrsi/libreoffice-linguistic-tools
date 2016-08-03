@@ -23,6 +23,7 @@
 # 07-Aug-15 JDK  Added setupLogging().
 # 14-Oct-15 JDK  Uno objects for Impress.
 # 23-May-16 JDK  Added a generic UnoObjs doc type.
+# 02-Aug-16 JDK  Added mri().
 
 """
 This module is used by most OOLT modules:
@@ -41,6 +42,7 @@ This module exports:
 
     funcName() - Returns name of calling function.
     xray() - Displays a dialog to analyze UNO object attributes.
+    mri() - Displays a dialog to analyze UNO object attributes.
     debug_tellNextChar() - Tells character to right of cursor.
 
     BASE_FOLDER - Convenient location for test results.
@@ -240,7 +242,7 @@ def uniqueList(seq):
 def xray(myObject, unoObjs):
     """For debugging.
     Displays a dialog to analyze UNO object attributes.
-    To use this function, the XRay OpenOffice extension is required.
+    To use this function, the XRayTool OpenOffice extension is required.
     """
     if not LOGGING_ENABLED:
         return
@@ -256,6 +258,15 @@ def xray(myObject, unoObjs):
         raise RuntimeException(
             "\nBasic library Xray is not installed", unoObjs.ctx)
     xScript.invoke((myObject,), (), ())
+
+
+ def mri(target, unoObjs):
+    """Like xray but uses the MRI introspection tool instead."""
+    if not LOGGING_ENABLED:
+        return
+    mri = unoObjs.ctx.ServiceManager.createInstanceWithContext(
+        "mytools.Mri", unoObjs.ctx)
+    mri.inspect(target)
 
 
 def funcName(location=None, obj=None, args='args_unspecified'):
