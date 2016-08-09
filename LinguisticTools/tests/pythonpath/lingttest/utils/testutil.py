@@ -13,6 +13,7 @@
 # 29-Sep-15 JDK  Added getDefaultStyle().
 # 30-Sep-15 JDK  Match dlg.execute$ for DlgSpellingReplace.
 # 09-Dec-15 JDK  Added clear_messages_sent()
+# 09-Aug-16 JDK  Added output_path().
 
 # Disable warnings related to modifying code dynamically, useful for testing.
 # pylint: disable=exec-used,unused-argument
@@ -31,7 +32,7 @@ import re
 import sys
 import unittest
 # pylint: disable=import-error,unused-import
-#import uno  # This may no longer be needed.  Remove if tests pass.
+import uno
 # pylint: enable=import-error,unused-import
 
 # Used in modules that import testutil.
@@ -359,4 +360,12 @@ def getDefaultStyle():
         return "Default Style"
     else:
         return "Default"
+
+
+def output_path(filename):
+    """Write files here for testing.  These can be deleted when finished,
+    or just ignored.
+    """
+    return os.path.join(
+        os.path.expanduser("~"), "Documents", "OOLT_testing", filename)
 

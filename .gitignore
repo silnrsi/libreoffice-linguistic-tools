@@ -213,4 +213,11 @@ ModelManifest.xml
 
 # Python compiled files
 *.pyc
+
+# Java OpenOffice extensions
 /dev/extensions/java/BookmarkInsertion/API/Samples/Java/Text/BookmarkInsertion/build/
+/dev/extensions/java/PrintingHelper/
+/dev/extensions/java/TestAddOn/
+/dev/extensions/java/TestAddOn2/
+/dev/extensions/java/HelloWorld/
+/dev/extensions/java/SayHello/

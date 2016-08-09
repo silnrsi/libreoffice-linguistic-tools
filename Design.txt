@@ -8,8 +8,7 @@
 
 ## Next
 
-Make a minimal test verifying that each of the different scope types
-has an expected result.
+Get odt_converter_test.py to pass.
 
 
 ## Sometime

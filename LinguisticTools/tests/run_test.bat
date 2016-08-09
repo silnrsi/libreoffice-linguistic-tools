@@ -7,10 +7,12 @@
 @rem 18-Aug-15 JDK  Add pythonpath in the tests directory.
 
 c:
-chdir "%ProgramFiles(x86)%\OpenOffice 4\program\"
+@rem chdir "%ProgramFiles(x86)%\OpenOffice 4\program\"
 @rem chdir "%ProgramFiles(x86)%\LibreOffice 5\program\"
+chdir "%ProgramFiles%\LibreOffice 5\program\"
 
-set ADD_ON=C:\OurDocs\computing\Office\OOLT\LinguisticTools
+@rem set ADD_ON=C:\OurDocs\computing\Office\OOLT\LinguisticTools
+set ADD_ON=D:\dev\OOLT\LinguisticTools
 @rem "." is the current directory and is needed to import uno for AOO.
 set PYTHONPATH=%ADD_ON%\pythonpath;%ADD_ON%\tests\pythonpath;.
 

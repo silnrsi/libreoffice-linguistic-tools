@@ -102,6 +102,7 @@ class StyleItem(StyleInfo):
         """
         if not self.change:
             self.change = StyleChange(self, userVars)
+        return self.change
 
     def set_change(self, styleChange):
         self.change = styleChange
@@ -218,15 +219,15 @@ class ProcessingStyleItem(StyleItem):
 class StyleChange(StyleInfo, Syncable):
     """A structure to hold form data for changing one font."""
 
-    def __init__(self, font_from, userVars, varNum=0):
+    def __init__(self, style_from, userVars, varNum=0):
         """
-        :param font_from: StyleItem being converted from
+        :param style_from: StyleItem being converted from
         :param userVars: for persistent storage
         :param varNum: a user variable number unique to this change
         """
         StyleInfo.__init__(self)
         Syncable.__init__(self, userVars)
-        self.styleItem = font_from
+        self.styleItem = style_from
         self.varNum = varNum  # for storage in user variables
         self.converter = ConverterSettings(userVars)
         self.converted_data = dict()  # key inputString, value convertedString

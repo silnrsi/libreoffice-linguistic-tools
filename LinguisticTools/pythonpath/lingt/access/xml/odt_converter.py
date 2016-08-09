@@ -53,6 +53,10 @@ class OdtReader(FileReader):
     SUPPORTED_FORMATS = [("xml", "Unzipped Open Document Format (.odt)"),]
 
     def __init__(self, srcdir, scopeType, unoObjs):
+        """
+        :param srcdir: will read and write the same XML files
+        :param scopeType: lingt.app.data.bulkconv_structs.ScopeType
+        """
         FileReader.__init__(self, unoObjs)
         self.srcdir = srcdir
         self.defaultStyleItem = None

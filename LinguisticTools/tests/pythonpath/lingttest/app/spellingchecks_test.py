@@ -5,7 +5,6 @@
 # 30-Sep-15 JDK  Match dlg.execute$ for DlgSpellingReplace.
 
 import logging
-import os
 import unittest
 # pylint: disable=import-error
 import uno
@@ -48,8 +47,7 @@ class SpellingChecksTestCase(unittest.TestCase):
     def testAffixesEN(self):
         self.set_writer_contents()
         self.create_blank_wordlist()
-        FILEPATH = os.path.join(
-            os.path.expanduser("~"), "Documents", "wordListTemp.ods")
+        FILEPATH = testutil.output_path("wordListTemp.ods")
         wordListDoc = self.write_wordlist_file(FILEPATH)
 
         app = spellingchecks.SpellingChecker(self.unoObjs, self.userVars)

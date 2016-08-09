@@ -8,117 +8,113 @@ Reads and modifies content.xml and styles.xml.
 
 import os
 import logging
+import shutil
 import unittest
 
 from lingttest.utils import testutil
 
 from lingt.access.xml import odt_converter
-from lingt.access.writer.uservars import UserVars
-from lingt.app.data import lingex_structs
+from lingt.app.data.bulkconv_structs import ScopeType
+from lingt.app.svc.bulkconversion import UniqueStyles
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.odt_converter_test")
 
+REPLACED_VAL = "__REPLACED_VAL__"
+
+
 def getSuite():
     suite = unittest.TestSuite()
-    for method_name in (
-            'testScopeWholeDoc',
-            'testScopeFontWithStyle',
-            'testScopeFontWithoutStyle',
-            'testScopeParaStyle',
-            'testScopeCharStyle'):
-        suite.addTest(BulkReaderTestCase(method_name))
+    suite.addTest(BulkReaderTestCase('testReader'))
+    suite.addTest(BulkWriterTestCase('testWriter'))
     return suite
+
 
 class BulkReaderTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTp_"  # LinguisticTools Phonology variables
-        self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+        self.srcdir = os.path.join(util.TESTDATA_FOLDER, "all_scope_types")
 
-    def testPA(self):
-        config = lingex_structs.PhonInputSettings(None)
-        config.filepath = os.path.join(
-            util.TESTDATA_FOLDER, "PAdata.paxml")
-        config.phoneticWS = ""
-        config.isLexemePhonetic = False
-        xmlReader = phon_reader.PhonReader(
-            self.unoObjs, self.userVars, config)
-        self.assertEqual(xmlReader.get_filetype(), "paxml")
+    def read_files(self, scopeType):
+        reader = odt_converter.OdtReader(self.srcdir, scopeType, self.unoObjs)
+        return reader.read()
 
-        exampleDict = xmlReader.read()
-        self.assertTrue("JPDN23.1".lower() in exampleDict)
-        phonEx = exampleDict["JPDN23.1".lower()]
-        self.assertEqual(phonEx.refText, "JPDN23.1")
-        self.assertEqual(phonEx.gloss, "unmarried cousin")
-        self.assertNotEqual(phonEx.phonetic, "")
-        self.assertNotEqual(phonEx.phonemic, "")
+    def testReader(self):
+        dataSets = [
+            (ScopeType.PARASTYLE, 4),
+            (ScopeType.CHARSTYLE, 4),
+            (ScopeType.FONT_WITH_STYLE, 5),
+            (ScopeType.FONT_WITHOUT_STYLE, 6),
+            (ScopeType.WHOLE_DOC, 1),
+            ]
+        for scopeType, num_expected in dataSets:
+            processingStylesFound = self.read_files(scopeType)
+            self.assertEqual(
+                len(processingStylesFound), num_expected,
+                msg=ScopeType.TO_STRING[scopeType])
 
-        self.assertTrue("JPDN37.4".lower() in exampleDict)
-        phonEx = exampleDict["JPDN37.4".lower()]
-        self.assertEqual(phonEx.refText, "JPDN37.4")
-        self.assertEqual(phonEx.gloss, "")
-        self.assertNotEqual(phonEx.phonetic, "")
-        self.assertNotEqual(phonEx.phonemic, "")
 
-        suggestions = xmlReader.getSuggestions()
-        self.assertEqual(len(suggestions), 1)
-        self.assertEqual(suggestions[0], "JPDN58.02")
+class BulkWriterTestCase(unittest.TestCase):
 
-    def testTbx1(self):
-        config = lingex_structs.PhonInputSettings(None)
-        config.filepath = os.path.join(
-            util.TESTDATA_FOLDER, "TbxPhonCorpus.xml")
-        config.phoneticWS = ""
-        config.isLexemePhonetic = False
-        xmlReader = phon_reader.PhonReader(
-            self.unoObjs, self.userVars, config)
-        self.assertEqual(xmlReader.get_filetype(), "xml")
+    def setUp(self):
+        self.unoObjs = testutil.unoObjsForCurrentDoc()
+        self.outdir = testutil.output_path("all_scope_types")
+        if os.path.exists(self.outdir):
+            for f in os.listdir(self.outdir):
+                os.remove(os.path.join(self.outdir, f))
+        else:
+            os.makedirs(self.outdir)
+        srcdir = os.path.join(util.TESTDATA_FOLDER, "all_scope_types")
+        for filename in ("content.xml", "styles.xml"):
+            shutil.copy(os.path.join(srcdir, filename), self.outdir)
 
-        exampleDict = xmlReader.read()
-        self.assertTrue("JPDN21.5".lower() in exampleDict)
-        phonEx = exampleDict["JPDN21.5".lower()]
-        self.assertEqual(phonEx.refText, "JPDN21.5")
-        self.assertEqual(phonEx.gloss, "elder sister")
-        self.assertNotEqual(phonEx.phonetic, "")
-        self.assertNotEqual(phonEx.phonemic, "")
+    def testWriter(self):
+        dataSets = [
+            (ScopeType.PARASTYLE, "Heading 3", 1),
+            (ScopeType.PARASTYLE, "My Heading Style", 1),
+            (ScopeType.PARASTYLE, "Preformatted Text", 1),
+            (ScopeType.PARASTYLE, "My Preformatted Text", 1),
+            (ScopeType.CHARSTYLE, "Emphasis", 1),
+            (ScopeType.CHARSTYLE, "My Emphasis", 1),
+            (ScopeType.CHARSTYLE, "Source Text", 1),
+            (ScopeType.FONT_WITH_STYLE, "DejaVu Sans", 1),
+            (ScopeType.FONT_WITHOUT_STYLE, "DejaVu Sans", 1),
+            (ScopeType.FONT_WITH_STYLE, "Verdana", 0),
+            (ScopeType.FONT_WITHOUT_STYLE, "Verdana", 1),
+            (ScopeType.WHOLE_DOC, None, 9),
+            ]
+        for dataSet in dataSets:
+            self._do_dataset(dataSet)
 
-        self.assertTrue("EGAN03.37".lower() in exampleDict)
-        phonEx = exampleDict["EGAN03.37".lower()]
-        self.assertEqual(phonEx.refText, "EGAN03.37")
-        self.assertEqual(phonEx.gloss, "five")
-        self.assertNotEqual(phonEx.phonetic, "")
-        self.assertEqual(phonEx.phonemic, "")
+    def _do_dataset(self, dataSet):
+        scopeType, style_to_find, num_expected = dataSet
+        reader = odt_converter.OdtReader(self.outdir, scopeType, self.unoObjs)
+        unique_styles = UniqueStyles(scopeType)
+        unique_styles.add(reader.read())
+        styleItems = unique_styles.get_values()
+        styleChanges = getStyleChanges(styleItems, style_to_find)
+        changer = odt_converter.OdtChanger(reader, styleChanges)
+        changer.makeChanges()
+        resultfile = open(
+            os.path.join(self.outdir, "content.xml"), 'r', encoding="utf-8")
+        count = resultfile.read().count(REPLACED_VAL)
+        debug_msg = ScopeType.TO_STRING[scopeType] + "/" + style_to_find
+        self.assertEqual(count, num_expected, msg=debug_msg)
 
-        suggestions = xmlReader.getSuggestions()
-        self.assertEqual(len(suggestions), 1)
-        self.assertEqual(suggestions[0], "JPDN37.6")
 
-    def testTbx2(self):
-        self.userVars.store("SFMarker_Gloss", "gl123")    # doesn't exist
-        config = lingex_structs.PhonInputSettings(None)
-        config.filepath = os.path.join(
-            util.TESTDATA_FOLDER, "TbxPhonCorpus.xml")
-        config.phoneticWS = ""
-        config.isLexemePhonetic = False
-        xmlReader = phon_reader.PhonReader(
-            self.unoObjs, self.userVars, config)
+def getStyleChanges(styleItems, style_to_find):
+    styleChanges = []
+    for item in styleItems:
+        if str(item) == style_to_find:
+            getStyleChange(item, styleChanges)
+    return styleChanges
 
-        exampleDict = xmlReader.read()
-        self.assertTrue("JPDN21.5".lower() in exampleDict)
-        phonEx = exampleDict["JPDN21.5".lower()]
-        self.assertEqual(phonEx.refText, "JPDN21.5")
-        self.assertEqual(phonEx.gloss, "")
-        self.assertNotEqual(phonEx.phonetic, "")
-        self.assertNotEqual(phonEx.phonemic, "")
-
-        suggestions = xmlReader.getSuggestions()
-        self.assertEqual(len(suggestions), 1)
-        self.assertEqual(suggestions[0], "JPDN37.6")
-
-        self.userVars.store("SFMarker_Gloss", "") # reset
+def getStyleChange(item, styleChanges):
+    item.create_change(None)
+    for instr in item.inputData:
+        item.change.converted_data[instr] = REPLACED_VAL
+    styleChanges.append(item.change)
 
 
 if __name__ == '__main__':

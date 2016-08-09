@@ -65,21 +65,16 @@ class BulkConversion:
             ops=len(self.fileItems), pbar=progressBar)
         #progressRange.partSize = 10
         progressRange.partSize = 4
-        uniqueStylesFound = dict()
+        unique_styles = UniqueStyles(self.scopeType)
         for fileItemIndex, fileItem in enumerate(self.fileItems):
             fileItem.fileEditor = doc_to_xml.DocToXml(
                 self.unoObjs, self.msgbox, fileItem, self.outdir,
                 self.scopeType, progressRange)
             processingStylesFound = fileItem.fileEditor.read()
             logger.debug("found %d styles", len(processingStylesFound))
-            for processingStyleItem in processingStylesFound:
-                styleItem = processingStyleItem.getStyleItem(self.scopeType)
-                if styleItem in uniqueStylesFound:
-                    styleItem.inputData.extend(
-                        uniqueStylesFound[styleItem].inputData)
-                uniqueStylesFound[styleItem] = styleItem
+            unique_styles.add(processingStylesFound)
             progressRange.update(fileItemIndex)
-        self.styleItemList.set_items(uniqueStylesFound.values())
+        self.styleItemList.set_items(unique_styles)
         progressBar.updateFinishing()
         progressBar.close()
         logger.debug(util.funcName('end', args=len(self.styleItemList.items)))
@@ -172,6 +167,28 @@ class BulkConversion:
         return self.styleItemList.selected_item()
 
 
+class UniqueStyles:
+    """Gets StyleItems from ProcessingStyleItems.
+    Merges inputData of style items.
+    """
+    def __init__(self, scopeType):
+        self.uniqueStyles = dict()  # key and value are both type StyleItem
+        self.scopeType = scopeType
+
+    def add(self, processingStyleItems):
+        for processingStyleItem in processingStyleItems:
+            styleItem = processingStyleItem.getStyleItem(self.scopeType)
+            if styleItem in self.uniqueStyles:
+                styleItem.inputData.extend(
+                    self.uniqueStyles[styleItem].inputData)
+            self.uniqueStyles[styleItem] = styleItem
+
+    def get_values(self):
+        return [
+            styleItem for styleItem in self.uniqueStyles.values()
+            if styleItem.inputData]
+
+
 class StyleItemList:
     """Manage a list of StyleItem objects."""
     def __init__(self, userVars):
@@ -179,12 +196,9 @@ class StyleItemList:
         self.items = []  # elements are type StyleItem
         self.selected_index = -1  # selected StyleItem
 
-    def set_items(self, allStyleItems):
-        self.items = []
-        for styleItem in allStyleItems:
-            if styleItem.inputData:
-                self.items.append(styleItem)
-        self.items.sort()
+    def set_items(self, unique_styles):
+        """:param unique_styles: type UniqueStyles"""
+        self.items = sorted(unique_styles.get_values())
 
     def update_item(self, item, event_handler):
         """When controls get changed, update StyleItem object.

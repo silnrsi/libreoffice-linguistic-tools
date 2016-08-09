@@ -260,13 +260,13 @@ def xray(myObject, unoObjs):
     xScript.invoke((myObject,), (), ())
 
 
- def mri(target, unoObjs):
+def mri(target, unoObjs):
     """Like xray but uses the MRI introspection tool instead."""
     if not LOGGING_ENABLED:
         return
-    mri = unoObjs.ctx.ServiceManager.createInstanceWithContext(
+    mri_obj = unoObjs.ctx.ServiceManager.createInstanceWithContext(
         "mytools.Mri", unoObjs.ctx)
-    mri.inspect(target)
+    mri_obj.inspect(target)
 
 
 def funcName(location=None, obj=None, args='args_unspecified'):
