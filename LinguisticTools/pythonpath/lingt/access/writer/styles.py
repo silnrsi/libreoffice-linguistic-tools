@@ -482,6 +482,7 @@ def getListOfStyles(familyName, unoObjs):
     styleObjs = families.getByName(familyName)
     styleNames = []
     for style in iteruno.byIndex(styleObjs):
+        # DisplayName is in the com.sun.star.style.Style service.
         styleNames.append(
             (style.getPropertyValue("DisplayName"), style.getName()))
     # sort by display name

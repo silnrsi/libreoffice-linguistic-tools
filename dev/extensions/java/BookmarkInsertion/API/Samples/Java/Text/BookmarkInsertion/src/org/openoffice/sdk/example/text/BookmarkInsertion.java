@@ -49,15 +49,21 @@
 
 package org.openoffice.sdk.example.text;
 
+import com.sun.star.awt.Point;
+import com.sun.star.awt.Size;
 import com.sun.star.beans.PropertyValue;
+import com.sun.star.beans.XPropertySet;
+import com.sun.star.container.XIndexAccess;
+import com.sun.star.drawing.XDrawPage;
+import com.sun.star.drawing.XDrawPagesSupplier;
+import com.sun.star.drawing.XShape;
 import com.sun.star.frame.XDesktop;
 import com.sun.star.frame.XDispatchHelper;
 import com.sun.star.frame.XDispatchProvider;
+import com.sun.star.lang.XMultiServiceFactory;
 import com.sun.star.text.XText;
-import com.sun.star.text.XTextCursor;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
-import com.sun.star.text.XTextRange;
 import com.sun.star.view.XPrintJobBroadcaster;
 import com.sun.star.view.XPrintJobListener;
 //import javax.print.event.PrintJobEvent;
@@ -86,20 +92,42 @@ public class BookmarkInsertion {
           try {
         // open current document
         xComponent = xDesktop.getCurrentComponent();
-        xTextDocument =(XTextDocument)UnoRuntime.queryInterface(XTextDocument.class, xComponent);
+        //xTextDocument =(XTextDocument)UnoRuntime.queryInterface(XTextDocument.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xTextDocument);
-		xText = xTextDocument.getText();
+		//xText = xTextDocument.getText();
 		//XTextRange xTextRange = xText.getStart();
 		//XTextCursor xTextCursor = xText.createTextCursorByRange(xTextRange);
-		XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
+		//XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
 		//XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
 		//XTextCursor xTextCursor = xTextDocument.getText().createTextCursorByRange(xText.getStart());
 		//xTextCursor.collapseToStart();
-		int num_chars = 0;
-        while (xTextCursor.goRight((short)1, false)) { num_chars++; }
-		System.out.println("Found " + num_chars + " characters.");
+		//int num_chars = 0;
+        //while (xTextCursor.goRight((short)1, false)) { num_chars++; }
+		//System.out.println("Found " + num_chars + " characters.");
+
+		XDrawPagesSupplier xDrawPagesSupplier = 
+			(XDrawPagesSupplier)UnoRuntime.queryInterface(
+				XDrawPagesSupplier.class, xComponent);
+		Object drawPages = xDrawPagesSupplier.getDrawPages();
+		XIndexAccess xIndexedDrawPages = (XIndexAccess)UnoRuntime.queryInterface(
+			XIndexAccess.class, drawPages);
+		Object drawPage = xIndexedDrawPages.getByIndex(0);
+		XMultiServiceFactory xDrawFactory = 
+                  (XMultiServiceFactory)UnoRuntime.queryInterface(
+                      XMultiServiceFactory.class, xComponent);
+		Object drawShape = xDrawFactory.createInstance("com.sun.star.drawing.RectangleShape");
+		XDrawPage xDrawPage = (XDrawPage)UnoRuntime.queryInterface(XDrawPage.class, drawPage);
+		XShape xDrawShape = UnoRuntime.queryInterface(XShape.class, drawShape);
+		xDrawShape.setSize(new Size(10000, 20000));
+		xDrawShape.setPosition(new Point(5000, 5000));
+		xDrawPage.add(xDrawShape);
+
+		XText xShapeText = UnoRuntime.queryInterface(XText.class, drawShape);
+		XPropertySet xShapeProps = UnoRuntime.queryInterface(XPropertySet.class, drawShape);
+		xShapeText.setString("DEF");
+
 		System.exit(0);
 
                 /*

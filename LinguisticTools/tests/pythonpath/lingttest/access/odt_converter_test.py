@@ -2,6 +2,8 @@
 #
 # This file created August 3 2016 by Jim Kornelsen
 #
+# 30-Sep-16 JDK  Get most datasets to pass.
+
 """
 Reads and modifies content.xml and styles.xml.
 """
@@ -43,9 +45,9 @@ class BulkReaderTestCase(unittest.TestCase):
     def testReader(self):
         dataSets = [
             (ScopeType.PARASTYLE, 4),
-            (ScopeType.CHARSTYLE, 4),
-            (ScopeType.FONT_WITH_STYLE, 5),
-            (ScopeType.FONT_WITHOUT_STYLE, 6),
+            (ScopeType.CHARSTYLE, 3),
+            (ScopeType.FONT_WITH_STYLE, 9),
+            (ScopeType.FONT_WITHOUT_STYLE, 4),
             (ScopeType.WHOLE_DOC, 1),
             ]
         for scopeType, num_expected in dataSets:
@@ -60,9 +62,12 @@ class BulkWriterTestCase(unittest.TestCase):
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.outdir = testutil.output_path("all_scope_types")
+
+    def _setUp_dataset(self):
         if os.path.exists(self.outdir):
             for f in os.listdir(self.outdir):
                 os.remove(os.path.join(self.outdir, f))
+                #logger.debug("Removed " + repr(f))
         else:
             os.makedirs(self.outdir)
         srcdir = os.path.join(util.TESTDATA_FOLDER, "all_scope_types")
@@ -89,6 +94,7 @@ class BulkWriterTestCase(unittest.TestCase):
 
     def _do_dataset(self, dataSet):
         scopeType, style_to_find, num_expected = dataSet
+        self._setUp_dataset()
         reader = odt_converter.OdtReader(self.outdir, scopeType, self.unoObjs)
         unique_styles = UniqueStyles(scopeType)
         unique_styles.add(reader.read())
@@ -99,7 +105,7 @@ class BulkWriterTestCase(unittest.TestCase):
         resultfile = open(
             os.path.join(self.outdir, "content.xml"), 'r', encoding="utf-8")
         count = resultfile.read().count(REPLACED_VAL)
-        debug_msg = ScopeType.TO_STRING[scopeType] + "/" + style_to_find
+        debug_msg = ScopeType.TO_STRING[scopeType] + "/" + str(style_to_find)
         self.assertEqual(count, num_expected, msg=debug_msg)
 
 

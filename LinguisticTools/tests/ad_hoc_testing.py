@@ -15,6 +15,7 @@ import uno
 import logging
 import time
 
+from lingt.access.writer import styles
 from lingt.app import exceptions
 from lingt.ui.common import dutil
 from lingt.ui.common.messagebox import MessageBox
@@ -172,6 +173,13 @@ def impress():
     #unoObj = unoObjs.document
     #unoObj = unoObjs.desktop
 
+def underlying_style_names():
+    styleNames = styles.getListOfStyles('ParagraphStyles', unoObjs)
+    for styleName in styleNames:
+        print(
+            "disp_name=" + styleName[0] +
+            ", underlying_name=" + styleName[1] + ";")
+
 def doReplace():
     oDoc = unoObjs.document
     #r = oDoc.createReplaceDescriptor()
@@ -275,8 +283,8 @@ def displayAttrs():
 #------------------------------------------------------------------------------
 print("Starting...")
 ctx = util.UnoObjs.getCtxFromSocket()
-#unoObjs = util.UnoObjs(ctx)
-unoObjs = util.UnoObjs(ctx, 'calc')
+unoObjs = util.UnoObjs(ctx)
+#unoObjs = util.UnoObjs(ctx, 'calc')
 #unoObjs = util.UnoObjs(ctx, 'impress')
 #msgbox = MessageBox(unoObjs)
 
@@ -284,7 +292,8 @@ unoObjs = util.UnoObjs(ctx, 'calc')
 #testSelString()
 #testReadInsertUnicode()
 #impress()
-displayAttrs()
+underlying_style_names()
+#displayAttrs()
 #doReplace()
 print("Finished!")
 

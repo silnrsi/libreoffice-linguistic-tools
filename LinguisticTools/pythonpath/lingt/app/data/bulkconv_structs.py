@@ -171,6 +171,7 @@ class ProcessingStyleItem(StyleItem):
 
     def __init__(self, scopeType, named):
         StyleItem.__init__(self, scopeType)
+        self.styleInternalName = ""  # with _20_ instead of spaces
         self.fontStandard = "(Default)"  # could be non-Unicode Devanagari
         self.fontComplex = "(Default)"  # CTL fonts such as Unicode Devanagari
         self.fontAsian = "(Default)"  # Chinese, Japanese, Korean (CJK) fonts

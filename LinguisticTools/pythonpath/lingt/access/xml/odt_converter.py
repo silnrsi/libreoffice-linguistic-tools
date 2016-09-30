@@ -13,6 +13,7 @@
 # 21-Jul-16 JDK  Use ProcessingStyleItem instead of FontItem.
 # 28-Jul-16 JDK  Handle ScopeType.PARASTYLE.
 # 29-Jul-16 JDK  Handle any ScopeType value.
+# 30-Sep-16 JDK  Add conversion functions for internal names.
 
 """
 Read and change an ODT file in XML format.
@@ -26,6 +27,7 @@ import copy
 import io
 import logging
 import os
+import re
 import xml.dom.minidom
 import xml.parsers.expat
 
@@ -151,6 +153,31 @@ class OdtReader(FileReader):
         logger.debug(util.funcName('end'))
 
 
+def stylename_to_internal(stylename):
+    """
+    Returns the internal name of named style,
+    used in content.xml.
+
+    From http://books.evc-cit.info/odbook/ch02.html:
+    Non-alphanumeric characters in names are converted to hexadecimal;
+    thus blanks are converted to _20_.
+    """
+    return "".join([
+        c if c.isalnum()
+        else "_" + format(ord(c), 'x') + "_"
+        for c in stylename])
+
+def internal_to_stylename(internal_name):
+    """Returns the normal display name of the internal style name.
+    For example, sequences like __20__ are converted to spaces.
+    """
+    def replace_hexcodes(match):
+        hexcode = match.group(1)
+        return chr(int(hexcode, 16))
+
+    return re.sub(r'_([a-zA-Z0-9]{2})_', replace_hexcodes, internal_name)
+
+
 class StyleReader:
     """Read style node attributes.  Modifies stylesDict."""
 
@@ -189,7 +216,8 @@ class StyleReader:
             return
         styleItem = ProcessingStyleItem(self.scopeType, True)
         self.stylesDict[xmlStyleName] = styleItem
-        styleItem.styleName = xmlStyleName
+        styleItem.internalStyleName = xmlStyleName
+        styleItem.styleName = internal_to_stylename(xmlStyleName)
         if styleFamily == "paragraph":
             styleItem.styleType = StyleType.PARA
         else:

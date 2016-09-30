@@ -9,6 +9,8 @@
 ## Next
 
 Get odt_converter_test.py to pass.
+    "Whole Document" didn't make any changes.
+Include "Default Style" in list box when searching for para styles.
 
 
 ## Sometime
