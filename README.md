@@ -2,7 +2,9 @@
 
 This add-on provides a menu of tools for linguistic writeups and other documents written for lesser-known languages.  It reads XML files from SIL FieldWorks, Toolbox and Phonology Assistant.  Other features include Data Conversion using SIL Converters.
 
-To install, download the oxt file below and double-click to open it.  The Extension Manager should open and install the add-on.  For more detailed installation instructions and version history, see [README.txt](/releases/download/v2.9.1/README.txt)
+The primary site to download released builds is https://extensions.libreoffice.org/extensions/lingtools.  Complete source code can be downloaded from github, and recent released builds are here as well.
+
+To install, download the "LinguisticTools" oxt file and double-click to open it.  The Extension Manager should open and install the add-on.  For more detailed installation instructions and version history, see [README.txt](/releases/download/v2.9.1/README.txt)
 
 ![OOLT menu](/external%20docs/OOoLT_writer_menu.jpg)
 
@@ -14,4 +16,4 @@ If you need to remove the Linguistics menu and are having problems, use [RemoveL
 
 # Technical Notes
 
-The .oxt file is a zipped file.  Feel free to unzip it to see how it works.  This extension relies on using a pythonpath folder to allow layered design.
+The .oxt file is a zipped file that includes source code.  This extension relies on using a pythonpath folder to allow layered design.
