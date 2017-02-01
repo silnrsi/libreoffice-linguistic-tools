@@ -1,8 +1,8 @@
 # OpenOffice Linguistic Tools
 
-This add-on provides a menu of tools for linguistic writeups and other documents written for lesser-known languages.  It reads XML files from SIL FieldWorks, Toolbox and Phonology Assistant.  Other features include Data Conversion using SIL Converters.
+This add-on provides a menu of tools for linguistic writeups and other documents written for lesser-known languages.  It reads XML files from software such as SIL FieldWorks.  Other features include Data Conversion using SIL Converters.
 
-The primary site to download released builds is https://extensions.libreoffice.org/extensions/lingtools.  Complete source code can be downloaded from github, and recent released builds are here as well.
+The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Complete source code can be downloaded from github, and recent releases are here as well.
 
 To install, download the "LinguisticTools" oxt file and double-click to open it.  The Extension Manager should open and install the add-on.  For more detailed installation instructions and version history, see [README.txt](/releases/download/v2.9.1/README.txt)
 
