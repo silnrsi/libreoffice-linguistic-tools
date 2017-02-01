@@ -54,16 +54,22 @@ import com.sun.star.awt.Size;
 import com.sun.star.beans.PropertyValue;
 import com.sun.star.beans.XPropertySet;
 import com.sun.star.container.XIndexAccess;
+import com.sun.star.container.XNameAccess;
 import com.sun.star.drawing.XDrawPage;
 import com.sun.star.drawing.XDrawPagesSupplier;
 import com.sun.star.drawing.XShape;
 import com.sun.star.frame.XDesktop;
 import com.sun.star.frame.XDispatchHelper;
 import com.sun.star.frame.XDispatchProvider;
+import com.sun.star.frame.XModel;
+import com.sun.star.frame.XStorable;
 import com.sun.star.lang.XMultiServiceFactory;
+import com.sun.star.lang.XSingleServiceFactory;
+import com.sun.star.sdb.XDocumentDataSource;
 import com.sun.star.text.XText;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
+import com.sun.star.uno.XNamingService;
 import com.sun.star.view.XPrintJobBroadcaster;
 import com.sun.star.view.XPrintJobListener;
 //import javax.print.event.PrintJobEvent;
@@ -76,12 +82,14 @@ public class BookmarkInsertion {
 
     public static void main(String args[]) {
     //public static void was_main(String args[]) {
-		System.out.println("main() BEGIN");
+	System.out.println("main() BEGIN");
+	//printDataSources();
         // You need the desktop to create a document
         // The getDesktop method does the UNO bootstrapping, gets the
         // remote servie manager and the desktop object.
         com.sun.star.frame.XDesktop xDesktop = null;
-        xDesktop = getDesktop();
+	createNewDataSource2();
+	System.exit(0);
        
         // create text document
         XTextDocument xTextDocument = null;
@@ -511,6 +519,158 @@ public class BookmarkInsertion {
         }
         
         return xComponent ;
+    }
+
+    // creates a new DataSource
+    public static void createNewDataSource()
+    {
+        try
+        {
+            // get the remote office component context
+            com.sun.star.uno.XComponentContext xContext = null;
+            xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+            XMultiServiceFactory _rMSF = (XMultiServiceFactory)UnoRuntime.queryInterface(
+                XMultiServiceFactory.class,  xContext.getServiceManager());
+        
+            // the XSingleServiceFactory of the database context creates new generic 
+            // com.sun.star.sdb.DataSources (!)
+            // retrieve the database context at the global service manager and get its 
+            // XSingleServiceFactory interface
+            XSingleServiceFactory xFac = (XSingleServiceFactory)UnoRuntime.queryInterface(
+                XSingleServiceFactory.class, _rMSF.createInstance("com.sun.star.sdb.DatabaseContext"));
+
+            // instantiate an empty data source at the XSingleServiceFactory 
+            // interface of the DatabaseContext
+            Object xDs = xFac.createInstance();
+            if (xDs != null)
+                System.out.println("Created new data source.");
+
+            /*
+            // register it with the database context
+            XStorable store = (XStorable)UnoRuntime.queryInterface(
+                    XStorable.class, xDs);
+            XModel model = (XModel)UnoRuntime.queryInterface(
+                    XModel.class, xDs);
+            */
+            XDocumentDataSource datasourceDocument =
+                UnoRuntime.queryInterface(XDocumentDataSource.class, xDs);
+            XStorable store = (XStorable) UnoRuntime.queryInterface(XStorable.class, datasourceDocument);
+            XModel model = UnoRuntime.queryInterface(XModel.class, datasourceDocument);
+            //XDocumentDataSource datasource = UnoRuntime.queryInterface(XDocumentDataSource.class, xFac);
+            //XStorable store = (XStorable) UnoRuntime.queryInterface(XStorable.class, datasource.getDatabaseDocument());
+            //XModel model = UnoRuntime.queryInterface(XModel.class, datasource.getDatabaseDocument());
+            if (store == null) {
+                System.err.println("Could not get XStorable interface from new data source.");
+                System.exit(0);
+            }
+            store.storeAsURL(
+                    "file:///c:/Users/jkkor/Desktop/test.odb",model.getArgs());
+            XNamingService xServ = (XNamingService)UnoRuntime.queryInterface(
+                    XNamingService.class, xFac);
+            xServ.registerObject("NewDataSourceName", xDs);
+
+            // setting the necessary data source properties
+            XPropertySet xDsProps = (XPropertySet)UnoRuntime.queryInterface(XPropertySet.class, xDs);
+            // Adabas D URL
+            xDsProps.setPropertyValue("URL", "jdbc:mysql::MYSQL");
+
+            // force password dialog
+            xDsProps.setPropertyValue("IsPasswordRequired", new Boolean(true));
+
+            // suggest dsadmin as user name
+            xDsProps.setPropertyValue("User", "root");
+            store.store();
+        } catch (Exception exc) {
+                exc.printStackTrace(System.out);
+        }
+    }
+
+    // creates a new DataSource
+    public static void createNewDataSource2()
+    {
+        try
+        {
+            xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+            XMultiServiceFactory _rMSF = (XMultiServiceFactory)UnoRuntime.queryInterface(
+                XMultiServiceFactory.class,  xContext.getServiceManager());
+        
+            // the XSingleServiceFactory of the database context creates new generic 
+            // com.sun.star.sdb.DataSources (!)
+            // retrieve the database context at the global service manager and get its 
+            // XSingleServiceFactory interface
+            XSingleServiceFactory xFac = (XSingleServiceFactory)UnoRuntime.queryInterface(
+                XSingleServiceFactory.class, _rMSF.createInstance("com.sun.star.sdb.DatabaseContext"));
+
+            // instantiate an empty data source at the XSingleServiceFactory 
+            // interface of the DatabaseContext
+            Object xDs = xFac.createInstance();
+            if (xDs != null)
+                System.out.println("Created new data source.");
+
+            /*
+            // register it with the database context
+            XStorable store = (XStorable)UnoRuntime.queryInterface(
+                    XStorable.class, xDs);
+            XModel model = (XModel)UnoRuntime.queryInterface(
+                    XModel.class, xDs);
+            */
+            XDocumentDataSource datasourceDocument =
+                UnoRuntime.queryInterface(XDocumentDataSource.class, xDs);
+            XStorable store = (XStorable) UnoRuntime.queryInterface(XStorable.class, datasourceDocument);
+            XModel model = UnoRuntime.queryInterface(XModel.class, datasourceDocument);
+            //XDocumentDataSource datasource = UnoRuntime.queryInterface(XDocumentDataSource.class, xFac);
+            //XStorable store = (XStorable) UnoRuntime.queryInterface(XStorable.class, datasource.getDatabaseDocument());
+            //XModel model = UnoRuntime.queryInterface(XModel.class, datasource.getDatabaseDocument());
+            if (store == null) {
+                System.err.println("Could not get XStorable interface from new data source.");
+                System.exit(0);
+            }
+            store.storeAsURL(
+                    "file:///c:/Users/jkkor/Desktop/test.odb",model.getArgs());
+            XNamingService xServ = (XNamingService)UnoRuntime.queryInterface(
+                    XNamingService.class, xFac);
+            xServ.registerObject("NewDataSourceName", xDs);
+
+            // setting the necessary data source properties
+            XPropertySet xDsProps = (XPropertySet)UnoRuntime.queryInterface(XPropertySet.class, xDs);
+            // Adabas D URL
+            xDsProps.setPropertyValue("URL", "jdbc:mysql::MYSQL");
+
+            // force password dialog
+            xDsProps.setPropertyValue("IsPasswordRequired", new Boolean(true));
+
+            // suggest dsadmin as user name
+            xDsProps.setPropertyValue("User", "root");
+            store.store();
+        } catch (Exception exc) {
+                exc.printStackTrace(System.out);
+        }
+    }
+
+    // prints all data sources
+    public static void printDataSources()
+    {
+        System.out.println("Data Sources:");
+        try
+        {
+            // get the remote office component context
+            com.sun.star.uno.XComponentContext xContext = null;
+            xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+            XMultiServiceFactory _rMSF = (XMultiServiceFactory)UnoRuntime.queryInterface(
+                XMultiServiceFactory.class,  xContext.getServiceManager());
+
+            // retrieve the DatabaseContext and get its com.sun.star.container.XNameAccess interface
+            XNameAccess xNameAccess = (XNameAccess)UnoRuntime.queryInterface(
+                XNameAccess.class, _rMSF.createInstance("com.sun.star.sdb.DatabaseContext"));
+     
+             // print all DataSource names
+             String aNames [] = xNameAccess.getElementNames();
+             for (int i=0;i<aNames.length;++i)
+                System.out.println("  " + aNames[i]);
+        } catch (Exception exc) {
+                exc.printStackTrace(System.out);
+        }
+        System.out.println("End Data Sources.");
     }
 }
 
