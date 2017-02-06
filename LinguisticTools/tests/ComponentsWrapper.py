@@ -38,17 +38,22 @@ from lingt.ui.comp import spellstep
 from lingt.ui.comp import wordlist
 from lingt.utils import util
 
+# These paths are used for logging and testing.
 # Since this module is intended only for debugging and testing,
 # logging should normally be enabled here.
+# Change them depending on your system.
+# Also change lingt/utils/util.py and ComponentsWrapper.py
+
+#TOPLEVEL_LOGGING_ENABLED = False  # Set to False for production.
 TOPLEVEL_LOGGING_ENABLED = True
 if platform.system() == "Windows":
-    #ROOTDIR = r"C:\OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
+    ROOTDIR = r"C:\OurDocs"
+    #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
 else:
     #ROOTDIR = "/media/winC/OurDocs"
     ROOTDIR = "/media/sf_OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-        ROOTDIR, "computing", "Office", "OOLT", "debug.txt")
+TOPLEVEL_LOGGER_FILEPATH = os.path.join(
+    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
 
 
 class SimpleLogManager:

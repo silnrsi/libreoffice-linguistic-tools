@@ -43,17 +43,20 @@ from com.sun.star.task import XJobExecutor
 # This is defined in idl/XCalcFunctions.idl
 from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
 
-# Logging may be helpful when debugging and testing.
+# These paths are used for logging and testing.
+# Change them depending on your system.
+# Also change lingt/utils/util.py and tests/ComponentsWrapper.py
+
 #TOPLEVEL_LOGGING_ENABLED = False  # Set to False for production.
 TOPLEVEL_LOGGING_ENABLED = True
 if platform.system() == "Windows":
-    #ROOTDIR = r"C:\OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
+    ROOTDIR = r"C:\OurDocs"
+    #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
 else:
     #ROOTDIR = "/media/winC/OurDocs"
     ROOTDIR = "/media/sf_OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-        ROOTDIR, "computing", "Office", "OOLT", "debug.txt")
+TOPLEVEL_LOGGER_FILEPATH = os.path.join(
+    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
 
 
 class SimpleLogManager:

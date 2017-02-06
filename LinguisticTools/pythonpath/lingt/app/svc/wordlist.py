@@ -7,6 +7,7 @@
 # 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
 # 23-Jul-15 JDK  Refactor generateList().
 # 25-Aug-15 JDK  Catch DataNotFoundError.
+# 06-Feb-17 JDK  Fixed bug: attr name should be fieldItem.thingsToGrab.
 
 """
 Make Word List in Calc.
@@ -119,7 +120,7 @@ class WordList:
             lingExFileItem.filepath = fileItem.filepath
             config.fileList.addItem(lingExFileItem)
             reader = InterlinReader(self.unoObjs, self.userVars, config)
-            words = reader.grabWords(fileItem.dataFields)
+            words = reader.grabWords(fileItem.thingsToGrab)
         elif fileType in PhonReader.supportedNames():
             config = lingex_structs.PhonInputSettings(self.userVars)
             config.filepath = fileItem.filepath
@@ -130,7 +131,7 @@ class WordList:
             if phonUserVars.get("FlexLexeme") == 'phonemic':
                 config.isLexemePhonetic = False
             reader = PhonReader(self.unoObjs, self.userVars, config)
-            words = reader.grabWords(fileItem.dataFields)
+            words = reader.grabWords(fileItem.thingsToGrab)
         elif fileType in DocReader.supportedNames():
             matchesLimit = TextSearchSettings().loadMatchLimit(self.userVars)
             reader = DocReader(fileItem, self.unoObjs, matchesLimit)
