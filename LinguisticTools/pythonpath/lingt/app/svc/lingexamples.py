@@ -405,4 +405,3 @@ class ExSettings:
         self.inSettings.loadOutputSettings(self.outSettings)
         logger.debug("Using %d file(s).", len(self.inSettings.fileList))
         logger.debug(util.funcName('end'))
-

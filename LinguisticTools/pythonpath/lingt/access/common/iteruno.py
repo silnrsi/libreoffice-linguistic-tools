@@ -52,4 +52,3 @@ def byName(unoObj):
     """
     for elemName in unoObj.getElementNames():
         yield unoObj.getByName(elemName)
-

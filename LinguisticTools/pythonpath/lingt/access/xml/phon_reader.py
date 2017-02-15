@@ -340,4 +340,3 @@ class PhonFieldHelper:
                 self.firstEx = False
                 self.suggestions.append(ex.refText)
         self.reset()
-

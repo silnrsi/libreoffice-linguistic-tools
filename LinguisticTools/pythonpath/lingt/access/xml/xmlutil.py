@@ -70,4 +70,3 @@ def getElementsByTagNames(parent, tag_names):
     for tag_name in tag_names:
         iterables.append(parent.getElementsByTagName(tag_name))
     return itertools.chain.from_iterable(iterables)
-

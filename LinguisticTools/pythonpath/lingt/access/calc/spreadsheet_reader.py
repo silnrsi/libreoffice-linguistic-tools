@@ -161,4 +161,3 @@ class CalcFileReader(FileReader):
             raise exceptions.DocAccessError()
         self.calcUnoObjs.window.setVisible(True)  # otherwise it will be hidden
         logger.debug("Opened file.")
-

@@ -174,4 +174,3 @@ class ProgressRanges:
         for progressBar in self.bars:
             meth = getattr(progressBar, methodName)
             meth(*args, **kwargs)
-

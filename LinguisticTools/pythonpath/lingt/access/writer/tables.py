@@ -602,4 +602,3 @@ def countRowsToShow(rowShowVars):
     Value will be true if row should be shown.
     """
     return len([val for val in rowShowVars if val])
-

@@ -12,7 +12,6 @@
 #
 #------------------------------------------------------------------------------
 chdir $PSScriptRoot
-Remove-Item "assimilated_code/*"
 Remove-Item "generating_code/*.csv"
 
 # Go to LinguisticTools folder.

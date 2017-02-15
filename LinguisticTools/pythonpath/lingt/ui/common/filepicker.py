@@ -92,4 +92,3 @@ def showFolderPicker(genericUnoObjs, defaultFoldername=None):
                 folderpath = ""
     logger.debug(util.funcName('end', args=folderpath))
     return folderpath
-

@@ -421,4 +421,3 @@ class InterlinInputSettings(Syncable):
         """Param should be of type InterlinOutputSettings."""
         self.showMorphemeBreaks = outconfig.showMorphemeBreaks
         self.separateMorphColumns = outconfig.separateMorphColumns
-

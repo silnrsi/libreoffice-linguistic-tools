@@ -267,4 +267,3 @@ class ScopeTypeRadios(evt_handler.ItemEventHandler):
 
     def store_results(self):
         self.app.userVars.store('ScopeType', self.whichScope)
-

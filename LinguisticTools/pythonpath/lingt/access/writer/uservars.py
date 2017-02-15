@@ -410,4 +410,3 @@ class PhonologyTags(FieldTags):
         'phonetic' : "pht",
         'gloss' : "ge",
         'ref' : "ref"}
-

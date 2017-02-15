@@ -146,4 +146,3 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
         self.mainForm.finish(event.ActionCommand)
-

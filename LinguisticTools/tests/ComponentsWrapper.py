@@ -8,7 +8,6 @@
 """
 This is like Components.py but for code run from the user directory,
 useful for catching exceptions while testing and debugging.
-Alternatively, run each assimilated component script individually.
 
 If the modules are in Scripts/python/pythonpath,
 then it may be necessary to remove the lingt extension if installed,

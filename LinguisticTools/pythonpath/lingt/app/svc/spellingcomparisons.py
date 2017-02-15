@@ -415,4 +415,3 @@ class CharSet:
         self.charList = newCharList
         CharSet.instanceCount += 1
         self.charsetID = CharSet.instanceCount  # unique ID
-

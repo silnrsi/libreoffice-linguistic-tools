@@ -91,4 +91,3 @@ class CCT_Writer:
             outfile.write('"%s"wd(punct) > "%s"\n' % (oldValue, newValue))
         outfile.close()
         logger.debug("finished writing file")
-

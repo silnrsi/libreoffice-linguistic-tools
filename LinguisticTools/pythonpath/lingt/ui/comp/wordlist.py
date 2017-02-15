@@ -5,6 +5,7 @@
 # 26-Feb-13 JDK  Don't use copy.deepcopy() when changing settings.
 # 09-Apr-13 JDK  Use only item in list even if not selected.
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
+# 13-Feb-17 JDK  Normalize data.
 
 """
 Dialog to read from data files and create a word list in Calc.
@@ -63,6 +64,7 @@ class DlgWordList:
             userVarPrefix, unoObjs.document, logger)
         self.fileItems = FileItemList(WordListFileItem, self.userVars)
         self.punctToRemove = ""
+        self.normForm = 'NFD'
         self.columnOrder = ColumnOrder(self.userVars)
         self.app = WordList(
             unoObjs, self.fileItems, self.columnOrder, self.userVars)
@@ -102,7 +104,7 @@ class DlgWordList:
         dlg.execute()
 
         if self.generateOnClose:
-            self.app.generateList(self.punctToRemove)
+            self.app.generateList(self.punctToRemove, self.normForm)
         if self.disposeWhenFinished:
             dlg.dispose()
 
@@ -226,6 +228,7 @@ class DlgWordList:
     def storeUserVars(self):
         self.punctToRemove = self.dlgCtrls.txtRemovePunct.getText()
         self.userVars.store("Punctuation", self.punctToRemove)
+        self.normForm = self.userVars.get('NormForm')
         self.columnOrder.storeUserVars()
         for fileItem in self.fileItems:
             if fileItem.filetype in PhonReader.supportedNames():
@@ -278,6 +281,10 @@ class DlgControls:
         else:
             punctToRemove = userVars.get(varname)
         self.txtRemovePunct.setText(punctToRemove)
+
+        varname = 'NormForm'
+        if userVars.isEmpty(varname):
+            userVars.store(varname, 'NFD')
 
         if len(fileItems) == 0:
             self.btnMakeList.Label = theLocale.getText("Make Empty List")

@@ -187,6 +187,13 @@ class DlgSpellingSearch:
         config.matchCase = (self.dlgCtrls.chkMatchCase.getState() == 1)
         config.punctuation = self.dlgCtrls.txtPunct.getText()
 
+        varname = 'NormForm'
+        if self.userVars.isEmpty(varname):
+            config.normForm = 'NFD'
+            self.userVars.store(varname, config.normForm)
+        else:
+            config.normForm = self.userVars.get(varname)
+
         config.verify()
         config.setAffixes(self.dlgCtrls.txtAffixes.getText())
         self.app.setConfig(config)

@@ -527,4 +527,3 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.mainForm.dlgClose()
         else:
             evt_handler.raise_unknown_action(event.ActionCommand)
-

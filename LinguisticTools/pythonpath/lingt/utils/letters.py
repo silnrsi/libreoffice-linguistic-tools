@@ -27,8 +27,8 @@ except NameError:
 # Types are "WI_Vowels", "DepVowels", "AnyVowels", "WI_Consonants",
 # "WF_Consonants", "AnyConsonants",
 LetterIndex = dict()
-for script in unicode_data.SCRIPT_LETTERS.keys():
-    for lettertype in unicode_data.SCRIPT_LETTERS[script].keys():
+for script in unicode_data.SCRIPT_LETTERS:
+    for lettertype in unicode_data.SCRIPT_LETTERS[script]:
         for code in unicode_data.SCRIPT_LETTERS[script][lettertype]:
             LetterIndex[code] = lettertype
 for lettertype in unicode_data.OTHER_KNOWN_LETTERS:
@@ -515,5 +515,3 @@ FONT_TYPE_BLOCKS = [
     (u"\uFF00", u"\uFFEF", TYPE_STANDARD), # Halfwidth and Fullwidth Forms
     (u"\uFFF0", u"\uFFFF", TYPE_STANDARD), # Specials
     ]
-
-

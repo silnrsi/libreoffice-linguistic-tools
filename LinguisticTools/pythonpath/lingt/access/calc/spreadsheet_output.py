@@ -71,4 +71,3 @@ class SpreadsheetOutput:
             newDoc, doctype=util.UnoObjs.DOCTYPE_CALC)
         logger.debug(util.funcName('end'))
         return newDocObjs
-

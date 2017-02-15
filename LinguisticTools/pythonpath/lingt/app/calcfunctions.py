@@ -23,4 +23,3 @@ def reverseString(inString):
     # This is extended slice syntax [begin:end:step].  With a step of -1,
     # it will traverse the string elements in descending order.
     return s[::-1]
-

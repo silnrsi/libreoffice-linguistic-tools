@@ -241,4 +241,3 @@ def remember_handling_event(func):
             self.handling_event = False
 
     return wrapper
-

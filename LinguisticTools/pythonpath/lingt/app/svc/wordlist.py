@@ -7,7 +7,8 @@
 # 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
 # 23-Jul-15 JDK  Refactor generateList().
 # 25-Aug-15 JDK  Catch DataNotFoundError.
-# 06-Feb-17 JDK  Fixed bug: attr name should be fieldItem.thingsToGrab.
+# 06-Feb-17 JDK  Fixed bug: attr name should be .thingsToGrab.
+# 13-Feb-17 JDK  Normalize data.
 
 """
 Make Word List in Calc.
@@ -17,6 +18,7 @@ This module exports:
 """
 import logging
 import re
+import unicodedata
 
 from lingt.access.calc.spreadsheet_reader import CalcFileReader
 from lingt.access.calc.wordlist_io import WordlistIO
@@ -48,7 +50,7 @@ class WordList:
         self.words = []
         self.progressBar = None
 
-    def generateList(self, punctToRemove, outputToCalc=True):
+    def generateList(self, punctToRemove, normForm, outputToCalc=True):
         """Harvest words from various files.
         If outputToCalc is True, then output a word list in Calc.
         """
@@ -80,7 +82,7 @@ class WordList:
             if len(self.fileItems) > 0:
                 splitByWhitespace = self.fileItems[0].splitByWhitespace
             self.words = organizeList(
-                all_words_read, punctToRemove, splitByWhitespace,
+                all_words_read, punctToRemove, splitByWhitespace, normForm,
                 self.progressBar)
             self.progressBar.updateFinishing()
         finally:
@@ -169,7 +171,8 @@ class WordList:
         msgbox.display("Made list of %d words.", len(self.words))
 
 
-def organizeList(wordList, punctToRemove, splitByWhitespace, progressBar):
+def organizeList(wordList, punctToRemove, splitByWhitespace, normForm,
+                 progressBar):
     """All types of words are likely to be harvested.
     Clean up and organize the list.
     """
@@ -194,12 +197,14 @@ def organizeList(wordList, punctToRemove, splitByWhitespace, progressBar):
     logger.debug("Word count: %d", len(wordList))
     progressBar.updatePercent(40)
 
-    # remove outer punctuation
+    # remove outer punctuation and normalize
     punctToRemove = re.sub(r"\s+", "", punctToRemove)
     logger.debug("punctToRemove %r", punctToRemove)
     for word_read in wordList:
         word_read.text = word_read.text.strip()  # remove whitespace
         word_read.text = word_read.text.strip(punctToRemove)
+        if normForm != 'None':
+            word_read.text = unicodedata.normalize(normForm, word_read.text)
         #logger.debug("text is now '%s'", word_read.text)
     progressBar.updatePercent(60)
 
@@ -227,8 +232,7 @@ def organizeList(wordList, punctToRemove, splitByWhitespace, progressBar):
     # sort
     progressBar.updatePercent(80)
     sorted_words = []
-    for text in sorted(unique_words.keys()):
+    for text in sorted(unique_words):
         sorted_words.append(unique_words[text])
     logger.debug("Word count: %d", len(sorted_words))
     return sorted_words
-
