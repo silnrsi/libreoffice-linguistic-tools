@@ -1,5 +1,8 @@
 # Cre 2/25/10 by Jim K
 
+To update both branches, first push a commit to dev_extra,
+then cherry pick the commit into the main branch.
+
 Problem characters in XML
 Find using Vim: Open as utf-8, then search for a range like /[\x90-\x95]
 Also try opening in Firefox.
