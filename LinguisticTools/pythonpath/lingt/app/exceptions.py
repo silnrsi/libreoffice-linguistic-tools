@@ -117,4 +117,3 @@ class LogicError(MessageError):
 class DialogError(MessageError):
     """Dialog controls were in an unexpected state."""
     pass
-

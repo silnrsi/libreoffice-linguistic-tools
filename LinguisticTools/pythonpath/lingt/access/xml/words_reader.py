@@ -94,4 +94,3 @@ class WordsReader(FileReader):
                     logger.debug("got correction")
             self.data.append(word)
         logger.debug("finished reading file")
-

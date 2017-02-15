@@ -273,4 +273,3 @@ class WhatToGrab(Syncable):
         self.userVars.delete(self.prefix + "val")
         self.userVars.delete(self.prefix + "fontType")
         return cleaned_up_something
-

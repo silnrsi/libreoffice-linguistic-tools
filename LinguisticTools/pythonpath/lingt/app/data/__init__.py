@@ -5,4 +5,3 @@
 # They depend on lingt.access.writer.uservars.Syncable in order
 # to store their data.
 #
-

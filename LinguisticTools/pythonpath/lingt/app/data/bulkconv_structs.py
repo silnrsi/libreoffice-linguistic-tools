@@ -322,4 +322,3 @@ class StyleChange(StyleInfo, Syncable):
         self.userVars.delete(self.numberedVar("normalize"))
         self.userVars.delete(self.numberedVar('removeCustomFormatting'))
         return foundSomething1 or foundSomething2
-

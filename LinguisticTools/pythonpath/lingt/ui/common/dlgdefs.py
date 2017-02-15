@@ -395,4 +395,3 @@ class DlgWordListFile:
 class DlgWritingSystem:
     BTN_OK = "BtnOK"
     WSLIST_BOX = "WSListBox"
-

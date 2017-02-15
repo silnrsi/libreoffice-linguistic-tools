@@ -414,4 +414,3 @@ class ComparisonDoc:
         logger.debug("Disposing")
         self.writerDoc = None
         return None
-

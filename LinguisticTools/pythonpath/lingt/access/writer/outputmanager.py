@@ -414,4 +414,3 @@ class AbbrevManager:
             self.unoObjs.text.insertControlCharacter(
                 textcursor, PARAGRAPH_BREAK, 0)
         logger.debug(util.funcName('end'))
-

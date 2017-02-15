@@ -65,7 +65,7 @@ class Locale:
         ## Make the English key values case insensitive
 
         translationsLower = dict()
-        for en in self.translations.keys():
+        for en in self.translations:
             translationsLower[en.lower()] = self.translations[en]
         self.translations.update(translationsLower)
         return theLocale
@@ -1180,4 +1180,3 @@ class Locale:
     }
 
 theLocale = Locale()
-

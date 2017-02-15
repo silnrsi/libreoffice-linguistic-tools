@@ -327,4 +327,3 @@ class Stats:
         self.numCorrect = 0
         self.numIncorrect = 0
         self.avgTime = 0
-

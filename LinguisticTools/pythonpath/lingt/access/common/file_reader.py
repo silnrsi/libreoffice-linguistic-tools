@@ -93,4 +93,3 @@ class FileReader:
         so derived classes are not required to override this method.
         """
         return []
-

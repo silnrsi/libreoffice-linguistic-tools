@@ -763,4 +763,3 @@ class StyleCheckboxHandler(StyleChangeControlHandler,
         elif (styleType == StyleType.PARA
               or styleType == StyleType.CHAR):
             self.chkRemoveCustom.getModel().Enabled = True
-

@@ -427,4 +427,3 @@ def createBuffer(size):
         # In C++ this is char * for UTF-8
         # In Python this is bytes
         return ctypes.create_string_buffer(size)
-

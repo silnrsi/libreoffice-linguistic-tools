@@ -121,4 +121,3 @@ class DocReader(FileReader):
                 word.source = self.fileconfig.filepath
                 self.data.append(word)
         logger.debug(util.funcName('end'))
-

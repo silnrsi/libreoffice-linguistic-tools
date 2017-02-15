@@ -10,6 +10,7 @@
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 # 15-Jul-15 JDK  Refactor App.ScriptPractice into three classes.
 # 15-Aug-15 JDK  Checkbox instead of buttons for known fonts.
+# 13-Feb-17 JDK  Normalize data.
 
 """
 Script Practice dialog.
@@ -121,7 +122,8 @@ class DlgScriptPractice:
         punctToRemove = dlgFileList.punctToRemove
         dlgFileList.dlgDispose()
         if len(fileItems) > 0:
-            listApp.generateList(punctToRemove, outputToCalc=False)
+            listApp.generateList(
+                punctToRemove, dlgFileList.normForm, outputToCalc=False)
             self.wordList = listApp.words[:]
 
     def switch(self):

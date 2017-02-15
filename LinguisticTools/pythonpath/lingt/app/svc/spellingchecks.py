@@ -6,6 +6,7 @@
 # 08-May-13 JDK  Suggest only words of the same case as the word found.
 # 15-Jul-15 JDK  Added CheckerSettings class.
 # 23-Jul-15 JDK  Added GoodList and WorkAsker classes.
+# 13-Feb-17 JDK  Normalize data.
 
 """
 Checks a document or list for spelling corrections.
@@ -19,6 +20,8 @@ This module exports:
 import copy
 import logging
 import re
+import unicodedata
+
 from grantjenks.tribool import Tribool
 
 from lingt.access.calc import spreadsheet_reader
@@ -45,9 +48,10 @@ class CheckerSettings:
     def __init__(self):
         # These attributes should be set from an external class.
         self.filepath = ""
-        self.whichTask = ""
-        self.whichScope = ""
+        self.whichTask = ''
+        self.whichScope = ''
         self.punctuation = ""
+        self.normForm = ''
         self.matchCase = False
         self.searchConfig = TextSearchSettings()
         # These attributes are set from within this class.
@@ -169,6 +173,7 @@ class SpellingChecker:
             if tokenNum >= len(rangeTokens):
                 break
             word = rangeTokens[tokenNum].strip(self.config.punctuation)
+            #word = re.sub(self.config.punct_expr, "", rangeTokens[tokenNum])
             wordLower = self.goodList.firstLower(word)
             wordNoAffix = self.wordAsker.removeAffixes(wordLower)
             suspect = True
@@ -218,7 +223,8 @@ class SpellingChecker:
             wordList = wordListReader.getColumnStringList(
                 columnLetter, skipFirstRow=True)
             self.goodList.setGoodList(
-                wordList, self.config.matchCase, columnLetter)
+                wordList, self.config.matchCase, self.config.normForm,
+                columnLetter)
         else:
             logger.debug("Reading change list.")
             changeList = spellingchanges.getChangeList(
@@ -259,6 +265,12 @@ class SpellingChecker:
         return textSearch.getRanges()
 
 
+def normalize(normForm, word):
+    word = word.strip()  # remove whitespace
+    if normForm != 'None':
+        word = unicodedata.normalize(normForm, word)
+    return word
+
 class GoodList:
     """List of words that are correctly spelled."""
     def __init__(self, msgbox):
@@ -266,6 +278,7 @@ class GoodList:
         self.wordList = []
         self.insensitiveList = []  # case insensitive (unless matchCase)
         self.matchCase = False
+        self.normForm = 'NFD'
         self.columnLetter = ""
         self.calcUnoObjs = None
         # used instead of a good list if applying corrections
@@ -274,12 +287,13 @@ class GoodList:
     def setCalcUnoObjs(self, calcUnoObjs):
         self.calcUnoObjs = calcUnoObjs
 
-    def setGoodList(self, newList, matchCase, columnLetter):
+    def setGoodList(self, newList, matchCase, normForm, columnLetter):
         """Sets most of the attributes of this class."""
-        self.wordList = newList
+        self.wordList = self.normalizeList(newList)
         self.matchCase = matchCase
+        self.normForm = normForm
         self.columnLetter = columnLetter
-        self.suggestions.setList(newList)
+        self.suggestions.setList(self.wordList)
         self.loadInsensitiveList()
 
     def add(self, wordSimplified):
@@ -315,8 +329,13 @@ class GoodList:
             return wordText
         return wordText
 
+    def normalizeList(self, wordList):
+        return [
+            normalize(self.normForm, word)
+            for word in wordList]
+
     def __contains__(self, word):
-        return word in self.insensitiveList
+        return normalize(self.normForm, word) in self.insensitiveList
 
 
 def getContext(tokens, wordTokenNum):
@@ -349,6 +368,7 @@ class WordAsker:
         """Returns True if a change was made."""
         self.rangeJumper = rangeJumper
         self.separatePunct(tokens[wordTokenNum])
+        wordText = normalize(self.config.normForm, wordText)
         if self.config.whichTask == 'ApplyCorrections':
             return self.applyCorrection(wordText)
         else:
@@ -522,4 +542,3 @@ class SpellingStepper:
     def currentRowData(self):
         """Data starts on the second row of the Calc spreadsheet."""
         return self.datalist[self.currentRow - 2]
-

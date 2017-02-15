@@ -1,9 +1,12 @@
 # vim: set filetype=conf :
 #------------------------------------------------------------------------------
-# Created 12/21/09
+# Created 12/21/2009
 #
 # Problems to fix and future enhancements.
 # - Try not to add so many features that it becomes complicated for the user.
+#
+# Now using Issues on Github to track clearly defined issues.
+# However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
 ## Next
@@ -21,10 +24,13 @@ Create dialog definition files in /basic.
 ## Next OOLT version
 
 Version 3.0:
-    New Often-Requested feature (Bulk Data Conversion).
+    Bulk Data Conversion
         Really a big change because it uses somewhat of a different
         design, with more processing done outside of Office.
-        Possibly release it only for ScopeType.FONT_WITH_STYLE.
+        # Possibly release it only for ScopeType.FONT_WITH_STYLE.
+        Release an experimental version, noted in the dialog.
+        Release 3.0 but don't announce this major requested feature until
+        it is better tested.
     Grammar Settings improved for Flex - line 1, line 2.
     Make file size much larger by adding screen captures to documentation.
         Actually, make two downloads: one with lots of images, and one with
@@ -32,7 +38,6 @@ Version 3.0:
         With just a link to the help document online,
         and without LinguisticTools/tests.
     Spanish and French translations with help from David and Phil.
-    Complete set of topdown tests.
 
 
 ## Simplifying
@@ -215,37 +220,6 @@ If the checkbox is named "Join" then it would better reflect what this
 code would be doing.
  
 
-## Rename line checkboxes in Grammar Settings
-
-Morpheme Line 1
-Morpheme Line 2
-
-Line 1 will be checked by default.
-This will break compatibility with settings,
-requiring the user to change checkboxes.
-The most common use is to just use one line,
-so we want that transition to be smooth.
-So have new user var names,
-and ignore the old ones.
-So it will default to Line 1 checked.
-
-Make sure it doesn't matter to LingTools if for example the Tamil script is
-in Line 2.
-
-Toolbox orthographic tags will be line 1?
-But then the default of using line 1 will use only orthographic
-representation, which doesn't seem right.
-Would it work to say if line 1 and 2 are both checked,
-then we want orthographic text also,
-otherwise just normal text?
-No, because then it wouldn't be possible to show only orthographic text.
-Let's make line 2 be orthographic,
-even though that won't be how it ends up being shown (unless a hidden option
-is set?).
-
-Change the grammar documentation to describe FieldWorks first.
-
-
 ## Bulk Data Conversion
 
 3. When "Process Files" is pressed, show progress bar.
@@ -326,23 +300,6 @@ Script Practice             # result: (text box contents)
 Use bigExamples.xml in a grammar test.
 
 
-## Help text
-
-The dialog shows &328.DlgGrammarSettings.HelpText on mouseover.
-At least we should add an empty string or a space or something to make this
-less ugly.
-
-
-## Data Conversion test crashes on Linux 
-
-On Ubuntu VM even test 1 crashes.
-The debug.txt log seems to indicate that AddConverter() crashes.
-That would make sense, since it has not been tested as much as normal Data
-Conversion methods such as InitConverter().
-Maybe AddConverter() just has a bug in the linux ECDriver code,
-such as something simple like a string error when printing a message.
-
-
 ## Data Conversion string type problem
 
 On Linux, SEC_wrapper is returning bytes rather than unicode string.
@@ -388,51 +345,10 @@ Methods that use multiple documents would use variables that are more
 local than util.mainDoc.
 
 
-## Script Practice crashing
-
-Can't change to Devanagari without crashing.  "20-Nov-15 LO 5.0.3"
-Can't change to Khmer without crashing.  "20-Nov-2015 LO 5.0.3, AOO 4.1.1"
-Can't change to Bengali without crashing.  "20-Nov-2015 AOO 4.1.1"
-Can't change to Tamil or Devanagari without crashing.
-
-Can change to Arabic, Bengali, Greek, Hebrew, Thai.
-Seems to affect most South Asian scripts but not any others.
-
-Also it occurred on Ubuntu and Windows LO (20-Nov-2015) but not after
-LO had been open awhile,
-and the Run Macro command opened its menu faster.
-
-It occurs in the released version of OOLT.
-Maybe it is a problem with my Win10 setup.
-
-
 ## Dialog controls font
 
 Changed column to Gautami font for Telegu. However in Step
 through List, still shows up as boxes.
-
-
-## Extra text portions
-
-Editing a ref number manually adds a new text section,
-and then updating examples will only get part of the ref number.
-
-Add a cleanup dialog? Like SOLID.
-- first have an option that just looks for problems
-- to fix, could simply replace the word string, which seems fairly easy.
-- searching will be the difficult thing.
-    + Replace the whole contiguous string, not just one word at a time.
-      Or maybe a paragraph at a time. See how it is typically done in the XML.
-    + Make a textcursor for the main text.
-    + Loop through each frame and make a textcursor for each one.
-    + Loop through each table and make a textcursor for each cell.
-
-
-## User Var settings for Calc
-
-Keeping Calc settings in Writer is annoying because I
-save the Calc file but then the settings do not get saved. It is often
-confusing in various situations.
 
 
 ## Faster updates?
@@ -448,36 +364,9 @@ word "bigdog", then suggest "big dog" as a replacement.
 Likewise if it finds "big-dog" or "big,dog".
 
 
-## Spellchecking by good list
-
-Adding a word is slow for large (20,000 rows) good lists.
- 
-
-## Gloss writing system
-
-Writing system is only for phonetic / phonemic, not gloss.
-For example Moreira:22 gloss has both "en" and "pt" writing systems.
-Note that gloss does not use the "form" tag.
-
-
-## Word list number of occurrences
-
-Words will be counted twice if they match more than one
-search criteria, for example Arial Bold font and Strong Emphasis style.
-
-
 ## XSLT partial matches
 
 Match whole words like a full CC table does, or better.
-
-
-## Normalizing
-
-Collate number of occurrences according to a normalization form, perhaps NFD.
-Also spell check this way.
-Is there a library or something we can use to convert to NFD?
-EncConverters will do it but that is awkward.
-Unless we just require the user to convert everything to NFD.
 
 
 ## Update optimizing problem

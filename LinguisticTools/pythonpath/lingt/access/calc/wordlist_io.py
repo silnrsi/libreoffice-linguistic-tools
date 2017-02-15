@@ -160,4 +160,3 @@ class ProgressBars:
         self.calc = None
         self.writer = None
         self.start_val = 0
-

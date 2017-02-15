@@ -523,4 +523,3 @@ class OdtChanger:
                 return styleChange
         logger.debug("Did not find processingStyleItem.")
         return None
-

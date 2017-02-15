@@ -268,4 +268,3 @@ class VerifyHandler(evt_handler.ItemEventHandler):
         self.get_results()
         self.app.userVars.store(
             'AskEachChange', "%d" % self.app.askEach)
-

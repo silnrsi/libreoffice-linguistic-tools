@@ -343,4 +343,3 @@ def changeString(oCurs, stringVal):
     oCurs.goRight(1, True)
     oCurs.setString("")     # delete the second extra character
     oCurs.goRight(0, False)
-

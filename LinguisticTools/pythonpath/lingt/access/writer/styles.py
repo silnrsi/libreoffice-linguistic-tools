@@ -505,4 +505,3 @@ def getListOfFonts(unoObjs, addBlank=False):
         fontList.insert(0, "(None)")
     logger.debug("fontList has %d elements", len(fontList))
     return tuple(fontList)
-

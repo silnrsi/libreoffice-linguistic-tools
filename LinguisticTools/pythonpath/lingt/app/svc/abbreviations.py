@@ -306,4 +306,3 @@ class Abbrev:
             self.abbrevText == other.abbrevText
             and self.fullName == other.fullName
             and self.forceOutput == other.forceOutput)
-

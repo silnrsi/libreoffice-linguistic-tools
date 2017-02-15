@@ -404,4 +404,3 @@ class MergedMorphemes(lingex_structs.LingGramMorph):
             self.orth = ""
             self.text = ""
         return self
-

@@ -87,4 +87,3 @@ class SFM_Reader(FileReader):
         finally:
             infile.close()
         logger.debug("Found %d words.", len(self.rawData))
-

@@ -105,4 +105,3 @@ class ChangerMaker:
         progressBar.updateFinishing()
         progressBar.close()
         logger.debug(util.funcName('end'))
-

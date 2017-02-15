@@ -109,4 +109,3 @@ class WritingSysReader(FileReader):
                 ws.name = ws.internalCode
             self.data.append(ws)
             logger.debug("Got %s, %s", ws.name, ws.internalCode)
-

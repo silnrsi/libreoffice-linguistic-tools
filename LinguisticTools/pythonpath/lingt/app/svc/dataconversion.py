@@ -292,4 +292,3 @@ class DataConversion:
                 self.msgbox.display("No changes.")
             else:
                 self.msgbox.display("Successfully finished conversion.")
-

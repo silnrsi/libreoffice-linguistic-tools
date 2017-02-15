@@ -371,4 +371,3 @@ class AbbrevSearch:
             logger.debug("Adding to alreadyAskedList")
             self.alreadyAskedList.append(word.lower())
             self.possibilities.append(word)
-

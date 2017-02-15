@@ -100,4 +100,3 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
     def call_dispose(self):
         logger.debug("disposing")
         self.dlgDispose()
-

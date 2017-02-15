@@ -30,6 +30,7 @@ import collections
 import logging
 
 from com.sun.star.lang import IllegalArgumentException
+from com.sun.star.uno import RuntimeException
 from grantjenks.tribool import Tribool
 
 from lingt.app import exceptions
@@ -91,7 +92,7 @@ class DialogGetter:
         logger.debug(dlg_string)
         try:
             self.dlg = dlgprov.createDialog(dlg_string)
-        except IllegalArgumentException:
+        except (RuntimeException, IllegalArgumentException):
             pass
         return self.dlg
 
@@ -252,4 +253,3 @@ def get_tristate_checkbox(chkCtrl):
         return Tribool(None)
     else:
         return Tribool(bool(chkCtrl.getState()))
-
