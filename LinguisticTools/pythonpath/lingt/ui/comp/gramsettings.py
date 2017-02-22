@@ -22,6 +22,7 @@
 # 09-Sep-15 JDK  Set prefix when another item in list is selected.
 # 22-Sep-15 JDK  Verify checkbox user variable list.
 # 08-Dec-15 JDK  Checkbox to use segnum as ref number.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Dialog for settings to import Grammar examples.
@@ -246,10 +247,10 @@ class DlgControls:
         self.evtHandler = evtHandler
         self.origNumColWidth = 7    # we compare this to the changed value
 
-        self.chkOrthoTextLine = ctrl_getter.get(_dlgdef.CHK_ORTHO_TEXT_LINE)
-        self.chkTextLine = ctrl_getter.get(_dlgdef.CHK_TEXT_LINE)
-        self.chkOrthoMorphLine = ctrl_getter.get(_dlgdef.CHK_ORTH_MORPH_LINE)
-        self.chkMorphLine = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE)
+        self.chkWordLine1 = ctrl_getter.get(_dlgdef.CHK_WORD_LINE1)
+        self.chkWordLine2 = ctrl_getter.get(_dlgdef.CHK_WORD_LINE2)
+        self.chkMorphLine1 = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE1)
+        self.chkMorphLine2 = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE2)
         self.chkMorphsSeparate = ctrl_getter.get(
             _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
         self.chkPOS_Line = ctrl_getter.get(_dlgdef.CHK_POS_LINE)
@@ -282,10 +283,10 @@ class DlgControls:
             ctrl.addActionListener(self.evtHandler)
 
         self.CHECKBOX_VAR_LIST = [
-            (self.chkOrthoTextLine, "ShowOrthoTextLine"),
-            (self.chkTextLine, "ShowText"),
-            (self.chkOrthoMorphLine, "ShowOrthoMorphLine"),
-            (self.chkMorphLine, "ShowMorphBreaks"),
+            (self.chkWordLine1, "ShowWordLine1"),
+            (self.chkWordLine2, "ShowWordLine2"),
+            (self.chkMorphLine1, "ShowMorphLine1"),
+            (self.chkMorphLine2, "ShowMorphLine2"),
             (self.chkMorphsSeparate, "SeparateMorphColumns"),
             (self.chkPOS_Line, "ShowPartOfSpeech"),
             (self.chkFT_inQuotes, "FreeTransInQuotes"),
@@ -343,8 +344,9 @@ class DlgControls:
         but we wait to add listeners for other types of controls because
         they could have side effects during loadValues().
         """
-        for ctrl in (self.chkMorphLine, self.chkPOS_Line, self.optTables,
-                     self.optFrames, self.chkOuterTable):
+        for ctrl in (
+                self.chkMorphLine1, self.chkMorphLine2, self.chkPOS_Line,
+                self.optTables, self.optFrames, self.chkOuterTable):
             ctrl.addItemListener(self.evtHandler)
 
         self.listboxFiles.addItemListener(self.evtHandler)
@@ -360,13 +362,11 @@ class DlgControls:
 
     def enableDisable(self):
         """Enable or disable controls as appropriate."""
-        if self.chkMorphLine.getState() == 1:
+        if (self.chkMorphLine1.getState() == 1
+                or self.chkMorphLine2.getState() == 1):
             self.chkMorphsSeparate.getModel().Enabled = True
-            self.chkOrthoMorphLine.getModel().Enabled = True
         else:
             self.chkMorphsSeparate.getModel().Enabled = False
-            self.chkOrthoMorphLine.getModel().Enabled = False
-
         if (self.chkOuterTable.getState() == 1 or
                 self.optTables.getState() == 1):
             self.txtNumColWidth.getModel().Enabled = True

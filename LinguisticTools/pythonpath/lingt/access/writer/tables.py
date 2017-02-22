@@ -12,6 +12,7 @@
 # 29-Jul-15 JDK  Refactor into two classes.
 # 18-Sep-15 JDK  Fixed bug: Should say not self.innerTable.doesWordFit().
 # 21-Sep-15 JDK  Make wordRow_col() work without any word rows.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Create TextTables for interlinear data.
@@ -34,6 +35,7 @@ class OuterTable:
     data is.
     """
     def __init__(self, unoObjs, config, exnumRanges, updatingEx, styles):
+        """config should be of type lingex_structs.InterlinOutputSettings."""
         self.unoObjs = unoObjs
         self.config = config
         self.exnumRanges = exnumRanges
@@ -175,8 +177,8 @@ class InterlinTables:
     def _insertMorphColumnData(self, word, morph, morphRow_startCol, morph_i):
         """Add interlinear data for a single column."""
         wordOneMorph = lingex_structs.LingGramWord()
-        wordOneMorph.orth = word.orth
-        wordOneMorph.text = word.text
+        wordOneMorph.text1 = word.text1
+        wordOneMorph.text2 = word.text2
         wordOneMorph.morph = morph
         self._insertColumnData(
             wordOneMorph, morphRow_startCol + morph_i, (morph_i == 0))
@@ -196,35 +198,27 @@ class InterlinTables:
             word.morph.gloss, wordRow_col, morphRow_col)
         row = -1
 
-        # Orthographic Word
-        if self.config.showOrthoTextLine:
-            row += 1
-            if isFirstMorph:
-                self._insertCellData(
-                    wordRow_col, row, 'orth', word.orth)
+        # Word Line 1 and 2
+        word1args = (
+            self.config.showWordLine1, wordRow_col, row, 'word1', word.text1,
+            isFirstMorph)
+        word2args = (
+            self.config.showWordLine2, wordRow_col, row, 'word2', word.text2,
+            isFirstMorph)
+        row = self._insertWordData(*word1args)
+        row = self._insertWordData(*word2args)
 
-        # Word
-        logger.debug("_")
-        if self.config.showText:
-            row += 1
-            if isFirstMorph:
-                self._insertCellData(
-                    wordRow_col, row, 'text', word.text)
-
-        # Orthographic Morpheme
-        logger.debug("_")
-        if self.config.showOrthoMorphLine:
-            row += 1
-            self._insertCellData(morphRow_col, row, 'orthm', word.morph.orth)
-
-        # Morpheme
-        logger.debug("_")
-        if self.config.showMorphemeBreaks:
-            row += 1
-            self._insertCellData(morphRow_col, row, 'morph', word.morph.text)
+        # Morphemes Line 1 and 2
+        morph1args = (
+            self.config.showMorphLine1, morphRow_col, row, 'morph1',
+            word.morph.text1)
+        morph2args = (
+            self.config.showMorphLine2, morphRow_col, row, 'morph2',
+            word.morph.text2)
+        row = self._insertMorphData(*morph1args)
+        row = self._insertMorphData(*morph2args)
 
         # Gloss
-        logger.debug("_")
         if self.config.POS_aboveGloss:
             row += 2
         else:
@@ -232,7 +226,6 @@ class InterlinTables:
         self._insertCellData(morphRow_col, row, 'gloss', word.morph.gloss)
 
         # Part of Speech
-        logger.debug("_")
         if self.config.showPartOfSpeech:
             if self.config.POS_aboveGloss:
                 row -= 1
@@ -240,6 +233,20 @@ class InterlinTables:
                 row += 1
             self._insertCellData(morphRow_col, row, 'pos', word.morph.pos)
         logger.debug(util.funcName('end'))
+
+    def _insertWordData(self, show_line, col, row, paraStyleKey, strData,
+                        isFirstMorph):
+        if show_line:
+            if isFirstMorph:
+                self._insertCellData(col, row, paraStyleKey, strData)
+            return row + 1
+        return row
+
+    def _insertMorphData(self, show_line, col, row, paraStyleKey, strData):
+        if show_line:
+            self._insertCellData(col, row, paraStyleKey, strData)
+            return row + 1
+        return row
 
     def _insertCellData(self, col, row, paraStyleKey, strData):
         cellInner = self.wrappingManager.innerTable.table.getCellByPosition(
@@ -297,10 +304,10 @@ class WrappingManager:
         """Create a new inner table."""
         logger.debug("Preparing to create inner table.")
         self.numRows = countRowsToShow((
-            self.config.showOrthoTextLine,
-            self.config.showText,
-            self.config.showOrthoMorphLine,
-            self.config.showMorphemeBreaks,
+            self.config.showWordLine1,
+            self.config.showWordLine2,
+            self.config.showMorphLine1,
+            self.config.showMorphLine2,
             self.config.showPartOfSpeech))
         self.numRows += 1  # There's always a gloss row.
         firstInnerTable = False
@@ -426,8 +433,8 @@ class InnerTable:
         the most recent word.
         """
         word_rows = countRowsToShow((
-            self.config.showOrthoTextLine,
-            self.config.showText))
+            self.config.showWordLine1,
+            self.config.showWordLine2))
         if word_rows == 0:
             return self.wordRow_cols - self.numColumnsAdded
         return self.wordRow_cols - 1
@@ -445,8 +452,8 @@ class InnerTable:
         """Split up the column."""
         numNewCols = numCols - 1
         word_rows = countRowsToShow((
-            self.config.showOrthoTextLine,
-            self.config.showText))
+            self.config.showWordLine1,
+            self.config.showWordLine2))
         logger.debug(
             "Splitting for %d new morph cols at %d, %d",
             numNewCols, startCol, word_rows)
@@ -470,7 +477,7 @@ class InnerTable:
         wordCol = self.wordRow_col()
         logger.debug("Deleting word col(s) at %d", wordCol)
         oWordCols = self.table.getColumns()
-        if ((self.config.showText or self.config.showOrthoTextLine)
+        if ((self.config.showWordLine1 or self.config.showWordLine2)
                 and self.config.separateMorphColumns):
             oWordCols.removeByIndex(wordCol, 1)
             self.wordRow_cols -= 1

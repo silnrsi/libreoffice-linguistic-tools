@@ -2,6 +2,8 @@
 # -*- coding: Latin-1 -*-
 #
 # Created on March 21 2016 by Jim Kornelsen.
+#
+# 22-Feb-17 JDK  Remove final blank line to keep pylint happy.
 
 """
 Parse data from dialog definition files.
@@ -122,10 +124,14 @@ class FileWriter:
 
     def write_classes(self, dlg_ctrl_names):
         #self.indent(self.START_INDENT + 0)
+        first_class = True
         for dlg, ctrl_names in sorted(dlg_ctrl_names.items()):
+            if first_class:
+                first_class = False
+            else:
+                self.outfile.write("\n")
             self.outfile.write("class %s:\n" % dlg)
             self.write_ctrl_names(ctrl_names)
-            self.outfile.write("\n")
 
     def write_ctrl_names(self, ctrl_names):
         for ctrl_name in ctrl_names:

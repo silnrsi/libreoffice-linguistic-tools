@@ -9,6 +9,8 @@
 # 16-Sep-15 JDK  Fixed bug in handleWord(): continue instead of return.
 # 08-Dec-15 JDK  Optionally use segnum as ref number.
 # 12-Dec-15 JDK  Fixed bug: Add Flextext suggestion only if ref number.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
+# 22-Feb-17 JDK  SFM Option for either word line 1 or 2 as the baseline.
 
 """
 Read interlinear examples, typically used for grammar writeups.
@@ -188,11 +190,18 @@ class ToolboxXML:
             sentence, self.fieldTags['ref'])
         self.ex.freeTrans = xmlutil.getTextByTagName(
             sentence, self.fieldTags['ft'])
-        orthoText = xmlutil.getTextByTagName(
-            sentence, self.fieldTags['orth'])
-        orthoWords = orthoText.split()
+        if self.config.SFM_baseline_word1:
+            # Baseline means which words the morphemes are grouped by.
+            baseline_tag = 'word1'
+            ortho_tag = 'word2'
+        else:
+            baseline_tag = 'word2'
+            ortho_tag = 'word1'
         words = sentence.getElementsByTagName(
-            self.fieldTags['text'] + "Group")
+            self.fieldTags[baseline_tag] + "Group")
+        orthoText = xmlutil.getTextByTagName(
+            sentence, self.fieldTags[ortho_tag])
+        orthoWords = orthoText.split()
         for word in words:
             self.handleWord(word, len(words), orthoText, orthoWords)
         if not self.ex.refText and self.generateRefIDs:
@@ -202,7 +211,13 @@ class ToolboxXML:
             self.ex.refText = self.prefix + self.ex.refText
 
     def handleWord(self, word, num_words, orthoText, orthoWords):
-        wordText = xmlutil.getTextByTagName(word, self.fieldTags['text'])
+        if self.config.SFM_baseline_word1:
+            baseline_tag = 'word1'
+            base_morph_tag = 'morph1'
+        else:
+            baseline_tag = 'word2'
+            base_morph_tag = 'morph2'
+        wordText = xmlutil.getTextByTagName(word, self.fieldTags[baseline_tag])
         orthoWord = ""
         if orthoWords:
             if num_words == 1:
@@ -210,14 +225,14 @@ class ToolboxXML:
             else:
                 orthoWord = orthoWords.pop(0)
         morphemes = word.getElementsByTagName(
-            self.fieldTags['morph'] + "Group")
+            self.fieldTags[base_morph_tag] + "Group")
         mergedMorphemes = MergedMorphemes()
         for morpheme in morphemes:
             morph = lingex_structs.LingGramMorph()
-            morph.orth = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['orthm'])
-            morph.text = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['morph'])
+            morph.text1 = xmlutil.getTextByTagName(
+                morpheme, self.fieldTags['morph1'])
+            morph.text2 = xmlutil.getTextByTagName(
+                morpheme, self.fieldTags['morph2'])
             morph.gloss = xmlutil.getTextByTagName(
                 morpheme, self.fieldTags['gloss'])
             morph.pos = xmlutil.getTextByTagName(
@@ -232,7 +247,10 @@ class ToolboxXML:
             self.ex.appendMorphObj(
                 mergedMorphemes.getMorph(
                     self.config.showMorphemeBreaks))
-        self.ex.appendWord(wordText, orthoWord)
+        if self.config.SFM_baseline_word1:
+            self.ex.appendWord(wordText, orthoWord)
+        else:
+            self.ex.appendWord(orthoWord, wordText)
 
 
 def singleMorphemeWord(word):
@@ -246,8 +264,8 @@ def singleMorphemeWord(word):
             continue
         itemType = item.getAttribute("type")
         if itemType == "gls":
-            if morph.gloss and not morph.orth:
-                morph.orth = morph.gloss
+            if morph.gloss and not morph.text1:
+                morph.text1 = morph.gloss
             morph.gloss = xmlutil.getElemText(item)
         elif itemType == "msa":
             morph.pos = xmlutil.getElemText(item)
@@ -307,16 +325,20 @@ class FieldworksXML:
 
     def handleWord(self, word):
         #logger.debug(util.funcName('begin'))
-        wordOrth = ""
-        wordText = ""
+        wordText1 = ""
+        wordText2 = ""
         punct = None
+        is_first_text = True
         for childNode in word.childNodes:
             if not childNode.attributes:
                 continue
             elif childNode.getAttribute("type") == "txt":
-                if wordText and not wordOrth:
-                    wordOrth = wordText
-                wordText = xmlutil.getElemText(childNode)
+                text = xmlutil.getElemText(childNode)
+                if is_first_text:
+                    wordText1 = text
+                    is_first_text = False
+                else:
+                    wordText2 = text
             elif childNode.getAttribute("type") == "punct":
                 punct = xmlutil.getElemText(childNode)
                 break
@@ -332,7 +354,7 @@ class FieldworksXML:
             self.handleWordMorphemes(morphemes)
         else:
             self.ex.appendMorphObj(singleMorphemeWord(word))
-        self.ex.appendWord(wordText, wordOrth)
+        self.ex.appendWord(wordText1, wordText2)
         #logger.debug(util.funcName('end', args=wordText))
 
     def handleWordMorphemes(self, morphemes):
@@ -341,14 +363,21 @@ class FieldworksXML:
         for morpheme in morphemes:
             items = morpheme.getElementsByTagName("item")
             morph = lingex_structs.LingGramMorph()
+            is_first_text = True
             for item in items:
                 if item.attributes is None:
                     continue
                 itemType = item.getAttribute("type")
-                if itemType == "cf":
-                    if morph.text and not morph.orth:
-                        morph.orth = morph.text
-                    morph.text = xmlutil.getElemText(item)
+                if itemType == "txt":
+                    text = xmlutil.getElemText(item)
+                    if is_first_text:
+                        morph.text1 = text
+                        is_first_text = False
+                    else:
+                        morph.text2 = text
+                elif itemType == "cf":
+                    # lex entry, typically same as morph text
+                    pass
                 elif itemType == "gls":
                     morph.gloss = xmlutil.getElemText(item)
                 elif itemType == "msa":
@@ -377,10 +406,8 @@ class MergedMorphemes(lingex_structs.LingGramMorph):
         Saves the values for later.
         :param morph(type lingex_structs.LingGramMorph):
         """
-        self._addTo('orth', morph.orth)
-        self._addTo('text', morph.text)
-        self._addTo('gloss', morph.gloss)
-
+        for attr_name in ('text1', 'text2', 'gloss'):
+            self._addTo(attr_name, getattr(morph, attr_name))
         PREFIXES = ['det']
         if (not self.pos
                 or (self.pos.lower() in PREFIXES
@@ -389,18 +416,18 @@ class MergedMorphemes(lingex_structs.LingGramMorph):
             # (This works best for head-final languages.)
             self.pos = morph.pos
 
-    def _addTo(self, varName, valToAdd):
-        varVal = getattr(self, varName)
+    def _addTo(self, attrName, valToAdd):
+        attrVal = getattr(self, attrName)
         DELIM = "-"     # delimiter between morphemes
-        if (varVal and not valToAdd.startswith(DELIM)
-                and not varVal.endswith(DELIM)):
-            varVal += DELIM
-        varVal += valToAdd
-        setattr(self, varName, varVal)
+        if (attrVal and not valToAdd.startswith(DELIM)
+                and not attrVal.endswith(DELIM)):
+            attrVal += DELIM
+        attrVal += valToAdd
+        setattr(self, attrName, attrVal)
 
     def getMorph(self, showMorphemeBreaks):
         """Return type is subclass of lingex_structs.LingGramMorph."""
         if not showMorphemeBreaks:
-            self.orth = ""
-            self.text = ""
+            self.text1 = ""
+            self.text2 = ""
         return self

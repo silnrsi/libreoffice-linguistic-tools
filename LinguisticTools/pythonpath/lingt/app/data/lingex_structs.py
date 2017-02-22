@@ -11,6 +11,7 @@
 # 22-Sep-15 JDK  Fixed bug: Load ShowOrthoTextLine user variable.
 # 04-Nov-15 JDK  Moved InterlinInputSettings to fileitemlist module.
 # 17-Nov-15 JDK  Hidden user variable to specify ref number location for LIFT.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Data structures for Linguistic Examples used by other parts of the application.
@@ -59,10 +60,10 @@ class LingGramExample:
     GRAB_FIELDS = [
         ('ref', "Ref. Number"),
         ('ft', "Free Translation"),
-        ('tx', "Text"),
-        ('orth', "Orthographic"),
-        ('mb', "Morphemes"),
-        ('mbor', "Orth. Morphemes"),
+        ('word1', "WordLine1"),
+        ('word2', "WordLine2"),
+        ('morph1', "MorphemesLine1"),
+        ('morph2', "MorphemesLine2"),
         ('gl', "Gloss"),
         ('ps', "Part of Speech")]
 
@@ -76,22 +77,22 @@ class LingGramExample:
         """@arg1 type is LingGramMorph."""
         self._morphList.append(morph)
 
-    def appendMorph(self, morphOrth, morphText, morphEng, morphPS):
+    def appendMorph(self, morph1, morph2, morphEng, morphPS):
         """Temporarily store morph before assigning to a particular word."""
         m = LingGramMorph()
-        m.orth = morphOrth
-        m.text = morphText
+        m.text1 = morph1
+        m.text2 = morph2
         m.gloss = morphEng
         m.pos = morphPS
         self._morphList.append(m)
 
-    def appendWord(self, wordText, wordOrth):
+    def appendWord(self, wordText1, wordText2):
         if len(self._morphList) == 0:
             ## add an entry so that the word shows up
             self.appendMorphObj(LingGramMorph())
         w = LingGramWord()
-        w.orth = wordOrth
-        w.text = wordText
+        w.text1 = wordText1
+        w.text2 = wordText2
         w.morphList = self._morphList
         self.wordList.append(w)
         self._morphList = []
@@ -109,14 +110,14 @@ class LingGramExample:
             textList = [self.refText]
         elif grabKey == 'ft':
             textList = [self.freeTrans]
-        elif grabKey == 'tx':
-            textList = [word.text for word in self.wordList]
-        elif grabKey == 'orth':
-            textList = [word.orth for word in self.wordList]
-        elif grabKey == 'mb':
-            textList = [morph.text for morph in self.getMorphsList()]
-        elif grabKey == 'mbor':
-            textList = [morph.orth for morph in self.getMorphsList()]
+        elif grabKey == 'word1':
+            textList = [word.text1 for word in self.wordList]
+        elif grabKey == 'word2':
+            textList = [word.text2 for word in self.wordList]
+        elif grabKey == 'morph1':
+            textList = [morph.text1 for morph in self.getMorphsList()]
+        elif grabKey == 'morph2':
+            textList = [morph.text2 for morph in self.getMorphsList()]
         elif grabKey == 'gl':
             textList = [morph.gloss for morph in self.getMorphsList()]
         elif grabKey == 'ps':
@@ -136,8 +137,8 @@ class LingGramExample:
 class LingGramMorph:
     """Used in LingGramExample"""
     def __init__(self):
-        self.orth = ""  # orthographic representation of morpheme
-        self.text = ""  # normal (typically IPA) representation of morpheme
+        self.text1 = ""  # first writing system, orthographic for Toolbox
+        self.text2 = ""  # second writing system, typically IPA for Toolbox
         self.gloss = ""  # gloss (typically English)
         self.pos = ""  # part of speech
 
@@ -145,8 +146,8 @@ class LingGramMorph:
 class LingGramWord:
     """Used in LingGramExample"""
     def __init__(self):
-        self.orth = ""
-        self.text = ""
+        self.text1 = ""  # first writing system, orthographic for Toolbox
+        self.text2 = ""  # second writing system, typically IPA for Toolbox
         self.morphList = []  # to handle one or more morphs
         self.morph = None  # to handle only one morph
 
@@ -210,10 +211,10 @@ class InterlinOutputSettings(Syncable):
     USERVAR_BOOLEAN_ATTRS = [
         ('makeOuterTable', "MakeOuterTable"),
         ('insertNumbering', "InsertNumbering"),
-        ('showOrthoTextLine', "ShowOrthoTextLine"),
-        ('showText', "ShowText"),
-        ('showOrthoMorphLine', "ShowOrthoMorphLine"),
-        ('showMorphemeBreaks', "ShowMorphBreaks"),
+        ('showWordLine1', "ShowWordLine1"),
+        ('showWordLine2', "ShowWordLine2"),
+        ('showMorphLine1', "ShowMorphLine1"),
+        ('showMorphLine2', "ShowMorphLine2"),
         ('separateMorphColumns', "SeparateMorphColumns"),
         ('showPartOfSpeech', "ShowPartOfSpeech"),
         ('POS_aboveGloss', "POS_AboveGloss"),
@@ -226,10 +227,10 @@ class InterlinOutputSettings(Syncable):
         self.methodTables = True
         self.makeOuterTable = True
         self.insertNumbering = True
-        self.showOrthoTextLine = False
-        self.showText = True
-        self.showOrthoMorphLine = False
-        self.showMorphemeBreaks = True
+        self.showWordLine1 = True
+        self.showWordLine2 = False
+        self.showMorphLine1 = True
+        self.showMorphLine2 = False
         self.separateMorphColumns = True
         self.showPartOfSpeech = True
         self.POS_aboveGloss = False
@@ -252,7 +253,7 @@ class InterlinOutputSettings(Syncable):
             if self.userVars.getInt(varName) == 1:
                 setattr(self, attrName, True)
 
-        if not self.showMorphemeBreaks:
+        if not self.showMorphLine1 and not self.showMorphLine2:
             self.separateMorphColumns = False
         if not self.showPartOfSpeech:
             self.POS_aboveGloss = False

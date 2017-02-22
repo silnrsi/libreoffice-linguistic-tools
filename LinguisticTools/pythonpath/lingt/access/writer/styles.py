@@ -20,6 +20,7 @@
 # 28-Sep-15 JDK  Resizing was not working after refactoring.
 # 05-Oct-15 JDK  Default args for getFontOfStyle().
 # 24-Mar-16 JDK  StyleFonts does not need user vars to specify style name.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Create and manage styles.
@@ -278,10 +279,10 @@ class PhonologyStyles(DocumentStyles):
 
 class GrammarStyles(DocumentStyles):
     """Make changes to styles and the document itself."""
-    styleVars = [['orth', "StyleName_Orthographic"],
-                 ['text', "StyleName_Text"],
-                 ['morph', "StyleName_Morpheme"],
-                 ['orthm', "StyleName_OrthographicMorph"],
+    styleVars = [['word1', "StyleName_Word1"],
+                 ['word2', "StyleName_Word2"],
+                 ['morph1', "StyleName_Morphemes1"],
+                 ['morph2', "StyleName_Morphemes2"],
                  ['pos', "StyleName_POS"],
                  ['gloss', "StyleName_Gloss"],
                  ['ft', "StyleName_FreeTxln"],
@@ -290,10 +291,10 @@ class GrammarStyles(DocumentStyles):
                  ['intF', "StyleName_InterlinearFrame"],
                  ['morF', "StyleName_MorphemeFrame"]]
 
-    defaultNames = {'orth' : "Interlin Orthographic",
-                    'text' : "Interlin Base",
-                    'morph' : "Interlin Morph",
-                    'orthm' : "Interlin Orthographic Morph",
+    defaultNames = {'word1' : "Interlin Word 1",
+                    'word2' : "Interlin Word 2",
+                    'morph1' : "Interlin Morph 1",
+                    'morph2' : "Interlin Morph 2",
                     'pos' : "Interlin POS",
                     'gloss' : "Interlin Gloss",
                     'ft' : "Interlin Freeform Gloss",
@@ -310,10 +311,10 @@ class GrammarStyles(DocumentStyles):
 
         logger.debug("Modifying styles of interlinear lines")
         styleDefs = [
-            ('orth', FONT_ORTH, COLOR_BLACK),
-            ('text', FONT_VERN, COLOR_BLUE),
-            ('orthm', FONT_ORTH, COLOR_BLACK),
-            ('morph', FONT_VERN, COLOR_MAGENTA),
+            ('text1', FONT_VERN, COLOR_BLUE),
+            ('text2', FONT_ORTH, COLOR_BLACK),
+            ('morph1', FONT_VERN, COLOR_MAGENTA),
+            ('morph2', FONT_ORTH, COLOR_BLACK),
             ('pos', FONT_GLOSS, COLOR_LIGHT_RED),
             ('gloss', FONT_GLOSS, COLOR_LIGHT_MAGENTA),
             ('ft', FONT_GLOSS, COLOR_GREEN)]

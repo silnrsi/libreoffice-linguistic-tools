@@ -16,18 +16,12 @@ Get odt_converter_test.py to pass.
 Include "Default Style" in list box when searching for para styles.
 
 
-## Sometime
-
-Create dialog definition files in /basic.
-
-
 ## Next OOLT version
 
 Version 3.0:
     Bulk Data Conversion
         Really a big change because it uses somewhat of a different
         design, with more processing done outside of Office.
-        # Possibly release it only for ScopeType.FONT_WITH_STYLE.
         Release an experimental version, noted in the dialog.
         Release 3.0 but don't announce this major requested feature until
         it is better tested.

@@ -9,6 +9,7 @@
 # 29-Jul-13 JDK  Import constants instead of using uno.getConstantByName.
 # 30-Jul-15 JDK  Added _insertFrameData().
 # 15-Aug-15 JDK  Fixed bug: No paragraph break after last inner frame line.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Create TextFrames in Writer.
@@ -34,7 +35,7 @@ def set_noFrameBorders(textFrame):
 
 class InterlinFrames:
     def __init__(self, config, outerTable, unoObjs):
-        """config should be of type outputmanager.InterlinSettings."""
+        """config should be of type lingex_structs.InterlinOutputSettings."""
         self.config = config
         self.outerTable = outerTable
         self.unoObjs = unoObjs
@@ -81,19 +82,13 @@ class InterlinFrames:
         logger.debug(
             "%s: Adding frame '%s'", util.funcName(), word.morph.gloss)
 
-        ## Orthographic Word
+        ## Word Lines 1 and 2
 
-        if firstMorph and self.config.showOrthoTextLine:
-            self._insertFrameData(
-                self.frameOuter, self.framecursorOuter, 'orth', word.orth)
-            self.framecursorOuter.setPropertyValue("ParaStyleName", "Standard")
-
-        ## Word
-
-        if firstMorph and self.config.showText:
-            self._insertFrameData(
-                self.frameOuter, self.framecursorOuter, 'text', word.text)
-            self.framecursorOuter.setPropertyValue("ParaStyleName", "Standard")
+        if firstMorph:
+            word1args = (self.config.showWordLine1, 'word1', word.text1)
+            word2args = (self.config.showWordLine2, 'word2', word.text2)
+            self._insertWordData(*word1args)
+            self._insertWordData(*word2args)
 
         frameForGloss = None    # either outer or inner frame
         if self.config.separateMorphColumns:
@@ -116,17 +111,16 @@ class InterlinFrames:
             frameForGloss = self.frameOuter
             framecursor = self.framecursorOuter
 
-        ## Orthographic Morpheme
+        ## Morphemes Line 1 and 2
 
-        if self.config.showOrthoMorphLine:
-            self._insertFrameData(
-                frameForGloss, framecursor, 'orthm', word.morph.orth)
-
-        ## Morpheme
-
-        if self.config.showMorphemeBreaks:
-            self._insertFrameData(
-                frameForGloss, framecursor, 'morph', word.morph.text)
+        morph1args = (
+            self.config.showMorphLine1, frameForGloss, framecursor, 'morph1',
+            word.morph.text1)
+        morph2args = (
+            self.config.showMorphLine2, frameForGloss, framecursor, 'morph2',
+            word.morph.text2)
+        self._insertMorphData(*morph1args)
+        self._insertMorphData(*morph2args)
 
         ## Part of Speech - first option
 
@@ -147,6 +141,18 @@ class InterlinFrames:
                 frameForGloss, framecursor, 'pos', word.morph.pos,
                 parabreak='before')
         logger.debug(util.funcName('end'))
+
+    def _insertWordData(self, show_line, paraStyleKey, strData):
+        if show_line:
+            self._insertFrameData(
+                self.frameOuter, self.framecursorOuter, paraStyleKey, strData)
+            self.framecursorOuter.setPropertyValue(
+                "ParaStyleName", "Standard")
+
+    def _insertMorphData(self, show_line, frame, framecursor, paraStyleKey,
+                         strData):
+        if show_line:
+            self._insertFrameData(frame, framecursor, paraStyleKey, strData)
 
     def _insertFrameData(self, frame, frameCursor, paraStyleKey, strData,
                          parabreak='after'):
