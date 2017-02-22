@@ -14,6 +14,7 @@
 # 04-Nov-15 JDK  Moved InterlinInputSettings from lingex_structs module.
 # 08-Dec-15 JDK  Add use_segnum.
 # 18-Dec-15 JDK  Use __eq__ instead of getID().
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Maintain a list of files.
@@ -408,16 +409,27 @@ class InterlinInputSettings(Syncable):
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)
         self.fileList = FileItemList(LingExFileItem, self.userVars)
-        self.showMorphemeBreaks = True
+        self.showMorphLine1 = True
+        self.showMorphLine2 = False
         self.separateMorphColumns = False
+        self.SFM_baseline_word1 = True  # typically the \tx line
 
     def loadUserVars(self):
         self.fileList.loadUserVars()
+        varname = "SFM_Baseline"
+        if self.userVars.get(varname).lower() == "wordline2":
+            self.SFM_baseline_word1 = False
 
     def storeUserVars(self):
         self.fileList.storeUserVars()
+        varname = "SFM_Baseline"
+        if self.SFM_baseline_word1:
+            self.userVars.store(varname, "WordLine1")
+        else:
+            self.userVars.store(varname, "WordLine2")
 
     def loadOutputSettings(self, outconfig):
         """Param should be of type InterlinOutputSettings."""
-        self.showMorphemeBreaks = outconfig.showMorphemeBreaks
-        self.separateMorphColumns = outconfig.separateMorphColumns
+        for attr in (
+                'showMorphLine1', 'showMorphLine2', 'separateMorphColumns'):
+            setattr(self, attr, getattr(outconfig, attr))

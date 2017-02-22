@@ -249,8 +249,8 @@ class InterlinMgr(ExampleManager):
         isFirstMorph = True
         for morph in word.morphList:
             wordOneMorph = lingex_structs.LingGramWord()
-            wordOneMorph.orth = word.orth
-            wordOneMorph.text = word.text
+            wordOneMorph.text1 = word.text1
+            wordOneMorph.text2 = word.text2
             wordOneMorph.morph = morph
             interlinFrames.insertInnerFrameData(wordOneMorph, isFirstMorph)
             frame_count += 1

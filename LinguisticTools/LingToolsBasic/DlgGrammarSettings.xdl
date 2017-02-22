@@ -5,10 +5,10 @@
   <dlg:style dlg:style-id="0" dlg:font-name="Courier New" dlg:font-height="10" dlg:font-stylename="Regular" dlg:font-family="modern"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:checkbox dlg:id="chkOrthoTextLine" dlg:tab-index="0" dlg:left="12" dlg:top="19" dlg:width="92" dlg:height="9" dlg:value="&amp;159.DlgGrammarSettings.chkOrthoTextLine.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkTextLine" dlg:tab-index="1" dlg:left="12" dlg:top="30" dlg:width="92" dlg:height="9" dlg:value="&amp;162.DlgGrammarSettings.chkTextLine.Value" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="chkOrthMorphLine" dlg:tab-index="2" dlg:left="12" dlg:top="41" dlg:width="92" dlg:height="9" dlg:value="&amp;158.DlgGrammarSettings.chkOrthMorphLine.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="ChkMorphLine" dlg:tab-index="3" dlg:left="12" dlg:top="52" dlg:width="92" dlg:height="9" dlg:value="&amp;143.DlgGrammarSettings.ChkMorphLine.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="chkWordLine1" dlg:tab-index="0" dlg:left="12" dlg:top="19" dlg:width="92" dlg:height="9" dlg:value="&amp;159.DlgGrammarSettings.chkWordLine1.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="chkWordLine2" dlg:tab-index="1" dlg:left="12" dlg:top="30" dlg:width="92" dlg:height="9" dlg:value="&amp;162.DlgGrammarSettings.chkWordLine2.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="ChkMorphLine1" dlg:tab-index="2" dlg:left="12" dlg:top="41" dlg:width="92" dlg:height="9" dlg:value="&amp;143.DlgGrammarSettings.ChkMorphLine1.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="ChkMorphLine2" dlg:tab-index="3" dlg:left="12" dlg:top="52" dlg:width="92" dlg:height="9" dlg:value="&amp;148.DlgGrammarSettings.ChkMorphLine2.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="ChkPOS_Line" dlg:tab-index="4" dlg:left="12" dlg:top="64" dlg:width="92" dlg:height="9" dlg:value="&amp;144.DlgGrammarSettings.ChkPOS_Line.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="chkFT_inQuotes" dlg:tab-index="5" dlg:left="115" dlg:top="20" dlg:width="105" dlg:height="17" dlg:value="&amp;155.DlgGrammarSettings.chkFT_inQuotes.Value" dlg:multiline="true" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkMorphemesSeparateCols" dlg:tab-index="6" dlg:left="115" dlg:top="39" dlg:width="105" dlg:height="17" dlg:value="&amp;157.DlgGrammarSettings.chkMorphemesSeparateCols.Value" dlg:multiline="true" dlg:checked="true"/>
@@ -31,17 +31,17 @@
   <dlg:button dlg:id="BtnOk" dlg:tab-index="21" dlg:left="83" dlg:top="246" dlg:width="48" dlg:height="14" dlg:default="true" dlg:value="&amp;142.DlgGrammarSettings.BtnOk.Value"/>
   <dlg:button dlg:id="BtnCancel" dlg:tab-index="22" dlg:left="136" dlg:top="246" dlg:width="48" dlg:height="14" dlg:value="&amp;138.DlgGrammarSettings.BtnCancel.Value" dlg:button-type="cancel"/>
   <dlg:menulist dlg:id="ListboxFiles" dlg:tab-index="23" dlg:left="12" dlg:top="95" dlg:width="150" dlg:height="50"/>
-  <dlg:titledbox dlg:id="FrameControl4" dlg:tab-index="27" dlg:left="5" dlg:top="6" dlg:width="103" dlg:height="70">
-   <dlg:title dlg:value="&amp;148.DlgGrammarSettings.FrameControl4.Value"/>
-  </dlg:titledbox>
-  <dlg:titledbox dlg:id="FrameControl2" dlg:tab-index="26" dlg:left="5" dlg:top="82" dlg:width="205" dlg:height="92">
-   <dlg:title dlg:value="&amp;146.DlgGrammarSettings.FrameControl2.Value"/>
-  </dlg:titledbox>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="24" dlg:left="5" dlg:top="183" dlg:width="68" dlg:height="38">
    <dlg:title dlg:value="&amp;145.DlgGrammarSettings.FrameControl1.Value"/>
   </dlg:titledbox>
-  <dlg:titledbox dlg:id="FrameControl3" dlg:tab-index="25" dlg:left="105" dlg:top="183" dlg:width="90" dlg:height="51">
+  <dlg:titledbox dlg:id="FrameControl2" dlg:tab-index="25" dlg:left="5" dlg:top="82" dlg:width="205" dlg:height="92">
+   <dlg:title dlg:value="&amp;146.DlgGrammarSettings.FrameControl2.Value"/>
+  </dlg:titledbox>
+  <dlg:titledbox dlg:id="FrameControl3" dlg:tab-index="26" dlg:left="105" dlg:top="183" dlg:width="90" dlg:height="51">
    <dlg:title dlg:value="&amp;147.DlgGrammarSettings.FrameControl3.Value"/>
+  </dlg:titledbox>
+  <dlg:titledbox dlg:id="FrameControl4" dlg:tab-index="27" dlg:left="5" dlg:top="6" dlg:width="103" dlg:height="70">
+   <dlg:title dlg:value="&amp;148.DlgGrammarSettings.FrameControl4.Value"/>
   </dlg:titledbox>
  </dlg:bulletinboard>
 </dlg:window>

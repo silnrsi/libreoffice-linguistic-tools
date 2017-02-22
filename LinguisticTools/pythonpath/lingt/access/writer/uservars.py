@@ -20,6 +20,7 @@
 # 08-Oct-15 JDK  Removed UNO imports.
 # 23-Mar-16 JDK  Added Prefix class.
 # 29-Jul-16 JDK  Documents with one long line are not considered empty.
+# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Store persistent settings in user variables of a Writer document.
@@ -379,20 +380,20 @@ class FieldTags:
 class GrammarTags(FieldTags):
     TAG_VARS = [
         ['ref', "SFMarker_RefNum"],
-        ['orth', "SFMarker_Orthographic"],
-        ['text', "SFMarker_Text"],
-        ['orthm', "SFMarker_OrthographicMorph"],
-        ['morph', "SFMarker_Morpheme"],
+        ['word1', "SFMarker_Word1"],  # corresponds with check box for line 1
+        ['word2', "SFMarker_Word2"],
+        ['morph1', "SFMarker_Morpheme1"],
+        ['morph2', "SFMarker_Morpheme2"],
         ['gloss', "SFMarker_Gloss"],
         ['pos', "SFMarker_POS"],
         ['ft', "SFMarker_FreeTxln"]]
 
     DEFAULT_TAGS = {
         'ref' : "ref",
-        'orth' : "tor",
-        'text' : "tx",
-        'orthm' : "mor",
-        'morph' : "mb",
+        'word1' : "tx",
+        'word2' : "tor",
+        'morph1' : "mb",
+        'morph2' : "mor",
         'gloss' : "ge",
         'pos' : "ps",
         'ft' : "ft"}
