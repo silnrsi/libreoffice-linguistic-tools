@@ -116,7 +116,7 @@ class WordList:
             words = reader.read()
         elif fileType in InterlinReader.supportedNames():
             config = fileitemlist.InterlinInputSettings(self.userVars)
-            config.showMorphemeBreaks = True
+            config.showMorphLine2 = True
             config.separateMorphColumns = True
             lingExFileItem = fileitemlist.LingExFileItem(self.userVars)
             lingExFileItem.filepath = fileItem.filepath

@@ -217,10 +217,14 @@ class DlgGramSettings:
             state = ctrl.getState()  # 0 not checked, 1 checked
             self.userVars.store(varname, str(state))
         state = self.dlgCtrls.optTables.getState()
+        varname = "Method"
         if state == 1:  # selected
-            self.userVars.store("Method", 'tables')
+            self.userVars.store(varname, 'tables')
         else:
-            self.userVars.store("Method", 'frames')
+            self.userVars.store(varname, 'frames')
+        varname = "SFM_Baseline"
+        if self.userVars.isEmpty(varname):
+            self.userVars.store(varname, "WordLine1")
 
         ## Modify document settings
 

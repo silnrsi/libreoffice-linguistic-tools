@@ -8,7 +8,7 @@
   <dlg:checkbox dlg:id="chkWordLine1" dlg:tab-index="0" dlg:left="12" dlg:top="19" dlg:width="92" dlg:height="9" dlg:value="&amp;159.DlgGrammarSettings.chkWordLine1.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkWordLine2" dlg:tab-index="1" dlg:left="12" dlg:top="30" dlg:width="92" dlg:height="9" dlg:value="&amp;162.DlgGrammarSettings.chkWordLine2.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="ChkMorphLine1" dlg:tab-index="2" dlg:left="12" dlg:top="41" dlg:width="92" dlg:height="9" dlg:value="&amp;143.DlgGrammarSettings.ChkMorphLine1.Value" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="ChkMorphLine2" dlg:tab-index="3" dlg:left="12" dlg:top="52" dlg:width="92" dlg:height="9" dlg:value="&amp;148.DlgGrammarSettings.ChkMorphLine2.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="ChkMorphLine2" dlg:tab-index="3" dlg:left="12" dlg:top="52" dlg:width="92" dlg:height="9" dlg:value="&amp;158.DlgGrammarSettings.chkMorphLine2.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="ChkPOS_Line" dlg:tab-index="4" dlg:left="12" dlg:top="64" dlg:width="92" dlg:height="9" dlg:value="&amp;144.DlgGrammarSettings.ChkPOS_Line.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="chkFT_inQuotes" dlg:tab-index="5" dlg:left="115" dlg:top="20" dlg:width="105" dlg:height="17" dlg:value="&amp;155.DlgGrammarSettings.chkFT_inQuotes.Value" dlg:multiline="true" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkMorphemesSeparateCols" dlg:tab-index="6" dlg:left="115" dlg:top="39" dlg:width="105" dlg:height="17" dlg:value="&amp;157.DlgGrammarSettings.chkMorphemesSeparateCols.Value" dlg:multiline="true" dlg:checked="true"/>
