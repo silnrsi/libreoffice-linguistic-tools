@@ -311,8 +311,8 @@ class GrammarStyles(DocumentStyles):
 
         logger.debug("Modifying styles of interlinear lines")
         styleDefs = [
-            ('text1', FONT_VERN, COLOR_BLUE),
-            ('text2', FONT_ORTH, COLOR_BLACK),
+            ('word1', FONT_VERN, COLOR_BLUE),
+            ('word2', FONT_ORTH, COLOR_BLACK),
             ('morph1', FONT_VERN, COLOR_MAGENTA),
             ('morph2', FONT_ORTH, COLOR_BLACK),
             ('pos', FONT_GLOSS, COLOR_LIGHT_RED),

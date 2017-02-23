@@ -416,17 +416,8 @@ class InterlinInputSettings(Syncable):
 
     def loadUserVars(self):
         self.fileList.loadUserVars()
-        varname = "SFM_Baseline"
-        if self.userVars.get(varname).lower() == "wordline2":
+        if self.userVars.get("SFM_Baseline").lower() == "wordline2":
             self.SFM_baseline_word1 = False
-
-    def storeUserVars(self):
-        self.fileList.storeUserVars()
-        varname = "SFM_Baseline"
-        if self.SFM_baseline_word1:
-            self.userVars.store(varname, "WordLine1")
-        else:
-            self.userVars.store(varname, "WordLine2")
 
     def loadOutputSettings(self, outconfig):
         """Param should be of type InterlinOutputSettings."""

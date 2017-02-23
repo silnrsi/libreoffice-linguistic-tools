@@ -303,6 +303,16 @@ Anyway either make bytes work, or convert to unicode strings.
 LibreOffice seems to accept either one, but it would be good to test this.
 
 
+## Default complex font size for interlinear examples
+
+In styles.py, FONT_ORTH is created with only the complex size set,
+not the western size.
+So a punctuation character by itself will be smaller size,
+which does not line up well.
+This can be changed by editing the style manually,
+but people may not know to do that.
+
+
 ## reorganizing idea 28-Apr-16
 
 MessageBox and UserVars go along with the document, like UnoObjs.

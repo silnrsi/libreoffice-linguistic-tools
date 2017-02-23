@@ -101,7 +101,8 @@ class LingGramExample:
         if len(self.wordList) == 0:
             return
         prevWord = self.wordList[-1]
-        prevWord.text += punct
+        prevWord.text1 += punct
+        prevWord.text2 += punct
 
     def grabList(self, grabKey):
         """Return list of strings of the specified GRAB_FIELDS key."""
