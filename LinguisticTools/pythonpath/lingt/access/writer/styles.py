@@ -432,7 +432,7 @@ class StyleFonts(DocumentStyles):
         :param styleFamilyName: 'Paragraph' or 'Character'
         :param fontType: 'Western', 'Asian', or 'Complex'
         :param styleName: for example "Default" or "Heading 1"
-        :param styleKey: for example 'orth' but see _setStyleKey()
+        :param styleKey: for example 'word1' but see _setStyleKey()
         :returns: font name and size of the specified type
         """
         logger.debug(util.funcName(

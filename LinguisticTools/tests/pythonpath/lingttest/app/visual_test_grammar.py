@@ -219,7 +219,7 @@ def resetUserVars(userVars):
             util.TESTDATA_FOLDER, 'FWtextPigFox.xml'),
         'XML_filePrefix02' : 'FW-'
     }
-    for key in varValues1.keys():
+    for key in varValues1:
         userVars.store(key, varValues1[key])
 
 

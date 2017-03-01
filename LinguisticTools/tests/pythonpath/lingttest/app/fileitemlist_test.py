@@ -157,4 +157,3 @@ def add_new_item(itemlist, filepath):
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
-

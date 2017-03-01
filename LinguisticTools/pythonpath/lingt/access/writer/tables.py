@@ -13,12 +13,14 @@
 # 18-Sep-15 JDK  Fixed bug: Should say not self.innerTable.doesWordFit().
 # 21-Sep-15 JDK  Make wordRow_col() work without any word rows.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
+# 01-Mar-17 JDK  Fixed bugs caused by new way of incrementing rows.
 
 """
 Create TextTables for interlinear data.
 """
 import logging
 
+from com.sun.star.lang import IndexOutOfBoundsException
 from com.sun.star.table import BorderLine
 
 from lingt.app import exceptions
@@ -196,41 +198,35 @@ class InterlinTables:
         logger.debug(
             "Adding data '%s' to word col %d, morph col %d",
             word.morph.gloss, wordRow_col, morphRow_col)
-        row = -1
+        row = 0
 
         # Word Line 1 and 2
-        word1args = (
+        row = self._insertWordData(
             self.config.showWordLine1, wordRow_col, row, 'word1', word.text1,
             isFirstMorph)
-        word2args = (
+        row = self._insertWordData(
             self.config.showWordLine2, wordRow_col, row, 'word2', word.text2,
             isFirstMorph)
-        row = self._insertWordData(*word1args)
-        row = self._insertWordData(*word2args)
 
         # Morphemes Line 1 and 2
-        morph1args = (
+        row = self._insertMorphData(
             self.config.showMorphLine1, morphRow_col, row, 'morph1',
             word.morph.text1)
-        morph2args = (
+        row = self._insertMorphData(
             self.config.showMorphLine2, morphRow_col, row, 'morph2',
             word.morph.text2)
-        row = self._insertMorphData(*morph1args)
-        row = self._insertMorphData(*morph2args)
 
         # Gloss
         if self.config.POS_aboveGloss:
-            row += 2
-        else:
             row += 1
         self._insertCellData(morphRow_col, row, 'gloss', word.morph.gloss)
+        if self.config.POS_aboveGloss:
+            row -= 1
+        else:
+            row += 1
 
         # Part of Speech
         if self.config.showPartOfSpeech:
-            if self.config.POS_aboveGloss:
-                row -= 1
-            else:
-                row += 1
             self._insertCellData(morphRow_col, row, 'pos', word.morph.pos)
         logger.debug(util.funcName('end'))
 
@@ -249,8 +245,13 @@ class InterlinTables:
         return row
 
     def _insertCellData(self, col, row, paraStyleKey, strData):
-        cellInner = self.wrappingManager.innerTable.table.getCellByPosition(
-            col, row)
+        try:
+            cellInner = self.wrappingManager.innerTable.table.getCellByPosition(
+                col, row)
+        except IndexOutOfBoundsException:
+            raise exceptions.ContentError(
+                "Could not get column %d, row %d of table %s.",
+                col, row, self.wrappingManager.innerTable.table.getName())
         cellcursorInner = cellInner.createTextCursor()
         self.outerTable.styles.requireParaStyle(paraStyleKey)
         cellcursorInner.setPropertyValue(

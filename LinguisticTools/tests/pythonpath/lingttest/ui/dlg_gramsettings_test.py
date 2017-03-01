@@ -3,6 +3,7 @@
 # This file created 27-Oct-2010 by Jim Kornelsen
 #
 # 11-May-13 JDK  Use testutil instead of inspection code here.
+# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 import logging
 import unittest
@@ -62,16 +63,16 @@ class DlgGramSettingsTestCase(unittest.TestCase):
 
     def test2_enableDisable(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkMorphLine.setState(0)
+            innerSelf.dlgCtrls.chkMorphLine1.setState(0)
             innerSelf.dlgCtrls.chkPOS_Line.setState(1)
             innerSelf.dlgCtrls.chkOuterTable.setState(0)
             innerSelf.dlgCtrls.optTables.setState(0)
         DlgGramSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.dlgCtrls.enableDisable()
-        self.assertEqual(self.dlg.dlgCtrls.chkMorphLine.getState(), 0)
+        self.assertEqual(self.dlg.dlgCtrls.chkMorphLine1.getState(), 0)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkMorphLine.getModel().Enabled, True)
+            self.dlg.dlgCtrls.chkMorphLine1.getModel().Enabled, True)
         self.assertEqual(
             self.dlg.dlgCtrls.chkMorphsSeparate.getModel().Enabled, False)
         self.assertEqual(
@@ -83,7 +84,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
 
     def test3_enableDisable(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkMorphLine.setState(1)
+            innerSelf.dlgCtrls.chkMorphLine1.setState(1)
             innerSelf.dlgCtrls.chkPOS_Line.setState(0)
             innerSelf.dlgCtrls.chkOuterTable.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
@@ -101,16 +102,16 @@ class DlgGramSettingsTestCase(unittest.TestCase):
 
     def test4_interlinLines(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkOrthoTextLine.setState(1)
-            innerSelf.dlgCtrls.chkTextLine.setState(0)
-            innerSelf.dlgCtrls.chkOrthoMorphLine.setState(1)
-            innerSelf.dlgCtrls.chkMorphLine.setState(1)
+            innerSelf.dlgCtrls.chkWordLine1.setState(1)
+            innerSelf.dlgCtrls.chkWordLine2.setState(0)
+            innerSelf.dlgCtrls.chkMorphLine1.setState(1)
+            innerSelf.dlgCtrls.chkMorphLine2.setState(1)
             innerSelf.dlgCtrls.chkPOS_Line.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
         DlgGramSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.assertEqual(self.dlg.dlgCtrls.chkPOS_Line.getState(), 1)
-        self.assertEqual(self.dlg.dlgCtrls.chkTextLine.getState(), 0)
+        self.assertEqual(self.dlg.dlgCtrls.chkWordLine1.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optFrames.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optTables.getState(), 1)
         self.dlg.evtHandler.actionPerformed(MyActionEvent("Ok"))

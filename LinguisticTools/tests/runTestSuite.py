@@ -13,7 +13,7 @@
 This file runs a suite of automated tests all together.
 Otherwise you can run each test individually from its file.
 
-See README_testing.txt for instructions to run this code.
+See build/README_build.txt for instructions to run this code.
 """
 import os
 import unittest

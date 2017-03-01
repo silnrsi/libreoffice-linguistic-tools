@@ -5,6 +5,7 @@
 # 15-Sep-15 JDK  Use Latin-1 encoding for this file.
 # 28-Sep-15 JDK  Added getSuite().
 # 21-May-16 JDK  Move useDialog definitions out of for loops.
+# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 # pylint: disable=no-self-use
 
@@ -295,7 +296,7 @@ class GrammarTestCase(unittest.TestCase):
         testutil.blankWriterDoc(self.unoObjs)
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
-        for setting in ['orth', 'text', 'mbOrth', 'mb', 'ps', 'sepCols',
+        for setting in ['word1', 'word2', 'morph1', 'morph2', 'ps', 'sepCols',
                         'psAbove', 'numbering']:
             for setVal in True, False:
                 useDialog = self._test3_make_useDialog(setting, setVal)
@@ -317,27 +318,29 @@ class GrammarTestCase(unittest.TestCase):
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("FileAdd"))
             TAG_VARS = dict(GrammarTags.TAG_VARS)
-            innerSelf.userVars.store(TAG_VARS['orth'], 'or')
-            innerSelf.userVars.store(TAG_VARS['orthm'], 'mbor')
-            innerSelf.dlgCtrls.chkOrthoTextLine.setState(0)
-            innerSelf.dlgCtrls.chkTextLine.setState(1)
-            innerSelf.dlgCtrls.chkOrthoMorphLine.setState(0)
-            innerSelf.dlgCtrls.chkMorphLine.setState(1)
+            innerSelf.userVars.store(TAG_VARS['word1'], 'or')
+            innerSelf.userVars.store(TAG_VARS['word2'], 'tx')
+            innerSelf.userVars.store(TAG_VARS['morph1'], 'mbor')
+            innerSelf.userVars.store(TAG_VARS['morph2'], 'mb')
+            innerSelf.dlgCtrls.chkWordLine1.setState(0)
+            innerSelf.dlgCtrls.chkWordLine2.setState(1)
+            innerSelf.dlgCtrls.chkMorphLine1.setState(0)
+            innerSelf.dlgCtrls.chkMorphLine2.setState(1)
             innerSelf.dlgCtrls.chkPOS_Line.setState(0)
             innerSelf.dlgCtrls.chkMorphsSeparate.setState(1)
             innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(0)
             innerSelf.dlgCtrls.chkNumbering.setState(1)
-            if setting == 'orth':
-                innerSelf.dlgCtrls.chkOrthoTextLine.setState(
+            if setting == 'word1':
+                innerSelf.dlgCtrls.chkWordLine1.setState(
                     1 if setVal else 0)
-            elif setting == 'text':
-                innerSelf.dlgCtrls.chkTextLine.setState(
+            elif setting == 'word2':
+                innerSelf.dlgCtrls.chkWordLine2.setState(
                     1 if setVal else 0)
-            elif setting == 'mbOrth':
-                innerSelf.dlgCtrls.chkOrthoMorphLine.setState(
+            elif setting == 'morph1':
+                innerSelf.dlgCtrls.chkMorphLine1.setState(
                     1 if setVal else 0)
-            elif setting == 'mb':
-                innerSelf.dlgCtrls.chkMorphLine.setState(
+            elif setting == 'morph2':
+                innerSelf.dlgCtrls.chkMorphLine2.setState(
                     1 if setVal else 0)
             elif setting == 'ps':
                 innerSelf.dlgCtrls.chkPOS_Line.setState(
@@ -365,7 +368,7 @@ class GrammarTestCase(unittest.TestCase):
         self.assertGreaterEqual(tablesAdded, numTables)
         self.assertLessEqual(tablesAdded, numTablesMax)
         ipaOru = u"o\u027eu"  # used in text and mb lines
-        if setting == 'orth':
+        if setting == 'word1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
                 tamOru = u"\u0b92\u0bb0\u0bc1"  # Tamil /oru/
@@ -374,7 +377,7 @@ class GrammarTestCase(unittest.TestCase):
             else:
                 self.verifyTableHasCell(numTables, "A4", False)
                 self.verifyTable(numTables, 0, 0, ipaOru)  # text
-        elif setting == 'text':
+        elif setting == 'word2':
             self.verifyTableHasCell(numTables, "A3", setVal)
             if setVal:
                 self.verifyTable(numTables, 0, 0, ipaOru)  # text
@@ -382,14 +385,14 @@ class GrammarTestCase(unittest.TestCase):
             else:
                 self.verifyTable(numTables, 0, 0, ipaOru)  # mb
                 self.verifyTable(numTables, 0, 1, "a")  # gloss
-        elif setting == 'mbOrth':
+        elif setting == 'morph1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
                 tamTi = u"-\u0ba4\u0bbf"  # Tamil /-ti/
                 self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
             else:
                 self.verifyTable(numTables, 2, 1, u"-d\u032ai")  # mb
-        elif setting == 'mb':
+        elif setting == 'morph2':
             self.verifyTableHasCell(numTables, "A3", setVal)
             if setVal:
                 self.verifyTable(numTables, 0, 1, ipaOru)  # mb
@@ -747,8 +750,8 @@ class GrammarTestCase(unittest.TestCase):
         logger.debug(util.funcName() + ": Created grammar styles.")
         styleFonts = styles.StyleFonts(
             self.unoObjs, grammarStyles.styleNames)
-        styleFonts.setParaStyleWithFont(fontDef, styleKey="orth")
-        styleFonts.setParaStyleWithFont(fontDef, styleKey="orthm")
+        styleFonts.setParaStyleWithFont(fontDef, styleKey="word2")
+        styleFonts.setParaStyleWithFont(fontDef, styleKey="morph2")
 
     #@classmethod
     #def tearDownClass(cls):
