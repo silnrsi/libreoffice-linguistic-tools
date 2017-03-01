@@ -1,6 +1,6 @@
 # OpenOffice Linguistic Tools
 
-This add-on provides a menu of tools for linguistic writeups and other documents written for lesser-known languages.  It reads XML files from software such as SIL FieldWorks.  Other features include Data Conversion using SIL Converters.
+This add-on reads files exported from [SIL FieldWorks](http://software.sil.org/fieldworks/) and [Toolbox](http://www-01.sil.org/computing/toolbox/). Other features include Data Conversion using [SIL Converters](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=EncCnvtrs).
 
 The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Complete source code can be downloaded from github, and recent releases are here as well.
 
@@ -16,4 +16,9 @@ If you need to remove the Linguistics menu and are having problems, use [RemoveL
 
 # Technical Notes
 
-The .oxt file is a zipped file that includes source code.  This extension relies on using a pythonpath folder to allow layered design.
+The .oxt file is a zipped file with source code included.  Most of the code is in the pythonpath folder as described [here](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python#Importing_Modules).
+
+More information for developers is in the following files:
+- [README_build.txt](/LinguisticTools/build/README_build.txt)
+- [README_pylint.txt](/LinguisticTools/build/README_pylint.txt)
+- [Design.txt](/Design.txt)
