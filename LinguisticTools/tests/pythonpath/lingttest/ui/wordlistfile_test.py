@@ -240,7 +240,7 @@ class WordListFileTestCase(unittest.TestCase):
             Test3Data(FileType.PAXML, "Field", 3, "Phonemic"),
             Test3Data(FileType.LIFT, "Field", 1, "Ref. Number"),
             Test3Data(FileType.FLEX, "Field", 2, "Free Translation"),
-            Test3Data(FileType.TBX_INTERLIN, "Field", 4, "Orthographic"),
+            Test3Data(FileType.TBX_INTERLIN, "Field", 4, "WordLine2"),
             Test3Data(FileType.SFM, "SFM Marker", -1, "\\tx \\ge"),
             Test3Data(FileType.SFM, "SFM Marker", -1, "mb ps"),
             ]

@@ -14,6 +14,7 @@
 # 30-Sep-15 JDK  Match dlg.execute$ for DlgSpellingReplace.
 # 09-Dec-15 JDK  Added clear_messages_sent()
 # 09-Aug-16 JDK  Added output_path().
+# 01-Mar-17 JDK  Fixed bug: MsgSentException arguments must now be unpacked.
 
 # Disable warnings related to modifying code dynamically, useful for testing.
 # pylint: disable=exec-used,unused-argument
@@ -235,7 +236,9 @@ def record_message(message, msg_args):
         interpolated_message = message % msg_args
         messageLogger.info(interpolated_message)
     except (TypeError, UnicodeDecodeError):
-        messageLogger.info(message)
+        logger.warning(
+            "Message '%s' failed to interpolate arguments %r",
+            message, msg_args)
 
 def modifyMsgboxDisplay():
     """Modify lingt.ui.messagebox.MessageBox.display() to throw an exception
@@ -247,7 +250,7 @@ def modifyMsgboxDisplay():
 
         def newFunc(self, message, *msg_args, **kwargs):
             record_message(message, msg_args)
-            raise MsgSentException(message, msg_args)
+            raise MsgSentException(message, *msg_args)
 
         MessageBox.display = newFunc
 
@@ -368,4 +371,3 @@ def output_path(filename):
     """
     return os.path.join(
         os.path.expanduser("~"), "Documents", "OOLT_testing", filename)
-

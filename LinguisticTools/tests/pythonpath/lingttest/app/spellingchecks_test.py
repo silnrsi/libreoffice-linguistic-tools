@@ -98,7 +98,7 @@ class SpellingChecksTestCase(unittest.TestCase):
             self.unoObjs, fileItemList, columnOrder, self.userVars)
         punct = ""
         try:
-            wordList.generateList(punct)
+            wordList.generateList(punct, 'NFD')
         except testutil.MsgSentException as exc:
             self.assertTrue(exc.msg.startswith("Made list"))
         else:

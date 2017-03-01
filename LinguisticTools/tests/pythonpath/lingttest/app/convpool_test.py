@@ -151,4 +151,3 @@ class ConvPoolTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
-

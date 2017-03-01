@@ -71,7 +71,7 @@ class WordListTestCase(unittest.TestCase):
             wordList = WordList(
                 self.unoObjs, fileItemList, columnOrder, self.userVars)
             try:
-                wordList.generateList(". ?")
+                wordList.generateList(". ?", 'NFD')
             except testutil.MsgSentException as exc:
                 self.assertTrue(exc.msg.startswith("Made list"), msg=exc.msg)
             else:

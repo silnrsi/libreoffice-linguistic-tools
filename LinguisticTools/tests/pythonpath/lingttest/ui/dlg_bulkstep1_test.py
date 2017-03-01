@@ -13,7 +13,6 @@ import os
 import unittest
 
 from lingt.ui.comp.bulkconv import DlgBulkConversion
-from lingt.ui.dep import bulkconv_step1
 from lingt.utils import util
 
 from lingttest.utils import testutil

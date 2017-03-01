@@ -5,6 +5,7 @@
 # 28-Sep-15 JDK  Added getSuite().
 # 11-Nov-15 JDK  Removed TestHelpersTestCase.setUp().
 # 09-Dec-15 JDK  Use .lower() instead of str.lower() for python 2.
+# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 import os
 import logging
@@ -165,22 +166,22 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(len(gramEx.wordList), 13)
 
         word1 = gramEx.wordList[0]
-        self.assertNotEqual(word1.text, "")
-        self.assertEqual(word1.orth, "")
+        self.assertNotEqual(word1.text1, "")
+        self.assertEqual(word1.text2, "")
         self.assertEqual(len(word1.morphList), 1)
         morph1 = word1.morphList[0]
         self.assertEqual(morph1.gloss, "like.that")
         self.assertEqual(morph1.pos, "adv")
-        self.assertNotEqual(morph1.text, "")
-        self.assertEqual(morph1.orth, "")
+        self.assertNotEqual(morph1.text1, "")
+        self.assertEqual(morph1.text2, "")
 
         word4 = gramEx.wordList[3]
         self.assertEqual(len(word4.morphList), 2)
         morph1 = word4.morphList[0]
         self.assertEqual(morph1.gloss, "sister")
         self.assertEqual(morph1.pos, "n")
-        self.assertNotEqual(morph1.text, "")
-        self.assertEqual(morph1.orth, "")
+        self.assertNotEqual(morph1.text1, "")
+        self.assertEqual(morph1.text2, "")
 
         suggestions = xmlReader.getSuggestions()
         self.assertEqual(len(suggestions), 1)
@@ -194,25 +195,25 @@ class GramTestCase(unittest.TestCase):
         config.fileList = [fileItem]
         config.separateMorphColumns = True
         config.showMorphemeBreaks = True
-        self.userVars.store("SFMarker_Orthographic", "or")
-        self.userVars.store("SFMarker_OrthographicMorph", "mbtam")
+        self.userVars.store("SFMarker_Word2", "or")
+        self.userVars.store("SFMarker_Morpheme2", "mbtam")
 
         xmlReader = interlin_reader.InterlinReader(
             self.unoObjs, self.userVars, config)
         exampleDict = xmlReader.read()
         gramEx = exampleDict["Hunt06".lower()]
         word1 = gramEx.wordList[0]
-        self.assertNotEqual(word1.orth, "")
+        self.assertNotEqual(word1.text2, "")
         morph1 = word1.morphList[0]
-        self.assertNotEqual(morph1.orth, "")
+        self.assertNotEqual(morph1.text2, "")
 
         word4 = gramEx.wordList[3]
-        self.assertNotEqual(word4.orth, "")
+        self.assertNotEqual(word4.text2, "")
         morph1 = word4.morphList[0]
-        self.assertNotEqual(morph1.orth, "")
+        self.assertNotEqual(morph1.text2, "")
 
-        self.userVars.store("SFMarker_Orthographic", "")          # reset
-        self.userVars.store("SFMarker_OrthographicMorph", "")     # reset
+        self.userVars.store("SFMarker_Word2", "")          # reset
+        self.userVars.store("SFMarker_Morpheme2", "")     # reset
 
     def testFw(self):
         filepath = os.path.join(util.TESTDATA_FOLDER, "FWtextPigFox.xml")
@@ -244,14 +245,14 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(len(gramEx.wordList), 7)
 
         word2 = gramEx.wordList[1]
-        self.assertNotEqual(word2.text, "")
-        self.assertEqual(word2.orth, "")
+        self.assertNotEqual(word2.text1, "")
+        self.assertEqual(word2.text2, "")
         self.assertEqual(len(word2.morphList), 2)
         morph2 = word2.morphList[1]
         self.assertEqual(morph2.gloss, "LOC.in")
         self.assertEqual(morph2.pos, "case ")
-        self.assertNotEqual(morph2.text, "")
-        self.assertEqual(morph2.orth, "")
+        self.assertNotEqual(morph2.text1, "")
+        self.assertEqual(morph2.text2, "")
 
     def testFlexText(self):
         filepath = os.path.join(util.TESTDATA_FOLDER, "Sena Int.flextext")
@@ -279,16 +280,16 @@ class GramTestCase(unittest.TestCase):
         self.assertEqual(len(gramEx.wordList), 4)
 
         word1 = gramEx.wordList[0]
-        self.assertEqual(word1.text, "Tonsene")
+        self.assertEqual(word1.text1, "Tonsene")
 
         word2 = gramEx.wordList[2]
-        self.assertEqual(word2.text, "yathu")
-        self.assertEqual(word2.orth, "")
+        self.assertEqual(word2.text1, "yathu")
+        self.assertEqual(word2.text2, "")
         morph2 = word2.morphList[1]
-        self.assertEqual(morph2.text, "a-")
+        self.assertEqual(morph2.text1, "a-")
         self.assertEqual(morph2.gloss, "assocpx")
         self.assertEqual(morph2.pos, "Poss:assocpx")
-        self.assertEqual(morph2.orth, "")
+        self.assertEqual(morph2.text2, "")
 
 
 class TestHelpersTestCase(unittest.TestCase):

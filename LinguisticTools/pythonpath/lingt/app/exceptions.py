@@ -9,6 +9,7 @@
 # 19-Oct-15 JDK  Interpolate messages.
 # 04-Nov-15 JDK  A nested empty tuple should not be used for interpolation.
 # 22-Mar-16 JDK  Added DialogError.
+# 01-Mar-17 JDK  Added ContentError.
 
 """
 Define custom exceptions that can be raised.
@@ -44,9 +45,12 @@ def interpolate_message(message, msg_args):
             # for example "%d%d" % (a, b)
             message = message % msg_args
         except (TypeError, UnicodeDecodeError):
-            logger.warning(
+            logger.exception(
                 "Message '%s' failed to interpolate arguments %r",
                 message, msg_args)
+            #logger.warning(
+            #    "Message '%s' failed to interpolate arguments %r",
+            #    message, msg_args)
     return message
 
 class MessageError(LingtError):
@@ -116,4 +120,10 @@ class LogicError(MessageError):
 
 class DialogError(MessageError):
     """Dialog controls were in an unexpected state."""
+    pass
+
+
+class ContentError(MessageError):
+    """There is something unexpected about what the document or file
+    contains."""
     pass

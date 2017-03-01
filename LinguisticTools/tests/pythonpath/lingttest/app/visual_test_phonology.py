@@ -116,7 +116,7 @@ def resetUserVars(userVars):
 
         'PhoneticWritingSystem' : 'iru-x-X_ETIC'
     }
-    for key in varValues1.keys():
+    for key in varValues1:
         userVars.store(key, varValues1[key])
 
 
@@ -137,4 +137,3 @@ msgr = MessageWriter()
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
-

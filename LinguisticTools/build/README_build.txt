@@ -34,8 +34,7 @@ The benefits of the third approach are:
   user directory
 - Does not deploy as an uno package, so there is less chance of the uno
   package registry getting corrupt when making a large number of changes.
-- No need to restart OpenOffice to deploy changes (an important consideration
-  when using older versions such as OOo 3.2)
+- No need to restart OpenOffice to deploy changes.
   However, to avoid restarting, it is necessary to run aaa_del_sys_modules().
   See tests/ComponentsWrapper.py for details about this function.
 
