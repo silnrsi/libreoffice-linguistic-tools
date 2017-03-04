@@ -280,7 +280,7 @@ class DlgControls:
         btnFileAdd.setActionCommand("FileAdd")
         btnFileRemove.setActionCommand("FileRemove")
         btnFileUpdate.setActionCommand("FileUpdate")
-        btnOk.setActionCommand("Ok")
+        btnOk.setActionCommand("OK")
         btnCancel.setActionCommand("Cancel")
         for ctrl in (btnFileAdd, btnFileRemove, btnFileUpdate, btnOk,
                      btnCancel):
@@ -418,7 +418,7 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
             self.mainForm.removeFile()
         elif event.ActionCommand == "FileUpdate":
             self.mainForm.updateFile(True)
-        elif event.ActionCommand == "Ok":
+        elif event.ActionCommand == "OK":
             self.mainForm.storeAndClose()
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()

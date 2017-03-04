@@ -26,6 +26,7 @@ from lingt.access.xml.phon_reader import PhonReader
 from lingt.app import exceptions
 from lingt.app.data.fileitemlist import FileItemList, WordListFileItem
 from lingt.app.data.wordlist_structs import ColumnOrder
+from lingt.app.svc.spellingchecks import DEFAULT_NORM_FORM
 from lingt.app.svc.wordlist import WordList
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
@@ -64,7 +65,7 @@ class DlgWordList:
             userVarPrefix, unoObjs.document, logger)
         self.fileItems = FileItemList(WordListFileItem, self.userVars)
         self.punctToRemove = ""
-        self.normForm = 'NFD'
+        self.normForm = DEFAULT_NORM_FORM
         self.columnOrder = ColumnOrder(self.userVars)
         self.app = WordList(
             unoObjs, self.fileItems, self.columnOrder, self.userVars)
@@ -284,7 +285,7 @@ class DlgControls:
 
         varname = 'NormForm'
         if userVars.isEmpty(varname):
-            userVars.store(varname, 'NFD')
+            userVars.store(varname, DEFAULT_NORM_FORM)
 
         if len(fileItems) == 0:
             self.btnMakeList.Label = theLocale.getText("Make Empty List")

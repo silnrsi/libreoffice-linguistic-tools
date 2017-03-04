@@ -13,3 +13,5 @@ class EventObject:
 class IllegalArgumentException(Exception):
     pass
 
+class IndexOutOfBoundsException(Exception):
+    pass

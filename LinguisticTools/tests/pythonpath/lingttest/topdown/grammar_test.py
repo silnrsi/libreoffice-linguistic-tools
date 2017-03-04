@@ -112,7 +112,7 @@ class GrammarTestCase(unittest.TestCase):
                 innerSelf.evtHandler.actionPerformed(
                     MyActionEvent("FileRemove"))
             innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def test2_surroundings(self):
@@ -163,7 +163,7 @@ class GrammarTestCase(unittest.TestCase):
                 innerSelf.dlgCtrls.optFrames.setState(1)
             else:
                 innerSelf.dlgCtrls.optTables.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test2_make_useDialog_grabExamples(self, action, refNum):
@@ -322,6 +322,7 @@ class GrammarTestCase(unittest.TestCase):
             innerSelf.userVars.store(TAG_VARS['word2'], 'tx')
             innerSelf.userVars.store(TAG_VARS['morph1'], 'mbor')
             innerSelf.userVars.store(TAG_VARS['morph2'], 'mb')
+            innerSelf.userVars.store("SFM_Baseline", "WordLine2")
             innerSelf.dlgCtrls.chkWordLine1.setState(0)
             innerSelf.dlgCtrls.chkWordLine2.setState(1)
             innerSelf.dlgCtrls.chkMorphLine1.setState(0)
@@ -330,34 +331,27 @@ class GrammarTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkMorphsSeparate.setState(1)
             innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(0)
             innerSelf.dlgCtrls.chkNumbering.setState(1)
+            newState = int(setVal)
             if setting == 'word1':
-                innerSelf.dlgCtrls.chkWordLine1.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkWordLine1.setState(newState)
             elif setting == 'word2':
-                innerSelf.dlgCtrls.chkWordLine2.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkWordLine2.setState(newState)
             elif setting == 'morph1':
-                innerSelf.dlgCtrls.chkMorphLine1.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkMorphLine1.setState(newState)
             elif setting == 'morph2':
-                innerSelf.dlgCtrls.chkMorphLine2.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkMorphLine2.setState(newState)
             elif setting == 'ps':
-                innerSelf.dlgCtrls.chkPOS_Line.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkPOS_Line.setState(newState)
             elif setting == 'sepCols':
-                innerSelf.dlgCtrls.chkMorphsSeparate.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkMorphsSeparate.setState(newState)
             elif setting == 'psAbove':
                 innerSelf.dlgCtrls.chkPOS_Line.setState(1)
-                innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(newState)
             elif setting == 'numbering':
-                innerSelf.dlgCtrls.chkNumbering.setState(
-                    1 if setVal else 0)
+                innerSelf.dlgCtrls.chkNumbering.setState(newState)
             innerSelf.dlgCtrls.optTables.setState(1)
             self.setOrthographicFont(innerSelf.userVars)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test3_verify(self, setting, setVal):
@@ -482,7 +476,7 @@ class GrammarTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.txtPrefix.setText("B")
             innerSelf.dlgCtrls.chkUseSegnum.setState(True)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("FileUpdate"))
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test4_verify_resize(self, dataSets):
@@ -496,8 +490,13 @@ class GrammarTestCase(unittest.TestCase):
             if resize:
 
                 def useDialog(innerSelf):
-                    innerSelf.dlgCtrls.txtNumColWidth.setText("30")
-                    innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+                    # This value may need to be adjusted depending on your
+                    # default system settings.
+                    # If the test fails, adjust the value until the table
+                    # starts at 2 frames tall and resizes to 3 frames tall.
+                    RESIZE_PERCENT = 50
+                    innerSelf.dlgCtrls.txtNumColWidth.setText(RESIZE_PERCENT)
+                    innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
 
                 DlgGramSettings.useDialog = useDialog
                 self.runDlgSettings(True)
@@ -509,6 +508,7 @@ class GrammarTestCase(unittest.TestCase):
             oVC.goUp(2, False)
             self.assertIsNotNone(oVC.TextTable)
             self.assertEqual(oVC.TextTable.getName(), tableName)
+            # Before the table is resized, this should move out of the table.
             oVC.goUp(1, False)
             if resize:
                 self.assertIsNotNone(oVC.TextTable)
@@ -597,14 +597,17 @@ class GrammarTestCase(unittest.TestCase):
                 innerSelf.evtHandler.actionPerformed(
                     MyActionEvent("FileUpdate"))
             innerSelf.dlgCtrls.optFrames.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            # This size may need to be adjusted depending on system settings.
+            RESIZE_PERCENT = 15
+            innerSelf.dlgCtrls.txtNumColWidth.setText(RESIZE_PERCENT)
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test5_update_examples(self):
 
         def useDialog_gramSettings(innerSelf):
             innerSelf.dlgCtrls.optTables.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
 
         DlgGramSettings.useDialog = useDialog_gramSettings
         self.runDlgSettings(True)

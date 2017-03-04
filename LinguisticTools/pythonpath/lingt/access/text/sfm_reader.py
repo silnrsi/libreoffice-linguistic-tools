@@ -3,6 +3,7 @@
 # This file created Nov 9 2012 by Jim Kornelsen
 #
 # 11-Apr-13 JDK  Split SF markers into list.
+# 02-Mar-17 JDK  Fixed bug: WhatToGrab attributes have changed.
 
 """
 Read SFM files and grab specified fields.
@@ -65,8 +66,8 @@ class SFM_Reader(FileReader):
 
         sfMarkerList = list()
         for whatToGrab in self.fileconfig.thingsToGrab:
-            if whatToGrab.fieldType == wordlist_structs.WhatToGrab.SFM:
-                sfMarkerList.extend(whatToGrab.fieldValue.split())
+            if whatToGrab.grabType == wordlist_structs.WhatToGrab.SFM:
+                sfMarkerList.extend(whatToGrab.whichOne.split())
 
         lineNum = 1
         try:

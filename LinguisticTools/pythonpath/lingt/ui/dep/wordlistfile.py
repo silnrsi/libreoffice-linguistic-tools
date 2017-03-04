@@ -348,7 +348,7 @@ class DlgControls:
         btnOk = ctrl_getter.get(_dlgdef.BTN_OK)
         btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
-        btnOk.setActionCommand("Ok")
+        btnOk.setActionCommand("OK")
         btnUseCurrent.setActionCommand("UseCurrent")
         self.btnSelectWS.setActionCommand("SelectWritingSys")
         self.btnAdd.setActionCommand("AddItem")
@@ -521,7 +521,7 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.mainForm.addItem()
         elif event.ActionCommand == "RemoveItem":
             self.mainForm.removeItem()
-        elif event.ActionCommand == "Ok":
+        elif event.ActionCommand == "OK":
             self.mainForm.doOk()
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()
