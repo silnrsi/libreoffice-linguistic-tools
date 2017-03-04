@@ -11,6 +11,7 @@
 # 12-Dec-15 JDK  Fixed bug: Add Flextext suggestion only if ref number.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 22-Feb-17 JDK  SFM Option for either word line 1 or 2 as the baseline.
+# 04-Mar-17 JDK  Added class ToolboxBaseline.
 
 """
 Read interlinear examples, typically used for grammar writeups.
@@ -165,6 +166,7 @@ class ToolboxXML:
         self.dom = mainReader.dom
         self.data = mainReader.data
         self.suggestions = mainReader.suggestions
+        self.baseline = ToolboxBaseline(mainReader)
         self.config = mainReader.config
         self.generateRefIDs = mainReader.generateRefIDs
         self.prefix = mainReader.prefix
@@ -184,23 +186,15 @@ class ToolboxXML:
                 if not addedSuggestion:
                     self.suggestions.append(self.ex.refText)
                     addedSuggestion = True
+        self.baseline.verify_words_found()
 
     def handleSentence(self, sentence):
         self.ex.refText = xmlutil.getTextByTagName(
             sentence, self.fieldTags['ref'])
         self.ex.freeTrans = xmlutil.getTextByTagName(
             sentence, self.fieldTags['ft'])
-        if self.config.SFM_baseline_word1:
-            # Baseline means which words the morphemes are grouped by.
-            baseline_tag = 'word1'
-            ortho_tag = 'word2'
-        else:
-            baseline_tag = 'word2'
-            ortho_tag = 'word1'
-        words = sentence.getElementsByTagName(
-            self.fieldTags[baseline_tag] + "Group")
-        orthoText = xmlutil.getTextByTagName(
-            sentence, self.fieldTags[ortho_tag])
+        words = sentence.getElementsByTagName(self.baseline.word_group)
+        orthoText = xmlutil.getTextByTagName(sentence, self.baseline.ortho_tag)
         orthoWords = orthoText.split()
         for word in words:
             self.handleWord(word, len(words), orthoText, orthoWords)
@@ -211,21 +205,14 @@ class ToolboxXML:
             self.ex.refText = self.prefix + self.ex.refText
 
     def handleWord(self, word, num_words, orthoText, orthoWords):
-        if self.config.SFM_baseline_word1:
-            baseline_tag = 'word1'
-            base_morph_tag = 'morph1'
-        else:
-            baseline_tag = 'word2'
-            base_morph_tag = 'morph2'
-        wordText = xmlutil.getTextByTagName(word, self.fieldTags[baseline_tag])
+        wordText = xmlutil.getTextByTagName(word, self.baseline.word_tag)
         orthoWord = ""
         if orthoWords:
             if num_words == 1:
                 orthoWord = orthoText
             else:
                 orthoWord = orthoWords.pop(0)
-        morphemes = word.getElementsByTagName(
-            self.fieldTags[base_morph_tag] + "Group")
+        morphemes = word.getElementsByTagName(self.baseline.morph_group)
         mergedMorphemes = MergedMorphemes()
         for morpheme in morphemes:
             morph = lingex_structs.LingGramMorph()
@@ -246,11 +233,61 @@ class ToolboxXML:
         if not self.config.separateMorphColumns:
             self.ex.appendMorphObj(
                 mergedMorphemes.getMorph(
-                    self.config.showMorphemeBreaks))
+                    self.config.get_showMorphemeBreaks()))
         if self.config.SFM_baseline_word1:
             self.ex.appendWord(wordText, orthoWord)
         else:
             self.ex.appendWord(orthoWord, wordText)
+
+
+class ToolboxBaseline:
+    """Baseline means which words the morphemes are grouped by."""
+
+    def __init__(self, mainReader):
+        self.msgbox = mainReader.msgbox
+        self.userVars = mainReader.userVars
+        self.config = mainReader.config
+        self.fieldTags = GrammarTags(mainReader.userVars).loadUserVars()
+        self.data = mainReader.data
+        self.word_group = ''
+        self.morph_group = ''
+        self.word_tag = ''
+        self.ortho_tag = ''
+        self._determine_tags()
+
+    def _determine_tags(self):
+        if self.config.SFM_baseline_word1:
+            word_tag = 'word1'
+            morph_tag = 'morph1'
+            ortho_tag = 'word2'
+        else:
+            word_tag = 'word2'
+            morph_tag = 'morph2'
+            ortho_tag = 'word1'
+        self.word_group = self.fieldTags[word_tag] + "Group"
+        self.morph_group = self.fieldTags[morph_tag] + "Group"
+        self.word_tag = self.fieldTags[word_tag]
+        self.ortho_tag = self.fieldTags[ortho_tag]
+
+    def verify_words_found(self):
+        if not len(self.data):
+            return
+        for ex in self.data.values():
+            if len(ex.wordList):
+                return
+        if self.config.SFM_baseline_word1:
+            current_wordline = 1
+            other_wordline = 2
+        else:
+            current_wordline = 2
+            other_wordline = 1
+        self.msgbox.display(
+            'Could not find any words in "%s".  '
+            'Try changing %s%d to use a different marker, '
+            'or change %s to "WordLine%d".',
+            self.word_group,
+            self.userVars.getVarName("SFMarker_Word"), current_wordline,
+            self.userVars.getVarName("SFM_Baseline"), other_wordline)
 
 
 def singleMorphemeWord(word):
@@ -393,7 +430,7 @@ class FieldworksXML:
         if not self.config.separateMorphColumns:
             self.ex.appendMorphObj(
                 mergedMorphemes.getMorph(
-                    self.config.showMorphemeBreaks))
+                    self.config.get_showMorphemeBreaks()))
 
 
 class MergedMorphemes(lingex_structs.LingGramMorph):

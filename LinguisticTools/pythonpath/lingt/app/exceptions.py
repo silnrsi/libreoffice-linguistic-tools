@@ -45,12 +45,13 @@ def interpolate_message(message, msg_args):
             # for example "%d%d" % (a, b)
             message = message % msg_args
         except (TypeError, UnicodeDecodeError):
-            logger.exception(
+            # Calling logger.exception() here gets the stack trace.
+            # However it also causes a crash during automated testing,
+            # perhaps caused by lingttest.utils.testutil.MsgSentException
+            # and lingt.ui.common.evt_handler.log_exceptions.
+            raise LogicError(
                 "Message '%s' failed to interpolate arguments %r",
                 message, msg_args)
-            #logger.warning(
-            #    "Message '%s' failed to interpolate arguments %r",
-            #    message, msg_args)
     return message
 
 class MessageError(LingtError):

@@ -142,7 +142,7 @@ class DlgControls:
         buttonCancel = ctrl_getter.get(_dlgdef.BUTTON_CANCEL)
 
         btnSelectWS.setActionCommand("SelectWritingSys")
-        buttonOK.setActionCommand("Ok")
+        buttonOK.setActionCommand("OK")
         buttonCancel.setActionCommand("Cancel")
         for ctrl in (btnSelectWS, buttonOK, buttonCancel):
             ctrl.addActionListener(self.evtHandler)
@@ -174,7 +174,7 @@ class DlgEventHandler(XActionListener, unohelper.Base):
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
         if event.ActionCommand == "SelectWritingSys":
             self.mainForm.selectWritingSys()
-        elif event.ActionCommand == "Ok":
+        elif event.ActionCommand == "OK":
             self.mainForm.storeAndClose()
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()

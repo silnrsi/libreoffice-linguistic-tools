@@ -27,7 +27,7 @@ from com.sun.star.awt import XItemListener
 from lingt.access.writer import styles
 from lingt.access.writer import uservars
 from lingt.app import exceptions
-from lingt.app.svc.spellingchecks import SpellingChecker, CheckerSettings
+from lingt.app.svc import spellingchecks
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.dlgdefs import DlgSpellSearch as _dlgdef
@@ -54,7 +54,7 @@ class DlgSpellingSearch:
         self.userVars = uservars.UserVars(
             uservars.Prefix.SPELLING, writerUnoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
-        self.app = SpellingChecker(self.unoObjs, self.userVars)
+        self.app = spellingchecks.SpellingChecker(self.unoObjs, self.userVars)
         self.localeList = []
         self.paraStyleNames = []
         self.charStyleNames = []
@@ -129,7 +129,7 @@ class DlgSpellingSearch:
     def getFormResults(self):
         """Reads form fields and sets user vars and app.config."""
         logger.debug(util.funcName('begin'))
-        config = CheckerSettings()
+        config = spellingchecks.CheckerSettings()
         config.filepath = self.dlgCtrls.fileWordList.getText()
         self.userVars.store("WordListFile", config.filepath)
 
@@ -189,7 +189,7 @@ class DlgSpellingSearch:
 
         varname = 'NormForm'
         if self.userVars.isEmpty(varname):
-            config.normForm = 'NFD'
+            config.normForm = spellingchecks.DEFAULT_NORM_FORM
             self.userVars.store(varname, config.normForm)
         else:
             config.normForm = self.userVars.get(varname)

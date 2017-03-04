@@ -102,8 +102,8 @@ class DlgGramSettingsTestCase(unittest.TestCase):
 
     def test4_interlinLines(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkWordLine1.setState(1)
-            innerSelf.dlgCtrls.chkWordLine2.setState(0)
+            innerSelf.dlgCtrls.chkWordLine1.setState(0)
+            innerSelf.dlgCtrls.chkWordLine2.setState(1)
             innerSelf.dlgCtrls.chkMorphLine1.setState(1)
             innerSelf.dlgCtrls.chkMorphLine2.setState(1)
             innerSelf.dlgCtrls.chkPOS_Line.setState(1)
@@ -111,7 +111,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
         DlgGramSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.assertEqual(self.dlg.dlgCtrls.chkPOS_Line.getState(), 1)
-        self.assertEqual(self.dlg.dlgCtrls.chkWordLine1.getState(), 0)
+        self.assertEqual(self.dlg.dlgCtrls.chkWordLine2.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.optFrames.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optTables.getState(), 1)
         self.dlg.evtHandler.actionPerformed(MyActionEvent("Ok"))

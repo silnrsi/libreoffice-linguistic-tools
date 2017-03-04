@@ -42,6 +42,8 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.app.spellingchecks")
 
+DEFAULT_NORM_FORM = 'NFD'
+
 class CheckerSettings:
     """Settings for SpellingChecker class."""
 
@@ -51,7 +53,7 @@ class CheckerSettings:
         self.whichTask = ''
         self.whichScope = ''
         self.punctuation = ""
-        self.normForm = ''
+        self.normForm = DEFAULT_NORM_FORM
         self.matchCase = False
         self.searchConfig = TextSearchSettings()
         # These attributes are set from within this class.
@@ -278,7 +280,7 @@ class GoodList:
         self.wordList = []
         self.insensitiveList = []  # case insensitive (unless matchCase)
         self.matchCase = False
-        self.normForm = 'NFD'
+        self.normForm = DEFAULT_NORM_FORM
         self.columnLetter = ""
         self.calcUnoObjs = None
         # used instead of a good list if applying corrections

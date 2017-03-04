@@ -414,10 +414,16 @@ class InterlinInputSettings(Syncable):
         self.separateMorphColumns = False
         self.SFM_baseline_word1 = True  # typically the \tx line
 
+    def get_showMorphemeBreaks(self):
+        return self.showMorphLine1 or self.showMorphLine2
+
     def loadUserVars(self):
         self.fileList.loadUserVars()
         if self.userVars.get("SFM_Baseline").lower() == "wordline2":
             self.SFM_baseline_word1 = False
+
+    def storeUserVars(self):
+        pass
 
     def loadOutputSettings(self, outconfig):
         """Param should be of type InterlinOutputSettings."""
