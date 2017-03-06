@@ -66,3 +66,10 @@ To modify the dialog:
    Also grab the new translated strings from the .properties files.
 3. Compare or replace files in LingToolsBasic.
 
+
+#------------------------------------------------------------------------------
+# Localization
+#------------------------------------------------------------------------------
+To search for changes needed, see read_error_messages.pl and
+dialog_strings_read.pl in the generating_code directory.
+

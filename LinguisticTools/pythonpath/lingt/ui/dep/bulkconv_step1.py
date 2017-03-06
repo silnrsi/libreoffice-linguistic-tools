@@ -4,6 +4,7 @@
 #
 # 28-Apr-16 JDK  Organize classes by controls.
 # 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
+# 06-Mar-17 JDK  Fixed bug: User var requires string, not int.
 
 """
 Bulk Conversion dialog step 1.
@@ -40,7 +41,7 @@ class FormStep1:
         self.scopeTypeRadios = ScopeTypeRadios(ctrl_getter, app)
 
         self.event_handlers = [
-            self.filesListButtons, self.outputTo, self.scopeTypeRadios]
+            self.filesListButtons, self.outputTo]
         self.data_controls = [
             self.filesList, self.outputTo, self.scopeTypeRadios]
 
@@ -196,6 +197,7 @@ class OutputTo(evt_handler.ActionEventHandler):
         self.app = app
         self.txtOutputTo = ctrl_getter.get(_dlgdef.TX_FOLDER_OUTPUT_TO)
         self.outdir = ""
+        self.USERVAR = 'OutputFolder'
 
     def add_listeners(self):
         btnOutputTo = self.ctrl_getter.get(_dlgdef.BTN_OUTPUT_TO)
@@ -215,10 +217,10 @@ class OutputTo(evt_handler.ActionEventHandler):
         self.fill(folderpath)
 
     def load_values(self):
-        self.fill(self.app.userVars.get('OutputFolder'))
+        self.fill(self.app.userVars.get(self.USERVAR))
 
     def store_results(self):
-        self.app.userVars.store('OutputFolder', self.read())
+        self.app.userVars.store(self.USERVAR, self.read())
 
     def fill(self, new_val, *dummy_args):
         self.outdir = new_val
@@ -250,20 +252,23 @@ class ScopeTypeRadios(evt_handler.ItemEventHandler):
                 ctrl_getter.get(_dlgdef.OPT_SCOPE_CHAR_STYLE),
                 ScopeType.CHARSTYLE)]
         self.whichScope = ScopeType.FONT_WITH_STYLE
-
-    def add_listeners(self):
-        for radio in self.radios:
-            radio.ctrl.addItemListener(self)
-
-    def handle_item_event(self, src):
-        self.whichScope = dutil.whichSelected(self.radios)
+        self.USERVAR = 'ScopeType'
+        self.lblStylesUsed = ctrl_getter.get(_dlgdef.LBL_STYLES_USED)
 
     def load_values(self):
         userVars = self.app.userVars
-        varname = 'ScopeType'
-        if not userVars.isEmpty(varname):
-            self.whichScope = userVars.getInt(varname)
+        if not userVars.isEmpty(self.USERVAR):
+            self.whichScope = userVars.getInt(self.USERVAR)
         dutil.selectRadio(self.radios, self.whichScope)
 
     def store_results(self):
-        self.app.userVars.store('ScopeType', self.whichScope)
+        self.whichScope = dutil.whichSelected(self.radios)
+        self.app.userVars.store(self.USERVAR, str(self.whichScope))
+        self._rename_label()
+
+    def _rename_label(self):
+        for radio in self.radios:
+            if radio.key == self.whichScope:
+                self.lblStylesUsed.getModel().Label = (
+                    radio.ctrl.getModel().Label)
+                break

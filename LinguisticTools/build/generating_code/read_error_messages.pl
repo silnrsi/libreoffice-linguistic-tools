@@ -26,22 +26,19 @@
 #
 # 30-Nov-12 JDK  Recurse subdirectories.
 # 18-Mar-13 JDK  Make it work on Linux.
+# 06-Mar-17 JDK  Use paths relative to the build directory.
 #
 ################################################################################
 use strict;
 use File::Spec;
 
 my $OUTFOLDER = ".\\";  # the current folder
-my $DRIVE = 'C:';
-my $INFOLDER_BASEPATH = $DRIVE . '\OurDocs\computing\Office\OOLT' .
-                        '\LinguisticTools\pythonpath\lingt\\';
-my $OS = $^O;   # linux or MSWin32
+my $INFOLDER_BASEPATH  = '..\\..\\pythonpath\\lingt\\';
+my $OS = $^O;  # linux or MSWin32
 print "Running in $OS\n";
 if ($OS eq 'linux') {
     $OUTFOLDER         =~ s!\\!/!g;
     $INFOLDER_BASEPATH =~ s!\\!/!g;
-    $OUTFOLDER         =~ s!^$DRIVE!/media/winC!;
-    $INFOLDER_BASEPATH =~ s!^$DRIVE!/media/winC!;
 }
 my $OUTFILE = $OUTFOLDER . "read_error_messages-out.csv";
 
@@ -90,16 +87,16 @@ foreach my $filepath (@Infiles) {
     $contents = &concat_multiline_strs($contents);
     my $CALLS =
         '(?:getText|display|displayOkCancel|displayYesNoCancel|' .
-        'StyleError|ScopeError|ChoiceProblem)';
-    while ($contents =~ /\.$CALLS\s*\(\r?\n?\s*"([^"]+)"/g) {
+        'Error|ChoiceProblem)';
+    while ($contents =~ /\..*$CALLS\s*\(\r?\n?\s*"(.+)"/g) {
         $Messages{$1} = $EXISTS;
         print ".";
     }
-    while ($contents =~ /\.$CALLS\s*\(\r?\n?\s*'([^']+)'/g) {
+    while ($contents =~ /\..*$CALLS\s*\(\r?\n?\s*'([^']+)'/g) {
         $Messages{$1} = $EXISTS;
         print ".";
     }
-    while ($contents =~ /message = "([^"]+)"\r?\n(.*?)\.$CALLS\(message/gs) {
+    while ($contents =~ /message = "([^"]+)"\r?\n(.*?)\..*$CALLS\(message/gs) {
         $Messages{$1} = $EXISTS;
         print ".";
     }
@@ -129,14 +126,14 @@ while (my $line = scalar(<INFILE>)) {
     $contents .= $line;
 }
 close INFILE;
-$contents =~ / translations = {(.+?)}\r?\n/s;
+$contents =~ / translations = \{(.+?)\}\r?\n/s;
 my $translations = $1;
 $translations = &concat_multiline_strs($translations);
-$translations =~ s/{\r?\n/{ /g;
+$translations =~ s/\{\r?\n/\{ /g;
 $translations =~ s/:\r?\n/: /g;
 $translations =~ s/",\r?\n/", /g;
 while ($translations =~
-       /"([^"]+)" : {\s+'es' :\s+"([^"]*)",\s+'fr' :\s+"([^"]*)",/gm)
+       /"([^"]+)" : \{\s+'es' :\s+"([^"]*)",\s+'fr' :\s+"([^"]*)",/gm)
 {
     my ($en, $es, $fr) = ($1, $2, $3);
     $TranslatedExprs{$en} = $es . "|" . $fr;
