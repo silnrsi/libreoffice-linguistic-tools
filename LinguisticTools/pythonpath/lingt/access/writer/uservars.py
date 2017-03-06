@@ -73,11 +73,14 @@ class UserVars:
         self.otherLogger = otherLogger
 
     def store(self, baseVarName, stringVal):
-        """
-        Stores a value in a Writer doc that is persistent across macro calls.
+        """Stores a value in a Writer doc that is persistent across macro
+        calls.
+        :param baseVarName: var name without "LTx_" prefix
+        :param stringVal: value to store; numeric type may not work correctly
         """
         varName = self.getVarName(baseVarName)
         self.otherLogger.debug("storeUserVar %s", varName)
+        #self.otherLogger.debug("storeUserVar %s=%s", varName, stringVal)
         if stringVal is None:
             stringVal = ""
         fieldMasters = self.document.getTextFieldMasters()
@@ -103,6 +106,7 @@ class UserVars:
         if fieldMasters.hasByName(fieldName):
             field = fieldMasters.getByName(fieldName)
             stringVal = field.getPropertyValue("Content")
+            #self.otherLogger.debug("getUserVar =%s", stringVal)
             return stringVal
         else:
             return ""
@@ -342,8 +346,8 @@ class Syncable:
     @staticmethod
     def noUserVarData(varName):
         return exceptions.DataNotFoundError(
-            u"Error parsing %s user variable.  Please go to \"Insert -> "
-            u"Field -> More Fields\" and fix the problem.", varName)
+            u"Error parsing %s user variable.  Please go to Insert -> "
+            u"Field -> More Fields and fix the problem.", varName)
 
 
 class FieldTags:

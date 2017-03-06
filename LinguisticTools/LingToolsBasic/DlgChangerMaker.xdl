@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgChangerMaker" dlg:left="60" dlg:top="76" dlg:width="236" dlg:height="230" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;74.DlgChangerMaker.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgChangerMaker" dlg:left="60" dlg:top="76" dlg:width="236" dlg:height="230" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;86.DlgChangerMaker.Title">
  <dlg:bulletinboard>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optReplacementCCT" dlg:tab-index="1" dlg:left="7" dlg:top="11" dlg:width="144" dlg:height="11" dlg:value="&amp;84.DlgChangerMaker.optReplacementCCT.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optSFM_CCT" dlg:tab-index="2" dlg:left="7" dlg:top="28" dlg:width="199" dlg:height="13" dlg:value="&amp;85.DlgChangerMaker.optSFM_CCT.Value"/>
-   <dlg:radio dlg:id="optXSLT" dlg:tab-index="3" dlg:left="5" dlg:top="76" dlg:width="157" dlg:height="13" dlg:value="&amp;86.DlgChangerMaker.optXSLT.Value"/>
+   <dlg:radio dlg:id="optReplacementCCT" dlg:tab-index="1" dlg:left="7" dlg:top="11" dlg:width="144" dlg:height="11" dlg:value="&amp;96.DlgChangerMaker.optReplacementCCT.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optSFM_CCT" dlg:tab-index="2" dlg:left="7" dlg:top="28" dlg:width="199" dlg:height="13" dlg:value="&amp;97.DlgChangerMaker.optSFM_CCT.Value"/>
+   <dlg:radio dlg:id="optXSLT" dlg:tab-index="3" dlg:left="5" dlg:top="76" dlg:width="157" dlg:height="13" dlg:value="&amp;98.DlgChangerMaker.optXSLT.Value"/>
   </dlg:radiogroup>
-  <dlg:text dlg:id="lblSFMarkers" dlg:tab-index="4" dlg:left="26" dlg:top="44" dlg:width="93" dlg:height="11" dlg:value="&amp;82.DlgChangerMaker.lblSFMarkers.Value"/>
-  <dlg:textfield dlg:id="txtSFMarkers" dlg:tab-index="5" dlg:left="26" dlg:top="56" dlg:width="65" dlg:height="14" dlg:value="&amp;88.DlgChangerMaker.txtSFMarkers.Value"/>
-  <dlg:checkbox dlg:id="chkMatchPartial" dlg:tab-index="6" dlg:left="26" dlg:top="91" dlg:width="127" dlg:height="12" dlg:value="&amp;80.DlgChangerMaker.chkMatchPartial.Value" dlg:checked="false"/>
-  <dlg:text dlg:id="lblXpath" dlg:tab-index="7" dlg:left="26" dlg:top="104" dlg:width="121" dlg:height="13" dlg:value="&amp;83.DlgChangerMaker.lblXpath.Value"/>
-  <dlg:textfield dlg:id="txtXpath" dlg:tab-index="8" dlg:left="26" dlg:top="118" dlg:width="121" dlg:height="14" dlg:value="&amp;89.DlgChangerMaker.txtXpath.Value"/>
-  <dlg:button dlg:id="btnAddXpath" dlg:tab-index="9" dlg:left="120" dlg:top="136" dlg:width="27" dlg:height="13" dlg:value="&amp;75.DlgChangerMaker.btnAddXpath.Value"/>
+  <dlg:text dlg:id="lblSFMarkers" dlg:tab-index="4" dlg:left="26" dlg:top="44" dlg:width="93" dlg:height="11" dlg:value="&amp;94.DlgChangerMaker.lblSFMarkers.Value"/>
+  <dlg:textfield dlg:id="txtSFMarkers" dlg:tab-index="5" dlg:left="26" dlg:top="56" dlg:width="65" dlg:height="14" dlg:value="&amp;100.DlgChangerMaker.txtSFMarkers.Value"/>
+  <dlg:checkbox dlg:id="chkMatchPartial" dlg:tab-index="6" dlg:left="26" dlg:top="91" dlg:width="127" dlg:height="12" dlg:value="&amp;92.DlgChangerMaker.chkMatchPartial.Value" dlg:checked="false"/>
+  <dlg:text dlg:id="lblXpath" dlg:tab-index="7" dlg:left="26" dlg:top="104" dlg:width="121" dlg:height="13" dlg:value="&amp;95.DlgChangerMaker.lblXpath.Value"/>
+  <dlg:textfield dlg:id="txtXpath" dlg:tab-index="8" dlg:left="26" dlg:top="118" dlg:width="121" dlg:height="14" dlg:value="&amp;101.DlgChangerMaker.txtXpath.Value"/>
+  <dlg:button dlg:id="btnAddXpath" dlg:tab-index="9" dlg:left="120" dlg:top="136" dlg:width="27" dlg:height="13" dlg:value="&amp;87.DlgChangerMaker.btnAddXpath.Value"/>
   <dlg:menulist dlg:id="listXpathExprs" dlg:tab-index="10" dlg:left="153" dlg:top="104" dlg:width="77" dlg:height="29" dlg:tabstop="false"/>
-  <dlg:button dlg:id="btnRemoveXpath" dlg:tab-index="11" dlg:left="153" dlg:top="136" dlg:width="27" dlg:height="13" dlg:value="&amp;79.DlgChangerMaker.btnRemoveXpath.Value"/>
-  <dlg:text dlg:id="lblFilePath" dlg:tab-index="12" dlg:left="5" dlg:top="160" dlg:width="96" dlg:height="11" dlg:value="&amp;81.DlgChangerMaker.lblFilePath.Value"/>
-  <dlg:textfield dlg:id="txtFilePath" dlg:tab-index="13" dlg:left="5" dlg:top="171" dlg:width="182" dlg:height="16" dlg:value="&amp;87.DlgChangerMaker.txtFilePath.Value"/>
-  <dlg:button dlg:id="btnBrowse" dlg:tab-index="14" dlg:left="187" dlg:top="171" dlg:width="41" dlg:height="16" dlg:value="&amp;76.DlgChangerMaker.btnBrowse.Value"/>
-  <dlg:button dlg:id="btnOK" dlg:tab-index="15" dlg:left="49" dlg:top="203" dlg:width="55" dlg:height="16" dlg:value="&amp;78.DlgChangerMaker.btnOK.Value"/>
-  <dlg:button dlg:id="btnCancel" dlg:tab-index="16" dlg:left="112" dlg:top="203" dlg:width="55" dlg:height="16" dlg:value="&amp;77.DlgChangerMaker.btnCancel.Value"/>
+  <dlg:button dlg:id="btnRemoveXpath" dlg:tab-index="11" dlg:left="153" dlg:top="136" dlg:width="27" dlg:height="13" dlg:value="&amp;91.DlgChangerMaker.btnRemoveXpath.Value"/>
+  <dlg:text dlg:id="lblFilePath" dlg:tab-index="12" dlg:left="5" dlg:top="160" dlg:width="96" dlg:height="11" dlg:value="&amp;93.DlgChangerMaker.lblFilePath.Value"/>
+  <dlg:textfield dlg:id="txtFilePath" dlg:tab-index="13" dlg:left="5" dlg:top="171" dlg:width="182" dlg:height="16" dlg:value="&amp;99.DlgChangerMaker.txtFilePath.Value"/>
+  <dlg:button dlg:id="btnBrowse" dlg:tab-index="14" dlg:left="187" dlg:top="171" dlg:width="41" dlg:height="16" dlg:value="&amp;88.DlgChangerMaker.btnBrowse.Value"/>
+  <dlg:button dlg:id="btnOK" dlg:tab-index="15" dlg:left="49" dlg:top="203" dlg:width="55" dlg:height="16" dlg:value="&amp;90.DlgChangerMaker.btnOK.Value"/>
+  <dlg:button dlg:id="btnCancel" dlg:tab-index="16" dlg:left="112" dlg:top="203" dlg:width="55" dlg:height="16" dlg:value="&amp;89.DlgChangerMaker.btnCancel.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

@@ -21,21 +21,19 @@
 # Created by Jim on March 22 2013
 #
 # 29-Mar-13 JDK  Add support for frame controls (titled boxes).
+# 06-Mar-17 JDK  Use paths relative to the build directory.
 #
 #-------------------------------------------------------------------------------
 use strict;
 use File::Spec;
 
 my $OUTFOLDER = ".\\";  # the current folder
-my $INFOLDER  = 'C:\OurDocs\computing\Office\OOLT' .
-                '\LinguisticTools\LingToolsBasic\\';
+my $INFOLDER  = '..\\..\\LingToolsBasic';
 my $OS = $^O;   # linux or MSWin32
 print "Running in $OS\n";
 if ($OS eq 'linux') {
     $OUTFOLDER =~ s!\\!/!g;
     $INFOLDER  =~ s!\\!/!g;
-    $OUTFOLDER =~ s!^D:!/media/winD!;
-    $INFOLDER  =~ s!^D:!/media/winD!;
 }
 my $OUTFILE = File::Spec->catfile($OUTFOLDER, "dialog_strings.csv");
 

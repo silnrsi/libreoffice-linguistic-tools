@@ -543,8 +543,8 @@ class Locale:
             'fr' :
             u"EncConverters semble être mal installé",
         },
-        u"Error parsing %s user variable.  Please go to \"Insert -> Field -> "
-        u"More Fields\" and fix the problem." : {
+        u"Error parsing %s user variable.  Please go to Insert -> Field -> "
+        u"More Fields and fix the problem." : {
             'es' :
             u"Error al analizar %s variable de usuario.  Por favor, vaya a "
             u"Insertar -> Campos y solucionar el problema.",
@@ -599,12 +599,6 @@ class Locale:
             u"Error: No se pudo crear el diálogo.",
             'fr' :
             u"Erreur : Impossible de créer dialogue.",
-        },
-        u"Error: Could not show dialog window." : {
-            'es' :
-            u"Error: No se pudo mostrar el cuadro de diálogo.",
-            'fr' :
-            u"Erreur : Impossible d'afficher dialogue.",
         },
         u"Error: EncConverters returned %d%s." : {
             'es' :
@@ -863,12 +857,6 @@ class Locale:
             u"Veuillez charger une liste de mots en cliquant sur Fichiers...  "
             u"Après avoir fait la configuration de fichier",
         },
-        u"Please open one or more documents to search." : {
-            'es' :
-            u"Por favor, abrir uno o más documentos para la búsqueda.",
-            'fr' :
-            u"Veuillez ouvrir un ou plusieurs documents à rechercher.",
-        },
         u"Please save the current document first." : {
             'es' :
             u"Por favor, primero guarde el documento actual.",
@@ -977,12 +965,6 @@ class Locale:
             'fr' :
             u"Veuillez spécifier un fichier à exporter.",
         },
-        u"Please specify a row between 2 and %d." : {
-            'es' :
-            u"Por favor, especifica una fila entre 2 y %d.",
-            'fr' :
-            u"Veuillez spécifier une ligne entre 2 et %d.",
-        },
         u"Please specify a scope." : {
             'es' :
             u"Por favor, especifique un ámbito.",
@@ -1012,12 +994,6 @@ class Locale:
             'fr' :
             u"%d exemple%s a été remplasé.",
         },
-        u"Some words could not be converted." : {
-            'es' :
-            u"Algunas palabras no se pueden convertir.",
-            'fr' :
-            u"Impossible de convertir certains mots",
-        },
         u"Spell check finished." : {
             'es' :
             u"Spell check finished.",
@@ -1029,12 +1005,6 @@ class Locale:
             u"Terminado con éxito la conversión.",
             'fr' :
             u"Conversion terminée avec succès.",
-        },
-        u"System error: Unable to get UNO object." : {
-            'es' :
-            u"Error del sistema: No se puede obtener objeto UNO.",
-            'fr' :
-            u"Erreur de système : Impossible d'accéder à l'objet UNO.",
         },
         u"The cursor cannot be in a header or footer." : {
             'es' :
@@ -1050,12 +1020,6 @@ class Locale:
             'fr' :
             u"Le curseur ne peut pas se trouver dans un tableau ou dans un "
             u"cadre.",
-        },
-        u"There do not seem to be any examples to insert." : {
-            'es' :
-            u"No parece haber ningún ejemplo para insertar.",
-            'fr' :
-            u"Il semble qu'il n'existe pas d'exemples à insérer.",
         },
         u"There was a problem while writing the list.\n\n%s" : {
             'es' :
@@ -1118,6 +1082,12 @@ class Locale:
             u"Nuevo valor inesperado %s.",
             'fr' :
             u"Nouvelle valeur inattendue %s.",
+        },
+        u"Unexpected value %r" : {
+            'es' :
+            u"Valor inesperado %r.",
+            'fr' :
+            u"Valeur inattendue %r",
         },
         u"Unexpected value %s" : {
             'es' :
