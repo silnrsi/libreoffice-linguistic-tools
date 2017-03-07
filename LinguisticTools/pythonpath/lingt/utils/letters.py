@@ -76,7 +76,8 @@ LATIN_FONTS = [
 
 SCRIPT_FONTS = {
     "ARABIC": [
-        "AlBayan", "Andalus", "Arabic Transparent", "Arabic Typesettings",
+        "AlBayan", "Aldhabi", "Andalus", "Arabic Transparent",
+        "Arabic Typesettings",
         "Arial", "Baghdad", "Courier New", "DecoTypeNaskh",
         "Droid Arabic Naskh",
         "Estrangelo Edessa", "Geeza", "Geeza Pro",
@@ -106,7 +107,7 @@ SCRIPT_FONTS = {
         "Annapurna", "Aparajita", "CDAC-GIST Surekh", "Chandas",
         "Devanagari", "DevanagariMT", "Jana Hindi", "Kalimati", "Kokila",
         "Lohit Hindi", "Mangal", "Raavi", "Raghu8", "Samanata",
-        "Sanskrit Text", "Saraswati5", "Ultsaah", "Xdvng", "Yogesh",
+        "Sanskrit Text", "Saraswati5", "Utsaah", "Xdvng", "Yogesh",
         "gargi"],
     "GEORGIAN": ["JF Georgian Contrast", "Sylfaen"],
     "GLAGOLITIC": [],
@@ -123,18 +124,20 @@ SCRIPT_FONTS = {
         "Malgun Gothic", "PCMyungjo", "PilGi", "Seoul", "Tae Graphic"],
     "HANUNOO": [],
     "HEBREW": [
-        "Aharoni", "Arial", "Arial Hebrew", "ArialHB", "Corsiva",
-        "Corsiva Hebrew", "Courier New", "David",
+        "Aharoni", "Aharoni Bold", "Arial", "Arial Hebrew", "ArialHB",
+        "Corsiva", "Corsiva Hebrew", "Courier New", "David",
         "Droid Sans Hebrew", "Ezra SIL",
         "FrankRuehl", "Gisha", "Hebrew", "Levenim MT",
         "Lucida Sans Unicode", "Microsoft Sans Serif", "Miriam",
+        "Miriam Fixed",
         "Narkisim", "New Peninim", "NewPeninimMT", "Raanana", "Rod",
         "Tahoma", "Times New Roman"],
     "HIRAGANA": [
         "AquaKanaRegular", "Droid Sans Japanese",
         "Hiragino Kaku Gothic Pro", "Kochi Mincho",
-        "MS Gothic", "MS Mincho", "Meiryo", "Osaka", "Yu Gothic",
-        "Yu Mincho"],
+        "MS Gothic", "MS PGothic", "MS UI Gothic",
+        "MS Mincho", "MS PMincho", "Meiryo", "Meiryo UI",
+        "Osaka", "Yu Gothic", "Yu Mincho"],
     "JAVANESE": [],
     "KANNADA": ["Kedage", "Mallig", "Tunga"],
     "KATAKANA": [
@@ -148,7 +151,8 @@ SCRIPT_FONTS = {
     "LEPCHA": [],
     "LIMBU": [],
     "LISU": [],
-    "MALAYALAM": ["Kartika", "Lohit Malayalam", "Meera", "Rachana"],
+    "MALAYALAM": [
+        "Kartika", "Karthika", "Lohit Malayalam", "Meera", "Rachana"],
     "MANDAIC": [],
     "MONGOLIAN": ["Mongolian Baiti"],
     "MYANMAR": ["Myanmar Text", "Padauk"],
@@ -163,7 +167,7 @@ SCRIPT_FONTS = {
     "SAURASHTRA": [],
     "SINHALA": ["Iskoola Pota", "LKLUG"],
     "SUNDANESE": [],
-    "SYRIAC": ["Extrangelo Edessa"],
+    "SYRIAC": ["Estrangelo Edessa"],
     "TAGALOG": [],
     "TAGBANWA": [],
     "TAMIL": [
@@ -175,8 +179,8 @@ SCRIPT_FONTS = {
     "THAANA": ["MV Boli"],
     "THAI": [
         "Angsana New", "AngsanaUPC", "Ayuthaya", "Browallia",
-        "BrowalliaUPC", "Cordia New", "Dillenia", "DilleniaUPC",
-        "Droid Sans Thai",
+        "Browallia New", "BrowalliaUPC", "Cordia New", "CordiaUPC",
+        "Dillenia", "DilleniaUPC", "Droid Sans Thai",
         "Eucrosia", "EucrosiaUPC", "Freesia", "FreesiaUPC", "Garuda",
         "IrisUPC", "JasmineUPC", "Jumpa", "Kinnari",
         "KodchiangUPC", "Krungthep",

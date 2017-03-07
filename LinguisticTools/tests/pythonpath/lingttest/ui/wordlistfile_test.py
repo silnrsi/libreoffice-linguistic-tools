@@ -499,7 +499,7 @@ class WordListFileTestCase(unittest.TestCase):
                     innerSelf.evtHandler.actionPerformed(
                         MyActionEvent("RemoveItem"))
             if data.do_ok:
-                innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+                innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
             else:
                 innerSelf.evtHandler.actionPerformed(
                     MyActionEvent("Cancel"))

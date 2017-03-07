@@ -102,6 +102,8 @@ class ConvPoolTestCase(unittest.TestCase):
         self.assertEqual(convertedVal, "ABCDE")
         self.assertEqual(len(convPool._secCallObjs), 1)
 
+        conv_settings = ConverterSettings(self.userVars)
+        conv_settings.convName = CONV_NAME
         conv_settings.forward = False
         sec_call = convPool.loadConverter(conv_settings)
         convertedVal = sec_call.convert(inputStr)
@@ -119,9 +121,16 @@ class ConvPoolTestCase(unittest.TestCase):
         convPool = ConvPool(self.userVars, self.msgbox)
         conv_settings1 = ConverterSettings(self.userVars)
         conv_settings1.convName = CONV_NAME
-        conv_settings1.forward = True
+        conv_settings1.forward = False
         SelectSettingsCache.converter = conv_settings1
+        # This calls our modified funcSelectConverter() above,
+        # which tells the ConvPool what EncConverters actually
+        # contains after test1_single().
         dummy_fontChange = convPool.selectConverter(conv_settings1)
+
+        conv_settings1 = ConverterSettings(self.userVars)
+        conv_settings1.convName = CONV_NAME
+        conv_settings1.forward = True
         sec_call1 = convPool.loadConverter(conv_settings1)
         convertedVal = sec_call1.convert(inputStr)
         self.assertEqual(convertedVal, "ABCDE")
