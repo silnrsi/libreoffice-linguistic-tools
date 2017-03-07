@@ -83,7 +83,7 @@ class PhonologyTestCase(unittest.TestCase):
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("SelectWritingSys"))
             innerSelf.dlgCtrls.optionLexemePhm.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         DlgPhonSettings.useDialog = useDialog
         DlgGrabExamples.useDialog = useDialog_insertEx("JPDN21.4")
 
@@ -126,7 +126,7 @@ class PhonologyTestCase(unittest.TestCase):
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("SelectWritingSys"))
             innerSelf.dlgCtrls.optionLexemePht.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         DlgPhonSettings.useDialog = useDialog
         DlgGrabExamples.useDialog = useDialog_insertEx("JPDN21.4")
         Test1BData = collections.namedtuple('Test1BData', [
@@ -205,7 +205,7 @@ class PhonologyTestCase(unittest.TestCase):
                 self.assertEqual(exc.msg, liftErrorMsg)
             else:
                 self.fail("Expected error message.")
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def test3_surroundings(self):
@@ -226,7 +226,7 @@ class PhonologyTestCase(unittest.TestCase):
         def useDialog(innerSelf):
             filepath = os.path.join(util.TESTDATA_FOLDER, "TbxPhonCorpus.xml")
             innerSelf.dlgCtrls.fileControl.setText(filepath)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test3_make_useDialog_grabExamples(self, action, refNum):
@@ -364,7 +364,7 @@ class PhonologyTestCase(unittest.TestCase):
                 innerSelf.dlgCtrls.checkboxBrackets.setState(1)
             else:
                 innerSelf.dlgCtrls.checkboxBrackets.setState(0)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def test5_updating(self):
@@ -426,7 +426,7 @@ class PhonologyTestCase(unittest.TestCase):
                 util.TESTDATA_FOLDER, "TbxPhonCorpus.xml")
             innerSelf.dlgCtrls.fileControl.setText(filepath)
             innerSelf.dlgCtrls.optionPhonemicFirst.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
     def _test5_update_examples(self):
@@ -436,7 +436,7 @@ class PhonologyTestCase(unittest.TestCase):
                 util.TESTDATA_FOLDER, "TbxPhonCorpus.xml")
             innerSelf.dlgCtrls.fileControl.setText(filepath)
             innerSelf.dlgCtrls.optionPhoneticFirst.setState(1)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("Ok"))
+            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
 
         DlgPhonSettings.useDialog = useDialog_phonSettings
         self.runDlgSettings(True)

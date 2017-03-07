@@ -15,6 +15,7 @@ Otherwise you can run each test individually from its file.
 
 See build/README_build.txt for instructions to run this code.
 """
+import io
 import os
 import unittest
 # pylint: disable=import-error
@@ -31,6 +32,7 @@ from lingttest.access import uservars_test
 from lingttest.access import xml_readers_test
 from lingttest.app import fileitemlist_test
 from lingttest.app import spellingchecks_test
+from lingttest.app import convpool_test
 from lingttest.app import visual_test_grammar
 from lingttest.app import visual_test_phonology
 from lingttest.topdown import abbrevs_test
@@ -58,7 +60,7 @@ def get_master_suite():
 
             fileitemlist_test,
             spellingchecks_test,
-            #convpool_test,
+            convpool_test,
 
             messagebox_test,
             dlg_gramsettings_test,
@@ -109,9 +111,8 @@ def run_suite(suite, outputToFile):
 
 def run_suite_to_outfile(suite):
     outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
-    #outfile = io.open(outfilepath, mode='w', encoding='UTF8')
-    #outfile.write(u"Calling TextTestRunner...\n")
-    outfile = open(outfilepath, mode='w')
+    outfile = io.open(outfilepath, mode='w', encoding='UTF8')
+    #outfile = open(outfilepath, mode='w')
     outfile.write("Calling TextTestRunner...\n")
     outfile.flush()
     unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)
@@ -158,6 +159,9 @@ def run_fileitemlist_test():
 def run_spellingchecks_test():
     run_module_suite(spellingchecks_test)
 
+def run_convpool_test():
+    run_module_suite(convpool_test)
+
 def run_visual_test_grammar():
     run_module_suite(visual_test_grammar)
 
@@ -203,6 +207,7 @@ g_exportedScripts = (
     run_xml_readers_test,
     run_fileitemlist_test,
     run_spellingchecks_test,
+    run_convpool_test,
     run_visual_test_grammar,
     run_visual_test_phonology,
     run_abbrevs_test,

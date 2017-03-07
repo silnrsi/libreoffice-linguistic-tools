@@ -114,7 +114,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
         self.assertEqual(self.dlg.dlgCtrls.chkWordLine2.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.optFrames.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optTables.getState(), 1)
-        self.dlg.evtHandler.actionPerformed(MyActionEvent("Ok"))
+        self.dlg.evtHandler.actionPerformed(MyActionEvent("OK"))
         self.dlg = None
         self.assertEqual(self.userVars.get("Method"), "tables")
         self.assertEqual(self.userVars.getInt("ShowPartOfSpeech"), 1)

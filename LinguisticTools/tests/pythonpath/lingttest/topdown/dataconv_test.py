@@ -44,10 +44,10 @@ def getSuite():
     for method_name in (
             'test1_toUpper',
             'test2_scopeFont',
-            #'test3_parastyles',
-            #'test4_charstyles',
-            #'test5_targetFont',
-            #'test6_encTypes',
+            'test3_parastyles',
+            'test4_charstyles',
+            'test5_targetFont',
+            'test6_encTypes',
         ):
         suite.addTest(DataConvTestCase(method_name))
     return suite
@@ -517,7 +517,9 @@ def addConverter(convName, msgbox, userVars):
     if ".tec" in convSpec or ".map" in convSpec:
         convSpec = os.path.join(util.TESTDATA_FOLDER, convSpec)
     if convName in ("Any-Upper", "Any-Lower", "Any-Hex"):
-        processFlags = ProcessTypeFlags.ICUTransliteration
+        processFlags = (
+            ProcessTypeFlags.Transliteration |
+            ProcessTypeFlags.ICUTransliteration)
     sec_call = sec_wrapper.SEC_wrapper(msgbox, userVars)
     sec_call.addConverter(
         convName, convSpec, convType,
