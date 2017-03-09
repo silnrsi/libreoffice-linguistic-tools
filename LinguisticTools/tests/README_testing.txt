@@ -2,9 +2,10 @@
 # Created on May 14, 2013 by Jim Kornelsen
 #
 # 23-May-16 JDK  Updated to no longer require assimilation.
+# 09-Mar-17 JDK  Added system setup information.
 
 #-------------------------------------------------------------------------------
-# Testing the code
+# Running the tests
 #-------------------------------------------------------------------------------
 
 I use two different methods for running tests.
@@ -15,10 +16,35 @@ Use the batch or shell scripts to start OpenOffice and to run the tests,
 or enter command line commands that do these things.
 
 The second is to run from the user directory,
-like we can do when running the main OOLT code.
+like the third method described in build/README_build.py.
 Testing results are written to a file, since stdout is not accessible.
+The file runTestSuite.py can be used to run most tests.
 This approach is MUCH faster.
 1. Run build/deploy_to_userdir.ps1
 2. From OpenOffice go to Tools -> Macros -> Run macro.
    Specify runTestSuite -> runTests_myMacros.
+
+
+#-------------------------------------------------------------------------------
+# Setup to get tests to pass
+#-------------------------------------------------------------------------------
+
+Typically the tests do not pass the first time because various system settings
+are required.  These include:
+- adding converters
+    + The tests attempt to add converters automatically such as Any-Hex,
+      but it often fails, so add them manually.
+- missing fonts
+    + On Windows 10, go to Control Panel -> Fonts -> Download Fonts for
+      All Languages.
+    + Either download the required fonts or modify the testing code to use
+      fonts that are already on your system.
+    + See CHANGED_FONT in dataconv_test.py.
+- version of LibreOffice
+    + Style name might be "Default" or "Default Style" or "Standard"; change in
+      the testing code to match your system.
+    + See getDefaultFont() and getDefaultStyle() in testutil.py.
+- table width
+    + Seems to vary somewhat.  If necessary, change values such as
+      RESIZE_PERCENT in grammar_test.py.
 

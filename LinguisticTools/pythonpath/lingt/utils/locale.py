@@ -9,6 +9,7 @@
 # 28-Oct-11 JDK  Finished Spanish and French for 1.2 release.
 # 27-Feb-13 JDK  Can't modify dict in loop in python 3.3
 # 11-Mar-13 JDK  Remove "Default" (use underlying name "Standard" instead).
+# 08-Mar-17 JDK  Spanish and French for 3.0 release.
 
 """
 Handle localization of messages into French and Spanish.
@@ -21,9 +22,13 @@ To maintain the translations dictionary, here is one approach:
    Sort by English, and delete duplicates.
 3. Use Vim to change back into dictionary entries.
 
+To verify the strings that should go in this file, see
+build/generating_code/read_error_messages.pl.
+
 This module exports:
     theLocale
 """
+from __future__ import unicode_literals
 import logging
 
 from lingt.utils import util
@@ -252,900 +257,1093 @@ class Locale:
 
         ## Dynamic labels in dialogs
 
-        u"Back to Settings" : {
+        "Back to Settings" : {
             'es' :
-            u"Volver a la configuración",
+            "Volver a la configuración",
             'fr' :
-            u"Atteindre la configuration",
+            "Atteindre la configuration",
         },
-        u"Column" : {
+        "Column" : {
             'es' :
-            u"Columna",
+            "Columna",
             'fr' :
-            u"Colonne",
+            "Colonne",
         },
-        u"Get Phonology Examples" : {
+        "Bulk Conversion" : {
             'es' :
-            u"Obtener ejemplos de fonología",
+            "Conversión masiva",
             'fr' :
-            u"Obtenir des exemples de phonologie",
+            "",
         },
-        u"Get Interlinear Grammar Examples" : {
+        "Get Phonology Examples" : {
             'es' :
-            u"Obtener ejemplos de gramática",
+            "Obtener ejemplos de fonología",
             'fr' :
-            u"Obtenir des exemples de grammaire",
+            "Obtenir des exemples de phonologie",
         },
-        u"Get words" : {
+        "Get Interlinear Grammar Examples" : {
             'es' :
-            u"Obtener palabras",
+            "Obtener ejemplos de gramática",
             'fr' :
-            u"Obtenir mots",
+            "Obtenir des exemples de grammaire",
         },
-        u"Go to Practice" : {
+        "Get words" : {
             'es' :
-            u"Ir a la práctica",
+            "Obtener palabras",
             'fr' :
-            u"Atteindre exercices",
+            "Obtenir mots",
         },
-        u"Make Empty List" : {
+        "Go to Practice" : {
             'es' :
-            u"Hacer una lista vacía",
+            "Ir a la práctica",
             'fr' :
-            u"Créer liste vide",
+            "Atteindre exercices",
         },
-        u"Make List" : {
+        "Make Empty List" : {
             'es' :
-            u"Hacer una lista",
+            "Hacer una lista vacía",
             'fr' :
-            u"Créer liste",
+            "Créer liste vide",
         },
-        u"Replace with Example" : {
+        "Make List" : {
             'es' :
-            u"Reemplazar con ejemplo",
+            "Hacer una lista",
             'fr' :
-            u"Remplacer par exemple",
+            "Créer liste",
         },
-        u"Replace All" : {
+        "Replace with Example" : {
             'es' :
-            u"Reemplazar todo",
+            "Reemplazar con ejemplo",
             'fr' :
-            u"Remplacer tout",
+            "Remplacer par exemple",
         },
-        u"Script Practice" : {
+        "Replace All" : {
             'es' :
-            u"Practica de script",
+            "Reemplazar todo",
             'fr' :
-            u"Exercices d'écriture",
+            "Remplacer tout",
         },
-        u"Script Practice - Settings" : {
+        "Script Practice" : {
             'es' :
-            u"Practica de script - Configuración",
+            "Practica de script",
             'fr' :
-            u"Exercices d'écriture - Configuration",
+            "Exercices d'écriture",
         },
-        u"Spelling" : {
+        "Script Practice - Settings" : {
             'es' :
-            u"Ortografía",
+            "Practica de script - Configuración",
             'fr' :
-            u"Vérification d'orthographe",
+            "Exercices d'écriture - Configuration",
         },
-        u"Update Example" : {
+        "Searched by %s but did not find anything." : {
             'es' :
-            u"Actualizar el ejemplo",
+            "Se ha buscado por %s pero no ha encontrado nada.",
             'fr' :
-            u"Mettre l'exemple à jour",
+            "",
         },
-        u"Update All" : {
+        "Spelling" : {
             'es' :
-            u"Actualizar todos",
+            "Ortografía",
             'fr' :
-            u"Tout mettre à jour",
+            "Vérification d'orthographe",
         },
-        u"Word List and Spelling" : {
+        "Testing" : {
             'es' :
-            u"Lista de palabras y ortografía",
+            "Probando",
             'fr' :
-            u"Liste de mots et orthographe",
+            "",
+        },
+        "Update Example" : {
+            'es' :
+            "Actualizar el ejemplo",
+            'fr' :
+            "Mettre l'exemple à jour",
+        },
+        "Update All" : {
+            'es' :
+            "Actualizar todos",
+            'fr' :
+            "Tout mettre à jour",
+        },
+        "Word List and Spelling" : {
+            'es' :
+            "Lista de palabras y ortografía",
+            'fr' :
+            "Liste de mots et orthographe",
         },
 
         ## Localized text values
 
-        u"(none)" : {
+        "(none)" : {
             'es' :
-            u"(ninguno)",
+            "(ninguno)",
             'fr' :
-            u"(aucun)",
+            "(aucun)",
         },
-        u"(cannot make word)" : {
+        "(cannot make word)" : {
             'es' :
-            u"(no puede hacer la palabra)",
+            "(no puede hacer la palabra)",
             'fr' :
-            u"(impossible de créer mot)",
+            "(impossible de créer mot)",
         },
-        u"(Fallback Font)" : {
+        "(Fallback Font)" : {
             'es' :
-            u"(Fuente de Reserva)",
+            "(Fuente de Reserva)",
             'fr' :
-            u"(Police de Remplacement)",
+            "(Police de Remplacement)",
         },
-        u"(no words found)" : {
+        "(no words found)" : {
             'es' :
-            u"(no hay palabras encontradas)",
+            "(no hay palabras encontradas)",
             'fr' :
-            u"(aucun mot trouvé)",
+            "(aucun mot trouvé)",
         },
-        u"(No data)" : {
+        "(No data)" : {
             'es' :
-            u"(No hay datos)",
+            "(No hay datos)",
             'fr' :
-            u"(Aucune donnée)",
+            "(Aucune donnée)",
         },
-        u"Whole Document" : {
+        "Whole Document" : {
             'es' :
-            u"Documento completo",
+            "Documento completo",
             'fr' :
-            u"Document entier",
+            "Document entier",
         },
 
         ## Status messages for ProgressBar
 
-        u"Converting..." : {
+        "Converting..." : {
             'es' :
-            u"Convirtiendo...",
+            "Convirtiendo...",
             'fr' :
-            u"Conversion en cours...",
+            "Conversion en cours...",
         },
-        u"Finding text..." : {
+        "Finding text..." : {
             'es' :
-            u"Buscando texto...",
+            "Buscando texto...",
             'fr' :
-            u"Recherche de texte...",
+            "Recherche de texte...",
         },
-        u"Generating List..." : {
+        "Generating List..." : {
             'es' :
-            u"Generando lista...",
+            "Generando lista...",
             'fr' :
-            u"Création de liste...",
+            "Création de liste...",
         },
-        u"Getting data..." : {
+        "Getting data..." : {
             'es' :
-            u"Obteniendo datos...",
+            "Obteniendo datos...",
             'fr' :
-            u"L’obtention des données...",
+            "L’obtention des données...",
         },
-        u"Reading..." : {
+        "Reading..." : {
             'es' :
-            u"Leyendo...",
+            "Leyendo...",
             'fr' :
-            u"",
+            "",
         },
-        u"Saving file..." : {
+        "Reading files..." : {
             'es' :
-            u"Guardando archivo...",
+            "Leyendo los archivos...",
             'fr' :
-            u"Enregistrement de fichier...",
+            "",
         },
-        u"Searching for occurrences..." : {
+        "Saving file..." : {
             'es' :
-            u"Buscando ocurrencias...",
+            "Guardando archivo...",
             'fr' :
-            u"Recherche des occurrences...",
+            "Enregistrement de fichier...",
         },
-        u"Sorting..." : {
+        "Searching for occurrences..." : {
             'es' :
-            u"Ordenando...",
+            "Buscando ocurrencias...",
             'fr' :
-            u"Triage...",
+            "Recherche des occurrences...",
         },
-        u"Loading data..." : {
+        "Sorting..." : {
             'es' :
-            u"Cargando datos...",
+            "Ordenando...",
             'fr' :
-            u"Chargement des données...",
+            "Triage...",
+        },
+        "Loading data..." : {
+            'es' :
+            "Cargando datos...",
+            'fr' :
+            "Chargement des données...",
         },
 
         ## Error messages
 
-        u"%s is already in the list." : {
+        "%s is already in the list." : {
             'es' :
-            u"%s ya está en la lista.",
+            "%s ya está en la lista.",
             'fr' :
-            u"%s est déjà dans la liste.",
+            "%s est déjà dans la liste.",
         },
-        u"Add '%s' as a new abbreviation?" : {
+        "Add '%s' as a new abbreviation?" : {
             'es' :
-            u"Agregar '%s' como una abreviatura de nuevo?",
+            "Agregar '%s' como una abreviatura de nuevo?",
             'fr' :
-            u"Ajouter '%s' comme nouvelle abréviation?",
+            "Ajouter '%s' comme nouvelle abréviation?",
         },
-        u"Cannot be in a header or footer." : {
+        "Cannot be in a header or footer." : {
             'es' :
-            u"No puede ser en un encabezado o un pie de página.",
+            "No puede ser en un encabezado o un pie de página.",
             'fr' :
-            u"Interdit dans un en-tête ou pied de page.",
+            "Interdit dans un en-tête ou pied de page.",
         },
-        u"Cannot be inside a table or frame." : {
+        "Cannot be inside a table or frame." : {
             'es' :
-            u"No se puede estar dentro de una tabla o un marco.",
+            "No se puede estar dentro de una tabla o un marco.",
             'fr' :
-            u"Interdit dans un tableau ou cadre",
+            "Interdit dans un tableau ou cadre",
         },
-        u"Cannot find file %s" : {
+        "Cannot find file %s" : {
             'es' :
-            u"No se puede encontrar el archivo %s",
+            "No se puede encontrar el archivo %s",
             'fr' :
-            u"Impossible de trouver le fichier %s",
+            "Impossible de trouver le fichier %s",
         },
-        u"Cannot insert text here." : {
+        "Cannot insert text here." : {
             'es' :
-            u"No se puede insertar texto aquí.",
+            "No se puede insertar texto aquí.",
             'fr' :
-            u"Impossible d'insérer texte ici.",
+            "Impossible d'insérer texte ici.",
         },
-        u"Character style '%s' is missing" : {
+        "Character style '%s' is missing" : {
             'es' :
-            u"No se encuentra el estilo de carácter '%s'",
+            "No se encuentra el estilo de carácter '%s'",
             'fr' :
-            u"Style de caractère '%s' introuvable",
+            "Style de caractère '%s' introuvable",
         },
-        u"Column width is not a number." : {
+        "Column width is not a number." : {
             'es' :
-            u"El ancho de columna no es un número.",
+            "El ancho de columna no es un número.",
             'fr' :
-            u"La largeur de colonne n'est pas un nombre.",
+            "La largeur de colonne n'est pas un nombre.",
         },
-        u"Could not find ref number %s" : {
+        "Could not create style '%s'." : {
             'es' :
-            u"No se encuentra el número de referencia %s",
+            "No se pudo crear el estilo '%s'.",
             'fr' :
-            u"Numéro de référence %s introuvable.",
+            "",
         },
-        u"Could not find ref number %s\n\nSuggestions\n%s" : {
+        "Could not create temporary folder %s" : {
             'es' :
-            u"No se encuentra el número de referencia %s\n\nSugerencias\n%s",
+            "No se pudo crear la carpeta temporal %s.",
             'fr' :
-            u"Numéro de référence %s introuvable.\n\nSuggestions\n%s",
+            "",
         },
-        u"Did not find any data in file %s" : {
+        "Could not find any words in '%s'.  Try changing %s%d to use a "
+        "different marker, or change %s to 'WordLine%d'." : {
             'es' :
-            u"No ha encontrado ningún dato en el archivo %s",
+            "No se encontraron palabras en '%s'. Intente cambiar %s%d para "
+            "usar un marcador diferente, o cambie %s a 'WordLine%d'.",
             'fr' :
-            u"Aucune donnée n'a été trouvée dans le fichier %s",
+            "",
         },
-        u"Did not find any similar words." : {
+        "Could not find ref number %s" : {
             'es' :
-            u"No encontró algunas palabras similares.",
+            "No se encuentra el número de referencia %s",
             'fr' :
-            u"On n'a trouvé aucun mot similaire.",
+            "Numéro de référence %s introuvable.",
         },
-        u"Did not find any words for the list." : {
+        "Could not find ref number %s\n\nSuggestions\n%s" : {
             'es' :
-            u"No encontró algunas palabras para la lista.",
+            "No se encuentra el número de referencia %s\n\nSugerencias\n%s",
             'fr' :
-            u"On n'a trouvé aucun mot pour la liste.",
+            "Numéro de référence %s introuvable.\n\nSuggestions\n%s",
         },
-        u"Did not find anything in column %s." : {
+        "Could not get AddConverter function.  Automatically adding a "
+        "converter requires SEC4.0 or higher." : {
             'es' :
-            u"No encontró nada en la columna %s.",
+            "No se pudo obtener la función AddConverter. La "
+            "adición automática de un convertidor requiere "
+            "SEC4.0 o superior.",
             'fr' :
-            u"On n'a rien trouvé dans colonne %s.",
+            "",
         },
-        u"Did not find scope of change." : {
+        "Could not get column %d, row %d of table %s." : {
             'es' :
-            u"No ha encontrado el ámbito del cambio.",
+            "No se pudo obtener la columna %d, fila %d de la tabla%s.",
             'fr' :
-            u"L'étendue de changement n'a pas été trouvée.",
+            "",
         },
-        u"EncConverters does not seem to be installed properly." : {
+        "Could not get selection string." : {
             'es' :
-            u"EncConverters no parece que se haya instalado correctamente.",
+            "No se pudo obtener la cadena de selección.",
             'fr' :
-            u"EncConverters semble être mal installé",
+            "",
         },
-        u"Error parsing %s user variable.  Please go to Insert -> Field -> "
-        u"More Fields and fix the problem." : {
+        "Did not find any data in file %s" : {
             'es' :
-            u"Error al analizar %s variable de usuario.  Por favor, vaya a "
-            u"Insertar -> Campos y solucionar el problema.",
+            "No ha encontrado ningún dato en el archivo %s",
             'fr' :
-            u"Erreur en analysant la variable utilisateur %s.  Veuillez "
-            u"atteindre Insertion -> Champs pour résoudre le problème.",
+            "Aucune donnée n'a été trouvée dans le fichier %s",
         },
-        u"Error reading file %s" : {
+        "Did not find any similar words." : {
             'es' :
-            u"Error al leer el archivo %s",
+            "No encontró algunas palabras similares.",
             'fr' :
-            u"Erreur en lisant le fichier %s",
+            "On n'a trouvé aucun mot similaire.",
         },
-        u"Error reading file %s\n\n%s" : {
+        "Did not find any words for the list." : {
             'es' :
-            u"Error al leer el archivo %s\n\n%s",
+            "No encontró algunas palabras para la lista.",
             'fr' :
-            u"Erreur en lisant le fichier %s\n\n%s",
+            "On n'a trouvé aucun mot pour la liste.",
         },
-        u"Error with file: %s" : {
+        "Did not find anything in column %s." : {
             'es' :
-            u"Error con el archivo: %s",
+            "No encontró nada en la columna %s.",
             'fr' :
-            u"Erreur de fichier : %s",
+            "On n'a rien trouvé dans colonne %s.",
         },
-        u"Error reading spreadsheet." : {
+        "Did not find scope of change." : {
             'es' :
-            u"Error al leer la hoja de cálculo",
+            "No ha encontrado el ámbito del cambio.",
             'fr' :
-            u"Erreur de lecture de classeur",
+            "L'étendue de changement n'a pas été trouvée.",
         },
-        u"Error reading the list." : {
+        "EncConverters does not seem to be installed properly." : {
             'es' :
-            u"Error al leer la lista.",
+            "EncConverters no parece que se haya instalado correctamente.",
             'fr' :
-            u"Erreur de lecture de liste.",
+            "EncConverters semble être mal installé",
         },
-        u"Error reading the list.\n\n%s" : {
+        "Error parsing %s user variable.  Please go to Insert -> Field -> "
+        "More Fields and fix the problem." : {
             'es' :
-            u"Error al leer la lista.\n\n%s",
+            "Error al analizar %s variable de usuario.  Por favor, vaya a "
+            "Insertar -> Campos y solucionar el problema.",
             'fr' :
-            u"Erreur de lecture de liste.\n\n%s",
+            "Erreur en analysant la variable utilisateur %s.  Veuillez "
+            "atteindre Insertion -> Champs pour résoudre le problème.",
         },
-        u"Error writing to spreadsheet." : {
+        "Error reading file %s" : {
             'es' :
-            u"Error al escribir al hoja de cálculo.",
+            "Error al leer el archivo %s",
             'fr' :
-            u"Erreur d'écriture de classeur.",
+            "Erreur en lisant le fichier %s",
         },
-        u"Error: Could not create dialog." : {
+        "Error reading file %s\n\n%s" : {
             'es' :
-            u"Error: No se pudo crear el diálogo.",
+            "Error al leer el archivo %s\n\n%s",
             'fr' :
-            u"Erreur : Impossible de créer dialogue.",
+            "Erreur en lisant le fichier %s\n\n%s",
         },
-        u"Error: EncConverters returned %d%s." : {
+        "Error saving %s" : {
             'es' :
-            u"Error: EncConverters devolvió %d%s.",
+            "Error al guardar %s",
             'fr' :
-            u"Erreur: EncConverters a répondu %d%s.",
+            "",
         },
-        u"Failed to encode string properly." : {
+        "Error showing dialog: No %s control." : {
             'es' :
-            u"No pudo codificar correctamente la cadena.",
+            "Error al mostrar el diálogo: No %s control.",
             'fr' :
-            u"Impossible d'encoder correctement la chaîne.",
+            "",
         },
-        u"File does not seem to be from Toolbox or FieldWorks: %s" : {
+        "Error with file: %s" : {
             'es' :
-            u"El archivo no parece ser del Toolbox o Fieldworks: %s",
+            "Error con el archivo: %s",
             'fr' :
-            u"Il semble que ce fichier n'a pas été créé par Toolbox ou "
-            u"FieldWorks: %s",
+            "Erreur de fichier : %s",
         },
-        u"File is already in the list." : {
+        "Error reading spreadsheet." : {
             'es' :
-            u"El archivo ya está en la lista.",
+            "Error al leer la hoja de cálculo",
             'fr' :
-            u"Le fichier est déjà dans la liste.",
+            "Erreur de lecture de classeur",
         },
-        u"Found %d similar words." : {
+        "Error reading the list." : {
             'es' :
-            u"Encontrado %d palabras similares.",
+            "Error al leer la lista.",
             'fr' :
-            u"%d mots similaires trouvés.",
+            "Erreur de lecture de liste.",
         },
-        u"Found %d words." : {
+        "Error reading the list.\n\n%s" : {
             'es' :
-            u"Encontrado %d palabras.",
+            "Error al leer la lista.\n\n%s",
             'fr' :
-            u"%d mots trouvés.",
+            "Erreur de lecture de liste.\n\n%s",
         },
-        u"Found %d paragraphs and made %d change%s." : {
+        "Error writing to spreadsheet." : {
             'es' :
-            u"Ha encontrado %d párrafos y hizo %d cambio%s.",
+            "Error al escribir al hoja de cálculo.",
             'fr' :
-            u"%d paragraphes trouvés et %d changement%s faits.",
+            "Erreur d'écriture de classeur.",
         },
-        u"Found a ref number, but it must be in an outer table in order to "
-        u"be updated." : {
+        "Error: Could not create dialog." : {
             'es' :
-            u"Ha encontrado un número de referencia, pero debe estar en una "
-            u"tabla de exterior para ser actualizados.",
+            "Error: No se pudo crear el diálogo.",
             'fr' :
-            u"N° de réf.  trouvé, mais pour l'actualier il doit être dans un "
-            u"cadre exterieur",
+            "Erreur : Impossible de créer dialogue.",
         },
-        u"Frame style '%s' is missing" : {
+        "Error: EncConverters returned %d%s." : {
             'es' :
-            u"No se encuentra el estilo del marco '%s'",
+            "Error: EncConverters devolvió %d%s.",
             'fr' :
-            u"Style de cadre '%s' introuvable",
+            "Erreur: EncConverters a répondu %d%s.",
         },
-        u"If you want to use LIFT data, then first specify a LIFT file "
-        u"exported from FieldWorks." : {
+        "Expected frame margin parameter." : {
             'es' :
-            u"Si desea utilizar los datos LIFT, en primer lugar especificar "
-            u"un archivo LIFT exportados de Fieldworks.",
+            "Parámetro de margen de marco esperado.",
             'fr' :
-            u"Pour utiliser des données LIFT il faut spécifier un fichier "
-            u"LIFT exporté de FieldWorks.",
+            "",
         },
-        u"Library error: %s." : {
+        "Expected styleFonts to be set." : {
             'es' :
-            u"Error de rutinas: %s.",
+            "Se espera que se establezcan styleFonts.",
             'fr' :
-            u"Erreur de logiciel: %s.",
+            "",
         },
-        u"Made %d change%s." : {
+        "Failed to encode string properly." : {
             'es' :
-            u"Hizo %d cambio%s.",
+            "No pudo codificar correctamente la cadena.",
             'fr' :
-            u"%d changement%s faits.",
+            "Impossible d'encoder correctement la chaîne.",
         },
-        u"Made %d correction%s." : {
+        "Failed to go to text range." : {
             'es' :
-            u"Hizo %d correccione%s.",
+            "No pudo ir al rango de texto.",
             'fr' :
-            u"On a fait %d correction%s.",
+            "",
         },
-        u"Made list of %d words." : {
+        "File does not seem to be from Toolbox or FieldWorks: %s" : {
             'es' :
-            u"Hizo una lista de %d palabras.",
+            "El archivo no parece ser del Toolbox o Fieldworks: %s",
             'fr' :
-            u"On a créé une liste de %d mots.",
+            "Il semble que ce fichier n'a pas été créé par Toolbox ou "
+            "FieldWorks: %s",
         },
-        u"Make this change?" : {
+        "File is already in the list." : {
             'es' :
-            u"¿Hacer este cambio?",
+            "El archivo ya está en la lista.",
             'fr' :
-            u"Modifier ceci?",
+            "Le fichier est déjà dans la liste.",
         },
-        u"Make this change?  (%s -> %s)" : {
+        "First press Copy." : {
             'es' :
-            u"¿Hacer este cambio?  (%s -> %s)",
+            "Primero presione Copiar.",
             'fr' :
-            u"Modifier ceci?  (%s -> %s)",
+            "",
         },
-        u"Missed word '%s'.  Keep going?" : {
+        "Found %d similar words." : {
             'es' :
-            u"Hubo un problema con la palabra '%s'.  ¿Seguir adelante?",
+            "Encontrado %d palabras similares.",
             'fr' :
-            u"Un problème en le mot '%s'.  Continuer?",
+            "%d mots similaires trouvés.",
         },
-        u"No changes, but modified style of %d paragraph%s." : {
+        "Found %d words." : {
             'es' :
-            u"No hubo cambios, pero el estilo de %d párrafo%s se ha "
-            u"modificado.",
+            "Encontrado %d palabras.",
             'fr' :
-            u"Pas de changements, mais le style de %d paragraphe%s a été "
-            u"changé.",
+            "%d mots trouvés.",
         },
-        u"No changes." : {
+        "Found %d paragraphs and made %d change%s." : {
             'es' :
-            u"No hubo cambios.",
+            "Ha encontrado %d párrafos y hizo %d cambio%s.",
             'fr' :
-            u"Pas de changements.",
+            "%d paragraphes trouvés et %d changement%s faits.",
         },
-        u"No converter was specified." : {
+        "Found a ref number, but it must be in an outer table in order to "
+        "be updated." : {
             'es' :
-            u"No convertidor se ha especificado.",
+            "Ha encontrado un número de referencia, pero debe estar en una "
+            "tabla de exterior para ser actualizados.",
             'fr' :
-            u"Aucun convertisseur spécifié.",
+            "N° de réf.  trouvé, mais pour l'actualier il doit être dans un "
+            "cadre exterieur",
         },
-        u"No data found." : {
+        "Frame style '%s' is missing" : {
             'es' :
-            u"No se encontraron datos",
+            "No se encuentra el estilo del marco '%s'",
             'fr' :
-            u"Aucune donnée trouvée.",
+            "Style de cadre '%s' introuvable",
         },
-        u"No locale was specified." : {
+        "If you want to use LIFT data, then first specify a LIFT file "
+        "exported from FieldWorks." : {
             'es' :
-            u"Un locale no se ha especificado",
+            "Si desea utilizar los datos LIFT, en primer lugar especificar "
+            "un archivo LIFT exportados de Fieldworks.",
             'fr' :
-            u"Aucuns paramètres régionaux spécifiés.",
+            "Pour utiliser des données LIFT il faut spécifier un fichier "
+            "LIFT exporté de FieldWorks.",
         },
-        u"No more existing examples found." : {
+        "Library error: %s." : {
             'es' :
-            u"No se ha encontrado más ejemplos existentes",
+            "Error de rutinas: %s.",
             'fr' :
-            u"Il n'y a plus d'exemples trouvés.",
+            "Erreur de logiciel: %s.",
         },
-        u"No more possible abbreviations found." : {
+        "Made %d change%s to %d file%s." : {
             'es' :
-            u"No se ha encontrado más abreviaturas posibles",
+            "Hecho %d cambio%s a %d archivo %s.",
             'fr' :
-            u"On ne trouve plus des abréviations possibles.",
+            "",
         },
-        u"No more reference numbers found." : {
+        "Made %d change%s." : {
             'es' :
-            u"No se ha encontrado más números de referencia",
+            "Hizo %d cambio%s.",
             'fr' :
-            u"On ne trouve plus des numéros de référence.",
+            "%d changement%s faits.",
         },
-        u"No SF markers were specified.  Continue anyway?" : {
+        "Made %d correction%s." : {
             'es' :
-            u"Ningún marcadores SFM fueron especificados.  ¿Desea continuar?",
+            "Hizo %d correccione%s.",
             'fr' :
-            u"Aucune balise SFM spécifiée.  Continuer quand même?",
+            "On a fait %d correction%s.",
         },
-        u"No spreadsheet is open." : {
+        "Made list of %d words." : {
             'es' :
-            u"No hay ninguna hoja de cálculo abierto.",
+            "Hizo una lista de %d palabras.",
             'fr' :
-            u"Aucun classeur est ouvert.",
+            "On a créé une liste de %d mots.",
         },
-        u"No writing systems found." : {
+        "Make this change?" : {
             'es' :
-            u"No se encontraron sistemas de escritura.",
+            "¿Hacer este cambio?",
             'fr' :
-            u"Aucune systèmes d'écriture trouvée.",
+            "Modifier ceci?",
         },
-        u"No Xpath expressions were specified.  Continue anyway?" : {
+        "Make this change?  (%s -> %s)" : {
             'es' :
-            u"Ningún expresiones XPath fueron especificadas.  "
-            u"¿Desea continuar?",
+            "¿Hacer este cambio?  (%s -> %s)",
             'fr' :
-            u"Aucune expression Xpath spécifiée.  Continuer quand même?",
+            "Modifier ceci?  (%s -> %s)",
         },
-        u"No text is selected." : {
+        "Missed word '%s'.  Keep going?" : {
             'es' :
-            u"No hay texto seleccionado.",
+            "Hubo un problema con la palabra '%s'.  ¿Seguir adelante?",
             'fr' :
-            u"Aucun texte sélectionné.",
+            "Un problème en le mot '%s'.  Continuer?",
         },
-        u"Paragraph style '%s' is missing" : {
+        "No conversion result." : {
             'es' :
-            u"No se encuentra el estilo de párrafo '%s'",
+            "No hay resultado de conversión.",
             'fr' :
-            u"Style de paragraphe '%s' introuvable",
+            "",
         },
-        u"Please add a file to get words." : {
+        "No changes, but modified style of %d paragraph%s." : {
             'es' :
-            u"Por favor, añada un archivo para obtener las palabras.",
+            "No hubo cambios, pero el estilo de %d párrafo%s se ha "
+            "modificado.",
             'fr' :
-            u"Veuillez ajouter un fichier duquel on peut obtenir des mots.",
+            "Pas de changements, mais le style de %d paragraphe%s a été "
+            "changé.",
         },
-        u"Please do not select individual table cells." : {
+        "No changes." : {
             'es' :
-            u"Por favor, no seleccione las celdas individuales de la tabla.",
+            "No hubo cambios.",
             'fr' :
-            u"Veuillez ne pas choisir des cellules individuelles.",
+            "Pas de changements.",
         },
-        u"Please enter a number for max length." : {
+        "No converter was specified." : {
             'es' :
-            u"Por favor, introduzca un número para la longitud máxima.",
+            "No convertidor se ha especificado.",
             'fr' :
-            u"Veuillez entrer la longueur maximum.",
+            "Aucun convertisseur spécifié.",
         },
-        u"Please enter a ref number." : {
+        "No data found." : {
             'es' :
-            u"Por favor, introduzca un número de referencia.",
+            "No se encontraron datos",
             'fr' :
-            u"Veuillez entrer un numéro de référence.",
+            "Aucune donnée trouvée.",
         },
-        u"Please enter a ref number.\n\nSuggestions\n%s" : {
+        "No locale was specified." : {
             'es' :
-            u"Por favor, introduzca un número de referencia."
-            u"\n\nSugerencias\n%s",
+            "Un locale no se ha especificado",
             'fr' :
-            u"Veuillez entrer un numéro de référence.\n\nSuggestions\n%s",
+            "Aucuns paramètres régionaux spécifiés.",
         },
-        u"Please enter a value for column width." : {
+        "No more existing examples found." : {
             'es' :
-            u"Por favor, introduzca un valor para el ancho de la columna.",
+            "No se ha encontrado más ejemplos existentes",
             'fr' :
-            u"Veuillez entrer la largeur de colonne.",
+            "Il n'y a plus d'exemples trouvés.",
         },
-        u"Please go to Grammar Settings and specify a file." : {
+        "No more possible abbreviations found." : {
             'es' :
-            u"Por favor, vaya a la Configuración de gramática y especifique "
-            u"un archivo.",
+            "No se ha encontrado más abreviaturas posibles",
             'fr' :
-            u"Veuillez choisir un fichier dans Configuration de grammaire.",
+            "On ne trouve plus des abréviations possibles.",
         },
-        u"Please go to Phonology Settings and specify a file." : {
+        "No more reference numbers found." : {
             'es' :
-            u"Por favor, vaya a la Configuración de fonología y especifique "
-            u"un archivo.",
+            "No se ha encontrado más números de referencia",
             'fr' :
-            u"Veuillez spécifier un fichier dans Configuration de phonologie.",
+            "On ne trouve plus des numéros de référence.",
         },
-        u"Please load a word list by clicking on the Files... button.  When "
-        u"file settings are finished, click Get words." : {
+        "No more reference numbers found.\n Make sure to type # in front." : {
             'es' :
-            u"Por favor, cargue una lista de palabras haciendo clic en el "
-            u"botón Archivos.  Cuando la configuración de archivo se haya "
-            u"terminado, haga clic en Obtener palabras.",
+            "No se encontraron más números de referencia. \n Asegúrese de "
+            "escribir # delante.",
             'fr' :
-            u"Veuillez charger une liste de mots en cliquant sur Fichiers...  "
-            u"Après avoir fait la configuration de fichier",
+            "",
         },
-        u"Please save the current document first." : {
+        "No scope was specified." : {
             'es' :
-            u"Por favor, primero guarde el documento actual.",
+            "No se especificó ningún ámbito.",
             'fr' :
-            u"Veuillez enregistrer d'abord le document actuel.",
+            "",
         },
-        u"Please save the spreadsheet first." : {
+        "No SF markers were specified.  Continue anyway?" : {
             'es' :
-            u"Por favor, primero guarde la hoja de cálculo.",
+            "Ningún marcadores SFM fueron especificados.  ¿Desea continuar?",
             'fr' :
-            u"Veuillez d'abord enregistrer le classeur",
+            "Aucune balise SFM spécifiée.  Continuer quand même?",
         },
-        u"Please select a converter." : {
+        "No spreadsheet is open." : {
             'es' :
-            u"Por favor, seleccione un convertidor.",
+            "No hay ninguna hoja de cálculo abierto.",
             'fr' :
-            u"Veuillez choisir un convertisseur.",
+            "Aucun classeur est ouvert.",
         },
-        u"Please select a file in the list." : {
+        "No task was specified." : {
             'es' :
-            u"Por favor, seleccione un archivo en la lista.",
+            "No se especificó ninguna tarea.",
             'fr' :
-            u"Veuillez choisir un fichier dans la liste.",
+            "",
         },
-        u"Please select a language name." : {
+        "No writing systems found." : {
             'es' :
-            u"Por favor, seleccione un nombre de idioma.",
+            "No se encontraron sistemas de escritura.",
             'fr' :
-            u"Veuillez sélectionner un nom de langue.",
+            "Aucune systèmes d'écriture trouvée.",
         },
-        u"Please select a scope character style." : {
+        "No Xpath expressions were specified.  Continue anyway?" : {
             'es' :
-            u"Por favor, seleccione un estilo de carácter ámbito.",
+            "Ningún expresiones XPath fueron especificadas.  "
+            "¿Desea continuar?",
             'fr' :
-            u"Veuillez choisir un style de caractère pour l'étendue.",
+            "Aucune expression Xpath spécifiée.  Continuer quand même?",
         },
-        u"Please select a scope font." : {
+        "No text is selected." : {
             'es' :
-            u"Por favor, seleccione una fuente ámbito.",
+            "No hay texto seleccionado.",
             'fr' :
-            u"Veuillez choisir une police pour l'étendue.",
+            "Aucun texte sélectionné.",
         },
-        u"Please select a paragraph style." : {
+        "Paragraph style '%s' is missing" : {
             'es' :
-            u"Por favor, seleccione un estilo de párrafo.",
+            "No se encuentra el estilo de párrafo '%s'",
             'fr' :
-            u"Veuillez choisir un style de paragraphe.",
+            "Style de paragraphe '%s' introuvable",
         },
-        u"Please select a scope paragraph style." : {
+        "Please add a file to get words." : {
             'es' :
-            u"Por favor, seleccione un estilo de párrafo ámbito.",
+            "Por favor, añada un archivo para obtener las palabras.",
             'fr' :
-            u"Veuillez choisir un style de paragraphe pour l'étendue.",
+            "Veuillez ajouter un fichier duquel on peut obtenir des mots.",
         },
-        u"Please select a script." : {
+        "Please add files to scan." : {
             'es' :
-            u"Por favor, seleccione un script.",
+            "Por favor, agregue archivos para escanear.",
             'fr' :
-            u"Veuillez choisir un écriture.",
+            "",
         },
-        u"Please select a target font." : {
+        "Please do not select individual table cells." : {
             'es' :
-            u"Por favor, seleccione una fuente destino.",
+            "Por favor, no seleccione las celdas individuales de la tabla.",
             'fr' :
-            u"Veuillez choisir une police cible.",
+            "Veuillez ne pas choisir des cellules individuelles.",
         },
-        u"Please select a target style." : {
+        "Please enter a number for max length." : {
             'es' :
-            u"Por favor, seleccione un estilo destino.",
+            "Por favor, introduzca un número para la longitud máxima.",
             'fr' :
-            u"Veuillez choisir un style cible.",
+            "Veuillez entrer la longueur maximum.",
         },
-        u"Please select an abbreviation in the list." : {
+        "Please enter a ref number." : {
             'es' :
-            u"Por favor, seleccione una abreviatura de la lista.",
+            "Por favor, introduzca un número de referencia.",
             'fr' :
-            u"Veuillez choisir une abréviation dans la liste.",
+            "Veuillez entrer un numéro de référence.",
         },
-        u"Please select an item in the list." : {
+        "Please enter a ref number.\n\nSuggestions\n%s" : {
             'es' :
-            u"Por favor, seleccione un elemento de la lista.",
+            "Por favor, introduzca un número de referencia."
+            "\n\nSugerencias\n%s",
             'fr' :
-            u"Veuillez choisir un élément dans la liste.",
+            "Veuillez entrer un numéro de référence.\n\nSuggestions\n%s",
         },
-        u"Please select or enter something to find." : {
+        "Please enter a value for column width." : {
             'es' :
-            u"Por favor seleccione o escriba algo para buscar.",
+            "Por favor, introduzca un valor para el ancho de la columna.",
             'fr' :
-            u"Veuillez sélectionner ou saisir quelque chose à rechercher.",
+            "Veuillez entrer la largeur de colonne.",
         },
-        u"Please select the converter again." : {
+        "Please go to Grammar Settings and specify a file." : {
             'es' :
-            u"Por favor, seleccione el convertidor de nuevo.",
+            "Por favor, vaya a la Configuración de gramática y especifique "
+            "un archivo.",
             'fr' :
-            u"Veuillez choisir encore le convertisseur.",
+            "Veuillez choisir un fichier dans Configuration de grammaire.",
         },
-        u"Please specify SFMs." : {
+        "Please go to Phonology Settings and specify a file." : {
             'es' :
-            u"Por favor, especifique los SFMs.",
+            "Por favor, vaya a la Configuración de fonología y especifique "
+            "un archivo.",
             'fr' :
-            u"Veuillez spécifier les balises (SFMs).",
+            "Veuillez spécifier un fichier dans Configuration de phonologie.",
         },
-        u"Please specify a file to export." : {
+        "Please load a word list by clicking on the Files... button.  When "
+        "file settings are finished, click Get words." : {
             'es' :
-            u"Por favor, especifique un archivo para exportar.",
+            "Por favor, cargue una lista de palabras haciendo clic en el "
+            "botón Archivos.  Cuando la configuración de archivo se haya "
+            "terminado, haga clic en Obtener palabras.",
             'fr' :
-            u"Veuillez spécifier un fichier à exporter.",
+            "Veuillez charger une liste de mots en cliquant sur Fichiers...  "
+            "Après avoir fait la configuration de fichier",
         },
-        u"Please specify a scope." : {
+        "Please save the current document first." : {
             'es' :
-            u"Por favor, especifique un ámbito.",
+            "Por favor, primero guarde el documento actual.",
             'fr' :
-            u"Veuillez spécifier l'étendue.",
+            "Veuillez enregistrer d'abord le document actuel.",
         },
-        u"Please specify a target." : {
+        "Please save the spreadsheet first." : {
             'es' :
-            u"Por favor, especifique un destino.",
+            "Por favor, primero guarde la hoja de cálculo.",
             'fr' :
-            u"Veuillez spécifier un cible.",
+            "Veuillez d'abord enregistrer le classeur",
         },
-        u"Please specify a word list file.  To make a new empty list, go to "
-        u"Word List and Spelling and then save the spreadsheet file." : {
+        "Please select %s in the list." : {
             'es' :
-            u"Por favor, especifique un archivo de una lista de palabras.  "
-            u"Para crear una nueva lista vacía, vaya a Lista de palabras y "
-            u"ortografía y guarde el archivo de hoja de cálculo.",
+            "Por favor, seleccione %s en la lista.",
             'fr' :
-            u"Veuillez spécifier un fichier de liste de mots.  Pour créer une "
-            u"nouvelle liste vide, atteindre Liste de mots et orthographe, "
-            u"puis enregistrer le classeur.",
+            "",
         },
-        u"Replaced %d example%s." : {
+        "Please select a converter." : {
             'es' :
-            u"reemplazado %d ejemplo%s.",
+            "Por favor, seleccione un convertidor.",
             'fr' :
-            u"%d exemple%s a été remplasé.",
+            "Veuillez choisir un convertisseur.",
         },
-        u"Spell check finished." : {
+        "Please select a file in the list." : {
             'es' :
-            u"Spell check finished.",
+            "Por favor, seleccione un archivo en la lista.",
             'fr' :
-            u"Vérification d'orthographe terminée.",
+            "Veuillez choisir un fichier dans la liste.",
         },
-        u"Successfully finished conversion." : {
+        "Please select a language name." : {
             'es' :
-            u"Terminado con éxito la conversión.",
+            "Por favor, seleccione un nombre de idioma.",
             'fr' :
-            u"Conversion terminée avec succès.",
+            "Veuillez sélectionner un nom de langue.",
         },
-        u"The cursor cannot be in a header or footer." : {
+        "Please select a scope character style." : {
             'es' :
-            u"El cursor no puede estar en un encabezado o en un pie de "
-            u"página.",
+            "Por favor, seleccione un estilo de carácter ámbito.",
             'fr' :
-            u"Le curseur ne peut pas se trouver dans un en-tête ou dans un "
-            u"pied de page.",
+            "Veuillez choisir un style de caractère pour l'étendue.",
         },
-        u"The cursor cannot be inside a table or frame." : {
+        "Please select a scope font." : {
             'es' :
-            u"El cursor no puede estar dentro de una tabla o un marco.",
+            "Por favor, seleccione una fuente ámbito.",
             'fr' :
-            u"Le curseur ne peut pas se trouver dans un tableau ou dans un "
-            u"cadre.",
+            "Veuillez choisir une police pour l'étendue.",
         },
-        u"There was a problem while writing the list.\n\n%s" : {
+        "Please select a paragraph style." : {
             'es' :
-            u"Hubo un problema al escribir la lista.\n\n%s",
+            "Por favor, seleccione un estilo de párrafo.",
             'fr' :
-            u"Un problème est survenu en écrivant la liste.\n\n%s",
+            "Veuillez choisir un style de paragraphe.",
         },
-        u"This document stores %s settings.  "
-        u"Please leave it open while using %s.  "
-        u"If you want to keep the settings to use again later, "
-        u"then save this document." : {
+        "Please select a scope paragraph style." : {
             'es' :
-            u"Este documento guarda la configuración de %s.  "
-            u"Por favor, dejarlo abierto durante el uso de %s.  "
-            u"Si desea mantener la configuración para utilizarlo más "
-            u"adelante, guarde este documento.",
+            "Por favor, seleccione un estilo de párrafo ámbito.",
             'fr' :
-            u"Ce document contient la configuration de la fonction %s.  "
-            u"Veuillez le laisser ouvert en utilisant %s.  "
-            u"Pour garder la configuration afin de la réutiliser plus tard, "
-            u"enregistrer ce document.",
+            "Veuillez choisir un style de paragraphe pour l'étendue.",
         },
-        u"This expression is already in the list." : {
+        "Please select a script." : {
             'es' :
-            u"Esta expresión está ya en la lista.",
+            "Por favor, seleccione un script.",
             'fr' :
-            u"Cette expression est déjà dans la liste.",
+            "Veuillez choisir un écriture.",
         },
-        u"This will change the case of the entire list from '%s' to '%s.' "
-        u"Continue?" : {
+        "Please select a target font." : {
             'es' :
-            u"Esto cambiará el caso de la lista completa de '%s' a '%s'.  "
-            u"¿Desea continuar?",
+            "Por favor, seleccione una fuente destino.",
             'fr' :
-            u"Ceci changera la casse de toute la liste de '%s' à '%s'.  "
-            u"Continuer?",
+            "Veuillez choisir une police cible.",
         },
-        u"To update examples, 'Outer table' must be marked in Grammar "
-        u"Settings." : {
+        "Please select a target style." : {
             'es' :
-            u"'Tabla de exterior' debe estar en la Configuración de "
-            u"gramática.",
+            "Por favor, seleccione un estilo destino.",
             'fr' :
-            u"'Cadre exterieur' doit être dans Configuration de grammaire.",
+            "Veuillez choisir un style cible.",
         },
-        u"Unexpected file type %s" : {
+        "Please select an abbreviation in the list." : {
             'es' :
-            u"Tipo de archivo inesperado %s",
+            "Por favor, seleccione una abreviatura de la lista.",
             'fr' :
-            u"Type de fichier %s inattendu",
+            "Veuillez choisir une abréviation dans la liste.",
         },
-        u"Unexpected font type %s." : {
+        "Please select an item in the list." : {
             'es' :
-            u"Tipo de fuente inesperada %s.",
+            "Por favor, seleccione un elemento de la lista.",
             'fr' :
-            u"Police de type %s inattendue.",
+            "Veuillez choisir un élément dans la liste.",
         },
-        u"Unexpected new value %s." : {
+        "Please select an output folder." : {
             'es' :
-            u"Nuevo valor inesperado %s.",
+            "Por favor, seleccione una carpeta de salida.",
             'fr' :
-            u"Nouvelle valeur inattendue %s.",
+            "",
         },
-        u"Unexpected value %r" : {
+        "Please select or enter something to find." : {
             'es' :
-            u"Valor inesperado %r.",
+            "Por favor seleccione o escriba algo para buscar.",
             'fr' :
-            u"Valeur inattendue %r",
+            "Veuillez sélectionner ou saisir quelque chose à rechercher.",
         },
-        u"Unexpected value %s" : {
+        "Please select the converter again." : {
             'es' :
-            u"Valor inesperado %s.",
+            "Por favor, seleccione el convertidor de nuevo.",
             'fr' :
-            u"Valeur inattendue %s",
+            "Veuillez choisir encore le convertisseur.",
         },
-        u"Unknown file type for %s" : {
+        "Please specify SFMs." : {
             'es' :
-            u"Tipo de archivo desconocido para %s",
+            "Por favor, especifique los SFMs.",
             'fr' :
-            u"Type de fichier inconnu pour %s",
+            "Veuillez spécifier les balises (SFMs).",
         },
-        u"Update all examples now?  It is recommended to save a copy of your "
-        u"document first." : {
+        "Please specify a file to export." : {
             'es' :
-            u"¿Actualizar todos los ejemplos ahora?  Se recomienda que "
-            u"primero guarde una copia de su documento.",
+            "Por favor, especifique un archivo para exportar.",
             'fr' :
-            u"Actualiser tous les exemples maintenant?  Il est conseillé "
-            u"d'enregistrer le document d'abord.",
+            "Veuillez spécifier un fichier à exporter.",
         },
-        u"Updated '%s' %d times in a row.  Keep going?" : {
+        "Please specify a scope." : {
             'es' :
-            u"Actualizado '%s' %d veces seguidas.  ¿Seguir adelante?",
+            "Por favor, especifique un ámbito.",
             'fr' :
-            u"'%s' a été actualisé %d fois de suite.  Continuer?",
+            "Veuillez spécifier l'étendue.",
         },
-        u"Updated %d example%s." : {
+        "Please specify a target." : {
             'es' :
-            u"Actualizado %d ejemplo%s.",
+            "Por favor, especifique un destino.",
             'fr' :
-            u"%d exemple%s a été actualisé.",
+            "Veuillez spécifier un cible.",
         },
-        u"Value %d for column width is too high." : {
+        "Please specify a word list file.  To make a new empty list, go to "
+        "Word List and Spelling and then save the spreadsheet file." : {
             'es' :
-            u"El valor de %d para el ancho de columna es demasiado alta.",
+            "Por favor, especifique un archivo de una lista de palabras.  "
+            "Para crear una nueva lista vacía, vaya a Lista de palabras y "
+            "ortografía y guarde el archivo de hoja de cálculo.",
             'fr' :
-            u"%d est trop grande comme largeur de colonne.",
+            "Veuillez spécifier un fichier de liste de mots.  Pour créer une "
+            "nouvelle liste vide, atteindre Liste de mots et orthographe, "
+            "puis enregistrer le classeur.",
         },
-        u"Value for column width must be more than zero." : {
+        "Replaced %d example%s." : {
             'es' :
-            u"El valor para el ancho de columna debe ser mayor de cero.",
+            "reemplazado %d ejemplo%s.",
             'fr' :
-            u"La largeur de colonne doit être supérieure à zéro.",
+            "%d exemple%s a été remplasé.",
         },
-        u"'Whole Document' must be the only thing to find." : {
+        "Spell check finished." : {
             'es' :
-            u"'Documento Completo' debe ser la única cosa para buscar.",
+            "Spell check finished.",
             'fr' :
-            u"'Document entier' doit être la seule chose à rechercher",
+            "Vérification d'orthographe terminée.",
         },
-        u"You did not specify anything to find.  Continue anyway?" : {
+        "Successfully finished conversion." : {
             'es' :
-            u"No ha especificado nada que encontrar.  ¿Desea continuar?",
+            "Terminado con éxito la conversión.",
             'fr' :
-            u"Vous n'avez spécifier aucune chose à rechercher.  Continuer "
-            u"quand même?",
+            "Conversion terminée avec succès.",
+        },
+        "The cursor cannot be in a header or footer." : {
+            'es' :
+            "El cursor no puede estar en un encabezado o en un pie de "
+            "página.",
+            'fr' :
+            "Le curseur ne peut pas se trouver dans un en-tête ou dans un "
+            "pied de page.",
+        },
+        "The cursor cannot be inside a table or frame." : {
+            'es' :
+            "El cursor no puede estar dentro de una tabla o un marco.",
+            'fr' :
+            "Le curseur ne peut pas se trouver dans un tableau ou dans un "
+            "cadre.",
+        },
+        "There was a problem while writing the list.\n\n%s" : {
+            'es' :
+            "Hubo un problema al escribir la lista.\n\n%s",
+            'fr' :
+            "Un problème est survenu en écrivant la liste.\n\n%s",
+        },
+        "This document stores %s settings.  "
+        "Please leave it open while using %s.  "
+        "If you want to keep the settings to use again later, "
+        "then save this document." : {
+            'es' :
+            "Este documento guarda la configuración de %s.  "
+            "Por favor, dejarlo abierto durante el uso de %s.  "
+            "Si desea mantener la configuración para utilizarlo más "
+            "adelante, guarde este documento.",
+            'fr' :
+            "Ce document contient la configuration de la fonction %s.  "
+            "Veuillez le laisser ouvert en utilisant %s.  "
+            "Pour garder la configuration afin de la réutiliser plus tard, "
+            "enregistrer ce document.",
+        },
+        "This expression is already in the list." : {
+            'es' :
+            "Esta expresión está ya en la lista.",
+            'fr' :
+            "Cette expression est déjà dans la liste.",
+        },
+        "This will change the case of the entire list from '%s' to '%s.' "
+        "Continue?" : {
+            'es' :
+            "Esto cambiará el caso de la lista completa de '%s' a '%s'.  "
+            "¿Desea continuar?",
+            'fr' :
+            "Ceci changera la casse de toute la liste de '%s' à '%s'.  "
+            "Continuer?",
+        },
+        "This word was already set to correct.  Change anyway?" : {
+            'es' :
+            "Esta palabra ya estaba configurada para corregir. "
+            "¿Cambiar de todos modos?",
+            'fr' :
+            "",
+        },
+        "To update examples, 'Outer table' must be marked in Grammar "
+        "Settings." : {
+            'es' :
+            "'Tabla de exterior' debe estar en la Configuración de "
+            "gramática.",
+            'fr' :
+            "'Cadre exterieur' doit être dans Configuration de grammaire.",
+        },
+        "Too many files named like %s." : {
+            'es' :
+            "Demasiados archivos con el nombre %s.",
+            'fr' :
+            "",
+        },
+        "Too many temporary folders in %s." : {
+            'es' :
+            "Demasiadas carpetas temporales en %s.",
+            'fr' :
+            "",
+        },
+        "Unexpected file type %s" : {
+            'es' :
+            "Tipo de archivo inesperado %s",
+            'fr' :
+            "Type de fichier %s inattendu",
+        },
+        "Unexpected font type %s." : {
+            'es' :
+            "Tipo de fuente inesperada %s.",
+            'fr' :
+            "Police de type %s inattendue.",
+        },
+        "Unexpected new value %s." : {
+            'es' :
+            "Nuevo valor inesperado %s.",
+            'fr' :
+            "Nouvelle valeur inattendue %s.",
+        },
+        "Unexpected value %r" : {
+            'es' :
+            "Valor inesperado %r.",
+            'fr' :
+            "Valeur inattendue %r",
+        },
+        "Unexpected value %s" : {
+            'es' :
+            "Valor inesperado %s.",
+            'fr' :
+            "Valeur inattendue %s",
+        },
+        "Unknown action command '%s'" : {
+            'es' :
+            "Comando de acción desconocido '%s'",
+            'fr' :
+            "",
+        },
+        "Unknown file type for %s" : {
+            'es' :
+            "Tipo de archivo desconocido para %s",
+            'fr' :
+            "Type de fichier inconnu pour %s",
+        },
+        "Unknown grabKey '%s'" : {
+            'es' :
+            "grabKey '%s' desconocido",
+            'fr' :
+            "",
+        },
+        "Update all examples now?  It is recommended to save a copy of your "
+        "document first." : {
+            'es' :
+            "¿Actualizar todos los ejemplos ahora?  Se recomienda que "
+            "primero guarde una copia de su documento.",
+            'fr' :
+            "Actualiser tous les exemples maintenant?  Il est conseillé "
+            "d'enregistrer le document d'abord.",
+        },
+        "Updated '%s' %d times in a row.  Keep going?" : {
+            'es' :
+            "Actualizado '%s' %d veces seguidas.  ¿Seguir adelante?",
+            'fr' :
+            "'%s' a été actualisé %d fois de suite.  Continuer?",
+        },
+        "Updated %d example%s." : {
+            'es' :
+            "Actualizado %d ejemplo%s.",
+            'fr' :
+            "%d exemple%s a été actualisé.",
+        },
+        "Value %d for column width is too high." : {
+            'es' :
+            "El valor de %d para el ancho de columna es demasiado alta.",
+            'fr' :
+            "%d est trop grande comme largeur de colonne.",
+        },
+        "Value for column width must be more than zero." : {
+            'es' :
+            "El valor para el ancho de columna debe ser mayor de cero.",
+            'fr' :
+            "La largeur de colonne doit être supérieure à zéro.",
+        },
+        "'Whole Document' must be the only thing to find." : {
+            'es' :
+            "'Documento Completo' debe ser la única cosa para buscar.",
+            'fr' :
+            "'Document entier' doit être la seule chose à rechercher",
+        },
+        "Word failed to fit properly." : {
+            'es' :
+            "La palabra no se ajustó correctamente.",
+            'fr' :
+            "",
+        },
+        "You did not made any changes to the word." : {
+            'es' :
+            "No hiciste ningún cambio en la palabra.",
+            'fr' :
+            "",
+        },
+        "You did not specify anything to find.  Continue anyway?" : {
+            'es' :
+            "No ha especificado nada que encontrar.  ¿Desea continuar?",
+            'fr' :
+            "Vous n'avez spécifier aucune chose à rechercher.  Continuer "
+            "quand même?",
         },
     }
 

@@ -282,9 +282,9 @@ class ToolboxBaseline:
             current_wordline = 2
             other_wordline = 1
         self.msgbox.display(
-            'Could not find any words in "%s".  '
-            'Try changing %s%d to use a different marker, '
-            'or change %s to "WordLine%d".',
+            "Could not find any words in '%s'.  "
+            "Try changing %s%d to use a different marker, "
+            "or change %s to 'WordLine%d'.",
             self.word_group,
             self.userVars.getVarName("SFMarker_Word"), current_wordline,
             self.userVars.getVarName("SFM_Baseline"), other_wordline)

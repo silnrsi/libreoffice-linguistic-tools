@@ -145,7 +145,7 @@ class DataConversion:
         except RuntimeException as exc:
             logger.exception(exc)
             raise exceptions.StyleError(
-                'Could not create style "%s".', newConfig.targetStyle)
+                "Could not create style '%s'.", newConfig.targetStyle)
         logger.debug(util.funcName('end'))
 
     def doConversions_writer(self):

@@ -69,8 +69,7 @@ if platform.system() == "Windows":
     ROOTDIR = "C:" + os.path.sep + "OurDocs"
     #BASE_FOLDER = r"D:\dev\OOLT"
 else:
-    #ROOTDIR = "/media/winC/OurDocs"
-    ROOTDIR = "/media/sf_OurDocs"
+    ROOTDIR = "/mnt/sf_OurDocs"
 BASE_FOLDER = os.path.join(ROOTDIR, "computing", "Office", "OOLT_dev_extra")
 LOGGING_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 TESTDATA_FOLDER = os.path.join(
