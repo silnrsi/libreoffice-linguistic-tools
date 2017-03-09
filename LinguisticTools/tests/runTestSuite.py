@@ -111,8 +111,12 @@ def run_suite(suite, outputToFile):
 
 def run_suite_to_outfile(suite):
     outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
-    outfile = io.open(outfilepath, mode='w', encoding='UTF8')
-    #outfile = open(outfilepath, mode='w')
+    if type("") == type(u""):
+        # Python 3
+        outfile = io.open(outfilepath, mode='w', encoding='UTF8')
+    else:
+        # Python 2
+        outfile = open(outfilepath, mode='w')
     outfile.write("Calling TextTestRunner...\n")
     outfile.flush()
     unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)

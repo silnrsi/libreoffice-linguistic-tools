@@ -48,7 +48,6 @@ class FileItem(Syncable):
             # The base class should not be instantiated.
             raise NotImplementedError
         Syncable.__init__(self, userVars)
-        self.userVars = userVars
         self.filenum = filenum
         self.filepath = ""
 

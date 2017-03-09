@@ -4,6 +4,7 @@
 # 12-Dec-15 JDK  Added info about dialogs and releasing a new version.
 # 03-May-16 JDK  No need to assimilate code.
 # 07-Mar-17 JDK  Add testing information.
+# 09-Mar-17 JDK  Moved testing information to README_testing.txt.
 
 #------------------------------------------------------------------------------
 # Building the code
@@ -78,27 +79,4 @@ dialog_strings_read.pl in the generating_code directory.
 #------------------------------------------------------------------------------
 # Testing
 #------------------------------------------------------------------------------
-See tests/runTestSuite.py.  Try running from the user directory (the third
-approach described above).
-Tests can also be run from the command line by starting Office in listening
-mode (start_soffice_listening.bat or .sh), although it is much slower.
-
-Typically the tests do not pass the first time because various system settings
-are required.  These include:
-- adding converters
-    + The code attempts to add converters such as Any-Hex,
-      but it often fails, so add them manually.
-- missing fonts
-    + On Windows 10, go to Control Panel -> Fonts -> Download Fonts for
-      All Languages.
-    + Either download the required fonts or modify the testing code to use
-      fonts that are already on your system.
-    + See CHANGED_FONT in dataconv_test.py.
-- version of LibreOffice
-    + Style name might be "Default" or "Default Style" or "Standard"; change in
-      the testing code to match your system.
-    + See getDefaultFont() and getDefaultStyle() in testutil.py.
-- table width
-    + Seems to vary somewhat.  If necessary, change values such as
-      RESIZE_PERCENT in grammar_test.py.
-
+See tests/README_testing.py.

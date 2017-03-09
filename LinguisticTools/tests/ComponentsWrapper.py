@@ -49,8 +49,7 @@ if platform.system() == "Windows":
     ROOTDIR = r"C:\OurDocs"
     #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
 else:
-    #ROOTDIR = "/media/winC/OurDocs"
-    ROOTDIR = "/media/sf_OurDocs"
+    ROOTDIR = "/mnt/sf_OurDocs"
 TOPLEVEL_LOGGER_FILEPATH = os.path.join(
     ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
 

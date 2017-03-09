@@ -1,6 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created May 25, 2016 by Jim Kornelsen
+#
+# 09-Mar-17 JDK  Python 2.7 does not have mock.
 
 """
 Verify that lists can add and remove items and stay the correct size.
@@ -9,7 +11,13 @@ Check that user vars get stored using mock objects.
 from __future__ import unicode_literals
 import logging
 import unittest
-from unittest import mock
+try:
+    # Python 3.3 and higher (LibreOffice)
+    from unittest import mock
+    HAS_MOCK = True
+except ImportError:
+    # Python 2.7 (Apache OpenOffice)
+    HAS_MOCK = False
 
 from lingttest.utils import testutil
 
@@ -30,6 +38,8 @@ def getSuite():
             'test3_add_items',
             'test4_uservars',
         ):
+        if not HAS_MOCK and method_name == 'test4_uservars':
+            continue
         suite.addTest(FileItemListTestCase(method_name))
     return suite
 
@@ -45,7 +55,10 @@ class FileItemListTestCase(unittest.TestCase):
         self.msgbox = MessageBox(self.unoObjs)
 
     def test1_item_types(self):
-        userVars = mock.Mock()
+        if HAS_MOCK:
+            userVars = mock.Mock()
+        else:
+            userVars = None
         dummy_item = fileitemlist.BulkFileItem(userVars)
         dummy_item = fileitemlist.WordListFileItem(userVars)
         dummy_item = fileitemlist.LingExFileItem(userVars)

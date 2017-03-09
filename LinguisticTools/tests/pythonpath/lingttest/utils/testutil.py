@@ -21,7 +21,6 @@
 
 """
 Utilities for the test suite.
-
 Also consider using unittest.mock.
 """
 
