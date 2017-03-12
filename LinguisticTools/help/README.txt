@@ -75,8 +75,8 @@ where there is a poor internet connection.
 
 To see which version is installed, go to Tools -> Extension manager.
 
-3.0   TBD Mar-17 Arrange grammar lines like FieldWorks, not Toolbox.
-                 Experimental version of Bulk Conversion.
+3.0   11-Mar-17  Arrange grammar lines like FieldWorks, not Toolbox.
+                 Experimental release of Bulk Conversion.
                  Normalize word lists and spelling.
 2.9.1 15-Dec-15  Option to read Flextext ref numbers.
 2.9   30-Nov-15  Refactor to prepare for 3.0 release.

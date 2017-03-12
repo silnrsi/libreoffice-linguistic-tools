@@ -58,15 +58,14 @@ from com.sun.star.beans import PropertyValue
 from com.sun.star.lang import IllegalArgumentException
 from com.sun.star.uno import RuntimeException
 
-LOGGING_ENABLED = True
-#LOGGING_ENABLED = False    # Set to False for production.
-
 # These paths are used for logging and testing.
 # Change them depending on your system.
-# Also change ComponentsWrapper.py and tests/ComponentsWrapper.py
+# Also change Components.py and tests/ComponentsWrapper.py
 
+LOGGING_ENABLED = False
+#LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    ROOTDIR = "C:" + os.path.sep + "OurDocs"
+    ROOTDIR = r"C:\OurDocs"
     #BASE_FOLDER = r"D:\dev\OOLT"
 else:
     ROOTDIR = "/mnt/sf_OurDocs"

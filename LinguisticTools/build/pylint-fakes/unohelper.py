@@ -9,7 +9,8 @@ docs.libreoffice.org/pyuno/html/unohelper_8py.html
 """
 
 class ImplementationHelper:
-    pass
+    def addImplementation(self, ctor, implementationName, serviceNames):
+        pass
 
 class ImplementationEntry:
     pass

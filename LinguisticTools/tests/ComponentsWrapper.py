@@ -38,13 +38,11 @@ from lingt.ui.comp import wordlist
 from lingt.utils import util
 
 # These paths are used for logging and testing.
-# Since this module is intended only for debugging and testing,
-# logging should normally be enabled here.
 # Change them depending on your system.
-# Also change lingt/utils/util.py and ComponentsWrapper.py
+# Also change lingt/utils/util.py and Components.py
 
-#TOPLEVEL_LOGGING_ENABLED = False  # Set to False for production.
-TOPLEVEL_LOGGING_ENABLED = True
+LOGGING_ENABLED = False
+#LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
     ROOTDIR = r"C:\OurDocs"
     #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
@@ -69,14 +67,14 @@ class SimpleLogManager:
         self.logger = None
 
     def spacer(self):
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return
         self._setup()
         self.logger.error('-' * 30)
 
     def log_exceptions(self, func):
         """Decorator method to log uncaught exceptions."""
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return func
 
         def wrapper(*args, **kwargs):
@@ -94,7 +92,7 @@ class SimpleLogManager:
 
     def _setup(self):
         """Set up a minimalist file logger."""
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return
         if self.logger:
             return
@@ -181,7 +179,7 @@ def aaa_del_sys_modules(dummy_int=0):
     """
     logManager.spacer()
     modules_count = 0
-    for mod in list(sys.modules.keys()):
+    for mod in list(sys.modules):
         if mod.startswith('lingt.') or mod.startswith('lingttest.'):
             del sys.modules[mod]
             modules_count += 1

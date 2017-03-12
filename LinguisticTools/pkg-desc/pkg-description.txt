@@ -1,2 +1,2 @@
-SIL South Asia
+SIL South Asia.
 Provides tools for linguistic writeups and other documents written in lesser-known languages.
