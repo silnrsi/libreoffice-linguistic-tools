@@ -30,25 +30,28 @@ There are no functions in this file to be run from Tools -> Macros -> Run.
 Instead, run one of the component showDlg() functions, for example in
 pythonpath/lingt/ui/components/abbrevs.py.
 """
+import logging
+import os
+import platform
+
 # uno is required for unohelper
 # pylint: disable=unused-import
 import uno
 # pylint: enable=unused-import
 import unohelper
-import logging
-import os
-import platform
 from com.sun.star.task import XJobExecutor
 
 # This is defined in idl/XCalcFunctions.idl
+# pylint: disable=import-error
 from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
+# pylint: enable=import-error
 
 # These paths are used for logging and testing.
 # Change them depending on your system.
 # Also change lingt/utils/util.py and tests/ComponentsWrapper.py
 
-#TOPLEVEL_LOGGING_ENABLED = False  # Set to False for production.
-TOPLEVEL_LOGGING_ENABLED = True
+LOGGING_ENABLED = False
+#LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
     ROOTDIR = r"C:\OurDocs"
     #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
@@ -73,14 +76,14 @@ class SimpleLogManager:
         self.logger = None
 
     def spacer(self):
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return
         self._setup()
         self.logger.error('-' * 30)
 
     def log_exceptions(self, func):
         """Decorator method to log uncaught exceptions."""
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return func
         def wrapper(*args, **kwargs):
             try:
@@ -97,7 +100,7 @@ class SimpleLogManager:
 
     def _setup(self):
         """Set up a minimalist file logger."""
-        if not TOPLEVEL_LOGGING_ENABLED:
+        if not LOGGING_ENABLED:
             return
         if self.logger:
             return
@@ -123,9 +126,9 @@ class JobWrapper(unohelper.Base, XJobExecutor):
         self.ctx = ctx
 
     @logManager.log_exceptions
-    def trigger(self, dummy_args):
-        """XJobExecutor expects a worker method called trigger(), which will
-        be called to execute the component.
+    def trigger(self, dummy_sEvent):
+        """XJobExecutor requires this worker method, which will be called to
+        execute the component.
         """
         logManager.spacer()
         self.showDialog()

@@ -45,7 +45,7 @@ The benefits of the third approach are:
 # Releasing
 #------------------------------------------------------------------------------
 When releasing a new .oxt file:
-1. Make sure debugging is turned off in Utils.py and Components.py
+1. Make sure debugging is turned off (see below).
 2. It may help to run clean.ps1
 3. Increment the version in description.xml
 4. Update README.txt with the version history and date.
@@ -77,6 +77,12 @@ dialog_strings_read.pl in the generating_code directory.
 
 
 #------------------------------------------------------------------------------
-# Testing
+# Testing and Debugging
 #------------------------------------------------------------------------------
 See tests/README_testing.py.
+
+To enable debugging, set LOGGING_ENABLED and specify a path that exists on
+your system.  These settings are located in the following files:
+1. lingt/utils/util.py
+2. Components.py
+3. tests/ComponentsWrapper.py

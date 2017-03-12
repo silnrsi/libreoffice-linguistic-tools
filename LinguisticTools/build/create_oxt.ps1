@@ -4,16 +4,16 @@
 # Created by Jim Kornelsen on 24-Sep-2015.
 #
 # 04-Nov-15 JDK  Do not pause if run from command line.
+# 11-Mar-17 JDK  Do not deploy by default.
 #
-# Build .oxt file and deploy it to Office.
-# Specify -nodeploy in order to create the .oxt without deploying.
+# Build .oxt file.  Specify -deploy to deploy it to Office.
 #
 #------------------------------------------------------------------------------
-$Deploy = $True
-if($args[0] -eq "-nodeploy")
+$Deploy = $False
+if($args[0] -eq "-deploy")
 {
-    Write-Host "Not Deploying"
-    $Deploy = $False
+    Write-Host "Deploying"
+    $Deploy = $True
 }
 
 # Go to LinguisticTools folder.

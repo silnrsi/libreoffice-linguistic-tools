@@ -2,6 +2,7 @@
 #
 # This file created February 22 2016 by Jim Kornelsen
 #
+# 11-Mar-17 JDK  Added XJobExecutor.
 
 """
 A fake UNO file needed to make PyLint happy.
@@ -12,3 +13,6 @@ class ErrorCodeIOException(Exception):
     """long ErrCode"""
     pass
 
+class XJobExecutor:
+    def trigger(self, sEvent):
+        pass
