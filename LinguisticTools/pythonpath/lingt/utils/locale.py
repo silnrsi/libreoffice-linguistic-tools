@@ -273,7 +273,7 @@ class Locale:
             'es' :
             "Conversión masiva",
             'fr' :
-            "",
+            "Conversion en bloc",
         },
         "Get Phonology Examples" : {
             'es' :
@@ -339,7 +339,7 @@ class Locale:
             'es' :
             "Se ha buscado por %s pero no ha encontrado nada.",
             'fr' :
-            "",
+            "Recherche selon %s n'a trouvé aucun résultat.",
         },
         "Spelling" : {
             'es' :
@@ -351,7 +351,7 @@ class Locale:
             'es' :
             "Probando",
             'fr' :
-            "",
+            "Test",
         },
         "Update Example" : {
             'es' :
@@ -447,7 +447,7 @@ class Locale:
             'es' :
             "Leyendo los archivos...",
             'fr' :
-            "",
+            "Lecture des fichiers...",
         },
         "Saving file..." : {
             'es' :
@@ -528,13 +528,13 @@ class Locale:
             'es' :
             "No se pudo crear el estilo '%s'.",
             'fr' :
-            "",
+            "Impossible de créer le style '%s'.",
         },
         "Could not create temporary folder %s" : {
             'es' :
             "No se pudo crear la carpeta temporal %s.",
             'fr' :
-            "",
+            "Impossible de créer le dossier temporaire %s.",
         },
         "Could not find any words in '%s'.  Try changing %s%d to use a "
         "different marker, or change %s to 'WordLine%d'." : {
@@ -542,7 +542,8 @@ class Locale:
             "No se encontraron palabras en '%s'. Intente cambiar %s%d para "
             "usar un marcador diferente, o cambie %s a 'WordLine%d'.",
             'fr' :
-            "",
+            "Impossible de trouver des mots dans '%s'. Essayer une autre "
+            "balise pour %s%d, ou modifier %s en 'WordLine%d'.",
         },
         "Could not find ref number %s" : {
             'es' :
@@ -563,19 +564,20 @@ class Locale:
             "adición automática de un convertidor requiere "
             "SEC4.0 o superior.",
             'fr' :
-            "",
+            "Impossible d'obtenir la fonction AddConverter. L'ajout "
+            "automatique d'un convertisseur nécessite SEC4.0 ou supérieur.",
         },
         "Could not get column %d, row %d of table %s." : {
             'es' :
             "No se pudo obtener la columna %d, fila %d de la tabla%s.",
             'fr' :
-            "",
+            "Impossible d’obtenir colonne %d, ligne %d de table %s.",
         },
         "Could not get selection string." : {
             'es' :
             "No se pudo obtener la cadena de selección.",
             'fr' :
-            "",
+            "Impossible d’obtenir la chaîne de sélection",
         },
         "Did not find any data in file %s" : {
             'es' :
@@ -638,13 +640,13 @@ class Locale:
             'es' :
             "Error al guardar %s",
             'fr' :
-            "",
+            "Erreur d’enregistrement de %s",
         },
         "Error showing dialog: No %s control." : {
             'es' :
             "Error al mostrar el diálogo: No %s control.",
             'fr' :
-            "",
+            "Erreur d’affichage du dialogue: Aucun contrôle %s",
         },
         "Error with file: %s" : {
             'es' :
@@ -692,13 +694,13 @@ class Locale:
             'es' :
             "Parámetro de margen de marco esperado.",
             'fr' :
-            "",
+            "Paramètre de marge de cadre attendu.",
         },
         "Expected styleFonts to be set." : {
             'es' :
             "Se espera que se establezcan styleFonts.",
             'fr' :
-            "",
+            "Paramètre de styleFonts attendu.",
         },
         "Failed to encode string properly." : {
             'es' :
@@ -710,7 +712,7 @@ class Locale:
             'es' :
             "No pudo ir al rango de texto.",
             'fr' :
-            "",
+            "Impossible d’atteindre la plage de texte.",
         },
         "File does not seem to be from Toolbox or FieldWorks: %s" : {
             'es' :
@@ -729,7 +731,7 @@ class Locale:
             'es' :
             "Primero presione Copiar.",
             'fr' :
-            "",
+            "Appuyer d'abord sur Copier.",
         },
         "Found %d similar words." : {
             'es' :
@@ -783,7 +785,7 @@ class Locale:
             'es' :
             "Hecho %d cambio%s a %d archivo %s.",
             'fr' :
-            "",
+            "%d changement%s faits dans %d fichier%s.",
         },
         "Made %d change%s." : {
             'es' :
@@ -825,7 +827,7 @@ class Locale:
             'es' :
             "No hay resultado de conversión.",
             'fr' :
-            "",
+            "Aucun résultat de conversion.",
         },
         "No changes, but modified style of %d paragraph%s." : {
             'es' :
@@ -882,13 +884,14 @@ class Locale:
             "No se encontraron más números de referencia. \n Asegúrese de "
             "escribir # delante.",
             'fr' :
-            "",
+            "On ne trouve plus des numéros de référence. Il faut vérifier "
+            "le # devant des numéros.",
         },
         "No scope was specified." : {
             'es' :
             "No se especificó ningún ámbito.",
             'fr' :
-            "",
+            "Aucune étendue n’était spécifiée",
         },
         "No SF markers were specified.  Continue anyway?" : {
             'es' :
@@ -906,7 +909,7 @@ class Locale:
             'es' :
             "No se especificó ninguna tarea.",
             'fr' :
-            "",
+            "Aucune tâche n’était spécifiée",
         },
         "No writing systems found." : {
             'es' :
@@ -943,7 +946,7 @@ class Locale:
             'es' :
             "Por favor, agregue archivos para escanear.",
             'fr' :
-            "",
+            "Veuillez ajouter des fichiers à analyser.",
         },
         "Please do not select individual table cells." : {
             'es' :
@@ -1016,7 +1019,7 @@ class Locale:
             'es' :
             "Por favor, seleccione %s en la lista.",
             'fr' :
-            "",
+            "Veuillez choisir %s dans la liste.",
         },
         "Please select a converter." : {
             'es' :
@@ -1094,7 +1097,7 @@ class Locale:
             'es' :
             "Por favor, seleccione una carpeta de salida.",
             'fr' :
-            "",
+            "Veuillez choisir un dossier cible.",
         },
         "Please select or enter something to find." : {
             'es' :
@@ -1217,7 +1220,7 @@ class Locale:
             "Esta palabra ya estaba configurada para corregir. "
             "¿Cambiar de todos modos?",
             'fr' :
-            "",
+            "Ce mot est déjà réglé pour corriger. Modifier quand même?",
         },
         "To update examples, 'Outer table' must be marked in Grammar "
         "Settings." : {
@@ -1231,13 +1234,13 @@ class Locale:
             'es' :
             "Demasiados archivos con el nombre %s.",
             'fr' :
-            "",
+            "Trop de fichiers nommés comme %s.",
         },
         "Too many temporary folders in %s." : {
             'es' :
             "Demasiadas carpetas temporales en %s.",
             'fr' :
-            "",
+            "Trop de dossiers temporaires dans %s.",
         },
         "Unexpected file type %s" : {
             'es' :
@@ -1273,7 +1276,7 @@ class Locale:
             'es' :
             "Comando de acción desconocido '%s'",
             'fr' :
-            "",
+            "Commande d'action inconnue '%s'",
         },
         "Unknown file type for %s" : {
             'es' :
@@ -1285,7 +1288,7 @@ class Locale:
             'es' :
             "grabKey '%s' desconocido",
             'fr' :
-            "",
+            "grabKey '%s' inconnu",
         },
         "Update all examples now?  It is recommended to save a copy of your "
         "document first." : {
@@ -1330,13 +1333,13 @@ class Locale:
             'es' :
             "La palabra no se ajustó correctamente.",
             'fr' :
-            "",
+            "Le mot ne rentre pas correctement.",
         },
         "You did not made any changes to the word." : {
             'es' :
             "No hiciste ningún cambio en la palabra.",
             'fr' :
-            "",
+            "Vous n'avez apporté aucun changement au mot.",
         },
         "You did not specify anything to find.  Continue anyway?" : {
             'es' :

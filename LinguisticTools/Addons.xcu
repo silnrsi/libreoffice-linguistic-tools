@@ -138,7 +138,7 @@
               <value/>
               <value xml:lang="en">Bulk Conversion</value>
               <value xml:lang="es">Conversión masiva</value>
-              <value xml:lang="fr"></value>
+              <value xml:lang="fr">Conversion en bloc</value>
             </prop>
             <prop oor:name="Target" oor:type="xs:string">
               <value>_self</value>
