@@ -140,7 +140,7 @@ class DlgGrabExamples:
 
     def insertEx(self):
         logger.debug(util.funcName('begin'))
-        refText = self.dlgCtrls.txtRefnum.getText()
+        refText = self.dlgCtrls.comboRefnum.getText()
         self.userVars.store("EXREFNUM", refText)
         self.app.insertByRefnum(refText)
 
@@ -184,8 +184,9 @@ class DlgControls:
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.txtRefnum = ctrl_getter.get(_dlgdef.TXT_REFNUM)
-        self.chkStartFromBeginning = ctrl_getter.get(_dlgdef.CHK_START_FROM_BEGINNING)
+        self.comboRefnum = ctrl_getter.get(_dlgdef.COMBO_REF_NUM)
+        self.chkStartFromBeginning = ctrl_getter.get(
+            _dlgdef.CHK_START_FROM_BEGINNING)
         self.optSearchRefNum = ctrl_getter.get(_dlgdef.OPT_SEARCH_REF_NUM)
         self.optSearchExisting = ctrl_getter.get(_dlgdef.OPT_SEARCH_EXISTING)
         self.btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
@@ -206,8 +207,8 @@ class DlgControls:
             ctrl.addActionListener(self.evtHandler)
 
     def loadValues(self, userVars):
-        self.txtRefnum.setText(userVars.get("EXREFNUM"))
-        self.txtRefnum.setFocus()
+        self.comboRefnum.setText(userVars.get("EXREFNUM"))
+        self.comboRefnum.setFocus()
         varname = "SearchFor"
         if not userVars.isEmpty(varname):
             if userVars.get(varname) == "RefNum":
