@@ -1,14 +1,14 @@
 # LibreOffice Linguistic Tools
 
-This add-on inserts data from [SIL FieldWorks](http://software.sil.org/fieldworks/) into LibreOffice.  Other features include Data Conversion using [SIL Converters](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=EncCnvtrs).
-
-The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Source code can be downloaded from github.
-
-For detailed installation instructions and version history, see [README.txt](/LinguisticTools/help/README.txt)
+This add-on inserts lexical and interlinear data from [SIL FieldWorks](http://software.sil.org/fieldworks/) into LibreOffice.  Other features include Data Conversion using [SIL Converters](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=EncCnvtrs).
 
 ![OOLT menu](/external%20docs/writer_menu.jpg)
 
-The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic_Tools_Help.pdf) (503 KB)
+The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Source code can be downloaded from github.
+
+For installation instructions and version history, see [README.txt](/LinguisticTools/help/README.txt)
+
+The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic_Tools_Help.pdf)
 
 # Technical Notes
 
