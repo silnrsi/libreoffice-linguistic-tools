@@ -1,18 +1,14 @@
-# OpenOffice Linguistic Tools
+# LibreOffice Linguistic Tools
 
-This add-on reads files exported from [SIL FieldWorks](http://software.sil.org/fieldworks/) and [Toolbox](http://www-01.sil.org/computing/toolbox/). Other features include Data Conversion using [SIL Converters](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=EncCnvtrs).
+This add-on inserts data from [SIL FieldWorks](http://software.sil.org/fieldworks/) into LibreOffice.  Other features include Data Conversion using [SIL Converters](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=EncCnvtrs).
 
-The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Complete source code can be downloaded from github, and recent releases are here as well.
+The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Source code can be downloaded from github.
 
-To install, download the "LinguisticTools" oxt file and double-click to open it.  The Extension Manager should open and install the add-on.  For more detailed installation instructions and version history, see [README.txt](/releases/download/v2.9.1/README.txt)
+For detailed installation instructions and version history, see [README.txt](/LinguisticTools/help/README.txt)
 
-![OOLT menu](/external%20docs/OOoLT_writer_menu.jpg)
+![OOLT menu](/external%20docs/writer_menu.jpg)
 
-*Download latest version*: [LinguisticTools-2.9.1.oxt](https://github.com/jkornelsen/OOLingTools/releases/download/v2.9.1/LinguisticTools-2.9.1.oxt) (642 KB) released December 2015
-
-Help is available from the menu, or you can download it separately here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic_Tools_Help.pdf) (503 KB)
-
-If you need to remove the Linguistics menu and are having problems, use [RemoveLingMenu.oxt](https://github.com/jkornelsen/OOLingTools/releases/download/v2.9.1/RemoveLingMenu.oxt) (only 2 KB)
+The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic_Tools_Help.pdf) (503 KB)
 
 # Technical Notes
 
