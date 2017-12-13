@@ -6,6 +6,7 @@
 # 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
 # 07-Jul-15 JDK  Specific arguments instead of generic config object.
 # 17-Nov-15 JDK  Option to force LIFT ref number location.
+# 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
 
 """
 Read XML files that typically contain phonology corpus data.
@@ -13,6 +14,7 @@ Read XML files that typically contain phonology corpus data.
 It is possible to use it for other uses besides phonology, but phonology is
 expected to be the basic structure of the data.
 """
+import collections
 import logging
 import os
 import re
@@ -53,7 +55,7 @@ class PhonReader(FileReader):
         """Dictionary of examples keyed by lowercase reference number.
         Values are of type lingex_structs.LingPhonExample.
         """
-        self.data = {}
+        self.data = collections.OrderedDict()
         self.fieldHelper = PhonFieldHelper(self.data, self.generateRefIDs)
 
     def _read(self):

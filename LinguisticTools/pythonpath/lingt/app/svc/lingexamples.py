@@ -59,6 +59,16 @@ class ExServices:
         self.replacingRefs = True  # find and replace ref numbers
         logger.debug("ExGrabber init() finished")
 
+    def getAllRefnums(self):
+        """Returns an iterable of all ref numbers in the data.
+        Items are in the order that they were read from the file.
+        """
+        try:
+            self.operations.readData()
+            return self.operations.examplesDict.keys()
+        except exceptions.MessageError as exc:
+            self.msgbox.displayExc(exc)
+
     def insertByRefnum(self, refTextRough):
         try:
             self.operations.readData()

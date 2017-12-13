@@ -14,7 +14,7 @@ I use three different methods for building and running the OOLT extension.  The
 first is to manually select the folders, zip it up, rename as .oxt and then
 double-click to deploy in LibreOffice.  This is simple but somewhat tedious.
 
-The second method is similar but more automated.  Run deploy_as_extension.ps1,
+The second method is similar but more automated.  Run create_oxt.ps1,
 which zips up the folders and deploys them.
 This is a good general purpose method.
 

@@ -45,7 +45,7 @@ class FileReader:
         self.unoObjs = unoObjs
         self.msgbox = MessageBox(unoObjs)
         self.progressBar = ProgressBar(unoObjs, "Loading data...")
-        self.data = None
+        self.data = None  # typically a list or dict
         self.dom = None
         self.filepath = ""
 

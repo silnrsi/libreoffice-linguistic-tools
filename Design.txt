@@ -16,24 +16,6 @@ Get odt_converter_test.py to pass.
 Include "Default Style" in list box when searching for para styles.
 
 
-## Next OOLT version
-
-Version 3.0:
-    Bulk Data Conversion
-        Really a big change because it uses somewhat of a different
-        design, with more processing done outside of Office.
-        Release an experimental version, noted in the dialog.
-        Release 3.0 but don't announce this major requested feature until
-        it is better tested.
-    Grammar Settings improved for Flex - line 1, line 2.
-    Make file size much larger by adding screen captures to documentation.
-        Actually, make two downloads: one with lots of images, and one with
-        almost none.  (That's what LibreOffice 5.0 does).
-        With just a link to the help document online,
-        and without LinguisticTools/tests.
-    Spanish and French translations with help from David and Phil.
-
-
 ## Simplifying
 
 It's time to simplify the bulk converter.

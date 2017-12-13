@@ -12,10 +12,12 @@
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 22-Feb-17 JDK  SFM Option for either word line 1 or 2 as the baseline.
 # 04-Mar-17 JDK  Added class ToolboxBaseline.
+# 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
 
 """
 Read interlinear examples, typically used for grammar writeups.
 """
+import collections
 import logging
 import os
 import re
@@ -57,7 +59,7 @@ class InterlinReader(FileReader):
     def _initData(self):
         # Dictionary of examples keyed by lowercase ref number.
         # Examples are of type lingex_structs.LingGramExample.
-        self.data = {}
+        self.data = collections.OrderedDict()
 
     def _verifyDataFound(self):
         """Override base class method."""
