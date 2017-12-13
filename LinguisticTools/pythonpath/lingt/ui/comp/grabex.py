@@ -185,6 +185,7 @@ class DlgControls:
         self.evtHandler = evtHandler
 
         self.comboRefnum = ctrl_getter.get(_dlgdef.COMBO_REF_NUM)
+        self.listboxRefnum = ctrl_getter.get(_dlgdef.LISTBOX_REF_NUM)
         self.chkStartFromBeginning = ctrl_getter.get(
             _dlgdef.CHK_START_FROM_BEGINNING)
         self.optSearchRefNum = ctrl_getter.get(_dlgdef.OPT_SEARCH_REF_NUM)
@@ -207,7 +208,12 @@ class DlgControls:
             ctrl.addActionListener(self.evtHandler)
 
     def loadValues(self, userVars):
-        self.comboRefnum.setText(userVars.get("EXREFNUM"))
+        selItem = userVars.get("EXREFNUM")
+        all_refnums = self.evtHandler.app.getAllRefnums()
+        dutil.fill_list_ctrl(
+            self.comboRefnum, all_refnums, selItem)
+        dutil.fill_list_ctrl(
+            self.listboxRefnum, all_refnums, selItem)
         self.comboRefnum.setFocus()
         varname = "SearchFor"
         if not userVars.isEmpty(varname):

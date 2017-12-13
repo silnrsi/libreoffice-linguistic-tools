@@ -278,6 +278,60 @@ def displayAttrs():
     # Globalscope.BasicLibraries.LoadLibrary( "MRILib" )
     # Mri ThisComponent
 
+
+def fs2_GoToTimestamp(*args):
+    #get doc from scripting context which is made available to all scripts
+    #desktop = XSCRIPTCONTEXT.getDesktop()
+    desktop = unoObjs.desktop
+    model = desktop.getCurrentComponent()
+    oSelected = model.getCurrentSelection()
+    #access annotations for the whole document
+    oEnum = model.getTextFields().createEnumeration()
+    cursor = desktop.getCurrentComponent().getCurrentController().getViewCursor()
+    util.xray(cursor, unoObjs)
+    while oEnum.hasMoreElements():
+        oField = oEnum.nextElement()
+        if oField.supportsService('com.sun.star.text.TextField.Annotation'):
+            xTextRange = oField.getAnchor()
+            cursor.gotoRange(xTextRange, False)
+    oText = ""
+    try:  #Grab the text selected/highlighted
+        oSel = oSelected.getByIndex(0)
+        oText= oSel.getString()
+    except:pass
+    try:
+        if oText == "":  # Nothing selected grab the whole line
+            cursor = desktop.getCurrentComponent().getCurrentController().getViewCursor()
+            cursor.gotoStartOfLine(False)  #move cursor to start without selecting (False)
+            cursor.gotoEndOfLine(True)  #now move cursor to end of line selecting all (True)
+            oSelected = model.getCurrentSelection()
+            oSel = oSelected.getByIndex(0)
+            oText= oSel.getString()
+            # Deselect line to avoid inadvertently deleting it on next keystroke
+            cursor.gotoStartOfLine(False)
+    except:pass
+    time = str(oText)
+    valid_chars=('0123456789:')
+    time = ''.join(char for char in time if char in valid_chars)
+    if time.count(":") == 1:
+        oM, oS = time.split(":")
+        oH = "00"
+    elif time.count(":") == 2:
+        oH,oM,oS = time.split(":")
+    else:
+        return None
+    if len(oS) != 2:
+        oS=oS[:2]
+    try:
+        secs = int(oS)
+        secs = secs + int(oM) * 60
+        secs = secs + int(oH) *3600
+    except:
+        return None
+    seek_instruction = 'seek'+str(secs)+'\n'
+    #Now do something with the seek instruction 
+
+
 #------------------------------------------------------------------------------
 # Main routine
 #------------------------------------------------------------------------------
@@ -292,7 +346,8 @@ unoObjs = util.UnoObjs(ctx)
 #testSelString()
 #testReadInsertUnicode()
 #impress()
-underlying_style_names()
+fs2_GoToTimestamp()
+#underlying_style_names()
 #displayAttrs()
 #doReplace()
 print("Finished!")

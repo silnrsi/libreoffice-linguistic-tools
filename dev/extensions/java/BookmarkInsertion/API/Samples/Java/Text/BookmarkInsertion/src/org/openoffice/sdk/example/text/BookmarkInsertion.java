@@ -67,8 +67,10 @@ import com.sun.star.lang.XMultiServiceFactory;
 import com.sun.star.lang.XSingleServiceFactory;
 import com.sun.star.sdb.XDocumentDataSource;
 import com.sun.star.text.XText;
+import com.sun.star.text.XTextCursor;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
+import com.sun.star.text.XTextRange;
 import com.sun.star.uno.XNamingService;
 import com.sun.star.view.XPrintJobBroadcaster;
 import com.sun.star.view.XPrintJobListener;
@@ -87,15 +89,16 @@ public class BookmarkInsertion {
         // You need the desktop to create a document
         // The getDesktop method does the UNO bootstrapping, gets the
         // remote servie manager and the desktop object.
-        com.sun.star.frame.XDesktop xDesktop = null;
-	createNewDataSource2();
-	System.exit(0);
+        //com.sun.star.frame.XDesktop xDesktop = null;
+        com.sun.star.frame.XDesktop xDesktop = getDesktop();
+	//createNewDataSource2();
+	//System.exit(0);
        
         // create text document
         XTextDocument xTextDocument = null;
 		XText xText = null;
         com.sun.star.lang.XComponent xComponent = null;
-        //xTextDocument = createTextdocument(xDesktop);
+        xTextDocument = createTextdocument(xDesktop);
         
           try {
         // open current document
@@ -104,17 +107,18 @@ public class BookmarkInsertion {
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xTextDocument);
-		//xText = xTextDocument.getText();
-		//XTextRange xTextRange = xText.getStart();
-		//XTextCursor xTextCursor = xText.createTextCursorByRange(xTextRange);
+		xText = xTextDocument.getText();
+		XTextRange xTextRange = xText.getStart();
+		XTextCursor xTextCursor = xText.createTextCursorByRange(xTextRange);
 		//XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
 		//XTextCursor xTextCursor = xText.createTextCursorByRange(xText.getStart());
 		//XTextCursor xTextCursor = xTextDocument.getText().createTextCursorByRange(xText.getStart());
 		//xTextCursor.collapseToStart();
-		//int num_chars = 0;
-        //while (xTextCursor.goRight((short)1, false)) { num_chars++; }
-		//System.out.println("Found " + num_chars + " characters.");
+		int num_chars = 0;
+        while (xTextCursor.goRight((short)1, false)) { num_chars++; }
+		System.out.println("Found " + num_chars + " characters.");
 
+        /*
 		XDrawPagesSupplier xDrawPagesSupplier = 
 			(XDrawPagesSupplier)UnoRuntime.queryInterface(
 				XDrawPagesSupplier.class, xComponent);
@@ -137,6 +141,7 @@ public class BookmarkInsertion {
 		xShapeText.setString("DEF");
 
 		System.exit(0);
+        */
 
                 /*
                     com.sun.star.frame.XComponentLoader xCompLoader =
@@ -162,6 +167,7 @@ public class BookmarkInsertion {
         }
 
 
+          /*
 	  	PropertyValue[] printProperties = new PropertyValue[1];
 		printProperties[0] = new PropertyValue();
 		printProperties[0].Name = "Print";
@@ -178,6 +184,7 @@ public class BookmarkInsertion {
 		(com.sun.star.view.XPrintable)UnoRuntime.queryInterface(
 			com.sun.star.view.XPrintable.class, xComponent);
 	xPrintable.print(printProperties);
+          */
 
 		//dispatcher.executeDispatch(
 		//	xDispatchProvider, ".uno:Print","_self", 0, printProperties);
@@ -219,12 +226,12 @@ public class BookmarkInsertion {
             e.printStackTrace(System.err);
             System.exit(1);
         }
+        */
 
-        try
-        {
-        XText xText = (XText)xTextDocument.getText();
+        xText = (XText)xTextDocument.getText();
         XTextRange xTextRange = xText.getEnd();
         xTextRange.setString( "(JavaBegin1)" );
+        /*
         XFormsSupplier xFormsSupplier = UnoRuntime.queryInterface(XFormsSupplier.class, xComponent);
         //XNameContainer xforms = xFormsSupplier.getXForms();
         XNameContainer xforms = xFormsSupplier.getXForms();
@@ -590,6 +597,7 @@ public class BookmarkInsertion {
     {
         try
         {
+            com.sun.star.uno.XComponentContext xContext = null;
             xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
             XMultiServiceFactory _rMSF = (XMultiServiceFactory)UnoRuntime.queryInterface(
                 XMultiServiceFactory.class,  xContext.getServiceManager());

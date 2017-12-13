@@ -221,3 +221,5 @@ ModelManifest.xml
 /dev/extensions/java/TestAddOn2/
 /dev/extensions/java/HelloWorld/
 /dev/extensions/java/SayHello/
+*.exe
+*.o
