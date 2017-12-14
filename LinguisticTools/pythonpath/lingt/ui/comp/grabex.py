@@ -32,6 +32,7 @@
 # 01-Apr-11 JDK  Localize Update and Replace labels that change.
 # 22-Jul-11 JDK  Separate function requireInputFile() - for Script Practice.
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
+# 14-Dec-17 JDK  Add combo box to choose from list of ref numbers.
 
 """
 Dialog to import Phonology and Grammar examples.
@@ -130,6 +131,10 @@ class DlgGrabExamples:
         dlg.setTitle(self.titleText)
         self.dlgCtrls.loadValues(self.userVars)
         self.dlgCtrls.enableDisable(self.app, self.userVars)
+        if self.dlgCtrls.single_refnum():
+            self.dlgCtrls.comboRefnum.setFocus()
+        else:
+            self.dlgCtrls.listboxRefnum.setFocus()
 
         self.dlgClose = dlg.endExecute
         dlg.execute()
@@ -140,9 +145,13 @@ class DlgGrabExamples:
 
     def insertEx(self):
         logger.debug(util.funcName('begin'))
-        refText = self.dlgCtrls.comboRefnum.getText()
-        self.userVars.store("EXREFNUM", refText)
-        self.app.insertByRefnum(refText)
+        if self.dlgCtrls.single_refnum():
+            ref_texts = [self.dlgCtrls.comboRefnum.getText()]
+        else:
+            ref_texts = self.dlgCtrls.listboxRefnum.getSelectedItems()
+        for ref_text in ref_texts:
+            self.app.insertByRefnum(ref_text)
+        self.userVars.store("EXREFNUM", ref_texts[0])
 
     def findNext(self):
         logger.debug(util.funcName('begin'))
@@ -184,14 +193,15 @@ class DlgControls:
         self.unoObjs = unoObjs
         self.evtHandler = evtHandler
 
-        self.comboRefnum = ctrl_getter.get(_dlgdef.COMBO_REF_NUM)
-        self.listboxRefnum = ctrl_getter.get(_dlgdef.LISTBOX_REF_NUM)
         self.chkStartFromBeginning = ctrl_getter.get(
             _dlgdef.CHK_START_FROM_BEGINNING)
         self.optSearchRefNum = ctrl_getter.get(_dlgdef.OPT_SEARCH_REF_NUM)
         self.optSearchExisting = ctrl_getter.get(_dlgdef.OPT_SEARCH_EXISTING)
         self.btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
         self.btnReplaceAll = ctrl_getter.get(_dlgdef.BTN_REPLACE_ALL)
+        self.chkSelectMultiple = ctrl_getter.get(_dlgdef.CHK_SELECT_MULTIPLE)
+        self.comboRefnum = ctrl_getter.get(_dlgdef.COMBO_REF_NUM)
+        self.listboxRefnum = ctrl_getter.get(_dlgdef.LISTBOX_REF_NUM)
         btnFindNext = ctrl_getter.get(_dlgdef.BTN_FIND_NEXT)
         btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
         btnReplaceAll = ctrl_getter.get(_dlgdef.BTN_REPLACE_ALL)
@@ -214,7 +224,6 @@ class DlgControls:
             self.comboRefnum, all_refnums, selItem)
         dutil.fill_list_ctrl(
             self.listboxRefnum, all_refnums, selItem)
-        self.comboRefnum.setFocus()
         varname = "SearchFor"
         if not userVars.isEmpty(varname):
             if userVars.get(varname) == "RefNum":
@@ -230,6 +239,11 @@ class DlgControls:
         """
         self.optSearchRefNum.addItemListener(self.evtHandler)
         self.optSearchExisting.addItemListener(self.evtHandler)
+        self.chkSelectMultiple.addItemListener(self.evtHandler)
+
+    def single_refnum(self):
+        # One ref num specified at a time in a combo box.
+        return not bool(self.chkSelectMultiple.getState())
 
     def enableDisable(self, app, userVars):
         """Enable or disable controls as appropriate."""
@@ -250,6 +264,12 @@ class DlgControls:
             app.setUpdateExamples(True)
             userVars.store("SearchFor", "Existing")
             self.chkStartFromBeginning.setState(False)
+        if self.single_refnum():
+            self.comboRefnum.Visible = True
+            self.listboxRefnum.Visible = False
+        else:
+            self.comboRefnum.Visible = False
+            self.listboxRefnum.Visible = True
 
 
 class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
