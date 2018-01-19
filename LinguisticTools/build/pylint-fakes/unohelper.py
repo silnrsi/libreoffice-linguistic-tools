@@ -36,7 +36,7 @@ def systemPathToFileUrl(dummy_path):
 def fileUrlToSystemPath(dummy_url):
     return ""
  
-def absolutize():
+def absolutize( dummy_path, dummy_relativeUrl):
     pass
  
 def getComponentFactoryHelper():
