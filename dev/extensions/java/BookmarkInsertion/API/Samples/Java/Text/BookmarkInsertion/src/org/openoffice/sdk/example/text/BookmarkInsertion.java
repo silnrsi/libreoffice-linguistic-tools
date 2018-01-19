@@ -49,18 +49,14 @@
 
 package org.openoffice.sdk.example.text;
 
-import com.sun.star.awt.Point;
-import com.sun.star.awt.Size;
-import com.sun.star.beans.PropertyValue;
+import com.sun.star.beans.NamedValue;
 import com.sun.star.beans.XPropertySet;
-import com.sun.star.container.XIndexAccess;
 import com.sun.star.container.XNameAccess;
-import com.sun.star.drawing.XDrawPage;
-import com.sun.star.drawing.XDrawPagesSupplier;
-import com.sun.star.drawing.XShape;
+import com.sun.star.document.XDocumentProperties;
+import com.sun.star.document.XDocumentPropertiesSupplier;
+import com.sun.star.frame.XController;
 import com.sun.star.frame.XDesktop;
 import com.sun.star.frame.XDispatchHelper;
-import com.sun.star.frame.XDispatchProvider;
 import com.sun.star.frame.XModel;
 import com.sun.star.frame.XStorable;
 import com.sun.star.lang.XMultiServiceFactory;
@@ -71,8 +67,8 @@ import com.sun.star.text.XTextCursor;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.text.XTextDocument;
 import com.sun.star.text.XTextRange;
+import com.sun.star.uno.AnyConverter;
 import com.sun.star.uno.XNamingService;
-import com.sun.star.view.XPrintJobBroadcaster;
 import com.sun.star.view.XPrintJobListener;
 //import javax.print.event.PrintJobEvent;
 import com.sun.star.view.PrintJobEvent;
@@ -81,10 +77,14 @@ import com.sun.star.view.PrintJobEvent;
 public class BookmarkInsertion {
 
 	static XDispatchHelper dispatcher = null;
+    static com.sun.star.uno.XComponentContext xContext = null;
 
     public static void main(String args[]) {
     //public static void was_main(String args[]) {
 	System.out.println("main() BEGIN");
+    //DisableCommandTest.run_tests();
+	//System.out.println("main() END");
+    //System.exit(0);
 	//printDataSources();
         // You need the desktop to create a document
         // The getDesktop method does the UNO bootstrapping, gets the
@@ -103,6 +103,30 @@ public class BookmarkInsertion {
           try {
         // open current document
         xComponent = xDesktop.getCurrentComponent();
+        XDocumentPropertiesSupplier xSupplier = (XDocumentPropertiesSupplier)
+                UnoRuntime.queryInterface(
+                XDocumentPropertiesSupplier.class, xTextDocument);
+                //XDocumentPropertiesSupplier.class, xComponent);
+        XDocumentProperties xProps = (XDocumentProperties)
+                xSupplier.getDocumentProperties();
+        //XDocumentProperties xProps = UnoRuntime.queryInterface(
+        //        XDocumentProperties.class, xSupplier.getDocumentProperties());
+        NamedValue [] aStats = xProps.getDocumentStatistics();
+        //NamedValue [] aStats = xSupplier.getDocumentProperties().getDocumentStatistics();
+        for (int i = 0; i < aStats.length; i++) {
+            System.out.println(aStats[i].Name);
+            if (aStats[i].Name.equals("PageCount")) {
+                System.out.println("Page Count " + aStats[i].Value);
+            }
+        }
+        XController xController = xTextDocument.getCurrentController();
+        XPropertySet xPropertySet = UnoRuntime.queryInterface(
+            XPropertySet.class, xController);
+        int nPageCount = AnyConverter.toInt(
+            xPropertySet.getPropertyValue("PageCount"));
+        System.out.println("There are " + nPageCount + " pages.")
+;
+
         //xTextDocument =(XTextDocument)UnoRuntime.queryInterface(XTextDocument.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
         //xText = (XText)UnoRuntime.queryInterface(XText.class, xComponent);
@@ -118,6 +142,18 @@ public class BookmarkInsertion {
         while (xTextCursor.goRight((short)1, false)) { num_chars++; }
 		System.out.println("Found " + num_chars + " characters.");
 
+          // Conditions: sURL = "private:factory/swriter" 
+  // lProperties = new com.sun.star.beans.PropertyValue[0] 
+  // xSMGR = m_xServiceManager 
+  // xListener = this
+ 
+  // xFrame = a given frame  
+  // Query the frame for right interface which provides access to all 
+  // available dispatch objects. 
+  com.sun.star.frame.XDispatchProvider xProvider = 
+    (com.sun.star.frame.XDispatchProvider)UnoRuntime.queryInterface ( 
+       com.sun.star.frame.XDispatchProvider .class, xDesktop.getCurrentFrame() );
+ 
         /*
 		XDrawPagesSupplier xDrawPagesSupplier = 
 			(XDrawPagesSupplier)UnoRuntime.queryInterface(
@@ -446,7 +482,7 @@ public class BookmarkInsertion {
         com.sun.star.lang.XMultiComponentFactory xMCF = null;
         
         try {
-            com.sun.star.uno.XComponentContext xContext = null;
+            xContext = null;
             
             // get the remote office component context
             xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
@@ -534,7 +570,7 @@ public class BookmarkInsertion {
         try
         {
             // get the remote office component context
-            com.sun.star.uno.XComponentContext xContext = null;
+            //com.sun.star.uno.XComponentContext xContext = null;
             xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
             XMultiServiceFactory _rMSF = (XMultiServiceFactory)UnoRuntime.queryInterface(
                 XMultiServiceFactory.class,  xContext.getServiceManager());

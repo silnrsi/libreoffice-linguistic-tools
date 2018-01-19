@@ -404,11 +404,6 @@ Should check to see if what was copied is 0-length, or maybe if it failed or
 something.
 
 
-## Inserting examples is very slow
-
-Seems to be just in LibreOffice.
-
-
 ## Grab Examples changing radio buttons crashed.
 
 Seems to only happen sometimes.
