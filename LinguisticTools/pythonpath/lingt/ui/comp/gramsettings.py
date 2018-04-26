@@ -68,9 +68,8 @@ class DlgGramSettings:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = 'LTg_'  # for LinguisticTools Grammar variables
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, unoObjs.document, logger)
+            uservars.Prefix.GRAMMAR, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.fileItems = fileitemlist.FileItemList(
             fileitemlist.LingExFileItem, self.userVars)

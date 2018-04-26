@@ -17,4 +17,5 @@
  <library:element library:name="DlgSpellReplace"/>
  <library:element library:name="DlgSpellStep"/>
  <library:element library:name="DlgChangerMaker"/>
+ <library:element library:name="DlgMkoxtSettings"/>
 </library:library>

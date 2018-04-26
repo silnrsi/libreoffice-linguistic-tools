@@ -63,7 +63,7 @@
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
               <value/>
-              <value xml:lang="en">Grammar Settings</value>
+              <value xml:lang="en">Interlinear Settings</value>
               <value xml:lang="es">Configuración de gramática</value>
               <value xml:lang="fr">Configuration de grammaire</value>
             </prop>
@@ -80,7 +80,7 @@
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
               <value/>
-              <value xml:lang="en">Get Grammar Examples</value>
+              <value xml:lang="en">Get Interlinear Examples</value>
               <value xml:lang="es">Obtener ejemplos de gramática</value>
               <value xml:lang="fr">Obtenir des exemples de grammaire</value>
             </prop>
@@ -149,10 +149,25 @@
           </node>
           <node oor:name="m10" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
-              <value>private:separator</value>
+              <value>service:name.JimK.LinguisticTools.MakeOxt?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Build Extension for Language</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
           <node oor:name="m11" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m12" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.WordList?execute</value>
             </prop>
@@ -169,7 +184,7 @@
               <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
-          <node oor:name="m12" oor:op="replace">
+          <node oor:name="m13" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.GoodSpellingsCheck?execute</value>
             </prop>
@@ -186,7 +201,7 @@
               <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
-          <node oor:name="m13" oor:op="replace">
+          <node oor:name="m14" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.ScriptPractice?execute</value>
             </prop>
@@ -203,7 +218,7 @@
               <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
-          <node oor:name="m14" oor:op="replace">
+          <node oor:name="m15" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.ApplyConverter?execute</value>
             </prop>
@@ -220,7 +235,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m15" oor:op="replace">
+          <node oor:name="m16" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.SpellingCharComp?execute</value>
             </prop>
@@ -237,7 +252,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m16" oor:op="replace">
+          <node oor:name="m17" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.SpellingStepper?execute</value>
             </prop>
@@ -254,7 +269,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m17" oor:op="replace">
+          <node oor:name="m18" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.MakeSpellingChanger?execute</value>
             </prop>
@@ -271,12 +286,12 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m18" oor:op="replace">
+          <node oor:name="m19" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>private:separator</value>
             </prop>
           </node>
-          <node oor:name="m19" oor:op="replace">
+          <node oor:name="m20" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>vnd.sun.star.script:LingToolsBasic.ModuleMain.OpenExtensionHelp?language=Basic&amp;location=application</value>
             </prop>
@@ -294,7 +309,7 @@
           </node>
           <!-- remove unused menu names -->
           <!--
-          <node oor:name="m19" oor:op="remove" />
+          <node oor:name="m21" oor:op="remove" />
           -->
         </node>
       </node>

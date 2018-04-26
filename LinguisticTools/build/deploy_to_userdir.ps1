@@ -38,7 +38,8 @@ $file.LastWriteTime = (Get-Date)
 
 Foreach ($dir in @("$DEPLOY_PYTHONPATH\lingt",
                    "$DEPLOY_PYTHONPATH\lingttest",
-                   "$DEPLOY_PYTHONPATH\grantjenks")) {
+                   "$DEPLOY_PYTHONPATH\grantjenks",
+                   "$DEPLOY_PYTHONPATH\oxttools")) {
     if(Test-Path -PathType Container -Path $dir) {
         echo "Removing $dir"
         Remove-Item -Recurse -Force $dir
