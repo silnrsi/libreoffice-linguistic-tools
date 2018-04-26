@@ -50,8 +50,8 @@ from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
 # Change them depending on your system.
 # Also change lingt/utils/util.py and tests/ComponentsWrapper.py
 
-LOGGING_ENABLED = False
-#LOGGING_ENABLED = True  # Uncomment to turn on.
+#LOGGING_ENABLED = False
+LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
     ROOTDIR = r"C:\OurDocs"
     #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
@@ -194,6 +194,14 @@ class BulkConversionJob(JobWrapper):
         from lingt.ui.comp.bulkconv import showDlg
         showDlg(self.ctx)
 
+class MakeOxtJob(JobWrapper):
+    def __init__(self, ctx):
+        JobWrapper.__init__(self, ctx)
+
+    def showDialog(self):
+        from lingt.ui.comp.mkoxt_settings import showDlg
+        showDlg(self.ctx)
+
 class ScriptPracticeJob(JobWrapper):
     def __init__(self, ctx):
         JobWrapper.__init__(self, ctx)
@@ -299,6 +307,10 @@ g_ImplementationHelper.addImplementation(
 g_ImplementationHelper.addImplementation(
     BulkConversionJob,
     "name.JimK.LinguisticTools.BulkConversion",
+    ("com.sun.star.task.Job",),)
+g_ImplementationHelper.addImplementation(
+    MakeOxtJob,
+    "name.JimK.LinguisticTools.MakeOxt",
     ("com.sun.star.task.Job",),)
 g_ImplementationHelper.addImplementation(
     ScriptPracticeJob,

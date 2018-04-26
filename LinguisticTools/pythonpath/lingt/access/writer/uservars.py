@@ -55,6 +55,7 @@ class Prefix:
     WORD_LIST = "LTw_"
     SPELLING = "LTsp_"
     SCRIPT_PRACTICE = "LTscr_"
+    MAKE_OXT = "LTmk_"
 
 
 class UserVars:

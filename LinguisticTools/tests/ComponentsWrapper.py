@@ -29,6 +29,7 @@ from lingt.ui.comp import changermaker
 from lingt.ui.comp import dataconv
 from lingt.ui.comp import grabex
 from lingt.ui.comp import gramsettings
+from lingt.ui.comp import mkoxt_settings
 from lingt.ui.comp import phonsettings
 from lingt.ui.comp import scriptpractice
 from lingt.ui.comp import spellingadjustments
@@ -140,6 +141,9 @@ def grammarGrabEx(dummy_int=0):
 def grammarSettings(dummy_int=0):
     doShowDlg(gramsettings.showDlg)
 
+def makeOxt(dummy_int=0):
+    doShowDlg(mkoxt_settings.showDlg)
+
 def makeSpellingChanger(dummy_int=0):
     doShowDlg(changermaker.showDlg)
 
@@ -206,6 +210,7 @@ g_exportedScripts = (
     goodSpellingsCheck,
     grammarGrabEx,
     grammarSettings,
+    makeOxt,
     makeSpellingChanger,
     phonSettings,
     phonologyGrabEx,
