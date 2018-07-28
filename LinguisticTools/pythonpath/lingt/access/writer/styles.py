@@ -21,6 +21,7 @@
 # 05-Oct-15 JDK  Default args for getFontOfStyle().
 # 24-Mar-16 JDK  StyleFonts does not need user vars to specify style name.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
+# 03-May-18 JDK  Align description of constant 2540 with LO code.
 
 """
 Create and manage styles.
@@ -47,7 +48,7 @@ from lingt.utils.fontsize import FontSize
 
 logger = logging.getLogger("lingt.access.Styles")
 
-INCH_TO_CM = 2540  # convert 1/1000 cm to inches
+INCHES_TO_MM100 = 2540  # convert inches to hundredths of millimeters
 
 # font colors
 COLOR_BLACK = int("000000", 16)
@@ -152,8 +153,8 @@ def setFrameAttrs(styleObj, margins):
     styleObj.WidthType = VARIABLE
     styleObj.LeftMargin = 0
     styleObj.TopMargin = 0
-    styleObj.RightMargin = rightMargin * INCH_TO_CM
-    styleObj.BottomMargin = bottomMargin * INCH_TO_CM
+    styleObj.RightMargin = rightMargin * INCHES_TO_MM100
+    styleObj.BottomMargin = bottomMargin * INCHES_TO_MM100
     styleObj.BorderDistance = 0
     BORDER_WIDTH = 0
     borderLine = styleObj.getPropertyValue("LeftBorder")
@@ -262,14 +263,14 @@ class PhonologyStyles(DocumentStyles):
             ## set tabs on paragraph style
             stops = []
             position = 0
-            for width in [INCH_TO_CM * 1/2,
-                          INCH_TO_CM * 1.5,
-                          INCH_TO_CM * 1.5,
-                          INCH_TO_CM * 1.5,
-                          INCH_TO_CM * 1.5]:
+            for width in [INCHES_TO_MM100 * 1/2,
+                          INCHES_TO_MM100 * 1.5,
+                          INCHES_TO_MM100 * 1.5,
+                          INCHES_TO_MM100 * 1.5,
+                          INCHES_TO_MM100 * 1.5]:
                 position += width
                 tabStop = TabStop()
-                tabStop.Position = position    # 1/1000cm: 2540 = 1 inch
+                tabStop.Position = position
                 tabStop.Alignment = LEFT
                 tabStop.DecimalChar = "."
                 tabStop.FillChar = " "
@@ -334,8 +335,8 @@ class GrammarStyles(DocumentStyles):
             styleKey, topMargin, bottomMargin = styleDef
             newStyle = self.parastyles.createInDoc(styleKey)
             if newStyle:
-                newStyle.ParaTopMargin = topMargin * INCH_TO_CM
-                newStyle.ParaBottomMargin = bottomMargin * INCH_TO_CM
+                newStyle.ParaTopMargin = topMargin * INCHES_TO_MM100
+                newStyle.ParaBottomMargin = bottomMargin * INCHES_TO_MM100
 
         ## Styles for frames
 

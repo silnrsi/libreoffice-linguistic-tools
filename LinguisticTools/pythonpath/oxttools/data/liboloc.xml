@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Locale SYSTEM 'locale.dtd'>
+<!--
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * This file incorporates work covered by the following license notice:
+ *
+ *   Licensed to the Apache Software Foundation (ASF) under one or more
+ *   contributor license agreements. See the NOTICE file distributed
+ *   with this work for additional information regarding copyright
+ *   ownership. The ASF licenses this file to you under the Apache
+ *   License, Version 2.0 (the "License"); you may not use this file
+ *   except in compliance with the License. You may obtain a copy of
+ *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
+ -->
+<Locale versionDTD="2.0.3" allowUpdateFromCLDR="yes" version="1.2" xmlns:tmpl="uri://nrsi.sil.org/template/0.1" xmlns:tmpla="uri://nrsi.sil.org/template_attributes/0.1">
+  <tmpl:namespace tmpl:name="sil">urn://www.sil.org/ldml/0.1</tmpl:namespace>
+  <tmpl:variable tmpl:name="resdir" tmpl:fallback="true">"."</tmpl:variable>
+  <tmpl:variable tmpl:name="territory">/ldml/identity/territory/@type</tmpl:variable>
+  <tmpl:variable tmpl:name="general">"General"</tmpl:variable>
+
+  <tmpl:variable tmpl:name="numbers">/ldml/numbers/defaultNumberingSystem/text()</tmpl:variable>
+  <tmpl:variable tmpl:name="supplemental">doc(concat($resdir, "/supplementalData.xml"))</tmpl:variable>
+  <tmpl:variable tmpl:name="calendar" tmpl:default="gregorian">firstword($supplemental/calendarPreferenceData/calendarPreference[contains(@territories, $territory)]/@ordering)</tmpl:variable>
+  <tmpl:variable tmpl:name="currency">$supplemental/currencyData/region[@iso3166=$territory]/currency[not(@to) and not(@tender)]/@iso4217</tmpl:variable>
+  <tmpl:variable tmpl:name="datesep">findsep(/ldml/dates/calendars/calendar[@type=$calendar]/dateFormats/dateFormatLength[@type='short']/dateFormat/pattern/text(), 0)</tmpl:variable>
+  <tmpl:variable tmpl:name="collator">/ldml/collations/defaultCollations</tmpl:variable>
+  <LC_INFO>
+    <Language>
+      <LangID><tmpl:value tmpl:path="/ldml/identity/language/@type">en</tmpl:value></LangID>
+      <DefaultName><tmpl:value tmpl:path="/ldml/localeDisplayNames/languages/language[@type=/ldml/identity/language/@type]">English</tmpl:value></DefaultName>
+    </Language>
+    <Country>
+      <CountryID><tmpl:value tmpl:path="$territory">US</tmpl:value></CountryID>
+      <DefaultName><tmpl:value tmpl:path="/ldml/localeDisplayNames/territories/territory[@type=$territory and not(@alt)]">United States</tmpl:value></DefaultName>
+    </Country>
+  </LC_INFO>
+  <LC_CTYPE>
+    <Separators>
+      <DateSeparator><tmpl:value tmpl:path="$datesep">/</tmpl:value></DateSeparator>
+      <ThousandSeparator><tmpl:value tmpl:path="/ldml/numbers/symbols[@numberSystem=$numbers]/group">,</tmpl:value></ThousandSeparator>
+      <DecimalSeparator><tmpl:value tmpl:path="/ldml/numbers/symbols[@numberSystem=$numbers]/decimal">.</tmpl:value></DecimalSeparator>
+      <TimeSeparator><tmpl:value tmpl:path="findsep(/ldml/dates/calendars/calendar[@type=$calendar]/timeFormats/timeFormatLength[@type='short']/timeFormat/pattern, 0)">:</tmpl:value></TimeSeparator>
+      <Time100SecSeparator><tmpl:value tmpl:path="/ldml/numbers/symbols[@numberSystem=$numbers]/decimal">.</tmpl:value></Time100SecSeparator>
+      <!-- ListSeparator only used to work out row and column separators in sc formulae -->
+      <ListSeparator>;</ListSeparator>
+      <LongDateDayOfWeekSeparator><tmpl:value tmpl:path="findsep(/ldml/dates/calendars/calendar[@type=$calendar]/dateTimeFormats/dateTimeFormatLength[@type='medium']/dateTimeFormat/pattern, 0)">, </tmpl:value></LongDateDayOfWeekSeparator>
+      <LongDateDaySeparator><tmpl:value tmpl:path="findsep(/ldml/dates/calendars/calendar[@type=$calendar]/dateFormats/dateFormatLength[@type='long']/dateFormat/pattern, 2)">, </tmpl:value></LongDateDaySeparator>
+      <LongDateMonthSeparator><tmpl:value tmpl:path="findsep(/ldml/dates/calendars/calendar[@type=$calendar]/dateFormats/dateFormatLength[@type='long']/dateFormat/pattern, 0)"> </tmpl:value></LongDateMonthSeparator>
+      <LongDateYearSeparator><tmpl:value tmpl:path="findsep(/ldml/dates/calendars/calendar[@type=$calendar]/appendItems/appendItem[@request='Year'], 0)"> </tmpl:value></LongDateYearSeparator>
+    </Separators>
+    <Markers>
+      <QuotationStart><tmpl:value tmpl:path="/ldml/delimiters/alternateQuotationStart">‘</tmpl:value></QuotationStart>
+      <QuotationEnd><tmpl:value tmpl:path="/ldml/delimiters/alternateQuotationEnd">’</tmpl:value></QuotationEnd>
+      <DoubleQuotationStart><tmpl:value tmpl:path="/ldml/delimiters/quotationStart">“</tmpl:value></DoubleQuotationStart>
+      <DoubleQuotationEnd><tmpl:value tmpl:path="/ldml/delimiters/quotationEnd">”</tmpl:value></DoubleQuotationEnd>
+    </Markers>
+    <TimeAM><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/dayPeriods/dayPeriodContext[@type='stand-alone']/dayPeriodWidth[@type='wide']/dayPeriod[@type='am']">AM</tmpl:value></TimeAM>
+    <TimePM><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/dayPeriods/dayPeriodContext[@type='stand-alone']/dayPeriodWidth[@type='wide']/dayPeriod[@type='pm']">PM</tmpl:value></TimePM>
+    <MeasurementSystem><tmpl:value tmpl:path="$supplemental/measurementData/measurementSystem[contains(@territories, $territory)]/@type">US</tmpl:value></MeasurementSystem>
+  </LC_CTYPE>
+  <LC_FORMAT replaceFrom="[CURRENCY]" replaceTo="[$$-409]" tmpla:replaceTo="concat('[$', /ldml/numbers/currencies/currency[@type=$currency]/symbol, ']')">
+    <DateAcceptancePattern><tmpl:value tmpl:path="/ldml/calendars/calendar[@type=$calendar]/dateTimeFormats/availableFormats/dateFormatItem[@id='Md']">M/D</tmpl:value></DateAcceptancePattern>
+    <FormatElement msgid="FixedFormatskey1" default="true" type="medium" usage="FIXED_NUMBER" formatindex="0">
+      <FormatCode><tmpl:value tmpl:path="$general">General</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey2" default="true" type="short" usage="FIXED_NUMBER" formatindex="1">
+      <FormatCode>0</FormatCode>    <!-- fixed, always the same -->
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey3" default="false" type="medium" usage="FIXED_NUMBER" formatindex="2">
+      <FormatCode>0.00</FormatCode> <!-- fixed, always the same -->
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey4" default="false" type="short" usage="FIXED_NUMBER" formatindex="3">
+      <FormatCode><tmpl:value tmpl:path="replace(/ldml/numbers/decimalFormats[@numberSystem=$numbers]/decimalFormatLength[not(@type)]/decimalFormat/pattern, '\..*', '')">#,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey5" default="false" type="medium" usage="FIXED_NUMBER" formatindex="4">
+      <FormatCode><tmpl:value tmpl:path="/ldml/numbers/decimalFormats[@numberSystem=$numbers]/decimalFormatLength[not(@type)]/decimalFormat/pattern">#,##0.00</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey6" default="false" type="medium" usage="FIXED_NUMBER" formatindex="5">
+      <FormatCode><tmpl:value tmpl:path="/ldml/numbers/decimalFormats[@numberSystem=$numbers]/decimalFormatLength[not(@type)]/decimalFormat/pattern">#,###.00</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey7" default="false" type="short" usage="FIXED_NUMBER" formatindex="80">
+      <FormatCode>#,##0_);(#,##0)</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="FixedFormatskey8" default="false" type="medium" usage="FIXED_NUMBER" formatindex="81">
+      <FormatCode>#,##0.00_);(#,##0.00)</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="ScientificFormatskey1" default="false" type="medium" usage="SCIENTIFIC_NUMBER" formatindex="6">
+      <FormatCode><tmpl:value tmpl:path="/ldml/numbers/scientificFormats[@numberSystem=$numbers]/scientificFormatLength/scientificFormat/pattern">0.00E+000</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="ScientificFormatskey2" default="true" type="medium" usage="SCIENTIFIC_NUMBER" formatindex="7">
+      <FormatCode><tmpl:value tmpl:path="/ldml/numbers/scientificFormats[@numberSystem=$numbers]/scientificFormatLength/scientificFormat/pattern">0.00E+00</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="ScientificFormatskey3" default="false" type="medium" usage="SCIENTIFIC_NUMBER" formatindex="78">
+      <FormatCode>##0.00E+00</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="PercentFormatskey1" default="true" type="short" usage="PERCENT_NUMBER" formatindex="8">
+      <FormatCode><tmpl:value tmpl:path="/ldml/numbers/percentFormats[@numberSystem=$numbers]/percentFormatLength/percentFormat/pattern">0%</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="PercentFormatskey2" default="true" type="long" usage="PERCENT_NUMBER" formatindex="9">
+      <FormatCode><tmpl:value tmpl:path="replace(/ldml/numbers/percentFormats[@numberSystem=$numbers]/percentFormatLength/percentFormat/pattern, '([#0]+)', '\1.00')">0.00%</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey1" default="true" type="short" usage="CURRENCY" formatindex="12">
+      <FormatCode><tmpl:value tmpl:path="replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]')">[CURRENCY]#,##0;-[CURRENCY]#,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey2" default="false" type="medium" usage="CURRENCY" formatindex="13">
+      <FormatCode><tmpl:value tmpl:path="replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]')">[CURRENCY]#,##0;-[CURRENCY]#,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey3" default="false" type="medium" usage="CURRENCY" formatindex="14">
+      <FormatCode><tmpl:value tmpl:path="replace(replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]'), ';', ';[RED]')">[CURRENCY]#,##0;[RED]-[CURRENCY]#,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey4" default="true" type="medium" usage="CURRENCY" formatindex="15">
+      <FormatCode><tmpl:value tmpl:path="replace(replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]'), ';', ';[RED]')">[CURRENCY]#,##0;[RED]-[CURRENCY]#,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey5" default="false" type="medium" usage="CURRENCY" formatindex="16">
+      <FormatCode><tmpl:value tmpl:path="replace(replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/unitPattern[count='other'], '\{0\}', /ldml/numbers/decimalFormats[@numberSystem=$numbers]/decimalFormatLength[not(@type)]/decimalFormat/pattern), '\{1\}', 'CCC')">#,##0.00 CCC</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey6" default="false" type="medium" usage="CURRENCY" formatindex="17">
+      <FormatCode><tmpl:value tmpl:path="replace(replace(replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]'), ';', ';[RED]'), '\.00', '.--')">[CURRENCY]#,##0.--;[RED]-[CURRENCY]#,##0.--</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey7" default="false" type="short" usage="CURRENCY"  formatindex="82">
+      <FormatCode><tmpl:value tmpl:path="replace(replace(/ldml/numbers/currencyFormats[@numberSystem=$numbers]/currencyFormatLength/currencyFormat/pattern, '¤', '[CURRENCY]'), '\.00', '.--')">[CURRENCY]* #,##0;-[CURRENCY]* #,##0</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="CurrencyFormatskey8" default="false" type="medium" usage="CURRENCY"  formatindex="83">
+      <FormatCode>[CURRENCY]* #,##0.00;-[CURRENCY]* #,##0.00</FormatCode>
+    </FormatElement>
+  <tmpl:context tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]">
+    <FormatElement msgid="DateFormatskey1" default="true" type="short" usage="DATE" formatindex="18">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='short']/dateFormat/pattern)">M/D/YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey9" default="true" type="long" usage="DATE" formatindex="19">
+      <!-- Is LDML dateformat the same as libolocale, probably not. May need a transforming function -->
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='full']/dateFormat/pattern, 'DD')">NNNNMMMM DD, YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey8" default="true" type="medium" usage="DATE" formatindex="20">
+      <!-- Same as 18, since no contrast available in ldml -->
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='short']/dateFormat/pattern, 'MM', 'DD')">MM/DD/YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey7" default="false" type="medium" usage="DATE" formatindex="21">
+      <!-- Same as 18, since no contrast available in ldml -->
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='short']/dateFormat/pattern, 'MM', 'DD', 'YYYY')">MM/DD/YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey10" default="false" type="long" usage="DATE" formatindex="22">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='medium']/dateFormat/pattern, 'YY')">MMM D, YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey11" default="false" type="long" usage="DATE" formatindex="23">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='medium']/dateFormat/pattern)">MMM D, YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey16" default="false" type="long" usage="DATE" formatindex="24">
+      <FormatCode>D. MMM. YYYY</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey12" default="false" type="long" usage="DATE" formatindex="25">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='long']/dateFormat/pattern)">MMMM D, YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey17" default="false" type="long" usage="DATE" formatindex="26">
+      <FormatCode>D. MMMM YYYY</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey13" default="false" type="long" usage="DATE" formatindex="27">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='full']/dateFormat/pattern, 'NN', 'MMM', 'YY')">NN, MMM D, YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey2" default="false" type="medium" usage="DATE" formatindex="28">
+      <FormatCode><tmpl:value tmpl:path="concat('NN DD', $datesep, 'MMM YY')">NN DD/MMM YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey14" default="false" type="long" usage="DATE" formatindex="29">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='full']/dateFormat/pattern, 'NN')">NN, MMMM D, YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey15" default="false" type="long" usage="DATE" formatindex="30">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateFormats/dateFormatLength[@type='full']/dateFormat/pattern)">NNNNMMMM D, YYYY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey18" default="false" type="short" usage="DATE" formatindex="31">
+      <FormatCode>MM-DD</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey19" default="false" type="medium" usage="DATE" formatindex="32">
+      <FormatCode>YY-MM-DD</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey20" default="false" type="medium" usage="DATE" formatindex="33">
+      <FormatCode>YYYY-MM-DD</FormatCode>
+      <DefaultName>ISO 8601</DefaultName>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey3" default="false" type="medium" usage="DATE" formatindex="34">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='yM'], 'YY', 'MM')">MM/YY</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey4" default="false" type="medium" usage="DATE" formatindex="35">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='MMMd'], 'DD')">MMM DD</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey5" default="false" type="medium" usage="DATE" formatindex="36">
+      <FormatCode>MMMM</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey6" default="false" type="medium" usage="DATE" formatindex="37">
+      <FormatCode>QQ YY</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateFormatskey21" default="false" type="medium" usage="DATE" formatindex="38">
+      <FormatCode>WW</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey1" default="false" type="short" usage="TIME" formatindex="39">
+      <!-- HH is 24 hr clock 0-23 -->
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='Hm'])">HH:MM</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey2" default="false" type="medium" usage="TIME" formatindex="40">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='Hms'])">HH:MM:SS</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey3" default="true" type="short" usage="TIME" formatindex="41">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='hm'])">HH:MM AM/PM</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey4" default="true" type="medium" usage="TIME" formatindex="42">
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='hms'])">HH:MM:SS AM/PM</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey5" default="false" type="medium" usage="TIME" formatindex="43">
+      <!-- [HH] is not wrappged 24hr clock, whatever that means -->
+      <FormatCode><tmpl:value tmpl:path="dateformat(./dateTimeFormats/availableFormats/dateFormatItem[@id='Hms'])">[HH]:MM:SS</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey6" default="false" type="short" usage="TIME" formatindex="44">
+      <FormatCode>MM:SS.00</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="TimeFormatskey7" default="false" type="medium" usage="TIME" formatindex="45">
+      <FormatCode>[HH]:MM:SS.00</FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateTimeFormatskey1" default="true" type="medium" usage="DATE_TIME" formatindex="46">
+      <FormatCode><tmpl:value tmpl:path="dateformat(concat(./dateFormats/dateFormatLength[@type='short']/pattern, ' ', ./timeFormats/timeFormatLength[@type='short']/pattern), 'MM', 'DD', 'YY')">MM/DD/YY HH:MM AM/PM</tmpl:value></FormatCode>
+    </FormatElement>
+    <FormatElement msgid="DateTimeFormatskey2" default="false" type="medium" usage="DATE_TIME" formatindex="47">
+      <FormatCode><tmpl:value tmpl:path="dateformat(concat(./dateFormats/dateFormatLength[@type='short']/pattern, ' ', ./dateTimeFormats/availableFormats/dateFormatItem[@id='Hms']), 'MM', 'DD', 'YYYY')">MM/DD/YYYY HH:MM:SS</tmpl:value></FormatCode>
+    </FormatElement>
+  </tmpl:context>
+  </LC_FORMAT>
+  <LC_FORMAT_1>
+  </LC_FORMAT_1>
+  <LC_COLLATION>
+    <tmpl:foreach tmpl:path="/ldml/collations/collation[@sil:modified='true']">
+      <Collator tmpla:default="choose(@type = $collator, 'true', 'false')" unoid="alphanumeric" tmpla:unoid="@type">
+        <tmpl:value tmpl:path="cr" tmpl:cdata="true"/>
+      </Collator>
+    </tmpl:foreach>
+      <CollationOptions />
+  </LC_COLLATION>
+  <LC_SEARCH>
+    <SearchOptions>
+      <!-- Not sure what to do here -->
+      <TransliterationModules>IGNORE_CASE</TransliterationModules>
+    </SearchOptions>
+  </LC_SEARCH>
+  <LC_INDEX>
+    <IndexKey phonetic="false" default="true" unoid="alphanumeric"><tmpl:value tmpl:path="/ldml/characters/exemplarCharacters[@type='index']">A-Z</tmpl:value></IndexKey>
+    <UnicodeScript>0</UnicodeScript>
+    <UnicodeScript>1</UnicodeScript>
+    <FollowPageWord>p.</FollowPageWord>
+    <FollowPageWord>pp.</FollowPageWord>
+  </LC_INDEX>
+  <LC_CALENDAR>
+   <tmpl:foreach tmpla:c="split(default($supplemental/calendarPreferenceData/calendarPreference[contains(@territories, $territory)]/@ordering, 'gregorian'))" tmpl:path="/ldml/dates/calendars/calendar[@type=$c]">
+    <Calendar unoid="gregorian" tmpla:unoid="$c" default="true">
+      <DaysOfWeek>
+       <tmpl:foreach tmpl:path="./days/dayContext[@type='format']/dayWidth[@type='abbreviated']/day">
+        <tmpl:variable tmpl:name="type">./@type</tmpl:variable>
+        <Day>
+          <DefaultAbbrvName><tmpl:value tmpl:path="$type"></tmpl:value></DefaultAbbrvName>
+          <DefaultFullName><tmpl:value tmpl:path="../../dayWidth[@type='wide']/day[@type=$type]"></tmpl:value></DefaultFullName>
+        </Day>
+       </tmpl:foreach>
+      </DaysOfWeek>
+      <MonthsOfYear>
+       <tmpl:foreach tmpl:path="./months/monthContext[@type='format']/monthWidth[@type='abbreviated']/month">
+        <tmpl:variable tmpl:name="type">./@type</tmpl:variable>
+        <Month>
+          <MonthID><tmpl:value tmpl:path="$type"></tmpl:value></MonthID>
+          <DefaultAbbrvName><tmpl:value tmpl:path="."></tmpl:value></DefaultAbbrvName>
+          <DefaultFullName><tmpl:value tmpl:path="../../monthWidth[@type='wide']/month[@type=$type]"></tmpl:value></DefaultFullName>
+        </Month>
+       </tmpl:foreach>
+      </MonthsOfYear>
+      <Eras>
+        <Era>
+          <EraID>bc</EraID>
+          <DefaultAbbrvName><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$c]/eras/eraAbbr/era[@type='0' and not(@alt)]">BC</tmpl:value></DefaultAbbrvName>
+          <DefaultFullName><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$c]/eras/eraNames/era[@type='0' and not(@alt)]">BC</tmpl:value></DefaultFullName>
+        </Era>
+        <Era>
+          <EraID>ad</EraID>
+          <DefaultAbbrvName><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$c]/eras/eraAbbr/era[@type='1' and not(@alt)]">AD</tmpl:value></DefaultAbbrvName>
+          <DefaultFullName><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$c]/eras/eraNames/era[@type='1' and not(@alt)]">AD</tmpl:value></DefaultFullName>
+        </Era>
+      </Eras>
+      <StartDayOfWeek>
+        <DayID><tmpl:value tmpl:path="$supplemental/weekData/firstDay[contains(@territories, $territory)]/@day">sun</tmpl:value></DayID>
+      </StartDayOfWeek>
+      <MinimalDaysInFirstWeek><tmpl:value tmpl:path="$supplemental/weekData/minDays[contains(@territories, $territory)]/@count">1</tmpl:value></MinimalDaysInFirstWeek>
+    </Calendar>
+   </tmpl:foreach>
+  </LC_CALENDAR>
+  <LC_CURRENCY>
+    <Currency default="true" usedInCompatibleFormatCodes="true">
+      <CurrencyID><tmpl:value tmpl:path="$currency">USD</tmpl:value></CurrencyID>
+      <CurrencySymbol><tmpl:value tmpl:path="/ldml/numbers/currencies/currency[@type=$currency]/symbol">$</tmpl:value></CurrencySymbol>
+      <BankSymbol><tmpl:value tmpl:path="$currency">USD</tmpl:value></BankSymbol>
+      <CurrencyName><tmpl:value tmpl:path="/ldml/numbers/currencies/currency[@type=$currency]/displayName[not(@count)]">US Dollar</tmpl:value></CurrencyName>
+      <DecimalPlaces><tmpl:value tmpl:path="default($supplemental/currencyData/fractions/info[@iso4217=$currency]/@digits, $supplemental/currencyData/fractions/info[@iso4217='DEFAULT']/@digits)">2</tmpl:value></DecimalPlaces>
+    </Currency>
+  </LC_CURRENCY>
+  <LC_TRANSLITERATION>
+    <Transliteration unoid="SENTENCE_CASE"/>
+    <Transliteration unoid="LOWERCASE_UPPERCASE"/>
+    <Transliteration unoid="UPPERCASE_LOWERCASE"/>
+    <Transliteration unoid="TITLE_CASE"/>
+    <Transliteration unoid="TOGGLE_CASE"/>
+    <Transliteration unoid="IGNORE_CASE"/>
+  </LC_TRANSLITERATION>
+  <LC_MISC>
+    <ReservedWords>
+      <trueWord>true</trueWord>
+      <falseWord>false</falseWord>
+      <quarter1Word><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='wide']/quarter[@type='1']">1st quarter</tmpl:value></quarter1Word>
+      <quarter2Word><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='wide']/quarter[@type='2']">2nd quarter</tmpl:value></quarter2Word>
+      <quarter3Word><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='wide']/quarter[@type='3']">3rd quarter</tmpl:value></quarter3Word>
+      <quarter4Word><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='wide']/quarter[@type='4']">4th quarter</tmpl:value></quarter4Word>
+      <aboveWord>above</aboveWord>
+      <belowWord>below</belowWord>
+      <quarter1Abbreviation><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='abbreviated']/quarter[@type='1']">Q1</tmpl:value></quarter1Abbreviation>
+      <quarter2Abbreviation><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='abbreviated']/quarter[@type='2']">Q2</tmpl:value></quarter2Abbreviation>
+      <quarter3Abbreviation><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='abbreviated']/quarter[@type='3']">Q3</tmpl:value></quarter3Abbreviation>
+      <quarter4Abbreviation><tmpl:value tmpl:path="/ldml/dates/calendars/calendar[@type=$calendar]/quarters/quarterContext[@type='format']/quarterWidth[@type='abbreviated']/quarter[@type='4']">Q4</tmpl:value></quarter4Abbreviation>
+    </ReservedWords>
+  </LC_MISC>
+  <LC_NumberingLevel>
+    <NumberingLevel NumType="4" Prefix=" " Suffix=")"/>
+    <NumberingLevel NumType="4" Prefix=" " Suffix="."/>
+    <NumberingLevel NumType="4" Prefix="(" Suffix=")"/>
+    <NumberingLevel NumType="2" Prefix=" " Suffix="."/>
+    <NumberingLevel NumType="0" Prefix=" " Suffix=")"/>
+    <NumberingLevel NumType="1" Prefix=" " Suffix=")"/>
+    <NumberingLevel NumType="1" Prefix="(" Suffix=")"/>
+    <NumberingLevel NumType="3" Prefix=" " Suffix="."/>
+  </LC_NumberingLevel>
+  <LC_OutLineNumberingLevel>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="1" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="1" Suffix=")" BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="1" Suffix=")" BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix="(" NumType="1" Suffix=")" BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="3" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="0" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix="." BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="2" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="0" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="3" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="1" Suffix=")" BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="0" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="2" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="1" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="3" Suffix="." BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix=" " BulletChar="0020" BulletFontName="" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix=" " BulletChar="0020" BulletFontName="" ParentNumbering="1" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix=" " BulletChar="0020" BulletFontName="" ParentNumbering="2" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix=" " BulletChar="0020" BulletFontName="" ParentNumbering="3" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="4" Suffix=" " BulletChar="0020" BulletFontName="" ParentNumbering="4" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+    <OutlineStyle>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="27A2" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="0" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="E006" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="50" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=")" BulletChar="E004" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="100" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="150" SymbolTextDistance="50" FirstLineOffset="0"/>
+      <OutLineNumberingLevel Prefix=" " NumType="6" Suffix=" " BulletChar="2022" BulletFontName="StarSymbol" ParentNumbering="0" LeftMargin="200" SymbolTextDistance="50" FirstLineOffset="0"/>
+    </OutlineStyle>
+  </LC_OutLineNumberingLevel>
+</Locale>

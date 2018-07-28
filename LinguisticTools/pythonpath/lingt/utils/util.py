@@ -24,6 +24,7 @@
 # 14-Oct-15 JDK  Uno objects for Impress.
 # 23-May-16 JDK  Added a generic UnoObjs doc type.
 # 02-Aug-16 JDK  Added mri().
+# 28-Jul-18 JDK  Uno objects for Draw.
 
 """
 This module is used by most OOLT modules:
@@ -115,6 +116,7 @@ class UnoObjs:
     DOCTYPE_WRITER = 'writer'
     DOCTYPE_CALC = 'calc'
     DOCTYPE_IMPRESS = 'impress'
+    DOCTYPE_DRAW = 'draw'
     DOCTYPE_GENERIC = 'generic'
 
     def __init__(self, ctx, doctype=DOCTYPE_WRITER,
@@ -176,6 +178,11 @@ class UnoObjs:
                 self.presentation = self.document.getPresentation()
             except AttributeError:
                 raise AttributeError("Could not get Impress presentation.")
+        elif doctype == self.DOCTYPE_DRAW:
+            try:
+                self.pages = self.document.getDrawPages()
+            except AttributeError:
+                raise AttributeError("Could not get Draw document.")
         elif doctype == self.DOCTYPE_GENERIC:
             pass
         else:

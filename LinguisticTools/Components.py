@@ -13,6 +13,7 @@
 # 15-Aug-15 JDK  Rename packages and modules following PEP standard.
 # 18-Aug-15 JDK  Added logging for this level.
 # 05-Oct-15 JDK  Log exceptions with logger.exception().
+# 28-Jul-18 JDK  Added menu for Draw.
 """
 Handles the events from the Linguistics menu, defined in Addons.xcu.
 
@@ -258,6 +259,14 @@ class MakeSpellingChangerJob(JobWrapper):
         from lingt.ui.comp.changermaker import showDlg
         showDlg(self.ctx)
 
+class DrawConverterJob(JobWrapper):
+    def __init__(self, ctx):
+        JobWrapper.__init__(self, ctx)
+
+    def showDialog(self):
+        from lingt.ui.comp.dataconv_draw import showDlg
+        showDlg(self.ctx)
+
 
 class StringReverserAddIn(unohelper.Base, XCalcFunctions):
     def __init__(self, ctx):
@@ -339,6 +348,10 @@ g_ImplementationHelper.addImplementation(
 g_ImplementationHelper.addImplementation(
     MakeSpellingChangerJob,
     "name.JimK.LinguisticTools.MakeSpellingChanger",
+    ("com.sun.star.task.Job",),)
+g_ImplementationHelper.addImplementation(
+    DrawConverterJob,
+    "name.JimK.LinguisticTools.DrawConverter",
     ("com.sun.star.task.Job",),)
 
 g_ImplementationHelper.addImplementation(
