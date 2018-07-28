@@ -14,6 +14,7 @@
 # 21-Sep-15 JDK  Make wordRow_col() work without any word rows.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 01-Mar-17 JDK  Fixed bugs caused by new way of incrementing rows.
+# 03-May-18 JDK  Align description of constant 2540 with LO code.
 
 """
 Create TextTables for interlinear data.
@@ -30,7 +31,7 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.Tables")
 
-INCH_TO_CM = 2540  # convert 1/1000 cm to inches
+INCHES_TO_MM100 = 2540  # convert inches to hundredths of millimeters
 
 class OuterTable:
     """Table for numbering that contains frames or smaller tables where the
@@ -92,7 +93,7 @@ class OuterTable:
         if self.config.makeOuterTable:
             self.top_row.IsAutoHeight = False
             self.top_row.Height = \
-                self.config.startingOuterRowHeight * INCH_TO_CM
+                self.config.startingOuterRowHeight * INCHES_TO_MM100
 
     def resize(self):
         """After the contents of the table are inserted, call this method
@@ -392,7 +393,7 @@ class InnerTable:
         set_noTableBorders(table)
         table.Split = False # Text Flow -> don't split acr pages
         table.KeepTogether = True  # Text Flow -> keep with next para
-        table.BottomMargin = self.config.tableBottomMargin * INCH_TO_CM
+        table.BottomMargin = self.config.tableBottomMargin * INCHES_TO_MM100
         logger.debug(
             "Created inner table %s with %d rows.",
             table.getName(), self.wrappingManager.numRows)

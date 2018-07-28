@@ -1,4 +1,4 @@
-# -*- coding: Latin-1 -*-
+#-*- coding: Latin-1 -*-
 #
 # This file created October 25 2010 by Jim Kornelsen.
 
@@ -273,7 +273,7 @@ def displayAttrs():
     #Call Tools.WritedbgInfo(ThisComponent)
 
     #GlobalScope.BasicLibraries.LoadLibrary("XrayTool")
-	#Xray ThisComponent
+    #Xray ThisComponent
 
     # Globalscope.BasicLibraries.LoadLibrary( "MRILib" )
     # Mri ThisComponent
@@ -332,6 +332,77 @@ def fs2_GoToTimestamp(*args):
     #Now do something with the seek instruction 
 
 
+import threading
+import time
+
+import uno
+import unohelper
+from com.sun.star.awt import Rectangle
+from com.sun.star.awt import WindowDescriptor
+from com.sun.star.awt.WindowClass import MODALTOP
+
+def create_dlg(toolkit, parent):
+    from com.sun.star.awt.VclWindowPeerAttribute import OK, OK_CANCEL, YES_NO, YES_NO_CANCEL, RETRY_CANCEL, DEF_OK, DEF_CANCEL, DEF_RETRY, DEF_YES, DEF_NO
+    #describe window properties.
+    aDescriptor = WindowDescriptor()
+    aDescriptor.Type = MODALTOP
+    aDescriptor.WindowServiceName = "messbox"
+    aDescriptor.ParentIndex = -1
+    aDescriptor.Parent = parent
+    #aDescriptor.Bounds = Rectangle()
+    aDescriptor.WindowAttributes = OK
+    tk = parent.getToolkit()
+    msgbox = tk.createWindow(aDescriptor)
+    #msgbox.setMessageText("Hi there!")
+    #msgbox.setCaptionText("a title")
+    dlg = toolkit.createWindow(aDescriptor)
+    return dlg
+
+class DialogThread(threading.Thread):
+    def __init__(self, doc):
+        threading.Thread.__init__(self)
+        self.dlg = None
+        self.parent = doc.CurrentController.Frame.ContainerWindow
+        self.toolkit = self.parent.getToolkit()
+        print("__init__")
+        self.val = 1
+
+    def run(self):
+        print("run() begin")
+        self.dlg = create_dlg(self.toolkit, self.parent)
+        xray(self.dlg)
+        print("run() 2")
+        self.val = 2
+        #self.dlg.execute()
+        print("run() end")
+        self.val = 3
+
+    def dispval(self):
+        print("val = " + str(self.val))
+
+def show_mdlg():
+    doc = unoObjs.document
+    util.xray(doc, unoObjs)
+    #xray(doc)
+    #parent = doc.CurrentController.Frame.ContainerWindow
+    #toolkit = parent.getToolkit()
+    #dlg = create_dlg(toolkit, parent)
+    #xray(dlg)
+    #doc = XSCRIPTCONTEXT.getDocument()
+    #t = DialogThread(doc)
+    #t.start()
+    #t.dispval()
+    #time.sleep(1)
+    #t.dispval()
+    #if t.dlg:
+    #    print("t.dlg =...")
+    #    dir(t.dlg)
+    #    #xray(t.dlg)
+    #else:
+    #    print("t.dlg not")
+    #t.dlg.endExecute()
+
+
 #------------------------------------------------------------------------------
 # Main routine
 #------------------------------------------------------------------------------
@@ -346,7 +417,8 @@ unoObjs = util.UnoObjs(ctx)
 #testSelString()
 #testReadInsertUnicode()
 #impress()
-fs2_GoToTimestamp()
+#fs2_GoToTimestamp()
+show_mdlg()
 #underlying_style_names()
 #displayAttrs()
 #doReplace()

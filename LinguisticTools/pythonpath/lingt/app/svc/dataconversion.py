@@ -11,6 +11,7 @@
 # 11-Mar-13 JDK  Don't save user vars here for options shown in dialog.
 # 27-Apr-13 JDK  Remove testing functions.
 # 15-Oct-15 JDK  Fixed bug: was checking whichScope when creating para style.
+# 28-Jul-18 JDK  Added conversion for Draw.
 
 """
 Main data conversion logic.
@@ -25,6 +26,7 @@ from com.sun.star.uno import RuntimeException
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
+from lingt.access.draw.shapesearch import ShapeSearch, ShapeSearchSettings
 from lingt.access.writer.textchanges import TextChanger
 from lingt.access.writer.textsearch import TextSearch, TextSearchSettings
 from lingt.app import exceptions
@@ -292,3 +294,71 @@ class DataConversion:
                 self.msgbox.display("No changes.")
             else:
                 self.msgbox.display("Successfully finished conversion.")
+
+    def doConversions_draw(self):
+        """For converting data in a Draw doc."""
+        logger.debug(util.funcName('begin'))
+
+        ## Start progress bar
+
+        progressBar = ProgressBar(self.unoObjs, "Converting...")
+        progressBar.show()
+        progressBar.updateBeginning()
+
+        ## Find the text ranges
+
+        shapeSearch = ShapeSearch(self.unoObjs, progressBar)
+        shapeSearch.setConfig(self.config.searchConfig)
+        try:
+            if self.config.whichScope == 'WholeDoc':
+                shapeSearch.scopeWholeDoc()
+            elif self.config.whichScope == 'Selection':
+                shapeSearch.scopeSelection()
+            elif self.config.whichScope == 'Font':
+                shapeSearch.scopeFont()
+            else:
+                raise exceptions.LogicError(
+                    "Unexpected value %s", self.config.whichScope)
+        except (exceptions.RangeError, exceptions.LogicError) as exc:
+            self.msgbox.displayExc(exc)
+            progressBar.close()
+            return
+        rangesFound = shapeSearch.getRanges()
+
+        if progressBar.getPercent() < 40:
+            progressBar.updatePercent(40)
+
+        ## Do the changes to those ranges
+
+        textChanger = TextChanger(self.unoObjs, progressBar)
+        if self.secCall.config.convName:
+            textChanger.setConverterCall(self.secCall)
+        textChanger.setFontToChange(self.config.targetFont)
+        numDataChanges, numStyleChanges = textChanger.doChanges(
+            rangesFound, self.config.askEach)
+
+        progressBar.updateFinishing()
+        progressBar.close()
+
+        ## Display results
+
+        paragraphsFound = len(rangesFound)
+        if paragraphsFound == 0:
+            self.msgbox.display("Did not find scope of change.")
+        elif numDataChanges == 0:
+            if numStyleChanges == 0:
+                self.msgbox.display("No changes.")
+            else:
+                plural = "" if numStyleChanges == 1 else "s"
+                    # add "s" if plural
+                self.msgbox.display(
+                    "No changes, but modified style of %d paragraph%s.",
+                    numStyleChanges, plural)
+        elif paragraphsFound == 1:
+            plural = "" if numDataChanges == 1 else "s" # add "s" if plural
+            self.msgbox.display("Made %d change%s.", numDataChanges, plural)
+        else:
+            plural = "" if numDataChanges == 1 else "s" # add "s" if plural
+            self.msgbox.display(
+                "Found %d paragraphs and made %d change%s.",
+                paragraphsFound, numDataChanges, plural)
