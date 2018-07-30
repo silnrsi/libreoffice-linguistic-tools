@@ -21,6 +21,7 @@
 # 23-Mar-16 JDK  Added Prefix class.
 # 29-Jul-16 JDK  Documents with one long line are not considered empty.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
+# 30-Jul-18 JDK  Added prefix for Drawing documents.
 
 """
 Store persistent settings in user variables of a Writer document.
@@ -51,6 +52,7 @@ class Prefix:
     GRAMMAR = "LTg_"
     ABBREVIATIONS = "LTa_"
     DATA_CONVERSION = "LTc_"
+    DATA_CONV_DRAW = "LTd_"
     BULK_CONVERSION = "LTbc_"
     WORD_LIST = "LTw_"
     SPELLING = "LTsp_"
@@ -236,13 +238,15 @@ class SettingsDocPreparer:
         if self.VAR_PREFIX == Prefix.SCRIPT_PRACTICE:
             componentName = theLocale.getText("Script Practice")
         elif self.VAR_PREFIX == Prefix.WORD_LIST:
-            componentName = theLocale.getText("Word List and Spelling")
+            componentName = theLocale.getText("Word Lists and Spelling")
         elif self.VAR_PREFIX == Prefix.SPELLING:
             componentName = theLocale.getText("Spelling")
         elif self.VAR_PREFIX == Prefix.BULK_CONVERSION:
             componentName = theLocale.getText("Bulk Conversion")
+        elif self.VAR_PREFIX == Prefix.DATA_CONV_DRAW:
+            componentName = theLocale.getText("Draw")
         message = theLocale.getText(
-            "This document stores %s settings.  "
+            "This document stores settings for %s.  "
             "Please leave it open while using %s.  "
             "If you want to keep the settings to use again later, "
             "then save this document.") % (componentName, componentName)

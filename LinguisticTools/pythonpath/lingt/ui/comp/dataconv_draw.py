@@ -1,6 +1,8 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created July 28 2018 by Jim Kornelsen
+#
+# 30-Jul-18 JDK  Get UserVars from a Writer document.
 
 """
 Data conversion dialog for a Draw document.
@@ -36,23 +38,25 @@ def showDlg(ctx=uno.getComponentContext()):
     You can call this method directly by Tools -> Macros -> Run Macro.
     """
     logger.debug("----showDlg()----------------------------------------------")
-    drawUnoObjs = util.UnoObjs(ctx, doctype=util.UnoObjs.DOCTYPE_DRAW)
+    drawingUnoObjs = util.UnoObjs(ctx, doctype=util.UnoObjs.DOCTYPE_DRAW)
     logger.debug("got UNO context")
 
-    dlg = DlgDataConversion(drawUnoObjs)
+    dlg = DlgDataConversion(drawingUnoObjs)
     dlg.showDlg()
 
 class DlgDataConversion:
     """Main class for this dialog."""
 
-    def __init__(self, unoObjs):
-        self.unoObjs = unoObjs
-        USERVAR_PREFIX = 'LTc_'  # LinguisticTools Data Conversion vars
+    def __init__(self, drawingUnoObjs):
+        self.unoObjs = drawingUnoObjs
+        finder = uservars.SettingsDocFinder(
+            uservars.Prefix.DATA_CONV_DRAW, self.unoObjs)
+        writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, unoObjs.document, logger)
-        self.msgbox = MessageBox(unoObjs)
-        self.styleFonts = styles.StyleFonts(unoObjs)
-        self.app = DataConversion(unoObjs, self.userVars, self.styleFonts)
+            uservars.Prefix.DATA_CONV_DRAW, writerUnoObjs.document, logger)
+        self.msgbox = MessageBox(self.unoObjs)
+        self.styleFonts = styles.StyleFonts(self.unoObjs)
+        self.app = DataConversion(self.unoObjs, self.userVars, self.styleFonts)
         self.dlgCtrls = None
         self.evtHandler = None
         self.config = None
@@ -88,7 +92,7 @@ class DlgDataConversion:
     def selectTargetFont(self):
         """Selects the font from user variables."""
         logger.debug(util.funcName('begin'))
-        listCtrl = self.dlgCtrls.listTargetStyleFont  # shorthand variable
+        listCtrl = self.dlgCtrls.listTargetFont  # shorthand variable
         listValues = listCtrl.Items
         fontName = self.userVars.get('TargetFontName')
         fontSize = FontSize()
@@ -159,7 +163,7 @@ class DlgDataConversion:
 
         ## Target font
 
-        targetFontName = self.dlgCtrls.listTargetStyleFont.getSelectedItem()
+        targetFontName = self.dlgCtrls.listTargetFont.getSelectedItem()
         if targetFontName == "(None)":
             targetFontName = None
         targetFontSize = FontSize()
@@ -206,7 +210,7 @@ class DlgControls:
         self.optTargetNoChange = ctrl_getter.get(_dlgdef.OPT_TARGET_NO_CHANGE)
         self.optTargetFont = ctrl_getter.get(_dlgdef.OPT_TARGET_FONT)
         self.comboScopeFont = ctrl_getter.get(_dlgdef.CMBX_SCOPE_FONT)
-        self.listTargetStyleFont = ctrl_getter.get(_dlgdef.LIST_STYLE_FONT)
+        self.listTargetFont = ctrl_getter.get(_dlgdef.LIST_TARGET_FONT)
         self.txtFontSize = ctrl_getter.get(_dlgdef.TXT_FONT_SIZE)
         btnSelectConv = ctrl_getter.get(_dlgdef.BTN_SELECT_CONV)
         btnNoConverter = ctrl_getter.get(_dlgdef.BTN_NO_CONVERTER)
@@ -266,7 +270,7 @@ class DlgControls:
                 combo.ctrl, combo.data, userVars.get(combo.varname))
 
         dutil.fill_list_ctrl(
-            self.listTargetStyleFont,
+            self.listTargetFont,
             styles.getListOfFonts(self.unoObjs, addBlank=True))
         logger.debug("Finished populating font and styles lists.")
 
@@ -284,7 +288,7 @@ class DlgControls:
 
     def enableDisable(self, mainForm):
         """Enable or disable controls as appropriate."""
-        listCtrl = self.listTargetStyleFont  # shorthand variable
+        listCtrl = self.listTargetFont  # shorthand variable
         textCtrl = self.txtFontSize
         if self.optTargetNoChange.getState() == 1:
             listCtrl.selectItemPos(0, True)

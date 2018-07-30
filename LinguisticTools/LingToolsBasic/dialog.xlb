@@ -5,6 +5,7 @@
  <library:element library:name="DlgApplyConverter"/>
  <library:element library:name="DlgBulkConversion"/>
  <library:element library:name="DlgDataConversion"/>
+ <library:element library:name="DlgDataConv_Draw"/>
  <library:element library:name="DlgExGrab"/>
  <library:element library:name="DlgGrammarSettings"/>
  <library:element library:name="DlgPhnlgySettings"/>

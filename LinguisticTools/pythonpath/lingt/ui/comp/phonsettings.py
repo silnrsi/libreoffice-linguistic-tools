@@ -58,8 +58,7 @@ class DlgPhonSettings:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = Prefix.PHONOLOGY
-        self.userVars = UserVars(USERVAR_PREFIX, unoObjs.document, logger)
+        self.userVars = UserVars(Prefix.PHONOLOGY, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.dlgCtrls = None
         self.evtHandler = None

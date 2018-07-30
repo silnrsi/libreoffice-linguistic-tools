@@ -53,11 +53,11 @@ class DlgApplyConverter:
         self.unoObjs = calcUnoObjs
         self.msgbox = MessageBox(self.unoObjs)
         finder = uservars.SettingsDocFinder(
-            uservars.Prefix.WORD_LIST, calcUnoObjs)
+            uservars.Prefix.WORD_LIST, self.unoObjs)
         writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
             uservars.Prefix.WORD_LIST, writerUnoObjs.document, logger)
-        self.app = DataConversion(calcUnoObjs, self.userVars, styleFonts=None)
+        self.app = DataConversion(self.unoObjs, self.userVars, styleFonts=None)
         self.sourceCol = ""
         self.targetCol = ""
         self.skipFirstRow = True

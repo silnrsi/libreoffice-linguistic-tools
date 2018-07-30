@@ -52,12 +52,12 @@ class DlgSpellingStep:
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
         finder = uservars.SettingsDocFinder(
-            uservars.Prefix.SPELLING, calcUnoObjs)
+            uservars.Prefix.SPELLING, self.unoObjs)
         writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
             uservars.Prefix.SPELLING, writerUnoObjs.document, logger)
-        self.app = SpellingStepper(calcUnoObjs, self.userVars)
-        self.msgbox = MessageBox(calcUnoObjs)
+        self.app = SpellingStepper(self.unoObjs, self.userVars)
+        self.msgbox = MessageBox(self.unoObjs)
         self.maxRow = -1
         self.scrollbarAlreadyMoved = False
         self.dlgCtrls = None

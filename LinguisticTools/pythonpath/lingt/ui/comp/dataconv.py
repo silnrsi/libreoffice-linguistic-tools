@@ -71,9 +71,8 @@ class DlgDataConversion:
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
-        USERVAR_PREFIX = 'LTc_'  # LinguisticTools Data Conversion vars
         self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, unoObjs.document, logger)
+            uservars.Prefix.DATA_CONVERSION, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.styleFonts = styles.StyleFonts(unoObjs)
         self.app = DataConversion(unoObjs, self.userVars, self.styleFonts)

@@ -1185,7 +1185,7 @@ class Locale:
             'fr' :
             "Un problème est survenu en écrivant la liste.\n\n%s",
         },
-        "This document stores %s settings.  "
+        "This document stores settings for %s.  "
         "Please leave it open while using %s.  "
         "If you want to keep the settings to use again later, "
         "then save this document." : {
