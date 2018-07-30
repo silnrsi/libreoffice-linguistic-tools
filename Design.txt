@@ -11,6 +11,47 @@
 
 ## Next
 
+## LingTools 3.2
+
+documentation should say "LibreOffice" instead of "OpenOffice Lin..."
+
+leave case as in FW, and sort list
+- sorting by GUID not helpful
+- match case insensitive for lookup
+- be sure list is sorted 1, 2.1, 2.2, 3, 4, 5.1 etc.
+- warn about duplicate IDs before closing Interlinear Setup
+    """"The following Ref Numbers have duplicates: 1, 2.1, 2.2, 3, ...271 more.
+    #And for Interlinear but not Phonology
+    Either change the numbers or, if they are in different texts, add a
+    prefix for each text.
+    """
+- check if only one number in paragraph and remove .1
+- Sorteddict is not helpful.  Instead, put in a list, and create lookup dict.
+
+fix problem of nothing happening when menu options first used
+
+Make check box to pull ref numbers from FW hidden?
+People want to check it but it normally shouldn't be used.
+
+Use configuration instead of user vars.
+It should work in Calc as well.
+However, are these settings per document or per user?
+Possibly put global settings in config and doc settings in user vars.
+Either create a special dialog to edit them ("LingTools Settings"),
+or perhaps extension settings are good enough.
+
+"Interlinear Setup / Examples" rather than "Grammar Settings / Examples",
+but "Phonology Setup" rather than "Lexicon Setup".
+Could use tabs (actually Page Step) rather than two different menu items for
+each.
+"LingTools" rather than "Linguistics" to avoid confusion with Writer built-in
+features.
+
+Pull senses from lexicon as separate entries if found.
+
+
+## 
+
 Get odt_converter_test.py to pass.
     "Whole Document" didn't make any changes.
 Include "Default Style" in list box when searching for para styles.
