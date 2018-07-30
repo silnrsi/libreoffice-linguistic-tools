@@ -58,11 +58,11 @@ class DlgChangerMaker:
         self.unoObjs = calcUnoObjs
         self.msgbox = MessageBox(self.unoObjs)
         finder = uservars.SettingsDocFinder(
-            uservars.Prefix.SPELLING, calcUnoObjs)
+            uservars.Prefix.SPELLING, self.unoObjs)
         self.writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
             uservars.Prefix.SPELLING, self.writerUnoObjs.document, logger)
-        self.app = ChangerMaker(calcUnoObjs, self.userVars)
+        self.app = ChangerMaker(self.unoObjs, self.userVars)
         self.exportOnClose = False
         self.dlgCtrls = None
         self.evtHandler = None

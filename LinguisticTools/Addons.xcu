@@ -293,6 +293,23 @@
           </node>
           <node oor:name="m20" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.DrawConverter?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Data Conversion</value>
+              <value xml:lang="es">Conversión de datos</value>
+              <value xml:lang="fr">Conversion des données</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.drawing.DrawingDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m21" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
               <value>vnd.sun.star.script:LingToolsBasic.ModuleMain.OpenExtensionHelp?language=Basic&amp;location=application</value>
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
@@ -304,29 +321,12 @@
               <value>_self</value>
             </prop>
             <prop oor:name="Context" oor:type="xs:string">
-              <value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-            </prop>
-          </node>
-          <node oor:name="m21" oor:op="replace">
-            <prop oor:name="URL" oor:type="xs:string">
-              <value>service:name.JimK.LinguisticTools.DrawConverter?execute</value>
-            </prop>
-            <prop oor:name="Title" oor:type="xs:string">
-              <value/>
-              <value xml:lang="en">Apply Converter</value>
-              <value xml:lang="es">Aplicar convertidor</value>
-              <value xml:lang="fr">Appliquer convertisseur</value>
-            </prop>
-            <prop oor:name="Target" oor:type="xs:string">
-              <value>_self</value>
-            </prop>
-            <prop oor:name="Context" oor:type="xs:string">
-              <value>com.sun.star.drawing.DrawDocument</value>
+              <value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument,com.sun.star.drawing.DrawingDocument</value>
             </prop>
           </node>
           <!-- remove unused menu names -->
           <!--
-          <node oor:name="m21" oor:op="remove" />
+          <node oor:name="m22" oor:op="remove" />
           -->
         </node>
       </node>

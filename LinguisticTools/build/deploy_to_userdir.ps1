@@ -9,7 +9,7 @@
 # 15-Feb-17 JDK  Also copy dialogs.
 # 06-Mar-17 JDK  Flag for AOO.
 #
-# Copy code the LO/AOO user directory, so it can be run from Tools -> Macros.
+# Copy code to LO/AOO user directory, so it can be run from Tools -> Macros.
 #
 # The file ComponentsWrapper.py uses all of the lingt package.
 # Likewise runTestSuite.py uses all of lingttest.

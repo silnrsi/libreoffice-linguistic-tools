@@ -4,6 +4,7 @@
 #
 # 05-Oct-15 JDK  Log exceptions with logger.exception().
 # 17-May-16 JDK  Added function to reload sys.modules.
+# 30-Jul-18 JDK  Added Data Conversion for Draw.
 
 """
 This is like Components.py but for code run from the user directory,
@@ -27,6 +28,7 @@ from lingt.ui.comp import applyconv
 from lingt.ui.comp import bulkconv
 from lingt.ui.comp import changermaker
 from lingt.ui.comp import dataconv
+from lingt.ui.comp import dataconv_draw
 from lingt.ui.comp import grabex
 from lingt.ui.comp import gramsettings
 from lingt.ui.comp import mkoxt_settings
@@ -132,6 +134,9 @@ def bulkConversion(dummy_int=0):
 def dataConversion(dummy_int=0):
     doShowDlg(dataconv.showDlg)
 
+def dataConv_draw(dummy_int=0):
+    doShowDlg(dataconv_draw.showDlg)
+
 def goodSpellingsCheck(dummy_int=0):
     doShowDlg(spellsearch.showDlg)
 
@@ -207,6 +212,7 @@ g_exportedScripts = (
     applyConverter,
     bulkConversion,
     dataConversion,
+    dataConv_draw,
     goodSpellingsCheck,
     grammarGrabEx,
     grammarSettings,
