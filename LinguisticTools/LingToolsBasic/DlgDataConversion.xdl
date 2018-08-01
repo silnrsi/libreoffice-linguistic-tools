@@ -49,7 +49,7 @@
    <dlg:radio dlg:id="optTargetFontAsian" dlg:tab-index="30" dlg:left="249" dlg:top="169" dlg:width="37" dlg:height="10" dlg:value="&amp;129.DlgDataConversion.optTargetFontAsian.Value"/>
   </dlg:radiogroup>
   <dlg:text dlg:id="LabelSize" dlg:tab-index="31" dlg:left="254" dlg:top="143" dlg:width="27" dlg:height="10" dlg:value="&amp;108.DlgDataConversion.LabelSize.Value"/>
-  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="32" dlg:left="254" dlg:top="155" dlg:width="22" dlg:height="12" dlg:value="&amp;137.DlgDataConversion.txtFontSize.Value"/>
+  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="32" dlg:left="254" dlg:top="155" dlg:width="22" dlg:height="12" dlg:value=""/>
   <dlg:checkbox dlg:id="chkVerify" dlg:tab-index="33" dlg:left="152" dlg:top="209" dlg:width="113" dlg:height="12" dlg:value="&amp;110.DlgDataConversion.chkVerify.Value" dlg:checked="false"/>
   <dlg:button dlg:id="BtnOK" dlg:tab-index="34" dlg:left="152" dlg:top="225" dlg:width="76" dlg:height="14" dlg:value="&amp;105.DlgDataConversion.BtnOK.Value"/>
   <dlg:button dlg:id="BtnCancel" dlg:tab-index="35" dlg:left="232" dlg:top="225" dlg:width="55" dlg:height="14" dlg:value="&amp;103.DlgDataConversion.BtnCancel.Value"/>

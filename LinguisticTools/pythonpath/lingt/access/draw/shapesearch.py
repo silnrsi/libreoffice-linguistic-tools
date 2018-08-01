@@ -1,6 +1,9 @@
 # -*- coding: Latin-1 -*-
 #
 # This file created July 28 2018 by Jim Kornelsen
+#
+# 01-Aug-18 JDK  Draw search descriptors cannot search by font.
+
 """
 Search through shapes in a Draw document, by font or full document.
 """
@@ -120,32 +123,14 @@ class ShapeSearch:
         logger.debug(util.funcName('end'))
 
     def scopeFont(self):
-        """
-        This only searches direct formatting, that is, not including styles.
-        """
-        logger.debug(util.funcName('begin', args=self.config.fontName))
-        if self.config.fontType in ['Complex', 'Asian']:
-            self.scopeComplexFont()
-            return
-        search = self.unoObjs.document.createSearchDescriptor()
-        search.SearchString = ""
-        search.SearchAll = True
-        attrName = "CharFontName"
-        attrs = (
-            # trailing comma is required to make a tuple
-            util.createProp(attrName, self.config.fontName),
-        )
-        search.setSearchAttributes(attrs)
-        self.doSearch(search)
-
-    def scopeComplexFont(self):
-        """Similar to character styles,
-        searching for complex fonts using a search descriptor is currently
-        buggy, so we enumerate instead.
+        """The API for Draw does not provide searching by font like Writer,
+        so we enumerate instead.
         """
         logger.debug(util.funcName('begin'))
         for simpleTextSection in self.docEnum.documentSections():
-            if self.config.fontType == "Complex":
+            if self.config.fontType == "Western":
+                sectionFont = simpleTextSection.CharFontName
+            elif self.config.fontType == "Complex":
                 sectionFont = simpleTextSection.CharFontNameComplex
             elif self.config.fontType == "Asian":
                 sectionFont = simpleTextSection.CharFontNameAsian
@@ -169,32 +154,6 @@ class ShapeSearch:
                     simpleTextSection.CharLocaleAsian.Language == lang):
                 # TextPortions include the TextRange service.
                 self.ranger.addRange(simpleTextSection)
-
-    def doSearch(self, search):
-        logger.debug(util.funcName('begin'))
-        self.ranger.resetRanges()
-        selsFound = self.unoObjs.document.findAll(search)
-        self.selsCount = selsFound.getCount()
-        if self.selsCount == 0:
-            logger.debug("Did not find anything.")
-            return
-        progressRange = ProgressRange(
-            start=self.progressBar.val, stop=90, ops=self.selsCount,
-            pbar=self.progressBar)
-        progressRange.partSize = 2
-        progressRange.updatePart(1)  # show some movement
-
-        for selIndex, selectionFound in enumerate(
-                iteruno.byIndex(selsFound)):
-            logger.debug("Found selection %d", selIndex)
-            self.ranger.addRangesForCursor(selectionFound)
-            progressRange.update(selIndex)
-            if (self.config.matchesLimit > 0
-                    and selIndex >= self.config.matchesLimit):
-                # Stop here.  This may help with large documents, doing a
-                # little at a time.
-                logger.debug("Stopping at this match")
-                return
 
 
 class DocumentEnumerator:

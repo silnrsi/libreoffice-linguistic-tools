@@ -66,11 +66,11 @@ from com.sun.star.uno import RuntimeException
 LOGGING_ENABLED = False
 #LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    ROOTDIR = r"C:\OurDocs"
-    #BASE_FOLDER = r"D:\dev\OOLT"
+    #ROOTDIR = r"C:\OurDocs"
+    BASE_FOLDER = r"D:\dev\OOLT_dev_extra"
 else:
     ROOTDIR = "/mnt/sf_OurDocs"
-BASE_FOLDER = os.path.join(ROOTDIR, "computing", "Office", "OOLT_dev_extra")
+#BASE_FOLDER = os.path.join(ROOTDIR, "computing", "Office", "OOLT_dev_extra")
 LOGGING_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 TESTDATA_FOLDER = os.path.join(
     BASE_FOLDER, "LinguisticTools", "tests", "datafiles")

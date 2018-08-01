@@ -7,6 +7,7 @@
 # 24-Aug-15 JDK  Don't need a special copy method for this class.
 # 18-Dec-15 JDK  Added comparison methods.
 # 11-Feb-16 JDK  Option to always change control prop.
+# 01-Aug-18 JDK  Fixed bug: loadUserVar() should not specify if empty user var.
 
 """
 Operations related to font size defaults and form input.
@@ -97,6 +98,7 @@ class FontSize:
         if not newVal:
             self.size = self.defaultVal
             self.specified = False
+            return
         try:
             self.size = float(newVal)
         except ValueError:

@@ -55,11 +55,11 @@ from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
 LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
     ROOTDIR = r"C:\OurDocs"
-    #TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT\debug.txt"
+    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT_dev_extra\debug.txt"
 else:
     ROOTDIR = "/mnt/sf_OurDocs"
-TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
+#TOPLEVEL_LOGGER_FILEPATH = os.path.join(
+#    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
 
 
 class SimpleLogManager:
