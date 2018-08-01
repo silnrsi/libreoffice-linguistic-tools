@@ -14,6 +14,7 @@
 # 10-Aug-15 JDK  Use generator to enumerate UNO collections.
 # 09-Oct-15 JDK  Fixed bug in clearFont(): self.newFont is a FontDefStruct obj.
 # 10-Dec-15 JDK  Import constant instead of using uno.Enum.
+# 01-Aug-18 JDK  Do not require a viewcursor (for Draw).
 
 """
 Handles changes to text in the document.
@@ -70,7 +71,8 @@ class TextChanger:
         self.numChanges = 0
         self.numStyleChanges = 0
         self.askEach = askEach
-        originalRange = self.unoObjs.viewcursor.getStart()
+        if self.unoObjs.viewcursor:
+            originalRange = self.unoObjs.viewcursor.getStart()
         rangeLastChanged = None
         progressRange = ProgressRange(
             start=40, stop=90, ops=len(ranges), pbar=self.progressBar)
@@ -96,14 +98,15 @@ class TextChanger:
             progressRange.update(rangeNum)
             rangeNum += 1
 
-        try:
-            if rangeLastChanged is None:
-                self.unoObjs.viewcursor.gotoRange(originalRange, False)
-            else:
-                self.unoObjs.viewcursor.gotoRange(rangeLastChanged, False)
-        except (RuntimeException, IllegalArgumentException):
-            # Just give up; it's not essential.
-            logger.warning("Failed to go to text range.")
+        if self.unoObjs.viewcursor:
+            try:
+                if rangeLastChanged is None:
+                    self.unoObjs.viewcursor.gotoRange(originalRange, False)
+                else:
+                    self.unoObjs.viewcursor.gotoRange(rangeLastChanged, False)
+            except (RuntimeException, IllegalArgumentException):
+                # Just give up; it's not essential.
+                logger.warning("Failed to go to text range.")
         logger.debug(util.funcName('end'))
         return self.numChanges, self.numStyleChanges
 
@@ -117,8 +120,9 @@ class TextChanger:
             return
         logger.debug(u"String = '%r'", oCursor.getString())
         if self.askEach:
-            self.unoObjs.viewcursor.gotoRange(oSel.getStart(), False)
-            self.unoObjs.viewcursor.gotoRange(oSel.getEnd(), True) # select
+            if self.unoObjs.viewcursor:
+                self.unoObjs.viewcursor.gotoRange(oSel.getStart(), False)
+                self.unoObjs.viewcursor.gotoRange(oSel.getEnd(), True) # select
             result = self.msgboxFour.display("Make this change?")
             if result == "yes":
                 # keep going
@@ -249,7 +253,7 @@ class TextChanger:
     def setCursProp(self, oCurs, propName, newVal):
         curVal = oCurs.getPropertyValue(propName)
         if curVal != newVal:
-            logger.debug("Setting %s from %s", propName, curVal)
+            logger.debug("Setting %s from %s to %s", propName, curVal, newVal)
             oCurs.setPropertyValue(propName, newVal)
             self.numStyleChanges += 1
 

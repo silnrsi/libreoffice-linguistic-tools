@@ -15,7 +15,7 @@
   <dlg:combobox dlg:id="cmbxFont" dlg:tab-index="3" dlg:left="146" dlg:top="5" dlg:width="111" dlg:height="11" dlg:page="1" dlg:value="&amp;209.DlgScriptPractice.cmbxFont.Value" dlg:spin="true" dlg:linecount="12"/>
  <dlg:checkbox dlg:id="chkKnownFonts" dlg:tab-index="4" dlg:left="138" dlg:top="19" dlg:width="120" dlg:height="10" dlg:page="1" dlg:value="&amp;208.DlgScriptPractice.chkKnownFonts.Value" dlg:checked="false"/>
   <dlg:text dlg:id="LabelSize" dlg:tab-index="7" dlg:left="261" dlg:top="6" dlg:width="26" dlg:height="10" dlg:page="1" dlg:value="&amp;200.DlgScriptPractice.LabelSize.Value" dlg:align="right"/>
-  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="8" dlg:left="289" dlg:top="5" dlg:width="22" dlg:height="12" dlg:page="1" dlg:value="&amp;226.DlgScriptPractice.txtFontSize.Value"/>
+  <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="8" dlg:left="289" dlg:top="5" dlg:width="22" dlg:height="12" dlg:page="1" dlg:value=""/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="optGenerate" dlg:tab-index="9" dlg:left="3" dlg:top="45" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;222.DlgScriptPractice.optGenerate.Value" dlg:checked="true"/>
    <dlg:radio dlg:id="optWordlist" dlg:tab-index="10" dlg:left="5" dlg:top="105" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;223.DlgScriptPractice.optWordlist.Value"/>

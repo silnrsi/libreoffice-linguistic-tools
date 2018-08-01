@@ -86,7 +86,7 @@ class DlgDataConversion:
         dlg.execute()
 
         if self.convertOnClose:
-            self.app.doConversions_writer()
+            self.app.doConversions_draw()
         dlg.dispose()
 
     def selectTargetFont(self):
