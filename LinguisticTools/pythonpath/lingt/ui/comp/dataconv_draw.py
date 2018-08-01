@@ -265,10 +265,13 @@ class DlgControls:
             ComboTuple(ctrl=self.comboScopeFont,
                        varname='ScopeFont',
                        data=styles.getListOfFonts(self.unoObjs))]
+        #XXX: Sometimes hangs while filling these lists.
         for combo in self.combos:
+            logger.debug("Filling Scope Font list.")
             dutil.fill_list_ctrl(
                 combo.ctrl, combo.data, userVars.get(combo.varname))
 
+        logger.debug("Filling Target Font list.")
         dutil.fill_list_ctrl(
             self.listTargetFont,
             styles.getListOfFonts(self.unoObjs, addBlank=True))

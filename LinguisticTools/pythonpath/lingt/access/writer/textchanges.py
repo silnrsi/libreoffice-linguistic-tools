@@ -15,6 +15,7 @@
 # 09-Oct-15 JDK  Fixed bug in clearFont(): self.newFont is a FontDefStruct obj.
 # 10-Dec-15 JDK  Import constant instead of using uno.Enum.
 # 01-Aug-18 JDK  Do not require a viewcursor (for Draw).
+# 03-Aug-18 JDK  Cursor ranges were lost in Draw when text changed.
 
 """
 Handles changes to text in the document.
@@ -123,7 +124,11 @@ class TextChanger:
             if self.unoObjs.viewcursor:
                 self.unoObjs.viewcursor.gotoRange(oSel.getStart(), False)
                 self.unoObjs.viewcursor.gotoRange(oSel.getEnd(), True) # select
+            else:
+                self.unoObjs.controller.select(oSel)
             result = self.msgboxFour.display("Make this change?")
+            if not self.unoObjs.viewcursor:
+                self.unoObjs.controller.select(None)
             if result == "yes":
                 # keep going
                 pass
@@ -315,10 +320,8 @@ class FindAndReplace:
             changesMade += 1
         return changesMade
 
-def changeString(oCurs, stringVal):
-    """
-    Make the change in Writer
-
+def changeString(oRange, stringVal):
+    """Make the change.
     To preserve formatting, add extra characters to surround the text.
     We use the "+" character for this purpose.
     Since the "+" characters are inserted following the old string,
@@ -326,24 +329,20 @@ def changeString(oCurs, stringVal):
     Also the starting range will be preserved by this method.
     """
     ## Insert word in between ++.
-    start = oCurs.getStart()
-    oCurs.collapseToEnd()
-    oCurs.getText().insertString(oCurs, "++", False)
+    oText = oRange.getText()
+    oCurs = oText.createTextCursorByRange(oRange.getEnd())
+    oText.insertString(oCurs, "++", False)
     oCurs.goLeft(2, False)
-    oCurs.gotoRange(start, True)
+    oCurs.gotoRange(oRange.getStart(), True)
     oCurs.setString("")     # deletes all but the extra characters
+    oCurs.gotoRange(oRange.getStart(), False)
     oCurs.goRight(1, False) # move in between the two "+" characters.
-    oCurs.collapseToEnd()   # Not sure why this is needed, since going right
-                            # with False should deselect -- but it didn't.
-    oCurs.getText().insertString(oCurs, stringVal, True)
+    oText.insertString(oCurs, stringVal, False)
 
     ## Remove the surrounding '+' characters.
-    start = oCurs.getStart()
-    end = oCurs.getEnd()
-    oCurs.gotoRange(start, False)
-    oCurs.goLeft(1, True)
-    oCurs.setString("")     # delete the first extra character
-    oCurs.gotoRange(end, False)
     oCurs.goRight(1, True)
     oCurs.setString("")     # delete the second extra character
+    oCurs.gotoRange(oRange.getStart(), False)
+    oCurs.goRight(1, True)
+    oCurs.setString("")     # delete the first extra character
     oCurs.goRight(0, False)
