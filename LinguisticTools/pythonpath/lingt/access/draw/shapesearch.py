@@ -29,8 +29,8 @@ class ShapeSearchSettings:
         self.lang = ""  # two-letter locale code
         self.matchesLimit = 0  # max number of times to match
 
-    def loadMatchLimit(self, userVars):
-        """MatchLimit is a hidden user variable -- it must be set manually."""
+    def load_userVars(self, userVars):
+        """This hidden user variable must be set manually."""
         varname = 'MatchLimit'
         if userVars.isEmpty(varname):
             self.matchesLimit = 0
@@ -38,7 +38,6 @@ class ShapeSearchSettings:
         else:
             self.matchesLimit = userVars.getInt(varname)
             logger.debug("Match limit %s", self.matchesLimit)
-        return self.matchesLimit
 
 
 class ShapeSearch:

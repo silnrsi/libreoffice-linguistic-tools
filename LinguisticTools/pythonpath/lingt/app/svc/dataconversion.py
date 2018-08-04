@@ -12,6 +12,7 @@
 # 27-Apr-13 JDK  Remove testing functions.
 # 15-Oct-15 JDK  Fixed bug: was checking whichScope when creating para style.
 # 28-Jul-18 JDK  Added conversion for Draw.
+# 04-Aug-18 JDK  Ranges in Draw can move, so convert from last to first.
 
 """
 Main data conversion logic.
@@ -27,7 +28,7 @@ from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.draw.shapesearch import ShapeSearch, ShapeSearchSettings
-from lingt.access.writer.textchanges import TextChanger
+from lingt.access.writer.textchanges import TextChanger, TextChangerSettings
 from lingt.access.writer.textsearch import TextSearch, TextSearchSettings
 from lingt.app import exceptions
 from lingt.ui.common.messagebox import MessageBox
@@ -59,6 +60,8 @@ class DataConversion:
         """
         self.unoObjs = docUnoObjs
         self.userVars = userVars
+        self.changerSettings = TextChangerSettings()
+        self.changerSettings.load_userVars(userVars)
         self.styleFonts = styleFonts
         self.msgbox = MessageBox(self.unoObjs)
         self.secCall = SEC_wrapper(self.msgbox, userVars)
@@ -191,7 +194,8 @@ class DataConversion:
 
         ## Do the changes to those ranges
 
-        textChanger = TextChanger(self.unoObjs, progressBar)
+        textChanger = TextChanger(
+            self.unoObjs, progressBar, self.changerSettings)
         if self.secCall.config.convName:
             textChanger.setConverterCall(self.secCall)
         if self.config.whichTarget == "ParaStyle":
@@ -330,10 +334,14 @@ class DataConversion:
 
         ## Do the changes to those ranges
 
-        textChanger = TextChanger(self.unoObjs, progressBar)
+        textChanger = TextChanger(
+            self.unoObjs, progressBar, self.changerSettings)
         if self.secCall.config.convName:
             textChanger.setConverterCall(self.secCall)
         textChanger.setFontToChange(self.config.targetFont)
+        # Apparently, if we change text in front of a range in Draw,
+        # the range can move.  So, start from the end and work backwards.
+        rangesFound.reverse()
         numDataChanges, numStyleChanges = textChanger.doChanges(
             rangesFound, self.config.askEach)
 
