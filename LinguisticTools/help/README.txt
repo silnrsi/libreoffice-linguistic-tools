@@ -75,6 +75,9 @@ where there is a poor internet connection.
 
 To see which version is installed, go to Tools -> Extension manager.
 
+3.9.1 04-Aug-18  An early version towards 4.0.
+                 Data Conversion for Draw - text boxes.
+                 Concept dialog for oxttools.  Requires python lxml library.
 3.1   19-Jan-18  Select from list of available ref numbers.
 3.0   11-Mar-17  Arrange grammar lines like FieldWorks, not Toolbox.
                  Experimental release of Bulk Conversion.

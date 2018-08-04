@@ -37,8 +37,25 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.textchanges")
 
+
+class TextChangerSettings:
+    """A structure to hold settings for TextChanger."""
+    def __init__(self):
+        self.colorize = False
+
+    def load_userVars(self, userVars):
+        """This hidden user variable must be set manually."""
+        varname = 'Colorize'
+        if userVars.isEmpty(varname):
+            self.colorize = False
+            userVars.store(varname, "0")  # make sure it exists
+        else:
+            self.colorize = bool(userVars.getInt(varname))
+            logger.debug("Colorize is %s", self.colorize)
+
+
 class TextChanger:
-    def __init__(self, unoObjs, progressBar):
+    def __init__(self, unoObjs, progressBar, settings):
         self.unoObjs = unoObjs
         self.progressBar = progressBar
         self.msgboxFour = FourButtonDialog(unoObjs)
@@ -50,6 +67,7 @@ class TextChanger:
         self.numStyleChanges = 0
         self.selsCount = 0
         self.askEach = False
+        self.colorize = settings.colorize
 
     def setConverterCall(self, secCall):
         self.secCall = secCall
@@ -80,12 +98,13 @@ class TextChanger:
 
         rangeNum = 1
         for txtRange in ranges:
+            if self.colorize:
+                colorize_range(txtRange.sel)
             changed = False
             try:
                 changed = self.changeTextRange(txtRange)
             except (exceptions.UserInterrupt,
                     exceptions.FileAccessError) as exc:
-                #logger.exception(str(exc))
                 logger.exception(exc)
                 return self.numChanges, self.numStyleChanges
             if changed:
@@ -346,3 +365,23 @@ def changeString(oRange, stringVal):
     oCurs.goRight(1, True)
     oCurs.setString("")     # delete the first extra character
     oCurs.goRight(0, False)
+
+
+class ColorRotator:
+    COLORS = [
+        styles.COLOR_BLUE,
+        styles.COLOR_LIGHT_RED,
+        styles.COLOR_LIGHT_MAGENTA]
+    color = -1
+
+    @classmethod
+    def nextColor(klass):
+        klass.color += 1
+        if klass.color >= len(klass.COLORS):
+            klass.color = 0
+        return klass.COLORS[klass.color]
+
+
+def colorize_range(oTextRange):
+    """Highlight text portions."""
+    oTextRange.CharBackColor = ColorRotator.nextColor()

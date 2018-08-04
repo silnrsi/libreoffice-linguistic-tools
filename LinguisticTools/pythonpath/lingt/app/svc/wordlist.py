@@ -135,8 +135,9 @@ class WordList:
             reader = PhonReader(self.unoObjs, self.userVars, config)
             words = reader.grabWords(fileItem.thingsToGrab)
         elif fileType in DocReader.supportedNames():
-            matchesLimit = TextSearchSettings().loadMatchLimit(self.userVars)
-            reader = DocReader(fileItem, self.unoObjs, matchesLimit)
+            settings = TextSearchSettings()
+            settings.load_userVars(self.userVars)
+            reader = DocReader(fileItem, self.unoObjs, settings.matchesLimit)
             words = reader.read()
         elif fileType in CalcFileReader.supportedNames():
             reader = CalcFileReader(self.unoObjs)
