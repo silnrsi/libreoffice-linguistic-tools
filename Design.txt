@@ -11,7 +11,12 @@
 
 ## Next
 
-## LingTools 3.2
+## LingTools 4.0 (progressively with 3.9.xb)
+
+choose interlin/phon examples from list
+Draw conversion
+create oxt
+config without requiring user vars 
 
 documentation should say "LibreOffice" instead of "OpenOffice Lin..."
 
