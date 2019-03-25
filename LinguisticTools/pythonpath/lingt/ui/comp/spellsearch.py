@@ -167,7 +167,7 @@ class DlgSpellingSearch:
         elif config.whichScope == 'SFMs':
             searchConfig.SFMs = self.dlgCtrls.txtSFM.getText()
         self.userVars.store("WhichScope", config.whichScope)
-        searchConfig.loadMatchLimit(self.userVars)
+        searchConfig.load_userVars(self.userVars)
 
         ctrls = [
             (self.dlgCtrls.comboParaStyle, "ParaStyle"),

@@ -15,6 +15,7 @@
 # 09-Oct-15 JDK  Fixed bug in clearFont(): self.newFont is a FontDefStruct obj.
 # 10-Dec-15 JDK  Import constant instead of using uno.Enum.
 # 01-Aug-18 JDK  Do not require a viewcursor (for Draw).
+# 03-Aug-18 JDK  Cursor ranges were lost in Draw when text changed.
 
 """
 Handles changes to text in the document.
@@ -36,8 +37,25 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.textchanges")
 
+
+class TextChangerSettings:
+    """A structure to hold settings for TextChanger."""
+    def __init__(self):
+        self.colorize = False
+
+    def load_userVars(self, userVars):
+        """This hidden user variable must be set manually."""
+        varname = 'Colorize'
+        if userVars.isEmpty(varname):
+            self.colorize = False
+            userVars.store(varname, "0")  # make sure it exists
+        else:
+            self.colorize = bool(userVars.getInt(varname))
+            logger.debug("Colorize is %s", self.colorize)
+
+
 class TextChanger:
-    def __init__(self, unoObjs, progressBar):
+    def __init__(self, unoObjs, progressBar, settings):
         self.unoObjs = unoObjs
         self.progressBar = progressBar
         self.msgboxFour = FourButtonDialog(unoObjs)
@@ -49,6 +67,7 @@ class TextChanger:
         self.numStyleChanges = 0
         self.selsCount = 0
         self.askEach = False
+        self.colorize = settings.colorize
 
     def setConverterCall(self, secCall):
         self.secCall = secCall
@@ -79,12 +98,13 @@ class TextChanger:
 
         rangeNum = 1
         for txtRange in ranges:
+            if self.colorize:
+                colorize_range(txtRange.sel)
             changed = False
             try:
                 changed = self.changeTextRange(txtRange)
             except (exceptions.UserInterrupt,
                     exceptions.FileAccessError) as exc:
-                #logger.exception(str(exc))
                 logger.exception(exc)
                 return self.numChanges, self.numStyleChanges
             if changed:
@@ -123,7 +143,11 @@ class TextChanger:
             if self.unoObjs.viewcursor:
                 self.unoObjs.viewcursor.gotoRange(oSel.getStart(), False)
                 self.unoObjs.viewcursor.gotoRange(oSel.getEnd(), True) # select
+            else:
+                self.unoObjs.controller.select(oSel)
             result = self.msgboxFour.display("Make this change?")
+            if not self.unoObjs.viewcursor:
+                self.unoObjs.controller.select(None)
             if result == "yes":
                 # keep going
                 pass
@@ -315,10 +339,8 @@ class FindAndReplace:
             changesMade += 1
         return changesMade
 
-def changeString(oCurs, stringVal):
-    """
-    Make the change in Writer
-
+def changeString(oRange, stringVal):
+    """Make the change.
     To preserve formatting, add extra characters to surround the text.
     We use the "+" character for this purpose.
     Since the "+" characters are inserted following the old string,
@@ -326,24 +348,40 @@ def changeString(oCurs, stringVal):
     Also the starting range will be preserved by this method.
     """
     ## Insert word in between ++.
-    start = oCurs.getStart()
-    oCurs.collapseToEnd()
-    oCurs.getText().insertString(oCurs, "++", False)
+    oText = oRange.getText()
+    oCurs = oText.createTextCursorByRange(oRange.getEnd())
+    oText.insertString(oCurs, "++", False)
     oCurs.goLeft(2, False)
-    oCurs.gotoRange(start, True)
+    oCurs.gotoRange(oRange.getStart(), True)
     oCurs.setString("")     # deletes all but the extra characters
+    oCurs.gotoRange(oRange.getStart(), False)
     oCurs.goRight(1, False) # move in between the two "+" characters.
-    oCurs.collapseToEnd()   # Not sure why this is needed, since going right
-                            # with False should deselect -- but it didn't.
-    oCurs.getText().insertString(oCurs, stringVal, True)
+    oText.insertString(oCurs, stringVal, False)
 
     ## Remove the surrounding '+' characters.
-    start = oCurs.getStart()
-    end = oCurs.getEnd()
-    oCurs.gotoRange(start, False)
-    oCurs.goLeft(1, True)
-    oCurs.setString("")     # delete the first extra character
-    oCurs.gotoRange(end, False)
     oCurs.goRight(1, True)
     oCurs.setString("")     # delete the second extra character
+    oCurs.gotoRange(oRange.getStart(), False)
+    oCurs.goRight(1, True)
+    oCurs.setString("")     # delete the first extra character
     oCurs.goRight(0, False)
+
+
+class ColorRotator:
+    COLORS = [
+        styles.COLOR_BLUE,
+        styles.COLOR_LIGHT_RED,
+        styles.COLOR_LIGHT_MAGENTA]
+    color = -1
+
+    @classmethod
+    def nextColor(klass):
+        klass.color += 1
+        if klass.color >= len(klass.COLORS):
+            klass.color = 0
+        return klass.COLORS[klass.color]
+
+
+def colorize_range(oTextRange):
+    """Highlight text portions."""
+    oTextRange.CharBackColor = ColorRotator.nextColor()

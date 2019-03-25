@@ -217,7 +217,7 @@ class DlgDataConversion:
                 searchConfig.style = displayName
         elif self.config.whichScope == 'SFMs':
             searchConfig.SFMs = self.dlgCtrls.txtSFM.getText()
-        searchConfig.loadMatchLimit(self.userVars)
+        searchConfig.load_userVars(self.userVars)
 
         self.config.whichTarget = dutil.whichSelected(
             self.dlgCtrls.radiosWhichTarget)

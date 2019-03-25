@@ -3,6 +3,7 @@
 # This file created July 28 2018 by Jim Kornelsen
 #
 # 01-Aug-18 JDK  Draw search descriptors cannot search by font.
+# 03-Aug-18 JDK  Draw does not have multiple selections.
 
 """
 Search through shapes in a Draw document, by font or full document.
@@ -28,8 +29,8 @@ class ShapeSearchSettings:
         self.lang = ""  # two-letter locale code
         self.matchesLimit = 0  # max number of times to match
 
-    def loadMatchLimit(self, userVars):
-        """MatchLimit is a hidden user variable -- it must be set manually."""
+    def load_userVars(self, userVars):
+        """This hidden user variable must be set manually."""
         varname = 'MatchLimit'
         if userVars.isEmpty(varname):
             self.matchesLimit = 0
@@ -37,7 +38,6 @@ class ShapeSearchSettings:
         else:
             self.matchesLimit = userVars.getInt(varname)
             logger.debug("Match limit %s", self.matchesLimit)
-        return self.matchesLimit
 
 
 class ShapeSearch:
@@ -65,61 +65,22 @@ class ShapeSearch:
         self.ranger.addRangeList(self.docEnum.documentSections())
         logger.debug(util.funcName('end'))
 
-    def scopeWholeDocTraverse(self):
-        """Enumerating often splits up words because new sections get created
-        when a character is typed out of order.
-        Here is a presumably slower, less accurate method that preserves whole
-        words.
-        Traverse the document with cursors to split into chunks,
-        since just adding self.unoObjs.text whole gets slow after about 100
-        pages.
-        """
-        logger.debug(util.funcName('begin'))
-        oText = self.unoObjs.text
-        cursor = oText.createTextCursorByRange(oText.getStart())
-        cursor.collapseToStart()
-        MANY_CHARACTERS = 16384     # perhaps 5 pages, but this varies greatly
-        cursLeft = oText.createTextCursorByRange(cursor.getStart())
-        cursLeft.collapseToStart()
-        while cursor.goRight(MANY_CHARACTERS, True):
-            while cursor.goRight(1, True):
-                # Find a wordbreak
-                if cursor.getString().endswith(" "):
-                    break
-            cursRight = oText.createTextCursorByRange(cursLeft.getStart())
-            cursRight.collapseToStart()
-            cursRight.gotoRange(cursor.getEnd(), True)
-            self.ranger.addRange(cursRight)
-            cursLeft.gotoRange(cursor.getEnd(), False)
-            cursLeft.collapseToStart()
-        cursRight = oText.createTextCursorByRange(cursLeft.getStart())
-        cursRight.collapseToStart()
-        cursRight.gotoRange(oText.getEnd(), True)
-        self.ranger.addRange(cursRight)
-        logger.debug(util.funcName('end'))
-
     def scopeSelection(self):
         """Search the currently selected text."""
         logger.debug(util.funcName('begin'))
         self.ranger.resetRanges()
-        oSels = self.unoObjs.controller.getSelection()
-        if oSels is None:
+        oSel = self.unoObjs.controller.getSelection()
+        if oSel is None:
             raise exceptions.RangeError("No text is selected.")
-        if not oSels.supportsService("com.sun.star.text.TextRanges"):
-            # When cells are selected rather than text,
-            # the selection is a TextTableCursor and has no text ranges.
-            raise exceptions.RangeError(
-                "Please do not select individual table cells.")
-        logger.debug("getCount() = %s", oSels.getCount())
-        if oSels.getCount() == 1:
-            oSel = oSels.getByIndex(0)
-            if oSel.supportsService("com.sun.star.text.TextRange"):
-                cursor = oSel.getText().createTextCursorByRange(oSel)
-                if cursor.isCollapsed():
-                    raise exceptions.RangeError("No text is selected.")
-        for oSel in iteruno.byIndex(oSels):
-            if oSel.supportsService("com.sun.star.text.TextRange"):
-                self.ranger.addRangesForCursor(oSel)
+        #util.xray(oSel, self.unoObjs)
+        #XXX: This check fails even though, according to xray, the object
+        #     *does* support it.
+        #if not oSel.supportsService("com.sun.star.text.TextRange"):
+        #    raise exceptions.RangeError("No text is selected.")
+        cursor = oSel.getText().createTextCursorByRange(oSel)
+        if cursor.isCollapsed():
+            raise exceptions.RangeError("No text is selected.")
+        self.ranger.addRange(oSel)
         logger.debug(util.funcName('end'))
 
     def scopeFont(self):

@@ -155,7 +155,7 @@ class DlgDataConversion:
             searchConfig.fontType = dutil.whichSelected(
                 self.dlgCtrls.radiosScopeFont)
             self.userVars.store('ScopeFontType', searchConfig.fontType)
-        searchConfig.loadMatchLimit(self.userVars)
+        searchConfig.load_userVars(self.userVars)
 
         self.config.whichTarget = dutil.whichSelected(
             self.dlgCtrls.radiosWhichTarget)
@@ -266,9 +266,12 @@ class DlgControls:
                        varname='ScopeFont',
                        data=styles.getListOfFonts(self.unoObjs))]
         for combo in self.combos:
+            logger.debug("Filling Scope Font list.")
+            #XXX: Sometimes hangs here.
             dutil.fill_list_ctrl(
                 combo.ctrl, combo.data, userVars.get(combo.varname))
 
+        logger.debug("Filling Target Font list.")
         dutil.fill_list_ctrl(
             self.listTargetFont,
             styles.getListOfFonts(self.unoObjs, addBlank=True))
