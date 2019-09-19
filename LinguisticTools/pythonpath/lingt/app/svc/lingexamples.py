@@ -10,6 +10,8 @@
 # 13-Jul-15 JDK  Refactor LingEx into three smaller classes.
 # 14-Sep-15 JDK  Add module constants for example type.
 # 14-Dec-15 JDK  Show suggestions when no ref number specified.
+# 11-May-19 JDK  Raise an error after displaying error.
+# 19-Sep-19 JDK  Sort ref numbers.
 
 """
 Grab phonology or grammar examples and insert them.
@@ -65,9 +67,11 @@ class ExServices:
         """
         try:
             self.operations.readData()
-            return self.operations.examplesDict.keys()
+            return sorted([ex.refText
+                           for ex in self.operations.examplesDict.values()])
         except exceptions.MessageError as exc:
             self.msgbox.displayExc(exc)
+            raise exceptions.DataNotFoundError("No data found.")
 
     def insertByRefnum(self, refTextRough):
         try:

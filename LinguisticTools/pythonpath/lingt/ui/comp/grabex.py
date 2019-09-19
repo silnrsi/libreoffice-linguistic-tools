@@ -33,6 +33,7 @@
 # 22-Jul-11 JDK  Separate function requireInputFile() - for Script Practice.
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 # 14-Dec-17 JDK  Add combo box to choose from list of ref numbers.
+# 11-May-19 JDK  Gracefully handle no data.
 
 """
 Dialog to import Phonology and Grammar examples.
@@ -49,6 +50,7 @@ from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
 
 from lingt.access.writer.uservars import Prefix, UserVars
+from lingt.app import exceptions
 from lingt.app.svc import lingexamples
 from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY, EXTYPE_GRAMMAR
 from lingt.ui.common import dutil
@@ -129,7 +131,11 @@ class DlgGrabExamples:
             self.unoObjs, ctrl_getter, self.evtHandler)
         self.evtHandler.setCtrls(self.dlgCtrls)
         dlg.setTitle(self.titleText)
-        self.dlgCtrls.loadValues(self.userVars)
+        try:
+            self.dlgCtrls.loadValues(self.userVars)
+        except exceptions.DataNotFoundError:
+            dlg.dispose()
+            return
         self.dlgCtrls.enableDisable(self.app, self.userVars)
         if self.dlgCtrls.single_refnum():
             self.dlgCtrls.comboRefnum.setFocus()
