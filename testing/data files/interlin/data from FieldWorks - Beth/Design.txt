@@ -1,0 +1,58 @@
+The latter of these files are from Mark Penny.
+Number 1.8 is slow.
+
+%s/lang="ggo_Telu_IN">[^<]\+<\/item>/lang="ggo_Telu_IN">telu<\/item>/gc
+
+It seems to be slow after a certain number of frames are on a page.
+One solution that seems to work for frames is to insert a hard newline.
+So it could be inserted after e.g. 20 outer frames and somehow later removed.
+What about tables?  I'm not sure there's actually a problem with tables; it just takes
+a little more time with larger examples.
+
+Ok, two things seem to be causing the slowness:
+1. It takes more time to render a lot of frames without a newline.
+2. It takes more time to resize the table cell each time an inner table is
+   resized.
+3. It takes more time to render frames inside a table cell that
+   doesn't have any more room.  Or just resizing takes time?
+
+Corresponding solutions:
+1. Add newlines after 20 frames, then delete the newlines afterwards.
+2. Set the outer table height to 20 inches at first, then auto resize
+   at the end.
+3. Set the outer table height to fixed at first, then auto resize
+   at the end.
+
+Solution 1 is not too difficult, and does not slow down ordinary data.
+Solution 2 is not as good for normal size data. To fix this:
+- if there are more than a certain number of morphemes (say 20), then make a
+  larger fixed-size table.
+  Of course this is only an educated guess, although we could guess better by
+  taking into account the base font size and number of rows.
+
+Frame times:
+- 44 counts with IsAutoHeight True
+- 16 counts with Height 10 or more
+- 18 counts with Height 5
+- 20 counts with Height 2
+Setting a low height is still pretty fast.
+
+How about this solution:
+- add newlines for a lot of frames.
+- start with a fairly low fixed height, perhaps 1/3 page = 3.5in
+- have a user variable that can force a different starting size if non-empty
+  (or non-zero perhaps)
+  Well, why not always use the user variable, and set it to 3.5 by default
+
+Regardless of whether or not large data is common,
+it seems perfectly reasonable to start with a fixed size while doing so much
+manipulating, and then resize at the end.
+
+Question: Should number of frames be based on outer frames only?
+          This probably should be tested.
+          Conclusion: The count should include inner frames too.
+
+INSERT_NEWLINE_AFTER = 30
+self.top_row.Height = 3 * 2540 # inches
+Removing added newlines must be done AFTER a call to resizeOuterTable().
+

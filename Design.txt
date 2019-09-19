@@ -16,7 +16,7 @@
 choose interlin/phon examples from list
 Draw conversion
 create oxt
-config without requiring user vars 
+config without requiring user vars for Calc and Draw
 
 documentation should say "LibreOffice" instead of "OpenOffice Lin..."
 
@@ -38,10 +38,9 @@ fix problem of nothing happening when menu options first used
 Make check box to pull ref numbers from FW hidden?
 People want to check it but it normally shouldn't be used.
 
-Use configuration instead of user vars.
-It should work in Calc as well.
-However, are these settings per document or per user?
+Use configuration instead of user vars for Calc and Draw.
 Possibly put global settings in config and doc settings in user vars.
+Abbrevs and interlinear setup should be per document, not per user.
 Either create a special dialog to edit them ("LingTools Settings"),
 or perhaps extension settings are good enough.
 

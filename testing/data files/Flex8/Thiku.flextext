@@ -1,0 +1,1478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document version="2">
+  <interlinear-text guid="db094e82-30fd-4f62-81e8-9c4015bfbd7f">
+    <item type="title" lang="en">The Hyena and the Girl</item>
+    <item type="title" lang="pt">O Hiena e a Rapariga</item>
+    <item type="title" lang="seh">Thika na Ntsikana</item>
+    <item type="comment" lang="seh">Thika na Ntsikana ("The Hyena and the Girl") (c) Madalena Lede, used by permission</item>
+    <item type="comment" lang="pt"></item>
+    <paragraphs>
+      <paragraph guid="43dd3703-0fb5-45e0-a2fb-93d9a19431fb">
+        <phrases>
+          <phrase guid="efa04f83-2d6d-4dd7-90df-d057b4aefe05">
+            <item type="segnum" lang="en">1</item>
+            <words>
+              <word guid="a3745f4b-4572-4743-bfc1-f815ce249cbc">
+                <item type="txt" lang="seh">Ngwa</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ngwa</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">era</item>
+                <item type="pos" lang="pt">Cop</item>
+              </word>
+              <word guid="8765f336-6a32-4fce-8c31-21eb6f0f3a0f">
+                <item type="txt" lang="seh">pyacitwa</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">pyacitwa</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aconteceu</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="8765f336-6a32-4fce-8c31-21eb6f0f3a0f">
+                <item type="txt" lang="seh">pyacitwa</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">pyacitwa</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aconteceu</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="486e2a8f-1a63-4f50-894c-b8a7024afc47">
+                <item type="txt" lang="seh">na</item>
+                <morphemes>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">na</item>
+                    <item type="cf" lang="seh">na</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">e</item>
+                    <item type="msa" lang="pt">Conj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">com</item>
+                <item type="pos" lang="pt">Conj</item>
+              </word>
+              <word guid="910dc543-b9b8-4a15-9752-12f47b082bc0">
+                <item type="txt" lang="seh">nkazi</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">nkazi</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">mulher</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="98722787-771d-44fb-b9f4-883c38750087">
+                <item type="txt" lang="seh">na</item>
+                <morphemes>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">na</item>
+                    <item type="cf" lang="seh">na</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">e</item>
+                    <item type="msa" lang="pt">Conj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">e</item>
+                <item type="pos" lang="pt">Conj</item>
+              </word>
+              <word guid="f2fe764d-df98-427e-928a-72e4844b2f51">
+                <item type="txt" lang="seh">mamuna</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ma-</item>
+                    <item type="cf" lang="seh">ma-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">6</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">muna</item>
+                    <item type="cf" lang="seh">muna</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">homen</item>
+                    <item type="msa" lang="pt">N 1/2</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">marido</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="7e834f05-56f1-49cb-9c1e-69e842d16654">
+                <item type="txt" lang="seh">abala</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">abala</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">deu a luz</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="04c701ec-522a-4d67-9e4f-00a68fc436a0">
+                <item type="txt" lang="seh">mwana</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mwana</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">criança</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="0a7fca29-c0fc-4c7a-a3af-cc2e216f35fb">
+                <item type="txt" lang="seh">wawo</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">w-</item>
+                    <item type="cf" lang="seh">u-</item>
+                    <item type="hn" lang="en">3</item>
+                    <item type="gls" lang="pt">3</item>
+                    <item type="msa" lang="pt">Poss:possncl</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">6</item>
+                    <item type="gls" lang="pt">assocpx</item>
+                    <item type="msa" lang="pt">Poss:assocpx</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">wo</item>
+                    <item type="cf" lang="seh">wo</item>
+                    <item type="gls" lang="pt">d'eles</item>
+                    <item type="msa" lang="pt">Poss </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">deles</item>
+                <item type="pos" lang="pt">Poss</item>
+              </word>
+              <word guid="45e2f620-9246-4d3c-afab-30f3195fcfe7">
+                <item type="txt" lang="seh">m'bodzi</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">m'-</item>
+                    <item type="cf" lang="seh">mu-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">18</item>
+                    <item type="msa" lang="pt">N:dblncl</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">bodzi</item>
+                    <item type="cf" lang="seh">bodzi</item>
+                    <item type="gls" lang="pt">um</item>
+                    <item type="msa" lang="pt">Num </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">uma</item>
+                <item type="pos" lang="pt">Num</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Era uma vez aconteceu que mulher e homem deu a luz criança deles um.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="2719e825-5639-4d27-8eda-582367659bcc">
+        <phrases>
+          <phrase guid="83360f37-ff92-4910-8ceb-360d51c342c2">
+            <item type="segnum" lang="en">2.1</item>
+            <words>
+              <word guid="ae28c327-72dd-4576-b895-25a2e83954c0">
+                <item type="txt" lang="seh">Iwo</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">iwo</item>
+                    <item type="cf" lang="seh">iwo</item>
+                    <item type="gls" lang="pt">eles</item>
+                    <item type="msa" lang="pt">Ppron </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">eles</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="bcb184cf-eab0-4d95-b6ef-8376e56229e3">
+                <item type="txt" lang="seh">mbalonga</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mba-</item>
+                    <item type="cf" lang="seh">mba-</item>
+                    <item type="gls" lang="pt">COHES</item>
+                    <item type="msa" lang="pt">V:mba</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">long</item>
+                    <item type="cf" lang="seh">long</item>
+                    <item type="gls" lang="pt">dizer</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">disseram</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="27d934bd-66de-4ad5-87af-90d1ae035e67">
+                <item type="txt" lang="seh">tenepa</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">tenepa</item>
+                    <item type="cf" lang="seh">tenepa</item>
+                    <item type="gls" lang="pt">assim</item>
+                    <item type="msa" lang="pt">Adv </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">assim</item>
+                <item type="pos" lang="pt">Adv</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">:</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="b189ee5d-f327-494c-910d-1465fcb33651">
+                <item type="txt" lang="seh">Mwanathu</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Mwanathu</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">criança nossa</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="79277be6-1960-43bf-9b48-1fe0aff1a0d1">
+                <item type="txt" lang="seh">uxu</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">uxu</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">esta</item>
+                <item type="pos" lang="pt">dem1</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="6e4ee1a6-331f-43b1-ac1a-80aa8e8293c5">
+                <item type="txt" lang="seh">anafuna</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">anafuna</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aquele que quer</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="d9e84dcd-3c82-4e1e-a14e-e0ec689dfe6d">
+                <item type="txt" lang="seh">kunsemba</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">kunsemba</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">casar</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="b808983e-1d98-4d1b-a130-337cd3106690">
+                <item type="txt" lang="seh">mwanathu</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mwana</item>
+                  </morph>
+                  <morph>
+                    <item type="txt" lang="seh">athu</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">criança nossa</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="5b65ac85-7a65-4148-9a92-05c8d7f0b203">
+                <item type="txt" lang="seh">akhale</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">ele+PST</item>
+                    <item type="msa" lang="pt">V:sbj+tam1</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">khal</item>
+                    <item type="cf" lang="seh">khal</item>
+                    <item type="gls" lang="pt">ser</item>
+                    <item type="msa" lang="pt">Irreg - khala </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-e</item>
+                    <item type="cf" lang="seh">-e</item>
+                    <item type="gls" lang="pt">SBJV</item>
+                    <item type="msa" lang="pt">V:svf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">deve ser</item>
+                <item type="pos" lang="pt">Vsub</item>
+              </word>
+              <word guid="aa834ca0-8300-4348-9810-40205b656df4">
+                <item type="txt" lang="seh">munthu</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mu-</item>
+                    <item type="cf" lang="seh">mu-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">1</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">nthu</item>
+                    <item type="cf" lang="seh">nthu</item>
+                    <item type="gls" lang="pt">pessoa</item>
+                    <item type="msa" lang="pt">N 1/2</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">pessoa</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="7e09e697-ac8a-4cc9-9e57-aa4f2d471f78">
+                <item type="txt" lang="seh">ana</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">5</item>
+                    <item type="gls" lang="pt">3S+1</item>
+                    <item type="msa" lang="pt">V:sbj</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">n</item>
+                    <item type="cf" lang="seh">n</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">ter</item>
+                    <item type="msa" lang="pt">Irreg-na </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que tem</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="01341f99-fb35-468b-9b1d-d050c6f70b83">
+                <item type="txt" lang="seh">anji</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">anji</item>
+                    <item type="cf" lang="seh">anji</item>
+                    <item type="gls" lang="pt">que?</item>
+                    <item type="msa" lang="pt">Inter </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que?</item>
+                <item type="pos" lang="pt">Inter</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">?</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Eles disseram assim: "Este nossa filha, aquele que quer casar a nossa filha deve ser um homem que tem o quê?</item>
+          </phrase>
+          <phrase guid="7e30ddf7-ba0a-4486-85e8-13f3d1617769">
+            <item type="segnum" lang="en">2.2</item>
+            <words>
+              <word guid="71a201ee-c392-4976-a3fe-be8fd6829a73">
+                <item type="txt" lang="seh">Ana</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">5</item>
+                    <item type="gls" lang="pt">3S+1</item>
+                    <item type="msa" lang="pt">V:sbj</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">n</item>
+                    <item type="cf" lang="seh">n</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">ter</item>
+                    <item type="msa" lang="pt">Irreg-na </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que tem</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="463aa278-059b-4288-b0dd-334794d6a4f6">
+                <item type="txt" lang="seh">mpfuma</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mpfuma</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">riqueza</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">."</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Que tem riqueza."</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="396ec69c-c435-42d2-be96-d6c48c30e882">
+        <phrases>
+          <phrase guid="dd7e51cc-8e0b-4a3a-a093-a98c739313fd">
+            <item type="segnum" lang="en">3</item>
+            <words>
+              <word guid="c2c42caf-5bf1-4303-bc89-ceff02a98503">
+                <item type="txt" lang="seh">Mbakhabwera</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mbakhabwera</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">vieram</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="38c189e7-2542-4e69-8d93-8b4434ee1961">
+                <item type="txt" lang="seh">aphale</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">aphale</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">jovens</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="147d002f-7e38-4a6d-8d0c-3d5930f2d179">
+                <item type="txt" lang="seh">penepo</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">penepo</item>
+                    <item type="cf" lang="seh">penepo</item>
+                    <item type="gls" lang="pt">alí mesmo</item>
+                    <item type="msa" lang="pt">dem6 </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">lá</item>
+                <item type="pos" lang="pt">dem6</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Vieram muitos jovens para lá.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="67b69e57-d5eb-431f-8e9d-7399496b0bba">
+        <phrases>
+          <phrase guid="32a53222-ead4-4a69-a878-48864dcd762e">
+            <item type="segnum" lang="en">4</item>
+            <words>
+              <word guid="ae28c327-72dd-4576-b895-25a2e83954c0">
+                <item type="txt" lang="seh">Iwo</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">iwo</item>
+                    <item type="cf" lang="seh">iwo</item>
+                    <item type="gls" lang="pt">eles</item>
+                    <item type="msa" lang="pt">Ppron </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">eles</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="f3c72b35-b5f3-4a86-aad8-8946dbaaf260">
+                <item type="txt" lang="seh">akhakhonda</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">akhakhonda</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">recusaram</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Eles negavam.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="fea74994-b581-4e54-9fa8-4e7b6406495b">
+        <phrases>
+          <phrase guid="3b02318c-4182-4b73-9c5f-17aece983260">
+            <item type="segnum" lang="en">5</item>
+            <words>
+              <word guid="a39faee6-bd3b-4e23-b106-a1e5e7a451d1">
+                <item type="txt" lang="seh">Pai</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">pai</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">pai</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="b7c61810-ddd4-4433-8b68-943a7290d232">
+                <item type="txt" lang="seh">wace</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">w-</item>
+                    <item type="cf" lang="seh">u-</item>
+                    <item type="hn" lang="en">4</item>
+                    <item type="gls" lang="pt">1</item>
+                    <item type="msa" lang="pt">Poss:possncl</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">6</item>
+                    <item type="gls" lang="pt">assocpx</item>
+                    <item type="msa" lang="pt">Poss:assocpx</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ce</item>
+                    <item type="cf" lang="seh">ce</item>
+                    <item type="gls" lang="pt">d'ele</item>
+                    <item type="msa" lang="pt">Poss </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dela</item>
+                <item type="pos" lang="pt">Poss</item>
+              </word>
+              <word guid="cb47739f-4a12-44a3-988b-88d231a4d751">
+                <item type="txt" lang="seh">akhalonga</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">akhalonga</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dizia</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="3da300fc-2229-4f75-b218-30be82326b59">
+                <item type="txt" lang="seh">kuti</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">kuti</item>
+                    <item type="cf" lang="seh">ti</item>
+                    <item type="gls" lang="en">so that</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dizendo</item>
+                <item type="pos" lang="pt">Or</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">:</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="053caaef-cf5d-4d13-b2b4-a6c6684102ea">
+                <item type="txt" lang="seh">Iwe</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Iwe</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">você</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="6cfd473e-91ba-474e-900e-e6abbd24a42d">
+                <item type="txt" lang="seh">una</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">una</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">tens</item>
+                <item type="pos" lang="pt">Irreg-na</item>
+              </word>
+              <word guid="463aa278-059b-4288-b0dd-334794d6a4f6">
+                <item type="txt" lang="seh">mpfuma</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mpfuma</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">riqueza</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">?"</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Pai dela dizia: "Tens riqueza?"</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="ac263250-2f65-4dcf-bcb8-7dea1058e823">
+        <phrases>
+          <phrase guid="280b4117-e6da-46a9-b818-99da0d5ed8ff">
+            <item type="segnum" lang="en">6.1</item>
+            <words>
+              <word guid="4bf6f00b-b3de-41bc-8a63-6d89e4e47648">
+                <item type="txt" lang="seh">Iye</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">iye</item>
+                    <item type="cf" lang="seh">iye</item>
+                    <item type="gls" lang="pt">ele</item>
+                    <item type="msa" lang="pt">Ppron </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">ele</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="bc310ef0-fd1e-4bf4-8640-3146e99d7e98">
+                <item type="txt" lang="seh">ati</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ati</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">disse</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">:</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="ee13695b-aaf6-4567-8ec6-a441a34dff15">
+                <item type="txt" lang="seh">Nkhabe</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Nkhabe</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">não</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">."</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Ele disse, "Não."</item>
+          </phrase>
+          <phrase guid="84727d98-18be-42c6-89f1-1c572a8d0267">
+            <item type="segnum" lang="en">6.2</item>
+            <words>
+              <word guid="fd439c9b-76bc-4474-a322-199b3d7e046e">
+                <item type="txt" lang="seh">Mbakhonda</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mbakhonda</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">recusaram</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">E eles recusaram.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="69b1de55-5ed1-4eea-b7d3-f970d54f35f2">
+        <phrases>
+          <phrase guid="48428281-6b0f-4308-8092-008c516999e6">
+            <item type="segnum" lang="en">7</item>
+            <words>
+              <word guid="e507c53c-862a-4e7d-a2a4-4fa39ad4bd33">
+                <item type="txt" lang="seh">Mbabwera</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mbabwera</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">veio</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="96d3b13b-af9e-48b7-b823-77365eb9e606">
+                <item type="txt" lang="seh">unango</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">u-</item>
+                    <item type="cf" lang="seh">u-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">14</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">nango</item>
+                    <item type="cf" lang="seh">nango</item>
+                    <item type="gls" lang="pt">outra</item>
+                    <item type="msa" lang="pt">Adj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">outro</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="2aadcce4-db68-4212-8608-cdbd708cd5a1">
+                <item type="txt" lang="seh">wa</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">w-</item>
+                    <item type="cf" lang="seh">u-</item>
+                    <item type="hn" lang="en">3</item>
+                    <item type="gls" lang="pt">3</item>
+                    <item type="msa" lang="pt">Assoc:assocncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a</item>
+                    <item type="cf" lang="seh">a</item>
+                    <item type="hn" lang="en">9</item>
+                    <item type="gls" lang="pt">ASSOC</item>
+                    <item type="msa" lang="pt">Assoc </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">de</item>
+                <item type="pos" lang="pt">Assoc</item>
+              </word>
+              <word guid="78f43bff-4c0c-4de7-8ad1-bb9c5e973c00">
+                <item type="txt" lang="seh">ciwiri</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ciwiri</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dois</item>
+                <item type="pos" lang="pt">Num</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="fd439c9b-76bc-4474-a322-199b3d7e046e">
+                <item type="txt" lang="seh">mbakhonda</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mbakhonda</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">recusaram</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Veio segundo, e eles recusaram.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="2653af06-ba5a-4411-9c70-a9df9b0f1764">
+        <phrases>
+          <phrase guid="07c92425-3902-4468-980a-cca4cb24b190">
+            <item type="segnum" lang="en">8</item>
+            <words>
+              <word guid="a77654c8-69ff-4f3f-8ad7-c25bdc7b8c1e">
+                <item type="txt" lang="seh">Ntsiku</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">n-</item>
+                    <item type="cf" lang="seh">N-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">9</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">tsiku</item>
+                    <item type="cf" lang="seh">tsiku</item>
+                    <item type="gls" lang="pt">dia</item>
+                    <item type="msa" lang="pt">N 9/10</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dia</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="0c399a06-9ea7-4ccd-8f3c-7f76630a7779">
+                <item type="txt" lang="seh">inango</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">i-</item>
+                    <item type="cf" lang="seh">i-</item>
+                    <item type="gls" lang="pt">4+5+9</item>
+                    <item type="msa" lang="pt">V:(obj)/sbj</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">nango</item>
+                    <item type="cf" lang="seh">nango</item>
+                    <item type="gls" lang="pt">outra</item>
+                    <item type="msa" lang="pt">Adj </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">outro</item>
+                <item type="pos" lang="pt">Adj</item>
+              </word>
+              <word guid="7ef90197-6456-4853-b95c-dffa23073788">
+                <item type="txt" lang="seh">abwera</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">ele+PST</item>
+                    <item type="msa" lang="pt">V:sbj+tam1</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">bwer</item>
+                    <item type="cf" lang="seh">bwer</item>
+                    <item type="gls" lang="pt">vir</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">veio</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="67810120-cc87-43cc-a2ac-4fbc00b17ff7">
+                <item type="txt" lang="seh">thika</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">thika</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">hiena</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Um outro dia veio hiena.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="69278297-c2dc-4c7c-8b46-dd294cd2d528">
+        <phrases>
+          <phrase guid="613254e1-0b74-4077-85f5-b562b981d5fa">
+            <item type="segnum" lang="en">9.1</item>
+            <words>
+              <word guid="67810120-cc87-43cc-a2ac-4fbc00b17ff7">
+                <item type="txt" lang="seh">Thika</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">thika</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">hiena</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="00bcc78d-9ff6-45df-b97c-bd84905feffb">
+                <item type="txt" lang="seh">ule</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ule</item>
+                    <item type="cf" lang="seh">ule</item>
+                    <item type="gls" lang="pt">aquele</item>
+                    <item type="msa" lang="pt">dem4 </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aquele</item>
+                <item type="pos" lang="pt">dem4</item>
+              </word>
+              <word guid="b9178825-b7df-42e1-ab91-34483e4b1843">
+                <item type="txt" lang="seh">asanduka</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">asanduka</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">transformou</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Hiena transformou.</item>
+          </phrase>
+          <phrase guid="09ebc5bf-8b84-4fbd-be32-3bdf66954576">
+            <item type="segnum" lang="en">9.2</item>
+            <words>
+              <word guid="7ef90197-6456-4853-b95c-dffa23073788">
+                <item type="txt" lang="seh">Abwera</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">ele+PST</item>
+                    <item type="msa" lang="pt">V:sbj+tam1</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">bwer</item>
+                    <item type="cf" lang="seh">bwer</item>
+                    <item type="gls" lang="pt">vir</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">veio</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="aa834ca0-8300-4348-9810-40205b656df4">
+                <item type="txt" lang="seh">munthu</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mu-</item>
+                    <item type="cf" lang="seh">mu-</item>
+                    <item type="hn" lang="en">2</item>
+                    <item type="gls" lang="pt">1</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">nthu</item>
+                    <item type="cf" lang="seh">nthu</item>
+                    <item type="gls" lang="pt">pessoa</item>
+                    <item type="msa" lang="pt">N 1/2</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">pessoa</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">.</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Tornou-se uma pessoa.</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="fe0f0a22-cd7d-4a90-ab0c-49f3f86aa8b6">
+        <phrases>
+          <phrase guid="c42c5d69-2acc-47c8-be62-c8befbb9439a">
+            <item type="segnum" lang="en">10</item>
+            <words>
+              <word guid="b47ae167-4fb3-435b-aa03-b4085283c986">
+                <item type="txt" lang="seh">Pidabwereye</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">pidabwereye</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">quando ele veio</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="27a8e363-95c0-4cd1-abc1-0481141f71ae">
+                <item type="txt" lang="seh">iye</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">iye</item>
+                    <item type="cf" lang="seh">iye</item>
+                    <item type="gls" lang="pt">ele</item>
+                    <item type="msa" lang="pt">Ppron </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">ela</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="ac0ecc60-bdd5-4fe8-a9c3-91d34e4e9269">
+                <item type="txt" lang="seh">mbafika</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mbafika</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">chegou</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="8210dd5f-49a1-4246-b611-17fd14277ada">
+                <item type="txt" lang="seh">mbalonga</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mba-</item>
+                    <item type="cf" lang="seh">mba-</item>
+                    <item type="gls" lang="pt">COHES</item>
+                    <item type="msa" lang="pt">V:mba</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">long</item>
+                    <item type="cf" lang="seh">long</item>
+                    <item type="gls" lang="pt">dizer</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">disse</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="3da300fc-2229-4f75-b218-30be82326b59">
+                <item type="txt" lang="seh">kuti</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">kuti</item>
+                    <item type="cf" lang="seh">ti</item>
+                    <item type="gls" lang="en">so that</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dizendo</item>
+                <item type="pos" lang="pt">Or</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">:</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="06482680-8135-4762-8bfc-ac383f9dacb0">
+                <item type="txt" lang="seh">Pai</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Pai</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">pai</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="f2fe764d-df98-427e-928a-72e4844b2f51">
+                <item type="txt" lang="seh">mamuna</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ma-</item>
+                    <item type="cf" lang="seh">ma-</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">6</item>
+                    <item type="msa" lang="pt">N:ncl</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">muna</item>
+                    <item type="cf" lang="seh">muna</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">homen</item>
+                    <item type="msa" lang="pt">N 1/2</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">marido</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="69ebc355-7a9e-4bdf-953e-d2ec93aabbdb">
+                <item type="txt" lang="seh">anafunene</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">anafunene</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que quero</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="8a801bd4-379e-430e-9165-55184d91ef78">
+                <item type="txt" lang="seh">ndule</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ndule</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">é aquele</item>
+                <item type="pos" lang="pt">Cop</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">."</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Quando ele veio, ela chegou e disse: "Pai, o marido que eu quero é aquele."</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="27c2e08d-f397-4be2-8a77-0922ca1db6fd">
+        <phrases>
+          <phrase guid="a36783ab-d681-4f56-9756-3106d7520251">
+            <item type="segnum" lang="en">11</item>
+            <words>
+              <word guid="04c701ec-522a-4d67-9e4f-00a68fc436a0">
+                <item type="txt" lang="seh">Mwana</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mwana</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">criança</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="00bcc78d-9ff6-45df-b97c-bd84905feffb">
+                <item type="txt" lang="seh">ule</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ule</item>
+                    <item type="cf" lang="seh">ule</item>
+                    <item type="gls" lang="pt">aquele</item>
+                    <item type="msa" lang="pt">dem4 </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aquele</item>
+                <item type="pos" lang="pt">dem4</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="ddd0e4c9-f365-4467-a696-ddf8d6ba1c47">
+                <item type="txt" lang="seh">pidalongeye</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">pidalongeye</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">quando ela disse</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="96ee38b3-49f7-48b3-b181-35c09672b9a7">
+                <item type="txt" lang="seh">tenepa</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">tenepa</item>
+                    <item type="cf" lang="seh">tenepa</item>
+                    <item type="gls" lang="pt">assim</item>
+                    <item type="msa" lang="pt">Adv </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">assim</item>
+                <item type="pos" lang="pt">Adv</item>
+              </word>
+              <word guid="04c701ec-522a-4d67-9e4f-00a68fc436a0">
+                <item type="txt" lang="seh">mwana</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">mwana</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">criança</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="17278697-5959-40c0-9dc4-f109feeab39c">
+                <item type="txt" lang="seh">kuti</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">kuti</item>
+                    <item type="cf" lang="seh">ti</item>
+                    <item type="gls" lang="en">so that</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que</item>
+                <item type="pos" lang="pt">Or</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="de612147-24f0-4412-b392-edeaec9da804">
+                <item type="txt" lang="seh">Mamuna</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Mamuna</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">marido</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="69ebc355-7a9e-4bdf-953e-d2ec93aabbdb">
+                <item type="txt" lang="seh">anafunene</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">anafunene</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que quero</item>
+                <item type="pos" lang="pt">Vrel</item>
+              </word>
+              <word guid="8a801bd4-379e-430e-9165-55184d91ef78">
+                <item type="txt" lang="seh">ndule</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ndule</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">é aquele</item>
+                <item type="pos" lang="pt">Cop</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">",</item>
+              </word>
+              <word guid="47aa1e83-3ec8-4b68-9cd5-b2a5085752e8">
+                <item type="txt" lang="seh">apai</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">apai</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">pais</item>
+                <item type="pos" lang="pt">N</item>
+              </word>
+              <word guid="b7c61810-ddd4-4433-8b68-943a7290d232">
+                <item type="txt" lang="seh">wace</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">w-</item>
+                    <item type="cf" lang="seh">u-</item>
+                    <item type="hn" lang="en">4</item>
+                    <item type="gls" lang="pt">1</item>
+                    <item type="msa" lang="pt">Poss:possncl</item>
+                  </morph>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">a-</item>
+                    <item type="cf" lang="seh">a-</item>
+                    <item type="hn" lang="en">6</item>
+                    <item type="gls" lang="pt">assocpx</item>
+                    <item type="msa" lang="pt">Poss:assocpx</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ce</item>
+                    <item type="cf" lang="seh">ce</item>
+                    <item type="gls" lang="pt">d'ele</item>
+                    <item type="msa" lang="pt">Poss </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">dela</item>
+                <item type="pos" lang="pt">Poss</item>
+              </word>
+              <word guid="9ab8948c-2d3a-443f-94b5-4bf742bcec24">
+                <item type="txt" lang="seh">atawirambo</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">atawirambo</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aceitou também</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">Aquela filha, quando a criança disse assim que "O marido que eu quero é aquele, os pais dela aceitou também,</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+      <paragraph guid="51702636-f8ff-49f0-b71a-a45b3093e4d0">
+        <phrases>
+          <phrase guid="75a299a8-4ddd-4239-b7d4-9c089d414efd">
+            <item type="segnum" lang="en">12.1</item>
+            <words>
+              <word guid="bad35c56-f937-42b8-9f8a-9f6f0e0e1d2e">
+                <item type="txt" lang="seh">mbalonga</item>
+                <morphemes>
+                  <morph type="prefix" guid="d7f713db-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">mba-</item>
+                    <item type="cf" lang="seh">mba-</item>
+                    <item type="gls" lang="pt">COHES</item>
+                    <item type="msa" lang="pt">V:mba</item>
+                  </morph>
+                  <morph type="root" guid="d7f713e5-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">long</item>
+                    <item type="cf" lang="seh">long</item>
+                    <item type="gls" lang="pt">dizer</item>
+                    <item type="msa" lang="pt">V </item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">-a</item>
+                    <item type="cf" lang="seh">-a</item>
+                    <item type="hn" lang="en">1</item>
+                    <item type="gls" lang="pt">IND</item>
+                    <item type="msa" lang="pt">V:vf</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">disse</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">"</item>
+              </word>
+              <word guid="e1ded3e7-b8cf-4b87-9fe7-0641d96e9d4b">
+                <item type="txt" lang="seh">Ande</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">Ande</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">sim</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">,</item>
+              </word>
+              <word guid="32b5c98f-e1f0-4150-b0cf-e81eaa04dd43">
+                <item type="txt" lang="seh">ife</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ife</item>
+                    <item type="cf" lang="seh">ife</item>
+                    <item type="gls" lang="pt">nos</item>
+                    <item type="msa" lang="pt">Ppron </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">nos</item>
+                <item type="pos" lang="pt">Ppron</item>
+              </word>
+              <word guid="ac6a1e27-978a-4f88-b121-e6df3d92d8c3">
+                <item type="txt" lang="seh">tiri</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">tiri</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">estamos</item>
+                <item type="pos" lang="pt">Vaux</item>
+              </word>
+              <word guid="8ea8347e-0f36-4572-b2e3-1a5a582139a1">
+                <item type="txt" lang="seh">kumuonadi</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">kumuonadi</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">a ver verdadeiramente</item>
+                <item type="pos" lang="pt">V</item>
+              </word>
+              <word guid="17278697-5959-40c0-9dc4-f109feeab39c">
+                <item type="txt" lang="seh">kuti</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">kuti</item>
+                    <item type="cf" lang="seh">ti</item>
+                    <item type="gls" lang="en">so that</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">que</item>
+                <item type="pos" lang="pt">Or</item>
+              </word>
+              <word guid="9189bc87-28e2-4f07-bc39-6e789879b7e6">
+                <item type="txt" lang="seh">unowu</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">unowu</item>
+                    <item type="cf" lang="seh">unowu</item>
+                    <item type="gls" lang="pt">este mesmo</item>
+                    <item type="msa" lang="pt">dem5 </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">aquele</item>
+                <item type="pos" lang="pt">dem5</item>
+              </word>
+              <word guid="f7d23157-86b7-43d2-b64f-3b6bcf76f226">
+                <item type="txt" lang="seh">ndi</item>
+                <morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="seh">ndi</item>
+                    <item type="cf" lang="seh">ndi</item>
+                    <item type="gls" lang="pt">é</item>
+                    <item type="msa" lang="pt">Cop </item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">é</item>
+                <item type="pos" lang="pt">Cop</item>
+              </word>
+              <word guid="f0d577df-f05f-431a-9b6d-eacf461a27b8">
+                <item type="txt" lang="seh">wanji</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">wanji</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">o que?</item>
+                <item type="pos" lang="pt">Inter</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">?</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">e disse, "Sim, nós estamos a ver verdadeiramente que aquele é o quê?</item>
+          </phrase>
+          <phrase guid="9b499f86-0564-470f-8f9a-1a5c8fd937ae">
+            <item type="segnum" lang="en">12.2</item>
+            <words>
+              <word guid="0b741289-7c32-4335-81d4-b21a82a352e9">
+                <item type="txt" lang="seh">Ndwa</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">ndwa</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">ele é</item>
+                <item type="pos" lang="pt">Cop</item>
+              </word>
+              <word guid="29f6da03-8881-4d28-88f2-eaad048be84b">
+                <item type="txt" lang="seh">kupfuma</item>
+                <morphemes>
+                  <morph>
+                    <item type="txt" lang="seh">kupfuma</item>
+                  </morph>
+                </morphemes>
+                <item type="gls" lang="pt">rico</item>
+                <item type="pos" lang="pt">Vadj</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">."</item>
+              </word>
+              <word>
+                <item type="punct" lang="seh">...</item>
+              </word>
+            </words>
+            <item type="gls" lang="pt">"É rico."</item>
+          </phrase>
+        </phrases>
+      </paragraph>
+    </paragraphs>
+    <languages>
+      <language lang="en" font="Times New Roman" />
+      <language lang="pt" font="Times New Roman" />
+      <language lang="seh" font="Doulos SIL" vernacular="true" />
+    </languages>
+  </interlinear-text>
+</document>
