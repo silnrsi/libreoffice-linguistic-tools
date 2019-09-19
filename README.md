@@ -8,7 +8,7 @@ The primary site to download releases is https://extensions.libreoffice.org/exte
 
 For installation instructions and version history, see [README.txt](/LinguisticTools/help/README.txt)
 
-The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic_Tools_Help.pdf)
+The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic%20Tools%20Help.pdf)
 
 # Technical Notes
 
