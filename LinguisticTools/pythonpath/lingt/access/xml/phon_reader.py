@@ -111,10 +111,10 @@ class PhonReader(FileReader):
         logger.debug(util.funcName('begin'))
         filename = os.path.basename(self.filepath)
         filetype = ""
-        if re.search(r"\.paxml$", filename):
-            filetype = 'paxml'
-        elif re.search(r"\.lift$", filename):
+        if re.search(r"\.lift$", filename):
             filetype = 'lift'
+        elif re.search(r"\.paxml$", filename):
+            filetype = 'paxml'
         elif re.search(r"\.xml$", filename):
             filetype = 'xml'
         else:
@@ -123,26 +123,26 @@ class PhonReader(FileReader):
         logger.debug("File type %s.", filetype)
         return filetype
 
-    def read_paxml_file(self):
-        """Read in the data from Phonology Assistant.
-        Modifies self.examplesDict
-        """
-        logger.debug("reading Phonology Assistant file")
-        PaXML(self.dom, self.fieldHelper, self.userVars).read()
-        logger.debug("finished reading PA file")
-
     def read_lift_file(self):
         """Read in the LIFT data from FieldWorks.
-        Modifies self.examplesDict
+        Modifies self.data
         """
         logger.debug("reading LIFT file")
         reader = LiftXML(self.dom, self.fieldHelper, self.config)
         reader.read()
         logger.debug("finished reading LIFT file")
 
+    def read_paxml_file(self):
+        """Read in the data from Phonology Assistant.
+        Modifies self.data
+        """
+        logger.debug("reading Phonology Assistant file")
+        PaXML(self.dom, self.fieldHelper, self.userVars).read()
+        logger.debug("finished reading PA file")
+
     def read_toolbox_file(self):
         """Read in the data exported directly from Toolbox.
-        Modifies self.examplesDict
+        Modifies self.data
         """
         logger.debug("reading Toolbox file")
         fieldTags = PhonologyTags(self.userVars).loadUserVars()
