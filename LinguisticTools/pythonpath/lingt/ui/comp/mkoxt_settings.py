@@ -107,6 +107,14 @@ class DlgMkoxtSettings:
     def closeAndRun(self):
         logger.debug(util.funcName('begin'))
         try:
+            import lxml.etree as et
+            from lxml.etree import XPathEvalError
+        except ImportError:
+            self.msgbox.display(
+                "To use oxttools, the lxml python library must be installed.")
+            self.dlgClose()
+            return
+        try:
             self.settings = self.dlgCtrls.getFormResults()
             self.runOnClose = True
             self.dlgClose()

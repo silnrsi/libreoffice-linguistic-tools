@@ -25,7 +25,7 @@
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
-Dialog for settings to import Grammar examples.
+Dialog for settings to import interlinear examples for grammar write-ups.
 
 This module exports:
     showDlg()

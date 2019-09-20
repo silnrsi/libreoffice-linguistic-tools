@@ -34,9 +34,10 @@
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 # 14-Dec-17 JDK  Add combo box to choose from list of ref numbers.
 # 11-May-19 JDK  Gracefully handle no data.
+# 20-Sep-19 JDK  Change button text if selecting multiple.
 
 """
-Dialog to import Phonology and Grammar examples.
+Dialog to import Phonology and Interlinear examples.
 
 This module exports:
     showPhonologyDlg()
@@ -208,19 +209,17 @@ class DlgControls:
         self.chkSelectMultiple = ctrl_getter.get(_dlgdef.CHK_SELECT_MULTIPLE)
         self.comboRefnum = ctrl_getter.get(_dlgdef.COMBO_REF_NUM)
         self.listboxRefnum = ctrl_getter.get(_dlgdef.LISTBOX_REF_NUM)
+        self.btnInsertEx = ctrl_getter.get(_dlgdef.BTN_INSERT_EX)
         btnFindNext = ctrl_getter.get(_dlgdef.BTN_FIND_NEXT)
-        btnReplace = ctrl_getter.get(_dlgdef.BTN_REPLACE)
-        btnReplaceAll = ctrl_getter.get(_dlgdef.BTN_REPLACE_ALL)
-        btnInsertEx = ctrl_getter.get(_dlgdef.BTN_INSERT_EX)
         btnClose = ctrl_getter.get(_dlgdef.BTN_CLOSE)
 
         btnFindNext.setActionCommand("FindNext")
-        btnReplace.setActionCommand("Replace")
-        btnReplaceAll.setActionCommand("ReplaceAll")
-        btnInsertEx.setActionCommand("InsertEx")
+        self.btnReplace.setActionCommand("Replace")
+        self.btnReplaceAll.setActionCommand("ReplaceAll")
+        self.btnInsertEx.setActionCommand("InsertEx")
         btnClose.setActionCommand("Close")
-        for ctrl in (btnFindNext, btnReplace, btnReplaceAll, btnInsertEx,
-                     btnClose):
+        for ctrl in (btnFindNext, self.btnReplace, self.btnReplaceAll,
+                     self.btnInsertEx, btnClose):
             ctrl.addActionListener(self.evtHandler)
 
     def loadValues(self, userVars):
@@ -255,25 +254,23 @@ class DlgControls:
         """Enable or disable controls as appropriate."""
         logger.debug(util.funcName('begin'))
         if self.optSearchRefNum.getState() == 1:
-            self.btnReplace.Label = theLocale.getText(
-                "Replace with Example")
-            self.btnReplaceAll.Label = theLocale.getText(
-                "Replace All")
+            self.btnReplace.Label = theLocale.getText("Replace with Example")
+            self.btnReplaceAll.Label = theLocale.getText("Replace All")
             app.setUpdateExamples(False)
             userVars.store("SearchFor", "RefNum")
             self.chkStartFromBeginning.setState(True)
         else:
-            self.btnReplace.Label = theLocale.getText(
-                "Update Example")
-            self.btnReplaceAll.Label = theLocale.getText(
-                "Update All")
+            self.btnReplace.Label = theLocale.getText("Update Example")
+            self.btnReplaceAll.Label = theLocale.getText("Update All")
             app.setUpdateExamples(True)
             userVars.store("SearchFor", "Existing")
             self.chkStartFromBeginning.setState(False)
         if self.single_refnum():
+            self.btnInsertEx.Label = theLocale.getText("Insert this Example")
             self.comboRefnum.Visible = True
             self.listboxRefnum.Visible = False
         else:
+            self.btnInsertEx.Label = theLocale.getText("Insert Examples")
             self.comboRefnum.Visible = False
             self.listboxRefnum.Visible = True
 

@@ -299,6 +299,18 @@ class Locale:
             'fr' :
             "Atteindre exercices",
         },
+        "Insert Examples" : {
+            'es' :
+            "Insertar ejemplos",
+            'fr' :
+            "Insérer exemples",
+        },
+        "Insert this Example" : {
+            'es' :
+            "Insertar este ejemplo",
+            'fr' :
+            "Insérer cet exemple",
+        },
         "Make Empty List" : {
             'es' :
             "Hacer una lista vacía",
@@ -1229,6 +1241,12 @@ class Locale:
             "gramática.",
             'fr' :
             "'Cadre exterieur' doit être dans Configuration de grammaire.",
+        },
+        "To use oxttools, the lxml python library must be installed." : {
+            'es' :
+            "Para usar oxttools, python lxml debe ser instalado.",
+            'fr' :
+            "Pour utiliser oxttools, python lxml doit être installée.",
         },
         "Too many files named like %s." : {
             'es' :

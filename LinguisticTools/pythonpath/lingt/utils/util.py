@@ -25,6 +25,7 @@
 # 23-May-16 JDK  Added a generic UnoObjs doc type.
 # 02-Aug-16 JDK  Added mri().
 # 28-Jul-18 JDK  Uno objects for Draw.
+# 20-Sep-19 JDK  Added natural_sort().
 
 """
 This module is used by most OOLT modules:
@@ -53,6 +54,7 @@ import inspect
 import logging
 import os
 import platform
+import re
 import uno
 
 from com.sun.star.beans import PropertyValue
@@ -244,6 +246,16 @@ def uniqueList(seq):
         if e not in checked:
             checked.append(e)
     return checked
+
+
+def natural_sort(l): 
+    """Sort a list oF strings in natural sort order,
+    for example "1.2" before "1.10".
+    Taken from https://stackoverflow.com/questions/4836710/.
+    """
+    convert = lambda text: int(text) if text.isdigit() else text.lower() 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    return sorted(l, key = alphanum_key)
 
 
 def xray(myObject, unoObjs):
