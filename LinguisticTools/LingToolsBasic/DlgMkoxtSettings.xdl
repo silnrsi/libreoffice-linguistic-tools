@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxtSettings" dlg:left="180" dlg:top="59" dlg:width="341" dlg:height="219" dlg:help-text="&amp;340.DlgMkoxtSettings.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;341.DlgMkoxtSettings.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxtSettings" dlg:left="180" dlg:top="59" dlg:width="341" dlg:height="219" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;341.DlgMkoxtSettings.Title">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:background-color="0xffff99"/>
+ </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:text dlg:id="lblLangTagEx" dlg:tab-index="4" dlg:left="217" dlg:top="105" dlg:width="106" dlg:height="23" dlg:help-text="&amp;365.DlgMkoxtSettings.lblLangTagEx.HelpText" dlg:value="&amp;366.DlgMkoxtSettings.lblLangTagEx.Label" dlg:multiline="true"/>
-  <dlg:button dlg:id="btnOK" dlg:tab-index="9" dlg:left="148" dlg:top="186" dlg:width="61" dlg:height="21" dlg:help-text="&amp;380.DlgMkoxtSettings.btnOK.HelpText" dlg:value="&amp;381.DlgMkoxtSettings.btnOK.Label"/>
-  <dlg:button dlg:id="btnCancel" dlg:tab-index="10" dlg:left="236" dlg:top="184" dlg:width="68" dlg:height="23" dlg:help-text="&amp;384.DlgMkoxtSettings.btnCancel.HelpText" dlg:value="&amp;385.DlgMkoxtSettings.btnCancel.Label"/>
-  <dlg:text dlg:id="lblOutfile" dlg:tab-index="5" dlg:left="20" dlg:top="137" dlg:width="59" dlg:height="21" dlg:help-text="&amp;388.DlgMkoxtSettings.lblOutfile.HelpText" dlg:value="&amp;389.DlgMkoxtSettings.lblOutfile.Label"/>
-  <dlg:text dlg:id="Label5" dlg:tab-index="11" dlg:left="211" dlg:top="22" dlg:width="123" dlg:height="27" dlg:help-text="&amp;390.DlgMkoxtSettings.Label5.HelpText" dlg:value="&amp;391.DlgMkoxtSettings.Label5.Label" dlg:multiline="true"/>
-  <dlg:text dlg:id="Label6" dlg:tab-index="12" dlg:left="217" dlg:top="58" dlg:width="110" dlg:height="19" dlg:help-text="&amp;392.DlgMkoxtSettings.Label6.HelpText" dlg:value="&amp;393.DlgMkoxtSettings.Label6.Label" dlg:multiline="true"/>
-  <dlg:text dlg:id="Label7" dlg:tab-index="13" dlg:left="219" dlg:top="80" dlg:width="104" dlg:height="21" dlg:help-text="&amp;394.DlgMkoxtSettings.Label7.HelpText" dlg:value="&amp;395.DlgMkoxtSettings.Label7.Label" dlg:multiline="true"/>
-  <dlg:text dlg:id="lblWordlist" dlg:tab-index="0" dlg:left="22" dlg:top="29" dlg:width="59" dlg:height="19" dlg:help-text="&amp;407.DlgMkoxtSettings.lblWordlist.HelpText" dlg:value="&amp;408.DlgMkoxtSettings.lblWordlist.Label"/>
-  <dlg:text dlg:id="lblLangName" dlg:tab-index="1" dlg:left="22" dlg:top="56" dlg:width="53" dlg:height="19" dlg:help-text="&amp;409.DlgMkoxtSettings.lblLangName.HelpText" dlg:value="&amp;410.DlgMkoxtSettings.lblLangName.Label"/>
-  <dlg:button dlg:id="btnAdvancedOptions" dlg:tab-index="14" dlg:disabled="true" dlg:left="44" dlg:top="184" dlg:width="82" dlg:height="21" dlg:help-text="&amp;413.DlgMkoxtSettings.btnAdvancedOptions.HelpText" dlg:value="&amp;414.DlgMkoxtSettings.btnAdvancedOptions.Label"/>
-  <dlg:text dlg:id="lblScriptType" dlg:tab-index="2" dlg:left="22" dlg:top="80" dlg:width="55" dlg:height="17" dlg:help-text="&amp;415.DlgMkoxtSettings.lblScriptType.HelpText" dlg:value="&amp;416.DlgMkoxtSettings.lblScriptType.Label"/>
-  <dlg:text dlg:id="lblLangTag" dlg:tab-index="3" dlg:left="20" dlg:top="103" dlg:width="61" dlg:height="23" dlg:help-text="&amp;417.DlgMkoxtSettings.lblLangTag.HelpText" dlg:value="&amp;418.DlgMkoxtSettings.lblLangTag.Label"/>
-  <dlg:textfield dlg:id="txtLangName" dlg:tab-index="6" dlg:left="101" dlg:top="60" dlg:width="78" dlg:height="15" dlg:help-text="&amp;419.DlgMkoxtSettings.txtLangName.HelpText" dlg:value="&amp;420.DlgMkoxtSettings.txtLangName.Text"/>
-  <dlg:menulist dlg:id="listboxScriptType" dlg:tab-index="8" dlg:left="103" dlg:top="82" dlg:width="78" dlg:height="15" dlg:help-text="&amp;421.DlgMkoxtSettings.listboxScriptType.HelpText" dlg:spin="true">
+  <dlg:linklabel dlg:style-id="0" dlg:id="hyperlinkOxttools" dlg:tab-index="17" dlg:left="20" dlg:top="6" dlg:width="165" dlg:height="13" dlg:value="&amp;460.DlgMkoxtSettings.hyperlinkOxttools.Label" dlg:url="https://github.com/silnrsi/oxttools"/>
+  <dlg:text dlg:id="lblLangTagEx" dlg:tab-index="4" dlg:left="217" dlg:top="105" dlg:width="106" dlg:height="23" dlg:value="&amp;366.DlgMkoxtSettings.lblLangTagEx.Label" dlg:multiline="true"/>
+  <dlg:button dlg:id="btnOK" dlg:tab-index="9" dlg:left="148" dlg:top="186" dlg:width="61" dlg:height="21" dlg:value="&amp;381.DlgMkoxtSettings.btnOK.Label"/>
+  <dlg:button dlg:id="btnCancel" dlg:tab-index="10" dlg:left="236" dlg:top="184" dlg:width="68" dlg:height="23" dlg:value="&amp;385.DlgMkoxtSettings.btnCancel.Label"/>
+  <dlg:text dlg:id="lblOutfile" dlg:tab-index="5" dlg:left="20" dlg:top="137" dlg:width="59" dlg:height="21" dlg:value="&amp;389.DlgMkoxtSettings.lblOutfile.Label"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="11" dlg:left="211" dlg:top="22" dlg:width="123" dlg:height="27" dlg:value="&amp;391.DlgMkoxtSettings.Label5.Label" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="12" dlg:left="217" dlg:top="58" dlg:width="110" dlg:height="19" dlg:value="&amp;393.DlgMkoxtSettings.Label6.Label" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label7" dlg:tab-index="13" dlg:left="219" dlg:top="80" dlg:width="104" dlg:height="21" dlg:value="&amp;395.DlgMkoxtSettings.Label7.Label" dlg:multiline="true"/>
+  <dlg:text dlg:id="lblWordlist" dlg:tab-index="0" dlg:left="20" dlg:top="29" dlg:width="59" dlg:height="19" dlg:value="&amp;408.DlgMkoxtSettings.lblWordlist.Label"/>
+  <dlg:text dlg:id="lblLangName" dlg:tab-index="1" dlg:left="20" dlg:top="56" dlg:width="53" dlg:height="19" dlg:value="&amp;410.DlgMkoxtSettings.lblLangName.Label"/>
+  <dlg:button dlg:id="btnAdvancedOptions" dlg:tab-index="14" dlg:disabled="true" dlg:left="44" dlg:top="184" dlg:width="82" dlg:height="21" dlg:value="&amp;414.DlgMkoxtSettings.btnAdvancedOptions.Label"/>
+  <dlg:text dlg:id="lblScriptType" dlg:tab-index="2" dlg:left="20" dlg:top="80" dlg:width="55" dlg:height="17" dlg:value="&amp;416.DlgMkoxtSettings.lblScriptType.Label"/>
+  <dlg:text dlg:id="lblLangTag" dlg:tab-index="3" dlg:left="20" dlg:top="103" dlg:width="61" dlg:height="23" dlg:value="&amp;418.DlgMkoxtSettings.lblLangTag.Label"/>
+  <dlg:textfield dlg:id="txtLangName" dlg:tab-index="6" dlg:left="101" dlg:top="60" dlg:width="78" dlg:height="15" dlg:value="&amp;420.DlgMkoxtSettings.txtLangName.Text"/>
+  <dlg:menulist dlg:id="listboxScriptType" dlg:tab-index="8" dlg:left="103" dlg:top="82" dlg:width="78" dlg:height="15" dlg:spin="true">
    <dlg:menupopup>
     <dlg:menuitem dlg:value="&amp;422.listboxScriptType.StringItemList"/>
     <dlg:menuitem dlg:value="&amp;423.listboxScriptType.StringItemList"/>
@@ -24,8 +28,8 @@
     <dlg:menuitem dlg:value="&amp;426.listboxScriptType.StringItemList"/>
    </dlg:menupopup>
   </dlg:menulist>
-  <dlg:textfield dlg:id="txtLangTag" dlg:tab-index="7" dlg:left="105" dlg:top="107" dlg:width="76" dlg:height="19" dlg:help-text="&amp;427.DlgMkoxtSettings.txtLangTag.HelpText" dlg:value="&amp;428.DlgMkoxtSettings.txtLangTag.Text"/>
-  <dlg:filecontrol dlg:id="fctlWordList" dlg:tab-index="15" dlg:left="101" dlg:top="29" dlg:width="97" dlg:height="17" dlg:help-text="&amp;433.DlgMkoxtSettings.fctlWordList.HelpText"/>
-  <dlg:textfield dlg:id="txtOutfile" dlg:tab-index="16" dlg:left="106" dlg:top="140" dlg:width="106" dlg:height="19" dlg:help-text="&amp;453.DlgMkoxtSettings.txtOutfile.HelpText" dlg:value="&amp;454.DlgMkoxtSettings.txtOutfile.Text"/>
+  <dlg:textfield dlg:id="txtLangTag" dlg:tab-index="7" dlg:left="105" dlg:top="107" dlg:width="76" dlg:height="19" dlg:value="&amp;428.DlgMkoxtSettings.txtLangTag.Text"/>
+  <dlg:filecontrol dlg:id="fctlWordList" dlg:tab-index="15" dlg:left="101" dlg:top="29" dlg:width="97" dlg:height="17"/>
+  <dlg:textfield dlg:id="txtOutfile" dlg:tab-index="16" dlg:left="106" dlg:top="140" dlg:width="106" dlg:height="19" dlg:value="&amp;454.DlgMkoxtSettings.txtOutfile.Text"/>
  </dlg:bulletinboard>
 </dlg:window>

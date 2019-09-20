@@ -17,7 +17,7 @@
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
 
 """
-Dialog for settings to import Phonology examples.
+Dialog for settings to import lexical examples for phonology.
 
 This module exports:
     showDlg()

@@ -67,8 +67,8 @@ class ExServices:
         """
         try:
             self.operations.readData()
-            return sorted([ex.refText
-                           for ex in self.operations.examplesDict.values()])
+            return util.natural_sort(
+                [ex.refText for ex in self.operations.examplesDict.values()])
         except exceptions.MessageError as exc:
             self.msgbox.displayExc(exc)
             raise exceptions.DataNotFoundError("No data found.")

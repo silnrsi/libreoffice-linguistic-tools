@@ -149,25 +149,10 @@
           </node>
           <node oor:name="m10" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
-              <value>service:name.JimK.LinguisticTools.MakeOxt?execute</value>
-            </prop>
-            <prop oor:name="Title" oor:type="xs:string">
-              <value/>
-              <value xml:lang="en">Build Extension for Language</value>
-            </prop>
-            <prop oor:name="Target" oor:type="xs:string">
-              <value>_self</value>
-            </prop>
-            <prop oor:name="Context" oor:type="xs:string">
-              <value>com.sun.star.text.TextDocument</value>
-            </prop>
-          </node>
-          <node oor:name="m11" oor:op="replace">
-            <prop oor:name="URL" oor:type="xs:string">
               <value>private:separator</value>
             </prop>
           </node>
-          <node oor:name="m12" oor:op="replace">
+          <node oor:name="m11" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.WordList?execute</value>
             </prop>
@@ -184,7 +169,7 @@
               <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
-          <node oor:name="m13" oor:op="replace">
+          <node oor:name="m12" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.GoodSpellingsCheck?execute</value>
             </prop>
@@ -193,6 +178,21 @@
               <value xml:lang="en">Make Spelling Changes</value>
               <value xml:lang="es">Hacer cambios ortográficos</value>
               <value xml:lang="fr">Effectuer des changements d'orthographe</value>
+            </prop>
+            <prop oor:name="Target" oor:type="xs:string">
+              <value>_self</value>
+            </prop>
+            <prop oor:name="Context" oor:type="xs:string">
+              <value>com.sun.star.text.TextDocument</value>
+            </prop>
+          </node>
+          <node oor:name="m13" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
+              <value>service:name.JimK.LinguisticTools.MakeOxt?execute</value>
+            </prop>
+            <prop oor:name="Title" oor:type="xs:string">
+              <value/>
+              <value xml:lang="en">Build Extension for Language</value>
             </prop>
             <prop oor:name="Target" oor:type="xs:string">
               <value>_self</value>

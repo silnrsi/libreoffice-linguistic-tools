@@ -129,8 +129,12 @@ class DocumentEnumerator:
         Each text section has a single type of formatting.
         """
         textSections = []
-        for oDrawPage in self.unoObjs.pages:
-            for oShape in oDrawPage:
+        #for oDrawPage in self.unoObjs.pages  # doesn't work in AOO
+        for iDrawPage in range(self.unoObjs.pages.getCount()):
+            oDrawPage = self.unoObjs.pages.getByIndex(iDrawPage)
+            #for oShape in oDrawPage:
+            for iShape in range(oDrawPage.getCount()):
+                oShape = oDrawPage.getByIndex(iShape)
                 if oShape.supportsService("com.sun.star.drawing.TextShape"):
                     textSections += self.textSectionsForShapeEnum(oShape)
         return textSections
