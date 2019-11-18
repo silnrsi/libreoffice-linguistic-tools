@@ -9,11 +9,8 @@ To download the add-on, go to https://extensions.libreoffice.org/extensions/ling
 Help (including installation instructions) is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic%20Tools%20Help.pdf). For complete version history, see [README.txt](/LinguisticTools/help/README.txt)
 
 
-# Technical Notes
+# Notes for Developers
 
 The .oxt file is a zipped file with source code included.  Most of the code is in the pythonpath folder as described [here](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python#Importing_Modules).
 
-More information for developers is in the following files:
-- [README_build.txt](/LinguisticTools/build/README_build.txt)
-- [README_pylint.txt](/LinguisticTools/build/README_pylint.txt)
-- [Design.txt](/Design.txt)
+Information about how to build the add-on is in [README_build.txt](/LinguisticTools/build/README_build.txt)
