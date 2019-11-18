@@ -4,11 +4,10 @@ This add-on inserts lexical and interlinear data from [SIL FieldWorks](http://so
 
 ![OOLT menu](/external%20docs/writer_menu.jpg)
 
-The primary site to download releases is https://extensions.libreoffice.org/extensions/lingtools.  Source code can be downloaded from github.
+To download the add-on, go to https://extensions.libreoffice.org/extensions/lingtools.  Source code is on github.
 
-For installation instructions and version history, see [README.txt](/LinguisticTools/help/README.txt)
+Help (including installation instructions) is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic%20Tools%20Help.pdf). For complete version history, see [README.txt](/LinguisticTools/help/README.txt)
 
-The latest release is [3.0](/releases/tag/3.0).  Help is available from the menu, or you can download it here: [Linguistic Tools Help.pdf](/external%20docs/Linguistic%20Tools%20Help.pdf)
 
 # Technical Notes
 
