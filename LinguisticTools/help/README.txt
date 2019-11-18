@@ -1,73 +1,13 @@
 *******************************************************************************
-* Linguistic Tools add-on for OpenOffice (OOLT)
-* SIL South Asia
+* LibreOffice Linguistic Tools add-on (LOLT)
+* SIL NRSI
 *******************************************************************************
 
-OOLT provides a menu of tools for linguistic writeups and other documents
+LOLT provides a menu of tools for linguistic writeups and other documents
 written in lesser-known languages.
 
-For help, see Linguistics -> Help.
-
-In this file:
-    Requirements
-    Installation instructions
-    Version history
-
-
-*******************************************************************************
-* Requirements
-*******************************************************************************
-
-LibreOffice (LO) or Apache OpenOffice (AOO) is required.  The add-on supports
-both brands equally, and in this document, the name OpenOffice refers
-generically to both.  There is no python support in AOO 4.0 so please upgrade
-to AOO 4.1 or higher.  OOLT is tested on Windows and Linux.  It should work on
-a Mac as well.
-
-For Data Conversion on Windows, download and install the SIL Converters
-application.  On Linux, install FieldWorks which includes the required SIL
-Converters libraries.
-
-In addition to English, this add-on can be used in Spanish or French.  It
-should change automatically when you use OpenOffice in one of those
-languages (Tools -> Options -> Language Settings, Languages).
-
-The latest release of the add-on can be downloaded from
-http://projects.palaso.org/projects/ooolt.
-
-
-*******************************************************************************
-* Installation
-*******************************************************************************
-
-The add-on is installed from a file called LinguisticTools.oxt. When you
-open this file, the OpenOffice Extensions Manager will install it. After it
-finishes, open a Writer document. If the installation was
-successful, you will see a new menu to the right of the Tools menu called
-"Linguistics" as shown in Overview above.
-
-If the extension is not able to install correctly, close all open windows of
-OpenOffice including the quickstarter and then try again.
-
-When installing OpenOffice in Windows, the Python-UNO bridge must be selected.
-This is under Optional components and is selected by default.  In Fedora, the
-Python bridge is not included by default.  You must add either the
-libreoffice-pyuno or python-openoffice package.
-
-If there is an older version of the add-on installed, the Extension Manager
-will first remove the old version.  You may see an error when removing that
-says "Addons.xcu does not exist." Just ignore this error and press ok.  To
-prevent this error, you can delete the user profile
-(check Tools -> Options -> Paths for the location), which will remove any
-existing add-ons and settings.
-
-Sometimes removing an older version may give other error messages such as
-failing to close a bridge. If there are error messages like this, then close
-all open windows of OpenOffice. Then try removing the older version again. You
-may also need to reboot in order for this problem to go away.  Some people have
-reported that re-downloading the extension was needed, especially in areas
-where there is a poor internet connection.
-
+For help, requirements and installation instructions, see Linguistics -> Help,
+or download the help file in PDF format.
 
 *******************************************************************************
 * Version History
@@ -79,7 +19,7 @@ To see which version is installed, go to Tools -> Extension manager.
                  Version 3.9.1 failed to run on linux.
 3.9.1 04-Aug-18  An early version towards 4.0.
                  Data Conversion for Draw - text boxes.
-                 Concept dialog for oxttools.  Requires python lxml library.
+                 Concept dialog for oxttools. Requires python lxml library.
 3.1   19-Jan-18  Select from list of available ref numbers.
 3.0   11-Mar-17  Arrange grammar lines like FieldWorks, not Toolbox.
                  Experimental release of Bulk Conversion.
