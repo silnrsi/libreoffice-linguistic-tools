@@ -4,6 +4,7 @@
 #
 # 01-Aug-18 JDK  Draw search descriptors cannot search by font.
 # 03-Aug-18 JDK  Draw does not have multiple selections.
+# 20-Sep-19 JDK  Cannot iterate over draw pages object in AOO.
 
 """
 Search through shapes in a Draw document, by font or full document.
@@ -129,10 +130,8 @@ class DocumentEnumerator:
         Each text section has a single type of formatting.
         """
         textSections = []
-        #for oDrawPage in self.unoObjs.pages  # doesn't work in AOO
         for iDrawPage in range(self.unoObjs.pages.getCount()):
             oDrawPage = self.unoObjs.pages.getByIndex(iDrawPage)
-            #for oShape in oDrawPage:
             for iShape in range(oDrawPage.getCount()):
                 oShape = oDrawPage.getByIndex(iShape)
                 if oShape.supportsService("com.sun.star.drawing.TextShape"):

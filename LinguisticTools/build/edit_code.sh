@@ -1,27 +1,21 @@
 #!/bin/sh
 # Created 28-Jan-2013 by Jim K
 #
+# 2019-11-18 JDK  Open files recursively.
+#
 # Open all code in pythonpath for editing using Vim, with each package in
 # a separate window.
 #
 
-BASEPATH="/media/OurDocs/computing/Office/OOLT/LinguisticTools/pythonpath"
-gvim "$BASEPATH/lingt/UI/"*.py &
+#BASEPATH="/media/OurDocs/computing/Office/OOLT/LinguisticTools/pythonpath"
+BASEPATH="/home/jkornels/LOLT_dev_extra/LinguisticTools/pythonpath"
+gvim `find $BASEPATH/lingt/ui/ -name *.py`
 # Wait for window to open before opening another one,
 # so that it appears in the correct order in the task bar.
 sleep 2
-gvim "$BASEPATH/lingt/App/"*.py &
+gvim `find $BASEPATH/lingt/app/ -name *.py`
 sleep 2
-gvim "$BASEPATH/lingt/Access/Writer/"*.py &
+gvim `find $BASEPATH/lingt/access/ -name *.py`
 sleep 2
-gvim "$BASEPATH/lingt/Access/Calc/"*.py &
-sleep 2
-gvim "$BASEPATH/lingt/Access/PlainText/"*.py &
-sleep 2
-gvim "$BASEPATH/lingt/Access/Xml/"*.py &
-sleep 2
-gvim "$BASEPATH/lingt/Access/"*.py &
-sleep 2
-gvim "$BASEPATH/lingt/Utils/"*.py &
+gvim `find $BASEPATH/lingt/utils/ -name *.py`
 sleep 1
-

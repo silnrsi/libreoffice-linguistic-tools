@@ -14,6 +14,8 @@
 # 18-Aug-15 JDK  Added logging for this level.
 # 05-Oct-15 JDK  Log exceptions with logger.exception().
 # 28-Jul-18 JDK  Added menu for Draw.
+# 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
+
 """
 Handles the events from the Linguistics menu, defined in Addons.xcu.
 
@@ -51,16 +53,14 @@ from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
 # Change them depending on your system.
 # Also change lingt/utils/util.py and tests/ComponentsWrapper.py
 
-#LOGGING_ENABLED = False
-LOGGING_ENABLED = True  # Uncomment to turn on.
+LOGGING_ENABLED = False
+#LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    ROOTDIR = r"C:\OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT_dev_extra\debug.txt"
+    BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
 else:
-    ROOTDIR = "/mnt/sf_OurDocs"
-#TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-#    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
-
+    #BASE_FOLDER = "/mnt/sf_OurDocs"
+    BASE_FOLDER = "/home/jkornels/LOLT_dev_extra"
+TOPLEVEL_LOGGER_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 
 class SimpleLogManager:
     """The main logging is set up in pythonpath/lingt/utils/util.py.

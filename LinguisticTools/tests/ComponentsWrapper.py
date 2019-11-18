@@ -5,6 +5,7 @@
 # 05-Oct-15 JDK  Log exceptions with logger.exception().
 # 17-May-16 JDK  Added function to reload sys.modules.
 # 30-Jul-18 JDK  Added Data Conversion for Draw.
+# 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
 
 """
 This is like Components.py but for code run from the user directory,
@@ -47,13 +48,11 @@ from lingt.utils import util
 LOGGING_ENABLED = False
 #LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    ROOTDIR = r"C:\OurDocs"
-    TOPLEVEL_LOGGER_FILEPATH = r"D:\dev\OOLT_dev_extra\debug.txt"
+    BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
 else:
-    ROOTDIR = "/mnt/sf_OurDocs"
-#TOPLEVEL_LOGGER_FILEPATH = os.path.join(
-#    ROOTDIR, "computing", "Office", "OOLT_dev_extra", "debug.txt")
-
+    #BASE_FOLDER = "/mnt/sf_OurDocs"
+    BASE_FOLDER = "/home/jkornels/LOLT_dev_extra"
+TOPLEVEL_LOGGER_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 
 class SimpleLogManager:
     """The main logging is set up in pythonpath/lingt/utils/util.py.
