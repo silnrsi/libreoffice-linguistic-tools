@@ -75,6 +75,8 @@ where there is a poor internet connection.
 
 To see which version is installed, go to Tools -> Extension manager.
 
+3.9.2 18-Nov-19  Update documentation to say LibreOffice.
+                 Version 3.9.1 failed to run on linux.
 3.9.1 04-Aug-18  An early version towards 4.0.
                  Data Conversion for Draw - text boxes.
                  Concept dialog for oxttools.  Requires python lxml library.
