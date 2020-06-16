@@ -4,19 +4,19 @@
  <library:element library:name="DlgAbbreviations"/>
  <library:element library:name="DlgApplyConverter"/>
  <library:element library:name="DlgBulkConversion"/>
- <library:element library:name="DlgDataConversion"/>
+ <library:element library:name="DlgChangerMaker"/>
  <library:element library:name="DlgDataConv_Draw"/>
+ <library:element library:name="DlgDataConversion"/>
  <library:element library:name="DlgExGrab"/>
  <library:element library:name="DlgGrammarSettings"/>
+ <library:element library:name="DlgMkoxtSettings"/>
  <library:element library:name="DlgPhnlgySettings"/>
  <library:element library:name="DlgScriptPractice"/>
+ <library:element library:name="DlgSpellReplace"/>
+ <library:element library:name="DlgSpellSearch"/>
+ <library:element library:name="DlgSpellStep"/>
  <library:element library:name="DlgSpellingAdjustments"/>
  <library:element library:name="DlgWordList"/>
  <library:element library:name="DlgWordListFile"/>
  <library:element library:name="DlgWritingSystem"/>
- <library:element library:name="DlgSpellSearch"/>
- <library:element library:name="DlgSpellReplace"/>
- <library:element library:name="DlgSpellStep"/>
- <library:element library:name="DlgChangerMaker"/>
- <library:element library:name="DlgMkoxtSettings"/>
 </library:library>

@@ -1,3 +1,3 @@
 #
-# Package for OOoLT tests.
+# Package for LOLT tests.
 #

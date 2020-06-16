@@ -1,23 +1,13 @@
 #!/usr/bin/python
 
-from argparse import ArgumentParser
-import codecs
-import logging
-try:
-    import lxml.etree as et
-except ImportError:
-    et = None
-import os
-import sys
-import time
+import time, os, codecs, sys
+#from argparse import ArgumentParser
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
+import xml.etree.ElementTree as et
 
-from lingt.ui.common.messagebox import MessageBox
-from lingt.utils import util
 import oxttools.hunspell as hs
+import oxttools.modified_etree as metree
 import oxttools.xmltemplate as xtmpl
-
-logger = logging.getLogger("oxttools.makeoxt")
 
 if sys.version_info[0] >= 3 :
     unicode = str
@@ -54,6 +44,7 @@ langsing = ( "ar", "bs", "ckb", "cz", "dsb", "dz", "eu", "en", "eo", "fr", "ia",
             "ie", "iu", "jbo", "ks", "la", "mn", "nb", "nn", "pnb", "qtz", "sh",
             "sma", "smj", "smn", "sms", "sr", "tg", "uz", "zh" )
 
+
 def zipadd(zipfile, data, fname) :
     zinfo = ZipInfo()
     zinfo.filename = fname
@@ -67,25 +58,31 @@ def ziphunspell(ozip, hun, name) :
         zipadd(ozip, hun.getaff().encode('utf-8'), 'dictionaries/' + name + '.aff')
         zipadd(ozip, hun.getdic().encode('utf-8'), 'dictionaries/' + name + '.dic')
 
-def zipnfcfile(ozip, fin, fout, affix=None) :
+def zipnfcfile(ozip, fin, fout, normalize, affix=None) :
     dat = ""
     with open(fin) as fd :
-        dat += u"\n".join([unicodedata.normalize('NFC', x) for x in fd.readlines()])
+        if normalize in ('NFC','NFD'):
+            dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
+        else:
+            dat += u"\n".join([x for x in fd.readlines()])
     if affix is not None :
-        with oepn(affix) as fd:
-            dat += u"\n".join([unicodedata.normalize('NFC', x) for x in fd.readlines()])
+        with open(affix) as fd:
+            if normalize in ('NFC','NFD'):
+                dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
+            else:
+                dat += u"\n".join([x for x in fd.readlines()])
     zipadd(ozip, dat.replace("\uFEFF", ""), fout)
+
+scripttypes = {
+    'west' : 1,
+    'asian' : 2,
+    'ctl' : 3,
+    'rtl' : 4,
+    'none' : ""
+}
 
 def make(settings, msgbox):
     msgbox.display("Starting oxttools.makeoxt.make().")
-    scripttypes = {
-        'west' : 1,
-        'asian' : 2,
-        'ctl' : 3,
-        'rtl' : 4,
-        'none' : ""
-    }
-
     #parser = ArgumentParser()
     #parser.add_argument('langtag',help='language tag for this extension')
     #parser.add_argument('outfile',help='output oxt file')
@@ -95,12 +92,14 @@ def make(settings, msgbox):
     #parser.add_argument('-l','--langname',help='Language name for UI strings')
     #parser.add_argument('-d','--dict',help='Wordlist dictionary. For hunspell dictionaries, specify the .aff file. Will try to infer what kind of xml')
     #parser.add_argument('-a','--affix',help='Merge the given affix file data into the generated .aff file')
+    #parser.add_argument('-n','--normalize',default="NFC",help="normalize to NFC, NFD or none")
     #parser.add_argument('-v','--version',default='0.1',help='OXT version number')
     #parser.add_argument('--dicttype',help='Specifies dictionary type [hunspell, pt, ptall, text]')
     #parser.add_argument('--publisher',help='Name of publisher')
     #parser.add_argument('--puburl',default='',help='URL of publisher')
     #args = parser.parse_args()
     args = settings
+
 
     resdir = os.path.join(os.path.dirname(xtmpl.__file__), 'data')
     scripttype = scripttypes.get(args.type.lower(), 1)
@@ -180,12 +179,12 @@ def make(settings, msgbox):
         elif args.dicttype == 'pt' or args.dicttype == 'ptall' :
             itemcount = 0
             wordcount = 0
-            doc = et.parse(args.dict)
-            hun = hs.Hunspell(args.langtag, puncs=args.word)
-            for e in doc.findall('//item') :
+            doc = et.parse(args.dict).getRoot()
+            hun = hs.Hunspell(args.langtag, args.normalize, puncs=args.word)
+            for e in doc.iter('item') :
                 itemcount += 1
                 if args.dicttype != 'ptall' and e.attrib['spelling'] != 'Correct' : continue
-                hun.addword(unicode(e.attrib['word']))
+                hun.addword(unicode(e.get('word')))
                 wordcount += 1
             if wordcount * 4 < itemcount :  #warn if less than 25% of the words are valid
                 print("Warning: only {:.0f}% of the words marked as correct and entered into the dictionary. Consider using --dicttype ptall".format(wordcount / float(itemcount) * 100))
@@ -193,7 +192,7 @@ def make(settings, msgbox):
                 hun.mergeaffix(args.affix)
             ziphunspell(ozip, hun, args.langtag)
         elif args.dicttype == 'text' :
-            hun = hs.Hunspell(args.langtag, puncs=args.word)
+            hun = hs.Hunspell(args.langtag, args.normalize, puncs=args.word)
             with codecs.open(args.dict, encoding='utf-8') as infile :
                 for l in infile.readlines() :
                     hun.addword(l.replace("\uFEFF", "").strip())
@@ -202,5 +201,3 @@ def make(settings, msgbox):
             ziphunspell(ozip, hun, args.langtag)
 
     ozip.close()
-    msgbox.display("Finished oxttools.makeoxt.make().")
-    

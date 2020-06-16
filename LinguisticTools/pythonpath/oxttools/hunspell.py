@@ -3,23 +3,34 @@ import codecs
 import unicodedata
 import itertools
 
+try:
+    # verify that it is defined
+    unichr
+except NameError:
+    # define it for Python 3
+    unichr = chr
+
 def decompose(s) :
     return "".join([unichr(int(x, 16)) for x in unicodedata.decomposition(s).split()])
     
 
 class Hunspell(object) :
 
-    def __init__(self, name, puncs="") :
+    def __init__(self, name, normalize, puncs="") :
         self.name = name
         self.words = set()
         self.affix = ""
         self.chars = set()
         self.ignore = set()
         self.puncs = puncs
+        self.normalize = normalize
 
     def addword(self, word) :
         if len(word) :
-            line = unicodedata.normalize('NFC', word)
+            if self.normalize in ('NFC','NFD'):
+                line = unicodedata.normalize('NFC', word)
+            else:
+                line = word
             for dat in line.split() :  # no phrases, just words
                 self.words.add(dat)
                 i = 0

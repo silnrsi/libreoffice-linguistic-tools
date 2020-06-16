@@ -7,7 +7,7 @@
 # a separate window.
 #
 
-#BASEPATH="/media/OurDocs/computing/Office/OOLT/LinguisticTools/pythonpath"
+#BASEPATH="/media/OurDocs/computing/Office/LOLT/LinguisticTools/pythonpath"
 BASEPATH="/home/jkornels/LOLT_dev_extra/LinguisticTools/pythonpath"
 gvim `find $BASEPATH/lingt/ui/ -name *.py`
 # Wait for window to open before opening another one,

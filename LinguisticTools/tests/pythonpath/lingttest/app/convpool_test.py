@@ -6,7 +6,7 @@
 
 """
 Test using multiple SEC calls.
-In most of OOLT there is a one to one correspondence between calls and
+In most of LOLT there is a one to one correspondence between calls and
 components, but bulk conversion requires more than one call.
 Make sure converters get removed from the pool if no longer used.
 

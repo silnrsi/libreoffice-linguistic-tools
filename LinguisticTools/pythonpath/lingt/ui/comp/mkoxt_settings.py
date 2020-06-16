@@ -21,6 +21,7 @@ from lingt.access.writer.uservars import Syncable
 from lingt.app import exceptions
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
+from lingt.ui.common import filepicker
 from lingt.ui.common.dlgdefs import DlgMkoxtSettings as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -34,11 +35,12 @@ class MkoxtSettings(Syncable):
         self.langtag = ""
         self.outfile = ""
         self.word = ""  # word-forming punctuation list
-        self.type = "none"  # script type
+        self.type = "west"  # script type
         self.font = ""
         self.langname = ""
         self.dict = ""
         self.affix = ""
+        self.normalize = "NFC"
         self.version = ""
         self.dicttype = ""
         self.publisher = ""
@@ -104,16 +106,33 @@ class DlgMkoxtSettings:
             _mkoxt(self.settings, self.msgbox)
         dlg.dispose()
 
+    def showFilePicker(self):
+        logger.debug(util.funcName('begin'))
+        OXT_EXT = ".oxt"
+        extension = OXT_EXT
+        defaultFilename = "MyLanguage" + extension
+        filters = [
+            ["OpenOffice Extension (%s)" % OXT_EXT, "*" + OXT_EXT]]
+        filepath = filepicker.showFilePicker(
+            self.unoObjs, True, filters, defaultFilename)
+        logger.debug(repr(filepath))
+        if filepath == "":
+            logger.debug("No filepath specified.")
+            return
+        if not filepath.lower().endswith(extension):
+            filepath = "{}{}".format(filepath, extension)
+        self.dlgCtrls.txtOutfile.setText(filepath)
+        logger.debug("set filepath to '%s'", filepath)
+
     def closeAndRun(self):
         logger.debug(util.funcName('begin'))
-        try:
-            import lxml.etree as et
-            from lxml.etree import XPathEvalError
-        except ImportError:
-            self.msgbox.display(
-                "To use oxttools, the lxml python library must be installed.")
-            self.dlgClose()
-            return
+        #try:
+        #    import lxml.etree as et
+        #except ImportError:
+        #    self.msgbox.display(
+        #        "To use oxttools, the lxml python library must be installed.")
+        #    self.dlgClose()
+        #    return
         try:
             self.settings = self.dlgCtrls.getFormResults()
             self.runOnClose = True
@@ -136,16 +155,18 @@ class DlgControls:
         self.listboxScriptType = ctrl_getter.get(_dlgdef.LISTBOX_SCRIPT_TYPE)
         self.txtLangTag = ctrl_getter.get(_dlgdef.TXT_LANG_TAG)
         self.txtOutfile = ctrl_getter.get(_dlgdef.TXT_OUTFILE)
+        btnBrowse = ctrl_getter.get(_dlgdef.BTN_BROWSE)
         btnAdvancedOptions = ctrl_getter.get(_dlgdef.BTN_ADVANCED_OPTIONS)
         btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
         btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         ## Listeners
 
+        btnBrowse.setActionCommand("ShowFilePicker")
         btnAdvancedOptions.setActionCommand("AdvancedOptions")
         btnOK.setActionCommand("Close_and_Run")
         btnCancel.setActionCommand("Cancel")
-        for ctrl in (btnAdvancedOptions, btnOK, btnCancel):
+        for ctrl in (btnBrowse, btnAdvancedOptions, btnOK, btnCancel):
             ctrl.addActionListener(self.evtHandler)
 
     def loadValues(self):
@@ -182,7 +203,9 @@ class DlgEventHandler(XActionListener, unohelper.Base):
     def actionPerformed(self, event):
         """XActionListener event handler.  Handle which button was pressed."""
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
-        if event.ActionCommand == "AdvancedOptions":
+        if event.ActionCommand == "ShowFilePicker":
+            self.mainForm.showFilePicker()
+        elif event.ActionCommand == "AdvancedOptions":
             pass
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()

@@ -1,7 +1,7 @@
 # vim: set filetype=conf :
 # Created by Jim Kornelsen on June 22 2015
 #
-# This document describes using pylint to check for OOLT programming errors.
+# This document describes using pylint to check for LOLT programming errors.
 
 Pylint is useful for catching python errors such as print(self.x) when
 self.x has never been used.

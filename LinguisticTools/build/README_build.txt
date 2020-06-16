@@ -10,7 +10,7 @@
 # Building the code
 #------------------------------------------------------------------------------
 
-I use three different methods for building and running the OOLT extension.  The
+I use three different methods for building and running the LOLT extension.  The
 first is to manually select the folders, zip it up, rename as .oxt and then
 double-click to deploy in LibreOffice.  This is simple but somewhat tedious.
 
@@ -22,12 +22,12 @@ For the third method, do not zip it.  Run it from the user directory:
 1. Go to Tools -> Extension Manager and remove Linguistic Tools if it exists.
 2. Go to Tools -> Macros -> Organize Dialogs.
    Under the Library tab, create a library named LingToolsBasic.
-   Also under the Dialogs tab, I selected LingToolsBasic and created a new
-   dialog, because otherwise it didn't seem to notice the new library.
-   Also, copy the LinguisticTools/LingToolsBasic folder to <user dir>/basic.
-3. Run deploy_to_userdir.ps1 which copies files to Scripts/python in
-   the OpenOffice or LibreOffice user directory.
-4. From OpenOffice go to Tools -> Macros -> Run macro.
+   Also, under the Dialogs tab, select LingToolsBasic and create a new
+   dialog, because otherwise it doesn't recognize the new library.
+   Then, copy the LinguisticTools/LingToolsBasic folder to <user dir>/basic.
+,3. Run deploy_to_userdir.ps1 which copies files to Scripts/python in
+   the LibreOffice user directory.
+4. From LibreOffice go to Tools -> Macros -> Run macro.
    Do not use the Linguistics menu with this approach.
 
 The benefits of the third approach are:
@@ -36,7 +36,7 @@ The benefits of the third approach are:
   user directory
 - Does not deploy as an uno package, so there is less chance of the uno
   package registry getting corrupt when making a large number of changes.
-- No need to restart OpenOffice to deploy changes.
+- No need to restart LibreOffice to deploy changes.
   However, to avoid restarting, it is necessary to run aaa_del_sys_modules().
   See tests/ComponentsWrapper.py for details about this function.
 

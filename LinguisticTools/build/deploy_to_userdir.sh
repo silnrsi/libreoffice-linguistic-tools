@@ -37,7 +37,7 @@ mkdir -p $DEPLOY_PYTHONPATH
 cp -r "$SRCDIR/pythonpath/"* $DEPLOY_PYTHONPATH
 cp -r "$TESTDIR/pythonpath/"* $DEPLOY_PYTHONPATH
 cp -v "$TESTDIR/runTestSuite.py" $DEPLOY_PY
-cp -v "$TESTDIR/componentsWrapper.py" $DEPLOY_PY
+cp -v "$TESTDIR/ComponentsWrapper.py" $DEPLOY_PY
 
 DEPLOY_BASIC="$DEPLOYDIR/basic/LingToolsBasic"
 cp "$SRCDIR/LingToolsBasic/"* $DEPLOY_BASIC

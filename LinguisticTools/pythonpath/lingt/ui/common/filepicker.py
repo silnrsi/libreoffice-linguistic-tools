@@ -44,6 +44,7 @@ def showFilePicker(genericUnoObjs, save=False, filters=None,
         logger.debug("Default filename %s", defaultFilename)
         dlg.setDefaultName(defaultFilename)
     if save:
+        # XXX: Shows "open" dialog in LO 6.4 on Windows
         dlgType = FILESAVE_SIMPLE
     else:
         dlgType = FILEOPEN_SIMPLE

@@ -2,7 +2,7 @@
 #
 # read_error_messages.pl
 #
-# Reads OOoLT code and outputs all possible error messages.
+# Reads LOLT code and outputs all possible error messages.
 # Also outputs all existing translations given in Locale.py.
 # Outputs "NO" if a message is in Locale.py but not used elsewhere,
 # in which case it can probably be removed from Locale.py.
