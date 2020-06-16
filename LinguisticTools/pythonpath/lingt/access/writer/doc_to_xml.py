@@ -79,7 +79,7 @@ class DocToXml:
 
     def make_temp_dir(self):
         """Make temporary directory to extract .odt file contents."""
-        self.tempBaseDir = os.path.join(self.outdir, 'OOLT Converted Files')
+        self.tempBaseDir = os.path.join(self.outdir, 'LOLT Converted Files')
         if not os.path.exists(self.tempBaseDir):
             try:
                 os.makedirs(self.tempBaseDir)

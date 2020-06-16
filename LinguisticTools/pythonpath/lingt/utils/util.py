@@ -29,7 +29,7 @@
 # 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
 
 """
-This module is used by most OOLT modules:
+This module is used by most LingTools modules:
 - Logging and debugging
 - Manage OpenOffice UNO objects
 
@@ -69,7 +69,7 @@ from com.sun.star.uno import RuntimeException
 LOGGING_ENABLED = False
 #LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
+    BASE_FOLDER = r"C:\OurDocs\computing\Office\LOLT_dev_extra"
 else:
     #BASE_FOLDER = "/mnt/sf_OurDocs"
     BASE_FOLDER = "/home/jkornels/LOLT_dev_extra"

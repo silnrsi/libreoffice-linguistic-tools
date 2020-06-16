@@ -4,10 +4,11 @@
 # Created on March 21 2016 by Jim Kornelsen.
 #
 # 22-Feb-17 JDK  Remove final blank line to keep pylint happy.
+# 15-Jun-20 JDK  Allow script to run from different directory.
 
 """
 Parse data from dialog definition files.
-Used to generate lingt/ui/dlg_defs.py.
+Used to generate lingt/ui/common/dlgdefs.py.
 """
 from collections import namedtuple
 import datetime
@@ -17,8 +18,7 @@ import re
 FILEPATH = os.path.realpath(__file__)
 CURRENT_DIR = os.path.dirname(FILEPATH)
 INFOLDER_PATH = os.path.join(CURRENT_DIR, "../../LingToolsBasic")
-OUTFILE = "out/dlgdefs.py"
-
+OUTFILE = os.path.join(CURRENT_DIR, "out/dlgdefs.py")
 
 FileTuple = namedtuple('FileTuple', ['path', 'name'])
 

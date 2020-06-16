@@ -268,24 +268,6 @@ def differentPlaces(oCurs1, oCurs2):
         logger.info("Could not compare region.")
         return False
 
-#def moreToGoInRegion(oLCurs, oRCurs):
-#    """
-#    As of OOLT 1.2.5, compareVC() is used instead of this method
-#    because it works better with nested tables.
-#    Returns 1 if more to go, 0 if same, and -1 if past the end.
-#    If comparison is not possible, returns 1.
-#    """
-#    try:
-#        oText = oRCurs.getText()
-#        return oText.compareRegionEnds(oLCurs, oRCurs)
-#    except IllegalArgumentException:
-#        logger.debug(
-#            "compareRegion failed, perhaps because of nested tables")
-#        rText = InText(oRCurs)
-#        lText = InText(oLCurs)
-#        logger.debug(rText.describeComparison(lText))
-#        return 1
-
 class RangeCompare:
     """Compare the viewcursor to a text range (a location).
     Can be useful when traversing a cursor over a range.
@@ -311,9 +293,11 @@ class RangeCompare:
 
     def compareVC(self):
         """Compare the viewcursor to the range.
+        This works better with nested tables than oText.compareRegionEnds().
         Assume we are travelling with the viewcursor.
         See if it is up to the end yet or not.
         The comparison is done by checking the physical position of the cursor.
+
         Returns -1 if the VC location is less than self.rangeEnd, 0 if it is
         the same, and 1 if it is greater.
         Returns -2 if they are on the same line but not in the same spot, and

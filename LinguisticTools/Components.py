@@ -105,7 +105,7 @@ class SimpleLogManager:
             return
         if self.logger:
             return
-        self.logger = logging.getLogger('oolt.Components')
+        self.logger = logging.getLogger('lolt.Components')
         loggingFh = logging.FileHandler(TOPLEVEL_LOGGER_FILEPATH)
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         loggingFh.setFormatter(formatter)

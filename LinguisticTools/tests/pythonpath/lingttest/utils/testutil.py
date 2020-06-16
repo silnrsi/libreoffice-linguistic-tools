@@ -369,4 +369,4 @@ def output_path(filename):
     or just ignored.
     """
     return os.path.join(
-        os.path.expanduser("~"), "Documents", "OOLT_testing", filename)
+        os.path.expanduser("~"), "Documents", "LOLT_testing", filename)

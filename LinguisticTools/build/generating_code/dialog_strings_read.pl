@@ -16,7 +16,7 @@
 # strings list, and populate localized menuitem values by code.
 #
 # For now, set all help text to "" since we don't use it.
-# This could possibly change in a future version of OOoLT.
+# This could possibly change in a future version of LOLT.
 #
 # Created by Jim on March 22 2013
 #

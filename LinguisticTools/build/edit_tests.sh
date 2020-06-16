@@ -5,7 +5,7 @@
 # a separate window.
 #
 
-BASEPATH="/media/OurDocs/computing/Office/OOLT/LinguisticTools/developing/tests"
+BASEPATH="/media/OurDocs/computing/Office/LOLT/LinguisticTools/developing/tests"
 gvim "$BASEPATH/"*.py &
 # Wait for window to open before opening another one,
 # so that it appears in the correct order in the task bar.
