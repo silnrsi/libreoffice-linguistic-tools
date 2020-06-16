@@ -9,14 +9,6 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-## data conversion may still require 32-bit LO
-
-No, it works on Windows.
-LO Version: 6.4.3.2 (x64)
-C:\Program Files\SIL\FieldWorks 9\ECDriver.dll
-ICU transliterators seem to have a problem.
-TECkit, CC, and Perl are working.
-
 ## Linux Data Conversion error 09-Mar-2017
 
 This is probably a SilConverters ECDriver error, not a LingTools error.
@@ -26,34 +18,34 @@ Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such fi
 
 ## LingTools 4.0 (progressively with 3.9.xb)
 {
-    create oxt
-
     fix problem of nothing happening when menu options first used
         perhaps not able to create dialog because no attribute such as dlg:helptext
 
-    - warn about duplicate IDs before closing Interlinear Setup
+    warn about duplicate IDs before closing Interlinear Setup
         """"The following Ref Numbers have duplicates: 1, 2.1, 2.2, 3, ...271 more.
         #And for Interlinear but not Phonology
         Either change the numbers or, if they are in different texts, add a
         prefix for each text.
         """
-    - check if only one number in paragraph and remove .1
-    - Sorteddict is not helpful.  Instead, put in a list, and create lookup dict.
-
     Make check box to pull ref numbers from FW hidden?
-    People want to check it but it normally shouldn't be used.
+        People want to check it but it normally shouldn't be used.
+    check if only one number in paragraph and remove .1
+    Sorteddict is not helpful.  Instead, put in a list, and create lookup dict.
+
+    create oxt - use xml.etree code and create dialogs for it
 
     Use configuration instead of user vars for Calc and Draw.
     Possibly put global settings in config and doc settings in user vars.
     Abbrevs and interlinear setup should be per document, not per user.
     Either create a special dialog to edit them ("LingTools Settings"),
-    or perhaps extension settings are good enough.
+        or perhaps extension settings are good enough.
 
-    "Interlinear Setup / Examples" rather than "Grammar Settings / Examples",
-    but "Phonology Setup" rather than "Lexicon Setup".
-    "LingTools" rather than "Linguistics" to avoid confusion with Writer built-in
-    features.
+    get all tests to pass again
+        primary difficulty is data conversion
+        maybe not all tests need to pass on ubuntu
 }
+
+##
 
 Pull senses from lexicon as separate entries if found.
 
@@ -343,6 +335,14 @@ This can be changed by editing the style manually,
 but people may not know to do that.
 
 
+##
+
+Menu could be "LingTools" rather than "Linguistics" to avoid confusion with
+Writer built-in features.
+However there is no other "Linguistics" menu option, and probably no one
+has gotten confused about this.
+
+
 ## reorganizing idea 28-Apr-16
 
 MessageBox and UserVars go along with the document, like UnoObjs.
@@ -483,7 +483,7 @@ Question: When the extension is installed, where does the python code go?
           Can a button call it that way too?
 
 
-## Possible OOLT 4.0 version
+## Possible new major version
 
 Connect directly to FieldWorks,
 which means no need to save as XML,
@@ -504,12 +504,9 @@ FW database.
 # Version compatibility
 #------------------------------------------------------------------------------
 OOo 3.0.0 on Win uses Python version 2.3.4
-For OOoLT 2.0, aim for compatibility for Python 2.6, 2.7 and 3.0+.
-- This allows 'as' exceptions, whereas 2.5 does not.
-- give up on 2.5 for now, and see what AOO/LO versions that covers.
-
 set(fontList) does not work.  Instead use Utils.uniqueList().
 RuntimeError, IOError as exc -- change to (RuntimeError, IOError), exc
+    'as' exceptions require Python 2.6
 In older versions of python it is illegal to add () after a class declaration.
 The @staticmethod decorator is new in version 2.4, so it does not work.
 sort(key = ) does not work. Instead pass a function that compares values.
@@ -671,6 +668,13 @@ A small Python project that I wrote is an entirely different matter:
 # Done
 #------------------------------------------------------------------------------
 
+data conversion may still require 32-bit LO
+    No, it works on Windows.
+    LO Version: 6.4.3.2 (x64)
+    C:\Program Files\SIL\FieldWorks 9\ECDriver.dll
+    ICU transliterators seem to have a problem.
+    TECkit, CC, and Perl are working.
+
 for version 4.0
     choose interlin/phon examples from list
     documentation should say "LibreOffice" instead of "OpenOffice Lin..."
@@ -679,6 +683,8 @@ for version 4.0
     - match case insensitive for lookup
     - be sure list is sorted 1, 2.1, 2.2, 3, 4, 5.1 etc.
     Draw conversion
+    "Interlinear Setup / Examples" rather than "Grammar Settings / Examples",
+        but "Phonology Setup" rather than "Lexicon Setup".
 
 user var for phonology flex fields
 
