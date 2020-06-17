@@ -29,36 +29,60 @@ from oxttools.makeoxt import make as _mkoxt
 
 logger = logging.getLogger("lingt.ui.dlgmkoxtsettings")
 
+SCRIPT_TYPES = [
+    'west',
+    'asian',
+    'ctl',
+    'rtl',
+    'none'
+    ]
+
 class MkoxtSettings(Syncable):
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)
         self.langtag = ""
         self.outfile = ""
         self.word = ""  # word-forming punctuation list
-        self.type = "west"  # script type
+        self.type = 'west'
         self.font = ""
         self.langname = ""
         self.dict = ""
         self.affix = ""
-        self.normalize = "NFC"
+        self.normalize = 'NFC'
         self.version = ""
         self.dicttype = ""
         self.publisher = ""
         self.puburl = ""
 
     def loadUserVars(self):
-        self.dict = self.userVars.get("WordList")
-        self.langname = self.userVars.get("LangName")
-        self.type = self.userVars.get("ScriptType")
         self.langtag = self.userVars.get("LangTag")
         self.outfile = self.userVars.get("Outfile")
+        self.word = self.userVars.get("WordFormingPunct")
+        self.type = self.userVars.getWithDefault("ScriptType", self.type)
+        self.font = self.userVars.get("Font")
+        self.langname = self.userVars.get("LangName")
+        self.dict = self.userVars.get("WordList")
+        self.affix = self.userVars.get("AffixFile")
+        self.normalize = self.userVars.getWithDefault("Normalize", 'NFC')
+        self.version = self.userVars.get("Version")
+        self.dicttype = self.userVars.get("DictType")
+        self.publisher = self.userVars.get("Publisher")
+        self.puburl = self.userVars.get("PublisherURL")
 
     def storeUserVars(self):
-        self.userVars.store("WordList", self.dict)
-        self.userVars.store("LangName", self.langname)
-        self.userVars.store("ScriptType", self.type)
         self.userVars.store("LangTag", self.langtag)
         self.userVars.store("Outfile", self.outfile)
+        self.userVars.store("WordFormingPunct", self.word)
+        self.userVars.store("ScriptType", self.type)
+        self.userVars.store("Font", self.font)
+        self.userVars.store("LangName", self.langname)
+        self.userVars.store("WordList", self.dict)
+        self.userVars.store("AffixFile", self.affix)
+        self.userVars.store("Normalize", self.normalize)
+        self.userVars.store("Version", self.version)
+        self.userVars.store("DictType", self.dicttype)
+        self.userVars.store("Publisher", self.publisher)
+        self.userVars.store("PublisherURL", self.puburl)
 
 
 def showDlg(ctx=uno.getComponentContext()):
@@ -174,7 +198,7 @@ class DlgControls:
         settings.loadUserVars()
         self.fctlWordList.setText(settings.dict)
         self.txtLangName.setText(settings.langname)
-        self.listboxScriptType.selectItem(settings.type, True)
+        self.listboxScriptType.selectItemPos(1, True)
         self.txtLangTag.setText(settings.langtag)
         self.txtOutfile.setText(settings.outfile)
 
@@ -186,7 +210,8 @@ class DlgControls:
         settings = MkoxtSettings(self.userVars)
         settings.dict = self.fctlWordList.getText()
         settings.langname = self.txtLangName.getText()
-        settings.type = self.listboxScriptType.getSelectedItem()
+        settings.type = SCRIPT_TYPES[
+            self.listboxScriptType.getSelectedItemPos()]
         settings.langtag = self.txtLangTag.getText()
         settings.outfile = self.txtOutfile.getText()
         settings.storeUserVars()

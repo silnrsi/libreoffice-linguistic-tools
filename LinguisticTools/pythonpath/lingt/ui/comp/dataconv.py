@@ -446,6 +446,7 @@ class DlgEventHandler(XActionListener, XTextListener, XItemListener,
 
     @evt_handler.log_exceptions
     def textChanged(self, textEvent):
+        """XTextListener event handler."""
         logger.debug(util.funcName('begin'))
         src = textEvent.Source
         if evt_handler.sameName(src, self.dlgCtrls.comboTargetParaStyle):
