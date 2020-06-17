@@ -19,7 +19,7 @@ import re
 
 FILEPATH = os.path.realpath(__file__)
 CURRENT_DIR = os.path.dirname(FILEPATH)
-INFOLDER_PATH = os.path.join(CURRENT_DIR, "../../LingToolsBasic")
+INFOLDER = os.path.join(CURRENT_DIR, "../../LingToolsBasic")
 OUTFILE = os.path.join(CURRENT_DIR, "dialog_strings.csv")
 
 Strings = dict()  # values of type DialogString
@@ -34,14 +34,13 @@ def amp_strip(string_id):
 
 class DialogString:
     """Dialog string identifers and values."""
-    def __init__(self, dialogID, stringID):
+    def __init__(self, dialogID, stringID=""):
         self.dialogID = dialogID
         self.controlID = ""
         self.isTitle = False  # dialog titles do not have control IDs
         self.valueType = ''  # Value, HelpText, StringItemList
         self.string_id = amp_strip(stringID)
-        self.new_string_id = ""
-        self.string_num = 0
+        self.string_num = None
         self.english = ""
         self.spanish = ""
         self.french = ""
@@ -63,9 +62,7 @@ class DialogString:
         return "{}.{}".format(self.string_num, self.getKey())
 
     def addToDict(self):
-        #Strings[self.getKey()] = self
         Strings[self.string_id] = self
-        #print("Added {} to Strings.".format(self.string_id))
 
     def set_langval(self, lang, val):
         if lang == 'en':
@@ -74,6 +71,9 @@ class DialogString:
             self.spanish = val
         elif lang == 'fr':
             self.french = val
+
+    def __lt__(self, other):
+        return self.string_id < other.string_id
 
 FileTuple = namedtuple('FileTuple', ['path', 'name'])
 
@@ -88,12 +88,12 @@ class FolderHandler:
             self.read_folder()
             self.handle_files()
         except (OSError, IOError):
-            print("Couldn't open folder for reading: %s", INFOLDER_PATH)
-            exit()
+            raise IOError("Couldn't open folder for reading: {}".format(
+                INFOLDER))
 
     def read_folder(self):
-        for filename in os.listdir(INFOLDER_PATH):
-            filepath = os.path.join(INFOLDER_PATH, filename)
+        for filename in os.listdir(INFOLDER):
+            filepath = os.path.join(INFOLDER, filename)
             if os.path.isfile(filepath):
                 filetuple = FileTuple(filepath, filename)
                 if filename.endswith(".xdl"):
@@ -135,8 +135,8 @@ class FileReader(LineSearcher):
                 for self.line in infile:
                     self.parseLine()
         except (OSError, IOError):
-            print("Couldn't open file for reading: %s", self.filetuple.path)
-            exit()
+            raise IOError("Couldn't open file for reading: {}".format(
+                self.filetuple.path))
 
 class DialogFileReader(FileReader):
     def __init__(self, filetuple):
@@ -159,20 +159,23 @@ class DialogFileReader(FileReader):
             dlgString.addToDict()
         elif self.searchLine(r'dlg:(?:titledbox|menulist) dlg:id="(\w+)"'):
             controlID = self.matchObj.group(1)
-            self.parentString = DialogString(self.dialogID, "")
+            self.parentString = DialogString(self.dialogID)
             self.parentString.controlID = controlID
             self.parentString.string_id = self.parentString.getKey()
-            self.parentString.addToDict()
+            #self.parentString.addToDict()
         elif self.searchLine(r'dlg:title dlg:value="([^"]*)"'):
             string_id = self.matchObj.group(1)
+            #del Strings[self.parentString.string_id]
             self.parentString.string_id = amp_strip(string_id)
             self.parentString.valueType = 'Value'
-        elif self.searchLine(r'dlg:(?:title|menuitem) dlg:value="([^"]*)"'):
+            self.parentString.addToDict()
+        elif self.searchLine(r'dlg:menuitem dlg:value="([^"]*)"'):
             string_id = self.matchObj.group(1)
             dlgString = DialogString(self.dialogID, string_id)
             dlgString.controlID = self.parentString.controlID
             dlgString.valueType = 'StringItemList'
-            self.parentString.children.append(dlgString)
+            #self.parentString.children.append(dlgString)
+            dlgString.addToDict()
         if self.searchLine(r'dlg:id="(\w+)".+dlg:help-text="([^"]*)"'):
             controlID, string_id = self.matchObj.groups()
             if string_id:
@@ -194,18 +197,9 @@ class StringsFileReader(FileReader):
             if string_id in Strings:
                 if text:
                     Strings[string_id].set_langval(self.lang, text)
-            #else:
-            #    print("{} not in Strings.".format(string_id))
-
-def tabSpaces(numTabs):
-    TABWIDTH = 4  # following PEP8 style guide
-    numSpaces = TABWIDTH * numTabs
-    return ' ' * numSpaces
 
 class FileWriter:
     """Write results to file"""
-    CTRL_NAMES_TO_SKIP = []
-
     def __init__(self):
         self.outfile = None
         self.strNum = 0
@@ -215,8 +209,8 @@ class FileWriter:
             with open(OUTFILE, 'w') as self.outfile:
                 self.write_data()
         except (OSError, IOError):
-            print("Couldn't open file for writing: %s" % OUTFILE)
-            exit()
+            raise IOError("Couldn't open file for writing: {}".format(
+                OUTFILE))
 
     def write_data(self):
         sorted_strings = []
@@ -224,6 +218,7 @@ class FileWriter:
             #print(dialogString.getKey())
             sorted_strings.append(
                 [dialogString.getKey(), dialogString])
+
         sorted_strings.sort()
         self.strNum = 0
         for dummy_key, dialogString in sorted_strings:
