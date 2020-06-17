@@ -22,6 +22,7 @@
 # 29-Jul-16 JDK  Documents with one long line are not considered empty.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 30-Jul-18 JDK  Added prefix for Drawing documents.
+# 16-Jun-20 JDK  Added getWithDefault().
 
 """
 Store persistent settings in user variables of a Writer document.
@@ -113,6 +114,12 @@ class UserVars:
             return stringVal
         else:
             return ""
+
+    def getWithDefault(self, varName, defaultVal):
+        """Returns default value if user var is empty."""
+        if self.isEmpty(varName):
+            return defaultVal
+        return self.get(varName)
 
     def getVarName(self, baseVarName):
         """Punctuation shouldn't be used in names, because Writer doesn't

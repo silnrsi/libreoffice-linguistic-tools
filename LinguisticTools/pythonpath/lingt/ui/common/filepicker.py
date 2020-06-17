@@ -8,6 +8,7 @@
 # 21-Dec-12 JDK  Fixed bug: Default filters value [] works in this case.
 # 29-Jul-13 JDK  Import constants instead of using uno.getConstantByName.
 # 16-Dec-15 JDK  Added folder picker.
+# 16-Jun-20 JDK  Initialize first or else it defaults to opening.
 
 """
 Display a dialog to select a file.
@@ -20,8 +21,8 @@ import logging
 import os.path
 
 import uno
-from com.sun.star.ui.dialogs.TemplateDescription import FILESAVE_SIMPLE
-from com.sun.star.ui.dialogs.TemplateDescription import FILEOPEN_SIMPLE
+from com.sun.star.ui.dialogs.TemplateDescription import (
+    FILEOPEN_SIMPLE, FILESAVE_SIMPLE)
 from com.sun.star.ui.dialogs.ExecutableDialogResults import OK as _RESULT_OK
 
 from lingt.utils import util
@@ -31,25 +32,22 @@ logger = logging.getLogger("lingt.ui.filepicker")
 
 def showFilePicker(genericUnoObjs, save=False, filters=None,
                    defaultFilename=None):
-    """Adapted from DannyB 2008"""
     logger.debug(util.funcName('begin'))
 
     # Create a FilePicker dialog.
     dlg = genericUnoObjs.smgr.createInstanceWithContext(
         "com.sun.star.ui.dialogs.FilePicker", genericUnoObjs.ctx)
+    if save:
+        dlgType = FILESAVE_SIMPLE
+    else:
+        dlgType = FILEOPEN_SIMPLE
+    dlg.initialize((dlgType,))
     if filters:
         for name, ext in filters:
             dlg.appendFilter(name, ext)
     if defaultFilename:
         logger.debug("Default filename %s", defaultFilename)
         dlg.setDefaultName(defaultFilename)
-    if save:
-        # XXX: Shows "open" dialog in LO 6.4 on Windows
-        dlgType = FILESAVE_SIMPLE
-    else:
-        dlgType = FILEOPEN_SIMPLE
-    # Initialization is required for OOo3.0 on Vista
-    dlg.initialize((dlgType,))
 
     # Execute it.
     dlg.execute()
@@ -61,7 +59,6 @@ def showFilePicker(genericUnoObjs, save=False, filters=None,
     filepath = ""
     if filesList != None and len(filesList) > 0:
         filepath = filesList[0]
-        # this line is like convertFromURL in OOo Basic
         filepath = uno.fileUrlToSystemPath(filepath)
         if os.path.exists(filepath):
             if os.path.isdir(filepath) or os.path.islink(filepath):
@@ -83,9 +80,7 @@ def showFolderPicker(genericUnoObjs, defaultFoldername=None):
     # Get results.
     folderpath = ""
     if result == _RESULT_OK:
-        # User has clicked "Select" button.
         folderpath = dlg.getDirectory()
-        # this line is like convertFromURL in OOo Basic
         folderpath = uno.fileUrlToSystemPath(folderpath)
         if os.path.exists(folderpath):
             if os.path.isfile(folderpath) or os.path.islink(folderpath):
