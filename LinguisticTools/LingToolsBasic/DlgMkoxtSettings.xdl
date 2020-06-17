@@ -1,8 +1,8 @@
-?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxtSettings" dlg:left="180" dlg:top="29" dlg:width="350" dlg:height="343" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;341.DlgMkoxtSettings.Title">
  <dlg:bulletinboard>
-  <dlg:titledbox dlg:id="frameBasicSettings" dlg:tab-index="0" dlg:left="5" dlg:top="5" dlg:width="330" dlg:height="123" dlg:help-text="&amp;557.DlgMkoxtSettings.frameBasicSettings.HelpText">
+  <dlg:titledbox dlg:id="frameBasicSettings" dlg:tab-index="0" dlg:left="5" dlg:top="5" dlg:width="330" dlg:height="123" dlg:help-text="">
    <dlg:title dlg:value="&amp;558.DlgMkoxtSettings.frameBasicSettings.Label"/>
   </dlg:titledbox>
   <dlg:text dlg:id="lblLangName" dlg:tab-index="2" dlg:left="20" dlg:top="17" dlg:width="75" dlg:height="12" dlg:value="&amp;410.DlgMkoxtSettings.lblLangName.Label"/>
@@ -24,7 +24,7 @@
   </dlg:menulist>
   <dlg:text dlg:id="lblLangTag" dlg:tab-index="10" dlg:left="20" dlg:top="104" dlg:width="75" dlg:height="12" dlg:value="&amp;418.DlgMkoxtSettings.lblLangTag.Label"/>
   <dlg:textfield dlg:id="txtLangTag" dlg:tab-index="11" dlg:left="100" dlg:top="104" dlg:width="78" dlg:height="12" dlg:help-text="427.DlgMkoxtSettings.txtLangTag.HelpText" dlg:value="&amp;428.DlgMkoxtSettings.txtLangTag.Text"/>
-  <dlg:titledbox dlg:id="frameOtherOpts" dlg:tab-index="12" dlg:left="5" dlg:top="128" dlg:width="330" dlg:height="191" dlg:help-text="&amp;553.DlgMkoxtSettings.frameOtherOpts.HelpText">
+  <dlg:titledbox dlg:id="frameOtherOpts" dlg:tab-index="12" dlg:left="5" dlg:top="128" dlg:width="330" dlg:height="191" dlg:help-text="">
    <dlg:title dlg:value="&amp;554.DlgMkoxtSettings.frameOtherOpts.Label"/>
   </dlg:titledbox>
   <dlg:text dlg:id="lblWordFormingPunct" dlg:tab-index="14" dlg:left="20" dlg:top="137" dlg:width="75" dlg:height="12" dlg:help-text="&amp;481.DlgMkoxtSettings.lblWordFormingPunct.HelpText" dlg:value="&amp;482.DlgMkoxtSettings.lblWordFormingPunct.Label"/>
