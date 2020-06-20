@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellReplace" dlg:left="200" dlg:top="25" dlg:width="264" dlg:height="168" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;230.DlgSpellReplace.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellReplace" dlg:left="200" dlg:top="25" dlg:width="264" dlg:height="168" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;300.DlgSpellReplace.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:background-color="0xe6e1a2" dlg:font-height="14"/>
   <dlg:style dlg:style-id="1" dlg:font-height="14"/>
@@ -8,17 +8,17 @@
  </dlg:styles>
  <dlg:bulletinboard>
   <dlg:text dlg:style-id="2" dlg:id="lblContext" dlg:tab-index="0" dlg:left="7" dlg:top="4" dlg:width="252" dlg:height="38" dlg:multiline="true"/>
-  <dlg:text dlg:id="lblFound" dlg:tab-index="1" dlg:left="5" dlg:top="54" dlg:width="47" dlg:height="12" dlg:value="&amp;238.DlgSpellReplace.lblFound.Value"/>
-  <dlg:text dlg:style-id="0" dlg:id="lblFoundText" dlg:tab-index="2" dlg:left="55" dlg:top="54" dlg:width="92" dlg:height="16" dlg:value="&amp;239.DlgSpellReplace.lblFoundText.Value"/>
-  <dlg:text dlg:id="lblChangeTo" dlg:tab-index="3" dlg:left="5" dlg:top="71" dlg:width="50" dlg:height="14" dlg:value="&amp;237.DlgSpellReplace.lblChangeTo.Value"/>
+  <dlg:text dlg:id="lblFound" dlg:tab-index="1" dlg:left="5" dlg:top="54" dlg:width="47" dlg:height="12" dlg:value="&amp;308.DlgSpellReplace.lblFound.Value"/>
+  <dlg:text dlg:style-id="0" dlg:id="lblFoundText" dlg:tab-index="2" dlg:left="55" dlg:top="54" dlg:width="92" dlg:height="16" dlg:value="&amp;309.DlgSpellReplace.lblFoundText.Value"/>
+  <dlg:text dlg:id="lblChangeTo" dlg:tab-index="3" dlg:left="5" dlg:top="71" dlg:width="50" dlg:height="14" dlg:value="&amp;307.DlgSpellReplace.lblChangeTo.Value"/>
   <dlg:textfield dlg:style-id="1" dlg:id="txtChangeTo" dlg:tab-index="4" dlg:left="55" dlg:top="71" dlg:width="92" dlg:height="16"/>
-  <dlg:text dlg:id="lblSuggestions" dlg:tab-index="5" dlg:left="5" dlg:top="93" dlg:width="46" dlg:height="18" dlg:value="&amp;240.DlgSpellReplace.lblSuggestions.Value"/>
+  <dlg:text dlg:id="lblSuggestions" dlg:tab-index="5" dlg:left="5" dlg:top="93" dlg:width="46" dlg:height="18" dlg:value="&amp;310.DlgSpellReplace.lblSuggestions.Value"/>
   <dlg:menulist dlg:style-id="1" dlg:id="listboxSuggestions" dlg:tab-index="6" dlg:left="55" dlg:top="93" dlg:width="92" dlg:height="59"/>
-  <dlg:button dlg:id="btnAdd" dlg:tab-index="7" dlg:left="155" dlg:top="54" dlg:width="45" dlg:height="15" dlg:value="&amp;231.DlgSpellReplace.btnAdd.Value"/>
-  <dlg:button dlg:id="btnChange" dlg:tab-index="8" dlg:left="155" dlg:top="79" dlg:width="45" dlg:height="15" dlg:value="&amp;232.DlgSpellReplace.btnChange.Value"/>
-  <dlg:button dlg:id="btnIgnore" dlg:tab-index="9" dlg:left="155" dlg:top="104" dlg:width="45" dlg:height="15" dlg:value="&amp;235.DlgSpellReplace.btnIgnore.Value"/>
-  <dlg:button dlg:id="btnChangeAll" dlg:tab-index="10" dlg:left="205" dlg:top="79" dlg:width="45" dlg:height="15" dlg:value="&amp;233.DlgSpellReplace.btnChangeAll.Value"/>
-  <dlg:button dlg:id="btnIgnoreAll" dlg:tab-index="11" dlg:left="205" dlg:top="104" dlg:width="45" dlg:height="15" dlg:value="&amp;236.DlgSpellReplace.btnIgnoreAll.Value"/>
-  <dlg:button dlg:id="btnClose" dlg:tab-index="12" dlg:left="176" dlg:top="145" dlg:width="44" dlg:height="18" dlg:value="&amp;234.DlgSpellReplace.btnClose.Value"/>
+  <dlg:button dlg:id="btnAdd" dlg:tab-index="7" dlg:left="155" dlg:top="54" dlg:width="45" dlg:height="15" dlg:value="&amp;301.DlgSpellReplace.btnAdd.Value"/>
+  <dlg:button dlg:id="btnChange" dlg:tab-index="8" dlg:left="155" dlg:top="79" dlg:width="45" dlg:height="15" dlg:value="&amp;302.DlgSpellReplace.btnChange.Value"/>
+  <dlg:button dlg:id="btnIgnore" dlg:tab-index="9" dlg:left="155" dlg:top="104" dlg:width="45" dlg:height="15" dlg:value="&amp;305.DlgSpellReplace.btnIgnore.Value"/>
+  <dlg:button dlg:id="btnChangeAll" dlg:tab-index="10" dlg:left="205" dlg:top="79" dlg:width="45" dlg:height="15" dlg:value="&amp;303.DlgSpellReplace.btnChangeAll.Value"/>
+  <dlg:button dlg:id="btnIgnoreAll" dlg:tab-index="11" dlg:left="205" dlg:top="104" dlg:width="45" dlg:height="15" dlg:value="&amp;306.DlgSpellReplace.btnIgnoreAll.Value"/>
+  <dlg:button dlg:id="btnClose" dlg:tab-index="12" dlg:left="176" dlg:top="145" dlg:width="44" dlg:height="18" dlg:value="&amp;304.DlgSpellReplace.btnClose.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

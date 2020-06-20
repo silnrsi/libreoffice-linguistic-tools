@@ -20,6 +20,7 @@ INFILE = os.path.join(CURRENT_DIR, "dialog_strings.csv")
 
 Strings = dict()  # values of type DialogString
 ItemLists = dict()  # for valtype StringItemList
+ItemLists_List = list()  # all StringItemList objects
 AMP = "&amp;"
 
 def amp_strip(string_id):
@@ -59,7 +60,7 @@ class DialogString:
         return "{}.{}".format(self.string_num, self.getKey())
 
     def addToDict(self, aDict=None):
-        if not aDict:
+        if aDict is None:
             aDict = Strings
         aDict[self.getKey()] = self
 
@@ -162,6 +163,7 @@ class CSV_FileReader(FileReader):
             if valtype == 'StringItemList':
                 ds_search = DialogString(dialogID)
                 ds_search.controlID = controlID
+                ds_search.valueType = valtype
                 key = ds_search.getKey()
                 if key in ItemLists:
                     parentString = ItemLists[key]
@@ -169,6 +171,7 @@ class CSV_FileReader(FileReader):
                     parentString = ds_search
                     parentString.addToDict(ItemLists)
                 parentString.children.append(dlgString)
+                ItemLists_List.append(dlgString)
             else:
                 dlgString.addToDict()
 
@@ -218,6 +221,7 @@ class DialogFileChanger(FileReader):
             controlID = self.matchObj.group(1)
             ds_search = DialogString(self.dialogID)
             ds_search.controlID = controlID
+            ds_search.valueType = 'StringItemList'
             key = ds_search.getKey()
             if key in ItemLists:
                 self.parentString = ItemLists[key]
@@ -258,6 +262,12 @@ class DialogFileChanger(FileReader):
         self.outfile.write("{}".format(self.line))
 
 
+def natural_sort_key(s, _nsre=re.compile('([0-9]+)')):
+    """Sort numbers in strings naturally, so '2.abc' is less than '15.abc'.
+    Python default sorting would make it greater because 2 > 1."""
+    return [int(text) if text.isdigit() else text.lower()
+            for text in _nsre.split(s[0])]  
+
 class FileWriter:
     """Write results to file"""
     def __init__(self):
@@ -284,17 +294,13 @@ class FileWriter:
     def write_data(self):
         self.outfile.write("# Strings for Dialog Library LingToolsBasic\n")
         sorted_strings = []
-        for dialogString in Strings.values():
-            sorted_strings.append(
-                [dialogString.getKey(), dialogString])
-        for dialogString in ItemLists.values():
-            sorted_strings.append(
-                [dialogString.getKey(), dialogString])
-        sorted_strings.sort()
+        for dialogString in list(Strings.values()) + ItemLists_List:
+            if dialogString.string_num is not None:
+                sorted_strings.append(
+                    [dialogString.string_id, dialogString])
+        sorted_strings.sort(key=natural_sort_key)
         for dummy_key, dialogString in sorted_strings:
             self.write_string(dialogString)
-            for child in dialogString.children:
-                self.write_string(child)
 
     def write_string(self, dialogString):
         if dialogString.string_num is None:

@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConv_Draw" dlg:left="111" dlg:top="12" dlg:width="296" dlg:height="197" dlg:help-text="&amp;461.DlgDataConv_Draw.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;457.DlgDataConv_Draw.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConv_Draw" dlg:left="111" dlg:top="12" dlg:width="296" dlg:height="197" dlg:help-text="&amp;106.DlgDataConv_Draw.DlgDataConv_Draw.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;109.DlgDataConv_Draw.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:background-color="0xd8e4f8"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:text dlg:id="LabelSEC" dlg:tab-index="0" dlg:left="10" dlg:top="8" dlg:width="194" dlg:height="10" dlg:value="&amp;107.DlgDataConversion.LabelSEC.Value"/>
-  <dlg:textfield dlg:style-id="0" dlg:id="txtCnvtrName" dlg:tab-index="1" dlg:left="10" dlg:top="20" dlg:width="194" dlg:height="14" dlg:value="&amp;136.DlgDataConversion.txtCnvtrName.Value"/>
-  <dlg:button dlg:id="BtnSelectConv" dlg:tab-index="2" dlg:left="204" dlg:top="21" dlg:width="67" dlg:height="12" dlg:value="&amp;106.DlgDataConversion.BtnSelectConv.Value"/>
-  <dlg:button dlg:id="BtnNoConverter" dlg:tab-index="3" dlg:left="204" dlg:top="35" dlg:width="67" dlg:height="12" dlg:value="&amp;104.DlgDataConversion.BtnNoConverter.Value"/>
-  <dlg:checkbox dlg:id="chkDirectionReverse" dlg:tab-index="4" dlg:left="10" dlg:top="36" dlg:width="104" dlg:height="10" dlg:value="&amp;109.DlgDataConversion.chkDirectionReverse.Value" dlg:checked="true"/>
+  <dlg:text dlg:id="LabelSEC" dlg:tab-index="0" dlg:left="10" dlg:top="8" dlg:width="194" dlg:height="10" dlg:value="&amp;107.DlgDataConv_Draw.LabelSEC.Value"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="txtCnvtrName" dlg:tab-index="1" dlg:left="10" dlg:top="20" dlg:width="194" dlg:height="14" dlg:value="&amp;127.DlgDataConv_Draw.txtCnvtrName.Value"/>
+  <dlg:button dlg:id="BtnSelectConv" dlg:tab-index="2" dlg:left="204" dlg:top="21" dlg:width="67" dlg:height="12" dlg:value="&amp;105.DlgDataConv_Draw.BtnSelectConv.Value"/>
+  <dlg:button dlg:id="BtnNoConverter" dlg:tab-index="3" dlg:left="204" dlg:top="35" dlg:width="67" dlg:height="12" dlg:value="&amp;103.DlgDataConv_Draw.BtnNoConverter.Value"/>
+  <dlg:checkbox dlg:id="chkDirectionReverse" dlg:tab-index="4" dlg:left="10" dlg:top="36" dlg:width="104" dlg:height="10" dlg:value="&amp;110.DlgDataConv_Draw.chkDirectionReverse.Value" dlg:checked="true"/>
   <dlg:titledbox dlg:id="frameScope" dlg:tab-index="5" dlg:left="6" dlg:top="57" dlg:width="138" dlg:height="88">
-   <dlg:title dlg:value="&amp;116.DlgDataConversion.frameScope.Value"/>
+   <dlg:title dlg:value="&amp;113.DlgDataConv_Draw.frameScope.Value"/>
   </dlg:titledbox>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optScopeWholeDoc" dlg:tab-index="6" dlg:left="11" dlg:top="70" dlg:width="116" dlg:height="10" dlg:value="&amp;127.DlgDataConversion.optScopeWholeDoc.Value" dlg:valign="center"/>
-   <dlg:radio dlg:id="optScopeSelection" dlg:tab-index="7" dlg:left="11" dlg:top="84" dlg:width="116" dlg:height="10" dlg:value="&amp;126.DlgDataConversion.optScopeSelection.Value" dlg:valign="center"/>
-   <dlg:radio dlg:id="optScopeFont" dlg:tab-index="8" dlg:left="11" dlg:top="98" dlg:width="119" dlg:height="10" dlg:value="&amp;458.DlgDataConv_Draw.optScopeFont.Value" dlg:valign="center" dlg:checked="true"/>
+   <dlg:radio dlg:id="optScopeWholeDoc" dlg:tab-index="6" dlg:left="11" dlg:top="70" dlg:width="116" dlg:height="10" dlg:value="&amp;121.DlgDataConv_Draw.optScopeWholeDoc.Value" dlg:valign="center"/>
+   <dlg:radio dlg:id="optScopeSelection" dlg:tab-index="7" dlg:left="11" dlg:top="84" dlg:width="116" dlg:height="10" dlg:value="&amp;120.DlgDataConv_Draw.optScopeSelection.Value" dlg:valign="center"/>
+   <dlg:radio dlg:id="optScopeFont" dlg:tab-index="8" dlg:left="11" dlg:top="98" dlg:width="119" dlg:height="10" dlg:value="&amp;116.DlgDataConv_Draw.optScopeFont.Value" dlg:valign="center" dlg:checked="true"/>
   </dlg:radiogroup>
-  <dlg:combobox dlg:id="cmbxScopeFont" dlg:tab-index="9" dlg:left="28" dlg:top="111" dlg:width="93" dlg:height="11" dlg:value="&amp;112.DlgDataConversion.cmbxScopeFont.Value" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="cmbxScopeFont" dlg:tab-index="9" dlg:left="28" dlg:top="111" dlg:width="93" dlg:height="11" dlg:value="&amp;112.DlgDataConv_Draw.cmbxScopeFont.Value" dlg:spin="true" dlg:linecount="15"/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optScopeFontRegular" dlg:tab-index="10" dlg:left="28" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;123.DlgDataConversion.optScopeFontRegular.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optScopeFontCTL" dlg:tab-index="11" dlg:left="66" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;122.DlgDataConversion.optScopeFontCTL.Value"/>
-   <dlg:radio dlg:id="optScopeFontAsian" dlg:tab-index="12" dlg:left="105" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;121.DlgDataConversion.optScopeFontAsian.Value"/>
+   <dlg:radio dlg:id="optScopeFontRegular" dlg:tab-index="10" dlg:left="28" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;119.DlgDataConv_Draw.optScopeFontRegular.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optScopeFontCTL" dlg:tab-index="11" dlg:left="66" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;118.DlgDataConv_Draw.optScopeFontCTL.Value"/>
+   <dlg:radio dlg:id="optScopeFontAsian" dlg:tab-index="12" dlg:left="105" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;117.DlgDataConv_Draw.optScopeFontAsian.Value"/>
   </dlg:radiogroup>
   <dlg:titledbox dlg:id="frameTargetFont" dlg:tab-index="13" dlg:left="153" dlg:top="57" dlg:width="136" dlg:height="88">
-   <dlg:title dlg:value="&amp;117.DlgDataConversion.frameTargetFont.Value"/>
+   <dlg:title dlg:value="&amp;114.DlgDataConv_Draw.frameTargetFont.Value"/>
   </dlg:titledbox>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optTargetNoChange" dlg:tab-index="14" dlg:left="158" dlg:top="70" dlg:width="103" dlg:height="10" dlg:value="&amp;456.DlgDataConv_Draw.optTargetNoChange.Value" dlg:valign="center" dlg:checked="true"/>
-   <dlg:radio dlg:id="optTargetFont" dlg:tab-index="15" dlg:left="158" dlg:top="84" dlg:width="116" dlg:height="10" dlg:value="&amp;455.DlgDataConv_Draw.optTargetFont.Value"/>
+   <dlg:radio dlg:id="optTargetNoChange" dlg:tab-index="14" dlg:left="158" dlg:top="70" dlg:width="103" dlg:height="10" dlg:value="&amp;126.DlgDataConv_Draw.optTargetNoChange.Value" dlg:valign="center" dlg:checked="true"/>
+   <dlg:radio dlg:id="optTargetFont" dlg:tab-index="15" dlg:left="158" dlg:top="84" dlg:width="116" dlg:height="10" dlg:value="&amp;122.DlgDataConv_Draw.optTargetFont.Value"/>
   </dlg:radiogroup>
-  <dlg:text dlg:id="lblTargetFont" dlg:tab-index="16" dlg:left="158" dlg:top="98" dlg:width="91" dlg:height="10" dlg:value="&amp;459.DlgDataConv_Draw.lblTargetFont.Value"/>
+  <dlg:text dlg:id="lblTargetFont" dlg:tab-index="16" dlg:left="158" dlg:top="98" dlg:width="91" dlg:height="10" dlg:value="&amp;115.DlgDataConv_Draw.lblTargetFont.Value"/>
   <dlg:menulist dlg:id="listTargetFont" dlg:tab-index="17" dlg:left="158" dlg:top="111" dlg:width="93" dlg:height="11" dlg:spin="true" dlg:linecount="15"/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optTargetFontRegular" dlg:tab-index="18" dlg:left="172" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;132.DlgDataConversion.optTargetFontRegular.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optTargetFontCTL" dlg:tab-index="19" dlg:left="210" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;130.DlgDataConversion.optTargetFontCTL.Value"/>
-   <dlg:radio dlg:id="optTargetFontAsian" dlg:tab-index="20" dlg:left="249" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;129.DlgDataConversion.optTargetFontAsian.Value"/>
+   <dlg:radio dlg:id="optTargetFontRegular" dlg:tab-index="18" dlg:left="172" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;125.DlgDataConv_Draw.optTargetFontRegular.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optTargetFontCTL" dlg:tab-index="19" dlg:left="210" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;124.DlgDataConv_Draw.optTargetFontCTL.Value"/>
+   <dlg:radio dlg:id="optTargetFontAsian" dlg:tab-index="20" dlg:left="249" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;123.DlgDataConv_Draw.optTargetFontAsian.Value"/>
   </dlg:radiogroup>
-  <dlg:text dlg:id="LabelSize" dlg:tab-index="21" dlg:left="254" dlg:top="98" dlg:width="27" dlg:height="10" dlg:value="&amp;108.DlgDataConversion.LabelSize.Value"/>
+  <dlg:text dlg:id="LabelSize" dlg:tab-index="21" dlg:left="254" dlg:top="98" dlg:width="27" dlg:height="10" dlg:value="&amp;108.DlgDataConv_Draw.LabelSize.Value"/>
   <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="22" dlg:left="254" dlg:top="111" dlg:width="22" dlg:height="12" dlg:value=""/>
-  <dlg:checkbox dlg:id="chkVerify" dlg:tab-index="23" dlg:left="152" dlg:top="156" dlg:width="113" dlg:height="12" dlg:value="&amp;110.DlgDataConversion.chkVerify.Value" dlg:checked="false"/>
-  <dlg:button dlg:id="BtnOK" dlg:tab-index="24" dlg:left="152" dlg:top="172" dlg:width="76" dlg:height="14" dlg:value="&amp;105.DlgDataConversion.BtnOK.Value"/>
-  <dlg:button dlg:id="BtnCancel" dlg:tab-index="25" dlg:left="232" dlg:top="172" dlg:width="55" dlg:height="14" dlg:value="&amp;103.DlgDataConversion.BtnCancel.Value"/>
+  <dlg:checkbox dlg:id="chkVerify" dlg:tab-index="23" dlg:left="152" dlg:top="156" dlg:width="113" dlg:height="12" dlg:value="&amp;111.DlgDataConv_Draw.chkVerify.Value" dlg:checked="false"/>
+  <dlg:button dlg:id="BtnOK" dlg:tab-index="24" dlg:left="152" dlg:top="172" dlg:width="76" dlg:height="14" dlg:value="&amp;104.DlgDataConv_Draw.BtnOK.Value"/>
+  <dlg:button dlg:id="BtnCancel" dlg:tab-index="25" dlg:left="232" dlg:top="172" dlg:width="55" dlg:height="14" dlg:value="&amp;102.DlgDataConv_Draw.BtnCancel.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

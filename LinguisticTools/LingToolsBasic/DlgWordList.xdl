@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWordList" dlg:left="95" dlg:top="32" dlg:width="238" dlg:height="234" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;294.DlgWordList.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWordList" dlg:left="95" dlg:top="32" dlg:width="238" dlg:height="234" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;365.DlgWordList.Title">
  <dlg:bulletinboard>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="0" dlg:left="7" dlg:top="16" dlg:width="223" dlg:height="76">
-   <dlg:title dlg:value="&amp;295.DlgWordList.FrameControl1.Value"/>
+   <dlg:title dlg:value="&amp;364.DlgWordList.FrameControl1.Value"/>
   </dlg:titledbox>
   <dlg:menulist dlg:id="ListboxFiles" dlg:tab-index="1" dlg:left="14" dlg:top="29" dlg:width="129" dlg:height="55" dlg:tabstop="false"/>
-  <dlg:button dlg:id="btnAdd" dlg:tab-index="2" dlg:left="149" dlg:top="29" dlg:width="75" dlg:height="16" dlg:value="&amp;296.DlgWordList.btnAdd.Value"/>
-  <dlg:button dlg:id="btnFileSettings" dlg:tab-index="3" dlg:left="149" dlg:top="48" dlg:width="75" dlg:height="16" dlg:value="&amp;298.DlgWordList.btnFileSettings.Value"/>
-  <dlg:button dlg:id="btnRemove" dlg:tab-index="4" dlg:left="149" dlg:top="68" dlg:width="75" dlg:height="16" dlg:value="&amp;302.DlgWordList.btnRemove.Value"/>
-  <dlg:text dlg:id="lblRemovePunct" dlg:tab-index="5" dlg:left="8" dlg:top="106" dlg:width="82" dlg:height="14" dlg:value="&amp;304.DlgWordList.lblRemovePunct.Value" dlg:align="right"/>
+  <dlg:button dlg:id="btnAdd" dlg:tab-index="2" dlg:left="149" dlg:top="29" dlg:width="75" dlg:height="16" dlg:value="&amp;366.DlgWordList.btnAdd.Value"/>
+  <dlg:button dlg:id="btnFileSettings" dlg:tab-index="3" dlg:left="149" dlg:top="48" dlg:width="75" dlg:height="16" dlg:value="&amp;368.DlgWordList.btnFileSettings.Value"/>
+  <dlg:button dlg:id="btnRemove" dlg:tab-index="4" dlg:left="149" dlg:top="68" dlg:width="75" dlg:height="16" dlg:value="&amp;372.DlgWordList.btnRemove.Value"/>
+  <dlg:text dlg:id="lblRemovePunct" dlg:tab-index="5" dlg:left="8" dlg:top="106" dlg:width="82" dlg:height="14" dlg:value="&amp;374.DlgWordList.lblRemovePunct.Value" dlg:align="right"/>
   <dlg:textfield dlg:id="txtRemovePunct" dlg:tab-index="6" dlg:left="95" dlg:top="104" dlg:width="103" dlg:height="16"/>
   <dlg:titledbox dlg:id="frameColOrder" dlg:tab-index="7" dlg:left="7" dlg:top="134" dlg:width="155" dlg:height="62">
-   <dlg:title dlg:value="&amp;303.DlgWordList.frameColOrder.Value"/>
+   <dlg:title dlg:value="&amp;373.DlgWordList.frameColOrder.Value"/>
   </dlg:titledbox>
   <dlg:menulist dlg:id="listboxColOrder" dlg:tab-index="8" dlg:left="14" dlg:top="148" dlg:width="88" dlg:height="42" dlg:tabstop="false"/>
-  <dlg:button dlg:id="btnMoveUp" dlg:tab-index="9" dlg:left="106" dlg:top="148" dlg:width="48" dlg:height="16" dlg:value="&amp;301.DlgWordList.btnMoveUp.Value"/>
-  <dlg:button dlg:id="btnMoveDown" dlg:tab-index="10" dlg:left="106" dlg:top="168" dlg:width="48" dlg:height="16" dlg:value="&amp;300.DlgWordList.btnMoveDown.Value"/>
-  <dlg:button dlg:id="btnMakeList" dlg:tab-index="11" dlg:left="32" dlg:top="206" dlg:width="82" dlg:height="18" dlg:value="&amp;299.DlgWordList.btnMakeList.Value"/>
-  <dlg:button dlg:id="btnClose" dlg:tab-index="12" dlg:left="131" dlg:top="206" dlg:width="74" dlg:height="18" dlg:value="&amp;297.DlgWordList.btnClose.Value"/>
+  <dlg:button dlg:id="btnMoveUp" dlg:tab-index="9" dlg:left="106" dlg:top="148" dlg:width="48" dlg:height="16" dlg:value="&amp;371.DlgWordList.btnMoveUp.Value"/>
+  <dlg:button dlg:id="btnMoveDown" dlg:tab-index="10" dlg:left="106" dlg:top="168" dlg:width="48" dlg:height="16" dlg:value="&amp;370.DlgWordList.btnMoveDown.Value"/>
+  <dlg:button dlg:id="btnMakeList" dlg:tab-index="11" dlg:left="32" dlg:top="206" dlg:width="82" dlg:height="18" dlg:value="&amp;369.DlgWordList.btnMakeList.Value"/>
+  <dlg:button dlg:id="btnClose" dlg:tab-index="12" dlg:left="131" dlg:top="206" dlg:width="74" dlg:height="18" dlg:value="&amp;367.DlgWordList.btnClose.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

@@ -58,7 +58,7 @@ def ziphunspell(ozip, hun, name) :
         zipadd(ozip, hun.getaff().encode('utf-8'), 'dictionaries/' + name + '.aff')
         zipadd(ozip, hun.getdic().encode('utf-8'), 'dictionaries/' + name + '.dic')
 
-def zipnfcfile(ozip, fin, fout, normalize, affix=None) :
+def zipnormfile(ozip, fin, fout, normalize, affix=None) :
     dat = ""
     with open(fin) as fd :
         if normalize in ('NFC','NFD'):
@@ -82,7 +82,7 @@ scripttypes = {
 }
 
 def make(settings, msgbox):
-    msgbox.display("Starting oxttools.makeoxt.make().")
+    #msgbox.display("Starting oxttools.makeoxt.make().")
     #parser = ArgumentParser()
     #parser.add_argument('langtag',help='language tag for this extension')
     #parser.add_argument('outfile',help='output oxt file')
@@ -173,9 +173,9 @@ def make(settings, msgbox):
             elif args.dict.endswith('.txt') :
                 args.dicttype = 'text'
         if args.dicttype == 'hunspell' :
-            zipnfcfile(ozip, args.dict, 'dictionaries/' + args.langtag + '.aff', args.affix)
+            zipnormfile(ozip, args.dict, 'dictionaries/' + args.langtag + '.aff', args.normalize, args.affix)
             d = args.dict.replace('.aff', '.dic')
-            zipnfcfile(ozip, d, 'dictionaries/' + args.langtag + '.dic', None)
+            zipnormfile(ozip, d, 'dictionaries/' + args.langtag + '.dic', args.normalize, None)
         elif args.dicttype == 'pt' or args.dicttype == 'ptall' :
             itemcount = 0
             wordcount = 0

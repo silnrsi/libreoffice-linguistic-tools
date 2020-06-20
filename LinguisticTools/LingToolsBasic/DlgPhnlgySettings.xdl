@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgPhnlgySettings" dlg:left="127" dlg:top="16" dlg:width="201" dlg:height="199" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;177.DlgPhnlgySettings.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgPhnlgySettings" dlg:left="127" dlg:top="16" dlg:width="201" dlg:height="199" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;253.DlgPhnlgySettings.Title">
  <dlg:bulletinboard>
-  <dlg:text dlg:id="LabelSelectFile" dlg:tab-index="0" dlg:left="9" dlg:top="8" dlg:width="163" dlg:height="8" dlg:help-text="" dlg:value="&amp;183.DlgPhnlgySettings.LabelSelectFile.Value"/>
+  <dlg:text dlg:id="LabelSelectFile" dlg:tab-index="0" dlg:left="9" dlg:top="8" dlg:width="163" dlg:height="8" dlg:help-text="" dlg:value="&amp;249.DlgPhnlgySettings.LabelSelectFile.Value"/>
   <dlg:filecontrol dlg:id="InputFile" dlg:tab-index="1" dlg:left="8" dlg:top="18" dlg:width="181" dlg:height="14" dlg:help-text=""/>
-  <dlg:text dlg:id="LabelFiletype" dlg:tab-index="2" dlg:left="8" dlg:top="33" dlg:width="175" dlg:height="10" dlg:help-text="" dlg:value="&amp;182.DlgPhnlgySettings.LabelFiletype.Value"/>
+  <dlg:text dlg:id="LabelFiletype" dlg:tab-index="2" dlg:left="8" dlg:top="33" dlg:width="175" dlg:height="10" dlg:help-text="" dlg:value="&amp;248.DlgPhnlgySettings.LabelFiletype.Value"/>
   <dlg:titledbox dlg:id="frameFieldWorks" dlg:tab-index="3" dlg:left="5" dlg:top="53" dlg:width="187" dlg:height="63" dlg:help-text="">
-   <dlg:title dlg:value="&amp;188.DlgPhnlgySettings.frameFieldWorks.Value"/>
+   <dlg:title dlg:value="&amp;255.DlgPhnlgySettings.frameFieldWorks.Value"/>
   </dlg:titledbox>
-  <dlg:text dlg:id="LabelWritingSys" dlg:tab-index="4" dlg:left="11" dlg:top="68" dlg:width="73" dlg:height="12" dlg:help-text="" dlg:value="&amp;184.DlgPhnlgySettings.LabelWritingSys.Value" dlg:align="right"/>
-  <dlg:textfield dlg:id="TxtWritingSystem" dlg:tab-index="5" dlg:left="87" dlg:top="68" dlg:width="48" dlg:height="12" dlg:help-text="" dlg:value="&amp;187.DlgPhnlgySettings.TxtWritingSystem.Value"/>
-  <dlg:button dlg:id="BtnSelectWS" dlg:tab-index="6" dlg:left="135" dlg:top="68" dlg:width="43" dlg:height="12" dlg:help-text="" dlg:value="&amp;178.DlgPhnlgySettings.BtnSelectWS.Value"/>
+  <dlg:text dlg:id="LabelWritingSys" dlg:tab-index="4" dlg:left="11" dlg:top="68" dlg:width="73" dlg:height="12" dlg:help-text="" dlg:value="&amp;250.DlgPhnlgySettings.LabelWritingSys.Value" dlg:align="right"/>
+  <dlg:textfield dlg:id="TxtWritingSystem" dlg:tab-index="5" dlg:left="87" dlg:top="68" dlg:width="48" dlg:height="12" dlg:help-text="" dlg:value="&amp;254.DlgPhnlgySettings.TxtWritingSystem.Value"/>
+  <dlg:button dlg:id="BtnSelectWS" dlg:tab-index="6" dlg:left="135" dlg:top="68" dlg:width="43" dlg:height="12" dlg:help-text="" dlg:value="&amp;244.DlgPhnlgySettings.BtnSelectWS.Value"/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optLexemePhm" dlg:tab-index="7" dlg:left="11" dlg:top="88" dlg:width="177" dlg:height="12" dlg:help-text="" dlg:value="&amp;190.DlgPhnlgySettings.optLexemePhm.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optLexemePht" dlg:tab-index="8" dlg:left="11" dlg:top="101" dlg:width="177" dlg:height="12" dlg:help-text="" dlg:value="&amp;191.DlgPhnlgySettings.optLexemePht.Value"/>
+   <dlg:radio dlg:id="optLexemePhm" dlg:tab-index="7" dlg:left="11" dlg:top="88" dlg:width="177" dlg:height="12" dlg:help-text="" dlg:value="&amp;257.DlgPhnlgySettings.optLexemePhm.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optLexemePht" dlg:tab-index="8" dlg:left="11" dlg:top="101" dlg:width="177" dlg:height="12" dlg:help-text="" dlg:value="&amp;258.DlgPhnlgySettings.optLexemePht.Value"/>
   </dlg:radiogroup>
-  <dlg:checkbox dlg:id="CheckboxBrackets" dlg:tab-index="9" dlg:left="8" dlg:top="122" dlg:width="176" dlg:height="10" dlg:help-text="" dlg:value="&amp;181.DlgPhnlgySettings.CheckboxBrackets.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="CheckboxBrackets" dlg:tab-index="9" dlg:left="8" dlg:top="122" dlg:width="176" dlg:height="10" dlg:help-text="" dlg:value="&amp;247.DlgPhnlgySettings.CheckboxBrackets.Value" dlg:checked="true"/>
   <dlg:titledbox dlg:id="frameWhichFirst" dlg:tab-index="10" dlg:left="8" dlg:top="140" dlg:width="83" dlg:height="26" dlg:help-text="">
-   <dlg:title dlg:value="&amp;189.DlgPhnlgySettings.frameWhichFirst.Value"/>
+   <dlg:title dlg:value="&amp;256.DlgPhnlgySettings.frameWhichFirst.Value"/>
   </dlg:titledbox>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="OptPhonemicFirst" dlg:tab-index="11" dlg:left="10" dlg:top="142" dlg:width="78" dlg:height="10" dlg:help-text="" dlg:value="&amp;185.DlgPhnlgySettings.OptPhonemicFirst.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="OptPhoneticFirst" dlg:tab-index="12" dlg:left="10" dlg:top="154" dlg:width="78" dlg:height="10" dlg:help-text="" dlg:value="&amp;186.DlgPhnlgySettings.OptPhoneticFirst.Value"/>
+   <dlg:radio dlg:id="OptPhonemicFirst" dlg:tab-index="11" dlg:left="10" dlg:top="142" dlg:width="78" dlg:height="10" dlg:help-text="" dlg:value="&amp;251.DlgPhnlgySettings.OptPhonemicFirst.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="OptPhoneticFirst" dlg:tab-index="12" dlg:left="10" dlg:top="154" dlg:width="78" dlg:height="10" dlg:help-text="" dlg:value="&amp;252.DlgPhnlgySettings.OptPhoneticFirst.Value"/>
   </dlg:radiogroup>
-  <dlg:button dlg:id="ButtonOK" dlg:tab-index="13" dlg:left="68" dlg:top="178" dlg:width="53" dlg:height="14" dlg:help-text="" dlg:value="&amp;180.DlgPhnlgySettings.ButtonOK.Value"/>
-  <dlg:button dlg:id="ButtonCancel" dlg:tab-index="14" dlg:left="135" dlg:top="178" dlg:width="48" dlg:height="14" dlg:help-text="" dlg:value="&amp;179.DlgPhnlgySettings.ButtonCancel.Value"/>
+  <dlg:button dlg:id="ButtonOK" dlg:tab-index="13" dlg:left="68" dlg:top="178" dlg:width="53" dlg:height="14" dlg:help-text="" dlg:value="&amp;246.DlgPhnlgySettings.ButtonOK.Value"/>
+  <dlg:button dlg:id="ButtonCancel" dlg:tab-index="14" dlg:left="135" dlg:top="178" dlg:width="48" dlg:height="14" dlg:help-text="" dlg:value="&amp;245.DlgPhnlgySettings.ButtonCancel.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

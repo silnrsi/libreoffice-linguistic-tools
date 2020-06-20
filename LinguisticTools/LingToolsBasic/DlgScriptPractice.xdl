@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgScriptPractice" dlg:left="62" dlg:top="32" dlg:width="321" dlg:height="209" dlg:page="1" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;192.DlgScriptPractice.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgScriptPractice" dlg:left="62" dlg:top="32" dlg:width="321" dlg:height="209" dlg:page="1" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;269.DlgScriptPractice.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:font-height="24"/>
   <dlg:style dlg:style-id="1" dlg:text-color="0x8000"/>
@@ -9,55 +9,55 @@
   <dlg:style dlg:style-id="4" dlg:background-color="0xffff99" dlg:border="simple"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:text dlg:id="lblScript" dlg:tab-index="0" dlg:left="1" dlg:top="6" dlg:width="24" dlg:height="10" dlg:page="1" dlg:value="&amp;218.DlgScriptPractice.lblScript.Value" dlg:align="right"/>
-  <dlg:combobox dlg:id="cmbxScript" dlg:tab-index="1" dlg:left="27" dlg:top="5" dlg:width="81" dlg:height="11" dlg:page="1" dlg:value="&amp;210.DlgScriptPractice.cmbxScript.Value" dlg:spin="true" dlg:linecount="12"/>
-  <dlg:text dlg:id="LabelFont" dlg:tab-index="2" dlg:left="118" dlg:top="6" dlg:width="26" dlg:height="10" dlg:page="1" dlg:value="&amp;197.DlgScriptPractice.LabelFont.Value" dlg:align="right"/>
-  <dlg:combobox dlg:id="cmbxFont" dlg:tab-index="3" dlg:left="146" dlg:top="5" dlg:width="111" dlg:height="11" dlg:page="1" dlg:value="&amp;209.DlgScriptPractice.cmbxFont.Value" dlg:spin="true" dlg:linecount="12"/>
- <dlg:checkbox dlg:id="chkKnownFonts" dlg:tab-index="4" dlg:left="138" dlg:top="19" dlg:width="120" dlg:height="10" dlg:page="1" dlg:value="&amp;208.DlgScriptPractice.chkKnownFonts.Value" dlg:checked="false"/>
-  <dlg:text dlg:id="LabelSize" dlg:tab-index="7" dlg:left="261" dlg:top="6" dlg:width="26" dlg:height="10" dlg:page="1" dlg:value="&amp;200.DlgScriptPractice.LabelSize.Value" dlg:align="right"/>
+  <dlg:text dlg:id="lblScript" dlg:tab-index="0" dlg:left="1" dlg:top="6" dlg:width="24" dlg:height="10" dlg:page="1" dlg:value="&amp;285.DlgScriptPractice.lblScript.Value" dlg:align="right"/>
+  <dlg:combobox dlg:id="cmbxScript" dlg:tab-index="1" dlg:left="27" dlg:top="5" dlg:width="81" dlg:height="11" dlg:page="1" dlg:value="&amp;277.DlgScriptPractice.cmbxScript.Value" dlg:spin="true" dlg:linecount="12"/>
+  <dlg:text dlg:id="LabelFont" dlg:tab-index="2" dlg:left="118" dlg:top="6" dlg:width="26" dlg:height="10" dlg:page="1" dlg:value="&amp;263.DlgScriptPractice.LabelFont.Value" dlg:align="right"/>
+  <dlg:combobox dlg:id="cmbxFont" dlg:tab-index="3" dlg:left="146" dlg:top="5" dlg:width="111" dlg:height="11" dlg:page="1" dlg:value="&amp;276.DlgScriptPractice.cmbxFont.Value" dlg:spin="true" dlg:linecount="12"/>
+ <dlg:checkbox dlg:id="chkKnownFonts" dlg:tab-index="4" dlg:left="138" dlg:top="19" dlg:width="120" dlg:height="10" dlg:page="1" dlg:value="&amp;275.DlgScriptPractice.chkKnownFonts.Value" dlg:checked="false"/>
+  <dlg:text dlg:id="LabelSize" dlg:tab-index="7" dlg:left="261" dlg:top="6" dlg:width="26" dlg:height="10" dlg:page="1" dlg:value="&amp;266.DlgScriptPractice.LabelSize.Value" dlg:align="right"/>
   <dlg:textfield dlg:id="txtFontSize" dlg:tab-index="8" dlg:left="289" dlg:top="5" dlg:width="22" dlg:height="12" dlg:page="1" dlg:value=""/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optGenerate" dlg:tab-index="9" dlg:left="3" dlg:top="45" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;222.DlgScriptPractice.optGenerate.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optWordlist" dlg:tab-index="10" dlg:left="5" dlg:top="105" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;223.DlgScriptPractice.optWordlist.Value"/>
+   <dlg:radio dlg:id="optGenerate" dlg:tab-index="9" dlg:left="3" dlg:top="45" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;292.DlgScriptPractice.optGenerate.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optWordlist" dlg:tab-index="10" dlg:left="5" dlg:top="105" dlg:width="79" dlg:height="12" dlg:page="1" dlg:value="&amp;293.DlgScriptPractice.optWordlist.Value"/>
   </dlg:radiogroup>
-  <dlg:text dlg:id="lblSyllableSize" dlg:tab-index="11" dlg:left="12" dlg:top="61" dlg:width="65" dlg:height="11" dlg:page="1" dlg:value="&amp;219.DlgScriptPractice.lblSyllableSize.Value"/>
+  <dlg:text dlg:id="lblSyllableSize" dlg:tab-index="11" dlg:left="12" dlg:top="61" dlg:width="65" dlg:height="11" dlg:page="1" dlg:value="&amp;286.DlgScriptPractice.lblSyllableSize.Value"/>
   <dlg:menulist dlg:id="listSyllableSize" dlg:tab-index="12" dlg:left="77" dlg:top="61" dlg:width="19" dlg:height="11" dlg:page="1" dlg:spin="true">
    <dlg:menupopup>
-    <dlg:menuitem dlg:value="1"/>
-    <dlg:menuitem dlg:value="2"/>
-    <dlg:menuitem dlg:value="3"/>
+    <dlg:menuitem dlg:value="&amp;287.DlgScriptPractice.listSyllableSize.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;288.DlgScriptPractice.listSyllableSize.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;289.DlgScriptPractice.listSyllableSize.StringItemList"/>
    </dlg:menupopup>
   </dlg:menulist>
-  <dlg:text dlg:id="lblNumSyllables" dlg:tab-index="13" dlg:left="12" dlg:top="73" dlg:width="55" dlg:height="11" dlg:page="1" dlg:value="&amp;216.DlgScriptPractice.lblNumSyllables.Value"/>
-  <dlg:textfield dlg:id="txtNumSyllables" dlg:tab-index="14" dlg:left="77" dlg:top="73" dlg:width="10" dlg:height="11" dlg:page="1" dlg:value="&amp;227.DlgScriptPractice.txtNumSyllables.Value"/>
-  <dlg:text dlg:id="lblNumWords" dlg:tab-index="15" dlg:left="12" dlg:top="85" dlg:width="50" dlg:height="11" dlg:page="1" dlg:value="&amp;217.DlgScriptPractice.lblNumWords.Value"/>
-  <dlg:textfield dlg:id="txtNumWords" dlg:tab-index="16" dlg:left="77" dlg:top="84" dlg:width="10" dlg:height="10" dlg:page="1" dlg:value="&amp;228.DlgScriptPractice.txtNumWords.Value"/>
-  <dlg:button dlg:id="btnFiles" dlg:tab-index="17" dlg:left="12" dlg:top="117" dlg:width="50" dlg:height="14" dlg:page="1" dlg:value="&amp;204.DlgScriptPractice.btnFiles.Value"/>
-  <dlg:text dlg:id="lblCharset" dlg:tab-index="18" dlg:left="102" dlg:top="36" dlg:width="57" dlg:height="11" dlg:page="1" dlg:value="&amp;211.DlgScriptPractice.lblCharset.Value"/>
-  <dlg:textfield dlg:style-id="0" dlg:id="txtCharset" dlg:tab-index="19" dlg:left="102" dlg:top="45" dlg:width="213" dlg:height="134" dlg:page="1" dlg:vscroll="true" dlg:multiline="true" dlg:value="&amp;225.DlgScriptPractice.txtCharset.Value"/>
-  <dlg:button dlg:id="btnResetCharacters" dlg:tab-index="20" dlg:left="102" dlg:top="179" dlg:width="75" dlg:height="14" dlg:page="1" dlg:value="&amp;205.DlgScriptPractice.btnResetCharacters.Value"/>
-  <dlg:button dlg:id="btnSwitch" dlg:tab-index="21" dlg:left="211" dlg:top="189" dlg:width="71" dlg:height="14" dlg:value="&amp;207.DlgScriptPractice.btnSwitch.Value"/>
-  <dlg:button dlg:id="btnExit" dlg:tab-index="22" dlg:left="284" dlg:top="189" dlg:width="30" dlg:height="14" dlg:value="&amp;203.DlgScriptPractice.btnExit.Value"/>
-  <dlg:text dlg:style-id="3" dlg:id="LabelKeyboard" dlg:tab-index="23" dlg:left="30" dlg:top="6" dlg:width="260" dlg:height="21" dlg:page="2" dlg:value="&amp;198.DlgScriptPractice.LabelKeyboard.Value" dlg:multiline="true"/>
-  <dlg:textfield dlg:style-id="4" dlg:id="txtQuestion" dlg:tab-index="24" dlg:tabstop="false" dlg:left="30" dlg:top="27" dlg:width="260" dlg:height="41" dlg:page="2" dlg:multiline="true" dlg:readonly="true" dlg:value="&amp;229.DlgScriptPractice.txtQuestion.Value"/>
-  <dlg:textfield dlg:id="txtAnswer" dlg:tab-index="25" dlg:left="30" dlg:top="71" dlg:width="260" dlg:height="41" dlg:page="2" dlg:multiline="true" dlg:value="&amp;224.DlgScriptPractice.txtAnswer.Value"/>
-  <dlg:button dlg:id="BtnNextWord" dlg:tab-index="26" dlg:left="53" dlg:top="116" dlg:width="51" dlg:height="14" dlg:page="2" dlg:value="&amp;193.DlgScriptPractice.BtnNextWord.Value"/>
-  <dlg:button dlg:id="BtnRetry" dlg:tab-index="27" dlg:left="107" dlg:top="116" dlg:width="51" dlg:height="14" dlg:page="2" dlg:value="&amp;194.DlgScriptPractice.BtnRetry.Value"/>
+  <dlg:text dlg:id="lblNumSyllables" dlg:tab-index="13" dlg:left="12" dlg:top="73" dlg:width="55" dlg:height="11" dlg:page="1" dlg:value="&amp;283.DlgScriptPractice.lblNumSyllables.Value"/>
+  <dlg:textfield dlg:id="txtNumSyllables" dlg:tab-index="14" dlg:left="77" dlg:top="73" dlg:width="10" dlg:height="11" dlg:page="1" dlg:value="&amp;297.DlgScriptPractice.txtNumSyllables.Value"/>
+  <dlg:text dlg:id="lblNumWords" dlg:tab-index="15" dlg:left="12" dlg:top="85" dlg:width="50" dlg:height="11" dlg:page="1" dlg:value="&amp;284.DlgScriptPractice.lblNumWords.Value"/>
+  <dlg:textfield dlg:id="txtNumWords" dlg:tab-index="16" dlg:left="77" dlg:top="84" dlg:width="10" dlg:height="10" dlg:page="1" dlg:value="&amp;298.DlgScriptPractice.txtNumWords.Value"/>
+  <dlg:button dlg:id="btnFiles" dlg:tab-index="17" dlg:left="12" dlg:top="117" dlg:width="50" dlg:height="14" dlg:page="1" dlg:value="&amp;271.DlgScriptPractice.btnFiles.Value"/>
+  <dlg:text dlg:id="lblCharset" dlg:tab-index="18" dlg:left="102" dlg:top="36" dlg:width="57" dlg:height="11" dlg:page="1" dlg:value="&amp;278.DlgScriptPractice.lblCharset.Value"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="txtCharset" dlg:tab-index="19" dlg:left="102" dlg:top="45" dlg:width="213" dlg:height="134" dlg:page="1" dlg:vscroll="true" dlg:multiline="true" dlg:value="&amp;295.DlgScriptPractice.txtCharset.Value"/>
+  <dlg:button dlg:id="btnResetCharacters" dlg:tab-index="20" dlg:left="102" dlg:top="179" dlg:width="75" dlg:height="14" dlg:page="1" dlg:value="&amp;272.DlgScriptPractice.btnResetCharacters.Value"/>
+  <dlg:button dlg:id="btnSwitch" dlg:tab-index="21" dlg:left="211" dlg:top="189" dlg:width="71" dlg:height="14" dlg:value="&amp;274.DlgScriptPractice.btnSwitch.Value"/>
+  <dlg:button dlg:id="btnExit" dlg:tab-index="22" dlg:left="284" dlg:top="189" dlg:width="30" dlg:height="14" dlg:value="&amp;270.DlgScriptPractice.btnExit.Value"/>
+  <dlg:text dlg:style-id="3" dlg:id="LabelKeyboard" dlg:tab-index="23" dlg:left="30" dlg:top="6" dlg:width="260" dlg:height="21" dlg:page="2" dlg:value="&amp;264.DlgScriptPractice.LabelKeyboard.Value" dlg:multiline="true"/>
+  <dlg:textfield dlg:style-id="4" dlg:id="txtQuestion" dlg:tab-index="24" dlg:tabstop="false" dlg:left="30" dlg:top="27" dlg:width="260" dlg:height="41" dlg:page="2" dlg:multiline="true" dlg:readonly="true" dlg:value="&amp;299.DlgScriptPractice.txtQuestion.Value"/>
+  <dlg:textfield dlg:id="txtAnswer" dlg:tab-index="25" dlg:left="30" dlg:top="71" dlg:width="260" dlg:height="41" dlg:page="2" dlg:multiline="true" dlg:value="&amp;294.DlgScriptPractice.txtAnswer.Value"/>
+  <dlg:button dlg:id="BtnNextWord" dlg:tab-index="26" dlg:left="53" dlg:top="116" dlg:width="51" dlg:height="14" dlg:page="2" dlg:value="&amp;259.DlgScriptPractice.BtnNextWord.Value"/>
+  <dlg:button dlg:id="BtnRetry" dlg:tab-index="27" dlg:left="107" dlg:top="116" dlg:width="51" dlg:height="14" dlg:page="2" dlg:value="&amp;260.DlgScriptPractice.BtnRetry.Value"/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optCheckAtLastChar" dlg:tab-index="28" dlg:left="162" dlg:top="116" dlg:width="127" dlg:height="11" dlg:page="2" dlg:value="&amp;220.DlgScriptPractice.optCheckAtLastChar.Value" dlg:checked="true"/>
-   <dlg:radio dlg:id="optCheckTypeSpace" dlg:tab-index="29" dlg:left="162" dlg:top="127" dlg:width="127" dlg:height="11" dlg:page="2" dlg:value="&amp;221.DlgScriptPractice.optCheckTypeSpace.Value"/>
+   <dlg:radio dlg:id="optCheckAtLastChar" dlg:tab-index="28" dlg:left="162" dlg:top="116" dlg:width="127" dlg:height="11" dlg:page="2" dlg:value="&amp;290.DlgScriptPractice.optCheckAtLastChar.Value" dlg:checked="true"/>
+   <dlg:radio dlg:id="optCheckTypeSpace" dlg:tab-index="29" dlg:left="162" dlg:top="127" dlg:width="127" dlg:height="11" dlg:page="2" dlg:value="&amp;291.DlgScriptPractice.optCheckTypeSpace.Value"/>
   </dlg:radiogroup>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="30" dlg:left="6" dlg:top="137" dlg:width="114" dlg:height="67" dlg:page="2">
-   <dlg:title dlg:value="&amp;195.DlgScriptPractice.FrameControl1.Value"/>
+   <dlg:title dlg:value="&amp;261.DlgScriptPractice.FrameControl1.Value"/>
   </dlg:titledbox>
-  <dlg:text dlg:id="LabelTotal" dlg:tab-index="31" dlg:left="7" dlg:top="148" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;201.DlgScriptPractice.LabelTotal.Value" dlg:align="right"/>
-  <dlg:text dlg:id="lblDispNumberOfWords" dlg:tab-index="32" dlg:left="100" dlg:top="148" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;215.DlgScriptPractice.lblDispNumberOfWords.Value"/>
-  <dlg:text dlg:style-id="1" dlg:id="LabelRight" dlg:tab-index="33" dlg:left="7" dlg:top="157" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;199.DlgScriptPractice.LabelRight.Value" dlg:align="right"/>
-  <dlg:text dlg:style-id="1" dlg:id="lblDispCorrect" dlg:tab-index="34" dlg:left="100" dlg:top="157" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;213.DlgScriptPractice.lblDispCorrect.Value"/>
-  <dlg:text dlg:style-id="2" dlg:id="LabelWrong" dlg:tab-index="35" dlg:left="7" dlg:top="166" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;202.DlgScriptPractice.LabelWrong.Value" dlg:align="right"/>
-  <dlg:text dlg:style-id="2" dlg:id="lblDispIncorrect" dlg:tab-index="36" dlg:left="100" dlg:top="166" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;214.DlgScriptPractice.lblDispIncorrect.Value"/>
-  <dlg:button dlg:id="btnResetStats" dlg:tab-index="37" dlg:left="79" dlg:top="187" dlg:width="38" dlg:height="13" dlg:page="2" dlg:value="&amp;206.DlgScriptPractice.btnResetStats.Value"/>
-  <dlg:text dlg:id="LabelAvgTime" dlg:tab-index="38" dlg:left="7" dlg:top="175" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;196.DlgScriptPractice.LabelAvgTime.Value" dlg:align="right"/>
-  <dlg:text dlg:id="lblDispAvgTime" dlg:tab-index="39" dlg:left="100" dlg:top="175" dlg:width="19" dlg:height="9" dlg:page="2" dlg:value="&amp;212.DlgScriptPractice.lblDispAvgTime.Value"/>
+  <dlg:text dlg:id="LabelTotal" dlg:tab-index="31" dlg:left="7" dlg:top="148" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;267.DlgScriptPractice.LabelTotal.Value" dlg:align="right"/>
+  <dlg:text dlg:id="lblDispNumberOfWords" dlg:tab-index="32" dlg:left="100" dlg:top="148" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;282.DlgScriptPractice.lblDispNumberOfWords.Value"/>
+  <dlg:text dlg:style-id="1" dlg:id="LabelRight" dlg:tab-index="33" dlg:left="7" dlg:top="157" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;265.DlgScriptPractice.LabelRight.Value" dlg:align="right"/>
+  <dlg:text dlg:style-id="1" dlg:id="lblDispCorrect" dlg:tab-index="34" dlg:left="100" dlg:top="157" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;280.DlgScriptPractice.lblDispCorrect.Value"/>
+  <dlg:text dlg:style-id="2" dlg:id="LabelWrong" dlg:tab-index="35" dlg:left="7" dlg:top="166" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;268.DlgScriptPractice.LabelWrong.Value" dlg:align="right"/>
+  <dlg:text dlg:style-id="2" dlg:id="lblDispIncorrect" dlg:tab-index="36" dlg:left="100" dlg:top="166" dlg:width="20" dlg:height="9" dlg:page="2" dlg:value="&amp;281.DlgScriptPractice.lblDispIncorrect.Value"/>
+  <dlg:button dlg:id="btnResetStats" dlg:tab-index="37" dlg:left="79" dlg:top="187" dlg:width="38" dlg:height="13" dlg:page="2" dlg:value="&amp;273.DlgScriptPractice.btnResetStats.Value"/>
+  <dlg:text dlg:id="LabelAvgTime" dlg:tab-index="38" dlg:left="7" dlg:top="175" dlg:width="90" dlg:height="9" dlg:page="2" dlg:value="&amp;262.DlgScriptPractice.LabelAvgTime.Value" dlg:align="right"/>
+  <dlg:text dlg:id="lblDispAvgTime" dlg:tab-index="39" dlg:left="100" dlg:top="175" dlg:width="19" dlg:height="9" dlg:page="2" dlg:value="&amp;279.DlgScriptPractice.lblDispAvgTime.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

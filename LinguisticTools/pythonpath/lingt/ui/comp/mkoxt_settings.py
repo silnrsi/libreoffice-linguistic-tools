@@ -43,12 +43,12 @@ class MkoxtSettings(Syncable):
         self.langtag = ""
         self.outfile = ""
         self.word = ""  # word-forming punctuation list
-        self.type = 'west'
+        self.type = ''
         self.font = ""
         self.langname = ""
         self.dict = ""
         self.affix = ""
-        self.normalize = 'NFC'
+        self.normalize = ''
         self.version = ""
         self.dicttype = ""
         self.publisher = ""
@@ -58,13 +58,13 @@ class MkoxtSettings(Syncable):
         self.langtag = self.userVars.get("LangTag")
         self.outfile = self.userVars.get("Outfile")
         self.word = self.userVars.get("WordFormingPunct")
-        self.type = self.userVars.getWithDefault("ScriptType", self.type)
+        self.type = self.userVars.getWithDefault("ScriptType", 'west')
         self.font = self.userVars.get("Font")
         self.langname = self.userVars.get("LangName")
         self.dict = self.userVars.get("WordList")
         self.affix = self.userVars.get("AffixFile")
         self.normalize = self.userVars.getWithDefault("Normalize", 'NFC')
-        self.version = self.userVars.get("Version")
+        self.version = self.userVars.getWithDefault("Version", "0.1")
         self.dicttype = self.userVars.get("DictType")
         self.publisher = self.userVars.get("Publisher")
         self.puburl = self.userVars.get("PublisherURL")
@@ -102,6 +102,8 @@ class DlgMkoxtSettings:
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
         self.msgbox = MessageBox(self.unoObjs)
+        uservars.SettingsDocPreparer(
+            uservars.Prefix.MAKE_OXT, unoObjs).prepare()
         self.userVars = uservars.UserVars(
             uservars.Prefix.MAKE_OXT, unoObjs.document, logger)
         self.settings = None
@@ -128,6 +130,7 @@ class DlgMkoxtSettings:
 
         if self.runOnClose:
             _mkoxt(self.settings, self.msgbox)
+            self.msgbox.display("Finished!")
         dlg.dispose()
 
     def showFilePicker(self):
@@ -174,33 +177,54 @@ class DlgControls:
         self.evtHandler = evtHandler
         self.userVars = userVars
 
-        self.fctlWordList = ctrl_getter.get(_dlgdef.FCTL_WORD_LIST)
         self.txtLangName = ctrl_getter.get(_dlgdef.TXT_LANG_NAME)
+        self.txtOutfile = ctrl_getter.get(_dlgdef.TXT_OUTFILE)
+        self.fctlWordList = ctrl_getter.get(_dlgdef.FCTL_WORD_LIST)
         self.listboxScriptType = ctrl_getter.get(_dlgdef.LISTBOX_SCRIPT_TYPE)
         self.txtLangTag = ctrl_getter.get(_dlgdef.TXT_LANG_TAG)
-        self.txtOutfile = ctrl_getter.get(_dlgdef.TXT_OUTFILE)
+        self.txtWordFormingPunct = ctrl_getter.get(_dlgdef.TXT_WORD_FORMING_PUNCT)
+        self.comboFont = ctrl_getter.get(_dlgdef.COMBO_FONT)
+        self.fctlAffix = ctrl_getter.get(_dlgdef.FCTL_AFFIX)
+        self.optNormNFC = ctrl_getter.get(_dlgdef.OPT_NORM_NFC)
+        self.optNormNFD = ctrl_getter.get(_dlgdef.OPT_NORM_NFD)
+        self.optNormNone = ctrl_getter.get(_dlgdef.OPT_NORM_NONE)
+        self.txtVersion = ctrl_getter.get(_dlgdef.TXT_VERSION)
+        self.listDictType = ctrl_getter.get(_dlgdef.LIST_DICT_TYPE)
+        self.txtPublisher = ctrl_getter.get(_dlgdef.TXT_PUBLISHER)
+        self.txtPublisherURL = ctrl_getter.get(_dlgdef.TXT_PUBLISHER_URL)
         btnBrowse = ctrl_getter.get(_dlgdef.BTN_BROWSE)
-        btnAdvancedOptions = ctrl_getter.get(_dlgdef.BTN_ADVANCED_OPTIONS)
         btnOK = ctrl_getter.get(_dlgdef.BTN_OK)
         btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
         ## Listeners
 
         btnBrowse.setActionCommand("ShowFilePicker")
-        btnAdvancedOptions.setActionCommand("AdvancedOptions")
         btnOK.setActionCommand("Close_and_Run")
         btnCancel.setActionCommand("Cancel")
-        for ctrl in (btnBrowse, btnAdvancedOptions, btnOK, btnCancel):
+        for ctrl in (btnBrowse, btnOK, btnCancel):
             ctrl.addActionListener(self.evtHandler)
+
+        self.radiosNormalize = [
+            dutil.RadioTuple(self.optNormNFC, 'NFC'),
+            dutil.RadioTuple(self.optNormNFD, 'NFD'),
+            dutil.RadioTuple(self.optNormNone, 'None')]
 
     def loadValues(self):
         settings = MkoxtSettings(self.userVars)
         settings.loadUserVars()
-        self.fctlWordList.setText(settings.dict)
         self.txtLangName.setText(settings.langname)
-        self.listboxScriptType.selectItemPos(1, True)
-        self.txtLangTag.setText(settings.langtag)
         self.txtOutfile.setText(settings.outfile)
+        self.fctlWordList.setText(settings.dict)
+        self.listboxScriptType.selectItemPos(0, True)
+        self.txtLangTag.setText(settings.langtag)
+        self.txtWordFormingPunct.setText(settings.word)
+        self.comboFont.setText(settings.font)
+        self.fctlAffix.setText(settings.affix)
+        dutil.selectRadio(self.radiosNormalize, settings.normalize)
+        self.txtVersion.setText(settings.version)
+        self.listDictType.selectItem(settings.dicttype, True)
+        self.txtPublisher.setText(settings.publisher)
+        self.txtPublisherURL.setText(settings.puburl)
 
     def getFormResults(self):
         """Reads form fields and returns settings.
@@ -208,12 +232,20 @@ class DlgControls:
         """
         logger.debug(util.funcName('begin'))
         settings = MkoxtSettings(self.userVars)
-        settings.dict = self.fctlWordList.getText()
         settings.langname = self.txtLangName.getText()
+        settings.outfile = self.txtOutfile.getText()
+        settings.dict = self.fctlWordList.getText()
         settings.type = SCRIPT_TYPES[
             self.listboxScriptType.getSelectedItemPos()]
         settings.langtag = self.txtLangTag.getText()
-        settings.outfile = self.txtOutfile.getText()
+        settings.word = self.txtWordFormingPunct.getText()
+        settings.font = self.comboFont.getText()
+        settings.affix = self.fctlAffix.getText()
+        settings.normalize = dutil.whichSelected(self.radiosNormalize)
+        settings.version = self.txtVersion.getText()
+        settings.dicttype = self.listDictType.getSelectedItem()
+        settings.publisher = self.txtPublisher.getText()
+        settings.puburl = self.txtPublisherURL.getText()
         settings.storeUserVars()
         return settings
 
@@ -230,8 +262,6 @@ class DlgEventHandler(XActionListener, unohelper.Base):
         logger.debug("%s %s", util.funcName(), event.ActionCommand)
         if event.ActionCommand == "ShowFilePicker":
             self.mainForm.showFilePicker()
-        elif event.ActionCommand == "AdvancedOptions":
-            pass
         elif event.ActionCommand == "Cancel":
             self.mainForm.dlgClose()
         elif event.ActionCommand == "Close_and_Run":
