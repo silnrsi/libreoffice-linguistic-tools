@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConversion" dlg:left="111" dlg:top="12" dlg:width="296" dlg:height="257" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;102.DlgDataConversion.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConversion" dlg:left="111" dlg:top="12" dlg:width="296" dlg:height="257" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;128.DlgDataConversion.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:background-color="0xd8e4f8"/>
  </dlg:styles>
@@ -16,10 +16,10 @@
   <dlg:radiogroup>
    <dlg:radio dlg:id="optScopeWholeDoc" dlg:tab-index="6" dlg:left="11" dlg:top="70" dlg:width="116" dlg:height="10" dlg:value="&amp;127.DlgDataConversion.optScopeWholeDoc.Value" dlg:valign="center"/>
    <dlg:radio dlg:id="optScopeSelection" dlg:tab-index="7" dlg:left="11" dlg:top="84" dlg:width="116" dlg:height="10" dlg:value="&amp;126.DlgDataConversion.optScopeSelection.Value" dlg:valign="center"/>
-   <dlg:radio dlg:id="optScopeFont" dlg:tab-index="8" dlg:left="11" dlg:top="98" dlg:width="119" dlg:height="10" dlg:value="&amp;120.DlgDataConversion.optScopeFont.Value" dlg:valign="center" dlg:checked="true"/>
-   <dlg:radio dlg:id="optScopeParaStyle" dlg:tab-index="9" dlg:left="11" dlg:top="141" dlg:width="117" dlg:height="10" dlg:value="&amp;124.DlgDataConversion.optScopeParaStyle.Value" dlg:valign="center"/>
-   <dlg:radio dlg:id="optScopeCharStyle" dlg:tab-index="10" dlg:left="11" dlg:top="169" dlg:width="117" dlg:height="10" dlg:value="&amp;119.DlgDataConversion.optScopeCharStyle.Value"/>
-   <dlg:radio dlg:id="optScopeSFMs" dlg:tab-index="11" dlg:left="11" dlg:top="196" dlg:width="119" dlg:height="10" dlg:value="&amp;125.DlgDataConversion.optScopeSFMs.Value" dlg:valign="center"/>
+   <dlg:radio dlg:id="optScopeFont" dlg:tab-index="8" dlg:left="11" dlg:top="98" dlg:width="119" dlg:height="10" dlg:value="&amp;135.DlgDataConversion.optScopeFont.Value" dlg:valign="center" dlg:checked="true"/>
+   <dlg:radio dlg:id="optScopeParaStyle" dlg:tab-index="9" dlg:left="11" dlg:top="141" dlg:width="117" dlg:height="10" dlg:value="&amp;136.DlgDataConversion.optScopeParaStyle.Value" dlg:valign="center"/>
+   <dlg:radio dlg:id="optScopeCharStyle" dlg:tab-index="10" dlg:left="11" dlg:top="169" dlg:width="117" dlg:height="10" dlg:value="&amp;134.DlgDataConversion.optScopeCharStyle.Value"/>
+   <dlg:radio dlg:id="optScopeSFMs" dlg:tab-index="11" dlg:left="11" dlg:top="196" dlg:width="119" dlg:height="10" dlg:value="&amp;137.DlgDataConversion.optScopeSFMs.Value" dlg:valign="center"/>
   </dlg:radiogroup>
   <dlg:combobox dlg:id="cmbxScopeFont" dlg:tab-index="12" dlg:left="28" dlg:top="111" dlg:width="93" dlg:height="11" dlg:value="&amp;112.DlgDataConversion.cmbxScopeFont.Value" dlg:spin="true" dlg:linecount="15"/>
   <dlg:radiogroup>
@@ -27,21 +27,21 @@
    <dlg:radio dlg:id="optScopeFontCTL" dlg:tab-index="14" dlg:left="66" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;122.DlgDataConversion.optScopeFontCTL.Value"/>
    <dlg:radio dlg:id="optScopeFontAsian" dlg:tab-index="15" dlg:left="105" dlg:top="126" dlg:width="37" dlg:height="10" dlg:value="&amp;121.DlgDataConversion.optScopeFontAsian.Value"/>
   </dlg:radiogroup>
-  <dlg:combobox dlg:id="cmbxScopeParaStyle" dlg:tab-index="16" dlg:left="28" dlg:top="153" dlg:width="93" dlg:height="11" dlg:value="&amp;113.DlgDataConversion.cmbxScopeParaStyle.Value" dlg:spin="true" dlg:linecount="15"/>
-  <dlg:combobox dlg:id="cmbxScopeCharStyle" dlg:tab-index="17" dlg:left="28" dlg:top="181" dlg:width="92" dlg:height="11" dlg:value="&amp;111.DlgDataConversion.cmbxScopeCharStyle.Value" dlg:spin="true" dlg:linecount="15"/>
-  <dlg:textfield dlg:id="txbxSFM" dlg:tab-index="18" dlg:left="28" dlg:top="209" dlg:width="93" dlg:height="11" dlg:value="&amp;135.DlgDataConversion.txbxSFM.Value"/>
+  <dlg:combobox dlg:id="cmbxScopeParaStyle" dlg:tab-index="16" dlg:left="28" dlg:top="153" dlg:width="93" dlg:height="11" dlg:value="&amp;130.DlgDataConversion.cmbxScopeParaStyle.Value" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="cmbxScopeCharStyle" dlg:tab-index="17" dlg:left="28" dlg:top="181" dlg:width="92" dlg:height="11" dlg:value="&amp;129.DlgDataConversion.cmbxScopeCharStyle.Value" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:textfield dlg:id="txbxSFM" dlg:tab-index="18" dlg:left="28" dlg:top="209" dlg:width="93" dlg:height="11" dlg:value="&amp;142.DlgDataConversion.txbxSFM.Value"/>
   <dlg:titledbox dlg:id="frameTargetFont" dlg:tab-index="19" dlg:left="153" dlg:top="57" dlg:width="136" dlg:height="144">
    <dlg:title dlg:value="&amp;117.DlgDataConversion.frameTargetFont.Value"/>
   </dlg:titledbox>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="optTargetNoChange" dlg:tab-index="20" dlg:left="158" dlg:top="70" dlg:width="103" dlg:height="10" dlg:value="&amp;133.DlgDataConversion.optTargetNoChange.Value" dlg:valign="center" dlg:checked="true"/>
-   <dlg:radio dlg:id="optTargetParaStyle" dlg:tab-index="21" dlg:left="158" dlg:top="85" dlg:width="102" dlg:height="10" dlg:value="&amp;134.DlgDataConversion.optTargetParaStyle.Value" dlg:valign="center"/>
-   <dlg:radio dlg:id="optTargetCharStyle" dlg:tab-index="22" dlg:left="158" dlg:top="112" dlg:width="100" dlg:height="10" dlg:value="&amp;128.DlgDataConversion.optTargetCharStyle.Value"/>
-   <dlg:radio dlg:id="optTargetFontOnly" dlg:tab-index="23" dlg:left="158" dlg:top="185" dlg:width="116" dlg:height="10" dlg:value="&amp;131.DlgDataConversion.optTargetFontOnly.Value"/>
+   <dlg:radio dlg:id="optTargetNoChange" dlg:tab-index="20" dlg:left="158" dlg:top="70" dlg:width="103" dlg:height="10" dlg:value="&amp;140.DlgDataConversion.optTargetNoChange.Value" dlg:valign="center" dlg:checked="true"/>
+   <dlg:radio dlg:id="optTargetParaStyle" dlg:tab-index="21" dlg:left="158" dlg:top="85" dlg:width="102" dlg:height="10" dlg:value="&amp;141.DlgDataConversion.optTargetParaStyle.Value" dlg:valign="center"/>
+   <dlg:radio dlg:id="optTargetCharStyle" dlg:tab-index="22" dlg:left="158" dlg:top="112" dlg:width="100" dlg:height="10" dlg:value="&amp;138.DlgDataConversion.optTargetCharStyle.Value"/>
+   <dlg:radio dlg:id="optTargetFontOnly" dlg:tab-index="23" dlg:left="158" dlg:top="185" dlg:width="116" dlg:height="10" dlg:value="&amp;139.DlgDataConversion.optTargetFontOnly.Value"/>
   </dlg:radiogroup>
-  <dlg:combobox dlg:id="cmbxTargetParaStyle" dlg:tab-index="24" dlg:left="172" dlg:top="97" dlg:width="93" dlg:height="11" dlg:value="&amp;115.DlgDataConversion.cmbxTargetParaStyle.Value" dlg:spin="true" dlg:linecount="12"/>
-  <dlg:combobox dlg:id="cmbxTargetCharStyle" dlg:tab-index="25" dlg:left="172" dlg:top="124" dlg:width="93" dlg:height="11" dlg:value="&amp;114.DlgDataConversion.cmbxTargetCharStyle.Value" dlg:spin="true" dlg:linecount="12"/>
-  <dlg:text dlg:id="lblStyleFont" dlg:tab-index="26" dlg:left="158" dlg:top="143" dlg:width="91" dlg:height="10" dlg:value="&amp;118.DlgDataConversion.lblStyleFont.Value"/>
+  <dlg:combobox dlg:id="cmbxTargetParaStyle" dlg:tab-index="24" dlg:left="172" dlg:top="97" dlg:width="93" dlg:height="11" dlg:value="&amp;132.DlgDataConversion.cmbxTargetParaStyle.Value" dlg:spin="true" dlg:linecount="12"/>
+  <dlg:combobox dlg:id="cmbxTargetCharStyle" dlg:tab-index="25" dlg:left="172" dlg:top="124" dlg:width="93" dlg:height="11" dlg:value="&amp;131.DlgDataConversion.cmbxTargetCharStyle.Value" dlg:spin="true" dlg:linecount="12"/>
+  <dlg:text dlg:id="lblStyleFont" dlg:tab-index="26" dlg:left="158" dlg:top="143" dlg:width="91" dlg:height="10" dlg:value="&amp;133.DlgDataConversion.lblStyleFont.Value"/>
   <dlg:menulist dlg:id="listStyleFont" dlg:tab-index="27" dlg:left="158" dlg:top="155" dlg:width="93" dlg:height="11" dlg:spin="true" dlg:linecount="15"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="optTargetFontRegular" dlg:tab-index="28" dlg:left="172" dlg:top="169" dlg:width="37" dlg:height="10" dlg:value="&amp;132.DlgDataConversion.optTargetFontRegular.Value" dlg:checked="true"/>

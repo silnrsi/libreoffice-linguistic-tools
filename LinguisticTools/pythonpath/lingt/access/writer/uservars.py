@@ -241,7 +241,7 @@ class SettingsDocPreparer:
         """Add explanation text to the document."""
         oVC = self.unoObjs.viewcursor   # shorthand variable name
         oVC.gotoEnd(False)
-        componentName = ""
+        componentName = "LingTools"
         if self.VAR_PREFIX == Prefix.SCRIPT_PRACTICE:
             componentName = theLocale.getText("Script Practice")
         elif self.VAR_PREFIX == Prefix.WORD_LIST:
@@ -252,6 +252,8 @@ class SettingsDocPreparer:
             componentName = theLocale.getText("Bulk Conversion")
         elif self.VAR_PREFIX == Prefix.DATA_CONV_DRAW:
             componentName = theLocale.getText("Draw")
+        elif self.VAR_PREFIX == Prefix.MAKE_OXT:
+            componentName = theLocale.getText("Make OXT")
         message = theLocale.getText(
             "This document stores settings for %s.  "
             "Please leave it open while using %s.  "
