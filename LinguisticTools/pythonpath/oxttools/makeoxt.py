@@ -65,7 +65,7 @@ def zipnormfile(ozip, fin, fout, normalize, affix=None) :
             dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
         else:
             dat += u"\n".join([x for x in fd.readlines()])
-    if affix is not None :
+    if affix:
         with open(affix) as fd:
             if normalize in ('NFC','NFD'):
                 dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
@@ -108,7 +108,7 @@ def make(settings, msgbox):
     t = xtmpl.Templater()
 
     fontmap = {}
-    if args.font is not None :
+    if args.font:
         for f in args.font :
             (id, name) = f.split('=')
             fontmap[id] = name
@@ -134,7 +134,7 @@ def make(settings, msgbox):
     t.define('scripttype', str(scripttype))
     t.define('language', args.langname)
     t.define('version', args.version)
-    if args.publisher is not None :
+    if args.publisher:
         t.define('publisher', args.publisher)
         t.define('puburl', args.puburl)
     else :
@@ -188,7 +188,7 @@ def make(settings, msgbox):
                 wordcount += 1
             if wordcount * 4 < itemcount :  #warn if less than 25% of the words are valid
                 print("Warning: only {:.0f}% of the words marked as correct and entered into the dictionary. Consider using --dicttype ptall".format(wordcount / float(itemcount) * 100))
-            if args.affix is not None :
+            if args.affix:
                 hun.mergeaffix(args.affix)
             ziphunspell(ozip, hun, args.langtag)
         elif args.dicttype == 'text' :
@@ -196,7 +196,7 @@ def make(settings, msgbox):
             with codecs.open(args.dict, encoding='utf-8') as infile :
                 for l in infile.readlines() :
                     hun.addword(l.replace("\uFEFF", "").strip())
-            if args.affix is not None :
+            if args.affix:
                 hun.mergeaffix(args.affix)
             ziphunspell(ozip, hun, args.langtag)
 

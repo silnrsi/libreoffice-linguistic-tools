@@ -18,7 +18,7 @@
   <dlg:textfield dlg:style-id="0" dlg:id="TxtRefPrefix" dlg:tab-index="10" dlg:left="12" dlg:top="147" dlg:width="19" dlg:height="12" dlg:maxlength="4" dlg:value="&amp;174.DlgGrammarSettings.TxtRefPrefix.Value"/>
   <dlg:text dlg:id="LabelPrefix" dlg:tab-index="11" dlg:left="33" dlg:top="149" dlg:width="117" dlg:height="10" dlg:value="&amp;169.DlgGrammarSettings.LabelPrefix.Value"/>
   <dlg:button dlg:id="BtnFileUpdate" dlg:tab-index="12" dlg:left="151" dlg:top="147" dlg:width="49" dlg:height="12" dlg:value="&amp;158.DlgGrammarSettings.BtnFileUpdate.Value"/>
-  <dlg:checkbox dlg:id="ChkUseSegnum" dlg:tab-index="13" dlg:left="12" dlg:top="162" dlg:width="170" dlg:height="9" dlg:value="&amp;163.DlgGrammarSettings.ChkUseSegnum.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="ChkDontUseSegnum" dlg:tab-index="13" dlg:left="12" dlg:top="162" dlg:width="170" dlg:height="9" dlg:value="&amp;163.DlgGrammarSettings.ChkDontUseSegnum.Value" dlg:checked="true"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="OptionMethodFrames" dlg:tab-index="14" dlg:left="12" dlg:top="195" dlg:width="55" dlg:height="9" dlg:value="&amp;170.DlgGrammarSettings.OptionMethodFrames.Value" dlg:checked="true"/>
    <dlg:radio dlg:id="OptionMethodTables" dlg:tab-index="15" dlg:left="12" dlg:top="207" dlg:width="53" dlg:height="9" dlg:value="&amp;171.DlgGrammarSettings.OptionMethodTables.Value"/>
