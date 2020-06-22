@@ -30,14 +30,14 @@
   <dlg:text dlg:id="lblWordFormingPunct" dlg:tab-index="14" dlg:left="20" dlg:top="137" dlg:width="75" dlg:height="12" dlg:help-text="&amp;211.DlgMkoxtSettings.lblWordFormingPunct.HelpText" dlg:value="&amp;212.DlgMkoxtSettings.lblWordFormingPunct.Value"/>
   <dlg:textfield dlg:id="txtWordFormingPunct" dlg:tab-index="13" dlg:left="100" dlg:top="137" dlg:width="111" dlg:height="12" dlg:help-text="&amp;242.DlgMkoxtSettings.txtWordFormingPunct.HelpText" dlg:value="&amp;243.DlgMkoxtSettings.txtWordFormingPunct.Value"/>
   <dlg:text dlg:id="lblFont" dlg:tab-index="16" dlg:left="20" dlg:top="157" dlg:width="75" dlg:height="12" dlg:help-text="&amp;197.DlgMkoxtSettings.lblFont.HelpText" dlg:value="&amp;198.DlgMkoxtSettings.lblFont.Value"/>
-  <dlg:combobox dlg:id="comboFont" dlg:tab-index="15" dlg:left="100" dlg:top="157" dlg:width="131" dlg:height="12" dlg:help-text="&amp;187.DlgMkoxtSettings.comboFont.HelpText" dlg:value="&amp;188.DlgMkoxtSettings.comboFont.Value" dlg:spin="true"/>
+  <dlg:textfield dlg:id="txtFont" dlg:tab-index="15" dlg:left="100" dlg:top="157" dlg:width="131" dlg:height="12" dlg:help-text="&amp;187.DlgMkoxtSettings.txtFont.HelpText" dlg:value="&amp;188.DlgMkoxtSettings.txtFont.Value" dlg:spin="true"/>
   <dlg:text dlg:id="lblAffix" dlg:tab-index="18" dlg:left="20" dlg:top="176" dlg:width="75" dlg:height="12" dlg:help-text="&amp;193.DlgMkoxtSettings.lblAffix.HelpText" dlg:value="&amp;194.DlgMkoxtSettings.lblAffix.Value"/>
   <dlg:filecontrol dlg:id="fctlAffix" dlg:tab-index="17" dlg:left="100" dlg:top="176" dlg:width="196" dlg:height="12" dlg:help-text="&amp;189.DlgMkoxtSettings.fctlAffix.HelpText"/>
   <dlg:text dlg:id="lblNormalize" dlg:tab-index="19" dlg:left="20" dlg:top="192" dlg:width="75" dlg:height="12" dlg:help-text="&amp;201.DlgMkoxtSettings.lblNormalize.HelpText" dlg:value="&amp;202.DlgMkoxtSettings.lblNormalize.Value"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="optNormNFC" dlg:tab-index="29" dlg:left="100" dlg:top="192" dlg:width="38" dlg:height="12" dlg:help-text="&amp;225.DlgMkoxtSettings.optNormNFC.HelpText" dlg:value="&amp;226.DlgMkoxtSettings.optNormNFC.Value"/>
-   <dlg:radio dlg:id="optNormNFD" dlg:tab-index="30" dlg:left="163" dlg:top="192" dlg:width="38" dlg:height="12" dlg:help-text="&amp;227.DlgMkoxtSettings.optNormNFD.HelpText" dlg:value="&amp;228.DlgMkoxtSettings.optNormNFD.Value"/>
-   <dlg:radio dlg:id="optNormNone" dlg:tab-index="31" dlg:left="214" dlg:top="192" dlg:width="40" dlg:height="12" dlg:help-text="&amp;229.DlgMkoxtSettings.optNormNone.HelpText" dlg:value="&amp;230.DlgMkoxtSettings.optNormNone.Value"/>
+   <dlg:radio dlg:id="optNormNFD" dlg:tab-index="30" dlg:left="140" dlg:top="192" dlg:width="38" dlg:height="12" dlg:help-text="&amp;227.DlgMkoxtSettings.optNormNFD.HelpText" dlg:value="&amp;228.DlgMkoxtSettings.optNormNFD.Value"/>
+   <dlg:radio dlg:id="optNormNone" dlg:tab-index="31" dlg:left="180" dlg:top="192" dlg:width="40" dlg:height="12" dlg:help-text="&amp;229.DlgMkoxtSettings.optNormNone.HelpText" dlg:value="&amp;230.DlgMkoxtSettings.optNormNone.Value"/>
   </dlg:radiogroup>
   <dlg:text dlg:id="lblVersion" dlg:tab-index="21" dlg:left="20" dlg:top="209" dlg:width="75" dlg:height="12" dlg:help-text="&amp;209.DlgMkoxtSettings.lblVersion.HelpText" dlg:value="&amp;210.DlgMkoxtSettings.lblVersion.Value"/>
   <dlg:textfield dlg:id="txtVersion" dlg:tab-index="20" dlg:left="100" dlg:top="209" dlg:width="59" dlg:height="12" dlg:help-text="&amp;240.DlgMkoxtSettings.txtVersion.HelpText" dlg:value="&amp;241.DlgMkoxtSettings.txtVersion.Value"/>

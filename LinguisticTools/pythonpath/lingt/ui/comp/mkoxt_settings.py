@@ -11,10 +11,12 @@ This module exports:
 
 """
 import logging
+import os
 
 import uno
 import unohelper
 from com.sun.star.awt import XActionListener
+from com.sun.star.awt import XTextListener
 
 from lingt.access.writer import uservars
 from lingt.access.writer.uservars import Syncable
@@ -121,6 +123,7 @@ class DlgMkoxtSettings:
         self.evtHandler = DlgEventHandler(self)
         self.dlgCtrls = DlgControls(
             self.unoObjs, ctrl_getter, self.evtHandler, self.userVars)
+        self.evtHandler.setCtrls(self.dlgCtrls)
         self.dlgCtrls.loadValues()
 
         ## Display the dialog
@@ -130,7 +133,9 @@ class DlgMkoxtSettings:
 
         if self.runOnClose:
             _mkoxt(self.settings, self.msgbox)
-            self.msgbox.display("Finished!")
+            filename = os.path.basename(self.settings.outfile)
+            self.msgbox.display("%s finished." % filename)
+
         dlg.dispose()
 
     def showFilePicker(self):
@@ -183,7 +188,7 @@ class DlgControls:
         self.listboxScriptType = ctrl_getter.get(_dlgdef.LISTBOX_SCRIPT_TYPE)
         self.txtLangTag = ctrl_getter.get(_dlgdef.TXT_LANG_TAG)
         self.txtWordFormingPunct = ctrl_getter.get(_dlgdef.TXT_WORD_FORMING_PUNCT)
-        self.comboFont = ctrl_getter.get(_dlgdef.COMBO_FONT)
+        self.txtFont = ctrl_getter.get(_dlgdef.TXT_FONT)
         self.fctlAffix = ctrl_getter.get(_dlgdef.FCTL_AFFIX)
         self.optNormNFC = ctrl_getter.get(_dlgdef.OPT_NORM_NFC)
         self.optNormNFD = ctrl_getter.get(_dlgdef.OPT_NORM_NFD)
@@ -218,13 +223,22 @@ class DlgControls:
         self.listboxScriptType.selectItemPos(0, True)
         self.txtLangTag.setText(settings.langtag)
         self.txtWordFormingPunct.setText(settings.word)
-        self.comboFont.setText(settings.font)
+        self.txtFont.setText(settings.font)
         self.fctlAffix.setText(settings.affix)
         dutil.selectRadio(self.radiosNormalize, settings.normalize)
         self.txtVersion.setText(settings.version)
         self.listDictType.selectItem(settings.dicttype, True)
         self.txtPublisher.setText(settings.publisher)
         self.txtPublisherURL.setText(settings.puburl)
+
+        self.addRemainingListeners()
+
+    def addRemainingListeners(self):
+        """We have already added action listeners in __init__(),
+        but we wait to add listeners for other types of controls because
+        they could have side effects during loadValues().
+        """
+        self.fctlWordList.addTextListener(self.evtHandler)
 
     def getFormResults(self):
         """Reads form fields and returns settings.
@@ -239,7 +253,7 @@ class DlgControls:
             self.listboxScriptType.getSelectedItemPos()]
         settings.langtag = self.txtLangTag.getText()
         settings.word = self.txtWordFormingPunct.getText()
-        settings.font = self.comboFont.getText()
+        settings.font = self.txtFont.getText()
         settings.affix = self.fctlAffix.getText()
         settings.normalize = dutil.whichSelected(self.radiosNormalize)
         settings.version = self.txtVersion.getText()
@@ -249,12 +263,36 @@ class DlgControls:
         settings.storeUserVars()
         return settings
 
+    def changeDictType(self):
+        filename = self.fctlWordList.getText()
+        if filename.endswith('.aff') :
+            dicttype = 'hunspell'
+        elif filename.endswith('.xml') :
+            dicttype = 'pt'
+        elif filename.endswith('.txt') :
+            dicttype = 'text'
+        self.listDictType.selectItem(dicttype, True)
 
-class DlgEventHandler(XActionListener, unohelper.Base):
+
+class DlgEventHandler(XActionListener, XTextListener, unohelper.Base):
     """Handles dialog events."""
 
     def __init__(self, mainForm):
         self.mainForm = mainForm
+        self.dlgCtrls = None
+
+    def setCtrls(self, dlgCtrls):
+        self.dlgCtrls = dlgCtrls
+
+    @evt_handler.log_exceptions
+    def textChanged(self, textEvent):
+        """XTextListener event handler."""
+        logger.debug(util.funcName('begin'))
+        src = textEvent.Source
+        if evt_handler.sameName(src, self.dlgCtrls.fctlWordList):
+            self.dlgCtrls.changeDictType()
+        else:
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @evt_handler.log_exceptions
     def actionPerformed(self, event):

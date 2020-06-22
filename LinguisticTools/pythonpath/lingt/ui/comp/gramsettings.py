@@ -23,6 +23,7 @@
 # 22-Sep-15 JDK  Verify checkbox user variable list.
 # 08-Dec-15 JDK  Checkbox to use segnum as ref number.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
+# 22-Jun-20 JDK  Make segnum box have opposite meaning - uncheck to read.
 
 """
 Dialog for settings to import interlinear examples for grammar write-ups.
@@ -115,7 +116,7 @@ class DlgGramSettings:
         fileItem = self.fileItems[self.selectedIndex]
         logger.debug("Filepath %s", fileItem.filepath)
         self.dlgCtrls.txtPrefix.setText(fileItem.prefix)
-        self.dlgCtrls.chkUseSegnum.setState(fileItem.use_segnum)
+        self.dlgCtrls.chkDontUseSegnum.setState(not fileItem.use_segnum)
         logger.debug(util.funcName('end'))
 
     def updateFile(self, selectNewItem):
@@ -129,7 +130,8 @@ class DlgGramSettings:
         newItem = fileitemlist.LingExFileItem(self.userVars)
         newItem.filepath = self.fileItems[self.selectedIndex].filepath
         newItem.setPrefixNoSpaces(self.dlgCtrls.txtPrefix.getText())
-        newItem.use_segnum = bool(self.dlgCtrls.chkUseSegnum.getState())
+        newItem.use_segnum = not bool(
+            self.dlgCtrls.chkDontUseSegnum.getState())
         oldItem = self.fileItems[self.selectedIndex]
         if oldItem:
             if (newItem.filepath == oldItem.filepath
@@ -201,7 +203,7 @@ class DlgGramSettings:
         else:
             ## The list is empty.  Clear the text field.
             self.dlgCtrls.txtPrefix.setText("")
-            self.dlgCtrls.chkUseSegnum.setState(False)
+            self.dlgCtrls.chkDontUseSegnum.setState(True)
             self.selectedIndex = -1
         logger.debug("FileRemove end")
 
@@ -263,7 +265,7 @@ class DlgControls:
         self.chkOuterTable = ctrl_getter.get(_dlgdef.CHK_OUTER_TABLE)
         self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
         self.txtPrefix = ctrl_getter.get(_dlgdef.TXT_REF_PREFIX)
-        self.chkUseSegnum = ctrl_getter.get(_dlgdef.CHK_USE_SEGNUM)
+        self.chkDontUseSegnum = ctrl_getter.get(_dlgdef.CHK_DONT_USE_SEGNUM)
         self.txtNumColWidth = ctrl_getter.get(_dlgdef.TXT_NUM_COL_WIDTH)
         self.lblNumColWidth = ctrl_getter.get(_dlgdef.LBL_NUM_COL_WIDTH)
         self.optTables = ctrl_getter.get(_dlgdef.OPTION_METHOD_TABLES)

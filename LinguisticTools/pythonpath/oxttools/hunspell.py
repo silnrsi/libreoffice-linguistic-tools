@@ -46,7 +46,7 @@ class Hunspell(object) :
                     i += 1
 
     def mergeaffix(self, fname) :
-        if fname is not None :
+        if fname:
             with codecs.open(fname, encoding='utf-8') as fd :
                 self.affix = "\n".join(fd.readlines()).replace(u"\uFEFF", "")
 
