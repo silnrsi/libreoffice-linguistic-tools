@@ -19,7 +19,7 @@ Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such fi
 ## LingTools 4.0 (progressively with 3.9.xb)
 {
     fix problem of nothing happening when menu options first used
-        perhaps not able to create dialog because no attribute such as dlg:helptext
+        perhaps not able to create dialog because no dlg:helptext
 
     warn about duplicate IDs before closing Interlinear Setup
         """"The following Ref Numbers have duplicates: 1, 2.1, 2.2, 3, ...271 more.
@@ -27,18 +27,12 @@ Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such fi
         Either change the numbers or, if they are in different texts, add a
         prefix for each text.
         """
-    Make check box to pull ref numbers from FW hidden?
-        People want to check it but it normally shouldn't be used.
     check if only one number in paragraph and remove .1
     Sorteddict is not helpful.  Instead, put in a list, and create lookup dict.
 
-    create oxt - use xml.etree code and create dialogs for it
-
-    Use configuration instead of user vars for Calc and Draw.
-    Possibly put global settings in config and doc settings in user vars.
-    Abbrevs and interlinear setup should be per document, not per user.
-    Either create a special dialog to edit them ("LingTools Settings"),
-        or perhaps extension settings are good enough.
+    update documentation
+        make oxt
+        interlinear setup changes
 
     get all tests to pass again
         primary difficulty is data conversion
@@ -72,6 +66,13 @@ with document defaults except using the specified font.
 
 Texts with more than one font type will still need to be split up.
 
+
+## Use configuration instead of user vars for Calc and Draw.
+
+Possibly put global settings in config and doc settings in user vars.
+Abbrevs and interlinear setup should be per document, not per user.
+Either create a special dialog to edit them ("LingTools Settings"),
+    or perhaps extension settings are good enough.
 
 ## Thought 21-Jul-2016
 
@@ -668,13 +669,6 @@ A small Python project that I wrote is an entirely different matter:
 # Done
 #------------------------------------------------------------------------------
 
-data conversion may still require 32-bit LO
-    No, it works on Windows.
-    LO Version: 6.4.3.2 (x64)
-    C:\Program Files\SIL\FieldWorks 9\ECDriver.dll
-    ICU transliterators seem to have a problem.
-    TECkit, CC, and Perl are working.
-
 for version 4.0
     choose interlin/phon examples from list
     documentation should say "LibreOffice" instead of "OpenOffice Lin..."
@@ -685,6 +679,18 @@ for version 4.0
     Draw conversion
     "Interlinear Setup / Examples" rather than "Grammar Settings / Examples",
         but "Phonology Setup" rather than "Lexicon Setup".
+    Make check box to pull ref numbers from FW hidden?
+        People want to check it but it normally shouldn't be used.
+        Instead of hiding it, change to the opposite and default to checked:
+        "Generate Flex ref numbers (1.1, 2.1)"
+    create oxt - use xml.etree code and create dialogs for it
+
+data conversion may still require 32-bit LO
+    No, it works on Windows.
+    LO Version: 6.4.3.2 (x64)
+    C:\Program Files\SIL\FieldWorks 9\ECDriver.dll
+    ICU transliterators seem to have a problem.
+    TECkit, CC, and Perl are working.
 
 user var for phonology flex fields
 

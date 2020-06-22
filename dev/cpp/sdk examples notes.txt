@@ -1,0 +1,22 @@
+C:\libreoffice6.4.3.2\sdk\setsdkenv_windows.bat
+set OO_SDK_CPP_HOME=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
+"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
+cd C:\libreoffice6.4.3.2\sdk\examples\DevelopersGuide\ProfUNO\SimpleBootstrap_cpp
+make clean
+make
+soffice "--accept=socket,host=localhost,port=2083;urp;StarOffice.ServiceManager"
+make SimpleBootstrap_cpp.run
+
+#include <com/sun/star/text/XTextDocument.hpp>
+#include <com/sun/star/text/XTextRange.hpp>
+using namespace com::sun::star::text;
+        Reference< XComponent > xComponent( xComponentLoader->loadComponentFromURL(
+            OUString( "private:factory/swriter" ),
+            OUString( "_blank" ), 0,
+            Sequence < ::com::sun::star::beans::PropertyValue >() ) );
+        Reference < XTextDocument > xTextDocument (xComponent, UNO_QUERY);
+        Reference< XText > xText = xTextDocument->getText();
+        xText->setString(OUString::createFromAscii("Hello\n"));
+        Reference<XTextRange> xTextRange = xText->getEnd();
+        xTextRange->setString(OUString::createFromAscii("Done!"));
+
