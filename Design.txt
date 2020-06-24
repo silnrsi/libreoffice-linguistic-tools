@@ -9,35 +9,26 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
+## LingTools 4.0 (progressively with 3.9.xb)
+{
+    fix problem of nothing happening when menu options first used
+        perhaps fails to create dialog because no dlg:helptext
+
+    update documentation
+        make oxt
+        interlinear setup changes
+    localize
+    get all tests to pass again
+        primary difficulty is data conversion
+        maybe not all tests need to pass on ubuntu
+}
+
 ## Linux Data Conversion error 09-Mar-2017
 
 This is probably a SilConverters ECDriver error, not a LingTools error.
 
 Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such file or directory. 
 
-
-## LingTools 4.0 (progressively with 3.9.xb)
-{
-    fix problem of nothing happening when menu options first used
-        perhaps not able to create dialog because no dlg:helptext
-
-    warn about duplicate IDs before closing Interlinear Setup
-        """"The following Ref Numbers have duplicates: 1, 2.1, 2.2, 3, ...271 more.
-        #And for Interlinear but not Phonology
-        Either change the numbers or, if they are in different texts, add a
-        prefix for each text.
-        """
-    check if only one number in paragraph and remove .1
-    Sorteddict is not helpful.  Instead, put in a list, and create lookup dict.
-
-    update documentation
-        make oxt
-        interlinear setup changes
-
-    get all tests to pass again
-        primary difficulty is data conversion
-        maybe not all tests need to pass on ubuntu
-}
 
 ##
 
@@ -684,6 +675,14 @@ for version 4.0
         Instead of hiding it, change to the opposite and default to checked:
         "Generate Flex ref numbers (1.1, 2.1)"
     create oxt - use xml.etree code and create dialogs for it
+    warn about duplicate IDs before closing Interlinear Setup
+        """"The following Ref Numbers have duplicates: 1, 2.1, 2.2, 3, ...271 more.
+        #And for Interlinear but not Phonology
+        Either change the numbers or, if they are in different texts, add a
+        prefix for each text.
+        """
+    check if only one number in paragraph and remove .1
+    Sorteddict is not helpful for reading interlinear data.
 
 data conversion may still require 32-bit LO
     No, it works on Windows.
