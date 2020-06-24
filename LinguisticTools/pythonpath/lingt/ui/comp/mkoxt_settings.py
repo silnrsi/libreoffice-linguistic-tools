@@ -265,11 +265,11 @@ class DlgControls:
 
     def changeDictType(self):
         filename = self.fctlWordList.getText()
-        if filename.endswith('.aff') :
+        if filename.endswith('.aff'):
             dicttype = 'hunspell'
-        elif filename.endswith('.xml') :
+        elif filename.endswith('.xml'):
             dicttype = 'pt'
-        elif filename.endswith('.txt') :
+        elif filename.endswith('.txt'):
             dicttype = 'text'
         self.listDictType.selectItem(dicttype, True)
 

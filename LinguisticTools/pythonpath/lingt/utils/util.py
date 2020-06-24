@@ -248,14 +248,14 @@ def uniqueList(seq):
     return checked
 
 
-def natural_sort(l): 
+def natural_sort(l):
     """Sort a list oF strings in natural sort order,
     for example "1.2" before "1.10".
     Taken from https://stackoverflow.com/questions/4836710/.
     """
-    convert = lambda text: int(text) if text.isdigit() else text.lower() 
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
-    return sorted(l, key = alphanum_key)
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
+    return sorted(l, key=alphanum_key)
 
 
 def xray(myObject, unoObjs):

@@ -27,7 +27,7 @@ from com.sun.star.uno import RuntimeException
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.calc.spreadsheet_output import SpreadsheetOutput
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
-from lingt.access.draw.shapesearch import ShapeSearch, ShapeSearchSettings
+from lingt.access.draw.shapesearch import ShapeSearch
 from lingt.access.writer.textchanges import TextChanger, TextChangerSettings
 from lingt.access.writer.textsearch import TextSearch, TextSearchSettings
 from lingt.app import exceptions

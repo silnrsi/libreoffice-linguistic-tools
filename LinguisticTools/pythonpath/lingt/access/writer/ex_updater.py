@@ -183,12 +183,6 @@ class ExUpdater:
         oVC.gotoEndOfLine(False)
         logger.debug("deleteOldPhonEx() FINISH")
 
-    def disposing(self, dummy_aEvent):
-        ## XXX: Needs testing; Is this method needed for this class?
-        logger.debug("Disposing")
-        self.compDoc = None
-        return None
-
 
 def insertPageBreak(oText, oCursor):
     """Inserts a paragraph that has a page break."""

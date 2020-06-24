@@ -93,6 +93,11 @@ class DataNotFoundError(MessageError):
     pass
 
 
+class DataInconsistentError(MessageError):
+    """Data problems such as duplicates."""
+    pass
+
+
 class FileAccessError(MessageError):
     """Error reading or writing files."""
     pass
