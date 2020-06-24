@@ -214,7 +214,6 @@ class DlgGrammarSettings:
     BTN_FILE_REMOVE = "BtnFileRemove"
     TXT_REF_PREFIX = "TxtRefPrefix"
     LABEL_PREFIX = "LabelPrefix"
-    BTN_FILE_UPDATE = "BtnFileUpdate"
     CHK_DONT_USE_SEGNUM = "ChkDontUseSegnum"
     OPTION_METHOD_FRAMES = "OptionMethodFrames"
     OPTION_METHOD_TABLES = "OptionMethodTables"

@@ -12,6 +12,7 @@
 # 14-Dec-15 JDK  Show suggestions when no ref number specified.
 # 11-May-19 JDK  Raise an error after displaying error.
 # 19-Sep-19 JDK  Sort ref numbers.
+# 24-Jun-20 JDK  Added verifyRefnums.
 
 """
 Grab phonology or grammar examples and insert them.
@@ -60,6 +61,29 @@ class ExServices:
             self.exType, self.unoObjs, self.userVars, self.settings)
         self.replacingRefs = True  # find and replace ref numbers
         logger.debug("ExGrabber init() finished")
+
+    def verifyRefnums(self):
+        """Raises an exception if there are duplicates or no ref nums found."""
+        try:
+            self.operations.readData(force_read=True)
+        except exceptions.MessageError as exc:
+            self.msgbox.displayExc(exc)
+            raise exceptions.DataNotFoundError("No data found.")
+        if self.operations.duplicate_refnums:
+            message = "The following Ref Numbers have duplicates: %s"
+            if self.exType == EXTYPE_GRAMMAR:
+                message += (
+                    "\n\nEither change the numbers or, if they are in "
+                    "different texts, add a prefix for each text.\n"
+                    "Press OK to use these settings anyway.")
+            MAX_NUMS_IN_MESSAGE = 5
+            refnums = util.natural_sort(self.operations.duplicate_refnums)
+            refnumsString = ", ".join(refnums[:MAX_NUMS_IN_MESSAGE])
+            additionalRefs = len(refnums) - MAX_NUMS_IN_MESSAGE
+            if additionalRefs > 0:
+                refnumsString += ", ...%d more." % additionalRefs
+            raise exceptions.DataInconsistentError(
+                message, refnumsString)
 
     def getAllRefnums(self):
         """Returns an iterable of all ref numbers in the data.
@@ -147,7 +171,6 @@ class ExServices:
 
 class ExRepeater:
     """For replacing or updating all."""
-
     def __init__(self, msgbox, settings, operations, replacingRefs):
         self.msgbox = msgbox
         self.settings = settings
@@ -202,9 +225,7 @@ class ExRepeater:
                 self.repeatedCount = 1
 
     def askInterrupt(self, refnumFound):
-        """
-        Updated the same number twice.  It might be an infinite loop.
-        """
+        """Updated the same number twice.  It might be an infinite loop."""
         logger.debug("Repeated ex %d times", self.repeatedCount)
         self.repeatedCount += 1
         MAX_REPETITIONS = 5
@@ -218,8 +239,7 @@ class ExRepeater:
 
 
 class ExOperations:
-    """
-    Core operations for this module.
+    """Core operations for this module.
     Calls the Access layer for input and output.
     """
     def __init__(self, exType, unoObjs, userVars, settings):
@@ -241,6 +261,7 @@ class ExOperations:
         self.msgbox = MessageBox(unoObjs)
         self.examplesDict = None
         self.suggestions = []
+        self.duplicate_refnums = []
 
     def addExampleNumbers(self):
         if self.interlinManager:
@@ -258,10 +279,11 @@ class ExOperations:
     def getFoundString(self):
         return self.search.getFoundString()
 
-    def readData(self):
-        """
-        Read examples from data files.
-        """
+    def readData(self, force_read=False):
+        """Read examples from data files."""
+        if force_read:
+            self.examplesDict = None
+            self.settings.reset()
         if self.examplesDict is None:
             logger.debug("Getting examples dict")
             if self.exType == EXTYPE_PHONOLOGY:
@@ -272,6 +294,7 @@ class ExOperations:
                     self.unoObjs, self.userVars, self.settings.getInconfig())
             self.examplesDict = fileReader.read()
             self.suggestions = fileReader.getSuggestions()
+            self.duplicate_refnums = fileReader.getDuplicateRefNumbers()
 
     def insertEx(self, refTextRough, deleteRefNum, updatingEx):
         """Set updatingEx to True if updating the example."""
@@ -301,8 +324,7 @@ class ExOperations:
                     "Could not find ref number %s", [refnum]))
 
     def messageAndSuggestions(self, message, msg_args=None):
-        """
-        Append suggestion ref numbers to a message.
+        """Append suggestion ref numbers to a message.
 
         :param message: the main part of the message
         :param msg_args: array of arguments needed for main part
@@ -324,9 +346,8 @@ class ExOperations:
         return [message] + msg_args
 
     def updateEx(self, refTextRough):
-        """
-        This method gets called after a ref number to update has been selected
-        in the document.  The order of the next few steps is as follows:
+        """This method gets called after a ref number to update has been
+        selected in the document.  The order of the next few steps is:
         1. Call gotoAfterEx() to move out of the table.
         2. Insert the new example without the example number.
         3. Call moveExNumber().
@@ -349,9 +370,7 @@ class ExOperations:
 
 
 class ExSettings:
-    """
-    Phonology or grammar settings from user vars.  Loads on demand.
-    """
+    """Phonology or grammar settings from user vars.  Loads on demand."""
     def __init__(self, exType, unoObjs, userVars):
         self.exType = exType
         self.unoObjs = unoObjs
@@ -389,6 +408,11 @@ class ExSettings:
                 if self.userVars.getInt(varname) == 0:
                     self.showComparisonDoc = False
         return self.showComparisonDoc
+
+    def reset(self):
+        """Call this to allow settings to be reloaded."""
+        self.inSettings = None
+        self.outSettings = None
 
     def _loadSettings(self):
         if self.outSettings:

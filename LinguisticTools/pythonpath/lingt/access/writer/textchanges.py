@@ -375,11 +375,11 @@ class ColorRotator:
     color = -1
 
     @classmethod
-    def nextColor(klass):
-        klass.color += 1
-        if klass.color >= len(klass.COLORS):
-            klass.color = 0
-        return klass.COLORS[klass.color]
+    def nextColor(cls):
+        cls.color += 1
+        if cls.color >= len(cls.COLORS):
+            cls.color = 0
+        return cls.COLORS[cls.color]
 
 
 def colorize_range(oTextRange):

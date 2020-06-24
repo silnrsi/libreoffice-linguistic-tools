@@ -7,6 +7,7 @@
 # 07-Jul-15 JDK  Specific arguments instead of generic config object.
 # 17-Nov-15 JDK  Option to force LIFT ref number location.
 # 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
+# 24-Jun-20 JDK  Remember duplicate ref numbers.
 
 """
 Read XML files that typically contain phonology corpus data.
@@ -50,6 +51,9 @@ class PhonReader(FileReader):
 
     def getSuggestions(self):
         return self.fieldHelper.suggestions
+
+    def getDuplicateRefNumbers(self):
+        return self.fieldHelper.duplicate_refnums
 
     def _initData(self):
         """Dictionary of examples keyed by lowercase reference number.
@@ -308,6 +312,7 @@ class PhonFieldHelper:
         self.examplesDict = examplesDict
         self.generateRefIDs = generateRefIDs
         self.suggestions = []  # list of example ref numbers
+        self.duplicate_refnums = set()
         self.vals = {}
         self.hasSomeContents = False
         self.firstEx = True
@@ -337,7 +342,11 @@ class PhonFieldHelper:
             PhonFieldHelper.autoRefID += 1
             ex.refText = str(PhonFieldHelper.autoRefID)
         if ex.refText:
-            self.examplesDict[ex.refText.lower()] = ex
+            key = ex.refText.lower()
+            if key in self.examplesDict:
+                self.duplicate_refnums.add(key)
+            else:
+                self.examplesDict[key] = ex
             if self.firstEx:
                 self.firstEx = False
                 self.suggestions.append(ex.refText)

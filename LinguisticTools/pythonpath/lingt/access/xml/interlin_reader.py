@@ -13,11 +13,11 @@
 # 22-Feb-17 JDK  SFM Option for either word line 1 or 2 as the baseline.
 # 04-Mar-17 JDK  Added class ToolboxBaseline.
 # 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
+# 24-Jun-20 JDK  Remember duplicate ref numbers.
 
 """
 Read interlinear examples, typically used for grammar writeups.
 """
-import collections
 import logging
 import os
 import re
@@ -49,6 +49,7 @@ class InterlinReader(FileReader):
         self.userVars = userVars
         self.config = config
         self.suggestions = []  # list of example ref numbers
+        self.duplicate_refnums = set()
         self.generateRefIDs = False
         self.prefix = ""
         self.use_segnum = False
@@ -56,10 +57,13 @@ class InterlinReader(FileReader):
     def getSuggestions(self):
         return self.suggestions
 
+    def getDuplicateRefNumbers(self):
+        return self.duplicate_refnums
+
     def _initData(self):
         # Dictionary of examples keyed by lowercase ref number.
         # Examples are of type lingex_structs.LingGramExample.
-        self.data = collections.OrderedDict()
+        self.data = dict()
 
     def _verifyDataFound(self):
         """Override base class method."""
@@ -70,6 +74,7 @@ class InterlinReader(FileReader):
             ops=len(self.config.fileList), pbar=self.progressBar)
         progressRange.partSize = 3
         self.suggestions = []
+        self.duplicate_refnums = set()
         list_index = 1   # 1-based index of current element in list
         for fileItem in self.config.fileList:
             logger.debug("Parsing file %s", fileItem.filepath)
@@ -168,6 +173,7 @@ class ToolboxXML:
         self.dom = mainReader.dom
         self.data = mainReader.data
         self.suggestions = mainReader.suggestions
+        self.duplicate_refnums = mainReader.duplicate_refnums
         self.baseline = ToolboxBaseline(mainReader)
         self.config = mainReader.config
         self.generateRefIDs = mainReader.generateRefIDs
@@ -184,10 +190,14 @@ class ToolboxXML:
             self.ex = lingex_structs.LingGramExample()
             self.handleSentence(sentence)
             if self.ex.refText:
-                self.data[self.ex.refText.lower()] = self.ex
-                if not addedSuggestion:
-                    self.suggestions.append(self.ex.refText)
-                    addedSuggestion = True
+                key = self.ex.refText.lower()
+                if key in self.data:
+                    self.duplicate_refnums.add(key)
+                else:
+                    self.data[key] = self.ex
+                    if not addedSuggestion:
+                        self.suggestions.append(self.ex.refText)
+                        addedSuggestion = True
         self.baseline.verify_words_found()
 
     def handleSentence(self, sentence):
@@ -316,6 +326,7 @@ class FieldworksXML:
         self.dom = mainReader.dom
         self.data = mainReader.data
         self.suggestions = mainReader.suggestions
+        self.duplicate_refnums = mainReader.duplicate_refnums
         self.config = mainReader.config
         self.prefix = mainReader.prefix
         self.use_segnum = mainReader.use_segnum
@@ -332,13 +343,19 @@ class FieldworksXML:
             for sentence in sentences:
                 self.ex = lingex_structs.LingGramExample()
                 if not self.use_segnum:
-                    self.ex.refText = "%s.%s" % (refTextPara, refTextSent)
+                    self.ex.refText = "%s" % refTextPara
+                    if sentences.length > 1:
+                        self.ex.refText += ".%s" % refTextSent
                 self.handleSentence(sentence)
                 if self.ex.refText:
-                    self.data[self.ex.refText.lower()] = self.ex
-                    if not addedSuggestion:
-                        self.suggestions.append(self.ex.refText)
-                        addedSuggestion = True
+                    key = self.ex.refText.lower()
+                    if key in self.data:
+                        self.duplicate_refnums.add(key)
+                    else:
+                        self.data[key] = self.ex
+                        if not addedSuggestion:
+                            self.suggestions.append(self.ex.refText)
+                            addedSuggestion = True
                 refTextSent += 1
             refTextPara += 1
 

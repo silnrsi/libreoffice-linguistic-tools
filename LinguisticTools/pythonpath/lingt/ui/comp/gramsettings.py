@@ -24,6 +24,7 @@
 # 08-Dec-15 JDK  Checkbox to use segnum as ref number.
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 22-Jun-20 JDK  Make segnum box have opposite meaning - uncheck to read.
+# 24-Jun-20 JDK  Verify data before closing.
 
 """
 Dialog for settings to import interlinear examples for grammar write-ups.
@@ -37,12 +38,15 @@ import uno
 import unohelper
 from com.sun.star.awt import XActionListener
 from com.sun.star.awt import XItemListener
+from com.sun.star.awt import XTextListener
 
 from lingt.access.writer import uservars
 from lingt.access.writer.styles import GrammarStyles
 from lingt.app import exceptions
 from lingt.app.data import fileitemlist
 from lingt.app.data import lingex_structs
+from lingt.app.svc import lingexamples
+from lingt.app.svc.lingexamples import EXTYPE_GRAMMAR
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common import filepicker
@@ -75,6 +79,7 @@ class DlgGramSettings:
         self.fileItems = fileitemlist.FileItemList(
             fileitemlist.LingExFileItem, self.userVars)
         self.selectedIndex = -1  # position in listboxFiles
+        self.app = lingexamples.ExServices(EXTYPE_GRAMMAR, unoObjs)
         self.dlgCtrls = None
         self.evtHandler = None
         self.dlgClose = None
@@ -120,6 +125,7 @@ class DlgGramSettings:
         logger.debug(util.funcName('end'))
 
     def updateFile(self, selectNewItem):
+        """:param selectNewItem: true to select item after refreshing list"""
         logger.debug(util.funcName('begin'))
         if not 0 <= self.selectedIndex < len(self.fileItems):
             if selectNewItem:
@@ -226,6 +232,13 @@ class DlgGramSettings:
         varname = "SFM_Baseline"
         if self.userVars.isEmpty(varname):
             self.userVars.store(varname, "WordLine1")
+        try:
+            self.app.verifyRefnums()
+        except (exceptions.DataNotFoundError,
+                exceptions.DataInconsistentError) as exc:
+            ok = self.msgbox.displayOkCancel(exc.msg, *exc.msg_args)
+            if not ok:
+                return
 
         ## Modify document settings
 
@@ -272,7 +285,6 @@ class DlgControls:
         self.optFrames = ctrl_getter.get(_dlgdef.OPTION_METHOD_FRAMES)
         btnFileAdd = ctrl_getter.get(_dlgdef.BTN_FILE_ADD)
         btnFileRemove = ctrl_getter.get(_dlgdef.BTN_FILE_REMOVE)
-        btnFileUpdate = ctrl_getter.get(_dlgdef.BTN_FILE_UPDATE)
         btnOk = ctrl_getter.get(_dlgdef.BTN_OK)
         btnCancel = ctrl_getter.get(_dlgdef.BTN_CANCEL)
 
@@ -280,11 +292,9 @@ class DlgControls:
 
         btnFileAdd.setActionCommand("FileAdd")
         btnFileRemove.setActionCommand("FileRemove")
-        btnFileUpdate.setActionCommand("FileUpdate")
         btnOk.setActionCommand("OK")
         btnCancel.setActionCommand("Cancel")
-        for ctrl in (btnFileAdd, btnFileRemove, btnFileUpdate, btnOk,
-                     btnCancel):
+        for ctrl in (btnFileAdd, btnFileRemove, btnOk, btnCancel):
             ctrl.addActionListener(self.evtHandler)
 
         self.CHECKBOX_VAR_LIST = [
@@ -351,10 +361,12 @@ class DlgControls:
         """
         for ctrl in (
                 self.chkMorphLine1, self.chkMorphLine2, self.chkPOS_Line,
-                self.optTables, self.optFrames, self.chkOuterTable):
+                self.optTables, self.optFrames, self.chkOuterTable,
+                self.chkDontUseSegnum):
             ctrl.addItemListener(self.evtHandler)
 
         self.listboxFiles.addItemListener(self.evtHandler)
+        self.txtPrefix.addTextListener(self.evtHandler)
 
     def verifyCheckboxVarList(self):
         """An assertion check to make sure the code is kept in sync."""
@@ -386,7 +398,8 @@ class DlgControls:
             self.chkPOS_aboveGloss.getModel().Enabled = False
 
 
-class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
+class DlgEventHandler(XActionListener, XItemListener, XTextListener,
+                      unohelper.Base):
     """Handles dialog events."""
 
     def __init__(self, mainForm):
@@ -399,13 +412,38 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
     @evt_handler.log_exceptions
     @evt_handler.do_not_enter_if_handling_event
-    def itemStateChanged(self, dummy_itemEvent):
+    def itemStateChanged(self, itemEvent):
         """XItemListener event handler.
         Could be for the list control or for enabling and disabling.
         """
         logger.debug(util.funcName('begin'))
-        self.dlgCtrls.enableDisable()
-        self.mainForm.viewFile(True)
+        src = itemEvent.Source
+        if evt_handler.sameName(src, self.dlgCtrls.listboxFiles):
+            self.mainForm.viewFile(False)
+            return
+        if evt_handler.sameName(src, self.dlgCtrls.chkDontUseSegnum):
+            #self.mainForm.updateFile(True)
+            self.mainForm.viewFile(True)
+            return
+        for ctrl in (
+                self.dlgCtrls.chkMorphLine1, self.dlgCtrls.chkMorphLine2,
+                self.dlgCtrls.chkPOS_Line, self.dlgCtrls.optTables,
+                self.dlgCtrls.optFrames, self.dlgCtrls.chkOuterTable):
+            if evt_handler.sameName(src, ctrl):
+                self.dlgCtrls.enableDisable()
+                return
+        logger.warning("unexpected source %s", src.Model.Name)
+
+    @evt_handler.log_exceptions
+    @evt_handler.do_not_enter_if_handling_event
+    def textChanged(self, textEvent):
+        """XTextListener event handler."""
+        logger.debug(util.funcName('begin'))
+        src = textEvent.Source
+        if evt_handler.sameName(src, self.dlgCtrls.txtPrefix):
+            self.mainForm.updateFile(True)
+        else:
+            logger.warning("unexpected source %s", src.Model.Name)
 
     @evt_handler.log_exceptions
     @evt_handler.remember_handling_event
@@ -417,8 +455,6 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
             self.mainForm.addFile()
         elif event.ActionCommand == "FileRemove":
             self.mainForm.removeFile()
-        elif event.ActionCommand == "FileUpdate":
-            self.mainForm.updateFile(True)
         elif event.ActionCommand == "OK":
             self.mainForm.storeAndClose()
         elif event.ActionCommand == "Cancel":

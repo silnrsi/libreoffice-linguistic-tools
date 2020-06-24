@@ -15,6 +15,7 @@
 # 14-May-13 JDK  Rename DlgSettings to unique name for assimilation.
 # 05-Jul-13 JDK  Radio buttons for which Flex field is phonemic.
 # 01-Jul-15 JDK  Refactor controls and events into separate classes.
+# 24-Jun-20 JDK  Verify data before closing.
 
 """
 Dialog for settings to import lexical examples for phonology.
@@ -31,7 +32,10 @@ from com.sun.star.awt import XActionListener
 
 from lingt.access.writer.styles import PhonologyStyles
 from lingt.access.writer.uservars import Prefix, UserVars, PhonologyTags
+from lingt.app import exceptions
 from lingt.app.data import lingex_structs
+from lingt.app.svc import lingexamples
+from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.messagebox import MessageBox
@@ -60,6 +64,7 @@ class DlgPhonSettings:
         self.unoObjs = unoObjs
         self.userVars = UserVars(Prefix.PHONOLOGY, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
+        self.app = lingexamples.ExServices(EXTYPE_PHONOLOGY, unoObjs)
         self.dlgCtrls = None
         self.evtHandler = None
         self.dlgClose = None
@@ -115,6 +120,13 @@ class DlgPhonSettings:
         inSettings.isLexemePhonetic = bool(
             self.dlgCtrls.optionLexemePht.getState())
         inSettings.storeUserVars()
+        try:
+            self.app.verifyRefnums()
+        except (exceptions.DataNotFoundError,
+                exceptions.DataInconsistentError) as exc:
+            ok = self.msgbox.displayOkCancel(exc.msg, *exc.msg_args)
+            if not ok:
+                return
 
         PhonologyStyles(self.unoObjs, self.userVars).createStyles()
         PhonologyTags(self.userVars).loadUserVars()
