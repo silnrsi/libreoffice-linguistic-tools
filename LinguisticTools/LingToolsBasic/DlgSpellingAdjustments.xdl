@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellingAdjustments" dlg:left="131" dlg:top="42" dlg:width="342" dlg:height="259" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;347.DlgSpellingAdjustments.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellingAdjustments" dlg:left="131" dlg:top="42" dlg:width="342" dlg:height="259" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;366.DlgSpellingAdjustments.Title">
  <dlg:bulletinboard>
-  <dlg:text dlg:id="lblScript" dlg:tab-index="0" dlg:left="4" dlg:top="8" dlg:width="28" dlg:height="12" dlg:value="&amp;361.DlgSpellingAdjustments.lblScript.Value" dlg:align="right"/>
+  <dlg:text dlg:id="lblScript" dlg:tab-index="0" dlg:left="4" dlg:top="8" dlg:width="28" dlg:height="12" dlg:value="&amp;380.DlgSpellingAdjustments.lblScript.Value" dlg:align="right"/>
   <dlg:combobox dlg:id="comboScript" dlg:tab-index="1" dlg:left="35" dlg:top="6" dlg:width="76" dlg:height="16" dlg:spin="true"/>
-  <dlg:text dlg:id="lblFont" dlg:tab-index="2" dlg:left="118" dlg:top="8" dlg:width="32" dlg:height="12" dlg:value="&amp;360.DlgSpellingAdjustments.lblFont.Value" dlg:align="right"/>
+  <dlg:text dlg:id="lblFont" dlg:tab-index="2" dlg:left="118" dlg:top="8" dlg:width="32" dlg:height="12" dlg:value="&amp;379.DlgSpellingAdjustments.lblFont.Value" dlg:align="right"/>
   <dlg:combobox dlg:id="comboFont" dlg:tab-index="3" dlg:left="152" dlg:top="6" dlg:width="131" dlg:height="18" dlg:spin="true"/>
-  <dlg:text dlg:id="lblSize" dlg:tab-index="4" dlg:left="288" dlg:top="8" dlg:width="28" dlg:height="12" dlg:value="&amp;362.DlgSpellingAdjustments.lblSize.Value" dlg:align="right"/>
-  <dlg:textfield dlg:id="txtSize" dlg:tab-index="5" dlg:left="318" dlg:top="6" dlg:width="21" dlg:height="16" dlg:value="&amp;363.DlgSpellingAdjustments.txtSize.Value"/>
-  <dlg:checkbox dlg:id="chkKnownFonts" dlg:tab-index="6" dlg:left="153" dlg:top="28" dlg:width="120" dlg:height="10" dlg:value="&amp;353.DlgSpellingAdjustments.chkKnownFonts.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkVowelLength" dlg:tab-index="7" dlg:left="32" dlg:top="66" dlg:width="90" dlg:height="12" dlg:value="&amp;358.DlgSpellingAdjustments.chkVowelLength.Value" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="chkVowelGlides" dlg:tab-index="8" dlg:left="32" dlg:top="80" dlg:width="90" dlg:height="12" dlg:value="&amp;357.DlgSpellingAdjustments.chkVowelGlides.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkNasals" dlg:tab-index="9" dlg:left="32" dlg:top="94" dlg:width="90" dlg:height="12" dlg:value="&amp;355.DlgSpellingAdjustments.chkNasals.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkAspiration" dlg:tab-index="10" dlg:left="32" dlg:top="108" dlg:width="90" dlg:height="12" dlg:value="&amp;351.DlgSpellingAdjustments.chkAspiration.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkPOA" dlg:tab-index="11" dlg:left="32" dlg:top="122" dlg:width="89" dlg:height="12" dlg:value="&amp;356.DlgSpellingAdjustments.chkPOA.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkGeminates" dlg:tab-index="12" dlg:left="32" dlg:top="136" dlg:width="90" dlg:height="12" dlg:value="&amp;352.DlgSpellingAdjustments.chkGeminates.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="chkLiquids" dlg:tab-index="13" dlg:left="32" dlg:top="150" dlg:width="90" dlg:height="12" dlg:value="&amp;354.DlgSpellingAdjustments.chkLiquids.Value" dlg:checked="false"/>
-  <dlg:button dlg:id="btnReset" dlg:tab-index="14" dlg:left="30" dlg:top="198" dlg:width="88" dlg:height="15" dlg:value="&amp;350.DlgSpellingAdjustments.btnReset.Value"/>
-  <dlg:text dlg:id="lblCompList" dlg:tab-index="15" dlg:left="133" dlg:top="51" dlg:width="121" dlg:height="12" dlg:value="&amp;359.DlgSpellingAdjustments.lblCompList.Value"/>
+  <dlg:text dlg:id="lblSize" dlg:tab-index="4" dlg:left="288" dlg:top="8" dlg:width="28" dlg:height="12" dlg:value="&amp;381.DlgSpellingAdjustments.lblSize.Value" dlg:align="right"/>
+  <dlg:textfield dlg:id="txtSize" dlg:tab-index="5" dlg:left="318" dlg:top="6" dlg:width="21" dlg:height="16" dlg:value="&amp;382.DlgSpellingAdjustments.txtSize.Value"/>
+  <dlg:checkbox dlg:id="chkKnownFonts" dlg:tab-index="6" dlg:left="153" dlg:top="28" dlg:width="120" dlg:height="10" dlg:value="&amp;372.DlgSpellingAdjustments.chkKnownFonts.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkVowelLength" dlg:tab-index="7" dlg:left="32" dlg:top="66" dlg:width="90" dlg:height="12" dlg:value="&amp;377.DlgSpellingAdjustments.chkVowelLength.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="chkVowelGlides" dlg:tab-index="8" dlg:left="32" dlg:top="80" dlg:width="90" dlg:height="12" dlg:value="&amp;376.DlgSpellingAdjustments.chkVowelGlides.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkNasals" dlg:tab-index="9" dlg:left="32" dlg:top="94" dlg:width="90" dlg:height="12" dlg:value="&amp;374.DlgSpellingAdjustments.chkNasals.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkAspiration" dlg:tab-index="10" dlg:left="32" dlg:top="108" dlg:width="90" dlg:height="12" dlg:value="&amp;370.DlgSpellingAdjustments.chkAspiration.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkPOA" dlg:tab-index="11" dlg:left="32" dlg:top="122" dlg:width="89" dlg:height="12" dlg:value="&amp;375.DlgSpellingAdjustments.chkPOA.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkGeminates" dlg:tab-index="12" dlg:left="32" dlg:top="136" dlg:width="90" dlg:height="12" dlg:value="&amp;371.DlgSpellingAdjustments.chkGeminates.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkLiquids" dlg:tab-index="13" dlg:left="32" dlg:top="150" dlg:width="90" dlg:height="12" dlg:value="&amp;373.DlgSpellingAdjustments.chkLiquids.Value" dlg:checked="false"/>
+  <dlg:button dlg:id="btnReset" dlg:tab-index="14" dlg:left="30" dlg:top="198" dlg:width="88" dlg:height="15" dlg:value="&amp;369.DlgSpellingAdjustments.btnReset.Value"/>
+  <dlg:text dlg:id="lblCompList" dlg:tab-index="15" dlg:left="133" dlg:top="51" dlg:width="121" dlg:height="12" dlg:value="&amp;378.DlgSpellingAdjustments.lblCompList.Value"/>
   <dlg:textfield dlg:id="txtComparisonList" dlg:tab-index="16" dlg:left="152" dlg:top="65" dlg:width="170" dlg:height="151" dlg:vscroll="true" dlg:multiline="true"/>
-  <dlg:button dlg:id="btnCompare" dlg:tab-index="17" dlg:left="97" dlg:top="230" dlg:width="85" dlg:height="18" dlg:value="&amp;349.DlgSpellingAdjustments.btnCompare.Value"/>
-  <dlg:button dlg:id="btnClose" dlg:tab-index="18" dlg:left="197" dlg:top="230" dlg:width="78" dlg:height="18" dlg:value="&amp;348.DlgSpellingAdjustments.btnClose.Value"/>
+  <dlg:button dlg:id="btnCompare" dlg:tab-index="17" dlg:left="97" dlg:top="230" dlg:width="85" dlg:height="18" dlg:value="&amp;368.DlgSpellingAdjustments.btnCompare.Value"/>
+  <dlg:button dlg:id="btnClose" dlg:tab-index="18" dlg:left="197" dlg:top="230" dlg:width="78" dlg:height="18" dlg:value="&amp;367.DlgSpellingAdjustments.btnClose.Value"/>
  </dlg:bulletinboard>
 </dlg:window>

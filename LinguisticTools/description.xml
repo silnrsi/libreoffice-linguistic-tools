@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description xmlns   = "http://openoffice.org/extensions/description/2006"
              xmlns:xlink="http://www.w3.org/1999/xlink">
-  <version value="3.9.2" />
+  <version value="4.0" />
   <identifier value="name.JimK.LinguisticTools"/>
   <dependencies>
     <!-- From the wiki: "...works in the specified OpenOffice.org versions as
@@ -9,7 +9,7 @@
          specified OpenOffice.org reference version."
          So there is no need to mention LibreOffice here.
      -->
-    <OpenOffice.org-minimal-version value="3.2" d:name="OpenOffice.org 3.2"/>
+    <OpenOffice.org-minimal-version value="4.0" d:name="OpenOffice.org 4.0"/>
   </dependencies>
   <display-name>
     <name lang="en">Linguistic Tools</name>

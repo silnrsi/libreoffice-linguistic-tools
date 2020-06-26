@@ -9,7 +9,7 @@
  <library:element library:name="DlgDataConversion"/>
  <library:element library:name="DlgExGrab"/>
  <library:element library:name="DlgGrammarSettings"/>
- <library:element library:name="DlgMkoxtSettings"/>
+ <library:element library:name="DlgMkoxt"/>
  <library:element library:name="DlgPhnlgySettings"/>
  <library:element library:name="DlgScriptPractice"/>
  <library:element library:name="DlgSpellReplace"/>
