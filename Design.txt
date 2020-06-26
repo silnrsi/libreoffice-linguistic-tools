@@ -9,11 +9,8 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-## LingTools 4.0 (progressively with 3.9.xb)
+## LingTools 4.0
 {
-    fix problem of nothing happening when menu options first used
-        perhaps fails to create dialog because no dlg:helptext
-
     update documentation
         make oxt
         interlinear setup changes
@@ -683,6 +680,9 @@ for version 4.0
         """
     check if only one number in paragraph and remove .1
     Sorteddict is not helpful for reading interlinear data.
+    nothing happening when menu options first used
+        perhaps fails to create dialog because no dlg:helptext
+        updating dialog strings seems to have fixed the problem
 
 data conversion may still require 32-bit LO
     No, it works on Windows.
