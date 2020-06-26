@@ -15,6 +15,8 @@ or download the help file in PDF format.
 
 To see which version is installed, go to Tools -> Extension manager.
 
+4.0   TBA        Dialog for oxttools works now, lxml not required.
+                 Improved handling of ref numbers in Flex data.
 3.9.2 18-Nov-19  Update documentation to say LibreOffice.
                  Version 3.9.1 failed to run on linux.
 3.9.1 04-Aug-18  An early version towards 4.0.

@@ -24,12 +24,12 @@ from lingt.app import exceptions
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common import filepicker
-from lingt.ui.common.dlgdefs import DlgMkoxtSettings as _dlgdef
+from lingt.ui.common.dlgdefs import DlgMkoxt as _dlgdef
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
 from oxttools.makeoxt import make as _mkoxt
 
-logger = logging.getLogger("lingt.ui.dlgmkoxtsettings")
+logger = logging.getLogger("lingt.ui.dlgmkoxt")
 
 SCRIPT_TYPES = [
     'west',
@@ -95,10 +95,10 @@ def showDlg(ctx=uno.getComponentContext()):
     unoObjs = util.UnoObjs(ctx)
     logger.debug("got UNO context")
 
-    dlg = DlgMkoxtSettings(unoObjs)
+    dlg = DlgMkoxt(unoObjs)
     dlg.showDlg()
 
-class DlgMkoxtSettings:
+class DlgMkoxt:
     """Main class for this dialog."""
 
     def __init__(self, unoObjs):

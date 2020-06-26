@@ -230,7 +230,7 @@ class DlgGrammarSettings:
     FRAME_CONTROL3 = "FrameControl3"
     FRAME_CONTROL4 = "FrameControl4"
 
-class DlgMkoxtSettings:
+class DlgMkoxt:
     FRAME_BASIC_SETTINGS = "frameBasicSettings"
     LBL_LANG_NAME = "lblLangName"
     TXT_LANG_NAME = "txtLangName"

@@ -203,6 +203,11 @@
           </node>
           <node oor:name="m14" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
+              <value>private:separator</value>
+            </prop>
+          </node>
+          <node oor:name="m15" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.ScriptPractice?execute</value>
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
@@ -218,7 +223,7 @@
               <value>com.sun.star.text.TextDocument</value>
             </prop>
           </node>
-          <node oor:name="m15" oor:op="replace">
+          <node oor:name="m16" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.ApplyConverter?execute</value>
             </prop>
@@ -235,7 +240,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m16" oor:op="replace">
+          <node oor:name="m17" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.SpellingCharComp?execute</value>
             </prop>
@@ -252,7 +257,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m17" oor:op="replace">
+          <node oor:name="m18" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.SpellingStepper?execute</value>
             </prop>
@@ -269,7 +274,7 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m18" oor:op="replace">
+          <node oor:name="m19" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.MakeSpellingChanger?execute</value>
             </prop>
@@ -286,12 +291,12 @@
               <value>com.sun.star.sheet.SpreadsheetDocument</value>
             </prop>
           </node>
-          <node oor:name="m19" oor:op="replace">
+          <node oor:name="m20" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>private:separator</value>
             </prop>
           </node>
-          <node oor:name="m20" oor:op="replace">
+          <node oor:name="m21" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>service:name.JimK.LinguisticTools.DrawConverter?execute</value>
             </prop>
@@ -308,7 +313,7 @@
               <value>com.sun.star.drawing.DrawingDocument</value>
             </prop>
           </node>
-          <node oor:name="m21" oor:op="replace">
+          <node oor:name="m22" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
               <value>vnd.sun.star.script:LingToolsBasic.ModuleMain.OpenExtensionHelp?language=Basic&amp;location=application</value>
             </prop>
@@ -326,7 +331,7 @@
           </node>
           <!-- remove unused menu names -->
           <!--
-          <node oor:name="m22" oor:op="remove" />
+          <node oor:name="m23" oor:op="remove" />
           -->
         </node>
       </node>

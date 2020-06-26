@@ -77,7 +77,7 @@ class Templater(object) :
     def __str__(self) :
         root = self.doc.getroot()
         metree.add_namespaces_not_found(root)
-        return et.tostring(root, encoding='unicode')
+        return et.tostring(root).decode()
 
     def process(self, root = None, context = None, nest = False) :
         if nest :
@@ -338,7 +338,7 @@ class Templater(object) :
             if not res:
                 res = path
         except (KeyError, TypeError) as e:
-            raise Exception("{} in xpath expression: \"{}\"".format(e.args[0], path)) from None
+            raise Exception("{} in xpath expression: \"{}\"".format(e.args[0], path))
         return res
 
     def xpath(self, path, context, base) :

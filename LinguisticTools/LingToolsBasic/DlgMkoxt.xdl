@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxt" dlg:left="180" dlg:top="29" dlg:width="326" dlg:height="313" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;202.DlgMkoxt.Title">
+ <dlg:bulletinboard>
+  <dlg:titledbox dlg:id="frameBasicSettings" dlg:tab-index="0" dlg:left="5" dlg:top="5" dlg:width="315" dlg:height="103" dlg:help-text="">
+   <dlg:title dlg:value="&amp;208.DlgMkoxt.frameBasicSettings.Value"/>
+  </dlg:titledbox>
+  <dlg:text dlg:id="lblLangName" dlg:tab-index="2" dlg:left="20" dlg:top="17" dlg:width="75" dlg:height="12" dlg:value="&amp;216.DlgMkoxt.lblLangName.Value"/>
+  <dlg:textfield dlg:id="txtLangName" dlg:tab-index="1" dlg:left="100" dlg:top="17" dlg:width="78" dlg:height="12" dlg:help-text="&amp;250.DlgMkoxt.txtLangName.HelpText" dlg:value="&amp;251.DlgMkoxt.txtLangName.Value"/>
+  <dlg:text dlg:id="lblOutfile" dlg:tab-index="5" dlg:left="20" dlg:top="34" dlg:width="75" dlg:height="12" dlg:value="&amp;220.DlgMkoxt.lblOutfile.Value"/>
+  <dlg:textfield dlg:id="txtOutfile" dlg:tab-index="3" dlg:left="100" dlg:top="34" dlg:width="172" dlg:height="12" dlg:value="&amp;254.DlgMkoxt.txtOutfile.Value"/>
+  <dlg:button dlg:id="btnBrowse" dlg:tab-index="4" dlg:left="274" dlg:top="34" dlg:width="41" dlg:height="12" dlg:value="&amp;203.DlgMkoxt.btnBrowse.Value"/>
+  <dlg:text dlg:id="lblWordlist" dlg:tab-index="6" dlg:left="20" dlg:top="55" dlg:width="75" dlg:height="12" dlg:value="&amp;230.DlgMkoxt.lblWordlist.Value"/>
+  <dlg:filecontrol dlg:id="fctlWordList" dlg:tab-index="7" dlg:left="100" dlg:top="55" dlg:width="208" dlg:height="12" dlg:help-text="&amp;207.DlgMkoxt.fctlWordList.HelpText"/>
+  <dlg:text dlg:id="lblScriptType" dlg:tab-index="8" dlg:left="20" dlg:top="74" dlg:width="75" dlg:height="12" dlg:value="&amp;225.DlgMkoxt.lblScriptType.Value"/>
+  <dlg:menulist dlg:id="listboxScriptType" dlg:tab-index="9" dlg:left="100" dlg:top="74" dlg:width="78" dlg:height="12" dlg:help-text="&amp;236.DlgMkoxt.listboxScriptType.HelpText" dlg:spin="true">
+   <dlg:menupopup>
+    <dlg:menuitem dlg:value="&amp;237.DlgMkoxt.listboxScriptType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;238.DlgMkoxt.listboxScriptType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;239.DlgMkoxt.listboxScriptType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;240.DlgMkoxt.listboxScriptType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;241.DlgMkoxt.listboxScriptType.StringItemList"/>
+   </dlg:menupopup>
+  </dlg:menulist>
+  <dlg:text dlg:id="lblLangTag" dlg:tab-index="10" dlg:left="20" dlg:top="93" dlg:width="75" dlg:height="12" dlg:value="&amp;217.DlgMkoxt.lblLangTag.Value"/>
+  <dlg:textfield dlg:id="txtLangTag" dlg:tab-index="11" dlg:left="100" dlg:top="93" dlg:width="78" dlg:height="12" dlg:help-text="&amp;252.DlgMkoxt.txtLangTag.HelpText" dlg:value="&amp;253.DlgMkoxt.txtLangTag.Value"/>
+  <dlg:titledbox dlg:id="frameOtherOpts" dlg:tab-index="12" dlg:left="5" dlg:top="123" dlg:width="315" dlg:height="157" dlg:help-text="">
+   <dlg:title dlg:value="&amp;209.DlgMkoxt.frameOtherOpts.Value"/>
+  </dlg:titledbox>
+  <dlg:text dlg:id="lblWordFormingPunct" dlg:tab-index="14" dlg:left="20" dlg:top="137" dlg:width="75" dlg:height="12" dlg:help-text="&amp;228.DlgMkoxt.lblWordFormingPunct.HelpText" dlg:value="&amp;229.DlgMkoxt.lblWordFormingPunct.Value"/>
+  <dlg:textfield dlg:id="txtWordFormingPunct" dlg:tab-index="13" dlg:left="100" dlg:top="137" dlg:width="111" dlg:height="12" dlg:help-text="&amp;261.DlgMkoxt.txtWordFormingPunct.HelpText" dlg:value="&amp;262.DlgMkoxt.txtWordFormingPunct.Value"/>
+  <dlg:text dlg:id="lblFont" dlg:tab-index="16" dlg:left="20" dlg:top="157" dlg:width="75" dlg:height="12" dlg:help-text="&amp;214.DlgMkoxt.lblFont.HelpText" dlg:value="&amp;215.DlgMkoxt.lblFont.Value"/>
+  <dlg:textfield dlg:id="txtFont" dlg:tab-index="15" dlg:left="100" dlg:top="157" dlg:width="131" dlg:height="12" dlg:help-text="&amp;248.DlgMkoxt.txtFont.HelpText" dlg:value="&amp;249.DlgMkoxt.txtFont.Value" dlg:spin="true"/>
+  <dlg:text dlg:id="lblAffix" dlg:tab-index="18" dlg:left="20" dlg:top="176" dlg:width="75" dlg:height="12" dlg:help-text="&amp;210.DlgMkoxt.lblAffix.HelpText" dlg:value="&amp;211.DlgMkoxt.lblAffix.Value"/>
+  <dlg:filecontrol dlg:id="fctlAffix" dlg:tab-index="17" dlg:left="100" dlg:top="176" dlg:width="196" dlg:height="12" dlg:help-text="&amp;206.DlgMkoxt.fctlAffix.HelpText"/>
+  <dlg:text dlg:id="lblNormalize" dlg:tab-index="19" dlg:left="20" dlg:top="192" dlg:width="75" dlg:height="12" dlg:help-text="&amp;218.DlgMkoxt.lblNormalize.HelpText" dlg:value="&amp;219.DlgMkoxt.lblNormalize.Value"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="optNormNFC" dlg:tab-index="29" dlg:left="100" dlg:top="192" dlg:width="38" dlg:height="12" dlg:help-text="&amp;242.DlgMkoxt.optNormNFC.HelpText" dlg:value="&amp;243.DlgMkoxt.optNormNFC.Value"/>
+   <dlg:radio dlg:id="optNormNFD" dlg:tab-index="30" dlg:left="140" dlg:top="192" dlg:width="38" dlg:height="12" dlg:help-text="&amp;244.DlgMkoxt.optNormNFD.HelpText" dlg:value="&amp;245.DlgMkoxt.optNormNFD.Value"/>
+   <dlg:radio dlg:id="optNormNone" dlg:tab-index="31" dlg:left="180" dlg:top="192" dlg:width="40" dlg:height="12" dlg:help-text="&amp;246.DlgMkoxt.optNormNone.HelpText" dlg:value="&amp;247.DlgMkoxt.optNormNone.Value"/>
+  </dlg:radiogroup>
+  <dlg:text dlg:id="lblVersion" dlg:tab-index="21" dlg:left="20" dlg:top="209" dlg:width="75" dlg:height="12" dlg:help-text="&amp;226.DlgMkoxt.lblVersion.HelpText" dlg:value="&amp;227.DlgMkoxt.lblVersion.Value"/>
+  <dlg:textfield dlg:id="txtVersion" dlg:tab-index="20" dlg:left="100" dlg:top="209" dlg:width="59" dlg:height="12" dlg:help-text="&amp;259.DlgMkoxt.txtVersion.HelpText" dlg:value="&amp;260.DlgMkoxt.txtVersion.Value"/>
+  <dlg:text dlg:id="lblDictType" dlg:tab-index="22" dlg:left="20" dlg:top="226" dlg:width="75" dlg:height="12" dlg:help-text="&amp;212.DlgMkoxt.lblDictType.HelpText" dlg:value="&amp;213.DlgMkoxt.lblDictType.Value"/>
+  <dlg:menulist dlg:id="listDictType" dlg:tab-index="32" dlg:left="100" dlg:top="226" dlg:width="61" dlg:height="12" dlg:help-text="&amp;231.DlgMkoxt.listDictType.HelpText" dlg:spin="true">
+   <dlg:menupopup>
+    <dlg:menuitem dlg:value="&amp;232.DlgMkoxt.listDictType.StringItemList" dlg:selected="true"/>
+    <dlg:menuitem dlg:value="&amp;233.DlgMkoxt.listDictType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;234.DlgMkoxt.listDictType.StringItemList"/>
+    <dlg:menuitem dlg:value="&amp;235.DlgMkoxt.listDictType.StringItemList"/>
+   </dlg:menupopup>
+  </dlg:menulist>
+  <dlg:text dlg:id="lblPublisher" dlg:tab-index="24" dlg:left="20" dlg:top="244" dlg:width="75" dlg:height="12" dlg:help-text="&amp;221.DlgMkoxt.lblPublisher.HelpText" dlg:value="&amp;222.DlgMkoxt.lblPublisher.Value"/>
+  <dlg:textfield dlg:id="txtPublisher" dlg:tab-index="23" dlg:left="100" dlg:top="244" dlg:width="138" dlg:height="12" dlg:help-text="&amp;255.DlgMkoxt.txtPublisher.HelpText" dlg:value="&amp;256.DlgMkoxt.txtPublisher.Value"/>
+  <dlg:text dlg:id="lblPublisherURL" dlg:tab-index="26" dlg:left="20" dlg:top="261" dlg:width="75" dlg:height="12" dlg:help-text="&amp;223.DlgMkoxt.lblPublisherURL.HelpText" dlg:value="&amp;224.DlgMkoxt.lblPublisherURL.Value"/>
+  <dlg:textfield dlg:id="txtPublisherURL" dlg:tab-index="25" dlg:left="100" dlg:top="261" dlg:width="201" dlg:height="12" dlg:help-text="&amp;257.DlgMkoxt.txtPublisherURL.HelpText" dlg:value="&amp;258.DlgMkoxt.txtPublisherURL.Value"/>
+  <dlg:button dlg:id="btnOK" dlg:tab-index="28" dlg:left="100" dlg:top="293" dlg:width="61" dlg:height="14" dlg:value="&amp;205.DlgMkoxt.btnOK.Value"/>
+  <dlg:button dlg:id="btnCancel" dlg:tab-index="27" dlg:left="195" dlg:top="293" dlg:width="68" dlg:height="14" dlg:value="&amp;204.DlgMkoxt.btnCancel.Value"/>
+ </dlg:bulletinboard>
+</dlg:window>
