@@ -223,3 +223,12 @@ ModelManifest.xml
 /dev/extensions/java/SayHello/
 *.exe
 *.o
+
+# Other files
+# can ignore changes with: git update-index --assume-unchanged
+testMessages.txt
+testResults.txt
+edit_code.lnk
+pylint.bat.lnk
+pack nodeploy.lnk
+LinguisticTools/LinguisticTools.oxt
