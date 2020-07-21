@@ -193,6 +193,8 @@
             <prop oor:name="Title" oor:type="xs:string">
               <value/>
               <value xml:lang="en">Build Extension for Language</value>
+              <value xml:lang="es">Construir extensión para lenguaje</value>
+              <value xml:lang="fr">Créer extension pour langue</value>
             </prop>
             <prop oor:name="Target" oor:type="xs:string">
               <value>_self</value>
