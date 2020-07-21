@@ -32,7 +32,7 @@ class LingtError(Exception):
         Exception.__init__(self)
 
 
-def interpolate_message(message, msg_args):
+def interpolate_message(message, msg_args=None):
     """
     For example, given ("Hello %s", "John"), returns "Hello John".
 

@@ -13,6 +13,7 @@
 # 11-May-19 JDK  Raise an error after displaying error.
 # 19-Sep-19 JDK  Sort ref numbers.
 # 24-Jun-20 JDK  Added verifyRefnums.
+# 21-Jul-20 JDK  Localize suggestions message.
 
 """
 Grab phonology or grammar examples and insert them.
@@ -70,20 +71,20 @@ class ExServices:
             self.msgbox.displayExc(exc)
             raise exceptions.DataNotFoundError("No data found.")
         if self.operations.duplicate_refnums:
-            message = "The following Ref Numbers have duplicates: %s"
-            if self.exType == EXTYPE_GRAMMAR:
-                message += (
-                    "\n\nEither change the numbers or, if they are in "
-                    "different texts, add a prefix for each text.\n"
-                    "Press OK to use these settings anyway.")
             MAX_NUMS_IN_MESSAGE = 5
             refnums = util.natural_sort(self.operations.duplicate_refnums)
             refnumsString = ", ".join(refnums[:MAX_NUMS_IN_MESSAGE])
             additionalRefs = len(refnums) - MAX_NUMS_IN_MESSAGE
             if additionalRefs > 0:
                 refnumsString += ", ...%d more." % additionalRefs
-            raise exceptions.DataInconsistentError(
-                message, refnumsString)
+            message = exceptions.interpolate_message(
+                "The following Ref Numbers have duplicates: %s", refnumsString)
+            if self.exType == EXTYPE_GRAMMAR:
+                message += exceptions.interpolate_message(
+                    "\n\nEither change the numbers or, if they are in "
+                    "different texts, add a prefix for each text.\n"
+                    "Press OK to use these settings anyway.")
+            raise exceptions.DataInconsistentError(message)
 
     def getAllRefnums(self):
         """Returns an iterable of all ref numbers in the data.
@@ -101,9 +102,10 @@ class ExServices:
         try:
             self.operations.readData()
             if not refTextRough.strip():
+                message = exceptions.interpolate_message(
+                    "Please enter a ref number.")
                 raise exceptions.ChoiceProblem(
-                    *self.operations.messageAndSuggestions(
-                        "Please enter a ref number."))
+                    self.operations.appendSuggestions(message))
             logger.debug("do the insertion.")
             self.operations.insertEx(refTextRough, False, False)
         except exceptions.MessageError as exc:
@@ -319,31 +321,30 @@ class ExOperations:
             self.outputManager.outputExample(
                 self.examplesDict[refnum_key], deleteRefNum, updatingEx)
         else:
+            message = exceptions.interpolate_message(
+                "Could not find ref number %s", [refnum])
             raise exceptions.DataNotFoundError(
-                *self.messageAndSuggestions(
-                    "Could not find ref number %s", [refnum]))
+                self.appendSuggestions(message))
 
-    def messageAndSuggestions(self, message, msg_args=None):
+    def appendSuggestions(self, message):
         """Append suggestion ref numbers to a message.
 
         :param message: the main part of the message
-        :param msg_args: array of arguments needed for main part
-        :returns: the message string and its argument array
+        :returns: the localized message string with suggestions added
         """
-        if msg_args is None:
-            msg_args = []
+        if not self.suggestions:
+            return message
         suggNum = 0
+        suggString = ""
         MAX_SUGGESTIONS = 3
-        if len(self.suggestions) > 0:
-            message += "\n\nSuggestions\n%s"
-            suggString = ""
-            for suggestion in self.suggestions:
-                suggNum += 1
-                if suggNum > MAX_SUGGESTIONS:
-                    break
-                suggString += "\t%s\n" % suggestion
-            msg_args.append(suggString)
-        return [message] + msg_args
+        for suggestion in self.suggestions:
+            suggNum += 1
+            if suggNum > MAX_SUGGESTIONS:
+                break
+            suggString += "\t%s\n" % suggestion
+        suggestion_message = exceptions.interpolate_message(
+            "\n\nSuggestions\n%s", [suggString])
+        return message + suggestion_message
 
     def updateEx(self, refTextRough):
         """This method gets called after a ref number to update has been

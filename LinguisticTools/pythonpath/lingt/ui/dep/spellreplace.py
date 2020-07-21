@@ -83,7 +83,7 @@ class DlgSpellingReplace:
             if (self.dlgCtrls.txtChangeTo.getText() ==
                     self.dlgCtrls.lblFoundText.getText()):
                 self.msgbox.display(
-                    "You did not made any changes to the word.")
+                    "You did not make any changes to the word.")
                 return
         self.buttonPressed = buttonPressed
         self.changeTo = self.dlgCtrls.txtChangeTo.getText()

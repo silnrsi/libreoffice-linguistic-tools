@@ -10,6 +10,7 @@
 # 27-Feb-13 JDK  Can't modify dict in loop in python 3.3
 # 11-Mar-13 JDK  Remove "Default" (use underlying name "Standard" instead).
 # 08-Mar-17 JDK  Spanish and French for 3.0 release.
+# 21-Jul-20 JDK  Translations for 4.0 release
 
 """
 Handle localization of messages into French and Spanish.
@@ -263,17 +264,23 @@ class Locale:
             'fr' :
             "Atteindre la configuration",
         },
+        "Bulk Conversion" : {
+            'es' :
+            "Conversión masiva",
+            'fr' :
+            "Conversion en bloc",
+        },
         "Column" : {
             'es' :
             "Columna",
             'fr' :
             "Colonne",
         },
-        "Bulk Conversion" : {
+        "Draw" : {
             'es' :
-            "Conversión masiva",
+            "Draw",
             'fr' :
-            "Conversion en bloc",
+            "Draw",
         },
         "Get Phonology Examples" : {
             'es' :
@@ -377,11 +384,11 @@ class Locale:
             'fr' :
             "Tout mettre à jour",
         },
-        "Word List and Spelling" : {
+        "Word Lists and Spelling" : {
             'es' :
-            "Lista de palabras y ortografía",
+            "Listas de palabras y ortografía",
             'fr' :
-            "Liste de mots et orthographe",
+            "Listes de mots et orthographe",
         },
 
         ## Localized text values
@@ -488,6 +495,12 @@ class Locale:
 
         ## Error messages
 
+        "%s finished." : {
+            'es' :
+            "%s terminado.",
+            'fr' :
+            "%s terminé.",
+        },
         "%s is already in the list." : {
             'es' :
             "%s ya está en la lista.",
@@ -563,12 +576,6 @@ class Locale:
             'fr' :
             "Numéro de référence %s introuvable.",
         },
-        "Could not find ref number %s\n\nSuggestions\n%s" : {
-            'es' :
-            "No se encuentra el número de referencia %s\n\nSugerencias\n%s",
-            'fr' :
-            "Numéro de référence %s introuvable.\n\nSuggestions\n%s",
-        },
         "Could not get AddConverter function.  Automatically adding a "
         "converter requires SEC4.0 or higher." : {
             'es' :
@@ -620,6 +627,18 @@ class Locale:
             "No ha encontrado el ámbito del cambio.",
             'fr' :
             "L'étendue de changement n'a pas été trouvée.",
+        },
+        "\n\nEither change the numbers or, if they are in "
+        "different texts, add a prefix for each text.\n"
+        "Press OK to use these settings anyway." : {
+            'es' :
+            "\n\nCambia los números o, si están en"
+            "diferentes textos, agregue un prefijo para cada texto.\n"
+            "Presione OK para usar estas configuraciones de todos modos",
+            'fr' :
+            "\n\nSoit modifiez les nombres ou, s'ils sont"
+            "textes différents, ajoutez un préfixe pour chaque texte.\n"
+            "Appuyez sur OK pour utiliser ces paramètres quand même.",
         },
         "EncConverters does not seem to be installed properly." : {
             'es' :
@@ -817,6 +836,12 @@ class Locale:
             'fr' :
             "On a créé une liste de %d mots.",
         },
+        "Make OXT" : {
+            'es' :
+            "Hacer OXT",
+            'fr' :
+            "Créer OXT",
+        },
         "Make this change?" : {
             'es' :
             "¿Hacer este cambio?",
@@ -977,13 +1002,6 @@ class Locale:
             "Por favor, introduzca un número de referencia.",
             'fr' :
             "Veuillez entrer un numéro de référence.",
-        },
-        "Please enter a ref number.\n\nSuggestions\n%s" : {
-            'es' :
-            "Por favor, introduzca un número de referencia."
-            "\n\nSugerencias\n%s",
-            'fr' :
-            "Veuillez entrer un numéro de référence.\n\nSuggestions\n%s",
         },
         "Please enter a value for column width." : {
             'es' :
@@ -1176,6 +1194,12 @@ class Locale:
             'fr' :
             "Conversion terminée avec succès.",
         },
+        "\n\nSuggestions\n%s" : {
+            'es' :
+            "\n\nSugerencias\n%s",
+            'fr' :
+            "\n\nSuggestions\n%s",
+        },
         "The cursor cannot be in a header or footer." : {
             'es' :
             "El cursor no puede estar en un encabezado o en un pie de "
@@ -1190,6 +1214,12 @@ class Locale:
             'fr' :
             "Le curseur ne peut pas se trouver dans un tableau ou dans un "
             "cadre.",
+        },
+        "The following Ref Numbers have duplicates: %s" : {
+            'es' :
+            "Los siguientes números de referencia tienen duplicados: %s",
+            'fr' :
+            "Les numéros de référence suivants ont des doublons: %s",
         },
         "There was a problem while writing the list.\n\n%s" : {
             'es' :
@@ -1353,7 +1383,7 @@ class Locale:
             'fr' :
             "Le mot ne rentre pas correctement.",
         },
-        "You did not made any changes to the word." : {
+        "You did not make any changes to the word." : {
             'es' :
             "No hiciste ningún cambio en la palabra.",
             'fr' :

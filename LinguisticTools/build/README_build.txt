@@ -73,7 +73,7 @@ To modify the dialog:
 # Localization
 #------------------------------------------------------------------------------
 To search for changes needed, see read_error_messages.pl and
-dialog_strings_read.pl in the generating_code directory.
+dialog_strings_read.py in the generating_code directory.
 
 
 #------------------------------------------------------------------------------
