@@ -28,3 +28,22 @@ These .xdl files together with the .properties files in the same folder contain 
 (C) Translation of error and information messages and menu items
 
 In addition to the dialogs, there is a list of error and information messages that need to be translated. These are in a list that can be obtained from Jim. Provide a translation for each item.  Also remember to translate the menu itself: "Linguistics", "Phonology Settings", "Abbreviations" etc.
+
+
+21 July 2020
+
+For .properties file:
+    « = \u00ab
+    » = \u00bb
+    À = \u00c0
+    à = \u00e0
+    á = \u00e1
+    è = \u00e8
+    é = \u00e9
+    ê = \u00ea
+    í = \u00ed
+    î = \u00ee
+    ó = \u00f3
+    ú = \u00fa
+vim search:/[^\x00-\x7F]
+

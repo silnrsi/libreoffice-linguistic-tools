@@ -11,13 +11,17 @@
 
 ## LingTools 4.0
 {
-    update documentation
-        make oxt
-        interlinear setup changes
-    localize
-    get all tests to pass again
-        primary difficulty is data conversion
-        maybe not all tests need to pass on ubuntu
+    testing
+        get all tests to pass again
+            primary difficulty is data conversion
+            maybe not all tests need to pass on ubuntu
+        install linux dual boot on new dev machine
+        test localization
+    release to extensions.libreoffice.org
+    send out message
+        probably a general message
+        maybe also a message for specific people
+        wait until it shows up on the extensions page
 }
 
 ## Linux Data Conversion error 09-Mar-2017
@@ -683,6 +687,9 @@ for version 4.0
     nothing happening when menu options first used
         perhaps fails to create dialog because no dlg:helptext
         updating dialog strings seems to have fixed the problem
+    update documentation
+        make oxt
+        interlinear setup changes
 
 data conversion may still require 32-bit LO
     No, it works on Windows.
