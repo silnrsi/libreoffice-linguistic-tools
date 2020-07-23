@@ -15,6 +15,7 @@
 # 09-Dec-15 JDK  Added clear_messages_sent()
 # 09-Aug-16 JDK  Added output_path().
 # 01-Mar-17 JDK  Fixed bug: MsgSentException arguments must now be unpacked.
+# 23-Jul-20 JDK  Added methods for Draw.
 
 # Disable warnings related to modifying code dynamically, useful for testing.
 # pylint: disable=exec-used,unused-argument
@@ -57,12 +58,17 @@ class CommonUnoObjs:
         self.ctx = None
         self.doc = None  # writer doc
         self.calc_doc = None
+        self.draw_doc = None
         self.product_name = None
 
     def getContext(self):
         if self.ctx is None:
             self.ctx = util.UnoObjs.getCtxFromSocket()
         return self.ctx
+
+    def getPlainUnoObjs(self):
+        """Get basic UNO objects not including document objects."""
+        return util.UnoObjs(self.getContext(), loadDocObjs=False)
 
     def getProductName(self):
         """Reads value in an XML file stored at a location like
@@ -83,33 +89,53 @@ class CommonUnoObjs:
 
 stored = CommonUnoObjs()
 
-
-def blankWriterDoc(unoObjs):
-    """Closes all current documents and opens a new writer doc.
-    Sets unoObjs to the new blank document.
-    Be sure to update any objects that reference the old unoObjs.
-    """
+def _closeAllOpenDocs(unoObjs):
     doclist = unoObjs.getOpenDocs()
     for docUnoObjs in doclist:
         docUnoObjs.document.close(True)
+
+def blankWriterDoc(unoObjs=None):
+    """Closes all current documents and opens a new document.
+    Sets unoObjs to the new blank document.
+    Be sure to update any objects that reference the old unoObjs.
+    """
+    if not unoObjs:
+        unoObjs = stored.getPlainUnoObjs()
+    _closeAllOpenDocs(unoObjs)
     newDoc = unoObjs.desktop.loadComponentFromURL(
         "private:factory/swriter", "_blank", 0, ())
     unoObjs.loadDocObjs(newDoc)
     stored.doc = unoObjs.document
 
-def blankCalcSpreadsheet(unoObjs):
-    """Closes all current documents and opens a new calc spreadsheet.
-    Also opens a new writer doc.
+def blankSpreadsheet(unoObjs=None):
+    """Closes all current documents and opens a new spreadsheet.
     Sets unoObjs to the new blank writer document,
     and returns the new calc uno objects.
     Be sure to update any objects that reference the old unoObjs.
     """
-    blankWriterDoc(unoObjs)
+    if not unoObjs:
+        unoObjs = stored.getPlainUnoObjs()
+    _closeAllOpenDocs(unoObjs)
     newDoc = unoObjs.desktop.loadComponentFromURL(
         "private:factory/scalc", "_blank", 0, ())
     calcUnoObjs = unoObjs.getDocObjs(newDoc, util.UnoObjs.DOCTYPE_CALC)
     stored.calc_doc = calcUnoObjs.document
     return calcUnoObjs
+
+def blankDrawing(unoObjs=None):
+    """Closes all current documents and opens a new drawing.
+    Sets unoObjs to the new blank writer document,
+    and returns the new calc uno objects.
+    Be sure to update any objects that reference the old unoObjs.
+    """
+    if not unoObjs:
+        unoObjs = stored.getPlainUnoObjs()
+    _closeAllOpenDocs(unoObjs)
+    newDoc = unoObjs.desktop.loadComponentFromURL(
+        "private:factory/sdraw", "_blank", 0, ())
+    drawUnoObjs = unoObjs.getDocObjs(newDoc, util.UnoObjs.DOCTYPE_DRAW)
+    stored.draw_doc = drawUnoObjs.document
+    return drawUnoObjs
 
 
 def unoObjsForCurrentDoc():
@@ -117,6 +143,9 @@ def unoObjsForCurrentDoc():
 
 def unoObjsForCurrentSpreadsheet():
     return _unoObjsForDoc(stored.calc_doc, util.UnoObjs.DOCTYPE_CALC)
+
+def unoObjsForCurrentDrawing():
+    return _unoObjsForDoc(stored.draw_doc, util.UnoObjs.DOCTYPE_DRAW)
 
 def _unoObjsForDoc(document, doctype):
     unoObjs = util.UnoObjs(stored.getContext(), loadDocObjs=False)

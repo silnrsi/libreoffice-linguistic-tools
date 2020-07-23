@@ -49,11 +49,8 @@ class DlgDataConversion:
 
     def __init__(self, drawingUnoObjs):
         self.unoObjs = drawingUnoObjs
-        finder = uservars.SettingsDocFinder(
-            uservars.Prefix.DATA_CONV_DRAW, self.unoObjs)
-        writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            uservars.Prefix.DATA_CONV_DRAW, writerUnoObjs.document, logger)
+            uservars.Prefix.DATA_CONV_DRAW, drawingUnoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
         self.styleFonts = styles.StyleFonts(self.unoObjs)
         self.app = DataConversion(self.unoObjs, self.userVars, self.styleFonts)

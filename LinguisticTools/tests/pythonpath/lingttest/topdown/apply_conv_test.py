@@ -41,7 +41,7 @@ class ApplyConvTestCase(unittest.TestCase):
     def setUpClass(cls):
         unoObjs = util.UnoObjs(
             testutil.stored.getContext(), loadDocObjs=False)
-        testutil.blankCalcSpreadsheet(unoObjs)
+        testutil.blankSpreadsheet(unoObjs)
 
     def setUp(self):
         self.calcUnoObjs = testutil.unoObjsForCurrentSpreadsheet()
