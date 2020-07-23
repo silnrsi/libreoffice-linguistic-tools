@@ -57,13 +57,10 @@ class DlgSpellingAdjustments:
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
         self.msgbox = MessageBox(self.unoObjs)
-        finder = uservars.SettingsDocFinder(
-            uservars.Prefix.SPELLING, self.unoObjs)
-        self.writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            uservars.Prefix.SPELLING, self.writerUnoObjs.document, logger)
+            uservars.Prefix.SPELLING, calcUnoObjs.document, logger)
         # for fonts and scripts
-        self.script = Script(self.writerUnoObjs)
+        self.script = Script(calcUnoObjs)
         self.app = SpellingCharClasses(self.unoObjs, self.userVars)
         self.charCompOpts = []
         self.charsetAlreadySet = False

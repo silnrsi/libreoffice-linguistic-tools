@@ -23,23 +23,20 @@
 # 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 # 30-Jul-18 JDK  Added prefix for Drawing documents.
 # 16-Jun-20 JDK  Added getWithDefault().
+# 23-Jul-20 JDK  User defined document props instead of Writer master fields.
 
 """
-Store persistent settings in user variables of a Writer document.
+Store persistent settings in user defined properties of a document.
 
-Note that this cannot be done in the same way in Calc.
-So for Calc we open a minimized Writer document to store settings.
-
-User variables can be edited manually from within Writer by
-going to Insert -> Field -> More Fields,
-then choosing User Field under the Variables tab.
+User defined properties can be managed manually by going to
+File -> Properties -> Custom Properties.
 """
 import logging
+from com.sun.star.beans.PropertyAttribute import REMOVEABLE
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 
 from lingt.access.common import iteruno
 from lingt.app import exceptions
-from lingt.utils import util
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.access.uservars")
@@ -62,22 +59,25 @@ class Prefix:
 
 
 class UserVars:
-    """Access to the user variables of the Writer document.
+    """Access to the user variables of the document.
     These can be viewed using Insert -> Field -> More Fields.
     """
-    def __init__(self, VAR_PREFIX, writer_document, otherLogger):
+    def __init__(self, VAR_PREFIX, oDoc, otherLogger):
         """
         :param VAR_PREFIX: member of the Prefix class
-        :param writer_document: The UNO document object, not available for
-                                Calc.
+        :param oDoc: The UNO document object
         :param logger: Logger of the module that is using this class.
         """
         self.VAR_PREFIX = VAR_PREFIX
-        self.document = writer_document
         self.otherLogger = otherLogger
+        oDocProps = oDoc.getDocumentProperties()
+        self.userProps = oDocProps.getUserDefinedProperties()
+
+    def userPropsInfo(self):
+        return self.userProps.getPropertySetInfo()
 
     def store(self, baseVarName, stringVal):
-        """Stores a value in a Writer doc that is persistent across macro
+        """Stores a value in a document. The value is persistent across macro
         calls.
         :param baseVarName: var name without "LTx_" prefix
         :param stringVal: value to store; numeric type may not work correctly
@@ -87,29 +87,17 @@ class UserVars:
         #self.otherLogger.debug("storeUserVar %s=%s", varName, stringVal)
         if stringVal is None:
             stringVal = ""
-        fieldMasters = self.document.getTextFieldMasters()
-        fieldName = "com.sun.star.text.FieldMaster.User." + varName
-        if fieldMasters.hasByName(fieldName):
-            field = fieldMasters.getByName(fieldName)
-            field.setPropertyValue("Content", stringVal)
+        if self.userPropsInfo().hasPropertyByName(varName):
+            self.userProps.setPropertyValue(varName, stringVal)
         else:
-            xMaster = self.document.createInstance(
-                "com.sun.star.text.fieldmaster.User")
-            xMaster.Name = varName
-            xMaster.Content = stringVal
-            xUserField = self.document.createInstance(
-                "com.sun.star.text.textfield.User")
-            xUserField.attachTextFieldMaster(xMaster)
+            self.userProps.addProperty(varName, REMOVEABLE, stringVal)
 
     def get(self, baseVarName):
         """Returns the value of a user variable as a string"""
         varName = self.getVarName(baseVarName)
         self.otherLogger.debug("getUserVar %s", varName)
-        fieldMasters = self.document.getTextFieldMasters()
-        fieldName = "com.sun.star.text.FieldMaster.User." + varName
-        if fieldMasters.hasByName(fieldName):
-            field = fieldMasters.getByName(fieldName)
-            stringVal = field.getPropertyValue("Content")
+        if self.userPropsInfo().hasPropertyByName(varName):
+            stringVal = self.userProps.getPropertyValue(varName)
             #self.otherLogger.debug("getUserVar =%s", stringVal)
             return stringVal
         else:
@@ -122,9 +110,6 @@ class UserVars:
         return self.get(varName)
 
     def getVarName(self, baseVarName):
-        """Punctuation shouldn't be used in names, because Writer doesn't
-        always handle it correctly.
-        """
         varName = baseVarName.replace("?", "")
         return self.VAR_PREFIX + varName
 
@@ -150,16 +135,12 @@ class UserVars:
         """
         varName = self.VAR_PREFIX + varName
         self.otherLogger.debug("delUserVar %s", varName)
-        fieldMasters = self.document.getTextFieldMasters()
-        fieldName = "com.sun.star.text.FieldMaster.User." + varName
-        if fieldMasters.hasByName(fieldName):
-            field = fieldMasters.getByName(fieldName)
-            field.setPropertyValue("Content", "")
-            field.dispose()
-            self.otherLogger.debug("Field deleted")
+        if self.userPropsInfo().hasPropertyByName(varName):
+            self.userProps.removeProperty(varName)
+            self.otherLogger.debug("Property deleted")
             return True
         else:
-            self.otherLogger.debug("Field not found")
+            self.otherLogger.debug("Property not found")
             return False
 
     def __deepcopy__(self, memo):
@@ -167,24 +148,13 @@ class UserVars:
         return self
 
 
-def setHasSettings(userVars, maxHasSettings, twoDocsHaveMax):
-    """Sets HasSettings to the highest value of any open documents.
-    Returns True if HasSettings was set previously.
-    """
+def setHasSettings(userVars):
+    """Sets HasSettings. Returns True if HasSettings was set previously."""
     varname = "HasSettings"
-    alreadyHasSettings = False
-    if not userVars.isEmpty(varname):
-        alreadyHasSettings = True
-        currentSettingsVal = userVars.getInt(varname)
-        if currentSettingsVal == maxHasSettings and not twoDocsHaveMax:
-            # No need to make any changes
-            return alreadyHasSettings
-    if maxHasSettings == -1:
-        newVal = 1
-    else:
-        newVal = maxHasSettings + 1
-    userVars.store(varname, str(newVal))
-    return alreadyHasSettings
+    if userVars.isEmpty(varname):
+        userVars.store(varname, "yes")
+        return False
+    return True
 
 class SettingsDocPreparer:
     """Prepares a Writer document to contain user variables."""
@@ -200,11 +170,8 @@ class SettingsDocPreparer:
         Any item in the Writer Linguistics menu that doesn't require document
         contents but uses user var settings should call this method.
         """
-        finder = SettingsDocFinder(self.VAR_PREFIX, self.unoObjs)
-        maxHasSettings, twoDocsHaveMax, dummy = finder.findBestDoc()
         userVars = UserVars(self.VAR_PREFIX, self.unoObjs.document, logger)
-        alreadyHasSettings = setHasSettings(
-            userVars, maxHasSettings, twoDocsHaveMax)
+        alreadyHasSettings = setHasSettings(userVars)
         if alreadyHasSettings:
             return
         if self._doc_is_empty():
@@ -263,71 +230,6 @@ class SettingsDocPreparer:
         self.unoObjs.text.insertControlCharacter(oVC, PARAGRAPH_BREAK, 0)
         self.unoObjs.text.insertString(oVC, message, 0)
         self.unoObjs.text.insertControlCharacter(oVC, PARAGRAPH_BREAK, 0)
-
-
-class SettingsDocFinder:
-    """Helps a Calc document that references user variables."""
-    def __init__(self, VAR_PREFIX, genericUnoObjs):
-        self.VAR_PREFIX = VAR_PREFIX
-        self.unoObjs = genericUnoObjs
-
-    def getWriterDoc(self):
-        """Typically called from a Calc spreadsheet.
-        Make sure we have a Writer document ready for user variables.
-
-        Takes an object of type util.UnoObjs that has service objs but
-        probably not writer doc objs.
-        Returns unoObjs of a writer document to hold UserVars settings.
-
-        Finds the best candidate found to store user variables.
-        If no candidate is found, opens a blank document.
-        """
-        maxHasSettings, twoDocsHaveMax, docFound = self.findBestDoc()
-        if docFound:
-            return docFound
-        else:
-            ## Open a blank document in the background.
-            uno_args = (
-                util.createProp("Minimized", True),
-            )
-            newDoc = self.unoObjs.desktop.loadComponentFromURL(
-                "private:factory/swriter", "_blank", 0, uno_args)
-            # this won't modify the original reference kept by calling code
-            writerUnoObjs = self.unoObjs.getDocObjs(newDoc)
-            writerUnoObjs.window.setVisible(True)
-            userVars = UserVars(
-                self.VAR_PREFIX, writerUnoObjs.document, logger)
-            setHasSettings(userVars, maxHasSettings, twoDocsHaveMax)
-            preparer = SettingsDocPreparer(self.VAR_PREFIX, writerUnoObjs)
-            preparer.addContents()
-            return writerUnoObjs
-
-    def findBestDoc(self):
-        """Searches all open documents for a Writer document.
-        If more than one is found, chooses the one with the highest value of
-        HasSettings, which will usually be the most recent.
-
-        :return arg1: highest value found of HasSettings
-        :return arg2: true if two or more docs have the same highest value
-        :return arg3: UNO objects of document with highest value
-        """
-        maxVal = -1
-        bestDoc = None
-        twoDocsHaveMax = False  # if two or more docs have the same max value
-        doclist = self.unoObjs.getOpenDocs(util.UnoObjs.DOCTYPE_WRITER)
-        for docUnoObjs in doclist:
-            logger.debug("Checking writer document for settings.")
-            userVars = UserVars(
-                self.VAR_PREFIX, docUnoObjs.document, logger)
-            val = userVars.getInt("HasSettings")
-            if val > 0 and val > maxVal:
-                logger.debug("Found doc with HasSettings value %s.", val)
-                maxVal = val
-                bestDoc = docUnoObjs
-                twoDocsHaveMax = False
-            elif val == maxVal:
-                twoDocsHaveMax = True
-        return maxVal, twoDocsHaveMax, bestDoc
 
 
 class Syncable:

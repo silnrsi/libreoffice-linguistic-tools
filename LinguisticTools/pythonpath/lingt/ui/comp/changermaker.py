@@ -57,11 +57,8 @@ class DlgChangerMaker:
     def __init__(self, calcUnoObjs):
         self.unoObjs = calcUnoObjs
         self.msgbox = MessageBox(self.unoObjs)
-        finder = uservars.SettingsDocFinder(
-            uservars.Prefix.SPELLING, self.unoObjs)
-        self.writerUnoObjs = finder.getWriterDoc()
         self.userVars = uservars.UserVars(
-            uservars.Prefix.SPELLING, self.writerUnoObjs.document, logger)
+            uservars.Prefix.SPELLING, calcUnoObjs.document, logger)
         self.app = ChangerMaker(self.unoObjs, self.userVars)
         self.exportOnClose = False
         self.dlgCtrls = None
