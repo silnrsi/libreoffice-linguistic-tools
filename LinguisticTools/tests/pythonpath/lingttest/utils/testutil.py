@@ -183,9 +183,14 @@ setupTestLogging()
 
 
 class MyActionEvent:
-    """Objects to pass to actionPerformed()."""
+    """Objects to pass to DlgEventHandler.actionPerformed()."""
     def __init__(self, actionCommand):
         self.ActionCommand = actionCommand
+
+class MyTextEvent:
+    """Objects to pass to DlgEventHandler.textChanged()."""
+    def __init__(self, source):
+        self.Source = source
 
 
 # Don't inspect the same function twice, because the second time the
@@ -379,18 +384,39 @@ def run_suite(test_suite):
     unittest.TextTestRunner(verbosity=2).run(test_suite)
 
 
-def getDefaultFont():
-    if (stored.getProductName() == "OpenOffice"
-            and platform.system() == "Windows"):
-        return "Times New Roman"
+def getDefaultFont(fontType='Western'):
+    """Change these values to your system's default font."""
+    fontName = ""
+    if fontType == 'Complex':
+        if platform.system() == "Windows":
+            #fontName = "Mangal"
+            fontName = "Ezra SIL"
+        else:
+            #fontName = "Lohit Hindi"
+            fontName = "FreeSans"
+    elif fontType == 'Asian':
+        #fontName = "SimSun"
+        fontName = "NSimSun"
     else:
-        return "Liberation Serif"
+        if (stored.getProductName() == "OpenOffice"
+                and platform.system() == "Windows"):
+            fontName = "Times New Roman"
+        else:
+            fontName = "Liberation Serif"
+    return fontName
 
 def getDefaultStyle():
+    """Change these values to your system's default style."""
     if stored.getProductName() == "LibreOffice":
         return "Default Style"
     else:
         return "Default"
+
+def getDefaultStyles():
+    return [
+        "Default Style",
+        "Default",
+        "Standard"]
 
 
 def output_path(filename):

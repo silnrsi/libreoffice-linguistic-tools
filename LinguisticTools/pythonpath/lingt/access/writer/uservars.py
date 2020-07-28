@@ -76,17 +76,19 @@ class UserVars:
     def userPropsInfo(self):
         return self.userProps.getPropertySetInfo()
 
-    def store(self, baseVarName, stringVal):
+    def store(self, baseVarName, val):
         """Stores a value in a document. The value is persistent across macro
         calls.
         :param baseVarName: var name without "LTx_" prefix
-        :param stringVal: value to store; numeric type may not work correctly
+        :param val: value to store
         """
         varName = self.getVarName(baseVarName)
         self.otherLogger.debug("storeUserVar %s", varName)
-        #self.otherLogger.debug("storeUserVar %s=%s", varName, stringVal)
-        if stringVal is None:
+        #self.otherLogger.debug("storeUserVar %s=%s", varName, val)
+        if val is None:
             stringVal = ""
+        else:
+            stringVal = str(val)
         if self.userPropsInfo().hasPropertyByName(varName):
             self.userProps.setPropertyValue(varName, stringVal)
         else:

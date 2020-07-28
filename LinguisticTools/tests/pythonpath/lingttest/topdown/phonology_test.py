@@ -232,7 +232,8 @@ class PhonologyTestCase(unittest.TestCase):
     def _test3_make_useDialog_grabExamples(self, action, refNum):
         def useDialog(innerSelf):
             if action == 'inserting':
-                innerSelf.dlgCtrls.txtRefnum.setText(refNum)
+                innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
+                innerSelf.dlgCtrls.comboRefnum.setText(refNum)
                 innerSelf.evtHandler.actionPerformed(
                     MyActionEvent("InsertEx"))
             elif action == 'replacing':
@@ -518,7 +519,8 @@ class PhonologyTestCase(unittest.TestCase):
 
 def useDialog_insertEx(refNum):
     def useDialog(innerSelf):
-        innerSelf.dlgCtrls.txtRefnum.setText(refNum)
+        innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
+        innerSelf.dlgCtrls.comboRefnum.setText(refNum)
         innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
     return useDialog
 

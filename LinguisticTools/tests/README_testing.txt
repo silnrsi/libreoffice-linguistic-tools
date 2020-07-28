@@ -34,16 +34,14 @@ are required.  These include:
 - adding converters
     + The tests attempt to add converters automatically such as Any-Hex,
       but it often fails, so add them manually.
-- missing fonts
-    + On Windows 10, go to Control Panel -> Fonts -> Download Fonts for
+- version of LibreOffice
+    + change getDefaultFont() and getDefaultStyle() in testutil.py if needed.
+- different fonts
+    + On Windows 10, go to Settings -> Font Settings -> Download Fonts for
       All Languages.
     + Either download the required fonts or modify the testing code to use
       fonts that are already on your system.
     + See CHANGED_FONT in dataconv_test.py.
-- version of LibreOffice
-    + Style name might be "Default" or "Default Style" or "Standard"; change in
-      the testing code to match your system.
-    + See getDefaultFont() and getDefaultStyle() in testutil.py.
 - table width
     + Seems to vary somewhat.  If necessary, change values such as
       RESIZE_PERCENT in grammar_test.py.

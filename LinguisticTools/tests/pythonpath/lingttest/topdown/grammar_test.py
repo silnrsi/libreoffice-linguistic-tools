@@ -19,7 +19,8 @@ import unittest
 import os
 
 from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
+from lingttest.utils.testutil import (
+    MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
 
 from lingt.access.writer import styles
 from lingt.access.writer.uservars import GrammarTags
@@ -169,7 +170,8 @@ class GrammarTestCase(unittest.TestCase):
     def _test2_make_useDialog_grabExamples(self, action, refNum):
         def useDialog(innerSelf):
             if action == 'inserting':
-                innerSelf.dlgCtrls.txtRefnum.setText(refNum)
+                innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
+                innerSelf.dlgCtrls.comboRefnum.setText(refNum)
                 innerSelf.evtHandler.actionPerformed(
                     MyActionEvent("InsertEx"))
             elif action == 'replacing':
@@ -467,15 +469,17 @@ class GrammarTestCase(unittest.TestCase):
             testutil.modifyFilePicker(filepath)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
             innerSelf.dlgCtrls.txtPrefix.setText("A")
-            innerSelf.dlgCtrls.chkUseSegnum.setState(False)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("FileUpdate"))
+            innerSelf.dlgCtrls.chkDontUseSegnum.setState(True)
+            innerSelf.evtHandler.textChanged(
+                MyTextEvent(innerSelf.dlgCtrls.txtPrefix))
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "FWtextPigFox.xml")
             testutil.modifyFilePicker(filepath)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
             innerSelf.dlgCtrls.txtPrefix.setText("B")
-            innerSelf.dlgCtrls.chkUseSegnum.setState(True)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("FileUpdate"))
+            innerSelf.dlgCtrls.chkDontUseSegnum.setState(False)
+            innerSelf.evtHandler.textChanged(
+                MyTextEvent(innerSelf.dlgCtrls.txtPrefix))
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
@@ -587,15 +591,15 @@ class GrammarTestCase(unittest.TestCase):
                 testutil.modifyFilePicker(filepath)
                 innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
                 innerSelf.dlgCtrls.txtPrefix.setText("A")
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("FileUpdate"))
+                innerSelf.evtHandler.textChanged(
+                    MyTextEvent(innerSelf.dlgCtrls.txtPrefix))
                 filepath = os.path.join(
                     util.TESTDATA_FOLDER, "FWtextPigFox.xml")
                 testutil.modifyFilePicker(filepath)
                 innerSelf.evtHandler.actionPerformed(MyActionEvent("FileAdd"))
                 innerSelf.dlgCtrls.txtPrefix.setText("B")
-                innerSelf.evtHandler.actionPerformed(
-                    MyActionEvent("FileUpdate"))
+                innerSelf.evtHandler.textChanged(
+                    MyTextEvent(innerSelf.dlgCtrls.txtPrefix))
             innerSelf.dlgCtrls.optFrames.setState(1)
             # This size may need to be adjusted depending on system settings.
             RESIZE_PERCENT = 15
@@ -764,7 +768,8 @@ class GrammarTestCase(unittest.TestCase):
 
 def useDialog_insertEx(refNum):
     def useDialog(innerSelf):
-        innerSelf.dlgCtrls.txtRefnum.setText(refNum)
+        innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
+        innerSelf.dlgCtrls.comboRefnum.setText(refNum)
         innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
     return useDialog
 

@@ -83,9 +83,9 @@ class DlgDataConvTestCase(unittest.TestCase):
         self.dlg.showDlg()
         self.dlg.getFormResults()
         self.assertEqual(self.dlg.config.whichScope, 'ParaStyle')
-        self.assertEqual(
+        self.assertIn(
             self.dlg.config.searchConfig.style,
-            testutil.getDefaultStyle())
+            testutil.getDefaultStyles())
 
     def test_scope4(self):
         def useDialog(innerSelf):
@@ -95,9 +95,9 @@ class DlgDataConvTestCase(unittest.TestCase):
         self.dlg.showDlg()
         self.dlg.getFormResults()
         self.assertEqual(self.dlg.config.whichScope, 'CharStyle')
-        self.assertEqual(
+        self.assertIn(
             self.dlg.config.searchConfig.style,
-            testutil.getDefaultStyle())
+            testutil.getDefaultStyles())
 
     def test_target1(self):
 
@@ -125,20 +125,17 @@ class DlgDataConvTestCase(unittest.TestCase):
         def useDialog(innerSelf):
             innerSelf.dlgCtrls.optTargetParaStyle.setState(1)
             innerSelf.dlgCtrls.optTargetFontComplex.setState(1)
-            #for paraStyleName in ["Default Style", "Default"]:
-            paraStyleName = testutil.getDefaultStyle()
-            if paraStyleName in innerSelf.paraStyleNames:
-                innerSelf.dlgCtrls.comboTargetParaStyle.setText(paraStyleName)
+            for paraStyleName in testutil.getDefaultStyles():
+                if paraStyleName in innerSelf.paraStyleNames:
+                    innerSelf.dlgCtrls.comboTargetParaStyle.setText(
+                        paraStyleName)
         DlgDataConversion.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.getFormResults()
         self.assertEqual(self.dlg.config.whichTarget, "ParaStyle")
-        if platform.system() == "Windows":
-            self.assertEqual(self.dlg.config.targetFont.fontName, "Mangal")
-        else:
-            self.assertEqual(
-                #self.dlg.config.targetFont.fontName, "Lohit Hindi")
-                self.dlg.config.targetFont.fontName, "FreeSans")
+        self.assertEqual(
+            self.dlg.config.targetFont.fontName,
+            testutil.getDefaultFont('Complex'))
         self.assertEqual(self.dlg.config.targetFont.fontSize.size, 12.)
 
     def test_target4(self):

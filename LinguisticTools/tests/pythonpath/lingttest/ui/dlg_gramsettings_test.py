@@ -10,7 +10,7 @@ import unittest
 import os
 
 from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent
+from lingttest.utils.testutil import MyActionEvent, MyTextEvent
 
 from lingt.access.writer.uservars import UserVars
 from lingt.ui.comp.gramsettings import DlgGramSettings
@@ -147,7 +147,8 @@ class DlgGramSettingsTestCase(unittest.TestCase):
 
         self.dlg.dlgCtrls.listboxFiles.selectItemPos(1, True)    # testText1.xml
         self.dlg.dlgCtrls.txtPrefix.setText("PREF-")
-        self.dlg.evtHandler.actionPerformed(MyActionEvent("FileUpdate"))
+        self.dlg.evtHandler.textChanged(
+            MyTextEvent(self.dlg.dlgCtrls.txtPrefix))
         fileItem = self.dlg.fileItems[1]
         self.assertEqual(fileItem.prefix, "PREF-")
         self.assertEqual(str(fileItem), "PREF-    testText1.xml")

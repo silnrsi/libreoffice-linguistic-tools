@@ -232,9 +232,11 @@ class GramTestCase(unittest.TestCase):
             xmlReader.get_filetype(filepath, xmlReader.dom), "fieldworks")
 
         self.assertTrue("Prefix-1.1".lower() in exampleDict)
+        self.assertTrue(not "Prefix-1".lower() in exampleDict)
         self.assertTrue("Prefix-1.2".lower() in exampleDict)
         self.assertTrue(not "Prefix-1.3".lower() in exampleDict)
-        self.assertTrue("Prefix-2.1".lower() in exampleDict)
+        self.assertTrue("Prefix-2".lower() in exampleDict)
+        self.assertTrue(not "Prefix-2.1".lower() in exampleDict)
         self.assertTrue(not "Prefix-2.2".lower() in exampleDict)
 
         gramEx = exampleDict["Prefix-1.2".lower()]
