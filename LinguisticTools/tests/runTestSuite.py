@@ -102,12 +102,12 @@ def run_suite(suite, outputToFile):
     else:
         unittest.TextTestRunner(verbosity=2).run(suite)
 
+    testutil.blankWriterDoc()
     unoObjs = testutil.unoObjsForCurrentDoc()
     oVC = unoObjs.viewcursor
     oVC.gotoEnd(False)
-    oVC.getText().insertString(oVC, "Testing finished.\n", False)
     testutil.restoreMsgboxDisplay()
-
+    oVC.getText().insertString(oVC, "\nTesting finished.\n", False)
 
 def run_suite_to_outfile(suite):
     outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
@@ -120,6 +120,7 @@ def run_suite_to_outfile(suite):
     outfile.write("Calling TextTestRunner...\n")
     outfile.flush()
     unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)
+    outfile.write("\nFinished!\n")
     outfile.close()
 
 

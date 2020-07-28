@@ -62,8 +62,9 @@ CHANGED_FONT = {
     "Arial": "Verdana",  # western OpenOffice
     "Mangal": "Latha",  # complex Windows
     "FreeSans": "Lohit Tamil",  # complex Linux
-    "Microsoft YaHei": "SimHei",  # asian Windows
-    "SimSun": "SimHei",  # asian Windows
+    "Microsoft YaHei": "NSimSun",  # asian Windows
+    "SimSun": "NSimSun",  # asian Windows
+    "NSimSun": "Microsoft YaHei",  # asian Windows
     "Droid Sans Fallback": "DejaVu Serif",  # asian Linux
     }
 
@@ -96,6 +97,7 @@ class DataConvTestCase(unittest.TestCase):
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.dlg = DlgDataConversion(self.unoObjs)
+        self.availableFonts = styles.getListOfFonts(self.unoObjs)
 
     def runDlg(self, useDialog):
         DlgDataConversion.useDialog = useDialog
@@ -163,8 +165,8 @@ class DataConvTestCase(unittest.TestCase):
         oVC.goRight(FORMAT_AT_INDEX, False)
         oVC.goRight(1, True)  # select
         styleFonts = styles.StyleFonts(self.unoObjs)
-        fontName, dummy = styleFonts.getFontOfStyle(
-            styleName=testutil.getDefaultStyle(), fontType=data.fontType)
+        fontName = testutil.getDefaultFont(data.fontType)
+        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
         fontDef = styles.FontDefStruct(
             CHANGED_FONT[fontName], data.fontType)
         # change font for one character
@@ -354,6 +356,7 @@ class DataConvTestCase(unittest.TestCase):
         #print("%s %s" % (data.fontType, ctrlName))
         fontName, dummy = styleFonts.getFontOfStyle(
             styleName=PARASTYLE_TO, fontType=data.fontType)
+        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
         paragraphs = [("Begin",), (data.testChar,), ("End",), ]
         self.setTextContent(paragraphs, True)
         oVC = self.unoObjs.viewcursor
@@ -383,6 +386,7 @@ class DataConvTestCase(unittest.TestCase):
         CONVERT_PARA = 1  # we change only the second paragraph
         PARASTYLE_TO = "Heading 4"  # target para style
         oVC = self.unoObjs.viewcursor
+        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
         for para_index in range(0, len(paragraphs)):
             paraStyle2 = oVC.getPropertyValue("ParaStyleName")
             fontName2, fontSize2 = self._get_target_font(
