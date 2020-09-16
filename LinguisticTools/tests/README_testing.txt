@@ -11,8 +11,8 @@
 I use two different methods for running tests.
 The first is easier to run and easier to see errors, and is good for running
 tests slowly, one at a time.
-This approach is to run OpenOffice listening on a socket.
-Use the batch or shell scripts to start OpenOffice and to run the tests,
+This approach is to run LibreOffice listening on a socket.
+Use the batch or shell scripts to start LibreOffice and to run the tests,
 or enter command line commands that do these things.
 
 The second is to run from the user directory,
@@ -21,8 +21,8 @@ Testing results are written to a file, since stdout is not accessible.
 The file runTestSuite.py can be used to run most tests.
 This approach is MUCH faster.
 1. Run build/deploy_to_userdir.ps1
-2. From OpenOffice go to Tools -> Macros -> Run macro.
-   Specify runTestSuite -> runTests_myMacros.
+2. From Writer go to Tools -> Macros -> Run macro.
+   Specify runTestSuite -> aaa_run_all_tests.
 
 
 #-------------------------------------------------------------------------------
