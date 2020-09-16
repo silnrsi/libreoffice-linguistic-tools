@@ -11,11 +11,13 @@
 
 ## LingTools 4.0
 {
+    fix packaging problem
     testing
         get all tests to pass again
             primary difficulty is data conversion
+            get an ICU converter to run in FW first
             maybe not all tests need to pass on ubuntu
-        install linux dual boot on new dev machine
+        keep things simple and test on 1 win machine + 1 ubuntu VM
         test localization
     release to extensions.libreoffice.org
     send out message
@@ -24,11 +26,60 @@
         wait until it shows up on the extensions page
 }
 
-## Linux Data Conversion error 09-Mar-2017
+## Packaging
+
+Perhaps caused by renaming MkoxtSettings.xdl to Mkoxt.xdl
+
+(com.sun.star.deployment.DeploymentException) { { Message = "An error occurred while enabling: LingToolsBasic", Context = (com.sun.star.uno.XInterface) @16c3542d280 }, Cause = (any) { (com.sun.star.lang.IllegalArgumentException) { { { Message = "", Context = (com.sun.star.uno.XInterface) @0 } }, ArgumentPosition = (short) 0 } } }
+
+
+## Linux Data Conversion GTK3
+
+Occurs if the path problem is fixed manually with ldconfig.
+
+GTK 2.0 vs 3.0 problem - affected by VMs maybe?
+https://ask.libreoffice.org/en/question/132794/python-script-unable-to-print-to-console-in-libreoffice-gtk3/
+    "After updating to Ubuntu 17.04, which apparently defaults to
+    libreoffice-gtk3... uninstall libreoffice-gtk3 and install
+    libreoffice-gtk (which uses gtk2)"
+maybe ECDriver needs to be updated to gtk3
+
+
+## Linux Data Conversion path problem 09-Mar-2017
 
 This is probably a SilConverters ECDriver error, not a LingTools error.
+Can be fixed with ldconfig.
 
 Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such file or directory. 
+
+
+## Tests finish but then LibreOffice crashes.  
+
+Perhaps related to testutil.restoreMsgboxDisplay()
+
+
+## Complete (but not exhaustive) set of tests
+
+Phonology Examples          # result: writer contents  # DONE
+    Phonology Settings
+        Writing Systems
+Grammar Examples            # result: writer contents  # DONE
+    Grammar Settings
+Abbrevs                     # result: writer contents  # DONE
+Data Conv                   # result: writer contents  # DONE (suite fails)
+    Apply Conv              # result: Calc contents    # DONE
+Make Spelling Changes       # result: writer contents  # part done -- app
+    Spelling Replacements
+Word List                   # result: Calc contents    # part done: app, ui
+    Word List File          # ui test only             # implemented
+Step Through List           # result: Calc contents    # TODO
+    Spelling Comparisons    # result: Calc contents
+Export Changer File         # result: text file        # TODO
+Script Practice             # result: (text box contents)
+    Word List
+        Word List File
+
+Use bigExamples.xml in a grammar test.
 
 
 ##
@@ -58,13 +109,6 @@ with document defaults except using the specified font.
 
 Texts with more than one font type will still need to be split up.
 
-
-## Use configuration instead of user vars for Calc and Draw.
-
-Possibly put global settings in config and doc settings in user vars.
-Abbrevs and interlinear setup should be per document, not per user.
-Either create a special dialog to edit them ("LingTools Settings"),
-    or perhaps extension settings are good enough.
 
 ## Thought 21-Jul-2016
 
@@ -283,30 +327,6 @@ Perhaps put such files in the Temp folder instead.
 
 Maybe this will help in Bulk Conversion for .doc files:
 libreoffice --convert-to
-
-
-## Complete (but not exhaustive) set of tests
-
-Phonology Examples          # result: writer contents  # DONE
-    Phonology Settings
-        Writing Systems
-Grammar Examples            # result: writer contents  # DONE
-    Grammar Settings
-Abbrevs                     # result: writer contents  # DONE
-Data Conv                   # result: writer contents  # DONE (suite fails)
-    Apply Conv              # result: Calc contents    # DONE
-Make Spelling Changes       # result: writer contents  # part done -- app
-    Spelling Replacements
-Word List                   # result: Calc contents    # part done: app, ui
-    Word List File          # ui test only             # implemented
-Step Through List           # result: Calc contents    # TODO
-    Spelling Comparisons    # result: Calc contents
-Export Changer File         # result: text file        # TODO
-Script Practice             # result: (text box contents)
-    Word List
-        Word List File
-
-Use bigExamples.xml in a grammar test.
 
 
 ## Data Conversion string type problem
@@ -690,6 +710,12 @@ for version 4.0
     update documentation
         make oxt
         interlinear setup changes
+
+Use configuration instead of user vars for Calc and Draw. [rejected]
+    Possibly put global settings in config and doc settings in user vars.
+    Abbrevs and interlinear setup should be per document, not per user.
+    Either create a special dialog to edit them ("LingTools Settings"),
+        or perhaps extension settings are good enough.
 
 data conversion may still require 32-bit LO
     No, it works on Windows.
