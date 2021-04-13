@@ -23,8 +23,7 @@ logger = logging.getLogger("lingttest.dlg_bulkstep1_test")
 def getSuite():
     suite = unittest.TestSuite()
     for method_name in (
-            'test1_',
-            'test2_',
+            'test1',
         ):
         suite.addTest(DlgBulkStep1TestCase(method_name))
     return suite

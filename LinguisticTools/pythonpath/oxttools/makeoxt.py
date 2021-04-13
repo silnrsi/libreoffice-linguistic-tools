@@ -1,16 +1,19 @@
 #!/usr/bin/python
 
 import time, os, codecs, sys
+try:
+    import oxttools.xmltemplate as xtmpl
+    import oxttools.modified_etree as metree
+except ImportError:
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib')))
+    import oxttools.xmltemplate as xtmpl
+    import oxttools.modified_etree as metree
+import oxttools.hunspell as hs
 #from argparse import ArgumentParser
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 import xml.etree.ElementTree as et
 
-import oxttools.hunspell as hs
-import oxttools.modified_etree as metree
-import oxttools.xmltemplate as xtmpl
-
-if sys.version_info[0] >= 3 :
-    unicode = str
+assert sys.version_info.major >= 3, "Requires Python 3"
 
 langres = ( "af-ZA", "ak-GH", "am-ET", "an-ES", "apt-IN", "arn-CL", "as-IN", "ast-ES",
     "axk-CF", "av-RU", "az-AZ", "ba-RU", "be-BY", "beq-CG", "bg-BG", "bin-NG", "bkw-CG",
@@ -65,7 +68,7 @@ def zipnormfile(ozip, fin, fout, normalize, affix=None) :
             dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
         else:
             dat += u"\n".join([x for x in fd.readlines()])
-    if affix:
+    if affix is not None :
         with open(affix) as fd:
             if normalize in ('NFC','NFD'):
                 dat += u"\n".join([unicodedata.normalize(normalize, x) for x in fd.readlines()])
@@ -100,7 +103,6 @@ def make(settings, msgbox):
     #args = parser.parse_args()
     args = settings
 
-
     resdir = os.path.join(os.path.dirname(xtmpl.__file__), 'data')
     scripttype = scripttypes.get(args.type.lower(), 1)
 
@@ -108,7 +110,7 @@ def make(settings, msgbox):
     t = xtmpl.Templater()
 
     fontmap = {}
-    if args.font:
+    if args.font is not None :
         for f in args.font :
             (id, name) = f.split('=')
             fontmap[id] = name
@@ -119,7 +121,7 @@ def make(settings, msgbox):
     test = args.langtag + "-"
     for k in langres:
         if k.startswith(test):
-            print("Can't have unregioned tag {}, using {} instead.".format(args.langtag, k))
+            print("Can't have unregioned tag {}, using {} instead.".format(args.langtag, k) )
             args.langtag = k
             break
 
@@ -134,7 +136,7 @@ def make(settings, msgbox):
     t.define('scripttype', str(scripttype))
     t.define('language', args.langname)
     t.define('version', args.version)
-    if args.publisher:
+    if args.publisher is not None :
         t.define('publisher', args.publisher)
         t.define('puburl', args.puburl)
     else :
@@ -142,11 +144,11 @@ def make(settings, msgbox):
     t.addfn(None, 'fonts', fn_fonts)
     t.parse(os.path.join(resdir, 'dictxcu.xml'))
     t.process()
-    zipadd(ozip, unicode(t).encode('utf-8'), 'dictionaries.xcu')
+    zipadd(ozip, str(t).encode('utf-8'), 'dictionaries.xcu')
 
     t.parse(os.path.join(resdir, 'oxtdescription.xml'))
     t.process()
-    zipadd(ozip, unicode(t).encode('utf-8'), 'description.xml')
+    zipadd(ozip, str(t).encode('utf-8'), 'description.xml')
 
     license="""LICENSES:
     Spell checker: MIT
@@ -184,11 +186,11 @@ def make(settings, msgbox):
             for e in doc.iter('item') :
                 itemcount += 1
                 if args.dicttype != 'ptall' and e.attrib['spelling'] != 'Correct' : continue
-                hun.addword(unicode(e.get('word')))
+                hun.addword(str(e.get('word')))
                 wordcount += 1
             if wordcount * 4 < itemcount :  #warn if less than 25% of the words are valid
-                print("Warning: only {:.0f}% of the words marked as correct and entered into the dictionary. Consider using --dicttype ptall".format(wordcount / float(itemcount) * 100))
-            if args.affix:
+                print("Warning: only {:.0f}% of the words marked as correct and entered into the dictionary. Consider using --dicttype ptall".format(wordcount / float(itemcount) * 100) )
+            if args.affix is not None :
                 hun.mergeaffix(args.affix)
             ziphunspell(ozip, hun, args.langtag)
         elif args.dicttype == 'text' :
@@ -196,7 +198,7 @@ def make(settings, msgbox):
             with codecs.open(args.dict, encoding='utf-8') as infile :
                 for l in infile.readlines() :
                     hun.addword(l.replace("\uFEFF", "").strip())
-            if args.affix:
+            if args.affix is not None :
                 hun.mergeaffix(args.affix)
             ziphunspell(ozip, hun, args.langtag)
 

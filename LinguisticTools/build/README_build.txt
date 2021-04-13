@@ -24,6 +24,7 @@ For the third method, do not zip it.  Run it from the user directory:
    Under the Library tab, create a library named LingToolsBasic.
    Also, under the Dialogs tab, select LingToolsBasic and create a new
    dialog, because otherwise it doesn't recognize the new library.
+   Then close LibreOffice to finish creating the new library.
 3. Run deploy_to_userdir.ps1 which copies files to /basic and Scripts/python in
    the LibreOffice user directory.
 4. From a LibreOffice document go to Tools -> Macros -> Run macro.
