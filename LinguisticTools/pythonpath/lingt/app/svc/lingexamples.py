@@ -1,27 +1,12 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 14 2010 by Jim Kornelsen
-#
-# 02-Oct-10 JDK  Raise exception instead of returning an interrupt arg.
-# 26-Oct-10 JDK  Optionally disable Comparison doc.
-# 25-Oct-12 JDK  Use FileItemList class to load file items from user vars.
-# 27-Apr-13 JDK  Remove testing functions.
-# 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
-# 13-Jul-15 JDK  Refactor LingEx into three smaller classes.
-# 14-Sep-15 JDK  Add module constants for example type.
-# 14-Dec-15 JDK  Show suggestions when no ref number specified.
-# 11-May-19 JDK  Raise an error after displaying error.
-# 19-Sep-19 JDK  Sort ref numbers.
-# 24-Jun-20 JDK  Added verifyRefnums.
-# 21-Jul-20 JDK  Localize suggestions message.
 
 """
-Grab phonology or grammar examples and insert them.
+Grab phonology or interlinear examples and insert them.
 
 This module exports:
     ExServices
     EXTYPE_PHONOLOGY
-    EXTYPE_GRAMMAR
+    EXTYPE_INTERLINEAR
 """
 import logging
 
@@ -42,7 +27,7 @@ logger = logging.getLogger("lingt.app.lingexamples")
 
 #  type of linguistic example
 EXTYPE_PHONOLOGY = 'phonology'
-EXTYPE_GRAMMAR = 'grammar'
+EXTYPE_INTERLINEAR = 'interlinear'
 
 class ExServices:
     """Services that can conveniently be called from other modules."""
@@ -53,7 +38,7 @@ class ExServices:
         if self.exType == EXTYPE_PHONOLOGY:
             USERVAR_PREFIX = Prefix.PHONOLOGY
         else:
-            USERVAR_PREFIX = Prefix.GRAMMAR
+            USERVAR_PREFIX = Prefix.INTERLINEAR
         self.userVars = UserVars(
             USERVAR_PREFIX, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
@@ -79,7 +64,7 @@ class ExServices:
                 refnumsString += ", ...%d more." % additionalRefs
             message = exceptions.interpolate_message(
                 "The following Ref Numbers have duplicates: %s", refnumsString)
-            if self.exType == EXTYPE_GRAMMAR:
+            if self.exType == EXTYPE_INTERLINEAR:
                 message += exceptions.interpolate_message(
                     "\n\nEither change the numbers or, if they are in "
                     "different texts, add a prefix for each text.\n"
@@ -130,11 +115,11 @@ class ExServices:
     def replace(self, searchFromBeginning):
         """Returns True if another ref number is found after replacing."""
         logger.debug(util.funcName('begin'))
-        if (self.exType == EXTYPE_GRAMMAR and self.isUpdatingExamples() and
+        if (self.exType == EXTYPE_INTERLINEAR and self.isUpdatingExamples() and
                 not self.settings.getOutconfig().makeOuterTable):
             self.msgbox.display(
                 "To update examples, 'Outer table' must be "
-                "marked in Grammar Settings.")
+                "marked in Interlinear Settings.")
             return False
         if not self.operations.getFoundString():
             return self.findNext(searchFromBeginning)
@@ -152,11 +137,11 @@ class ExServices:
 
     def replaceAll(self):
         """Replace all #ref no's or update all existing examples."""
-        if (self.exType == EXTYPE_GRAMMAR and self.isUpdatingExamples() and
+        if (self.exType == EXTYPE_INTERLINEAR and self.isUpdatingExamples() and
                 not self.settings.getOutconfig().makeOuterTable):
             self.msgbox.display(
                 "To update examples, 'Outer table' must be "
-                "marked in Grammar Settings.")
+                "marked in Interlinear Settings.")
             return
         try:
             self.operations.readData()
@@ -355,13 +340,13 @@ class ExOperations:
         Steps 1 and 2 are done in insertEx().
         """
         logger.debug(util.funcName('begin'))
-        if self.exType == EXTYPE_GRAMMAR:
+        if self.exType == EXTYPE_INTERLINEAR:
             if not self.search.refInTable():
                 raise exceptions.RangeError(
                     "Found a ref number, but it must be in an outer "
                     "table in order to be updated.")
         self.insertEx(refTextRough, False, True)
-        if self.exType == EXTYPE_GRAMMAR:
+        if self.exType == EXTYPE_INTERLINEAR:
             if not self.settings.showCompDoc():
                 self.exUpdater.doNotMakeCompDoc()
             self.exUpdater.moveExNumber()
@@ -371,7 +356,7 @@ class ExOperations:
 
 
 class ExSettings:
-    """Phonology or grammar settings from user vars.  Loads on demand."""
+    """Phonology or interlinear settings from user vars.  Loads on demand."""
     def __init__(self, exType, unoObjs, userVars):
         self.exType = exType
         self.unoObjs = unoObjs
@@ -389,7 +374,7 @@ class ExSettings:
                 self.styles = styles.PhonologyStyles(
                     self.unoObjs, self.userVars)
             else:
-                self.styles = styles.GrammarStyles(
+                self.styles = styles.InterlinStyles(
                     self.unoObjs, self.userVars)
         return self.styles
 
@@ -421,7 +406,7 @@ class ExSettings:
         if self.exType == EXTYPE_PHONOLOGY:
             self._getPhonologySettings()
         else:
-            self._getGrammarSettings()
+            self._getInterlinSettings()
 
     def _getPhonologySettings(self):
         """Get file paths, style names, and other options that were
@@ -434,7 +419,7 @@ class ExSettings:
         self.outSettings.loadUserVars()
         logger.debug(util.funcName('end'))
 
-    def _getGrammarSettings(self):
+    def _getInterlinSettings(self):
         """Get file paths, style names, and other options from user vars."""
         logger.debug(util.funcName('begin'))
         self.outSettings = lingex_structs.InterlinOutputSettings(self.userVars)

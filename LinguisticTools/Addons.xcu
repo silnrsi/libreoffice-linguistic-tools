@@ -59,13 +59,13 @@
           </node>
           <node oor:name="m04" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
-              <value>service:name.JimK.LinguisticTools.GrammarSettings?execute</value>
+              <value>service:name.JimK.LinguisticTools.InterlinSettings?execute</value>
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
               <value/>
               <value xml:lang="en">Interlinear Settings</value>
-              <value xml:lang="es">Configuración de gramática</value>
-              <value xml:lang="fr">Configuration de grammaire</value>
+              <value xml:lang="es">Configuración interlineal</value>
+              <value xml:lang="fr">Configuration interlinéaire</value>
             </prop>
             <prop oor:name="Target" oor:type="xs:string">
               <value>_self</value>
@@ -76,13 +76,13 @@
           </node>
           <node oor:name="m05" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string">
-              <value>service:name.JimK.LinguisticTools.GrammarGrabExamples?execute</value>
+              <value>service:name.JimK.LinguisticTools.InterlinGrabExamples?execute</value>
             </prop>
             <prop oor:name="Title" oor:type="xs:string">
               <value/>
               <value xml:lang="en">Get Interlinear Examples</value>
-              <value xml:lang="es">Obtener ejemplos de gramática</value>
-              <value xml:lang="fr">Obtenir des exemples de grammaire</value>
+              <value xml:lang="es">Obtener ejemplos interlineales</value>
+              <value xml:lang="fr">Obtenir des exemples interlinéaires</value>
             </prop>
             <prop oor:name="Target" oor:type="xs:string">
               <value>_self</value>

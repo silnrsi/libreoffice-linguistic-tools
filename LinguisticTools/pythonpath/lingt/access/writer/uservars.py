@@ -1,29 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 29-Oct-12 JDK  Return 0.0 from getFloat() to make return types consistent.
-# 15-Nov-12 JDK  Add methods for calc docs to use writer settings.
-# 19-Nov-12 JDK  Remove punctuation from var names.
-# 19-Dec-12 JDK  getUserVarDoc returns the new unoObjs instead of mod by ref.
-# 30-Jan-13 JDK  getUserVarDoc does not open a new writer doc.
-# 20-Mar-13 JDK  Move package level methods inside new classes.
-# 29-Mar-13 JDK  Separate into a new method setHasSettings.
-# 11-May-13 JDK  Add content to document even if not entirely empty.
-# 07-Jul-15 JDK  Remove getFloat() as it is only needed in util.fontsize.
-# 13-Jul-15 JDK  Added FieldTags.
-# 14-Jul-15 JDK  Rename set() to setv() to avoid shadowing builtin.
-# 15-Jul-15 JDK  Remove ConfigOptions class.
-# 10-Aug-15 JDK  Use generator to enumerate UNO collections.
-# 18-Aug-15 JDK  Don't call FieldTags.loadNames() from constructor.
-# 27-Aug-15 JDK  Added Syncable.cleanupUserVars().
-# 08-Oct-15 JDK  Removed UNO imports.
-# 23-Mar-16 JDK  Added Prefix class.
-# 29-Jul-16 JDK  Documents with one long line are not considered empty.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-# 30-Jul-18 JDK  Added prefix for Drawing documents.
-# 16-Jun-20 JDK  Added getWithDefault().
-# 23-Jul-20 JDK  User defined document props instead of Writer master fields.
 
 """
 Store persistent settings in user defined properties of a document.
@@ -47,7 +22,7 @@ class Prefix:
     LT is short for Linguistic Tools.
     """
     PHONOLOGY = "LTp_"
-    GRAMMAR = "LTg_"
+    INTERLINEAR = "LTi_"
     ABBREVIATIONS = "LTa_"
     DATA_CONVERSION = "LTc_"
     DATA_CONV_DRAW = "LTd_"
@@ -56,6 +31,7 @@ class Prefix:
     SPELLING = "LTsp_"
     SCRIPT_PRACTICE = "LTscr_"
     MAKE_OXT = "LTmk_"
+    TESTING = "LTtest_"
 
 
 class UserVars:
@@ -299,7 +275,7 @@ class FieldTags:
         return self.tags
 
 
-class GrammarTags(FieldTags):
+class InterlinTags(FieldTags):
     TAG_VARS = [
         ['ref', "SFMarker_RefNum"],
         ['word1', "SFMarker_Word1"],  # corresponds with check box for line 1

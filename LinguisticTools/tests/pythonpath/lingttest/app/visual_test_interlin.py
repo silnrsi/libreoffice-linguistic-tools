@@ -1,10 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created March 22, 2010 by Jim Kornelsen
-#
-# 09-Oct-10 JDK  Updated to use with assimilated scripts.
-# 23-Apr-13 JDK  Change paths for Linux.
-# 25-Nov-15 JDK  Integrated into test suite.
 
 """
 Test grabbing interlinear examples by setting user var values.
@@ -29,21 +23,21 @@ import unittest
 
 from lingttest.utils import testutil
 
-from lingt.access.writer.styles import GrammarStyles
-from lingt.access.writer.uservars import UserVars, GrammarTags
-from lingt.app.svc.lingexamples import ExServices, EXTYPE_GRAMMAR
+from lingt.access.writer.styles import InterlinStyles
+from lingt.access.writer.uservars import UserVars, InterlinTags
+from lingt.app.svc.lingexamples import ExServices, EXTYPE_INTERLINEAR
 from lingt.utils import util
 
-logger = logging.getLogger("lingttest.visual_test_grammar")
+logger = logging.getLogger("lingttest.visual_test_interlin")
 DASHES = "-" * 20
 
 def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
-    suite.addTest(VisGrammarTestCase('test1'))
+    suite.addTest(VisInterlinTestCase('test1'))
     return suite
 
-class VisGrammarTestCase(unittest.TestCase):
+class VisInterlinTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -72,8 +66,8 @@ class VisGrammarTestCase(unittest.TestCase):
 def doTests():
     unoObjs = testutil.unoObjsForCurrentDoc()
     userVars = UserVars("LTg_", unoObjs.document, logger)
-    GrammarStyles(unoObjs, userVars).createStyles()
-    GrammarTags(userVars).loadUserVars()
+    InterlinStyles(unoObjs, userVars).createStyles()
+    InterlinTags(userVars).loadUserVars()
     resetUserVars(userVars)
     allRefNums = ["JPDN60.01", "Hunt06", "Hunt39"]
     #allRefNums = ["JPDN60.01"]
@@ -173,7 +167,7 @@ def doTests():
 
 
 def doCall(exrefnum, unoObjs):
-    app = ExServices(EXTYPE_GRAMMAR, unoObjs)
+    app = ExServices(EXTYPE_INTERLINEAR, unoObjs)
     app.insertByRefnum(exrefnum)
 
 

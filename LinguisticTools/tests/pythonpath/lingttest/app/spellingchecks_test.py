@@ -1,8 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created 25-Mar-2013 by Jim Kornelsen
-#
-# 30-Sep-15 JDK  Match dlg.execute$ for DlgSpellingReplace.
 
 import logging
 import unittest
@@ -14,7 +10,7 @@ from lingttest.utils import testutil
 from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
 
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
-from lingt.access.writer import uservars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
 from lingt.app.data.wordlist_structs import ColumnOrder
 from lingt.app.svc import spellingchecks
@@ -39,9 +35,8 @@ class SpellingChecksTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTsp_"  # Spelling variables
-        self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+        self.userVars = UserVars(
+            Prefix.SPELLING, self.unoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
 
     def testAffixesEN(self):

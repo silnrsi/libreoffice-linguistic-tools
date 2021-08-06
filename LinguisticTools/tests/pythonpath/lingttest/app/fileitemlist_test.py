@@ -1,8 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created May 25, 2016 by Jim Kornelsen
-#
-# 09-Mar-17 JDK  Python 2.7 does not have mock.
 
 """
 Verify that lists can add and remove items and stay the correct size.
@@ -21,7 +17,7 @@ except ImportError:
 
 from lingttest.utils import testutil
 
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
 from lingt.app import exceptions
 from lingt.ui.common.messagebox import MessageBox
@@ -64,8 +60,8 @@ class FileItemListTestCase(unittest.TestCase):
         dummy_item = fileitemlist.LingExFileItem(userVars)
 
     def test2_empty_list(self):
-        USERVAR_PREFIX = 'LTbc_'  # LinguisticTools Bulk Conversion vars
-        userVars = UserVars(USERVAR_PREFIX, self.unoObjs.document, logger)
+        userVars = UserVars(
+            Prefix.BULK_CONVERSION, self.unoObjs.document, logger)
         itemlist = fileitemlist.FileItemList(
             fileitemlist.BulkFileItem, userVars)
         self.assertEqual(len(itemlist), 0)
@@ -80,8 +76,8 @@ class FileItemListTestCase(unittest.TestCase):
         self.assertEqual(cm.exception.msg, "Please select a file in the list.")
 
     def test3_add_items(self):
-        USERVAR_PREFIX = 'LTbc_'  # LinguisticTools Bulk Conversion vars
-        userVars = UserVars(USERVAR_PREFIX, self.unoObjs.document, logger)
+        userVars = UserVars(
+            Prefix.BULK_CONVERSION, self.unoObjs.document, logger)
         itemlist = fileitemlist.FileItemList(
             fileitemlist.BulkFileItem, userVars)
         item = add_new_item(itemlist, "a.txt")
@@ -118,8 +114,8 @@ class FileItemListTestCase(unittest.TestCase):
         self.assertEqual(itemlist[-1].filepath, "c.txt")
 
     def test4_uservars(self):
-        USERVAR_PREFIX = 'LTbc_'  # LinguisticTools Bulk Conversion vars
-        userVars = UserVars(USERVAR_PREFIX, self.unoObjs.document, logger)
+        userVars = UserVars(
+            Prefix.BULK_CONVERSION, self.unoObjs.document, logger)
         itemlist = fileitemlist.FileItemList(
             fileitemlist.BulkFileItem, userVars)
         add_new_item(itemlist, "a.txt")

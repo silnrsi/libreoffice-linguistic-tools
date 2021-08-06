@@ -1,12 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Aug 16, 2013 by Jim Kornelsen
-#
-# 09-Oct-15 JDK  Use python 3 string literals.
-# 10-Nov-15 JDK  Now askEach catches all messages.
-# 17-Nov-15 JDK  Reset direction user var at the end of test1.
-# 20-May-16 JDK  Move useDialog definitions out of for loops.
-
 # pylint: disable=no-self-use
 
 """
@@ -164,7 +156,6 @@ class DataConvTestCase(unittest.TestCase):
         oVC.gotoStart(False)
         oVC.goRight(FORMAT_AT_INDEX, False)
         oVC.goRight(1, True)  # select
-        styleFonts = styles.StyleFonts(self.unoObjs)
         fontName = testutil.getDefaultFont(data.fontType)
         self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
         fontDef = styles.FontDefStruct(

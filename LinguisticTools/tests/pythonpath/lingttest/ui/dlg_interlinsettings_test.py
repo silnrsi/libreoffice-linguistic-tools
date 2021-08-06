@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created 27-Oct-2010 by Jim Kornelsen
-#
-# 11-May-13 JDK  Use testutil instead of inspection code here.
-# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 import logging
 import unittest
@@ -12,11 +7,11 @@ import os
 from lingttest.utils import testutil
 from lingttest.utils.testutil import MyActionEvent, MyTextEvent
 
-from lingt.access.writer.uservars import UserVars
-from lingt.ui.comp.gramsettings import DlgGramSettings
+from lingt.access.writer.uservars import Prefix, UserVars
+from lingt.ui.comp.interlinsettings import DlgInterlinSettings
 from lingt.utils import util
 
-logger = logging.getLogger("lingttest.dlg_gramsettings_test")
+logger = logging.getLogger("lingttest.dlg_interlinsettings_test")
 
 def getSuite():
     suite = unittest.TestSuite()
@@ -27,13 +22,13 @@ def getSuite():
             'test4_interlinLines',
             'test5_fileList',
         ):
-        suite.addTest(DlgGramSettingsTestCase(method_name))
+        suite.addTest(DlgInterlinSettingsTestCase(method_name))
     return suite
 
-class DlgGramSettingsTestCase(unittest.TestCase):
+class DlgInterlinSettingsTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
         unittest.TestCase.__init__(self, testCaseName)
-        testutil.modifyClass_showDlg(DlgGramSettings)
+        testutil.modifyClass_showDlg(DlgInterlinSettings)
 
     @classmethod
     def setUpClass(cls):
@@ -42,18 +37,17 @@ class DlgGramSettingsTestCase(unittest.TestCase):
         testutil.blankWriterDoc(unoObjs)
 
     def setUp(self):
-        logger.debug("DlgGramSettingsTestCase setUp()")
+        logger.debug("DlgInterlinSettingsTestCase setUp()")
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTg_"  # for LinguisticTools Grammar variables
         self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
-        self.dlg = DlgGramSettings(self.unoObjs)
+            Prefix.INTERLINEAR, self.unoObjs.document, logger)
+        self.dlg = DlgInterlinSettings(self.unoObjs)
 
     def test1_enableDisable(self):
         # For this test, dialog should be set to its default settings.
         def useDialog(dummy_innerSelf):
             pass
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.dlgCtrls.enableDisable()
         self.assertEqual(
@@ -67,7 +61,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkPOS_Line.setState(1)
             innerSelf.dlgCtrls.chkOuterTable.setState(0)
             innerSelf.dlgCtrls.optTables.setState(0)
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.dlgCtrls.enableDisable()
         self.assertEqual(self.dlg.dlgCtrls.chkMorphLine1.getState(), 0)
@@ -88,7 +82,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkPOS_Line.setState(0)
             innerSelf.dlgCtrls.chkOuterTable.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.dlgCtrls.enableDisable()
         self.assertEqual(
@@ -108,7 +102,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkMorphLine2.setState(1)
             innerSelf.dlgCtrls.chkPOS_Line.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.assertEqual(self.dlg.dlgCtrls.chkPOS_Line.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.chkWordLine2.getState(), 1)
@@ -122,7 +116,7 @@ class DlgGramSettingsTestCase(unittest.TestCase):
     def test5_fileList(self):
         def useDialog(dummy_innerSelf):
             pass
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.assertEqual(self.dlg.dlgCtrls.listboxFiles.getItemCount(), 0)
         filepath = os.path.join(util.TESTDATA_FOLDER, "testText1.xml")

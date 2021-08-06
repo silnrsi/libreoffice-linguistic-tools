@@ -1,13 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 19 2012 by Jim Kornelsen
-#
-# 26-Feb-13 JDK  Added PART field type.
-# 18-Apr-13 JDK  Fixed bug: setIsCorrect() should set value, not return it.
-# 16-Jul-15 JDK  Moved static fromStringList() into spellingcomparisons.
-# 17-Jul-15 JDK  Use OrderedDict for ColumnOrder class.
-# 15-Aug-15 JDK  Use Tribool for three-way value.
-# 27-Aug-15 JDK  Added cleanupUserVars().
 
 """
 Data structures used by other parts of the application.
@@ -221,7 +212,7 @@ class WhatToGrab(Syncable):
     WHOLE_DOC = 'whole'  # possible value for whichOne when grabType is PART
     LINGEX_DICT = dict(
         lingex_structs.LingPhonExample.GRAB_FIELDS +
-        lingex_structs.LingGramExample.GRAB_FIELDS)
+        lingex_structs.LingInterlinExample.GRAB_FIELDS)
 
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)

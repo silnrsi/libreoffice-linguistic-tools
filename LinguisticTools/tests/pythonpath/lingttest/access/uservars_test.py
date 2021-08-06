@@ -1,18 +1,11 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created February 6 2010 by Jim Kornelsen
-#
-# 23-Oct-10 JDK  Use unittest.
-# 23-Apr-13 JDK  UserVars is now in Access layer.
-# 28-Sep-15 JDK  Added getSuite().
-# 23-Jul-20 JDK  Test Calc and Draw as well.
 
 import logging
 import unittest
 
 from lingttest.utils import testutil
 
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 
 logger = logging.getLogger("lingttest.uservars_test")
 
@@ -26,6 +19,9 @@ def getSuite():
     return suite
 
 class UserVarsTestCase(unittest.TestCase):
+    def __init__(self, testCaseName):
+        unittest.TestCase.__init__(self, testCaseName)
+        self.unoObjs = None
 
     def testWriter(self):
         testutil.blankWriterDoc()
@@ -43,9 +39,8 @@ class UserVarsTestCase(unittest.TestCase):
         self.testUserVars()
 
     def testUserVars(self):
-        USERVAR_PREFIX = "Test_"  # variables for testing
         userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+            Prefix.TESTING, self.unoObjs.document, logger)
         userVars.store("TestVar_1", "hamburger")
         result = userVars.get("TestVar_1")
         self.assertEqual(result, "hamburger")

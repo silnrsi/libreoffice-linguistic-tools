@@ -1,30 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Jan 21 2010 by Jim Kornelsen
-#
-# 25-Jan-10 JDK  Use frames like FieldWorks interlinear, instead of tables.
-# 01-Feb-10 JDK  List of files.  Option for frames or tables.
-# 02-Mar-10 JDK  Set complex font name.
-# 10-Mar-10 JDK  Use list of objects for file list.
-# 18-Mar-10 JDK  Optionally don't insert outer table or separate morph columns.
-# 28-Mar-10 JDK  Remove text row limit.
-# 30-Mar-10 JDK  Option for orthographic line.
-# 31-Mar-10 JDK  Add localization.
-# 01-Apr-10 JDK  Free translation in quotes.  Option for POS above gloss.
-# 15-Sep-10 JDK  Divide into packages.
-# 30-Sep-10 JDK  Option for orthographic morpheme line.
-# 08-Oct-10 JDK  Set SFM file defaults.
-# 26-Oct-10 JDK  Set bottom margin on the table rather than POS or gloss.
-# 28-Mar-11 JDK  Use multiline labels instead of a second label.
-# 09-Apr-13 JDK  Use only item in list even if not selected.
-# 14-May-13 JDK  Rename DlgSettings to unique name for assimilation.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 09-Sep-15 JDK  Set prefix when another item in list is selected.
-# 22-Sep-15 JDK  Verify checkbox user variable list.
-# 08-Dec-15 JDK  Checkbox to use segnum as ref number.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-# 22-Jun-20 JDK  Make segnum box have opposite meaning - uncheck to read.
-# 24-Jun-20 JDK  Verify data before closing.
 
 """
 Dialog for settings to import interlinear examples for grammar write-ups.
@@ -41,20 +15,20 @@ from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
 
 from lingt.access.writer import uservars
-from lingt.access.writer.styles import GrammarStyles
+from lingt.access.writer.styles import InterlinStyles
 from lingt.app import exceptions
 from lingt.app.data import fileitemlist
 from lingt.app.data import lingex_structs
 from lingt.app.svc import lingexamples
-from lingt.app.svc.lingexamples import EXTYPE_GRAMMAR
+from lingt.app.svc.lingexamples import EXTYPE_INTERLINEAR
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common import filepicker
 from lingt.ui.common.messagebox import MessageBox
-from lingt.ui.common.dlgdefs import DlgGrammarSettings as _dlgdef
+from lingt.ui.common.dlgdefs import DlgInterlinSettings as _dlgdef
 from lingt.utils import util
 
-logger = logging.getLogger("lingt.ui.dlggramsettings")
+logger = logging.getLogger("lingt.ui.dlginterlinsettings")
 
 
 def showDlg(ctx=uno.getComponentContext()):
@@ -65,21 +39,21 @@ def showDlg(ctx=uno.getComponentContext()):
     unoObjs = util.UnoObjs(ctx)
     logger.debug("got UNO context")
 
-    dlg = DlgGramSettings(unoObjs)
+    dlg = DlgInterlinSettings(unoObjs)
     dlg.showDlg()
 
-class DlgGramSettings:
+class DlgInterlinSettings:
     """Main class for this dialog."""
 
     def __init__(self, unoObjs):
         self.unoObjs = unoObjs
         self.userVars = uservars.UserVars(
-            uservars.Prefix.GRAMMAR, unoObjs.document, logger)
+            uservars.Prefix.INTERLINEAR, unoObjs.document, logger)
         self.msgbox = MessageBox(unoObjs)
         self.fileItems = fileitemlist.FileItemList(
             fileitemlist.LingExFileItem, self.userVars)
         self.selectedIndex = -1  # position in listboxFiles
-        self.app = lingexamples.ExServices(EXTYPE_GRAMMAR, unoObjs)
+        self.app = lingexamples.ExServices(EXTYPE_INTERLINEAR, unoObjs)
         self.dlgCtrls = None
         self.evtHandler = None
         self.dlgClose = None
@@ -243,12 +217,12 @@ class DlgGramSettings:
         ## Modify document settings
 
         try:
-            grammarStyles = GrammarStyles(self.unoObjs, self.userVars)
-            grammarStyles.createStyles()
-            uservars.GrammarTags(self.userVars).loadUserVars()
+            interlinStyles = InterlinStyles(self.unoObjs, self.userVars)
+            interlinStyles.createStyles()
+            uservars.InterlinTags(self.userVars).loadUserVars()
 
             ctrlText = self.dlgCtrls.txtNumColWidth.getText()
-            grammarStyles.resizeNumberingCol(
+            interlinStyles.resizeNumberingCol(
                 ctrlText, self.dlgCtrls.origNumColWidth)
         except (exceptions.ChoiceProblem, exceptions.StyleError) as exc:
             self.msgbox.displayExc(exc)

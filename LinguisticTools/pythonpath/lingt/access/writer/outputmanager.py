@@ -1,17 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 23-Sep-10 JDK  Orthography is at word rather than sentence level.
-# 01-Oct-10 JDK  First check if styles exist in order to avoid silent crash.
-# 29-Oct-10 JDK  When replacing #ref, don't insert an extra newline.
-# 13-Nov-10 JDK  Modified error message.
-# 12-Nov-12 JDK  Move grammar and phonology into subclasses.
-# 11-Mar-13 JDK  Use setPropertyToDefault instead of setting to "Default".
-# 11-Apr-13 JDK  Wait until after inserting example to delete newline.
-# 17-Apr-13 JDK  setAllPropertiesToDefault() doesn't work for styles.
-# 18-Apr-13 JDK  Remember what the styles of the next line were set to.
-# 06-May-13 JDK  Remember fonts too.
 
 """
 Sends output to Writer.
@@ -197,7 +184,7 @@ class InterlinMgr(ExampleManager):
         self.config = config
 
     def insertEx(self, ex, updatingEx):
-        """ex is of type LingGramExample"""
+        """ex is of type LingInterlinExample"""
         oVC = self.unoObjs.viewcursor   # shorthand variable name
         self.outerTable = OuterTable(
             self.unoObjs, self.config, self.exnumRanges, updatingEx,
@@ -248,7 +235,7 @@ class InterlinMgr(ExampleManager):
         logger.debug("Adding %d morphemes.", len(word.morphList))
         isFirstMorph = True
         for morph in word.morphList:
-            wordOneMorph = lingex_structs.LingGramWord()
+            wordOneMorph = lingex_structs.LingInterlinWord()
             wordOneMorph.text1 = word.text1
             wordOneMorph.text2 = word.text2
             wordOneMorph.morph = morph

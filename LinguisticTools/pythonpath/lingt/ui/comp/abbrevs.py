@@ -1,19 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Mar 11 2010 by Jim Kornelsen
-#
-# 31-Mar-10 JDK  Add localization.
-# 07-Apr-10 JDK  Clicking Add New starts with a blank item.
-# 09-Sep-10 JDK  Always set a combo box default value.
-# 15-Sep-10 JDK  Divided into packages.
-# 20-Sep-10 JDK  Keep occurrences count unless abbrev is changed.
-# 29-Oct-10 JDK  Use unique lists rather than sets.
-# 09-Apr-13 JDK  Skip whitespace results when searching.
-# 15-Apr-13 JDK  Distinguish between underlying and display style names.
-# 12-Jul-13 JDK  Abbrevs search should not allow empty style name.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 01-Sep-15 JDK  Update current abbrev before another is selected.
-# 08-Sep-15 JDK  Fixed bug: call viewAbbrev() in refreshListAndSelectItem().
 
 """
 Insert a list of abbreviations used in the document.
@@ -389,9 +374,9 @@ class DlgControls:
         displayNames = [dispName for dispName, name in styleNames]
         selectedValue = userVars.get("SearchParaStyle")
         if selectedValue == "":
-            userVarsGrammar = UserVars(
-                Prefix.GRAMMAR, self.unoObjs.document, logger)
-            selectedValue = userVarsGrammar.get("StyleName_Gloss")
+            userVarsInterlin = UserVars(
+                Prefix.INTERLINEAR, self.unoObjs.document, logger)
+            selectedValue = userVarsInterlin.get("StyleName_Gloss")
         dutil.fill_list_ctrl(
             self.cmbxSearchParaStyle, displayNames, selectedValue)
 

@@ -1,11 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created 30-Nov-12 by Jim Kornelsen
-#
-# 25-Mar-13 JDK  Fixed problem: don't call goToAfterEx() until cursor is at
-#                ref number. Also enumerate content to check results.
-# 23-Apr-13 JDK  Remove table from main doc when finished, so that next
-#                test in suite can pass.
 
 import copy
 import logging
@@ -16,7 +9,7 @@ from lingttest.utils import testutil
 from lingt.access.writer import styles
 from lingt.access.writer.ex_updater import ExUpdater
 from lingt.access.writer.outputmanager import InterlinMgr
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
 from lingt.utils import util
 
@@ -43,10 +36,9 @@ class ExUpdaterTestCase(unittest.TestCase):
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.exnumRanges = []
-        USERVAR_PREFIX = "LTg_"    # for Grammar
         self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
-        self.styles = styles.GrammarStyles(self.unoObjs, self.userVars)
+            Prefix.INTERLINEAR, self.unoObjs.document, logger)
+        self.styles = styles.InterlinStyles(self.unoObjs, self.userVars)
         self.styles.createStyles()
         self.baseConfig = lingex_structs.InterlinOutputSettings(None)
         self.baseConfig.makeOuterTable = True
@@ -69,7 +61,7 @@ class ExUpdaterTestCase(unittest.TestCase):
         config = copy.copy(self.baseConfig)
         exManager = InterlinMgr(self.unoObjs, self.styles)
         exManager.setConfig(config)
-        ex = lingex_structs.LingGramExample()
+        ex = lingex_structs.LingInterlinExample()
         ex.refText = "WORD01"
         ex.freeTrans = "ft1"
         ex.appendMorph("m1orth", "m1text", "m1Gloss", "m1pos")

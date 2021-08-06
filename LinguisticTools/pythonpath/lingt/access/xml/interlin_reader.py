@@ -1,19 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 25-Oct-12 JDK  FileList in self.config contains FileItem elements.
-# 11-Apr-13 JDK  Generate ref IDs when harvesting word list data.
-# 25-Apr-13 JDK  Use // instead of / for integers, better for Python 3.
-# 07-Jul-15 JDK  Specific arguments instead of generic config object.
-# 16-Sep-15 JDK  Fixed bug in handleWord(): continue instead of return.
-# 08-Dec-15 JDK  Optionally use segnum as ref number.
-# 12-Dec-15 JDK  Fixed bug: Add Flextext suggestion only if ref number.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-# 22-Feb-17 JDK  SFM Option for either word line 1 or 2 as the baseline.
-# 04-Mar-17 JDK  Added class ToolboxBaseline.
-# 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
-# 24-Jun-20 JDK  Remember duplicate ref numbers.
 
 """
 Read interlinear examples, typically used for grammar writeups.
@@ -25,7 +10,7 @@ import xml.dom.minidom
 import xml.parsers.expat
 
 from lingt.access.common.file_reader import FileReader
-from lingt.access.writer.uservars import GrammarTags
+from lingt.access.writer.uservars import InterlinTags
 from lingt.access.xml import xmlutil
 from lingt.app import exceptions
 from lingt.app.data import lingex_structs
@@ -62,7 +47,7 @@ class InterlinReader(FileReader):
 
     def _initData(self):
         # Dictionary of examples keyed by lowercase ref number.
-        # Examples are of type lingex_structs.LingGramExample.
+        # Examples are of type lingex_structs.LingInterlinExample.
         self.data = dict()
 
     def _verifyDataFound(self):
@@ -113,11 +98,11 @@ class InterlinReader(FileReader):
         self.read()
         words = []
         logger.debug("Grabbing %s thing(s).", len(thingsToGrab))
-        for gramEx in self.data.values():
+        for interlinEx in self.data.values():
             for whatToGrab in thingsToGrab:
                 if whatToGrab.grabType == wordlist_structs.WhatToGrab.FIELD:
                     try:
-                        newList = gramEx.grabList(whatToGrab.whichOne)
+                        newList = interlinEx.grabList(whatToGrab.whichOne)
                     except exceptions.LogicError as exc:
                         self.msgbox.displayExc(exc)
                         return words
@@ -178,7 +163,7 @@ class ToolboxXML:
         self.config = mainReader.config
         self.generateRefIDs = mainReader.generateRefIDs
         self.prefix = mainReader.prefix
-        self.fieldTags = GrammarTags(mainReader.userVars).loadUserVars()
+        self.fieldTags = InterlinTags(mainReader.userVars).loadUserVars()
         self.ex = None  # the current example
 
     def read(self):
@@ -187,7 +172,7 @@ class ToolboxXML:
         sentences = self.dom.getElementsByTagName(
             self.fieldTags['ref'] + "Group")
         for sentence in sentences:
-            self.ex = lingex_structs.LingGramExample()
+            self.ex = lingex_structs.LingInterlinExample()
             self.handleSentence(sentence)
             if self.ex.refText:
                 key = self.ex.refText.lower()
@@ -227,7 +212,7 @@ class ToolboxXML:
         morphemes = word.getElementsByTagName(self.baseline.morph_group)
         mergedMorphemes = MergedMorphemes()
         for morpheme in morphemes:
-            morph = lingex_structs.LingGramMorph()
+            morph = lingex_structs.LingInterlinMorph()
             morph.text1 = xmlutil.getTextByTagName(
                 morpheme, self.fieldTags['morph1'])
             morph.text2 = xmlutil.getTextByTagName(
@@ -259,7 +244,7 @@ class ToolboxBaseline:
         self.msgbox = mainReader.msgbox
         self.userVars = mainReader.userVars
         self.config = mainReader.config
-        self.fieldTags = GrammarTags(mainReader.userVars).loadUserVars()
+        self.fieldTags = InterlinTags(mainReader.userVars).loadUserVars()
         self.data = mainReader.data
         self.word_group = ''
         self.morph_group = ''
@@ -306,7 +291,7 @@ def singleMorphemeWord(word):
     """For words consisting of a single morpheme, get word-level
     attributes instead of morpheme-level.
     """
-    morph = lingex_structs.LingGramMorph()
+    morph = lingex_structs.LingInterlinMorph()
     items = word.getElementsByTagName("item")
     for item in items:
         if item.attributes is None:
@@ -341,7 +326,7 @@ class FieldworksXML:
             sentences = paragraph.getElementsByTagName("phrase")
             refTextSent = 1
             for sentence in sentences:
-                self.ex = lingex_structs.LingGramExample()
+                self.ex = lingex_structs.LingInterlinExample()
                 if not self.use_segnum:
                     self.ex.refText = "%s" % refTextPara
                     if sentences.length > 1:
@@ -418,7 +403,7 @@ class FieldworksXML:
         mergedMorphemes = MergedMorphemes()
         for morpheme in morphemes:
             items = morpheme.getElementsByTagName("item")
-            morph = lingex_structs.LingGramMorph()
+            morph = lingex_structs.LingInterlinMorph()
             is_first_text = True
             for item in items:
                 if item.attributes is None:
@@ -452,15 +437,15 @@ class FieldworksXML:
                     self.config.get_showMorphemeBreaks()))
 
 
-class MergedMorphemes(lingex_structs.LingGramMorph):
+class MergedMorphemes(lingex_structs.LingInterlinMorph):
     """Merge morphemes into a single dash-separated string."""
     def __init__(self):
-        lingex_structs.LingGramMorph.__init__(self)
+        lingex_structs.LingInterlinMorph.__init__(self)
 
     def add(self, morph):
         """
         Saves the values for later.
-        :param morph(type lingex_structs.LingGramMorph):
+        :param morph(type lingex_structs.LingInterlinMorph):
         """
         for attr_name in ('text1', 'text2', 'gloss'):
             self._addTo(attr_name, getattr(morph, attr_name))
@@ -482,7 +467,7 @@ class MergedMorphemes(lingex_structs.LingGramMorph):
         setattr(self, attrName, attrVal)
 
     def getMorph(self, showMorphemeBreaks):
-        """Return type is subclass of lingex_structs.LingGramMorph."""
+        """Return type is subclass of lingex_structs.LingInterlinMorph."""
         if not showMorphemeBreaks:
             self.text1 = ""
             self.text2 = ""

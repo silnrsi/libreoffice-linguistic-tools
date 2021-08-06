@@ -1,16 +1,8 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created May 6, 2013 by Jim Kornelsen
-#
-# 15-Sep-15 JDK  Use Latin-1 encoding for this file.
-# 28-Sep-15 JDK  Added getSuite().
-# 21-May-16 JDK  Move useDialog definitions out of for loops.
-# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-
 # pylint: disable=no-self-use
 
 """
-Test all features accessed by Grammar Settings dialog controls.
+Test all features accessed by Interlinear Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
 import collections
@@ -23,15 +15,16 @@ from lingttest.utils.testutil import (
     MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
 
 from lingt.access.writer import styles
-from lingt.access.writer.uservars import GrammarTags
+from lingt.access.writer.uservars import InterlinTags
+from lingt.app.svc.lingexamples import EXTYPE_INTERLINEAR
 from lingt.ui.comp.grabex import DlgGrabExamples
-from lingt.ui.comp.gramsettings import DlgGramSettings
+from lingt.ui.comp.interlinsettings import DlgInterlinSettings
 from lingt.utils import util
 
-logger = logging.getLogger("lingttest.grammar_test")
+logger = logging.getLogger("lingttest.interlin_test")
 
 def getSuite():
-    for klass in DlgGramSettings, DlgGrabExamples:
+    for klass in DlgInterlinSettings, DlgGrabExamples:
         testutil.modifyClass_showDlg(klass)
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
@@ -42,10 +35,10 @@ def getSuite():
             'test4_prefixAndColWidth',
             'test5_updating',
         ):
-        suite.addTest(GrammarTestCase(method_name))
+        suite.addTest(InterlinTestCase(method_name))
     return suite
 
-class GrammarTestCase(unittest.TestCase):
+class InterlinTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
         unittest.TestCase.__init__(self, testCaseName)
         testutil.verifyRegexMethods(self)
@@ -59,14 +52,14 @@ class GrammarTestCase(unittest.TestCase):
         self.dlgGrabEx = None
 
     def runDlgSettings(self, dispose):
-        self.dlgSettings = DlgGramSettings(self.unoObjs)
+        self.dlgSettings = DlgInterlinSettings(self.unoObjs)
         self.dlgSettings.showDlg()
         if dispose:
             testutil.do_dispose(self.dlgSettings)
             self.dlgSettings = None
 
     def runDlgGrabEx(self, dispose):
-        self.dlgGrabEx = DlgGrabExamples("grammar", self.unoObjs)
+        self.dlgGrabEx = DlgGrabExamples(EXTYPE_INTERLINEAR, self.unoObjs)
         self.dlgGrabEx.showDlg()
         if dispose:
             testutil.do_dispose(self.dlgGrabEx)
@@ -93,7 +86,7 @@ class GrammarTestCase(unittest.TestCase):
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         for dataSet in dataSets:
             useDialog = self._test1_make_useDialog(dataSet)
-            DlgGramSettings.useDialog = useDialog
+            DlgInterlinSettings.useDialog = useDialog
             DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
             self.runDlgSettings(True)
             self.runDlgGrabEx(True)
@@ -135,8 +128,8 @@ class GrammarTestCase(unittest.TestCase):
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
         for dataSet in dataSets:
-            useDialog = self._test2_make_useDialog_gramSettings(dataSet)
-            DlgGramSettings.useDialog = useDialog
+            useDialog = self._test2_make_useDialog_interlinSettings(dataSet)
+            DlgInterlinSettings.useDialog = useDialog
             self.runDlgSettings(True)
             for action in 'inserting', 'replacing':
                 refNum = "1.1"
@@ -145,7 +138,7 @@ class GrammarTestCase(unittest.TestCase):
                 DlgGrabExamples.useDialog = useDialog
                 self._test2_do_grabExamples(dataSet, action, refNum)
 
-    def _test2_make_useDialog_gramSettings(self, data):
+    def _test2_make_useDialog_interlinSettings(self, data):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "FWtextPigFox.xml")
@@ -291,7 +284,7 @@ class GrammarTestCase(unittest.TestCase):
             oVC.goUp(1, False)
 
     def test3_checkboxes(self):
-        """Test most checkboxes in Grammar Settings.
+        """Test most checkboxes in Interlinear Settings.
         This may ignore some controls that have already been sufficiently
         tested in test2_surroundings() or other places.
         """
@@ -302,7 +295,7 @@ class GrammarTestCase(unittest.TestCase):
                         'psAbove', 'numbering']:
             for setVal in True, False:
                 useDialog = self._test3_make_useDialog(setting, setVal)
-                DlgGramSettings.useDialog = useDialog
+                DlgInterlinSettings.useDialog = useDialog
                 self.runDlgSettings(True)
                 refNum = "Hunt01"
                 DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
@@ -319,7 +312,7 @@ class GrammarTestCase(unittest.TestCase):
                     MyActionEvent("FileRemove"))
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("FileAdd"))
-            TAG_VARS = dict(GrammarTags.TAG_VARS)
+            TAG_VARS = dict(InterlinTags.TAG_VARS)
             innerSelf.userVars.store(TAG_VARS['word1'], 'or')
             innerSelf.userVars.store(TAG_VARS['word2'], 'tx')
             innerSelf.userVars.store(TAG_VARS['morph1'], 'mbor')
@@ -432,7 +425,7 @@ class GrammarTestCase(unittest.TestCase):
         self.prevTableCount = newTableCount
 
     def test4_prefixAndColWidth(self):
-        """Test prefix and column width in Grammar Settings."""
+        """Test prefix and column width in Interlinear Settings."""
         testutil.blankWriterDoc(self.unoObjs)
         Test4Data = collections.namedtuple('Test4Data', [
             'refNum', 'numFrames', 'firstWord', 'ft'])
@@ -444,8 +437,8 @@ class GrammarTestCase(unittest.TestCase):
             Test4Data(
                 "BP1.S1", 11, u"o\u027eu",
                 u" \u200e\u200eIn a village there was a headman.")]
-        useDialog = self._test4_make_useDialog_gramSettingsA()
-        DlgGramSettings.useDialog = useDialog
+        useDialog = self._test4_make_useDialog_interlinSettingsA()
+        DlgInterlinSettings.useDialog = useDialog
         self.runDlgSettings(True)
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
@@ -462,7 +455,7 @@ class GrammarTestCase(unittest.TestCase):
             self.prevFrameCount = newFrameCount
         self._test4_verify_resize(dataSets)
 
-    def _test4_make_useDialog_gramSettingsA(self):
+    def _test4_make_useDialog_interlinSettingsA(self):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "Sena Int.flextext")
@@ -502,7 +495,7 @@ class GrammarTestCase(unittest.TestCase):
                     innerSelf.dlgCtrls.txtNumColWidth.setText(RESIZE_PERCENT)
                     innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
 
-                DlgGramSettings.useDialog = useDialog
+                DlgInterlinSettings.useDialog = useDialog
                 self.runDlgSettings(True)
             oVC.goLeft(2, False)  # move into first table after ref num
             ft = dataSets[1].ft
@@ -551,7 +544,7 @@ class GrammarTestCase(unittest.TestCase):
 
     def _test5_insert_original_examples(self, dataSets):
         useDialog = self._test5_make_useDialoga()
-        DlgGramSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = useDialog
         self.surroundNum = 0
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
@@ -609,11 +602,11 @@ class GrammarTestCase(unittest.TestCase):
 
     def _test5_update_examples(self):
 
-        def useDialog_gramSettings(innerSelf):
+        def useDialog_interlinSettings(innerSelf):
             innerSelf.dlgCtrls.optTables.setState(1)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
 
-        DlgGramSettings.useDialog = useDialog_gramSettings
+        DlgInterlinSettings.useDialog = useDialog_interlinSettings
         self.runDlgSettings(True)
 
         def useDialog_grabExamples(innerSelf):
@@ -683,7 +676,7 @@ class GrammarTestCase(unittest.TestCase):
             tableNum += 2
 
     def verifyFrame(self, whichFrame, textExpected):
-        """After gram ex is created, verify text content of the text frame.
+        """After interlin ex is created, verify text content of the text frame.
         whichFrame starts at 1 for the first frame created for an example.
         """
         exStartIndex = self.prevFrameCount - 1  # make it 0-based
@@ -697,7 +690,7 @@ class GrammarTestCase(unittest.TestCase):
 
     def verifyTable(self, whichTable, col, row, textExpected):
         """
-        After gram ex is created, verify text content of table.
+        After interlin ex is created, verify text content of table.
         Will check the first row of the specified column.
         whichTable starts at 1 for the first table created for an example.
         """
@@ -712,8 +705,8 @@ class GrammarTestCase(unittest.TestCase):
         self.assertEqual(celltext, textExpected)
 
     def verifyTableHasCell(self, whichTable, whichCell, isExpected):
-        """After gram ex is created, verify that a table does or does not have
-        a specific column such as A1.
+        """After interlin ex is created, verify that a table does or does not
+        have a specific column such as A1.
         whichTable starts at 1 for the first table created for an example.
         """
         exStartIndex = self.prevTableCount - 1  # make it 0-based
@@ -727,7 +720,7 @@ class GrammarTestCase(unittest.TestCase):
             self.assertNotIn(whichCell, cellNames)
 
     def verifyFreeTrans(self, ftExpected, quoted):
-        """After gram ex is created, verify free translation."""
+        """After interlin ex is created, verify free translation."""
         oVC = self.unoObjs.viewcursor
         oVC.goLeft(2, False)  # move up to end of FT line
         oVC.goLeft(len(ftExpected), False)  # prepare for gotoStartOfLine
@@ -752,11 +745,11 @@ class GrammarTestCase(unittest.TestCase):
         logger.debug(util.funcName('begin'))
         fontDef = styles.FontDefStruct(
             "Latha", "Complex", styles.FONT_ORTH.fontSize)
-        grammarStyles = styles.GrammarStyles(self.unoObjs, userVars)
-        grammarStyles.createStyles()
-        logger.debug(util.funcName() + ": Created grammar styles.")
+        interlinStyles = styles.InterlinStyles(self.unoObjs, userVars)
+        interlinStyles.createStyles()
+        logger.debug(util.funcName() + ": Created interlinear styles.")
         styleFonts = styles.StyleFonts(
-            self.unoObjs, grammarStyles.styleNames)
+            self.unoObjs, interlinStyles.styleNames)
         styleFonts.setParaStyleWithFont(fontDef, styleKey="word2")
         styleFonts.setParaStyleWithFont(fontDef, styleKey="morph2")
 

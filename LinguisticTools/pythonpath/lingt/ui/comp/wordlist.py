@@ -1,11 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 25 2012 by Jim Kornelsen
-#
-# 26-Feb-13 JDK  Don't use copy.deepcopy() when changing settings.
-# 09-Apr-13 JDK  Use only item in list even if not selected.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 13-Feb-17 JDK  Normalize data.
 
 """
 Dialog to read from data files and create a word list in Calc.
@@ -233,7 +226,7 @@ class DlgWordList:
         self.columnOrder.storeUserVars()
         for fileItem in self.fileItems:
             if fileItem.filetype in PhonReader.supportedNames():
-                uservars.GrammarTags(self.userVars).loadUserVars()
+                uservars.InterlinTags(self.userVars).loadUserVars()
                 break
         for fileItem in self.fileItems:
             if fileItem.filetype in InterlinReader.supportedNames():

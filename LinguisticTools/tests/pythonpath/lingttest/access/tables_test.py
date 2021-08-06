@@ -1,8 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created October 23 2010 by Jim Kornelsen.
-#
-# 23-Apr-13 JDK  Clean up for further unit tests by removing big table.
 
 import logging
 import unittest
@@ -12,7 +8,7 @@ from lingttest.utils.testutil import PARAGRAPH_BREAK
 
 from lingt.access.writer import styles
 from lingt.access.writer import tables
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
 
 logger = logging.getLogger("lingttest.tables_test")
@@ -30,10 +26,9 @@ class TablesTestCase(unittest.TestCase):
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.exnumRanges = []
-        USERVAR_PREFIX = "LTg_"    # for Grammar
         self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
-        self.styles = styles.GrammarStyles(
+            Prefix.INTERLINEAR, self.unoObjs.document, logger)
+        self.styles = styles.InterlinStyles(
             self.unoObjs, self.userVars)
         self.config = lingex_structs.InterlinOutputSettings(None)
         self.config.makeOuterTable = True

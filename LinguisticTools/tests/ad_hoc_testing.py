@@ -1,6 +1,4 @@
 #-*- coding: Latin-1 -*-
-#
-# This file created October 25 2010 by Jim Kornelsen.
 
 """
 Use this to quickly run some code.
@@ -249,7 +247,7 @@ def displayAttrs():
 
     #xText = unoObjs.text
     #dlg = dutil.createDialog(
-    #    unoObjs, msgbox, "DlgGrammarSettings")
+    #    unoObjs, msgbox, "DlgInterlinSettings")
     #ctrl = dutil.getControl(dlg, "chkMorphemesSeparateCols")
 
     #xforms = unoObjs.document.getXForms()

@@ -1,11 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created 23-Oct-2010 by Jim Kornelsen
-#
-# 28-Sep-15 JDK  Added getSuite().
-# 11-Nov-15 JDK  Removed TestHelpersTestCase.setUp().
-# 09-Dec-15 JDK  Use .lower() instead of str.lower() for python 2.
-# 01-Mar-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 import os
 import logging
@@ -15,7 +8,7 @@ from lingttest.utils import testutil
 
 from lingt.access.xml import interlin_reader
 from lingt.access.xml import phon_reader
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
 from lingt.app.data.fileitemlist import InterlinInputSettings, LingExFileItem
 from lingt.utils import util
@@ -34,7 +27,7 @@ def getSuite():
             'testTbxOrth',
             'testFw',
             'testFlexText'):
-        suite.addTest(GramTestCase(method_name))
+        suite.addTest(InterlinTestCase(method_name))
     for method_name in (
             'testPhonFieldHelper',
             'testMergedMorphemes'):
@@ -45,9 +38,8 @@ class PhonTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTp_"  # LinguisticTools Phonology variables
         self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+            Prefix.PHONOLOGY, self.unoObjs.document, logger)
 
     def testPA(self):
         config = lingex_structs.PhonInputSettings(None)
@@ -132,13 +124,12 @@ class PhonTestCase(unittest.TestCase):
         self.userVars.store("SFMarker_Gloss", "") # reset
 
 
-class GramTestCase(unittest.TestCase):
+class InterlinTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTg_"  # Grammar
         self.userVars = UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+            Prefix.INTERLINEAR, self.unoObjs.document, logger)
 
     def testTbx(self):
         filepath = os.path.join(util.TESTDATA_FOLDER, "TbxIntHunt06.xml")
@@ -156,16 +147,16 @@ class GramTestCase(unittest.TestCase):
             xmlReader.get_filetype(filepath, xmlReader.dom), "toolbox")
 
         self.assertTrue("Hunt06".lower() in exampleDict)
-        gramEx = exampleDict["Hunt06".lower()]
-        self.assertEqual(gramEx.refText, "Hunt06")
+        interlinEx = exampleDict["Hunt06".lower()]
+        self.assertEqual(interlinEx.refText, "Hunt06")
         self.assertEqual(
-            gramEx.freeTrans,
+            interlinEx.freeTrans,
             '"Not so.  Tell him, "We should take along the sister\'s ' +
             'husband and go to the hill for hunting.\'" Only when he hunts ' +
             'they will go.')
-        self.assertEqual(len(gramEx.wordList), 13)
+        self.assertEqual(len(interlinEx.wordList), 13)
 
-        word1 = gramEx.wordList[0]
+        word1 = interlinEx.wordList[0]
         self.assertNotEqual(word1.text1, "")
         self.assertEqual(word1.text2, "")
         self.assertEqual(len(word1.morphList), 1)
@@ -175,7 +166,7 @@ class GramTestCase(unittest.TestCase):
         self.assertNotEqual(morph1.text1, "")
         self.assertEqual(morph1.text2, "")
 
-        word4 = gramEx.wordList[3]
+        word4 = interlinEx.wordList[3]
         self.assertEqual(len(word4.morphList), 2)
         morph1 = word4.morphList[0]
         self.assertEqual(morph1.gloss, "sister")
@@ -201,13 +192,13 @@ class GramTestCase(unittest.TestCase):
         xmlReader = interlin_reader.InterlinReader(
             self.unoObjs, self.userVars, config)
         exampleDict = xmlReader.read()
-        gramEx = exampleDict["Hunt06".lower()]
-        word1 = gramEx.wordList[0]
+        interlinEx = exampleDict["Hunt06".lower()]
+        word1 = interlinEx.wordList[0]
         self.assertNotEqual(word1.text2, "")
         morph1 = word1.morphList[0]
         self.assertNotEqual(morph1.text2, "")
 
-        word4 = gramEx.wordList[3]
+        word4 = interlinEx.wordList[3]
         self.assertNotEqual(word4.text2, "")
         morph1 = word4.morphList[0]
         self.assertNotEqual(morph1.text2, "")
@@ -239,14 +230,14 @@ class GramTestCase(unittest.TestCase):
         self.assertTrue(not "Prefix-2.1".lower() in exampleDict)
         self.assertTrue(not "Prefix-2.2".lower() in exampleDict)
 
-        gramEx = exampleDict["Prefix-1.2".lower()]
-        self.assertEqual(gramEx.refText, "Prefix-1.2")
+        interlinEx = exampleDict["Prefix-1.2".lower()]
+        self.assertEqual(interlinEx.refText, "Prefix-1.2")
         self.assertEqual(
-            gramEx.freeTrans,
+            interlinEx.freeTrans,
             u" \u200e\u200eIn his house he kept one pig and one fox ")
-        self.assertEqual(len(gramEx.wordList), 7)
+        self.assertEqual(len(interlinEx.wordList), 7)
 
-        word2 = gramEx.wordList[1]
+        word2 = interlinEx.wordList[1]
         self.assertNotEqual(word2.text1, "")
         self.assertEqual(word2.text2, "")
         self.assertEqual(len(word2.morphList), 2)
@@ -276,15 +267,15 @@ class GramTestCase(unittest.TestCase):
         self.assertTrue("ABC 1.2".lower() in exampleDict)
         self.assertTrue(not "ABC 2.1".lower() in exampleDict)
 
-        gramEx = exampleDict["ABC 1.2".lower()]
-        self.assertEqual(gramEx.refText, "ABC 1.2")
-        self.assertEqual(gramEx.freeTrans, "[1.2 ft]")
-        self.assertEqual(len(gramEx.wordList), 4)
+        interlinEx = exampleDict["ABC 1.2".lower()]
+        self.assertEqual(interlinEx.refText, "ABC 1.2")
+        self.assertEqual(interlinEx.freeTrans, "[1.2 ft]")
+        self.assertEqual(len(interlinEx.wordList), 4)
 
-        word1 = gramEx.wordList[0]
+        word1 = interlinEx.wordList[0]
         self.assertEqual(word1.text1, "Tonsene")
 
-        word2 = gramEx.wordList[2]
+        word2 = interlinEx.wordList[2]
         self.assertEqual(word2.text1, "yathu")
         self.assertEqual(word2.text2, "")
         morph2 = word2.morphList[1]
@@ -336,7 +327,7 @@ class TestHelpersTestCase(unittest.TestCase):
 
     def testMergedMorphemes(self):
         mm = interlin_reader.MergedMorphemes()
-        morph = lingex_structs.LingGramMorph()
+        morph = lingex_structs.LingInterlinMorph()
         morph.gloss = "ham"
         morph.pos = "n"
         mm.add(morph)
@@ -346,11 +337,11 @@ class TestHelpersTestCase(unittest.TestCase):
         self.assertEqual(morphMerged.pos, "n")
 
         mm = interlin_reader.MergedMorphemes()
-        morph = lingex_structs.LingGramMorph()
+        morph = lingex_structs.LingInterlinMorph()
         morph.gloss = "ham"
         morph.pos = "n"
         mm.add(morph)
-        morph = lingex_structs.LingGramMorph()
+        morph = lingex_structs.LingInterlinMorph()
         morph.gloss = "PL"
         morph.pos = "n.suff"
         mm.add(morph)
@@ -359,11 +350,11 @@ class TestHelpersTestCase(unittest.TestCase):
         self.assertEqual(morphMerged.pos, "n")
 
         mm = interlin_reader.MergedMorphemes()
-        morph = lingex_structs.LingGramMorph()
+        morph = lingex_structs.LingInterlinMorph()
         morph.gloss = "the"
         morph.pos = "DET"
         mm.add(morph)
-        morph = lingex_structs.LingGramMorph()
+        morph = lingex_structs.LingInterlinMorph()
         morph.gloss = "cow"
         morph.pos = "n"
         mm.add(morph)
