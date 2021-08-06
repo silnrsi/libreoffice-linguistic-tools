@@ -1,20 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 23-Sep-10 JDK  Orthography is at word rather than sentence level.
-# 01-Oct-10 JDK  First check if styles exist in order to avoid silent crash.
-# 04-Oct-10 JDK  Don't save numbering ranges when updating.
-# 20-Oct-10 JDK  Optimizing a tall inner table requires adjustable outer row.
-# 26-Oct-10 JDK  Set bottom margin on the table rather than POS or gloss.
-# 12-Aug-11 JDK  Fix problem where inner tables can get out of order.
-# 18-Apr-13 JDK  Don't delete final added newline of inner table.
-# 29-Jul-15 JDK  Refactor into two classes.
-# 18-Sep-15 JDK  Fixed bug: Should say not self.innerTable.doesWordFit().
-# 21-Sep-15 JDK  Make wordRow_col() work without any word rows.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-# 01-Mar-17 JDK  Fixed bugs caused by new way of incrementing rows.
-# 03-May-18 JDK  Align description of constant 2540 with LO code.
 
 """
 Create TextTables for interlinear data.
@@ -179,7 +163,7 @@ class InterlinTables:
 
     def _insertMorphColumnData(self, word, morph, morphRow_startCol, morph_i):
         """Add interlinear data for a single column."""
-        wordOneMorph = lingex_structs.LingGramWord()
+        wordOneMorph = lingex_structs.LingInterlinWord()
         wordOneMorph.text1 = word.text1
         wordOneMorph.text2 = word.text2
         wordOneMorph.morph = morph

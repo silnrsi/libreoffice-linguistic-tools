@@ -1,16 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 25 2012 by Jim Kornelsen
-#
-# 26-Feb-13 JDK  Add field "Whole Document" for Writer.
-# 13-Mar-13 JDK  Added Current Document button.
-# 09-Apr-13 JDK  Use only item in list even if not selected.
-# 15-Apr-13 JDK  Distinguish between underlying and display style names.
-# 24-Apr-13 JDk  Python 3 does not define xrange.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 24-Aug-15 JDK  Added userVars param.
-# 26-Oct-15 JDK  Fixed bug: Using key means no need to parse out "Column ".
-# 02-Nov-15 JDK  Always add blank entry in self.titles.
 
 """
 Dialog for settings to harvest words from data files.
@@ -115,7 +103,7 @@ class DlgWordListFile:
         if self.filetype in PhonReader.supportedNames():
             self.titles.extend(lingex_structs.LingPhonExample.GRAB_FIELDS)
         elif self.filetype in InterlinReader.supportedNames():
-            self.titles.extend(lingex_structs.LingGramExample.GRAB_FIELDS)
+            self.titles.extend(lingex_structs.LingInterlinExample.GRAB_FIELDS)
         elif self.filetype in DocReader.supportedNames():
             self.titles.append((WhatToGrab.WHOLE_DOC, "Whole Document"))
         elif self.filetype in CalcFileReader.supportedNames():

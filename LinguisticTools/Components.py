@@ -1,20 +1,5 @@
 #!/usr/bin/python
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 14 2010 by Jim Kornelsen
-#
-# 08-Jul-11 JDK  Added Script Practice.
-# 25-Oct-12 JDK  Added Word List and Spelling Changes.
-# 20-Mar-13 JDK  Removed Quick Spelling Replace.
-# 06-Apr-15 JDK  Added Bulk Conversion.
-# 13-Jul-15 JDK  Change reverseString to module-level function rather than
-#                class method.
-# 18-Jul-15 JDK  Change showDlg to lowercase.
-# 15-Aug-15 JDK  Rename packages and modules following PEP standard.
-# 18-Aug-15 JDK  Added logging for this level.
-# 05-Oct-15 JDK  Log exceptions with logger.exception().
-# 28-Jul-18 JDK  Added menu for Draw.
-# 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
 
 """
 Handles the events from the Linguistics menu, defined in Addons.xcu.
@@ -155,21 +140,21 @@ class PhonologyGrabExJob(JobWrapper):
         from lingt.ui.comp.grabex import showPhonologyDlg
         showPhonologyDlg(self.ctx)
 
-class GrammarSettingsJob(JobWrapper):
+class InterlinSettingsJob(JobWrapper):
     def __init__(self, ctx):
         JobWrapper.__init__(self, ctx)
 
     def showDialog(self):
-        from lingt.ui.comp.gramsettings import showDlg
+        from lingt.ui.comp.interlinsettings import showDlg
         showDlg(self.ctx)
 
-class GrammarGrabExJob(JobWrapper):
+class InterlinGrabExJob(JobWrapper):
     def __init__(self, ctx):
         JobWrapper.__init__(self, ctx)
 
     def showDialog(self):
-        from lingt.ui.comp.grabex import showGrammarDlg
-        showGrammarDlg(self.ctx)
+        from lingt.ui.comp.grabex import showInterlinDlg
+        showInterlinDlg(self.ctx)
 
 class AbbreviationsJob(JobWrapper):
     def __init__(self, ctx):
@@ -298,12 +283,12 @@ g_ImplementationHelper.addImplementation(
     "name.JimK.LinguisticTools.PhonologyGrabExamples",
     ("com.sun.star.task.Job",),)
 g_ImplementationHelper.addImplementation(
-    GrammarSettingsJob,
-    "name.JimK.LinguisticTools.GrammarSettings",
+    InterlinSettingsJob,
+    "name.JimK.LinguisticTools.InterlinSettings",
     ("com.sun.star.task.Job",),)
 g_ImplementationHelper.addImplementation(
-    GrammarGrabExJob,
-    "name.JimK.LinguisticTools.GrammarGrabExamples",
+    InterlinGrabExJob,
+    "name.JimK.LinguisticTools.InterlinGrabExamples",
     ("com.sun.star.task.Job",),)
 g_ImplementationHelper.addImplementation(
     AbbreviationsJob,

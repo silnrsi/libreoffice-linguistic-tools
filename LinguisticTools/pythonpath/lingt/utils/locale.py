@@ -1,16 +1,5 @@
 # -*- coding: Latin-1 -*-
 # pylint: disable=too-many-lines
-#
-# This file created Sept 14 2010 by Jim Kornelsen
-#
-# 13-Nov-10 JDK  Updated French translations for 1.0 release.
-# 01-Apr-11 JDK  Added Spanish.  Localize dynamic labels and status messages.
-# 22-Apr-11 JDK  Strings need to be unicode to handle accents correctly.
-# 28-Oct-11 JDK  Finished Spanish and French for 1.2 release.
-# 27-Feb-13 JDK  Can't modify dict in loop in python 3.3
-# 11-Mar-13 JDK  Remove "Default" (use underlying name "Standard" instead).
-# 08-Mar-17 JDK  Spanish and French for 3.0 release.
-# 21-Jul-20 JDK  Translations for 4.0 release
 
 """
 Handle localization of messages into French and Spanish.
@@ -288,11 +277,11 @@ class Locale:
             'fr' :
             "Obtenir des exemples de phonologie",
         },
-        "Get Interlinear Grammar Examples" : {
+        "Get Interlinear Examples" : {
             'es' :
-            "Obtener ejemplos de gramática",
+            "Obtener ejemplos interlineales",
             'fr' :
-            "Obtenir des exemples de grammaire",
+            "Obtenir des exemples interlinéaires",
         },
         "Get words" : {
             'es' :
@@ -1009,12 +998,12 @@ class Locale:
             'fr' :
             "Veuillez entrer la largeur de colonne.",
         },
-        "Please go to Grammar Settings and specify a file." : {
+        "Please go to Interlinear Settings and specify a file." : {
             'es' :
-            "Por favor, vaya a la Configuración de gramática y especifique "
+            "Por favor, vaya a la Configuración interlineal y especifique "
             "un archivo.",
             'fr' :
-            "Veuillez choisir un fichier dans Configuration de grammaire.",
+            "Veuillez choisir un fichier dans Configuration interlinéaire.",
         },
         "Please go to Phonology Settings and specify a file." : {
             'es' :
@@ -1264,13 +1253,13 @@ class Locale:
             'fr' :
             "Ce mot est déjà réglé pour corriger. Modifier quand même?",
         },
-        "To update examples, 'Outer table' must be marked in Grammar "
+        "To update examples, 'Outer table' must be marked in Interlinear "
         "Settings." : {
             'es' :
-            "'Tabla de exterior' debe estar en la Configuración de "
-            "gramática.",
+            "'Tabla de exterior' debe estar en la Configuración "
+            "interlineal.",
             'fr' :
-            "'Cadre exterieur' doit être dans Configuration de grammaire.",
+            "'Cadre exterieur' doit être dans Configuration interlinéaire.",
         },
         "To use oxttools, the lxml python library must be installed." : {
             'es' :

@@ -1,11 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created August 20 2015 by Jim Kornelsen
-#
-# 05-Oct-15 JDK  Log exceptions with logger.exception().
-# 17-May-16 JDK  Added function to reload sys.modules.
-# 30-Jul-18 JDK  Added Data Conversion for Draw.
-# 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
 
 """
 This is like Components.py but for code run from the user directory,
@@ -31,7 +24,7 @@ from lingt.ui.comp import changermaker
 from lingt.ui.comp import dataconv
 from lingt.ui.comp import dataconv_draw
 from lingt.ui.comp import grabex
-from lingt.ui.comp import gramsettings
+from lingt.ui.comp import interlinsettings
 from lingt.ui.comp import mkoxt_settings
 from lingt.ui.comp import phonsettings
 from lingt.ui.comp import scriptpractice
@@ -139,11 +132,11 @@ def dataConv_draw(dummy_int=0):
 def goodSpellingsCheck(dummy_int=0):
     doShowDlg(spellsearch.showDlg)
 
-def grammarGrabEx(dummy_int=0):
-    doShowDlg(grabex.showGrammarDlg)
+def interlinGrabEx(dummy_int=0):
+    doShowDlg(grabex.showInterlinDlg)
 
-def grammarSettings(dummy_int=0):
-    doShowDlg(gramsettings.showDlg)
+def interlinSettings(dummy_int=0):
+    doShowDlg(interlinsettings.showDlg)
 
 def makeOxt(dummy_int=0):
     doShowDlg(mkoxt_settings.showDlg)
@@ -213,8 +206,8 @@ g_exportedScripts = (
     dataConversion,
     dataConv_draw,
     goodSpellingsCheck,
-    grammarGrabEx,
-    grammarSettings,
+    interlinGrabEx,
+    interlinSettings,
     makeOxt,
     makeSpellingChanger,
     phonSettings,

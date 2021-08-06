@@ -1,47 +1,11 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Dec 22 2009 by Jim Kornelsen
-#
-# 24-Dec-09 JDK  Split into a separate file for dialogs.
-# 07-Jan-09 JDK  Make the script filenames related to menu options.
-# 22-Jan-10 JDK  Added Grammar.
-# 25-Jan-10 JDK  Use frames like FieldWorks interlinear, instead of tables.
-# 02-Feb-10 JDK  Option to create tables.
-# 03-Feb-10 JDK  Store morphemes as a list for each word.
-# 09-Feb-10 JDK  Split WriterOutput into 3 classes.
-# 11-Feb-10 JDK  Import LIFT data from Flex.
-# 15-Feb-10 JDK  Add progress bar.
-# 18-Mar-10 JDK  Optionally don't insert outer table or separate morph columns.
-# 20-Mar-10 JDK  Frames and CTL fonts can be slow.  Solved by starting with
-#                FIX width.
-# 22-Mar-10 JDK  Added function for testing.
-# 23-Mar-10 JDK  Import SFM data directly from Toolbox.  Add tests.
-# 29-Mar-10 JDK  Make number of table columns optimal by trying new columns.
-# 30-Mar-10 JDK  Option for orthographic line.
-# 31-Mar-10 JDK  Add localization.
-# 24-Apr-10 JDK  Fixed bug: Don't use gotoEnd.  Don't allow tables to break
-#                across pages.
-# 25-Aug-10 JDK  Use "cf" instead of "txt" from FieldWorks.
-# 07-Sep-10 JDK  Large examples are too slow, so set row height to fixed,
-#                and insert newlines between a lot of frames.
-# 09-Sep-10 JDK  Import data from Toolbox in XML instead of SFM.
-# 13-Sep-10 JDK  If ref no.  is not found, then don't delete it.
-# 14-Sep-10 JDK  Merge Phonology and Grammar.  Divide into packages.
-# 20-Sep-10 JDK  Ability to update examples.
-# 02-Oct-10 JDK  Updating should not default to search from beginning.
-# 01-Apr-11 JDK  Localize Update and Replace labels that change.
-# 22-Jul-11 JDK  Separate function requireInputFile() - for Script Practice.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 14-Dec-17 JDK  Add combo box to choose from list of ref numbers.
-# 11-May-19 JDK  Gracefully handle no data.
-# 20-Sep-19 JDK  Change button text if selecting multiple.
 
 """
 Dialog to import Phonology and Interlinear examples.
 
 This module exports:
     showPhonologyDlg()
-    showGrammarDlg()
+    showInterlinDlg()
 """
 import logging
 
@@ -53,7 +17,7 @@ from com.sun.star.awt import XItemListener
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app import exceptions
 from lingt.app.svc import lingexamples
-from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY, EXTYPE_GRAMMAR
+from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY, EXTYPE_INTERLINEAR
 from lingt.ui.common import dutil
 from lingt.ui.common import evt_handler
 from lingt.ui.common.messagebox import MessageBox
@@ -67,8 +31,8 @@ logger = logging.getLogger("lingt.ui.dlggrabex")
 def showPhonologyDlg(ctx=uno.getComponentContext()):
     showDlgForType(ctx, EXTYPE_PHONOLOGY)
 
-def showGrammarDlg(ctx=uno.getComponentContext()):
-    showDlgForType(ctx, EXTYPE_GRAMMAR)
+def showInterlinDlg(ctx=uno.getComponentContext()):
+    showDlgForType(ctx, EXTYPE_INTERLINEAR)
 
 def showDlgForType(ctx, exType):
     logger.debug("----showDlg(%s)--------------------------------", exType)
@@ -85,14 +49,14 @@ def requireInputFile(exType, unoObjs, userVars):
     If no file is specified, displays an error message and returns false.
     """
     varname = "XML_filePath"
-    if exType == EXTYPE_GRAMMAR:
+    if exType == EXTYPE_INTERLINEAR:
         varname = "XML_filePath00"
     filepath = userVars.get(varname)
     if filepath == "":
         msgbox = MessageBox(unoObjs)
-        if exType == EXTYPE_GRAMMAR:
+        if exType == EXTYPE_INTERLINEAR:
             msgbox.display(
-                "Please go to Grammar Settings and specify a file.")
+                "Please go to Interlinear Settings and specify a file.")
         else:
             msgbox.display(
                 "Please go to Phonology Settings and specify a file.")
@@ -111,9 +75,9 @@ class DlgGrabExamples:
             USERVAR_PREFIX = Prefix.PHONOLOGY
             self.titleText = theLocale.getText("Get Phonology Examples")
         else:
-            USERVAR_PREFIX = Prefix.GRAMMAR
+            USERVAR_PREFIX = Prefix.INTERLINEAR
             self.titleText = theLocale.getText(
-                "Get Interlinear Grammar Examples")
+                "Get Interlinear Examples")
         self.userVars = UserVars(USERVAR_PREFIX, unoObjs.document, logger)
         self.app = lingexamples.ExServices(exType, unoObjs)
         self.dlgCtrls = None
@@ -146,7 +110,7 @@ class DlgGrabExamples:
         self.dlgClose = dlg.endExecute
         dlg.execute()
 
-        if self.exType == EXTYPE_GRAMMAR:
+        if self.exType == EXTYPE_INTERLINEAR:
             self.app.addExampleNumbers()
         dlg.dispose()
 
@@ -313,4 +277,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showPhonologyDlg, showGrammarDlg
+g_exportedScripts = showPhonologyDlg, showInterlinDlg

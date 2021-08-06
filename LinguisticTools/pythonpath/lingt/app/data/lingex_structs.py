@@ -1,17 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 24-Sep-10 JDK  Add function to LingExample to append a word record.
-# 30-Sep-10 JDK  Change LingGramExample to use structs instead of tuples.
-# 19-Nov-12 JDK  Moved WordInList to the WordList module.
-# 19-Nov-12 JDK  Moved many structures out, leaving just LingEx structures.
-# 13-Jul-15 JDK  Moved to Access layer and added InterlinSettings.
-# 22-Aug-15 JDK  Make GRAB_FIELDS type list rather than OrderedDict.
-# 22-Sep-15 JDK  Fixed bug: Load ShowOrthoTextLine user variable.
-# 04-Nov-15 JDK  Moved InterlinInputSettings to fileitemlist module.
-# 17-Nov-15 JDK  Hidden user variable to specify ref number location for LIFT.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Data structures for Linguistic Examples used by other parts of the application.
@@ -53,8 +40,8 @@ class LingPhonExample:
         return textList
 
 
-class LingGramExample:
-    """A structure to hold one grammar example.
+class LingInterlinExample:
+    """A structure to hold one interlinear example.
     It contains zero or more words, which each contain zero or more morphs.
     """
     GRAB_FIELDS = [
@@ -69,17 +56,17 @@ class LingGramExample:
 
     def __init__(self):
         self.refText = ""
-        self.wordList = []   # list of LingGramWord
-        self._morphList = []   # list of LingGramMorph
+        self.wordList = []   # list of LingInterlinWord
+        self._morphList = []   # list of LingInterlinMorph
         self.freeTrans = ""
 
     def appendMorphObj(self, morph):
-        """@arg1 type is LingGramMorph."""
+        """@arg1 type is LingInterlinMorph."""
         self._morphList.append(morph)
 
     def appendMorph(self, morph1, morph2, morphEng, morphPS):
         """Temporarily store morph before assigning to a particular word."""
-        m = LingGramMorph()
+        m = LingInterlinMorph()
         m.text1 = morph1
         m.text2 = morph2
         m.gloss = morphEng
@@ -89,8 +76,8 @@ class LingGramExample:
     def appendWord(self, wordText1, wordText2):
         if len(self._morphList) == 0:
             ## add an entry so that the word shows up
-            self.appendMorphObj(LingGramMorph())
-        w = LingGramWord()
+            self.appendMorphObj(LingInterlinMorph())
+        w = LingInterlinWord()
         w.text1 = wordText1
         w.text2 = wordText2
         w.morphList = self._morphList
@@ -135,8 +122,8 @@ class LingGramExample:
         return morphsList
 
 
-class LingGramMorph:
-    """Used in LingGramExample"""
+class LingInterlinMorph:
+    """Used in LingInterlinExample"""
     def __init__(self):
         self.text1 = ""  # first writing system, orthographic for Toolbox
         self.text2 = ""  # second writing system, typically IPA for Toolbox
@@ -144,8 +131,8 @@ class LingGramMorph:
         self.pos = ""  # part of speech
 
 
-class LingGramWord:
-    """Used in LingGramExample"""
+class LingInterlinWord:
+    """Used in LingInterlinExample"""
     def __init__(self):
         self.text1 = ""  # first writing system, orthographic for Toolbox
         self.text2 = ""  # second writing system, typically IPA for Toolbox

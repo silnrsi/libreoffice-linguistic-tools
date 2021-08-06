@@ -1,27 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 14 2010 by Jim Kornelsen
-#
-# 20-Sep-10 JDK  Fixed bug: bottom and right frame margins were switched.
-# 29-Sep-10 JDK  Class for managing the font of a style, for Data Conversion.
-# 01-Oct-10 JDK  Added hasCharStyle().  Create Orthographic Morph style.
-# 22-Oct-10 JDK  Ability to set font size specified by user.
-# 25-Oct-10 JDK  Use uniqueList() instead of set().
-# 23-Oct-12 JDK  Now that we require a newer python version, use set().
-# 11-Mar-13 JDK  Don't add "Default" paragraph style.  Use "Standard".
-#                Also show display names in list.
-# 13-Mar-13 JDK  Set attributes according to font type.
-# 15-Apr-13 JDK  getListOfStyles() returns both underlying and display names.
-# 18-Apr-13 JDK  Return status from resizeNumberingCol.
-# 29-Jul-13 JDK  Import constants instead of using uno.getConstantByName.
-# 08-Aug-15 JDK  Added StyleFamily class.
-# 10-Aug-15 JDK  Use generator to loop through UNO collections.
-# 25-Sep-15 JDK  Modify existing styles.
-# 28-Sep-15 JDK  Resizing was not working after refactoring.
-# 05-Oct-15 JDK  Default args for getFontOfStyle().
-# 24-Mar-16 JDK  StyleFonts does not need user vars to specify style name.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
-# 03-May-18 JDK  Align description of constant 2540 with LO code.
 
 """
 Create and manage styles.
@@ -278,7 +255,7 @@ class PhonologyStyles(DocumentStyles):
             newStyle.ParaTabStops = tuple(stops)
 
 
-class GrammarStyles(DocumentStyles):
+class InterlinStyles(DocumentStyles):
     """Make changes to styles and the document itself."""
     styleVars = [['word1', "StyleName_Word1"],
                  ['word2', "StyleName_Word2"],

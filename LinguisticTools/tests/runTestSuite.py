@@ -1,13 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created October 23, 2010 by Jim Kornelsen
-#
-# 23-Apr-13 JDK  Fix complaint about no handler for logging.
-# 27-Apr-13 JDK  Make sure a writer doc is open.
-# 13-May-13 JDK  Allow component context from argument as well as socket.
-# 15-Sep-15 JDK  Output file encoded for unicode.
-# 28-Sep-15 JDK  Load tests from modules rather than classes.
-# 23-May-16 JDK  Added functions to run individual modules.
 
 """
 This file runs a suite of automated tests all together.
@@ -25,23 +16,28 @@ import uno
 from lingttest.utils import testutil
 
 from lingttest.access import ex_updater_test
+from lingttest.access import odt_converter_test
 from lingttest.access import search_test
 from lingttest.access import tables_test
 from lingttest.access import textchanges_test
 from lingttest.access import uservars_test
 from lingttest.access import xml_readers_test
+from lingttest.app import convpool_test
 from lingttest.app import fileitemlist_test
 from lingttest.app import spellingchecks_test
-from lingttest.app import convpool_test
-from lingttest.app import visual_test_grammar
+from lingttest.app import visual_test_interlin
 from lingttest.app import visual_test_phonology
+from lingttest.app import wordlist_test
 from lingttest.topdown import abbrevs_test
+from lingttest.topdown import apply_conv_test
 from lingttest.topdown import dataconv_test
-from lingttest.topdown import grammar_test
+from lingttest.topdown import interlin_test
 from lingttest.topdown import phonology_test
 from lingttest.topdown import step_through_list
+from lingttest.ui import dlg_bulkstep1_test
+from lingttest.ui import dlg_bulkstep2_test
 from lingttest.ui import dlg_dataconv_test
-from lingttest.ui import dlg_gramsettings_test
+from lingttest.ui import dlg_interlinsettings_test
 from lingttest.ui import messagebox_test
 from lingttest.ui import wordlistfile_test
 
@@ -63,18 +59,19 @@ def get_master_suite():
             convpool_test,
 
             messagebox_test,
-            dlg_gramsettings_test,
+            dlg_bulkstep1_test,
+            dlg_interlinsettings_test,
             dlg_dataconv_test,
             wordlistfile_test,
 
             abbrevs_test,
             phonology_test,
-            grammar_test,
+            interlin_test,
             dataconv_test,
             step_through_list,
         ):
         masterSuite.addTest(module.getSuite())
-    # Uncomment to run only this test.
+    # Uncomment to run a specific test.
     #masterSuite = visual_test_phonology.getSuite()
     return masterSuite
 
@@ -139,9 +136,11 @@ def run_module_suite(module):
     testutil.stored.ctx = uno.getComponentContext()
     run_to_outfile(module.getSuite())
 
-
 def run_ex_updater_test():
     run_module_suite(ex_updater_test)
+
+def run_odt_converter_test():
+    run_module_suite(odt_converter_test)
 
 def run_search_test():
     run_module_suite(search_test)
@@ -167,20 +166,26 @@ def run_spellingchecks_test():
 def run_convpool_test():
     run_module_suite(convpool_test)
 
-def run_visual_test_grammar():
-    run_module_suite(visual_test_grammar)
+def run_visual_test_interlin():
+    run_module_suite(visual_test_interlin)
 
 def run_visual_test_phonology():
     run_module_suite(visual_test_phonology)
 
+def run_wordlist_test():
+    run_module_suite(wordlist_test)
+
 def run_abbrevs_test():
     run_module_suite(abbrevs_test)
+
+def run_apply_conv_test():
+    run_module_suite(apply_conv_test)
 
 def run_dataconv_test():
     run_module_suite(dataconv_test)
 
-def run_grammar_test():
-    run_module_suite(grammar_test)
+def run_interlin_test():
+    run_module_suite(interlin_test)
 
 def run_phonology_test():
     run_module_suite(phonology_test)
@@ -188,11 +193,17 @@ def run_phonology_test():
 def run_step_through_list():
     run_module_suite(step_through_list)
 
+def run_dlg_bulkstep1_test():
+    run_module_suite(dlg_bulkstep1_test)
+
+def run_dlg_bulkstep2_test():
+    run_module_suite(dlg_bulkstep2_test)
+
 def run_dlg_dataconv_test():
     run_module_suite(dlg_dataconv_test)
 
-def run_dlg_gramsettings_test():
-    run_module_suite(dlg_gramsettings_test)
+def run_dlg_interlinsettings_test():
+    run_module_suite(dlg_interlinsettings_test)
 
 def run_messagebox_test():
     run_module_suite(messagebox_test)
@@ -205,6 +216,7 @@ def run_wordlistfile_test():
 g_exportedScripts = (
     aaa_run_all_tests,
     run_ex_updater_test,
+    run_odt_converter_test,
     run_search_test,
     run_tables_test,
     run_textchanges_test,
@@ -213,15 +225,19 @@ g_exportedScripts = (
     run_fileitemlist_test,
     run_spellingchecks_test,
     run_convpool_test,
-    run_visual_test_grammar,
+    run_visual_test_interlin,
     run_visual_test_phonology,
+    run_wordlist_test,
     run_abbrevs_test,
+    run_apply_conv_test,
     run_dataconv_test,
-    run_grammar_test,
+    run_interlin_test,
     run_phonology_test,
     run_step_through_list,
+    run_dlg_bulkstep1_test,
+    run_dlg_bulkstep2_test,
     run_dlg_dataconv_test,
-    run_dlg_gramsettings_test,
+    run_dlg_interlinsettings_test,
     run_messagebox_test,
     run_wordlistfile_test,
     )

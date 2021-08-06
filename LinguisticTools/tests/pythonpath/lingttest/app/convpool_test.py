@@ -1,7 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created December 29, 2015 by Jim Kornelsen
-
 # pylint: disable=protected-access
 
 """
@@ -22,7 +19,7 @@ from lingttest.topdown import dataconv_test
 
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.sec_wrapper import SEC_wrapper
-from lingt.access.writer.uservars import UserVars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.svc.bulkconversion import ConvPool
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
@@ -83,8 +80,8 @@ class ConvPoolTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = 'LTbc_'  # LinguisticTools Bulk Conversion vars
-        self.userVars = UserVars(USERVAR_PREFIX, self.unoObjs.document, logger)
+        self.userVars = UserVars(
+            Prefix.BULK_CONVERSION, self.unoObjs.document, logger)
         self.msgbox = MessageBox(self.unoObjs)
 
     def test1_single(self):

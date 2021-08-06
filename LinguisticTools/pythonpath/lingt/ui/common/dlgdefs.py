@@ -201,7 +201,7 @@ class DlgExGrab:
     BTN_INSERT_EX = "BtnInsertEx"
     BTN_CLOSE = "BtnClose"
 
-class DlgGrammarSettings:
+class DlgInterlinSettings:
     CHK_WORD_LINE1 = "chkWordLine1"
     CHK_WORD_LINE2 = "chkWordLine2"
     CHK_MORPH_LINE1 = "ChkMorphLine1"

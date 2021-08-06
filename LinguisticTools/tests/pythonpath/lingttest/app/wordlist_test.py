@@ -1,6 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created 16-Nov-2015 by Jim Kornelsen
 
 """
 Test generating various kinds of word lists using
@@ -19,7 +17,7 @@ import unittest
 from lingttest.utils import testutil
 
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
-from lingt.access.writer import uservars
+from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
 from lingt.app.data.wordlist_structs import ColumnOrder, WhatToGrab
 from lingt.app.svc.wordlist import WordList
@@ -41,9 +39,8 @@ class WordListTestCase(unittest.TestCase):
 
     def setUp(self):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
-        USERVAR_PREFIX = "LTsp_"  # Spelling variables
-        self.userVars = uservars.UserVars(
-            USERVAR_PREFIX, self.unoObjs.document, logger)
+        self.userVars = UserVars(
+            Prefix.SPELLING, self.unoObjs.document, logger)
 
     def test1_paragraphStyles(self):
         dataSets = [

@@ -1,10 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created April 26, 2013 by Jim Kornelsen
-#
-# 05-Jul-13 JDK  Choose whether lexeme is phonetic or phonemic.
-# 26-Oct-15 JDK  Move useDialog_writingSys() so other modules can use it.
-
 # pylint: disable=no-self-use
 
 """
@@ -15,6 +9,7 @@ import collections
 import os
 import unittest
 
+from lingt.app.svc.lingexamples import EXTYPE_PHONOLOGY
 from lingt.ui.comp.grabex import DlgGrabExamples
 from lingt.ui.comp.phonsettings import DlgPhonSettings
 from lingt.ui.dep.writingsystem import DlgWritingSystem
@@ -60,7 +55,7 @@ class PhonologyTestCase(unittest.TestCase):
             self.dlgSettings = None
 
     def runDlgGrabEx(self, dispose):
-        self.dlgGrabEx = DlgGrabExamples("phonology", self.unoObjs)
+        self.dlgGrabEx = DlgGrabExamples(EXTYPE_PHONOLOGY, self.unoObjs)
         self.dlgGrabEx.showDlg()
         if dispose:
             testutil.do_dispose(self.dlgGrabEx)
