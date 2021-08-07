@@ -1,14 +1,12 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created April 26 2018 by Jim Kornelsen
 
 """
 Dialog to call oxttools.makeoxt
 https://github.com/silnrsi/oxttools
+Currently we use a modified version of oxttools that does not require lxml.
 
 This module exports:
     showDlg()
-
 """
 import logging
 import os
@@ -46,7 +44,7 @@ class MkoxtSettings(Syncable):
         self.outfile = ""
         self.word = ""  # word-forming punctuation list
         self.type = ''
-        self.font = ""
+        self.font = ""  # TODO: multiple can be given
         self.langname = ""
         self.dict = ""
         self.affix = ""
@@ -55,6 +53,17 @@ class MkoxtSettings(Syncable):
         self.dicttype = ""
         self.publisher = ""
         self.puburl = ""
+
+    def empty_to_none(self):
+        """oxttools code expects unused parameters that do not have
+        defaults to be None, so empty strings do not work.
+        """
+        if self.font == "":
+            self.font = None
+        if self.publisher == "":
+            self.publisher = None
+        if self.affix == "":
+            self.affix = None
 
     def loadUserVars(self):
         self.langtag = self.userVars.get("LangTag")
@@ -158,15 +167,9 @@ class DlgMkoxt:
 
     def closeAndRun(self):
         logger.debug(util.funcName('begin'))
-        #try:
-        #    import lxml.etree as et
-        #except ImportError:
-        #    self.msgbox.display(
-        #        "To use oxttools, the lxml python library must be installed.")
-        #    self.dlgClose()
-        #    return
         try:
             self.settings = self.dlgCtrls.getFormResults()
+            self.settings.empty_to_none()
             self.runOnClose = True
             self.dlgClose()
         except exceptions.ChoiceProblem as exc:
