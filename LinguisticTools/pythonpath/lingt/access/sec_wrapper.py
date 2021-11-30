@@ -1,22 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 1 2011 by Jim Kornelsen
-#
-# 08-Nov-11 JDK   Use create_unicode_buffer() for Windows.  Don't use windll.
-# 26-Nov-11 JDK   For Linux, encode in utf-8 rather than ascii.
-# 10-Dec-11 JDK   Don't encode to utf8 on Windows.
-# 23-Dec-11 JDK   For Linux, just pass utf-8 string rather than c_char_p.
-# 02-Jan-12 JDK   Encode as utf-8 or utf-16-le if string contains uni chars.
-# 28-Feb-13 JDK   Make getStringParam work in Python 3.
-# 06-Jun-13 JDK   Look for libecdriver.so in specific directories.
-# 23-Aug-13 JDK   Fixed bug for Python 3: create_string_buffer means bytes.
-# 03-Sep-13 JDK   Always convert received utf8 to unicode strings.
-# 27-Aug-14 JDK   Exception.message is deprecated.
-# 15-Jul-15 JDK   Added ConverterSettings class.
-# 03-Aug-15 JDK   Raise exceptions rather than returning status flags.
-# 01-Oct-15 JDK   Try to load AddConverter().
-# 08-Oct-15 JDK   Added ErrStatus class.
-# 16-Nov-15 JDK   Raise exceptions rather than returning False.
 
 """
 Access SIL Encoding Converters.
@@ -110,6 +92,19 @@ class SEC_wrapper:
         if platform.system() == "Windows":
             libfile = "ECDriver"
             wide = 'W'  # use functions named with 'W' for wide characters
+            logger.debug("Loading %s", libfile)
+            try:
+                try:
+                    # Python 3.8 and newer
+                    # It is recommended to use os.add_dll_directory("..."),
+                    # but that would not search with environment variables. See
+                    # docs.python.org/3/whatsnew/3.8.html#bpo-36085-whatsnew
+                    libecdriver = ctypes.CDLL(libfile, winmode=0)
+                except TypeError:
+                    # Python 3.7 or older
+                    libecdriver = ctypes.cdll.LoadLibrary(libfile)
+            except OSError as exc:
+                raise exceptions.FileAccessError("Library error: %s.", exc)
         else:
             wide = ''
             ## Look for libecdriver.so in order of location precedence.
@@ -126,11 +121,11 @@ class SEC_wrapper:
             if not libfile:
                 # Perhaps it is in current dir, LD_LIBRARY_PATH or ldconfig.
                 libfile = "libecdriver.so"
-        logger.debug("Loading %s", libfile)
-        try:
-            libecdriver = ctypes.cdll.LoadLibrary(libfile)
-        except OSError as exc:
-            raise exceptions.FileAccessError("Library error: %s.", exc)
+            logger.debug("Loading %s", libfile)
+            try:
+                libecdriver = ctypes.cdll.LoadLibrary(libfile)
+            except OSError as exc:
+                raise exceptions.FileAccessError("Library error: %s.", exc)
 
         logger.debug("Getting functions from library")
         try:
