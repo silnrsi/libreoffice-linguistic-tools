@@ -8,7 +8,7 @@ import oxttools.modified_etree as metree
 tmpl = "{uri://nrsi.sil.org/template/0.1}"
 tmpla = "{uri://nrsi.sil.org/template_attributes/0.1}"
 
-assert sys.version_info.major >= 3, "Requires Python 3"
+#assert sys.version_info.major >= 3, "Requires Python 3"
 
 class IterDict(object) :
     def __init__(self) :
@@ -61,6 +61,7 @@ docs = {}
 class Templater(object) :
 
     def __init__(self) :
+        assert sys.version_info.major >= 3, "Requires Python 3"
         self.vars = {}
         self.ns = {}
         self.fns = copy.copy(self.extensions)

@@ -13,7 +13,9 @@ import oxttools.hunspell as hs
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 import xml.etree.ElementTree as et
 
-assert sys.version_info.major >= 3, "Requires Python 3"
+# Don't check here because it will mess up LingTools even when not
+# running oxttools.
+#assert sys.version_info.major >= 3, "Requires Python 3"
 
 langres = ( "af-ZA", "ak-GH", "am-ET", "an-ES", "apt-IN", "arn-CL", "as-IN", "ast-ES",
     "axk-CF", "av-RU", "az-AZ", "ba-RU", "be-BY", "beq-CG", "bg-BG", "bin-NG", "bkw-CG",
@@ -85,6 +87,7 @@ scripttypes = {
 }
 
 def make(settings, msgbox):
+    assert sys.version_info.major >= 3, "Requires Python 3"
     #msgbox.display("Starting oxttools.makeoxt.make().")
     #parser = ArgumentParser()
     #parser.add_argument('langtag',help='language tag for this extension')

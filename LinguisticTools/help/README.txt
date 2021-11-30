@@ -16,6 +16,7 @@ or download the help file in PDF format.
 
 To see which version is installed, go to Tools -> Extension manager.
 
+4.0.2 30-Nov-2021  Updated Data Conversion for Python 3.8 on Windows
 4.0   07-Aug-2021  Improved handling of ref numbers in Flex data.
                    Dialog for oxttools works now; lxml not required.
                    No longer requires a Writer document to store Calc settings.
