@@ -1,0 +1,11 @@
+Repository Settings
+origin  https://github.com/silnrsi/libreoffice-linguistic-tools
+
+Download latest git and then Tools -> Options -> Git, use system git.
+
+Actions -> Open in Terminal
+
+#git pull
+git config credential.helper store
+git push -v origin dev_extra:dev_extra
+git push -v origin master:master

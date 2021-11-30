@@ -1,36 +1,28 @@
 # vim: set filetype=conf :
 #------------------------------------------------------------------------------
-# Created 12/21/2009
-#
 # Problems to fix and future enhancements.
-# - Try not to add so many features that it becomes complicated for the user.
 #
 # Now using Issues on Github to track clearly defined issues.
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-## LingTools 4.0
-{
-    fix packaging problem
-    testing
-        get all tests to pass again
-            primary difficulty is data conversion
-            get an ICU converter to run in FW first
-            maybe not all tests need to pass on ubuntu
-        keep things simple and test on 1 win machine + 1 ubuntu VM
-        test localization
-    release to extensions.libreoffice.org
-    send out message
-        probably a general message
-        maybe also a message for specific people
-        wait until it shows up on the extensions page
-}
+## LingTools 4.0.2
 
-## Packaging
+check LibO extensions site to see when available
+send out message
+    LingTranSoft
+    64-bit Data Conversion now working on Windows
+        may be a problem running under GTK3 on Linux
 
-Perhaps caused by renaming MkoxtSettings.xdl to Mkoxt.xdl
 
-(com.sun.star.deployment.DeploymentException) { { Message = "An error occurred while enabling: LingToolsBasic", Context = (com.sun.star.uno.XInterface) @16c3542d280 }, Cause = (any) { (com.sun.star.lang.IllegalArgumentException) { { { Message = "", Context = (com.sun.star.uno.XInterface) @0 } }, ArgumentPosition = (short) 0 } } }
+## Testing
+
+get all tests to pass again
+    primary difficulty is data conversion
+    get an ICU converter to run in FW first
+    maybe not all tests need to pass on ubuntu
+keep things simple and test on 1 win machine + 1 ubuntu VM
+also test in AOO.
 
 
 ## Linux Data Conversion GTK3
@@ -44,6 +36,11 @@ https://ask.libreoffice.org/en/question/132794/python-script-unable-to-print-to-
     libreoffice-gtk (which uses gtk2)"
 maybe ECDriver needs to be updated to gtk3
 
+recommendation from Opaque:
+dpkg --list | awk '/ii/&&/libreoffice/{print $2}' | sudo xargs apt purge --yes
+sudo apt autoremove --yes
+sudo apt install libreoffice libreoffice-gtk3 libreoffice-sdbc-hsqldb libreoffice-help-en-us --yes
+
 
 ## Linux Data Conversion path problem 09-Mar-2017
 
@@ -55,7 +52,42 @@ Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such fi
 
 ## Tests finish but then LibreOffice crashes.  
 
-Perhaps related to testutil.restoreMsgboxDisplay()
+For example run_dlg_bulkstep1.
+Commenting out the following line in runTestSuite.run_suite() avoids the problem:
+    testutil.blankWriterDoc()
+Perhaps the unoObjs paramater needs to be specified.
+
+
+## Compare Spelling dialog fails to save user vars in Python 2
+
+2021-11-30 12:56:11,335 - evt_handler.py 197 - 'ascii' codec can't encode character u'\u0905' in position 0: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\common\evt_handler.py", line 195, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\comp\spellingadjustments.py", line 336, in actionPerformed
+    self.mainForm.getFormResults()
+  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\comp\spellingadjustments.py", line 152, in getFormResults
+    self.userVars.store("CharComparison", charcompString)
+  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\access\writer\uservars.py", line 67, in store
+    stringVal = str(val)
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u0905' in position 0: ordinal not in range(128)
+
+
+## Packaging
+
+Perhaps caused by renaming MkoxtSettings.xdl to Mkoxt.xdl
+
+(com.sun.star.deployment.DeploymentException) { { Message = "An error occurred while enabling: LingToolsBasic", Context = (com.sun.star.uno.XInterface) @16c3542d280 }, Cause = (any) { (com.sun.star.lang.IllegalArgumentException) { { { Message = "", Context = (com.sun.star.uno.XInterface) @0 } }, ArgumentPosition = (short) 0 } } }
+
+Succeeds when installed in a fresh user directory.
+
+
+## Powerful parser like LXML
+
+Perhaps something like this could be useful for future mkoxt changes:
+
+    oDom=createUnoService("com.sun.star.xml.dom.DocumentBuilder").parse(oZip.getByName("meta.xml"))
+    GetOfficeVersion=oDom.FirstChild.getAttribute("version")
 
 
 ## Complete (but not exhaustive) set of tests
@@ -681,6 +713,9 @@ A small Python project that I wrote is an entirely different matter:
 # Done
 #------------------------------------------------------------------------------
 
+spelling tools dialogs don't open in LT 4.0
+    because oxttools raises an error when imported
+
 for version 4.0
     choose interlin/phon examples from list
     documentation should say "LibreOffice" instead of "OpenOffice Lin..."
@@ -710,6 +745,7 @@ for version 4.0
     update documentation
         make oxt
         interlinear setup changes
+    get new oxttools code to work with Kayan
 
 Use configuration instead of user vars for Calc and Draw. [rejected]
     Possibly put global settings in config and doc settings in user vars.
