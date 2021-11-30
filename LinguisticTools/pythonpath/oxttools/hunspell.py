@@ -3,7 +3,7 @@ import sys
 import unicodedata
 import itertools
 
-assert sys.version_info.major >= 3, "Requires Python 3"
+#assert sys.version_info.major >= 3, "Requires Python 3"
 
 def decompose(s) :
     return "".join([chr(int(x, 16)) for x in unicodedata.decomposition(s).split()])
@@ -12,6 +12,7 @@ def decompose(s) :
 class Hunspell(object) :
 
     def __init__(self, name, normalize, puncs="") :
+        assert sys.version_info.major >= 3, "Requires Python 3"
         self.name = name
         self.words = set()
         self.affix = ""
