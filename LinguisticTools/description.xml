@@ -9,7 +9,7 @@
          specified OpenOffice.org reference version."
          So there is no need to mention LibreOffice here.
      -->
-    <OpenOffice.org-minimal-version value="4.0" d:name="OpenOffice.org 4.0"/>
+    <OpenOffice.org-minimal-version value="4.1" d:name="OpenOffice.org 4.1"/>
   </dependencies>
   <display-name>
     <name lang="en">Linguistic Tools</name>
