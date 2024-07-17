@@ -166,6 +166,7 @@ class InterlinTables:
         wordOneMorph = lingex_structs.LingInterlinWord()
         wordOneMorph.text1 = word.text1
         wordOneMorph.text2 = word.text2
+        wordOneMorph.gloss = word.gloss
         wordOneMorph.morph = morph
         self._insertColumnData(
             wordOneMorph, morphRow_startCol + morph_i, (morph_i == 0))
@@ -185,34 +186,41 @@ class InterlinTables:
             word.morph.gloss, wordRow_col, morphRow_col)
         row = 0
 
-        # Word Line 1 and 2
+        # Word Text Line 1 and 2
         row = self._insertWordData(
-            self.config.showWordLine1, wordRow_col, row, 'word1', word.text1,
+            self.config.showWordLine1, wordRow_col, row, 'wordTx1', word.text1,
             isFirstMorph)
         row = self._insertWordData(
-            self.config.showWordLine2, wordRow_col, row, 'word2', word.text2,
+            self.config.showWordLine2, wordRow_col, row, 'wordTx2', word.text2,
             isFirstMorph)
 
-        # Morphemes Line 1 and 2
+        # Morpheme Text Line 1 and 2
         row = self._insertMorphData(
-            self.config.showMorphLine1, morphRow_col, row, 'morph1',
+            self.config.showMorphLine1, morphRow_col, row, 'morphTx1',
             word.morph.text1)
         row = self._insertMorphData(
-            self.config.showMorphLine2, morphRow_col, row, 'morph2',
+            self.config.showMorphLine2, morphRow_col, row, 'morphTx2',
             word.morph.text2)
 
-        # Gloss
+        # Morpheme Gloss and Part of Speech
+        morphGlossRow = row
+        morphPosRow = row + 1
         if self.config.POS_aboveGloss:
+            morphPosRow = row
+            morphGlossRow = row + 1
+        if self.config.showMorphGloss:
+            self._insertCellData(
+                morphRow_col, morphGlossRow, 'gloss', word.morph.gloss)
             row += 1
-        self._insertCellData(morphRow_col, row, 'gloss', word.morph.gloss)
-        if self.config.POS_aboveGloss:
-            row -= 1
-        else:
+        if self.config.showPartOfSpeech:
+            self._insertCellData(
+                morphRow_col, morphPosRow, 'pos', word.morph.pos)
             row += 1
 
-        # Part of Speech
-        if self.config.showPartOfSpeech:
-            self._insertCellData(morphRow_col, row, 'pos', word.morph.pos)
+        # Word Gloss
+        row = self._insertWordData(
+            self.config.showWordGloss, wordRow_col, row, 'wordGloss',
+            word.gloss, isFirstMorph)
         logger.debug(util.funcName('end'))
 
     def _insertWordData(self, show_line, col, row, paraStyleKey, strData,
@@ -292,10 +300,11 @@ class WrappingManager:
         self.numRows = countRowsToShow((
             self.config.showWordLine1,
             self.config.showWordLine2,
+            self.config.showWordGloss,
             self.config.showMorphLine1,
             self.config.showMorphLine2,
-            self.config.showPartOfSpeech))
-        self.numRows += 1  # There's always a gloss row.
+            self.config.showMorphGloss,
+            self.config.showMorphPartOfSpeech))
         firstInnerTable = False
         if self.innerTable is None:
             firstInnerTable = True
@@ -418,12 +427,9 @@ class InnerTable:
         If there are no word rows, then returns the first morpheme column of
         the most recent word.
         """
-        word_rows = countRowsToShow((
-            self.config.showWordLine1,
-            self.config.showWordLine2))
-        if word_rows == 0:
-            return self.wordRow_cols - self.numColumnsAdded
-        return self.wordRow_cols - 1
+        if self.config.showWordLine1 or self.config.showWordLine2:
+            return self.wordRow_cols - 1
+        return self.wordRow_cols - self.numColumnsAdded
 
     def insertNewColumn(self, percentWidth):
         """Param is percent of page width."""
@@ -437,23 +443,26 @@ class InnerTable:
     def _splitColumn(self, numCols, startCol):
         """Split up the column."""
         numNewCols = numCols - 1
-        word_rows = countRowsToShow((
+        word_upper_rows = countRowsToShow((
             self.config.showWordLine1,
             self.config.showWordLine2))
         logger.debug(
             "Splitting for %d new morph cols at %d, %d",
-            numNewCols, startCol, word_rows)
-        cell1 = self.table.getCellByPosition(
-            startCol, word_rows)
-        cell2 = self.table.getCellByPosition(
-            startCol, self.wrappingManager.numRows - 1)
+            numNewCols, startCol, word_upper_rows)
+        morphTopCell = self.table.getCellByPosition(
+            startCol, word_upper_rows)
+        morphBottomRow = self.wrappingManager.numRows - 1
+        if self.config.showWordGloss:
+            morphBottomRow -= 1
+        morphBottomCell = self.table.getCellByPosition(
+            startCol, morphBottomRow)
         oTextTableCurs = self.table.createCursorByCellName(
-            cell1.CellName)
-        oTextTableCurs.gotoCellByName(cell2.CellName, True)
+            morphTopCell.CellName)
+        oTextTableCurs.gotoCellByName(morphBottomCell.CellName, True)
         bHorizontal = False
         oTextTableCurs.splitRange(numNewCols, bHorizontal)
         self.morphRow_cols += numNewCols
-        if word_rows == 0:
+        if word_upper_rows == 0:
             self.wordRow_cols += numNewCols
 
     def deleteWordColumns(self):

@@ -205,17 +205,18 @@ class StyleFamily:
 
 
 class PhonologyStyles(DocumentStyles):
-    styleVars = [['phonemic', "StyleName_Phonemic"],
-                 ['phonetic', "StyleName_Phonetic"],
-                 ['gloss', "StyleName_Gloss"],
-                 ['ref', "StyleName_RefNum"],
-                 ['exPara', "StyleName_ExamplePara"]]
-
-    defaultNames = {'phonemic' : "Lex Phonemic",
-                    'phonetic' : "Lex Phonetic",
-                    'gloss' : "Lex Gloss",
-                    'ref' : "Lex Reference Number",
-                    'exPara' : "Lex Example"}
+    styleVars = [
+        ['phonemic', "StyleName_Phonemic"],
+        ['phonetic', "StyleName_Phonetic"],
+        ['gloss', "StyleName_Gloss"],
+        ['ref', "StyleName_RefNum"],
+        ['exPara', "StyleName_ExamplePara"]]
+    defaultNames = {
+        'phonemic' : "Lex Phonemic",
+        'phonetic' : "Lex Phonetic",
+        'gloss' : "Lex Gloss",
+        'ref' : "Lex Reference Number",
+        'exPara' : "Lex Example"}
 
     def createStyles(self):
         """Create styles if they don't already exist."""
@@ -257,29 +258,32 @@ class PhonologyStyles(DocumentStyles):
 
 class InterlinStyles(DocumentStyles):
     """Make changes to styles and the document itself."""
-    styleVars = [['word1', "StyleName_Word1"],
-                 ['word2', "StyleName_Word2"],
-                 ['morph1', "StyleName_Morphemes1"],
-                 ['morph2', "StyleName_Morphemes2"],
-                 ['pos', "StyleName_POS"],
-                 ['gloss', "StyleName_Gloss"],
-                 ['ft', "StyleName_FreeTxln"],
-                 ['ref', "StyleName_RefNum"],
-                 ['numP', "StyleName_NumPara"],
-                 ['intF', "StyleName_InterlinearFrame"],
-                 ['morF', "StyleName_MorphemeFrame"]]
-
-    defaultNames = {'word1' : "Interlin Word 1",
-                    'word2' : "Interlin Word 2",
-                    'morph1' : "Interlin Morph 1",
-                    'morph2' : "Interlin Morph 2",
-                    'pos' : "Interlin POS",
-                    'gloss' : "Interlin Gloss",
-                    'ft' : "Interlin Freeform Gloss",
-                    'ref' : "Interlin Reference Number",
-                    'numP' : "Interlin Example Number",
-                    'intF' : "Interlin Frame",
-                    'morF' : "Interlin Morpheme Frame"}
+    styleVars = [
+        ['wordTx1', "StyleName_WordText1"],
+        ['wordTx2', "StyleName_WordText2"],
+        ['wordGloss', "StyleName_WordGloss"],
+        ['morphTx1', "StyleName_MorphemeText1"],
+        ['morphTx2', "StyleName_MorphemeText2"],
+        ['morphPos', "StyleName_MorphemePOS"],
+        ['morphGloss', "StyleName_MorphemeGloss"],
+        ['ft', "StyleName_FreeTxln"],
+        ['ref', "StyleName_RefNum"],
+        ['numP', "StyleName_NumPara"],
+        ['intF', "StyleName_InterlinearFrame"],
+        ['morF', "StyleName_MorphemeFrame"]]
+    defaultNames = {
+        'wordTx1' : "Interlin Word Text Line 1",
+        'wordTx2' : "Interlin Word Text Line 2",
+        'wordGloss' : "Interlin Word Gloss",
+        'morphTx1' : "Interlin Morph Text Line 1",
+        'morphTx2' : "Interlin Morph Text Line 2",
+        'morphPos' : "Interlin Morph POS",
+        'morphGloss' : "Interlin Morph Gloss",
+        'ft' : "Interlin Freeform Gloss",
+        'ref' : "Interlin Reference Number",
+        'numP' : "Interlin Example Number",
+        'intF' : "Interlin Frame",
+        'morF' : "Interlin Morpheme Frame"}
 
     def createStyles(self):
         """Create styles if they don't already exist."""
@@ -289,12 +293,13 @@ class InterlinStyles(DocumentStyles):
 
         logger.debug("Modifying styles of interlinear lines")
         styleDefs = [
-            ('word1', FONT_VERN, COLOR_BLUE),
-            ('word2', FONT_ORTH, COLOR_BLACK),
-            ('morph1', FONT_VERN, COLOR_MAGENTA),
-            ('morph2', FONT_ORTH, COLOR_BLACK),
-            ('pos', FONT_GLOSS, COLOR_LIGHT_RED),
-            ('gloss', FONT_GLOSS, COLOR_LIGHT_MAGENTA),
+            ('wordTx1', FONT_VERN, COLOR_BLUE),
+            ('wordTx2', FONT_ORTH, COLOR_BLACK),
+            ('wordGloss', FONT_GLOSS, COLOR_LIGHT_MAGENTA),
+            ('morphTx1', FONT_VERN, COLOR_MAGENTA),
+            ('morphTx2', FONT_ORTH, COLOR_BLACK),
+            ('morphPos', FONT_GLOSS, COLOR_LIGHT_RED),
+            ('morphGloss', FONT_GLOSS, COLOR_LIGHT_MAGENTA),
             ('ft', FONT_GLOSS, COLOR_GREEN)]
         for styleKey, fontDef, color in styleDefs:
             self.parastyles.createInDoc(styleKey, fontDef, color)

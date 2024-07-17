@@ -214,13 +214,13 @@ class ToolboxXML:
         for morpheme in morphemes:
             morph = lingex_structs.LingInterlinMorph()
             morph.text1 = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['morph1'])
+                morpheme, self.fieldTags['morphTx1'])
             morph.text2 = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['morph2'])
+                morpheme, self.fieldTags['morphTx2'])
             morph.gloss = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['gloss'])
+                morpheme, self.fieldTags['morphGloss'])
             morph.pos = xmlutil.getTextByTagName(
-                morpheme, self.fieldTags['pos'])
+                morpheme, self.fieldTags['morphPos'])
             if self.config.separateMorphColumns:
                 ## store each morpheme separately
                 self.ex.appendMorphObj(morph)
@@ -232,9 +232,9 @@ class ToolboxXML:
                 mergedMorphemes.getMorph(
                     self.config.get_showMorphemeBreaks()))
         if self.config.SFM_baseline_word1:
-            self.ex.appendWord(wordText, orthoWord)
+            self.ex.appendWord(wordText, orthoWord, "")
         else:
-            self.ex.appendWord(orthoWord, wordText)
+            self.ex.appendWord(orthoWord, wordText, "")
 
 
 class ToolboxBaseline:
@@ -254,13 +254,13 @@ class ToolboxBaseline:
 
     def _determine_tags(self):
         if self.config.SFM_baseline_word1:
-            word_tag = 'word1'
-            morph_tag = 'morph1'
-            ortho_tag = 'word2'
+            word_tag = 'wordTx1'
+            morph_tag = 'morphTx1'
+            ortho_tag = 'wordTx2'
         else:
-            word_tag = 'word2'
-            morph_tag = 'morph2'
-            ortho_tag = 'word1'
+            word_tag = 'wordTx2'
+            morph_tag = 'morphTx2'
+            ortho_tag = 'wordTx1'
         self.word_group = self.fieldTags[word_tag] + "Group"
         self.morph_group = self.fieldTags[morph_tag] + "Group"
         self.word_tag = self.fieldTags[word_tag]
@@ -353,12 +353,12 @@ class FieldworksXML:
                 if childNode.getAttribute("type") == "segnum":
                     self.ex.refText = xmlutil.getElemText(childNode).strip()
                     break
-        words = sentence.getElementsByTagName("word")
         for childNode in sentence.childNodes:
             if childNode.attributes is None:
                 continue
             if childNode.getAttribute("type") == "gls":
                 self.ex.freeTrans = xmlutil.getElemText(childNode)
+        words = sentence.getElementsByTagName("word")
         for word in words:
             self.handleWord(word)
         if self.prefix:
@@ -373,21 +373,24 @@ class FieldworksXML:
         for childNode in word.childNodes:
             if not childNode.attributes:
                 continue
-            elif childNode.getAttribute("type") == "txt":
-                text = xmlutil.getElemText(childNode)
+            itemType = childNode.getAttribute("type")
+            itemText = xmlutil.getElemText(childNode)
+            if itemType == "txt":
                 if is_first_text:
-                    wordText1 = text
+                    wordText1 = itemText
                     is_first_text = False
                 else:
-                    wordText2 = text
-            elif childNode.getAttribute("type") == "punct":
-                punct = xmlutil.getElemText(childNode)
+                    wordText2 = itemText
+            elif itemType == "gls":
+                gloss = itemText
+            elif itemType == "punct":
+                punct = itemText
                 break
         if punct:
             if self.ex.wordList:
                 self.ex.addPunctuation(punct)
             else:
-                self.ex.appendWord(punct, punct)
+                self.ex.appendWord(punct, punct, "")
             #logger.debug(util.funcName('return', args=punct))
             return
         morphemes = word.getElementsByTagName("morph")
@@ -395,7 +398,7 @@ class FieldworksXML:
             self.handleWordMorphemes(morphemes)
         else:
             self.ex.appendMorphObj(singleMorphemeWord(word))
-        self.ex.appendWord(wordText1, wordText2)
+        self.ex.appendWord(wordText1, wordText2, gloss)
         #logger.debug(util.funcName('end', args=wordText))
 
     def handleWordMorphemes(self, morphemes):

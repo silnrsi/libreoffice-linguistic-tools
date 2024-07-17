@@ -278,22 +278,22 @@ class FieldTags:
 class InterlinTags(FieldTags):
     TAG_VARS = [
         ['ref', "SFMarker_RefNum"],
-        ['word1', "SFMarker_Word1"],  # corresponds with check box for line 1
-        ['word2', "SFMarker_Word2"],
-        ['morph1', "SFMarker_Morpheme1"],
-        ['morph2', "SFMarker_Morpheme2"],
-        ['gloss', "SFMarker_Gloss"],
-        ['pos', "SFMarker_POS"],
+        ['wordTx1', "SFMarker_WordTextLine1"],
+        ['wordTx2', "SFMarker_WordTextLine2"],
+        ['morphTx1', "SFMarker_MorphemeTextLine1"],
+        ['morphTx2', "SFMarker_MorphemeTextLine2"],
+        ['morphGloss', "SFMarker_MorphemeGloss"],
+        ['morphPos', "SFMarker_MorphemePOS"],
         ['ft', "SFMarker_FreeTxln"]]
-
     DEFAULT_TAGS = {
         'ref' : "ref",
-        'word1' : "tx",
-        'word2' : "tor",
-        'morph1' : "mb",
-        'morph2' : "mor",
-        'gloss' : "ge",
-        'pos' : "ps",
+        'wordTx1' : "tx",
+        'wordTx2' : "tor",
+        'wordGloss' : "wge",
+        'morphTx1' : "mb",
+        'morphTx2' : "mor",
+        'morphGloss' : "ge",
+        'morphPos' : "ps",
         'ft' : "ft"}
 
 

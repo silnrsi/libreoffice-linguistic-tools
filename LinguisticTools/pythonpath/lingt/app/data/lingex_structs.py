@@ -42,17 +42,18 @@ class LingPhonExample:
 
 class LingInterlinExample:
     """A structure to hold one interlinear example.
-    It contains zero or more words, which each contain zero or more morphs.
+    It contains zero or more words, which each contain zero or more morphemes.
     """
     GRAB_FIELDS = [
         ('ref', "Ref. Number"),
         ('ft', "Free Translation"),
-        ('word1', "WordLine1"),
-        ('word2', "WordLine2"),
-        ('morph1', "MorphemesLine1"),
-        ('morph2', "MorphemesLine2"),
-        ('gl', "Gloss"),
-        ('ps', "Part of Speech")]
+        ('wordTx1', "Word Text Line 1"),
+        ('wordTx2', "Word Text Line 2"),  # for multiple writing systems
+        ('wordGl', "Word Gloss"),
+        ('morphTx1', "Morpheme Text Line 1"),
+        ('morphTx2', "Morpheme Text Line 2"),
+        ('morphGl', "Morpheme Gloss"),
+        ('morphPos', "Morpheme Part Of Speech")]
 
     def __init__(self):
         self.refText = ""
@@ -64,22 +65,23 @@ class LingInterlinExample:
         """@arg1 type is LingInterlinMorph."""
         self._morphList.append(morph)
 
-    def appendMorph(self, morph1, morph2, morphEng, morphPS):
+    def appendMorph(self, morph1, morph2, morphGl, morphPS):
         """Temporarily store morph before assigning to a particular word."""
         m = LingInterlinMorph()
         m.text1 = morph1
         m.text2 = morph2
-        m.gloss = morphEng
+        m.gloss = morphGl
         m.pos = morphPS
         self._morphList.append(m)
 
-    def appendWord(self, wordText1, wordText2):
+    def appendWord(self, wordText1, wordText2, wordGl):
         if len(self._morphList) == 0:
             ## add an entry so that the word shows up
             self.appendMorphObj(LingInterlinMorph())
         w = LingInterlinWord()
         w.text1 = wordText1
         w.text2 = wordText2
+        w.gloss = wordGl
         w.morphList = self._morphList
         self.wordList.append(w)
         self._morphList = []
@@ -98,17 +100,19 @@ class LingInterlinExample:
             textList = [self.refText]
         elif grabKey == 'ft':
             textList = [self.freeTrans]
-        elif grabKey == 'word1':
+        elif grabKey == 'wordTx1':
             textList = [word.text1 for word in self.wordList]
-        elif grabKey == 'word2':
+        elif grabKey == 'wordTx2':
             textList = [word.text2 for word in self.wordList]
-        elif grabKey == 'morph1':
+        elif grabKey == 'wordGl':
+            textList = [word.gloss for word in self.wordList]
+        elif grabKey == 'morphTx1':
             textList = [morph.text1 for morph in self.getMorphsList()]
-        elif grabKey == 'morph2':
+        elif grabKey == 'morphTx2':
             textList = [morph.text2 for morph in self.getMorphsList()]
-        elif grabKey == 'gl':
+        elif grabKey == 'morphGl':
             textList = [morph.gloss for morph in self.getMorphsList()]
-        elif grabKey == 'ps':
+        elif grabKey == 'morphPos':
             textList = [morph.pos for morph in self.getMorphsList()]
         else:
             raise exceptions.LogicError("Unknown grabKey '%s'", grabKey)
@@ -127,7 +131,7 @@ class LingInterlinMorph:
     def __init__(self):
         self.text1 = ""  # first writing system, orthographic for Toolbox
         self.text2 = ""  # second writing system, typically IPA for Toolbox
-        self.gloss = ""  # gloss (typically English)
+        self.gloss = ""  # for example "LOC.in" (typically English)
         self.pos = ""  # part of speech
 
 
@@ -136,6 +140,7 @@ class LingInterlinWord:
     def __init__(self):
         self.text1 = ""  # first writing system, orthographic for Toolbox
         self.text2 = ""  # second writing system, typically IPA for Toolbox
+        self.gloss = ""  # word level, for example "in.house"
         self.morphList = []  # to handle one or more morphs
         self.morph = None  # to handle only one morph
 
