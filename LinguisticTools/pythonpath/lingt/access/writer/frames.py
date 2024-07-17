@@ -82,15 +82,15 @@ class InterlinFrames:
         logger.debug(
             "%s: Adding frame '%s'", util.funcName(), word.morph.gloss)
 
-        ## Word Lines 1 and 2
+        ## Word Text Lines 1 and 2
 
         if firstMorph:
-            word1args = (self.config.showWordLine1, 'word1', word.text1)
-            word2args = (self.config.showWordLine2, 'word2', word.text2)
-            self._insertWordData(*word1args)
-            self._insertWordData(*word2args)
+            self._insertWordData(
+                self.config.showWordLine1, 'wordTx1', word.text1)
+            self._insertWordData(
+                self.config.showWordLine2, 'wordTx2', word.text2)
 
-        frameForGloss = None    # either outer or inner frame
+        frameForMorph = None    # either outer or inner frame
         if self.config.separateMorphColumns:
             ## Create an inner frame for morpheme breaks.
 
@@ -105,41 +105,46 @@ class InterlinFrames:
                 self.framecursorOuter, frameInner, False)
             logger.debug("Created text frame %s", frameInner.getName())
 
-            frameForGloss = frameInner
+            frameForMorph = frameInner
             framecursor = frameInner.createTextCursor()
         else:
-            frameForGloss = self.frameOuter
+            frameForMorph = self.frameOuter
             framecursor = self.framecursorOuter
 
-        ## Morphemes Line 1 and 2
+        ## Morpheme Text Lines 1 and 2
 
-        morph1args = (
-            self.config.showMorphLine1, frameForGloss, framecursor, 'morph1',
+        self._insertMorphData(
+            self.config.showMorphLine1, frameForMorph, framecursor, 'morphTx1',
             word.morph.text1)
-        morph2args = (
-            self.config.showMorphLine2, frameForGloss, framecursor, 'morph2',
+        self._insertMorphData(
+            self.config.showMorphLine2, frameForMorph, framecursor, 'morphTx2',
             word.morph.text2)
-        self._insertMorphData(*morph1args)
-        self._insertMorphData(*morph2args)
 
-        ## Part of Speech - first option
+        ## Morpheme Part of Speech - first option
 
         if self.config.showPartOfSpeech and self.config.POS_aboveGloss:
             self._insertFrameData(
-                frameForGloss, framecursor, 'pos', word.morph.pos)
+                frameForMorph, framecursor, 'morphPos', word.morph.pos)
 
-        ## Gloss
+        ## Morpheme Gloss
 
-        self._insertFrameData(
-            frameForGloss, framecursor, 'gloss', word.morph.gloss,
-            parabreak='nobreak')
+        if self.config.showMorphGloss:
+            self._insertFrameData(
+                frameForMorph, framecursor, 'morphGloss', word.morph.gloss,
+                parabreak='nobreak')
 
-        ## Part of Speech - second option
+        ## Morpheme Part of Speech - second option
 
         if self.config.showPartOfSpeech and not self.config.POS_aboveGloss:
             self._insertFrameData(
-                frameForGloss, framecursor, 'pos', word.morph.pos,
+                frameForMorph, framecursor, 'morphPos', word.morph.pos,
                 parabreak='before')
+
+        ## Word Gloss
+
+        if firstMorph:
+            self._insertWordData(
+                self.config.showWordGloss, 'wordGloss', word.gloss)
         logger.debug(util.funcName('end'))
 
     def _insertWordData(self, show_line, paraStyleKey, strData):
@@ -158,7 +163,7 @@ class InterlinFrames:
                          parabreak='after'):
         """:param parabreak: either 'before', 'after', or 'nobreak'"""
         logger.debug("frame data style key %s", paraStyleKey)
-        # FIXME: 13-Aug-15 AOO crashed on 'orthm' while inserting Hunt06.
+        # FIXME: 13-Aug-2015 AOO crashed on 'orthm' while inserting Hunt06.
         if parabreak == 'before':
             frame.insertControlCharacter(frameCursor, PARAGRAPH_BREAK, 0)
         self.styles.requireParaStyle(paraStyleKey)
