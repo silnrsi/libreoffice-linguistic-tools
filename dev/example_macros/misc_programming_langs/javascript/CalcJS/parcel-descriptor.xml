@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parcel language="JavaScript" xmlns:parcel="scripting.dtd">
+    <script language="JavaScript">
+        <locale lang="en">
+            <displayname value="HelloCalc.js"/>
+            <description>HelloCalc.js</description>
+        </locale>
+        <logicalname value="HelloCalc.js"/>
+        <functionname value="HelloCalc.js"/>
+    </script>
+</parcel>

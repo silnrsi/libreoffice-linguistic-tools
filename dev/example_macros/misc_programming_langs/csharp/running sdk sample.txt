@@ -1,0 +1,31 @@
+choco install make
+choco install zip
+choco install sed
+choco install gnuwin32-coreutils.install
+
+./setsdkenv_windows.bat
+C:\ProgramData\chocolatey\lib\make\tools\install\bin
+C:\ProgramData\chocolatey\lib\zip\tools
+C:\Program Files (x86)\GnuWin32\bin
+C:\ProgramData\chocolatey\lib\sed\tools\install
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
+
+Edit C:\Users\JimStandard\AppData\Roaming\libreoffice7.5_sdk
+Replace all "Program Files(x86)" with "Progra~2".
+
+open cmd.exe window
+C:\Users\JimStandard\AppData\Roaming\libreoffice7.5_sdk\setsdkenv_windows.bat
+chdir "C:\Program Files (x86)\LibreOffice_7.5_SDK\sdk\examples\CLI\CSharp\Spreadsheet"
+make
+
+chdir "C:\libreoffice7.5_sdk\WINexample.out\bin\CSharp_SpreadsheetExamples"
+create file SpreadsheetSample.exe.config with the following contents:
+<?xml version="1.0"?>
+<configuration>
+    <startup useLegacyV2RuntimeActivationPolicy="true" /> 
+</configuration>
+
+soffice "--accept=socket,host=localhost,port=2083;urp;StarOffice.ServiceManager"
+make SpreadsheetSample.run
+
+chdir C:\Progra~2\LibreOffice_7.5_SDK\sdk\examples\java\Spreadsheet

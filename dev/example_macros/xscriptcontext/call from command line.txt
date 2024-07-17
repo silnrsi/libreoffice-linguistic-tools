@@ -1,0 +1,9 @@
+"C:\Program Files\LibreOffice\program\soffice" "vnd.sun.star.script:writer_hello_world.py$hello?language=Python&location=user"
+
+"C:\Program Files\LibreOffice\program\soffice" vnd.sun.star.script:writer_hello_world.py$hello?language=Python&location=user
+
+"C:\Program Files\LibreOffice\program\soffice" "vnd.sun.star.script:HelloWorld.py$HelloWorldPython?language=Python&location=share"
+
+"C:\Program Files\LibreOffice\program\soffice" "vnd.sun.star.script:HelloWorld.py$HelloWorldPython?language=Python&location=user"
+
+"C:\Program Files\LibreOffice\program\soffice" "vnd.sun.star.script:writer_hello_world.py$hello?language=Python&location=user"

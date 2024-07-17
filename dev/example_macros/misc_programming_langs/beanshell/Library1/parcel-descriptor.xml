@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parcel language="BeanShell" xmlns:parcel="scripting.dtd">
+    <script language="BeanShell">
+        <locale lang="en">
+            <displayname value="Macro1.bsh"/>
+            <description>Macro1.bsh</description>
+        </locale>
+        <logicalname value="Macro1.bsh"/>
+        <functionname value="Macro1.bsh"/>
+    </script>
+</parcel>

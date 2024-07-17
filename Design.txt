@@ -6,13 +6,15 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-## LingTools 4.0.2
+To implement:
+    modify dialog to add word gloss checkbox
+    and python front end code
+then run pylint
 
-check LibO extensions site to see when available
-send out message
-    LingTranSoft
-    64-bit Data Conversion now working on Windows
-        may be a problem running under GTK3 on Linux
+
+## 2024-07-17
+
+Check "Move PoS above gloss" by default.
 
 
 ## Testing

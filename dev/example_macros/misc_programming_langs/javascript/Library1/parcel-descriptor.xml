@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parcel language="JavaScript" xmlns:parcel="scripting.dtd">
+    <script language="JavaScript">
+        <locale lang="en">
+            <displayname value="Macro1.js"/>
+            <description>Macro1.js</description>
+        </locale>
+        <logicalname value="Macro1.js"/>
+        <functionname value="Macro1.js"/>
+    </script>
+</parcel>
