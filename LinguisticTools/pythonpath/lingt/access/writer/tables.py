@@ -188,31 +188,31 @@ class InterlinTables:
 
         # Word Text Line 1 and 2
         row = self._insertWordData(
-            self.config.showWordLine1, wordRow_col, row, 'wordTx1', word.text1,
+            self.config.showWordText1, wordRow_col, row, 'wordTx1', word.text1,
             isFirstMorph)
         row = self._insertWordData(
-            self.config.showWordLine2, wordRow_col, row, 'wordTx2', word.text2,
+            self.config.showWordText2, wordRow_col, row, 'wordTx2', word.text2,
             isFirstMorph)
 
         # Morpheme Text Line 1 and 2
         row = self._insertMorphData(
-            self.config.showMorphLine1, morphRow_col, row, 'morphTx1',
+            self.config.showMorphText1, morphRow_col, row, 'morphTx1',
             word.morph.text1)
         row = self._insertMorphData(
-            self.config.showMorphLine2, morphRow_col, row, 'morphTx2',
+            self.config.showMorphText2, morphRow_col, row, 'morphTx2',
             word.morph.text2)
 
         # Morpheme Gloss and Part of Speech
         morphGlossRow = row
         morphPosRow = row + 1
-        if self.config.POS_aboveGloss:
+        if self.config.morphPosAboveGloss:
             morphPosRow = row
             morphGlossRow = row + 1
         if self.config.showMorphGloss:
             self._insertCellData(
                 morphRow_col, morphGlossRow, 'gloss', word.morph.gloss)
             row += 1
-        if self.config.showPartOfSpeech:
+        if self.config.showMorphPos:
             self._insertCellData(
                 morphRow_col, morphPosRow, 'pos', word.morph.pos)
             row += 1
@@ -298,11 +298,11 @@ class WrappingManager:
         """Create a new inner table."""
         logger.debug("Preparing to create inner table.")
         self.numRows = countRowsToShow((
-            self.config.showWordLine1,
-            self.config.showWordLine2,
+            self.config.showWordText1,
+            self.config.showWordText2,
             self.config.showWordGloss,
-            self.config.showMorphLine1,
-            self.config.showMorphLine2,
+            self.config.showMorphText1,
+            self.config.showMorphText2,
             self.config.showMorphGloss,
             self.config.showMorphPartOfSpeech))
         firstInnerTable = False
@@ -427,7 +427,7 @@ class InnerTable:
         If there are no word rows, then returns the first morpheme column of
         the most recent word.
         """
-        if self.config.showWordLine1 or self.config.showWordLine2:
+        if self.config.showWordText1 or self.config.showWordText2:
             return self.wordRow_cols - 1
         return self.wordRow_cols - self.numColumnsAdded
 
@@ -444,8 +444,8 @@ class InnerTable:
         """Split up the column."""
         numNewCols = numCols - 1
         word_upper_rows = countRowsToShow((
-            self.config.showWordLine1,
-            self.config.showWordLine2))
+            self.config.showWordText1,
+            self.config.showWordText2))
         logger.debug(
             "Splitting for %d new morph cols at %d, %d",
             numNewCols, startCol, word_upper_rows)
@@ -472,7 +472,7 @@ class InnerTable:
         wordCol = self.wordRow_col()
         logger.debug("Deleting word col(s) at %d", wordCol)
         oWordCols = self.table.getColumns()
-        if ((self.config.showWordLine1 or self.config.showWordLine2)
+        if ((self.config.showWordText1 or self.config.showWordText2)
                 and self.config.separateMorphColumns):
             oWordCols.removeByIndex(wordCol, 1)
             self.wordRow_cols -= 1

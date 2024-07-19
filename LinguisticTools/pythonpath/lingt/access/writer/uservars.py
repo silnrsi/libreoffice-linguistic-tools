@@ -278,10 +278,10 @@ class FieldTags:
 class InterlinTags(FieldTags):
     TAG_VARS = [
         ['ref', "SFMarker_RefNum"],
-        ['wordTx1', "SFMarker_WordTextLine1"],
-        ['wordTx2', "SFMarker_WordTextLine2"],
-        ['morphTx1', "SFMarker_MorphemeTextLine1"],
-        ['morphTx2', "SFMarker_MorphemeTextLine2"],
+        ['wordTx1', "SFMarker_WordText1"],
+        ['wordTx2', "SFMarker_WordText2"],
+        ['morphTx1', "SFMarker_MorphemeText1"],
+        ['morphTx2', "SFMarker_MorphemeText2"],
         ['morphGloss', "SFMarker_MorphemeGloss"],
         ['morphPos', "SFMarker_MorphemePOS"],
         ['ft', "SFMarker_FreeTxln"]]

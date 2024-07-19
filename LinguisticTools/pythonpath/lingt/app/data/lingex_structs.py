@@ -47,11 +47,11 @@ class LingInterlinExample:
     GRAB_FIELDS = [
         ('ref', "Ref. Number"),
         ('ft', "Free Translation"),
-        ('wordTx1', "Word Text Line 1"),
-        ('wordTx2', "Word Text Line 2"),  # for multiple writing systems
+        ('wordTx1', "Word Text 1"),
+        ('wordTx2', "Word Text 2"),  # for a second writing system line
         ('wordGl', "Word Gloss"),
-        ('morphTx1', "Morpheme Text Line 1"),
-        ('morphTx2', "Morpheme Text Line 2"),
+        ('morphTx1', "Morpheme Text 1"),
+        ('morphTx2', "Morpheme Text 2"),
         ('morphGl', "Morpheme Gloss"),
         ('morphPos', "Morpheme Part Of Speech")]
 
@@ -204,13 +204,15 @@ class InterlinOutputSettings(Syncable):
     USERVAR_BOOLEAN_ATTRS = [
         ('makeOuterTable', "MakeOuterTable"),
         ('insertNumbering', "InsertNumbering"),
-        ('showWordLine1', "ShowWordLine1"),
-        ('showWordLine2', "ShowWordLine2"),
-        ('showMorphLine1', "ShowMorphLine1"),
-        ('showMorphLine2', "ShowMorphLine2"),
+        ('showWordText1', "ShowWordText1"),
+        ('showWordText2', "ShowWordText2"),
+        ('showWordGloss', "ShowWordGloss"),
+        ('showMorphText1', "ShowMorphText1"),
+        ('showMorphText2', "ShowMorphText2"),
+        ('showMorphGloss', "ShowMorphGloss"),
         ('separateMorphColumns', "SeparateMorphColumns"),
-        ('showPartOfSpeech', "ShowPartOfSpeech"),
-        ('POS_aboveGloss', "POS_AboveGloss"),
+        ('showMorphPos', "ShowMorphPartOfSpeech"),
+        ('morphPosAboveGloss', "MorphPartOfSpeechAboveGloss"),
         ('freeTransInQuotes', "FreeTransInQuotes"),
         ]
 
@@ -220,13 +222,15 @@ class InterlinOutputSettings(Syncable):
         self.methodTables = True
         self.makeOuterTable = True
         self.insertNumbering = True
-        self.showWordLine1 = True
-        self.showWordLine2 = False
-        self.showMorphLine1 = True
-        self.showMorphLine2 = False
+        self.showWordText1 = True
+        self.showWordText2 = False
+        self.showWordGloss = False
+        self.showMorphText1 = True
+        self.showMorphText2 = False
+        self.showMorphGloss = True
         self.separateMorphColumns = True
-        self.showPartOfSpeech = True
-        self.POS_aboveGloss = False
+        self.showMorphPos = True
+        self.morphPosAboveGloss = False
         self.freeTransInQuotes = False
         self.startingOuterRowHeight = 2
         self.tableBottomMargin = 0.13
@@ -246,10 +250,11 @@ class InterlinOutputSettings(Syncable):
             if self.userVars.getInt(varName) == 1:
                 setattr(self, attrName, True)
 
-        if not self.showMorphLine1 and not self.showMorphLine2:
+        if (not self.showMorphText1 and not self.showMorphText2
+                and not self.showMorphGloss):
             self.separateMorphColumns = False
         if not self.showPartOfSpeech:
-            self.POS_aboveGloss = False
+            self.morphPosAboveGloss = False
 
         val = 0.13
         varname = "TableBottomMargin"

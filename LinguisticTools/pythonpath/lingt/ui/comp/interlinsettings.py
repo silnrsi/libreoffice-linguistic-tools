@@ -239,15 +239,18 @@ class DlgControls:
         self.evtHandler = evtHandler
         self.origNumColWidth = 7    # we compare this to the changed value
 
-        self.chkWordLine1 = ctrl_getter.get(_dlgdef.CHK_WORD_LINE1)
-        self.chkWordLine2 = ctrl_getter.get(_dlgdef.CHK_WORD_LINE2)
-        self.chkMorphLine1 = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE1)
-        self.chkMorphLine2 = ctrl_getter.get(_dlgdef.CHK_MORPH_LINE2)
+        self.chkWordText1 = ctrl_getter.get(_dlgdef.CHK_WORD_TEXT1)
+        self.chkWordText2 = ctrl_getter.get(_dlgdef.CHK_WORD_TEXT2)
+        self.chkWordGloss = ctrl_getter.get(_dlgdef.CHK_WORD_GLOSS)
+        self.chkMorphText1 = ctrl_getter.get(_dlgdef.CHK_MORPH_TEXT1)
+        self.chkMorphText2 = ctrl_getter.get(_dlgdef.CHK_MORPH_TEXT2)
+        self.chkMorphGloss = ctrl_getter.get(_dlgdef.CHK_MORPH_GLOSS)
         self.chkMorphsSeparate = ctrl_getter.get(
             _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
-        self.chkPOS_Line = ctrl_getter.get(_dlgdef.CHK_POS_LINE)
+        self.chkMorphPOS = ctrl_getter.get(_dlgdef.CHK_MORPH_POS)
         self.chkFT_inQuotes = ctrl_getter.get(_dlgdef.CHK_FT_IN_QUOTES)
-        self.chkPOS_aboveGloss = ctrl_getter.get(_dlgdef.CHK_POS_ABOVE_GLOSS)
+        self.chkMorphPosAboveGloss = ctrl_getter.get(
+            _dlgdef.CHK_MORPH_POS_ABOVE_GLOSS)
         self.chkNumbering = ctrl_getter.get(_dlgdef.CHK_INSERT_NUMBERING)
         self.chkOuterTable = ctrl_getter.get(_dlgdef.CHK_OUTER_TABLE)
         self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
@@ -272,14 +275,16 @@ class DlgControls:
             ctrl.addActionListener(self.evtHandler)
 
         self.CHECKBOX_VAR_LIST = [
-            (self.chkWordLine1, "ShowWordLine1"),
-            (self.chkWordLine2, "ShowWordLine2"),
-            (self.chkMorphLine1, "ShowMorphLine1"),
-            (self.chkMorphLine2, "ShowMorphLine2"),
+            (self.chkWordText1, "ShowWordText1"),
+            (self.chkWordText2, "ShowWordText2"),
+            (self.chkWordGloss, "ShowWordGloss"),
+            (self.chkMorphText1, "ShowMorphText1"),
+            (self.chkMorphText2, "ShowMorphText2"),
+            (self.chkMorphGloss, "ShowMorphGloss"),
             (self.chkMorphsSeparate, "SeparateMorphColumns"),
-            (self.chkPOS_Line, "ShowPartOfSpeech"),
+            (self.chkMorphPOS, "ShowMorphPartOfSpeech"),
             (self.chkFT_inQuotes, "FreeTransInQuotes"),
-            (self.chkPOS_aboveGloss, "POS_AboveGloss"),
+            (self.chkMorphPosAboveGloss, "MorphPOS_AboveGloss"),
             (self.chkNumbering, "InsertNumbering"),
             (self.chkOuterTable, "MakeOuterTable")]
 
@@ -334,7 +339,7 @@ class DlgControls:
         they could have side effects during loadValues().
         """
         for ctrl in (
-                self.chkMorphLine1, self.chkMorphLine2, self.chkPOS_Line,
+                self.chkMorphText1, self.chkMorphText2, self.chkMorphPOS,
                 self.optTables, self.optFrames, self.chkOuterTable,
                 self.chkDontUseSegnum):
             ctrl.addItemListener(self.evtHandler)
@@ -353,8 +358,8 @@ class DlgControls:
 
     def enableDisable(self):
         """Enable or disable controls as appropriate."""
-        if (self.chkMorphLine1.getState() == 1
-                or self.chkMorphLine2.getState() == 1):
+        if (self.chkMorphText1.getState() == 1
+                or self.chkMorphText2.getState() == 1):
             self.chkMorphsSeparate.getModel().Enabled = True
         else:
             self.chkMorphsSeparate.getModel().Enabled = False
@@ -365,11 +370,10 @@ class DlgControls:
         else:
             self.txtNumColWidth.getModel().Enabled = False
             self.lblNumColWidth.getModel().Enabled = False
-
-        if self.chkPOS_Line.getState() == 1:
-            self.chkPOS_aboveGloss.getModel().Enabled = True
+        if self.chkMorphPOS.getState() == 1:
+            self.chkMorphPosAboveGloss.getModel().Enabled = True
         else:
-            self.chkPOS_aboveGloss.getModel().Enabled = False
+            self.chkMorphPosAboveGloss.getModel().Enabled = False
 
 
 class DlgEventHandler(XActionListener, XItemListener, XTextListener,
@@ -400,8 +404,8 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.mainForm.viewFile(True)
             return
         for ctrl in (
-                self.dlgCtrls.chkMorphLine1, self.dlgCtrls.chkMorphLine2,
-                self.dlgCtrls.chkPOS_Line, self.dlgCtrls.optTables,
+                self.dlgCtrls.chkMorphText1, self.dlgCtrls.chkMorphText2,
+                self.dlgCtrls.chkMorphPOS, self.dlgCtrls.optTables,
                 self.dlgCtrls.optFrames, self.dlgCtrls.chkOuterTable):
             if evt_handler.sameName(src, ctrl):
                 self.dlgCtrls.enableDisable()
