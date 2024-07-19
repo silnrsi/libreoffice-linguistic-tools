@@ -272,11 +272,11 @@ class InterlinStyles(DocumentStyles):
         ['intF', "StyleName_InterlinearFrame"],
         ['morF', "StyleName_MorphemeFrame"]]
     defaultNames = {
-        'wordTx1' : "Interlin Word Text Line 1",
-        'wordTx2' : "Interlin Word Text Line 2",
+        'wordTx1' : "Interlin Word Text 1",
+        'wordTx2' : "Interlin Word Text 2",
         'wordGloss' : "Interlin Word Gloss",
-        'morphTx1' : "Interlin Morph Text Line 1",
-        'morphTx2' : "Interlin Morph Text Line 2",
+        'morphTx1' : "Interlin Morph Text 1",
+        'morphTx2' : "Interlin Morph Text 2",
         'morphPos' : "Interlin Morph POS",
         'morphGloss' : "Interlin Morph Gloss",
         'ft' : "Interlin Freeform Gloss",

@@ -1,20 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 16 2010 by Jim Kornelsen
-#
-# 25-Oct-12 JDK  New class for word list data files.
-# 26-Feb-13 JDK  Override deepcopy for WordListFileItem.
-# 11-Apr-13 JDK  Get writing system from user vars.
-# 16-Apr-15 JDK  New class for bulk conversion.  FileItem class.
-# 12-Aug-15 JDK  Define __len__() instead of Java-style getCount().
-# 22-Aug-15 JDK  Define __str__() instead of toItemText().
-# 25-Aug-15 JDK  Add FileItem.numberedVar().
-# 27-Aug-15 JDK  Clean up unused word list field user variables.
-# 09-Sep-15 JDK  Add ItemList class.
-# 04-Nov-15 JDK  Moved InterlinInputSettings from lingex_structs module.
-# 08-Dec-15 JDK  Add use_segnum.
-# 18-Dec-15 JDK  Use __eq__ instead of getID().
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Maintain a list of files.
@@ -408,13 +392,16 @@ class InterlinInputSettings(Syncable):
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)
         self.fileList = FileItemList(LingExFileItem, self.userVars)
-        self.showMorphLine1 = True
-        self.showMorphLine2 = False
+        self.showMorphText1 = True
+        self.showMorphText2 = False
+        self.showMorphGloss = True
         self.separateMorphColumns = False
         self.SFM_baseline_word1 = True  # typically the \tx line
 
     def get_showMorphemeBreaks(self):
-        return self.showMorphLine1 or self.showMorphLine2
+        return (self.showMorphText1
+            or self.showMorphText2
+            or self.showMorphGloss)
 
     def loadUserVars(self):
         self.fileList.loadUserVars()
@@ -427,5 +414,7 @@ class InterlinInputSettings(Syncable):
     def loadOutputSettings(self, outconfig):
         """Param should be of type InterlinOutputSettings."""
         for attr in (
-                'showMorphLine1', 'showMorphLine2', 'separateMorphColumns'):
+                'showMorphText1', 'showMorphText2', 'showMorphGloss',
+                'separateMorphColumns'):
             setattr(self, attr, getattr(outconfig, attr))
+

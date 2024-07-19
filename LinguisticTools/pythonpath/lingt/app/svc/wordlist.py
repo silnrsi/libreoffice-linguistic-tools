@@ -1,14 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 26 2012 by Jim Kornelsen
-#
-# 09-Apr-13 JDK  Initialize some user variables for Calc dialogs.
-# 15-Apr-13 JDK  Vars for DlgApplyConv use LTw_ prefix.
-# 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
-# 23-Jul-15 JDK  Refactor generateList().
-# 25-Aug-15 JDK  Catch DataNotFoundError.
-# 06-Feb-17 JDK  Fixed bug: attr name should be .thingsToGrab.
-# 13-Feb-17 JDK  Normalize data.
 
 """
 Make Word List in Calc.
@@ -116,7 +106,7 @@ class WordList:
             words = reader.read()
         elif fileType in InterlinReader.supportedNames():
             config = fileitemlist.InterlinInputSettings(self.userVars)
-            config.showMorphLine2 = True
+            config.showMorphText2 = True
             config.separateMorphColumns = True
             lingExFileItem = fileitemlist.LingExFileItem(self.userVars)
             lingExFileItem.filepath = fileItem.filepath

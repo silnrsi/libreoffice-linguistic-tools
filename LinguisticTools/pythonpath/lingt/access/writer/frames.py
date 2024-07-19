@@ -1,15 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 23-Sep-10 JDK  Orthography is at word rather than sentence level.
-# 01-Oct-10 JDK  First check if styles exist in order to avoid silent crash.
-# 15-Apr-13 JDK  Added insertInnerTempSpace().
-# 18-Apr-13 JDK  Make insertInnerTempSpace() handle outer cursor as well.
-# 29-Jul-13 JDK  Import constants instead of using uno.getConstantByName.
-# 30-Jul-15 JDK  Added _insertFrameData().
-# 15-Aug-15 JDK  Fixed bug: No paragraph break after last inner frame line.
-# 17-Feb-17 JDK  Word Line 1 and 2 instead of Orthographic and Text.
 
 """
 Create TextFrames in Writer.
@@ -86,9 +75,9 @@ class InterlinFrames:
 
         if firstMorph:
             self._insertWordData(
-                self.config.showWordLine1, 'wordTx1', word.text1)
+                self.config.showWordText1, 'wordTx1', word.text1)
             self._insertWordData(
-                self.config.showWordLine2, 'wordTx2', word.text2)
+                self.config.showWordText2, 'wordTx2', word.text2)
 
         frameForMorph = None    # either outer or inner frame
         if self.config.separateMorphColumns:
@@ -114,15 +103,15 @@ class InterlinFrames:
         ## Morpheme Text Lines 1 and 2
 
         self._insertMorphData(
-            self.config.showMorphLine1, frameForMorph, framecursor, 'morphTx1',
+            self.config.showMorphText1, frameForMorph, framecursor, 'morphTx1',
             word.morph.text1)
         self._insertMorphData(
-            self.config.showMorphLine2, frameForMorph, framecursor, 'morphTx2',
+            self.config.showMorphText2, frameForMorph, framecursor, 'morphTx2',
             word.morph.text2)
 
         ## Morpheme Part of Speech - first option
 
-        if self.config.showPartOfSpeech and self.config.POS_aboveGloss:
+        if self.config.showMorphPos and self.config.morphPosAboveGloss:
             self._insertFrameData(
                 frameForMorph, framecursor, 'morphPos', word.morph.pos)
 
@@ -135,7 +124,7 @@ class InterlinFrames:
 
         ## Morpheme Part of Speech - second option
 
-        if self.config.showPartOfSpeech and not self.config.POS_aboveGloss:
+        if self.config.showMorphPos and not self.config.morphPosAboveGloss:
             self._insertFrameData(
                 frameForMorph, framecursor, 'morphPos', word.morph.pos,
                 parabreak='before')
