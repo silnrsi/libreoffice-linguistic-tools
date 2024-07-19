@@ -16,6 +16,19 @@ then run pylint
 
 Check "Move PoS above gloss" by default.
 
+Doesn't fileitemlist.InterlinInputSettings need a bunch more attrs,
+such as showWordText1?
+
+checkboxes order in dialog:
+show interlinear lines
+    Word Text 1                 default
+    Word Text 2
+    Morpheme Text 1             default
+    Morpheme Text 2
+    Morpheme Part of Speech     default
+    Morpheme Gloss              default
+    Word Gloss
+
 
 ## Testing
 

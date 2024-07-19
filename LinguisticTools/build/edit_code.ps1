@@ -16,8 +16,8 @@
 param ([switch]$tests)
 $block = {
     Param($psscriptroot, $subpath, [bool]$editTests)
-    $EDITOR = "${Env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
-    #$EDITOR = "${Env:ProgramFiles}\Vim\vim74\gvim.exe"
+    #$EDITOR = "${Env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
+    $EDITOR = "${Env:ProgramFiles}\Vim\vim91\gvim.exe"
     $inpath = "$psscriptroot\..\"
     if ($editTests) {
         $inpath = $inpath + "tests\"

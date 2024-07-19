@@ -41,7 +41,8 @@ from lingt.utils import util
 LOGGING_ENABLED = False
 #LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
+    #BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
+    BASE_FOLDER = r"C:\OurDocs\computing\Office\LOLT_dev_extra"
 else:
     #BASE_FOLDER = "/mnt/sf_OurDocs"
     BASE_FOLDER = "/home/jkornels/LOLT_dev_extra"

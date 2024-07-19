@@ -6,19 +6,16 @@
     <ProjectGuid>{06ec9873-15d8-4071-81b4-e4a095ba3e9a}</ProjectGuid>
     <ProjectHome>LinguisticTools\</ProjectHome>
     <StartupFile>tests\ad_hoc_testing.py</StartupFile>
-    <SearchPath>..\..\..\Program Files (x86)\LibreOffice 5\program\;C:\Program Files\LibreOffice 5\program\;pythonpath\;.</SearchPath>
+    <SearchPath>..\..\..\Program Files (x86)\LibreOffice 5\program\;..\..\..\..\..\Program Files\LibreOffice 5\program\;pythonpath\;.</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
-    <InterpreterVersion />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components.py" />
@@ -196,6 +193,5 @@
     <Folder Include="tests\pythonpath\lingttest\ui" />
     <Folder Include="tests\pythonpath\lingttest\utils" />
   </ItemGroup>
-  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
