@@ -1,6 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Aug 10 2015 by Jim Kornelsen
 
 """
 Functions for iterating over UNO collections.

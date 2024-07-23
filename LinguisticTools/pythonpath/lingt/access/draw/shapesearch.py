@@ -1,10 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created July 28 2018 by Jim Kornelsen
-#
-# 01-Aug-18 JDK  Draw search descriptors cannot search by font.
-# 03-Aug-18 JDK  Draw does not have multiple selections.
-# 20-Sep-19 JDK  Cannot iterate over draw pages object in AOO.
 
 """
 Search through shapes in a Draw document, by font or full document.
@@ -108,9 +102,10 @@ class ShapeSearch:
         if not lang:
             raise exceptions.ChoiceProblem("No locale was specified.")
         for simpleTextSection in self.docEnum.documentSections():
-            if (simpleTextSection.CharLocale.Language == lang or
-                    simpleTextSection.CharLocaleComplex.Language == lang or
-                    simpleTextSection.CharLocaleAsian.Language == lang):
+            if lang in (
+                    simpleTextSection.CharLocale.Language,
+                    simpleTextSection.CharLocaleComplex.Language,
+                    simpleTextSection.CharLocaleAsian.Language):
                 # TextPortions include the TextRange service.
                 self.ranger.addRange(simpleTextSection)
 

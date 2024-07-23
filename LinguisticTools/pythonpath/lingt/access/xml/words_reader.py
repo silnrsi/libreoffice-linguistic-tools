@@ -1,6 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
 
 """
 Read XML files that contain words we want to grab.

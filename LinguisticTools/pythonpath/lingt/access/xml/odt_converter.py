@@ -1,19 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created June 22 2015 by Jim Kornelsen
-#
-# 16-Dec-15 JDK  Fixed bug: specify absolute path to xml files.
-# 17-Dec-15 JDK  Implemented readContentFile with limited functionality.
-# 22-Dec-15 JDK  Read a list of text nodes.
-# 23-Dec-15 JDK  Added changeContentFile().
-# 24-Dec-15 JDK  Added class OdtChanger.
-# 20-Feb-16 JDK  Read complex and Asian font types.
-# 21-Jun-16 JDK  Choose font type based on Unicode block.
-# 13-Jul-16 JDK  Read font size.
-# 21-Jul-16 JDK  Use ProcessingStyleItem instead of FontItem.
-# 28-Jul-16 JDK  Handle ScopeType.PARASTYLE.
-# 29-Jul-16 JDK  Handle any ScopeType value.
-# 30-Sep-16 JDK  Add conversion functions for internal names.
 
 """
 Read and change an ODT file in XML format.
@@ -191,16 +176,16 @@ class StyleReader:
         "style:name" attribute.
         """
         styleItem = ProcessingStyleItem(self.scopeType, False)
-        if (self.scopeType != ScopeType.FONT_WITH_STYLE
-                and self.scopeType != ScopeType.FONT_WITHOUT_STYLE):
+        if self.scopeType not in (
+                ScopeType.FONT_WITH_STYLE, ScopeType.FONT_WITHOUT_STYLE):
             return styleItem
         self._read_text_properties(styleItem, styleNode)
         return styleItem
 
     def add_named_style(self, styleNode):
         """Add paragraph and character styles with inherited attributes."""
-        if (self.scopeType == ScopeType.FONT_WITHOUT_STYLE
-                or self.scopeType == ScopeType.WHOLE_DOC):
+        if self.scopeType in (
+                ScopeType.FONT_WITHOUT_STYLE, ScopeType.WHOLE_DOC):
             return
         xmlStyleName = styleNode.getAttribute("style:name")
         parentStyleName = styleNode.getAttribute("style:parent-style-name")
@@ -236,12 +221,12 @@ class StyleReader:
         """Read style:text-properties nodes and store in self.stylesDict."""
         newStyleItem = ProcessingStyleItem(
             self.scopeType, (basicStyleType == BasicStyleType.NAMED))
-        if (self.scopeType != ScopeType.FONT_WITH_STYLE
-                and self.scopeType != ScopeType.FONT_WITHOUT_STYLE):
-            return newStyleItem
+        if self.scopeType not in (
+                ScopeType.FONT_WITH_STYLE, ScopeType.FONT_WITHOUT_STYLE):
+            return
         if (self.scopeType == ScopeType.FONT_WITHOUT_STYLE
                 and basicStyleType == BasicStyleType.NAMED):
-            return newStyleItem
+            return
         xmlStyleName = styleNode.getAttribute("style:name")
         if xmlStyleName in self.stylesDict:
             styleItem = self.stylesDict[xmlStyleName]
@@ -249,6 +234,7 @@ class StyleReader:
             styleItem = newStyleItem
         if self._read_text_properties(styleItem, styleNode):
             self.stylesDict[xmlStyleName] = styleItem
+        return
 
     def _read_text_properties(self, styleItem, styleNode):
         has_props = False
@@ -380,10 +366,9 @@ class StyleItemAppender:
         else:
             newItem.fontName = getattr(
                 self.baseStyleItem, ATTR_OF_FONT_TYPE[fontType])
-        if (self.scopeType == ScopeType.PARASTYLE or
-                self.scopeType == ScopeType.CHARSTYLE):
+        if self.scopeType in (ScopeType.PARASTYLE, ScopeType.CHARSTYLE):
             if not newItem.styleName:
-                return
+                return None
         self.styleItemDict[fontType] = newItem
         return newItem
 

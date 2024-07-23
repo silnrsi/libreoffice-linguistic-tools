@@ -1,12 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 17 2012 by Jim Kornelsen
-#
-# 20-Feb-13 JDK  Added getSpreadsheetReader() method.
-# 01-Mar-13 JDK  Fixed bug: Don't skip second row if first row is empty.
-# 01-Apr-13 JDK  Handle exceptions if document cannot be opened.
-# 08-Apr-13 JDK  Add filepath arg to loadDoc.
-# 15-Apr-13 JDK  queryContentCells() is faster than Cells enumeration.
 
 """
 Manage reading data from a Calc spreadsheet.

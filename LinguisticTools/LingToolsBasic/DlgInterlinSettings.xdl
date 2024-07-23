@@ -32,7 +32,7 @@
   <dlg:checkbox dlg:id="ChkWordGloss" dlg:tab-index="4" dlg:left="12" dlg:top="189" dlg:width="92" dlg:height="9" dlg:value="&amp;421.DlgInterlinSettings.ChkWordGloss.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkFT_inQuotes" dlg:tab-index="5" dlg:left="115" dlg:top="123" dlg:width="105" dlg:height="17" dlg:value="&amp;194.DlgInterlinSettings.chkFT_inQuotes.Value" dlg:multiline="true" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkMorphemesSeparateCols" dlg:tab-index="6" dlg:left="115" dlg:top="142" dlg:width="105" dlg:height="17" dlg:value="&amp;196.DlgInterlinSettings.chkMorphemesSeparateCols.Value" dlg:multiline="true" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="chkMorphPosAboveGloss" dlg:tab-index="7" dlg:disabled="true" dlg:left="115" dlg:top="161" dlg:width="105" dlg:height="17" dlg:value="&amp;198.DlgInterlinSettings.chkMorphPosAboveGloss.Value" dlg:multiline="true" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="chkMorphPosBelowGloss" dlg:tab-index="7" dlg:disabled="true" dlg:left="115" dlg:top="161" dlg:width="105" dlg:height="17" dlg:value="&amp;198.DlgInterlinSettings.chkMorphPosBelowGloss.Value" dlg:multiline="true" dlg:checked="false"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="OptionMethodFrames" dlg:tab-index="14" dlg:left="12" dlg:top="219" dlg:width="55" dlg:height="9" dlg:value="&amp;189.DlgInterlinSettings.OptionMethodFrames.Value" dlg:checked="true"/>
    <dlg:radio dlg:id="OptionMethodTables" dlg:tab-index="15" dlg:left="12" dlg:top="231" dlg:width="53" dlg:height="9" dlg:value="&amp;190.DlgInterlinSettings.OptionMethodTables.Value"/>

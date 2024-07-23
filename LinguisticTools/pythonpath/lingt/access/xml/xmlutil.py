@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 22-Dec-15 JDK  Added getElemTextList().
-# 27-Jul-16 JDK  Added getElementsByTagNames().
 
 """
 Functions to help read XML files.
@@ -19,7 +14,7 @@ def getTextByTagName(parent, tagname):
     :param tagname: tag to search for
     """
     elems = parent.getElementsByTagName(tagname)
-    if not len(elems):
+    if not elems:
         return ""
     elem = elems[0]
     return getElemText(elem)
@@ -46,9 +41,9 @@ def getTextByWS(parent, preferredWS):
     if not preferredWS:
         preferredWS = "en"  # default to English
     forms = parent.getElementsByTagName("form")
-    if not len(forms):
+    if not forms:
         return getTextByTagName(parent, "text")
-    elif len(forms) == 1:
+    if forms == 1:
         return getTextByTagName(forms[0], "text")
     for form in forms:
         if form.attributes:

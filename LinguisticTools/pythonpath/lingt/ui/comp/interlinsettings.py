@@ -249,8 +249,8 @@ class DlgControls:
             _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
         self.chkMorphPOS = ctrl_getter.get(_dlgdef.CHK_MORPH_POS)
         self.chkFT_inQuotes = ctrl_getter.get(_dlgdef.CHK_FT_IN_QUOTES)
-        self.chkMorphPosAboveGloss = ctrl_getter.get(
-            _dlgdef.CHK_MORPH_POS_ABOVE_GLOSS)
+        self.chkMorphPosBelowGloss = ctrl_getter.get(
+            _dlgdef.CHK_MORPH_POS_BELOW_GLOSS)
         self.chkNumbering = ctrl_getter.get(_dlgdef.CHK_INSERT_NUMBERING)
         self.chkOuterTable = ctrl_getter.get(_dlgdef.CHK_OUTER_TABLE)
         self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
@@ -284,7 +284,7 @@ class DlgControls:
             (self.chkMorphsSeparate, "SeparateMorphColumns"),
             (self.chkMorphPOS, "ShowMorphPartOfSpeech"),
             (self.chkFT_inQuotes, "FreeTransInQuotes"),
-            (self.chkMorphPosAboveGloss, "MorphPOS_AboveGloss"),
+            (self.chkMorphPosBelowGloss, "MorphPOS_BelowGloss"),
             (self.chkNumbering, "InsertNumbering"),
             (self.chkOuterTable, "MakeOuterTable")]
 
@@ -371,9 +371,9 @@ class DlgControls:
             self.txtNumColWidth.getModel().Enabled = False
             self.lblNumColWidth.getModel().Enabled = False
         if self.chkMorphPOS.getState() == 1:
-            self.chkMorphPosAboveGloss.getModel().Enabled = True
+            self.chkMorphPosBelowGloss.getModel().Enabled = True
         else:
-            self.chkMorphPosAboveGloss.getModel().Enabled = False
+            self.chkMorphPosBelowGloss.getModel().Enabled = False
 
 
 class DlgEventHandler(XActionListener, XItemListener, XTextListener,

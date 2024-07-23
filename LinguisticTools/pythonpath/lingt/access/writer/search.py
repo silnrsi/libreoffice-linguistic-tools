@@ -1,31 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 21-Sep-10 JDK  Function to search for character styles.
-# 02-Oct-10 JDK  Don't test for refInTable until replacing.
-# 06-Oct-10 JDK  Search by paragraph for ref char style (otherwise too slow).
-# 21-Oct-10 JDK  Function to search for scope char styles.
-# 26-Oct-10 JDK  Fixed bug: AbbrevList alreadyAskedList should use .lower()
-# 29-Oct-10 JDK  Allow #ref numbers not at end of line.
-# 29-Oct-10 JDK  Use unique lists rather than sets for abbreviations.
-# 30-Mar-11 JDK  Handle footnotes when searching whole document.
-# 19-Apr-11 JDK  Handle whole document by text portions rather than cursors.
-# 20-Dec-11 JDK  Traverse selections by cursor, rather than enumerating.
-# 12-Jan-12 JDK  Fixed bug, renaming moreToGoVC to compareVCtoRange.
-# 16-Nov-12 JDK  Option to not check for formatting, useful for word lists.
-# 20-Nov-12 JDK  Search for complex fonts by enumerating.
-# 05-Dec-12 JDK  Added scopeLocale().
-# 22-Feb-13 JDK  Added scopeWholeDocTraverse().
-# 18-Apr-13 JDK  Find ref numbers to update beyond, not at, current line.
-# 19-Apr-13 JDK  Search for locale language code only, not country.
-#                Search for ref number only on lines after viewcursor.
-# 23-Apr-13 JDK  When searching ref numbers, move viewcursor to each table.
-# 06-Jul-15 JDK  Added TextSearchSettings.
-# 14-Jul-15 JDK  Added getFoundString().
-# 28-Jul-15 JDK  Move TextSearch classes to a new module.
-# 10-Aug-15 JDK  Use generator to enumerate UNO collections.
-# 14-Sep-15 JDK  Fixed bug: Set self.foundString in findRefCharStyle().
 
 """
 Performs searches for data in the writer document.
@@ -281,16 +254,16 @@ class AbbrevSearch:
         progressBar.show()
         progressBar.updateBeginning()
         progressRange = ProgressRange(ops=len(abbrevList), pbar=progressBar)
-        for itemPos in range(0, len(abbrevList)):
+        for abbrevIndex, abbrev in enumerate(abbrevList):
             search = self.unoObjs.document.createSearchDescriptor()
-            search.SearchString = abbrevList[itemPos].abbrevText
+            search.SearchString = abbrev.abbrevText
             search.SearchCaseSensitive = False
             search.SearchWords = True
 
             selectionsFound = self.unoObjs.document.findAll(search)
             occurrences = selectionsFound.getCount()
-            abbrevList.setOccurrences(itemPos, occurrences)
-            progressRange.update(itemPos)
+            abbrevList.setOccurrences(abbrevIndex, occurrences)
+            progressRange.update(abbrevIndex)
         progressBar.updateFinishing()
         progressBar.close()
 

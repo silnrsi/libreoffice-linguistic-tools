@@ -58,7 +58,7 @@ class ExampleManager:
 
         if oVC.TextTable or oVC.TextFrame:
             raise exceptions.RangeError("Cannot be inside a table or frame.")
-        elif oVC.getText().getImplementationName() == "SwXHeadFootText":
+        if oVC.getText().getImplementationName() == "SwXHeadFootText":
             raise exceptions.RangeError("Cannot be in a header or footer.")
         try:
             self.textcursor = self.unoObjs.text.createTextCursorByRange(
@@ -70,7 +70,7 @@ class ExampleManager:
             'ParaStyleName', 'CharStyleName', 'CharFontName',
             'CharFontNameComplex', 'CharFontNameAsian', 'CharHeight',
             'CharHeightComplex', 'CharHeightAsian']
-        nextProps = dict()
+        nextProps = {}
         if self.textcursor.goRight(1, False):
             # Look ahead for next style and font
             for propName in propNames:
@@ -88,9 +88,7 @@ class ExampleManager:
         self.unoObjs.text.insertControlCharacter(
             self.textcursor, PARAGRAPH_BREAK, 0)
         for propName in propNames:
-            propVal = ""
-            if propName in nextProps:
-                propVal = nextProps[propName]
+            propVal = nextProps.get(propName, "")
             if propVal:
                 ## Set property to look-ahead value
                 logger.debug("PropName '%s' = '%s'", propName, propVal)
@@ -367,7 +365,7 @@ class AbbrevManager:
             self.msgbox.display(
                 "The cursor cannot be inside a table or frame.")
             return
-        elif oVC.getText().getImplementationName() == "SwXHeadFootText":
+        if oVC.getText().getImplementationName() == "SwXHeadFootText":
             self.msgbox.display("The cursor cannot be in a header or footer.")
             return
         textcursor = self.unoObjs.text.createTextCursorByRange(

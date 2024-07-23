@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Dec 10 2012 by Jim Kornelsen
-#
-# 22-Apr-13 JDK  Use travelCursor instead of viewcursor to select string.
-# 25-Apr-13 JDK  Use // for integer division, needed in Python 3.
 
 """
 Travel through a text range with a cursor, checking each word.
@@ -200,8 +195,7 @@ def cursorGo(oCurs, direction, count, doSel):
     for part in parts:
         if direction == 'right':
             return oCurs.goRight(part, doSel)
-        else:
-            return oCurs.goLeft(part, doSel)
+        return oCurs.goLeft(part, doSel)
 
 
 class VCLocation:
@@ -216,7 +210,7 @@ class VCLocation:
         self.reachedTable = False
 
         # current location is after viewcursor
-        self.after = True if startFromBeginning else False
+        self.after = bool(startFromBeginning)
 
     def parAfter(self, oPar):
         """
@@ -309,27 +303,25 @@ class RangeCompare:
         if curY < self.endY:
             logger.debug("%d < %d", curY, self.endY)
             return -1
-        elif curY > self.endY:
+        if curY > self.endY:
             logger.debug("%d > %d", curY, self.endY)
             return 1
-        elif curY == self.endY:
-            if curX == self.endX:
-                if differentPlaces(self.oVC, self.rangeEnd):
-                    # There is probably a word-final diacritic that doesn't
-                    # change the position, so we're not to the end yet.
-                    logger.debug("Including word-final diacritic.")
-                    return -2
-                # We're at the end.
-                logger.debug(
-                    "VC same loc as text range (%d, %d).", curX, curY)
-                return 0
-            else:
-                # Probably we haven't gone far enough.
-                # If there is some problem we may have gone too far, in which
-                # case the method will return -1 when we get to the next line.
-                # There are several advantages of not comparing curX and
-                # self.endX here.  First, this handles right-to-left scripts.
-                # Second, some fonts render badly and so going right one
-                # character may not always be moving physically to the right.
-                logger.debug("Probably haven't gone far enough.")
+        if curX == self.endX:
+            if differentPlaces(self.oVC, self.rangeEnd):
+                # There is probably a word-final diacritic that doesn't
+                # change the position, so we're not to the end yet.
+                logger.debug("Including word-final diacritic.")
                 return -2
+            # We're at the end.
+            logger.debug(
+                "VC same loc as text range (%d, %d).", curX, curY)
+            return 0
+        # Probably we haven't gone far enough.
+        # If there is some problem we may have gone too far, in which
+        # case the method will return -1 when we get to the next line.
+        # There are several advantages of not comparing curX and
+        # self.endX here.  First, this handles right-to-left scripts.
+        # Second, some fonts render badly and so going right one
+        # character may not always be moving physically to the right.
+        logger.debug("Probably haven't gone far enough.")
+        return -2

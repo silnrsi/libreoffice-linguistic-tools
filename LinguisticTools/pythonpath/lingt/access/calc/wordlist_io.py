@@ -1,11 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 26 2012 by Jim Kornelsen
-#
-# 17-Dec-12 JDK  Include both input and output.
-# 01-Mar-13 JDK  Fixed bug: 0-length list was selecting two (A2:A1).
-# 23-Jul-15 JDK  Refactor outputList().
-# 25-Aug-15 JDK  Fixed bug: %d does not accept a string.
 
 """
 Word list input and output for Calc.

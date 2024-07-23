@@ -14,9 +14,8 @@ Pyflakes is another option, but it doesn't seem to catch most problems.
 
 ## Install and configure
 
-pip install pylint       # not needed for python 3.4.1 and later
-cd $env:USERPROFILE
-pylint --generate-rcfile
+pip install pylint
+pylint --generate-rcfile | out-file -encoding utf8 .pylintrc
 msg-template={path}:{line}: {msg_id}({symbol}) {msg}
 reports=no
 Add codes to the disable line:
