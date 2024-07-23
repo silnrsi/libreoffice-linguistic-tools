@@ -356,7 +356,7 @@ class InterlinStyles(DocumentStyles):
         if newVal > 50:     # more than 50% is unreasonable
             raise exceptions.ChoiceProblem(
                 "Value %d for column width is too high.", newVal)
-        elif newVal <= 0:
+        if newVal <= 0:
             raise exceptions.ChoiceProblem(
                 "Value for column width must be more than zero.")
 
@@ -379,8 +379,7 @@ class InterlinStyles(DocumentStyles):
             sep0Pos = separators[0].Position
             logger.debug(
                 "table %s separator is %d", table.getName(), sep0Pos)
-            if (sep0Pos > prevVal - MARGIN_OF_ERROR and
-                    sep0Pos < prevVal + MARGIN_OF_ERROR):
+            if prevVal - MARGIN_OF_ERROR < sep0Pos < prevVal + MARGIN_OF_ERROR:
                 separators[0].Position = newVal
                 table.TableColumnSeparators = separators
                 logger.debug("changed to %d", newVal)

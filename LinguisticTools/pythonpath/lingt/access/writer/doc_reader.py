@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 5 2012 by Jim Kornelsen
-#
-# 01-Apr-13 JDK  Handle exceptions if document cannot be opened.
-# 08-Apr-13 JDK  Separate loading document into a new method.
 
 """
 Read text docs in Writer that contain words we want to grab.

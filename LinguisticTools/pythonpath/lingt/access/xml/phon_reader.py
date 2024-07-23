@@ -1,14 +1,5 @@
 # -*- coding: Latin-1 -*-
 
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 11-Apr-13 JDK  Generate ref IDs when harvesting word list data.
-# 05-Jul-13 JDK  Option to use Flex citation field for phonemic.
-# 07-Jul-15 JDK  Specific arguments instead of generic config object.
-# 17-Nov-15 JDK  Option to force LIFT ref number location.
-# 13-Dec-17 JDK  Use collections.OrderedDict for display in a list.
-# 24-Jun-20 JDK  Remember duplicate ref numbers.
-
 """
 Read XML files that typically contain phonology corpus data.
 

@@ -111,7 +111,7 @@ class InterlinFrames:
 
         ## Morpheme Part of Speech - first option
 
-        if self.config.showMorphPos and self.config.morphPosAboveGloss:
+        if self.config.showMorphPos and not self.config.morphPosBelowGloss:
             self._insertFrameData(
                 frameForMorph, framecursor, 'morphPos', word.morph.pos)
 
@@ -124,7 +124,7 @@ class InterlinFrames:
 
         ## Morpheme Part of Speech - second option
 
-        if self.config.showMorphPos and not self.config.morphPosAboveGloss:
+        if self.config.showMorphPos and self.config.morphPosBelowGloss:
             self._insertFrameData(
                 frameForMorph, framecursor, 'morphPos', word.morph.pos,
                 parabreak='before')

@@ -1,27 +1,9 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 21-Oct-10 JDK  Option for changing font without applying a style.
-# 29-Mar-11 JDK  Preserve character styles.  Preserve line and para breaks.
-# 19-Apr-11 JDK  TextSearch now splits up text portions, so now we can assume
-#                the formatting is all the same here.
-# 21-Dec-11 JDK  Clear the font when setting character or paragraph styles.
-# 26-Nov-12 JDK  Optional message box to ask before making each change.
-# 22-Feb-13 JDK  Fixed bug in changeString -- added collapseToEnd.
-# 07-Jun-13 JDK  Raise exception if convert fails.
-# 13-Jul-15 JDK  Take fontDef as parameter.
-# 10-Aug-15 JDK  Use generator to enumerate UNO collections.
-# 09-Oct-15 JDK  Fixed bug in clearFont(): self.newFont is a FontDefStruct obj.
-# 10-Dec-15 JDK  Import constant instead of using uno.Enum.
-# 01-Aug-18 JDK  Do not require a viewcursor (for Draw).
-# 03-Aug-18 JDK  Cursor ranges were lost in Draw when text changed.
 
 """
 Handles changes to text in the document.
 For Data Conversion.
 """
-
 import logging
 import re
 from com.sun.star.beans.PropertyState import DIRECT_VALUE
@@ -137,8 +119,8 @@ class TextChanger:
             oCursor = oSel.getText().createTextCursorByRange(oSel)
         except (RuntimeException, IllegalArgumentException):
             logger.warning("Failed to go to text range.")
-            return
-        logger.debug(u"String = '%r'", oCursor.getString())
+            return False
+        logger.debug("String = '%r'", oCursor.getString())
         if self.askEach:
             if self.unoObjs.viewcursor:
                 self.unoObjs.viewcursor.gotoRange(oSel.getStart(), False)

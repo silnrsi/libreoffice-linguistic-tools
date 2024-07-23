@@ -1,15 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Sept 21 2010 by Jim Kornelsen
-#
-# 25-Oct-10 JDK  Optionally don't create a comparison doc.
-# 29-Oct-10 JDK  Only go up 2 when deleting phonology examples.
-# 12-Aug-11 JDK  If number is just (), save range to add number.
-# 09-Apr-13 JDK  Look for an already open comparsion doc.
-# 19-Apr-13 JDK  Start at end of new example in deleteOldPhonEx.
-# 29-Jul-13 JDK  Import constants instead of using uno.getConstantByName.
-# 27-Jul-15 JDK  Added ComparisonDoc class.
-# 10-Aug-15 JDK  Use generator to enumerate UNO collections.
 
 """
 Given an old example and a new one, moves the ref number to the new example.
@@ -235,10 +224,8 @@ class ComparisonDoc:
                     if varFilepath == currentFilepath:
                         logger.debug("found comparison doc")
                         self.writerDoc = docUnoObjs
-                        return False
-                    else:
-                        logger.debug(
-                            "%s != %s", varFilepath, currentFilepath)
+                        return
+                    logger.debug("%s != %s", varFilepath, currentFilepath)
 
         logger.debug("opening new document for comparison")
         newDoc = self.mainDoc.desktop.loadComponentFromURL(
@@ -407,4 +394,3 @@ class ComparisonDoc:
     def disposing(self, dummy_aEvent):
         logger.debug("Disposing")
         self.writerDoc = None
-        return None

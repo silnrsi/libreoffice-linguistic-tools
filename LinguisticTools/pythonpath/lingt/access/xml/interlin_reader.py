@@ -48,7 +48,7 @@ class InterlinReader(FileReader):
     def _initData(self):
         # Dictionary of examples keyed by lowercase ref number.
         # Examples are of type lingex_structs.LingInterlinExample.
-        self.data = dict()
+        self.data = {}
 
     def _verifyDataFound(self):
         """Override base class method."""
@@ -133,7 +133,7 @@ class InterlinReader(FileReader):
             raise exceptions.FileAccessError(
                 "File does not seem to be from Toolbox or FieldWorks: %s",
                 filepath)
-        elif (docElem.nodeName == "database"
+        if (docElem.nodeName == "database"
               and re.match(r"[a-zA-Z0-9]+Group", docElemChild.nodeName)):
             filetype = "toolbox"
         elif (docElem.nodeName == "document"
@@ -267,10 +267,10 @@ class ToolboxBaseline:
         self.ortho_tag = self.fieldTags[ortho_tag]
 
     def verify_words_found(self):
-        if not len(self.data):
+        if not self.data:
             return
         for ex in self.data.values():
-            if len(ex.wordList):
+            if ex.wordList:
                 return
         if self.config.SFM_baseline_word1:
             current_wordline = 1

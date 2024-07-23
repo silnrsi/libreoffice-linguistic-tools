@@ -1,8 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created June 22 2015 by Jim Kornelsen
-#
-# 16-Dec-15 JDK  Fixed bug: pass proper arguments to OdtConverter.
 
 """
 Does the following so that ODT files can be read and modified as XML:
@@ -55,7 +51,7 @@ class DocToXml:
             self.make_temp_dir()
         except exceptions.FileAccessError as exc:
             self.msgbox.displayExc(exc)
-            return list()
+            return []
         data = None
         self.progressRange_partNum = 0
         try:
@@ -173,10 +169,9 @@ class DocToXml:
                 "Too many files named like %s.", resultCandidate)
             return 0
         logger.debug("Writing to file %s", resultFilepath)
-        zipper = zipfile.ZipFile(resultFilepath, 'w')
-        for abs_path, rel_path in paths_to_all_files(self.tempDir):
-            zipper.write(abs_path, rel_path)
-        zipper.close()
+        with zipfile.ZipFile(resultFilepath, 'w') as zipper:
+            for abs_path, rel_path in paths_to_all_files(self.tempDir):
+                zipper.write(abs_path, rel_path)
         logger.debug(util.funcName('end'))
         return numChanges
 

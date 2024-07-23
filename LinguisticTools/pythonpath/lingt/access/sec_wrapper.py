@@ -402,9 +402,8 @@ def getStringParam(strval):
     try:
         if platform.system() == "Windows":
             return ctypes.c_wchar_p(strval)
-        else:
-            byteStr = strval.encode('utf-8')
-            return ctypes.c_char_p(byteStr)
+        byteStr = strval.encode('utf-8')
+        return ctypes.c_char_p(byteStr)
     except UnicodeEncodeError:
         raise exceptions.DataNotFoundError(
             "Failed to encode string properly.")
@@ -418,7 +417,6 @@ def createBuffer(size):
         # In C++ this is wchar_t *
         # In Python this is unicode string
         return ctypes.create_unicode_buffer(size)
-    else:
-        # In C++ this is char * for UTF-8
-        # In Python this is bytes
-        return ctypes.create_string_buffer(size)
+    # In C++ this is char * for UTF-8
+    # In Python this is bytes
+    return ctypes.create_string_buffer(size)

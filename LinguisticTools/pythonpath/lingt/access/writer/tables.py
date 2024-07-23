@@ -203,11 +203,11 @@ class InterlinTables:
             word.morph.text2)
 
         # Morpheme Gloss and Part of Speech
-        morphGlossRow = row
-        morphPosRow = row + 1
-        if self.config.morphPosAboveGloss:
-            morphPosRow = row
-            morphGlossRow = row + 1
+        morphPosRow = row
+        morphGlossRow = row + 1
+        if self.config.morphPosBelowGloss:
+            morphGlossRow = row
+            morphPosRow = row + 1
         if self.config.showMorphGloss:
             self._insertCellData(
                 morphRow_col, morphGlossRow, 'gloss', word.morph.gloss)

@@ -1,12 +1,5 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created July 28 2015 by Jim Kornelsen
-#
-# 10-Aug-15 JDK  Use generator to enumerate UNO collections.
-# 05-Oct-15 JDK  Fixed bug: Initialize traveler correctly.
-# 07-Oct-15 JDK  Fixed bug: Attribute fontName instead of font.
-# 14-Oct-15 JDK  Fixed bug: selFormatting cannot be local to one method.
-# 16-Nov-15 JDK  Fixed bug: addRangesForCursor() should add ranges.
+
 """
 Writer document searches such as by font or full document.
 """
@@ -198,9 +191,10 @@ class TextSearch:
         if not lang:
             raise exceptions.ChoiceProblem("No locale was specified.")
         for simpleTextSection in self.docEnum.documentSections():
-            if (simpleTextSection.CharLocale.Language == lang or
-                    simpleTextSection.CharLocaleComplex.Language == lang or
-                    simpleTextSection.CharLocaleAsian.Language == lang):
+            if lang in (
+                    simpleTextSection.CharLocale.Language,
+                    simpleTextSection.CharLocaleComplex.Language,
+                    simpleTextSection.CharLocaleAsian.Language):
                 # TextPortions include the TextRange service.
                 self.ranger.addRange(simpleTextSection)
 
@@ -230,7 +224,7 @@ class TextSearch:
                     cursor.gotoRange(oSel.getEnd(), True)
                     txtRange.sel = cursor
                     break
-                elif oText.compareRegionEnds(cursor, oSel.getEnd()) < 0:
+                if oText.compareRegionEnds(cursor, oSel.getEnd()) < 0:
                     logger.debug("passed end")
                     break
 
@@ -564,7 +558,7 @@ class Formatting:
         self.attrs = {}
         for attr in self.ATTR_NAMES:
             self.attrs[attr] = ""
-            if oSel != None:
+            if oSel is not None:
                 self.attrs[attr] = oSel.getPropertyValue(attr)
                 #logger.debug(
                 #    "%s attr %s = %s",
@@ -603,7 +597,7 @@ class InText:
         self.containers = {}
         for container in self.CONTAINER_TYPES:
             self.containers[container] = ""
-            if cursor != None:
+            if cursor is not None:
                 self.containers[container] = getContainerName(
                     cursor, container)
 

@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 17 2012 by Jim Kornelsen
-#
-# 28-Feb-13 JDK  Handle RuntimeException if Calc spreadsheet is closed.
-# 04-Mar-13 JDK  Added skipFirstRow parameter.
 
 """
 Manage outputting to Calc.

@@ -1,8 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 11-Apr-13 JDK  Also check in WritingSystems subdirectory if it exists.
 
 """
 Read XML files describing writing systems.
@@ -80,15 +76,15 @@ class WritingSysReader(FileReader):
         ## Get the code (seems to be different from FW Internal Code)
 
         elems = self.dom.getElementsByTagName("identity")
-        if len(elems):
+        if elems:
             elem = elems[0]
             languages = elem.getElementsByTagName("language")
-            if len(languages):
+            if languages:
                 language = languages[0]
                 if language.attributes:
                     ws.internalCode = language.getAttribute("type")
             variants = elem.getElementsByTagName("variant")
-            if len(variants):
+            if variants:
                 variant = variants[0]
                 if variant.attributes:
                     variantVal = variant.getAttribute("type")
@@ -97,7 +93,7 @@ class WritingSysReader(FileReader):
         ## Get the language name
 
         elems = self.dom.getElementsByTagName("palaso:languageName")
-        if len(elems):
+        if elems:
             elem = elems[0]
             if elem.attributes:
                 ws.name = elem.getAttribute("value")

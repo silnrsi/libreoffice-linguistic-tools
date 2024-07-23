@@ -1,9 +1,4 @@
 # -*- coding: Latin-1 -*-
-#
-# This file created Nov 9 2012 by Jim Kornelsen
-#
-# 11-Apr-13 JDK  Split SF markers into list.
-# 02-Mar-17 JDK  Fixed bug: WhatToGrab attributes have changed.
 
 """
 Read SFM files and grab specified fields.
@@ -62,29 +57,25 @@ class SFM_Reader(FileReader):
         Modifies self.rawData
         """
         logger.debug("reading SFM file")
-        infile = io.open(self.filepath, mode='r', encoding='UTF8')
-
-        sfMarkerList = list()
-        for whatToGrab in self.fileconfig.thingsToGrab:
-            if whatToGrab.grabType == wordlist_structs.WhatToGrab.SFM:
-                sfMarkerList.extend(whatToGrab.whichOne.split())
-
-        lineNum = 1
-        try:
-            for line in infile:
-                logger.debug("Line #%d.", lineNum)
-                lineNum += 1
-                for marker in sfMarkerList:
-                    markerWithSpace = marker + " "
-                    if line.startswith(markerWithSpace):
-                        logger.debug("^%s", markerWithSpace)
-                        data = line[len(markerWithSpace):]
-                        data = data.strip() # is this needed?
-                        self.rawData.append((marker, data))
-        except UnicodeDecodeError as exc:
-            raise exceptions.FileAccessError(
-                "Error reading file %s\n\n%s",
-                self.filepath, str(exc))
-        finally:
-            infile.close()
+        with io.open(self.filepath, mode='r', encoding='UTF8') as infile:
+            sfMarkerList = []
+            for whatToGrab in self.fileconfig.thingsToGrab:
+                if whatToGrab.grabType == wordlist_structs.WhatToGrab.SFM:
+                    sfMarkerList.extend(whatToGrab.whichOne.split())
+            lineNum = 1
+            try:
+                for line in infile:
+                    logger.debug("Line #%d.", lineNum)
+                    lineNum += 1
+                    for marker in sfMarkerList:
+                        markerWithSpace = marker + " "
+                        if line.startswith(markerWithSpace):
+                            logger.debug("^%s", markerWithSpace)
+                            data = line[len(markerWithSpace):]
+                            data = data.strip() # is this needed?
+                            self.rawData.append((marker, data))
+            except UnicodeDecodeError as exc:
+                raise exceptions.FileAccessError(
+                    "Error reading file %s\n\n%s",
+                    self.filepath, str(exc))
         logger.debug("Found %d words.", len(self.rawData))

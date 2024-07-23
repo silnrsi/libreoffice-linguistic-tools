@@ -212,7 +212,7 @@ class InterlinOutputSettings(Syncable):
         ('showMorphGloss', "ShowMorphGloss"),
         ('separateMorphColumns', "SeparateMorphColumns"),
         ('showMorphPos', "ShowMorphPartOfSpeech"),
-        ('morphPosAboveGloss', "MorphPartOfSpeechAboveGloss"),
+        ('morphPosBelowGloss', "MorphPartOfSpeechBelowGloss"),
         ('freeTransInQuotes', "FreeTransInQuotes"),
         ]
 
@@ -230,7 +230,7 @@ class InterlinOutputSettings(Syncable):
         self.showMorphGloss = True
         self.separateMorphColumns = True
         self.showMorphPos = True
-        self.morphPosAboveGloss = False
+        self.morphPosBelowGloss = False
         self.freeTransInQuotes = False
         self.startingOuterRowHeight = 2
         self.tableBottomMargin = 0.13
@@ -254,7 +254,7 @@ class InterlinOutputSettings(Syncable):
                 and not self.showMorphGloss):
             self.separateMorphColumns = False
         if not self.showPartOfSpeech:
-            self.morphPosAboveGloss = False
+            self.morphPosBelowGloss = False
 
         val = 0.13
         varname = "TableBottomMargin"

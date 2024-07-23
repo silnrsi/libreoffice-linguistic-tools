@@ -78,8 +78,7 @@ class UserVars:
             stringVal = self.userProps.getPropertyValue(varName)
             #self.otherLogger.debug("getUserVar =%s", stringVal)
             return stringVal
-        else:
-            return ""
+        return ""
 
     def getWithDefault(self, varName, defaultVal):
         """Returns default value if user var is empty."""
@@ -117,9 +116,8 @@ class UserVars:
             self.userProps.removeProperty(varName)
             self.otherLogger.debug("Property deleted")
             return True
-        else:
-            self.otherLogger.debug("Property not found")
-            return False
+        self.otherLogger.debug("Property not found")
+        return False
 
     def __deepcopy__(self, memo):
         """UserVar objects are only one per document, so return this one."""
@@ -240,8 +238,8 @@ class Syncable:
     @staticmethod
     def noUserVarData(varName):
         return exceptions.DataNotFoundError(
-            u"Error parsing %s user variable.  Please go to Insert -> "
-            u"Field -> More Fields and fix the problem.", varName)
+            "Error parsing %s user variable.  Please go to Insert -> "
+            "Field -> More Fields and fix the problem.", varName)
 
 
 class FieldTags:
