@@ -1,9 +1,6 @@
-# -*- coding: Latin-1 -*-
-
 """
 Manage reading data from a Calc spreadsheet.
 """
-
 import logging
 import os
 import uno

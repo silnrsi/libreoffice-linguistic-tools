@@ -1,3 +1,3 @@
 #
-# The lingt package (OOo Linguistic Tools).
+# The lingt package (LO Linguistic Tools).
 #

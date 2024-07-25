@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Given an old example and a new one, moves the ref number to the new example.
 Then moves the old example to a new comparison document, and copies the
@@ -25,11 +23,8 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.ExUpdater")
 
-
 class ExUpdater:
-    """
-    Inserts a new example to replace an old one.
-    """
+    """Inserts a new example to replace an old one."""
     def __init__(self, unoObjs, exampleManager, VAR_PREFIX):
         self.unoObjs = unoObjs
         self.exampleManager = exampleManager

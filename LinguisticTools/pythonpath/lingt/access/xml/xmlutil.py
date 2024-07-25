@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Functions to help read XML files.
 """

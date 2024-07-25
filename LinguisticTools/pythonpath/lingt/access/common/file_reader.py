@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Interface to read XML or other files.
 """
@@ -11,7 +9,6 @@ from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.file_reader")
-
 
 class FileReader:
     """Abstract base class for XML file readers.

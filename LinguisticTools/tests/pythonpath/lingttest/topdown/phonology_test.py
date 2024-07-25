@@ -165,13 +165,13 @@ class PhonologyTestCase(unittest.TestCase):
                 "TbxPhonCorpus.xml", "JPDN37.6", u"a\u0256upa",
                 u"a\u0256\u0268pa", "kitchen.stove"),
             Test2Data(
-                "TbxPhonCorpus.xml", "JPDN37.4", u"pane", u"pæne",
+                "TbxPhonCorpus.xml", "JPDN37.4", u"pane", u"pÃ¦ne",
                 "vessel.to.store.rice"),
             Test2Data(
-                "PAdata.paxml", "JPDN23.1", u"mat\u0283t\u0283æ",
+                "PAdata.paxml", "JPDN23.1", u"mat\u0283t\u0283Ã¦",
                 u"m\u0259t\u0283\u025b", "unmarried cousin"),
             Test2Data(
-                "PAdata.paxml", "JPDN58.02", u"bod\u032ae", u"boðe",
+                "PAdata.paxml", "JPDN58.02", u"bod\u032ae", u"boÃ°e",
                 "bush")]
         for data in dataSets:
             useDialog = self._test2_make_useDialog(data)
@@ -383,7 +383,7 @@ class PhonologyTestCase(unittest.TestCase):
                 u"ak\u02b0e", u"akke", "JPDN21.5", 'CharStyleName',
                 "Caption characters"),
             Test5Data(
-                u"pæne", u"pane", "JPDN37.4", 'CharFontName', "Arial Black")]
+                u"pÃ¦ne", u"pane", "JPDN37.4", 'CharFontName', "Arial Black")]
         self._test5_insert_original_examples(dataSets)
         self._test5_update_examples()
         self._test5_check_examples(dataSets)

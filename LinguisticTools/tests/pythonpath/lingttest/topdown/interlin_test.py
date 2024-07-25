@@ -81,8 +81,8 @@ class InterlinTestCase(unittest.TestCase):
                 u"[1.2 ft]"),
             Test1Data(
                 "Sena Int.flextext", "1.1", 20, u"Pisapha,",
-                u"Estas coisas doem mas o que È necess·rio È ter coragem. "
-                u"Pois nÛs todos vamos morrer.")]
+                u"Estas coisas doem mas o que √© necess√°rio √© ter coragem. "
+                u"Pois n√≥s todos vamos morrer.")]
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         for dataSet in dataSets:
             useDialog = self._test1_make_useDialog(dataSet)
@@ -432,8 +432,8 @@ class InterlinTestCase(unittest.TestCase):
         dataSets = [
             Test4Data(
                 "A1.1", 20, u"Pisapha,",
-                u"Estas coisas doem mas o que È necess·rio È ter coragem. "
-                u"Pois nÛs todos vamos morrer."),
+                u"Estas coisas doem mas o que √© necess√°rio √© ter coragem. "
+                u"Pois n√≥s todos vamos morrer."),
             Test4Data(
                 "BP1.S1", 11, u"o\u027eu",
                 u" \u200e\u200eIn a village there was a headman.")]

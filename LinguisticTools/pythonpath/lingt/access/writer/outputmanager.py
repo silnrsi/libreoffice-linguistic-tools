@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Sends output to Writer.
 """

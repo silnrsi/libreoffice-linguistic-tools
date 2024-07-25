@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Create TextTables for interlinear data.
 """
@@ -490,8 +488,9 @@ class InnerTable:
         logger.debug(util.funcName('begin'))
         #oldSel = self.unoObjs.controller.getSelection()
         addedExtraCol = False
-        # The outer table row needs to be adjustable or else optimizing
-        # a tall inner table can mess it up.  This seems to be a bug in OOo.
+        # The outer table row needs to be adjustable or else optimizing a tall
+        # inner table can mess it up. This seems to be a bug.
+        # TODO: Does the problem still occur in LibreOffice?
         self.outerTable.resize()
         if self.morphRow_cols == 1:
             # Insert an extra column, because optimization doesn't work

@@ -1,33 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Sept 14 2010 by Jim Kornelsen
-#
-# 21-Sep-10 JDK  Renamed logging vars to be different from other packages.
-# 04-Oct-10 JDK  Check for existence of directory for debug file.
-# 22-Oct-10 JDK  UserVars should handle None values.
-# 25-Oct-10 JDK  Custom uniqueList() instead of set().
-# 28-Jun-11 JDK  Optionally use Linux file paths.  Added function getFloat().
-# 23-Oct-12 JDK  Move UserVars to its own file.
-# 12-Nov-12 JDK  UnoObjs can optionally take an existing document object.
-# 14-Nov-12 JDK  Added sameName().
-# 16-Nov-12 JDK  Get frame window.
-# 21-Nov-12 JDK  Added getControl().
-# 17-Dec-12 JDK  Make UnoObjs.getFromSocket() work for Calc.
-# 25-Mar-13 JDK  Added getOpenDocs().
-# 27-Apr-13 JDK  Added testing path.
-# 08-May-13 JDK  Added uniqueList() again after it was removed.
-# 13-May-13 JDK  Default to getting current document in loadDocObjs().
-# 29-Jun-15 JDK  Added funcName().
-# 06-Jul-15 JDK  Moved UI-specific functions to ui.dutils.
-# 15-Jul-15 JDK  Removed safeStr().  Use "%s" instead.
-# 07-Aug-15 JDK  Added setupLogging().
-# 14-Oct-15 JDK  Uno objects for Impress.
-# 23-May-16 JDK  Added a generic UnoObjs doc type.
-# 02-Aug-16 JDK  Added mri().
-# 28-Jul-18 JDK  Uno objects for Draw.
-# 20-Sep-19 JDK  Added natural_sort().
-# 18-Nov-19 JDK  Fixed compile error: Variables were not declared for linux.
-
 """
 This module is used by most LingTools modules:
 - Logging and debugging
@@ -77,7 +47,6 @@ LOGGING_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 TESTDATA_FOLDER = os.path.join(
     BASE_FOLDER, "LinguisticTools", "tests", "datafiles")
 
-
 def setupLogging():
     """Set up logging output format, where the output gets sent,
     and which classes have logging turned on and at what levels.
@@ -109,7 +78,6 @@ def setupLogging():
     #    configLogger.setLevel(logging.WARN)
 
 setupLogging()
-
 
 class UnoObjs:
     """Manage UNO context and document objects.
@@ -204,7 +172,7 @@ class UnoObjs:
 
     @classmethod
     def getCtxFromSocket(cls):
-        """Use when connecting from outside OOo, such as when testing."""
+        """Use when connecting from outside LO, such as when testing."""
         localContext = uno.getComponentContext()
         resolver = localContext.ServiceManager.createInstanceWithContext(
             "com.sun.star.bridge.UnoUrlResolver", localContext)
@@ -228,14 +196,12 @@ class UnoObjs:
                     doclist.append(self.getDocObjs(oDoc, self.DOCTYPE_CALC))
         return doclist
 
-
 def createProp(name, value):
     """Creates an UNO property."""
     prop = PropertyValue()
     prop.Name = name
     prop.Value = value
     return prop
-
 
 def uniqueList(seq):
     """Return a list with duplicates removed and order preserved.
@@ -247,16 +213,23 @@ def uniqueList(seq):
             checked.append(e)
     return checked
 
-
 def natural_sort(l):
     """Sort a list oF strings in natural sort order,
     for example "1.2" before "1.10".
-    Taken from https://stackoverflow.com/questions/4836710/.
     """
-    convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
-    return sorted(l, key=alphanum_key)
+    def convert(text):
+        """Convert text to integer if it is a digit, otherwise to lowercase."""
+        if text.isdigit():
+            return int(text)
+        return text.lower()
 
+    def alphanum_key(key):
+        """Split the key into alphanumeric components,
+        converting digits to integers and other parts to lowercase."""
+        parts = re.split('([0-9]+)', key)
+        return [convert(c) for c in parts]
+
+    return sorted(l, key=alphanum_key)
 
 def xray(myObject, unoObjs):
     """For debugging.
@@ -278,7 +251,6 @@ def xray(myObject, unoObjs):
             "\nBasic library Xray is not installed", unoObjs.ctx)
     xScript.invoke((myObject,), (), ())
 
-
 def mri(target, unoObjs):
     """Like xray but uses the MRI introspection tool instead."""
     if not LOGGING_ENABLED:
@@ -286,7 +258,6 @@ def mri(target, unoObjs):
     mri_obj = unoObjs.ctx.ServiceManager.createInstanceWithContext(
         "mytools.Mri", unoObjs.ctx)
     mri_obj.inspect(target)
-
 
 def funcName(location=None, obj=None, args='args_unspecified'):
     """
@@ -318,7 +289,6 @@ def funcName(location=None, obj=None, args='args_unspecified'):
     if args != 'args_unspecified':
         argString = " = " + repr(args)
     return displayString + locationString + argString
-
 
 def debug_tellNextChar(oCurs):
     """Tells the character to the right of where the cursor is at."""

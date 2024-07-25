@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Write XSLT files to run against XML data files.
 """

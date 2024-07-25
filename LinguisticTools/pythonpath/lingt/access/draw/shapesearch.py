@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Search through shapes in a Draw document, by font or full document.
 """
@@ -11,7 +9,6 @@ from lingt.app import exceptions
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.TextSearch")
-
 
 class ShapeSearchSettings:
     """A structure to hold settings for ShapeSearch."""

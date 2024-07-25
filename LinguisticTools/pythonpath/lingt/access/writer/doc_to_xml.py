@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Does the following so that ODT files can be read and modified as XML:
 - Save files such as .rtf and .doc into .odt format.

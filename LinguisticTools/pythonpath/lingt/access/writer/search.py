@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Performs searches for data in the writer document.
 """

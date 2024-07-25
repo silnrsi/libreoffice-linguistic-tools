@@ -8,16 +8,36 @@ A fake UNO file needed to make PyLint happy.
 docs.libreoffice.org/pyuno/html/uno_8py.html
 """
 
+class BaseFakeInstance:
+    """Complains if None is unexpectedly returned,
+    so create one of these instead.
+    """
+    pass
+
+class FakeUnoUrlResolver(BaseFakeInstance):
+    def resolve(self, uno_url):
+        return "dummy_ctx"
+
+class FakeInstance(BaseFakeInstance):
+    """General purpose fake instance"""
+    pass
+
 def getComponentContext():
 
     class ServiceManager:
-        def createInstanceWithContext(self, dummy_str, dummy_ComponentContext):
-            return None
+        def createInstanceWithContext(self, service_name, context):
+            if service_name == "com.sun.star.bridge.UnoUrlResolver":
+                return FakeUnoUrlResolver()
+            return FakeInstance()
+
         def createInstanceWithArgumentsAndContext(
-                self, dummy_str, dummy_arguments, dummy_ComponentContext):
-            return None
+                self, service_name, arguments, context):
+            if service_name == "com.sun.star.bridge.UnoUrlResolver":
+                return FakeUnoUrlResolver()
+            return FakeInstance()
+
         def getAvailableServiceNames(self):
-            return []
+            return ["com.sun.star.bridge.UnoUrlResolver",]
 
     class ComponentContext:
         def __init__(self):
@@ -61,7 +81,7 @@ def absolutize():
     pass
 
 def getCurrentContext():
-    return None
+    return FakeInstance()
 
 def setCurrentContext():
     pass

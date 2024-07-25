@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Create TextFrames in Writer.
 """

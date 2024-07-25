@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Functions for iterating over UNO collections.
 See "https://wiki.openoffice.org/wiki/Documentation/DevGuide" +

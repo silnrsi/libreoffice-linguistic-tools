@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read text docs in Writer that contain words we want to grab.
 Most of the grunt work is done by search.py
@@ -61,7 +59,7 @@ class DocReader(FileReader):
             #util.createProp("FilterName", "Text"),
         )
         # Loading the document hidden was reported to frequently crash
-        #       before OOo 2.0.  It seems to work fine now though.
+        # before OpenOffice.org 2.0.  It seems to work fine now though.
         newDoc = self.unoObjs.desktop.loadComponentFromURL(
             fileUrl, "_default", 0, uno_args)
         try:

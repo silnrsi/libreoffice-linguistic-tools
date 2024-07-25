@@ -1,14 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created July 7 2015 by Jim Kornelsen
-#
-# 13-Jul-15 JDK  "Load" methods don't return a value.
-# 06-Aug-15 JDK  Fixed bug: Don't call setText() unless needed.
-# 24-Aug-15 JDK  Don't need a special copy method for this class.
-# 18-Dec-15 JDK  Added comparison methods.
-# 11-Feb-16 JDK  Option to always change control prop.
-# 01-Aug-18 JDK  Fixed bug: loadUserVar() should not specify if empty user var.
-
 """
 Operations related to font size defaults and form input.
 """
@@ -20,7 +9,6 @@ LOWER_LIMIT = 1
 UPPER_LIMIT = 99
 
 logger = logging.getLogger("lingt.utils.fontsize")
-
 
 @functools.total_ordering
 class FontSize:
