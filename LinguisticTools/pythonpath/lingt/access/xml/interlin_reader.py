@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read interlinear examples, typically used for grammar writeups.
 """
@@ -19,7 +17,6 @@ from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.interlin_reader")
-
 
 class InterlinReader(FileReader):
     SUPPORTED_FORMATS = [

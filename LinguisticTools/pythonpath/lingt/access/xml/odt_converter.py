@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read and change an ODT file in XML format.
 Call SEC_wrapper to do engine-based conversion.
@@ -26,7 +24,6 @@ from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 
 logger = logging.getLogger("lingt.access.odt_converter")
-
 
 class BasicStyleType:
     """Not to be confused with bulkconv_structs.StyleType"""

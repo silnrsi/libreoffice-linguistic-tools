@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Access SIL Encoding Converters.
 Calls the ECDriver DLL using the ctypes library.
@@ -21,7 +19,6 @@ from lingt.app import exceptions
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.sec_wrapper")
-
 
 class ConverterSettings(Syncable):
     def __init__(self, userVars):

@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read XML files describing writing systems.
 """
@@ -13,7 +11,6 @@ from lingt.access.common.file_reader import FileReader
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.writingsys_reader")
-
 
 class WritingSystem:
     """Information about a writing system."""

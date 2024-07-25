@@ -1,16 +1,5 @@
-#!/usr/bin/python
-# -*- coding: Latin-1 -*-
-#
-# Created on July 8 2015 by Jim Kornelsen.
-#
-# 03-Aug-15 JDK  Moved LineSearcher to a separate class.
-# 06-Aug-15 JDK  Fixed bug: get correct group to check CHARS_TO_SKIP.
-# 13-Aug-15 JDK  Fixed bug: vowel signs should be dependent.
-# 13-Nov-15 JDK  Fixed bug: extend() modifies list in place.
-# 22-Feb-16 JDK  Download file automatically.
-
 """
-Parse data from the Unicode Character Database at http://unicode.org/ucd/.
+Parse data from the Unicode Character Database at https://unicode.org/ucd/.
 Organize by script and linguistic properties.
 Used to generate lingt/utils/unicode_data.py.
 """
@@ -28,11 +17,11 @@ OUTFILE = "out/unicode_data_constants.py"
 def download_file():
     """Downloads the latest character database file if it doesn't exist yet."""
     if os.path.exists(INFILE):
-        print("Using previously downloaded file.")
+        print("Using downloaded file.")
         return
     print("Downloading file...", end="")
     sys.stdout.flush()
-    url = "http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+    url = "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
     # Download the file and save it locally.
     with urllib.request.urlopen(url) as response, open(
             INFILE, 'wb') as out_file:
@@ -360,7 +349,7 @@ def tabSpaces(numTabs):
     return ' ' * numSpaces
 
 def codeStr(code):
-    return 'u"\\u%s"' % code
+    return f'"\\u{code}"'
 
 class FileWriter:
     """Write results to file"""

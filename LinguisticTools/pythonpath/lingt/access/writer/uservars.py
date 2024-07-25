@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Store persistent settings in user defined properties of a document.
 
@@ -15,7 +13,6 @@ from lingt.app import exceptions
 from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.access.uservars")
-
 
 class Prefix:
     """For each module, we use a prefix to the user variable name.

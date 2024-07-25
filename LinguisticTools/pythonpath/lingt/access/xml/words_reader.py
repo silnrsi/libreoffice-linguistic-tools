@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read XML files that contain words we want to grab.
 Some possible uses:
@@ -31,7 +29,6 @@ from lingt.app import exceptions
 from lingt.app.data import wordlist_structs
 
 logger = logging.getLogger("lingt.access.words_reader")
-
 
 class WordsReader(FileReader):
     SUPPORTED_FORMATS = [

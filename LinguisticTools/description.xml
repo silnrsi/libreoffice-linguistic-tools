@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description xmlns   = "http://openoffice.org/extensions/description/2006"
              xmlns:xlink="http://www.w3.org/1999/xlink">
-  <version value="4.0.2" />
+  <version value="4.1.0" />
   <identifier value="name.JimK.LinguisticTools"/>
   <dependencies>
-    <!-- From the wiki: "...works in the specified OpenOffice.org versions as
-         well as in LibreOffice versions that correspond to at least the
-         specified OpenOffice.org reference version."
-         So there is no need to mention LibreOffice here.
-     -->
-    <OpenOffice.org-minimal-version value="4.1" d:name="OpenOffice.org 4.1"/>
+    <!--
+    Apache OpenOffice (AOO) versions are no longer considered or supported.
+    Also, from the information I could find,
+    LibreOffice 6.1 shipped with Python 3.7 on Windows,
+    while LibreOffice 6.0 shipped with Python 2.7.
+    So require 6.1.
+    -->
+    <libreoffice-minimal-version value="6.1" d:name="LibreOffice 6.1"/>
   </dependencies>
   <display-name>
     <name lang="en">Linguistic Tools</name>

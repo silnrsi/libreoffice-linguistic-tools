@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Writer document searches such as by font or full document.
 """
@@ -13,7 +11,6 @@ from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.TextSearch")
-
 
 class TextSearchSettings:
     """A structure to hold settings for TextSearch."""

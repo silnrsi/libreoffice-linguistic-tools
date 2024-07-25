@@ -39,7 +39,7 @@ logger = logging.getLogger("lingt.ui.messagebox")
 
 class MessageBox:
     """
-    Message box for python, like OOo Basic MsgBox.
+    Message box for python, like LO Basic MsgBox.
     Localizes messages before displaying.
     Modified from Villeroy 2007.
     """

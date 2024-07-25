@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Write Consistent Change Table file.
 

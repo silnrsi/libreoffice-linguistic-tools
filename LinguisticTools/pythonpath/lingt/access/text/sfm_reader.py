@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read SFM files and grab specified fields.
 """
@@ -12,7 +10,6 @@ from lingt.app.data import wordlist_structs
 from lingt.access.common.file_reader import FileReader
 
 logger = logging.getLogger("lingt.access.sfm_reader")
-
 
 class SFM_Reader(FileReader):
 

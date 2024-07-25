@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Travel through a text range with a cursor, checking each word.
 """

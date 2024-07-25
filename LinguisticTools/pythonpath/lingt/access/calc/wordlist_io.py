@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Word list input and output for Calc.
 """

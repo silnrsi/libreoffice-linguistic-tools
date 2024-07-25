@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Read XML files that typically contain phonology corpus data.
 
@@ -22,7 +20,6 @@ from lingt.app.data import wordlist_structs
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.phon_reader")
-
 
 class PhonReader(FileReader):
     """For Phonology examples."""

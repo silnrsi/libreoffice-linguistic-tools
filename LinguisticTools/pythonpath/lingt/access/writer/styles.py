@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Create and manage styles.
 Note on terminology:
@@ -35,7 +33,6 @@ COLOR_LIGHT_RED = int("FF0000", 16)
 COLOR_LIGHT_MAGENTA = int("FF00FF", 16)
 COLOR_GREEN = int("008000", 16)
 COLOR_RED = int("800000", 16)
-
 
 class FontDefStruct:
     def __init__(self, fontName="", fontType='Western', fontSize=None):

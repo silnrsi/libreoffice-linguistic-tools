@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Handles changes to text in the document.
 For Data Conversion.
@@ -18,7 +16,6 @@ from lingt.ui.common.progressbar import ProgressRange
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.access.textchanges")
-
 
 class TextChangerSettings:
     """A structure to hold settings for TextChanger."""
@@ -143,7 +140,7 @@ class TextChanger:
 
     def convertString(self, oCurs):
         """Here is where the call to SEC Converters is actually done.
-        It calls an OOo C++ component which calls the SEC dll file.
+        It calls a LO C++ component which calls the SEC dll file.
         Then it makes the change in Writer.
         Also sets the new style.
         Returns True if a change is made.
@@ -270,7 +267,7 @@ def prepareNewlines(value):
     Inserting LF creates a line break, and CR creates a paragraph break.
 
     Tips for figuring out newlines:
-    + In OOo go to View -> Nonprinting characters.
+    + In LO go to View > Nonprinting characters.
       This shows paragraph breaks and line breaks distinctly.
       Type Shift+Enter to create a line break.
     + Open the debug file in Notepad++ and View -> Show symbol -> EOL.
