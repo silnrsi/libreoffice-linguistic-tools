@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Maintain a list of files.
 
@@ -218,6 +216,9 @@ class LingExFileItem(FileItem):
         self.prefix = ""  # ref number prefix
         self.use_segnum = False  # use segnum field for ref num or autonumber
 
+    # The inherited method's param is a suffix instead of a prefix, but the
+    # purpose of this method is still the same.
+    # pylint: disable=arguments-renamed
     def numberedVar(self, prefix=""):
         return prefix + self.varNumStr()
 
@@ -417,4 +418,3 @@ class InterlinInputSettings(Syncable):
                 'showMorphText1', 'showMorphText2', 'showMorphGloss',
                 'separateMorphColumns'):
             setattr(self, attr, getattr(outconfig, attr))
-

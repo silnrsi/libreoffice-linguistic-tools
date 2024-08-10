@@ -1,15 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 20-Sep-10 JDK  Keep occurrences count unless abbrev is changed.
-# 29-Oct-10 JDK  Use unique lists rather than sets.
-# 23-Oct-12 JDK  Now that we require a newer python version, use set().
-# 27-Feb-13 JDK  Use key instead of cmp for sorting (required in python 3.3).
-# 01-Jul-15 JDK  Added Abbrev.__repr__().
-# 09-Sep-15 JDK  Derive from ItemList.
-# 18-Dec-15 JDK  Use rich comparisons instead of getID().
-
 """
 Insert a list of abbreviations used in the document.
 Reads from gloss and part of speech.
@@ -277,8 +265,8 @@ class Abbrev:
         vals = re.split(r'(?<!\\)[,]', abbrev_repr)
 
         ## Remove escape character "\"
-        for i in range(0, len(vals)):
-            vals[i] = re.sub(r'\\', '', vals[i])
+        for i, val in enumerate(vals):
+            vals[i] = re.sub(r'\\', '', val)
 
         ## Now store the values
         self.abbrevText = vals[0]

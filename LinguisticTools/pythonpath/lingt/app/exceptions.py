@@ -1,16 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Oct 2 2010 by Jim Kornelsen
-#
-# 28-Feb-13 JDK  Added DocAccessError.
-# 18-Apr-13 JDK  Added FileAccessError.
-# 13-Jul-15 JDK  Call base class constructors during init.
-# 01-Aug-15 JDK  Use tuple unpacking for message arguments list.
-# 19-Oct-15 JDK  Interpolate messages.
-# 04-Nov-15 JDK  A nested empty tuple should not be used for interpolation.
-# 22-Mar-16 JDK  Added DialogError.
-# 01-Mar-17 JDK  Added ContentError.
-
 """
 Define custom exceptions that can be raised.
 

@@ -1,19 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Sept 15 2010 by Jim Kornelsen
-#
-# 29-Sep-10 JDK  Create style with font if not yet done.
-# 21-Oct-10 JDK  Option for changing font without applying a style.
-# 01-Nov-11 JDK  Use python SEC_wrapper instead of SEC C++ component.
-# 29-Oct-12 JDK  To check results, throw exception rather than return false.
-# 26-Nov-12 JDK  Option to ask before making each change.
-# 04-Mar-13 JDK  Option to skip first row in Calc.
-# 11-Mar-13 JDK  Don't save user vars here for options shown in dialog.
-# 27-Apr-13 JDK  Remove testing functions.
-# 15-Oct-15 JDK  Fixed bug: was checking whichScope when creating para style.
-# 28-Jul-18 JDK  Added conversion for Draw.
-# 04-Aug-18 JDK  Ranges in Draw can move, so convert from last to first.
-
 """
 Main data conversion logic.
 

@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Make Word List in Calc.
 
@@ -200,7 +198,7 @@ def organizeList(wordList, punctToRemove, splitByWhitespace, normForm,
     progressBar.updatePercent(60)
 
     # group equal words
-    unique_words = dict()
+    unique_words = {}
     for word_read in wordList:
         text = word_read.text
         if not text:

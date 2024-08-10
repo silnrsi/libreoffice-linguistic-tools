@@ -1,20 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Aug 8 2015 by Jim Kornelsen
-#
-# 24-Aug-15 JDK  Define __str__() instead of toItemText().
-# 25-Aug-15 JDK  Add FontItem.numberedVar().
-# 18-Dec-15 JDK  Use rich comparisons instead of getID().
-# 24-Dec-15 JDK  Moved part of FontItem to a new FontChange class.
-# 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
-# 19-Feb-16 JDK  Add fonts found of each type.
-# 22-Jun-16 JDK  Add method to group items.
-# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
-# 13-Jul-16 JDK  Each kind of font can have its own size.
-# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
-# 21-Jul-16 JDK  Add ProcessingStyleItem, only needed for lingt.access layer.
-# 22-Jul-16 JDK  Add StyleChange.removeCustomFormatting.
-
 """
 Data structures for Bulk Conversion used by lower layer packages.
 To avoid cyclic imports, these are not defined in the BulkConversion module.
@@ -78,8 +61,7 @@ class StyleInfo:
         """For use in UNO properties such as CharFontComplex."""
         if self.fontType == 'Western':
             return ""
-        else:
-            return self.fontType
+        return self.fontType
 
 
 @functools.total_ordering
@@ -91,7 +73,7 @@ class StyleItem(StyleInfo):
         StyleInfo.__init__(self)
         self.scopeType = scopeType
         self.fontName = "(Default)"  # either a standard name, complex or Asian
-        self.inputData = list()  # data that gets read from the file
+        self.inputData = []  # data that gets read from the file
         self.inputDataOrder = 0  # sort order this item occurred in the file
         self.change = None  # type StyleChange
 
@@ -112,17 +94,15 @@ class StyleItem(StyleInfo):
         """Gets the StyleInfo object that is currently effective."""
         if self.change:
             return self.change
-        else:
-            return self
+        return self
 
     def __str__(self):
         if self.scopeType == ScopeType.WHOLE_DOC:
             strval = "Whole Document"
-        elif (self.scopeType == ScopeType.FONT_WITH_STYLE
-              or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+        elif self.scopeType in (
+                ScopeType.FONT_WITH_STYLE, ScopeType.FONT_WITHOUT_STYLE):
             strval = str(self.fontName)
-        elif (self.scopeType == ScopeType.CHARSTYLE
-              or self.scopeType == ScopeType.PARASTYLE):
+        elif self.scopeType in (ScopeType.CHARSTYLE, ScopeType.PARASTYLE):
             strval = str(self.styleName)
             if self.styleDisplayName:
                 strval = self.styleDisplayName
@@ -140,15 +120,13 @@ class StyleItem(StyleInfo):
         #logger.debug("StyleItem.attrs()")
         if self.scopeType == ScopeType.WHOLE_DOC:
             return 'WholeDoc'  # only one unique value for all items
-        elif (self.scopeType == ScopeType.FONT_WITH_STYLE
-              or self.scopeType == ScopeType.FONT_WITHOUT_STYLE):
+        if self.scopeType in (
+                ScopeType.FONT_WITH_STYLE, ScopeType.FONT_WITHOUT_STYLE):
             return (self.fontName, self.fontType)
-        elif (self.scopeType == ScopeType.CHARSTYLE
-              or self.scopeType == ScopeType.PARASTYLE):
+        if self.scopeType in (ScopeType.CHARSTYLE, ScopeType.PARASTYLE):
             return (self.styleName, self.styleType)
-        else:
-            raise exceptions.LogicError(
-                "Unexpected value %s", self.scopeType)
+        raise exceptions.LogicError(
+            "Unexpected value %s", self.scopeType)
 
     def __lt__(self, other):
         return (isinstance(other, StyleItem) and
@@ -187,12 +165,11 @@ class ProcessingStyleItem(StyleItem):
         styleItem.inputDataOrder = self.inputDataOrder
         if scopeType == ScopeType.WHOLE_DOC:
             pass
-        elif (scopeType == ScopeType.FONT_WITH_STYLE
-              or scopeType == ScopeType.FONT_WITHOUT_STYLE):
+        elif scopeType in (
+                ScopeType.FONT_WITH_STYLE, ScopeType.FONT_WITHOUT_STYLE):
             styleItem.fontName = self.fontName
             styleItem.fontType = self.fontType
-        elif (scopeType == ScopeType.PARASTYLE or
-              scopeType == ScopeType.CHARSTYLE):
+        elif self.scopeType in (ScopeType.CHARSTYLE, ScopeType.PARASTYLE):
             styleItem.styleType = self.styleType
             styleItem.styleDisplayName = self.styleDisplayName
             styleItem.styleName = self.styleName
@@ -212,7 +189,7 @@ class ProcessingStyleItem(StyleItem):
     def __eq__(self, other):
         if isinstance(other, ProcessingStyleItem):
             return self.attrs() == other.attrs()
-        elif isinstance(other, StyleItem):
+        if isinstance(other, StyleItem):
             return StyleItem.attrs(self) == other.attrs()
         return False
 
@@ -231,7 +208,7 @@ class StyleChange(StyleInfo, Syncable):
         self.styleItem = style_from
         self.varNum = varNum  # for storage in user variables
         self.converter = ConverterSettings(userVars)
-        self.converted_data = dict()  # key inputString, value convertedString
+        self.converted_data = {}  # key inputString, value convertedString
         self.remove_custom_formatting = True
 
     def setVarNum(self, varNum):
