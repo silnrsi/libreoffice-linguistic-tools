@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Data structures for Linguistic Examples used by other parts of the application.
 In order to avoid cyclic imports, classes used by lower layer packages should
@@ -186,7 +184,8 @@ class PhonOutputSettings(Syncable):
 
     def loadUserVars(self):
         self.showBrackets = bool(self.userVars.getInt("ShowBrackets"))
-        self.phonemicLeftmost = (self.userVars.get("Leftmost") != 'phonetic')
+        self.phonemicLeftmost = bool(
+            self.userVars.get("Leftmost") != 'phonetic')
 
     def storeUserVars(self):
         self.userVars.store("ShowBrackets", str(int(self.showBrackets)))
@@ -253,7 +252,7 @@ class InterlinOutputSettings(Syncable):
         if (not self.showMorphText1 and not self.showMorphText2
                 and not self.showMorphGloss):
             self.separateMorphColumns = False
-        if not self.showPartOfSpeech:
+        if not self.showMorphPos:
             self.morphPosBelowGloss = False
 
         val = 0.13

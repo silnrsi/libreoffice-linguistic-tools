@@ -1,11 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Nov 20 2012 by Jim Kornelsen
-#
-# 23-Feb-13 JDK  Fixed several basic suggestions problems.
-# 28-Feb-13 JDK  Handle exception if Calc spreadsheet gets closed.
-# 16-Jul-15 JDK  Use constructors instead of static factory functions.
-
 """
 Logic for spelling comparisons.
 
@@ -100,7 +92,7 @@ class SpellingCharClasses:
             self.charsComp.append(charlist)
 
     def getCharCompString(self):
-        lines = list()
+        lines = []
         for charlist in self.charsComp:
             lines.append("  ".join(charlist))
         return os.linesep.join(lines) + os.linesep
@@ -336,12 +328,12 @@ def compareAllWords(wordList, charSetList):
 
 def getPatterns(wordList, charSetList):
     """Reduce each word to its basic pattern by merging similar characters."""
-    wordPatternHash = dict()  # keys are patterns, values are list of
-                              # WordInList.  This lets us quickly
-                              # match up identical patterns.
-    wordPatterns = dict()  # keys are words, values are patterns.
-                           # This is to remember what
-                           # the patterns for that word were.
+    wordPatternHash = {}  # keys are patterns, values are list of
+                          # WordInList.  This lets us quickly
+                          # match up identical patterns.
+    wordPatterns = {}  # keys are words, values are patterns.
+                       # This is to remember what
+                       # the patterns for that word were.
     for word in wordList:
         for word_i in range(len(word.text)):
             for charsetWordChar in charSetList:
@@ -351,11 +343,11 @@ def getPatterns(wordList, charSetList):
                         newPattern = WordPattern(word.text)
                         newPattern.replace(word_i, list_j, charsetWordChar)
                         if word not in wordPatterns:
-                            wordPatterns[word] = list()
+                            wordPatterns[word] = []
                         wordPatterns[word].append(newPattern)
                         hashKey = newPattern.getHashKey()
                         if hashKey not in wordPatternHash:
-                            wordPatternHash[hashKey] = list()
+                            wordPatternHash[hashKey] = []
                         wordPatternHash[hashKey].append(word)
     return wordPatternHash, wordPatterns
 
@@ -401,7 +393,7 @@ class WordChar:
         """
         if self.charType == self.CHARSET:
             return str(self.val.charsetID)
-        elif self.charType == self.LITERAL:
+        if self.charType == self.LITERAL:
             return self.val
         return "0"
 

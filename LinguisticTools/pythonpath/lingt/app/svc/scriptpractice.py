@@ -1,14 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created June 28 2011 by Jim Kornelsen
-#
-# 22-Jul-11 JDK  Display friendly error message if input files are needed.
-# 12-Aug-11 JDK  Allow any characters as input, not just known letters.
-# 16-Nov-12 JDK  Get word list from Dlgwordlist.
-# 15-Jul-15 JDK  Refactor into three classes.
-# 07-Aug-15 JDK  Fixed bug: Add charset to PracticeQuestions.setConfig().
-# 18-Aug-15 JDK  Checkbox instead of buttons for known fonts.
-
 """
 Main script practice logic.
 
@@ -35,7 +24,7 @@ class Script:
 
     def __init__(self, unoObjs):
         self.scriptName = ""
-        self.charset = dict()
+        self.charset = {}
         self.allFonts = styles.getListOfFonts(unoObjs)
         self.fontList = []
         self.onlyKnownFonts = True
@@ -81,7 +70,7 @@ class Script:
                 self.charset[lettertype].append(char)
 
     def getCharsetString(self):
-        allchars = list()
+        allchars = []
         for charlist in self.charset.values():
             allchars += charlist
         allchars.sort()
@@ -119,8 +108,8 @@ class Script:
         scriptFonts = []
         if self.scriptName in letters.SCRIPT_FONTS:
             scriptFonts.extend(letters.SCRIPT_FONTS[self.scriptName])
-        for fontName in letters.FONT_SCRIPTS:
-            for scrpt in letters.FONT_SCRIPTS[fontName]:
+        for fontName, scripts in letters.FONT_SCRIPTS.items():
+            for scrpt in scripts:
                 if scrpt == self.scriptName:
                     scriptFonts.append(fontName)
         # Only keep fonts that are in the system font list
@@ -136,8 +125,7 @@ class Script:
             return selectedValue
         if len(self.fontList) > 1:
             return self.fontList[1]
-        else:
-            return self.fallbackFontDisplay
+        return self.fallbackFontDisplay
 
 
 class PracticeSettings:
@@ -190,7 +178,7 @@ class PracticeQuestions:
                 if newSyllable:
                     self.questionString += newSyllable
                 else:
-                    return self.questionString
+                    return
             if i < self.config.numWords - 1:
                 self.questionString += " "
 
@@ -310,17 +298,16 @@ class Stats:
     def getAvgTime(self):
         if self.alreadyAveraged:
             return "%1.1f" % self.avgTime
+        self.alreadyAveraged = True
+        curTime = time.time()
+        timedelta = curTime - self.startTime
+        if self.totalQuestions == 1:
+            self.avgTime = timedelta
         else:
-            self.alreadyAveraged = True
-            curTime = time.time()
-            timedelta = curTime - self.startTime
-            if self.totalQuestions == 1:
-                self.avgTime = timedelta
-            else:
-                self.avgTime = (
-                    float(self.avgTime * (self.totalQuestions - 1) + timedelta)
-                    / self.totalQuestions)
-            return "%1.1f" % self.avgTime
+            self.avgTime = (
+                float(self.avgTime * (self.totalQuestions - 1) + timedelta)
+                / self.totalQuestions)
+        return "%1.1f" % self.avgTime
 
     def resetStats(self):
         self.totalQuestions = 0

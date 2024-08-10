@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Data structures used by other parts of the application.
 To avoid cyclic imports, these are not defined in the WordList module.
@@ -31,8 +29,8 @@ class WordInList:
     def __init__(self):
         self.text = ""  # the word
         self.source = ""  # file name where it occurs, if not grouping
-        self.sources = dict() # file names where it occurs and number of
-                              # occurrences, if grouping
+        self.sources = {} # file names where it occurs and number of
+                          # occurrences, if grouping
         self.occurrences = 0  # number of occurences, if grouping
         self.isCorrect = Tribool('Indeterminate')
         self.correction = ""  # corrected spelling
@@ -49,9 +47,9 @@ class WordInList:
     def isCorrect_str(self):
         if self.isCorrect is Tribool('Indeterminate'):
             return ""
-        elif self.isCorrect is Tribool('True'):
+        if self.isCorrect is Tribool('True'):
             return "OK"
-        elif self.isCorrect is Tribool('False'):
+        if self.isCorrect is Tribool('False'):
             return "X"
         raise exceptions.LogicError("Unexpected value %r", self.isCorrect)
 
@@ -66,7 +64,7 @@ class WordInList:
         if len(self.sources) == 1:
             filepath = next(iter(self.sources.keys()))  # iter for python2.x
             return os.path.basename(filepath)
-        elif len(self.sources) > 1:
+        if len(self.sources) > 1:
             strlist = []
             for filepath, fileoccur in self.sources.items():
                 strlist.append(

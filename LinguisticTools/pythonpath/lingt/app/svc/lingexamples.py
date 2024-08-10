@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Grab phonology or interlinear examples and insert them.
 

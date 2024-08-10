@@ -1,14 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created April 4, 2015 by Jim Kornelsen
-#
-# 29-Dec-15 JDK  Set and verify sec_call if none exists yet.
-# 29-Dec-15 JDK  Use converter name as key instead of ConverterSettings.
-# 20-Feb-16 JDK  Added FontItemList.
-# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
-# 01-Jul-16 JDK  Samples reads from FontItemGroup instead of FontItem.
-# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
-
 """
 Bulk Conversion will create multiple SEC call objects,
 unlike Data Conversion which creates only one object.
@@ -128,9 +117,9 @@ class BulkConversion:
         """Performs whatever encoding conversion needs to be done.
         Modifies self.styleItemList by setting StyleChange.converted_data.
         """
-        unique_converter_settings = set(
-            [styleChange.converter for styleChange in self.getStyleChanges()
-             if styleChange.converter.convName])
+        unique_converter_settings = {
+            styleChange.converter for styleChange in self.getStyleChanges()
+            if styleChange.converter.convName}
         converter_styleItems = collections.defaultdict(list)
         for styleChange in self.getStyleChanges():
             converter_styleItems[styleChange.converter].append(
@@ -157,11 +146,11 @@ class BulkConversion:
                 if item.change]
 
     def get_all_conv_names(self):
-        """Returns all currently used converter names."""
-        return set([
+        """Returns a set containing all currently used converter names."""
+        return {
             styleChange.converter.convName
             for styleChange in self.getStyleChanges()
-            if styleChange.converter.convName])
+            if styleChange.converter.convName}
 
     def selected_item(self):
         return self.styleItemList.selected_item()
@@ -172,7 +161,7 @@ class UniqueStyles:
     Merges inputData of style items.
     """
     def __init__(self, scopeType):
-        self.uniqueStyles = dict()  # key and value are both type StyleItem
+        self.uniqueStyles = {}  # key and value are both type StyleItem
         self.scopeType = scopeType
 
     def add(self, processingStyleItems):
@@ -296,7 +285,7 @@ class ConvPool:
         self.userVars = userVars
         self.msgbox = msgbox
         self.get_all_conv_names = get_all_conv_names  # method
-        self._secCallObjs = dict()  # the main dict for this class
+        self._secCallObjs = {}  # the main dict for this class
 
     def selectConverter(self, key):
         """Returns ConverterSettings, or None if cancelled."""
@@ -329,7 +318,7 @@ class ConvPool:
         if key == "":
             raise exceptions.ChoiceProblem("Please select a converter.")
         if key == "<No converter>":
-            return
+            return None
         if key in self:
             secCall = self[key]
         else:

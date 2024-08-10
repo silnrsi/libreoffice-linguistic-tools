@@ -1,18 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Nov 19 2012 by Jim Kornelsen
-#
-# 28-Nov-12 JDK  Class to find & replace in all open Writer docs.
-# 07-Dec-12 JDK  Move to App layer.
-# 19-Dec-12 JDK  Rename from SpellingAdjustments.py to spellingchanges.py
-# 28-Feb-13 JDK  Handle exception if Calc spreadsheet gets closed.
-# 07-Mar-13 JDK  Add options for making the change file.  Move spell checking
-#                to its own file.
-# 20-Mar-13 JDK  Remove Quick Spelling Replace.
-# 09-Apr-13 JDK  Split SF markers into list.
-# 11-Apr-13 JDK  Don't split SF markers into list.
-# 18-Apr-13 JDK  Don't add to change list if from/to are identical.
-
 """
 Make spelling changes.
 

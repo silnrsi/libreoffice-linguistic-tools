@@ -1,13 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created March 7 2013 by Jim Kornelsen
-#
-# 17-Apr-13 JDK  Split words by whitespace, then remove punctuation.
-# 08-May-13 JDK  Suggest only words of the same case as the word found.
-# 15-Jul-15 JDK  Added CheckerSettings class.
-# 23-Jul-15 JDK  Added GoodList and WorkAsker classes.
-# 13-Feb-17 JDK  Normalize data.
-
 """
 Checks a document or list for spelling corrections.
 Uses classes in spellingcomparisons.py for some logic.
@@ -140,7 +130,7 @@ class SpellingChecker:
         logger.debug(util.funcName('begin'))
         try:
             self.readWordList()
-        except (exceptions.FileAccessError, exceptions.DocAccessError) as exc:
+        except (exceptions.FileAccessError, exceptions.DocAccessError):
             self.msgbox.display(
                 "Error reading file %s", self.config.filepath)
             return
@@ -199,8 +189,7 @@ class SpellingChecker:
                     if self.msgbox.displayOkCancel(
                             "Missed word '%s'.  Keep going?", word):
                         continue
-                    else:
-                        raise exceptions.UserInterrupt()
+                    raise exceptions.UserInterrupt()
                 if self.wordAsker.handleWord(
                         word, rangeTokens, tokenNum, rangeJumper):
                     self.numChanges += 1
@@ -344,8 +333,7 @@ def getContext(tokens, wordTokenNum):
     CONTEXT_LEN = 10   # probably use an even number
     contextBegin = wordTokenNum - CONTEXT_LEN
     contextEnd = wordTokenNum + CONTEXT_LEN
-    if contextBegin < 0:
-        contextBegin = 0
+    contextBegin = max(contextBegin, 0)
     return "".join(tokens[contextBegin:contextEnd])
 
 class WordAsker:
@@ -373,9 +361,8 @@ class WordAsker:
         wordText = normalize(self.config.normForm, wordText)
         if self.config.whichTask == 'ApplyCorrections':
             return self.applyCorrection(wordText)
-        else:
-            return self.checkSpelling(
-                wordText, getContext(tokens, wordTokenNum))
+        return self.checkSpelling(
+            wordText, getContext(tokens, wordTokenNum))
 
     def checkSpelling(self, wordText, context):
         suggestList = self.goodList.suggestions.getSuggestions(wordText)
@@ -398,21 +385,21 @@ class WordAsker:
         if action == 'Ignore':
             # just keep going
             return False
-        elif action == 'IgnoreAll':
+        if action == 'IgnoreAll':
             self.wordsToIgnore.add(self.goodList.firstLower(wordText))
             return False
-        elif action == 'Change':
+        if action == 'Change':
             self.rangeJumper.changeString(self.addPunct(changeTo))
             return True
-        elif action == 'ChangeAll':
+        if action == 'ChangeAll':
             self.rangeJumper.changeString(self.addPunct(changeTo))
             replacer = FindAndReplace(self.unoObjs, False)
             replacer.replace(wordText, changeTo)
             return True
-        elif action == 'Add':
+        if action == 'Add':
             self.goodList.add(self.removeAffixes(wordText))
             return False
-        # user probably pressed Close or x'd out of the dialog
+        # user probably pressed Close or clicked the X to close the dialog
         raise exceptions.UserInterrupt()
 
     def applyCorrection(self, wordText):

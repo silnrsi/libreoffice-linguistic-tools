@@ -1,7 +1,7 @@
 """
-This module is used by most LingTools modules:
-- Logging and debugging
-- Manage OpenOffice UNO objects
+This module is used by most other LingTools modules.
+It includes logging and debugging,
+and managing UNO objects of the LibreOffice API.
 
 Logging and debugging values in this file should be configured as needed;
 there is no external logging configuration file.
