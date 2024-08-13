@@ -1,13 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Nov 20 2012 by Jim Kornelsen
-#
-# 28-Feb-13 JDK  Default to Latin script.
-# 06-Mar-13 JDK  Separate ChangerMaker into its own dialog.
-# 20-Mar-13 JDK  Move "Quick Replace" to DlgSpellsearch.
-# 09-Apr-13 JDK  Default checkboxes to checked.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-
 """
 Dialog to search a word list in Calc and suggest or make spelling adjustments.
 
@@ -340,4 +330,4 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

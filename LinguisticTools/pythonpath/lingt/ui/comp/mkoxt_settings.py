@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Dialog to call oxttools.makeoxt
 https://github.com/silnrsi/oxttools
@@ -268,6 +266,7 @@ class DlgControls:
 
     def changeDictType(self):
         filename = self.fctlWordList.getText()
+        dicttype = ""
         if filename.endswith('.aff'):
             dicttype = 'hunspell'
         elif filename.endswith('.xml'):
@@ -312,4 +311,4 @@ class DlgEventHandler(XActionListener, XTextListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

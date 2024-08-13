@@ -390,6 +390,8 @@ class FileItemList(ItemList, Syncable):
 
 
 class InterlinInputSettings(Syncable):
+    """Settings for reading interlinear data from files.
+    Used in lingt.access.interlin_reader.py"""
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)
         self.fileList = FileItemList(LingExFileItem, self.userVars)

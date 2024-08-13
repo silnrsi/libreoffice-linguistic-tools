@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Dialog for settings to import interlinear examples for grammar write-ups.
 
@@ -442,4 +440,4 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

@@ -7,6 +7,7 @@ This module exports:
     EXTYPE_INTERLINEAR
 """
 import logging
+import re
 
 from lingt.access.writer import outputmanager
 from lingt.access.writer import search
@@ -26,6 +27,24 @@ logger = logging.getLogger("lingt.app.lingexamples")
 #  type of linguistic example
 EXTYPE_PHONOLOGY = 'phonology'
 EXTYPE_INTERLINEAR = 'interlinear'
+
+def natural_sort(l):
+    """Sort a list oF strings in natural sort order,
+    for example "1.2" before "1.10".
+    """
+    def convert(text):
+        """Convert text to integer if it is a digit, otherwise to lowercase."""
+        if text.isdigit():
+            return int(text)
+        return text.lower()
+
+    def alphanum_key(key):
+        """Split the key into alphanumeric components,
+        converting digits to integers and other parts to lowercase."""
+        parts = re.split('([0-9]+)', key)
+        return [convert(c) for c in parts]
+
+    return sorted(l, key=alphanum_key)
 
 class ExServices:
     """Services that can conveniently be called from other modules."""
@@ -55,7 +74,7 @@ class ExServices:
             raise exceptions.DataNotFoundError("No data found.")
         if self.operations.duplicate_refnums:
             MAX_NUMS_IN_MESSAGE = 5
-            refnums = util.natural_sort(self.operations.duplicate_refnums)
+            refnums = natural_sort(self.operations.duplicate_refnums)
             refnumsString = ", ".join(refnums[:MAX_NUMS_IN_MESSAGE])
             additionalRefs = len(refnums) - MAX_NUMS_IN_MESSAGE
             if additionalRefs > 0:
@@ -75,7 +94,7 @@ class ExServices:
         """
         try:
             self.operations.readData()
-            return util.natural_sort(
+            return natural_sort(
                 [ex.refText for ex in self.operations.examplesDict.values()])
         except exceptions.MessageError as exc:
             self.msgbox.displayExc(exc)

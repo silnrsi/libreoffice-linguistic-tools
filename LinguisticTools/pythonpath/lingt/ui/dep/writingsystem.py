@@ -1,13 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# Created Sept 14 2010 by Jim Kornelsen
-#
-# 31-Mar-11 JDK  Localizations for "(none)"
-# 09-Nov-12 JDK  Read file, rather than expecting to be given the data.
-# 29-Mar-13 JDK  Localize "(none)" by code rather than by dialog setting.
-# 15-Apr-13 JDK  Use list box instead of combo box.
-# 18-Apr-13 JDK  Fixed bug: self.writingSystems index should be offset by 1.
-
 """
 A dialog to select a writing system, as in FieldWorks.
 
@@ -73,8 +63,7 @@ class DlgWritingSystem(XActionListener, unohelper.Base):
             if ws.internalCode == self.def_ws_code:
                 def_ws_display = ws_display
         self.listbox.selectItem(def_ws_display, True)
-        logger.debug(
-            "Added " + str(len(self.writingSystems)) + " to list.")
+        logger.debug("Added %d to list.", len(self.writingSystems))
 
         btnOK.setActionCommand("OK")
         btnOK.addActionListener(self)

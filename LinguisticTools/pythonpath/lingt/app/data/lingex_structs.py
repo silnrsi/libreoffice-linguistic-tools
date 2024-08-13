@@ -144,7 +144,8 @@ class LingInterlinWord:
 
 
 class PhonInputSettings(Syncable):
-    """Phonology settings for reading data from files."""
+    """Settings for reading phonology data from files.
+    Used in lingt.access.phon_reader.py"""
     def __init__(self, userVars):
         Syncable.__init__(self, userVars)
         self.filepath = ""
@@ -196,8 +197,7 @@ class PhonOutputSettings(Syncable):
 
 
 class InterlinOutputSettings(Syncable):
-    """
-    Interlinear settings for outputmanager.
+    """Interlinear settings for outputmanager.
     Show rows and other options.
     """
     USERVAR_BOOLEAN_ATTRS = [

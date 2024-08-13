@@ -1,22 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Dec 22 2009 by Jim Kornelsen
-#
-# 24-Dec-09 JDK  Split into a separate file for dialogs.
-# 07-Jan-10 JDK  Make the script filenames related to menu options.
-# 11-Feb-10 JDK  Import LIFT data from Flex.
-# 31-Mar-10 JDK  Add localization.
-# 09-Sep-10 JDK  Always set a default combo box value.
-# 14-Sep-10 JDK  Divide into packages.
-# 08-Oct-10 JDK  Set SFM file defaults.
-# 29-Oct-10 JDK  Writing system is a struct rather than a list.
-# 01-Jul-11 JDK  User var to use experimental transcription for phonemic.
-# 17-Apr-13 JDK  Don't show writing system chooser if none are found.
-# 14-May-13 JDK  Rename DlgSettings to unique name for assimilation.
-# 05-Jul-13 JDK  Radio buttons for which Flex field is phonemic.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 24-Jun-20 JDK  Verify data before closing.
-
 """
 Dialog for settings to import lexical examples for phonology.
 
@@ -194,4 +175,4 @@ class DlgEventHandler(XActionListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

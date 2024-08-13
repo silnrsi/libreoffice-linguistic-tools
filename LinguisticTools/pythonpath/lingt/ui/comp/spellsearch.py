@@ -1,15 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Dec 7 2012 by Jim Kornelsen
-#
-# 30-Jan-13 JDK  Call from Writer and find Calc doc, instead of vice versa.
-# 20-Mar-13 JDK  Incorporate "Quick Replace" into this dialog.
-# 27-Mar-13 JDK  Add "Current Spreadsheet" button.
-# 15-Apr-13 JDK  Fixed bug: Send locale obj to app layer, not locale name.
-# 19-Apr-13 JDK  Get all locales, not just those available for spelling.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 15-Jul-15 JDK  Use CheckerSettings class from App layer.
-
 """
 Settings for making spelling changes in Writer.
 
@@ -75,10 +63,10 @@ class DlgSpellingSearch:
         logger.debug("Getting styles...")
         styleNames = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
         self.paraStyleNames = dict(styleNames)
-        paraStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        paraStyleDispNames = tuple(dispName for dispName, name in styleNames)
         styleNames = styles.getListOfStyles('CharacterStyles', self.unoObjs)
         self.charStyleNames = dict(styleNames)
-        charStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        charStyleDispNames = tuple(dispName for dispName, name in styleNames)
         self.localeList = list(theLocale.LANG_CODES.items())
         self.localeList.sort(key=operator.itemgetter(1))  # sort by lang name
         localeNames = [tupl[1] for tupl in self.localeList]
@@ -184,7 +172,7 @@ class DlgSpellingSearch:
             "Language", self.dlgCtrls.listLocale.getSelectedItem())
         self.userVars.store(
             "MatchCase", str(self.dlgCtrls.chkMatchCase.getState()))
-        config.matchCase = (self.dlgCtrls.chkMatchCase.getState() == 1)
+        config.matchCase = self.dlgCtrls.chkMatchCase.getState() == 1
         config.punctuation = self.dlgCtrls.txtPunct.getText()
 
         varname = 'NormForm'
@@ -307,7 +295,7 @@ class DlgControls:
 
         varname = 'Punctuation'
         if userVars.isEmpty(varname):
-            punct = u" ".join(letters.PUNCTUATION)
+            punct = " ".join(letters.PUNCTUATION)
             userVars.store(varname, punct)
         else:
             punct = userVars.get(varname)
@@ -355,4 +343,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

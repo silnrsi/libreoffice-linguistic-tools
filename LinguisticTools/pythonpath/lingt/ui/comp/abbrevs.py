@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Insert a list of abbreviations used in the document.
 Reads from gloss and part of speech.
@@ -452,4 +450,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

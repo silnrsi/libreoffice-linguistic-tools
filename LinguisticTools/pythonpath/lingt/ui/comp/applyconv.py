@@ -1,12 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Nov 16 2012 by Jim Kornelsen
-#
-# 04-Mar-13 JDK  Added comboHidden and chkSkipFirstRow.
-# 11-Mar-13 JDK  Simplify remembering converter name between dialog calls.
-# 09-Apr-13 JDK  Default to ConvSourceColumn set by wordlist.py.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-
 """
 Dialog to apply an SIL converter.
 Could be expanded to perform other conversions in the future, although I'm not
@@ -194,4 +185,4 @@ class DlgEventHandler(XActionListener, XTextListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

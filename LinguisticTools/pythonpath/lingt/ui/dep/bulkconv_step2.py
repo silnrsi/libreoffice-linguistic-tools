@@ -1,25 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created December 24 2015 by Jim Kornelsen
-#
-# 05-Feb-16 JDK  Show a mark in the list to indicate font changes.
-# 11-Feb-16 JDK  Show modified font settings when FontItem is selected.
-# 19-Feb-16 JDK  Add checkboxes to separate font type, size and style.
-# 24-Feb-16 JDK  Use a single foundFonts label instead of three labels.
-# 07-Mar-16 JDK  Handle chkJoin changes.
-# 25-Mar-16 JDK  Split up into separate classes for each control.
-# 26-Apr-16 JDK  Implement separate style classes for combos and radios.
-# 29-Apr-16 JDK  Add methods for filling to each control class.
-# 16-May-16 JDK  Separate class for sample labels because ctrl props change.
-# 28-May-16 JDK  Added Step2Master.
-# 31-May-16 JDK  Standardize names of filling methods.
-# 13-Jun-16 JDK  Aggregate related controls so that they can call each other.
-# 16-Jun-16 JDK  Moved controls classes to their own module.
-# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
-# 13-Jul-16 JDK  Remember state of group check boxes.
-# 16-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
-# 29-Jul-16 JDK  RemoveCustomFormatting is checked per item, not globally.
-
 """
 Bulk Conversion dialog step 2.
 
@@ -207,7 +185,6 @@ class ListStylesUsed(evt_handler.ItemEventHandler):
         except exceptions.ChoiceProblem as exc:
             self.app.msgbox.displayExc(exc)
             self._set_app_index(-1)
-            return None
 
     def refresh_and_fill(self):
         self.refresh()

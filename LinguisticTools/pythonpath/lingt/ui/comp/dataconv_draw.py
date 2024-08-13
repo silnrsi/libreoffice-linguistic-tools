@@ -1,9 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created July 28 2018 by Jim Kornelsen
-#
-# 30-Jul-18 JDK  Get UserVars from a Writer document.
-
 """
 Data conversion dialog for a Draw document.
 
@@ -174,7 +168,7 @@ class DlgDataConversion:
         self.config.targetFont = styles.FontDefStruct(
             targetFontName, targetFontType, targetFontSize)
 
-        self.config.askEach = (self.dlgCtrls.chkVerify.getState() == 1)
+        self.config.askEach = self.dlgCtrls.chkVerify.getState() == 1
 
         ## Save selections for next time
 
@@ -334,4 +328,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

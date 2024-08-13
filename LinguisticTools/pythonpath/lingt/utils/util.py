@@ -9,23 +9,21 @@ There is also a higher level logger set up in Components.py which should
 be configured as needed.
 
 This module exports:
-    UnoObjs - Manage UNO context and document objects.
-    createProp() - Creates an UNO property.
-    uniqueList() - Return a list with duplicates removed and order preserved.
+    UnoObjs -- Manage UNO context and document objects.
+    createProp() -- Creates an UNO property.
 
-    funcName() - Returns name of calling function.
-    xray() - Displays a dialog to analyze UNO object attributes.
-    mri() - Displays a dialog to analyze UNO object attributes.
-    debug_tellNextChar() - Tells character to right of cursor.
+    funcName() -- Returns name of calling function.
+    xray() -- Displays a dialog to analyze UNO object attributes.
+    mri() -- Displays a dialog to analyze UNO object attributes.
+    debug_tellNextChar() -- Tells character to right of cursor.
 
-    BASE_FOLDER - Convenient location for test results.
-    TESTDATA_FOLDER - Input test data files.
+    BASE_FOLDER -- Convenient location for test results.
+    TESTDATA_FOLDER -- Input test data files.
 """
 import inspect
 import logging
 import os
 import platform
-import re
 import uno
 
 from com.sun.star.beans import PropertyValue
@@ -202,34 +200,6 @@ def createProp(name, value):
     prop.Name = name
     prop.Value = value
     return prop
-
-def uniqueList(seq):
-    """Return a list with duplicates removed and order preserved.
-    Taken from http://www.peterbe.com/plog/uniqifiers-benchmark
-    """
-    checked = []
-    for e in seq:
-        if e not in checked:
-            checked.append(e)
-    return checked
-
-def natural_sort(l):
-    """Sort a list oF strings in natural sort order,
-    for example "1.2" before "1.10".
-    """
-    def convert(text):
-        """Convert text to integer if it is a digit, otherwise to lowercase."""
-        if text.isdigit():
-            return int(text)
-        return text.lower()
-
-    def alphanum_key(key):
-        """Split the key into alphanumeric components,
-        converting digits to integers and other parts to lowercase."""
-        parts = re.split('([0-9]+)', key)
-        return [convert(c) for c in parts]
-
-    return sorted(l, key=alphanum_key)
 
 def xray(myObject, unoObjs):
     """For debugging.
