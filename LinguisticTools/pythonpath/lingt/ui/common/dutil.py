@@ -1,16 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created July 6 2015 by Jim Kornelsen
-#
-# 15-Aug-15 JDK  Added constants for checkboxes.
-# 25-Aug-15 JDK  Added log_event_handler_exceptions().
-# 08-Sep-15 JDK  Set handling_event in finally clause.
-# 29-Sep-15 JDK  Set combo box values to empty string by default.
-# 12-Dec-15 JDK  Added listbox_items().
-# 21-Mar-16 JDK  Changed getControl() to a class to reduce arguments.
-# 23-Mar-16 JDK  Moved event handling functions to another module.
-# 16-May-16 JDK  Fixed bug: all_ctrl_names() should return strings, not attrs.
-
 """
 Utilities to manage UNO dialogs and controls.
 
@@ -46,7 +33,6 @@ SELECTED = CHECKED
 UNSPECIFIED = 2
 
 logger = logging.getLogger("lingt.ui.dutil")
-
 
 def createDialog(uno_objs, definition_class):
     """:param definition_class: class from lingt.utils.dlgdefs"""
@@ -110,7 +96,6 @@ class DialogGetter:
             class_dict[attr] for attr in class_dict
             if not attr.startswith('__')]
 
-
 class ControlGetter:
     def __init__(self, dlg):
         self.dlg = dlg
@@ -129,7 +114,6 @@ class ControlGetter:
     def get(self, ctrl_name):
         return self.dlg.getControl(ctrl_name)
 
-
 RadioTuple = collections.namedtuple('RadioTuple', ['ctrl', 'key'])
 
 def whichSelected(radioList):
@@ -143,10 +127,8 @@ def selectRadio(radioList, whichKey):
     """Select the specified radio button."""
     for radio in radioList:
         if radio.key == whichKey:
-            radio.ctrl.setState(1)
-            return
+            return radio.ctrl.setState(1)
     return radioList[0].ctrl.setState(1)
-
 
 def fill_list_ctrl(listCtrl, values, selectedValue=""):
     """
@@ -177,7 +159,6 @@ def fill_list_ctrl(listCtrl, values, selectedValue=""):
         else:
             listCtrl.setText("")
     logger.debug(util.funcName('end'))
-
 
 def get_selected_index(listCtrl, itemDescription="an item"):
     """
@@ -212,7 +193,6 @@ def select_index(listCtrl, itemPos):
     else:
         logger.warning("Could not select index %r", itemPos)
 
-
 def listbox_items(listboxCtrl):
     """This remedies problems with XListBox.getItems() for 0-length lists.
     XListBox.getItems() returns an empty byte string if the list is empty,
@@ -233,7 +213,6 @@ def listbox_items(listboxCtrl):
         return []
     return items
 
-
 def set_tristate_checkbox(chkCtrl, triboolVal):
     """
     :param chkCtrl: the dialog control to set
@@ -251,5 +230,4 @@ def get_tristate_checkbox(chkCtrl):
     """Returns the Tribool value of the chkCtrl state."""
     if chkCtrl.getState() == UNSPECIFIED:
         return Tribool(None)
-    else:
-        return Tribool(bool(chkCtrl.getState()))
+    return Tribool(bool(chkCtrl.getState()))

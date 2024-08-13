@@ -1,17 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Jun 28 2011 by Jim Kornelsen
-#
-# 10-Aug-11 JDK  Don't go to practice if no script was selected.
-# 16-Nov-12 JDK  Use DlgWordList to load words from files.
-# 27-Feb-13 JDK  Use list(dict.keys()) as required by python 3.3
-# 28-Feb-13 JDK  Default to Latin script.
-# 19-Apr-13 JDK  Update text fields with any corrections.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 15-Jul-15 JDK  Refactor App.ScriptPractice into three classes.
-# 15-Aug-15 JDK  Checkbox instead of buttons for known fonts.
-# 13-Feb-17 JDK  Normalize data.
-
 """
 Script Practice dialog.
 
@@ -544,4 +530,4 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

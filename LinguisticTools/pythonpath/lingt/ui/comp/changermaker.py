@@ -1,14 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Mar 6 2013 by Jim Kornelsen
-#
-# 15-Mar-13 JDK  Interrupt if there is a choice problem.
-# 09-Apr-13 JDK  Use only item in list even if not selected.
-# 19-Apr-13 JDK  Replace .cct if it should be .xsl.
-# 25-Apr-13 JDK  Add a default for txtXpath to prevent result &55.Ctrl.Value.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 12-Dec-15 JDK  Use listbox_items() instead of getItems().
-
 """
 Dialog to save a change file from the list of words, either a CC table or
 an XSLT file.
@@ -95,6 +84,7 @@ class DlgChangerMaker:
             extension = XSLT_EXT
         logger.debug("Extension %s", extension)
         defaultFilename = "spelling_changes" + extension
+        filters = []
         if filetype == "CCT":
             filters = [
                 ["Consistent Change Table (%s)" % CCT_EXT, "*" + CCT_EXT]]
@@ -320,4 +310,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

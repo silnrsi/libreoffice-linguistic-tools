@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Dialog to import Phonology and Interlinear examples.
 
@@ -277,4 +275,4 @@ class DlgEventHandler(XActionListener, XItemListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showPhonologyDlg, showInterlinDlg
+g_exportedScripts = (showPhonologyDlg, showInterlinDlg)

@@ -1,30 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Feb 24 2010 by Jim Kornelsen
-#
-# 01-Mar-10 JDK  Change frames.  Remember direction and normalize for SEC.
-# 02-Mar-10 JDK  Display results found and changed.
-# 15-Mar-10 JDK  No Char Style.  Add SFM.  Handle longer strings in parts.
-# 16-Mar-10 JDK  Implemented option to preserve character formatting.
-# 19-Mar-10 JDK  Fixed bug: do not use createCursor when excluding SFM mkr.
-# 20-Mar-10 JDK  Use viewcursor to goRight() through tables.
-# 31-Mar-10 JDK  Add localization.
-# 30-Jul-10 JDK  Yes Char Style.  Remove isStartOfParagraph() check.
-#                Enumerate paragraphs.  Always preserve formatting.
-# 05-Aug-10 JDK  Added function for testing.
-# 09-Sep-10 JDK  Always set a combo box default value.
-# 15-Sep-10 JDK  Divided into packages.
-# 16-Sep-10 JDK  Scope char styles are not possible, so don't put in list.
-# 29-Sep-10 JDK  Add font of target style.
-# 21-Oct-10 JDK  Option for changing font without applying a style.
-# 20-Dec-11 JDK  Hidden option to limit number of matches.
-# 15-Nov-12 JDK  Added font types option.
-# 26-Nov-12 JDK  Option to ask before making each change.
-# 11-Mar-13 JDK  Simplify remembering converter name between dialog calls.
-# 13-Mar-13 JDK  Added type of target font.
-# 15-Apr-13 JDK  Distinguish between underlying and display style names.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-
 """
 Data conversion dialog for a Writer document.
 
@@ -100,10 +73,10 @@ class DlgDataConversion:
         logger.debug("Getting styles...")
         styleNames = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
         self.paraStyleNames = dict(styleNames)
-        paraStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        paraStyleDispNames = tuple(dispName for dispName, name in styleNames)
         styleNames = styles.getListOfStyles('CharacterStyles', self.unoObjs)
         self.charStyleNames = dict(styleNames)
-        charStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        charStyleDispNames = tuple(dispName for dispName, name in styleNames)
         self.dlgCtrls.loadValues(
             self.userVars, paraStyleDispNames, charStyleDispNames)
         self.dlgCtrls.enableDisable(self)
@@ -132,6 +105,7 @@ class DlgDataConversion:
             elif self.dlgCtrls.optTargetFontAsian.getState() == 1:
                 fontType = 'Asian'
             displayName = control.getText()
+            styleName = ""
             try:
                 if styleType == 'Paragraph':
                     styleName = self.paraStyleNames[displayName]
@@ -254,7 +228,7 @@ class DlgDataConversion:
         self.config.targetFont = styles.FontDefStruct(
             targetFontName, targetFontType, targetFontSize)
 
-        self.config.askEach = (self.dlgCtrls.chkVerify.getState() == 1)
+        self.config.askEach = self.dlgCtrls.chkVerify.getState() == 1
 
         ## Save selections for next time
 
@@ -476,4 +450,4 @@ class DlgEventHandler(XActionListener, XTextListener, XItemListener,
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

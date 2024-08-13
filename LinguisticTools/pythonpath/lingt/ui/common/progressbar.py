@@ -1,13 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Oct 23 2012 by Jim Kornelsen
-#
-# 07-Nov-12 JDK  Allow for the controller of a different document.
-# 19-Nov-12 JDK  Added pause() method.
-# 19-Dec-12 JDK  Just pass controller along with document as main arg.
-# 24-Jul-15 JDK  Added ProgressRange class.  Removed percentMore().
-# 25-Aug-15 JDK  Fixed bug: Keyword is always pbar rather than bar.
-
 """
 Display a progress bar to the user.
 

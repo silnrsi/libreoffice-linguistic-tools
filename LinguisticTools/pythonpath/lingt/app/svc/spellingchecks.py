@@ -365,17 +365,20 @@ class WordAsker:
             wordText, getContext(tokens, wordTokenNum))
 
     def checkSpelling(self, wordText, context):
+        def unique_ordered_list(sequence):
+            """Return a list with duplicates removed and order preserved."""
+            return list(dict.fromkeys(sequence))
         suggestList = self.goodList.suggestions.getSuggestions(wordText)
         if not self.config.matchCase:
             ## Suggest only words of the same case as the word found.
             #  Non-roman characters will not be changed.
             firstChar = wordText[:1]
             if firstChar.isupper():
-                suggestList = util.uniqueList(
-                    [s.capitalize() for s in suggestList])
+                suggestList = unique_ordered_list(
+                    s.capitalize() for s in suggestList)
             elif firstChar.islower():
-                suggestList = util.uniqueList(
-                    [s.lower() for s in suggestList])
+                suggestList = unique_ordered_list(
+                    s.lower() for s in suggestList)
         if not self.dlgReplace:
             self.dlgReplace = DlgSpellingReplace(self.unoObjs)
             self.dlgReplace.makeDlg()

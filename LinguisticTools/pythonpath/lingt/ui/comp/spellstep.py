@@ -1,17 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Dec 17 2012 by Jim Kornelsen
-#
-# 22-Feb-13 JDK  Changed "Don't give suggestions" to a positive statement.
-# 01-Mar-13 JDK  Slide to maxRow instead of dataLen.
-# 29-Mar-13 JDK  Go directly to row 2 when creating dialog.
-# 09-Apr-13 JDK  Remember row number where we left off.
-# 15-Apr-13 JDK  Disable Set Correction button if word is unchanged.
-# 18-Apr-13 JDK  Clearing correction should check Correct.
-# 25-Apr-13 JDK  Fixed bug: displayOkCancel, not displayYesNo.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 05-Aug-15 JDK  Use constants for threeway checkbox.
-
 """
 Step through a word list to make spelling corrections.
 
@@ -158,7 +144,7 @@ class DlgSpellingStep:
     def enableDisable(self):
         newVal = self.dlgCtrls.txtCorrection.getText()
         wordInList = self.app.currentRowData()
-        if newVal == wordInList.text or newVal == wordInList.correction:
+        if newVal in (wordInList.text, wordInList.correction):
             self.dlgCtrls.btnSetCorrection.getModel().Enabled = False
         else:
             self.dlgCtrls.btnSetCorrection.getModel().Enabled = True
@@ -217,7 +203,7 @@ class DlgControls:
     def loadValues(self, userVars, app):
         varname = "GiveSuggestions"
         if not userVars.isEmpty(varname):
-            app.wantSuggestions = (userVars.getInt(varname) == 1)
+            app.wantSuggestions = userVars.getInt(varname) == 1
         if app.wantSuggestions:
             self.chkSuggestions.setState(1)
         else:
@@ -304,4 +290,4 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

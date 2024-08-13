@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Dialog for settings to harvest words from data files.
 
@@ -57,7 +55,7 @@ class DlgWordListFile:
         self.titles = None
         self.paraStyleNames = []
         self.charStyleNames = []
-        self.fileTypeDict = dict()
+        self.fileTypeDict = {}
         self.fileTypeNames = []
         self.dlgCtrls = None
         self.evtHandler = None
@@ -80,11 +78,11 @@ class DlgWordListFile:
 
         styleNames = styles.getListOfStyles('ParagraphStyles', self.unoObjs)
         self.paraStyleNames = dict(styleNames)
-        paraStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        paraStyleDispNames = tuple(dispName for dispName, name in styleNames)
 
         styleNames = styles.getListOfStyles('CharacterStyles', self.unoObjs)
         self.charStyleNames = dict(styleNames)
-        charStyleDispNames = tuple([dispName for dispName, name in styleNames])
+        charStyleDispNames = tuple(dispName for dispName, name in styleNames)
         self.dlgCtrls.loadValues(
             paraStyleDispNames, charStyleDispNames, self.fileItem,
             self.getTypesTuple(), self.fileTypeDict, self.fillFieldList)
@@ -347,7 +345,7 @@ class DlgControls:
             ctrl.addActionListener(self.evtHandler)
 
         # values in these controls have been changed
-        self.ctrlsChanged = dict()
+        self.ctrlsChanged = {}
 
     def loadValues(self, paraStyleDispNames, charStyleDispNames, fileItem,
                    typesList, fileTypeDict, fillFieldList):
@@ -391,7 +389,7 @@ class DlgControls:
 
     def enableDisable(self, filetype):
         """Enable or disable controls as appropriate."""
-        enabled = (filetype in DocReader.supportedNames())
+        enabled = filetype in DocReader.supportedNames()
         self.lblParaStyle.getModel().Enabled = enabled
         self.lblCharStyle.getModel().Enabled = enabled
         self.lblFont.getModel().Enabled = enabled
@@ -410,10 +408,10 @@ class DlgControls:
         self.lblWhatToGrab.getModel().Enabled = enabled
         self.listWhatToGrab.getModel().Enabled = enabled
 
-        enabled = (filetype in CalcFileReader.supportedNames())
+        enabled = filetype in CalcFileReader.supportedNames()
         self.checkboxSkipRow.getModel().Enabled = enabled
 
-        enabled = (filetype == 'spellingStatus')
+        enabled = filetype == 'spellingStatus'
         self.lblAddItem.getModel().Enabled = not enabled
         self.lblFields.getModel().Enabled = not enabled
         self.listboxFields.getModel().Enabled = not enabled
@@ -421,11 +419,11 @@ class DlgControls:
         self.btnRemove.getModel().Enabled = not enabled
         self.checkboxMiss.getModel().Enabled = enabled
 
-        enabled = (filetype in SFM_Reader.supportedNames())
+        enabled = filetype in SFM_Reader.supportedNames()
         self.lblSFM.getModel().Enabled = enabled
         self.txtSFM.getModel().Enabled = enabled
 
-        enabled = (filetype == 'lift')
+        enabled = filetype == 'lift'
         self.txtWS.getModel().Enabled = enabled
         self.lblWS.getModel().Enabled = enabled
         self.btnSelectWS.getModel().Enabled = enabled

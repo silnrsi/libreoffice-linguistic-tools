@@ -1,10 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created Dec 7 2012 by Jim Kornelsen
-#
-# 10-May-13 JDK  Show message if changed was pressed but no changes.
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-
 """
 Asks whether to add or change a particular misspelled word.
 Called by WordAsker.checkSpelling() in app.svc.spellingchecks.

@@ -1,11 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created June 16 2016 by Jim Kornelsen
-#
-# 24-Jun-16 JDK  FontItemList holds FontItemGroup instead of FontItem.
-# 16-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
-# 22-Jul-16 JDK  Added StyleCheckboxHandler.
-
 """
 Bulk Conversion classes that hold controls for StyleItem data.
 
@@ -28,7 +20,6 @@ from lingt.utils import util
 from lingt.utils.fontsize import FontSize
 
 logger = logging.getLogger("lingt.ui.dlgbulkconv_step2items")
-
 
 class StyleChangeControlHandler:
     """Abstract base class to handle controls that display and
@@ -78,7 +69,6 @@ class StyleChangeControlHandler:
         """Set form values based on the styleItem values."""
         pass
 
-
 class AggregateControlHandler(StyleChangeControlHandler):
     """Holds a group of handlers."""
 
@@ -107,7 +97,6 @@ class AggregateControlHandler(StyleChangeControlHandler):
             meth = getattr(controls_object, methodName)
             meth(*args, **kwargs)
 
-
 class ConverterControls(AggregateControlHandler):
     def __init__(self, ctrl_getter, app, step2Master):
         AggregateControlHandler.__init__(self, ctrl_getter, app, step2Master)
@@ -117,7 +106,6 @@ class ConverterControls(AggregateControlHandler):
             ctrl_getter, app, step2Master, sampleControls)
         self.controls_objects = (
             convName, chkReverse, sampleControls)
-
 
 class ConvName(StyleChangeControlHandler, evt_handler.ActionEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, sample_controls):
@@ -171,7 +159,6 @@ class ConvName(StyleChangeControlHandler, evt_handler.ActionEventHandler):
     def copy_change(self, change_from, change_to):
         change_to.converter.convName = change_from.converter.convName
 
-
 class CheckboxReverse(StyleChangeControlHandler,
                       evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, sample_controls):
@@ -200,7 +187,6 @@ class CheckboxReverse(StyleChangeControlHandler,
 
     def copy_change(self, change_from, change_to):
         change_to.converter.forward = change_from.converter.forward
-
 
 class SampleControls(StyleChangeControlHandler, evt_handler.EventHandler):
     def __init__(self, ctrl_getter, app):
@@ -245,7 +231,6 @@ class SampleControls(StyleChangeControlHandler, evt_handler.EventHandler):
 
     def change_font_size(self, styleItem):
         self.sampleLabels.change_font_size(styleItem)
-
 
 class SampleLabels:
     """Label controls to display sample input and converted text."""
@@ -302,8 +287,7 @@ class SampleLabels:
             return "", None
         if styleInfo.styleType == StyleType.CUSTOM:
             return styleInfo.fontName, styleInfo.size
-        else:
-            return getFontOfStyle(styleInfo, self.app.unoObjs)
+        return getFontOfStyle(styleInfo, self.app.unoObjs)
 
     def _change_font_name(self, fontName, ctrl):
         """See also lingt.access.writer.textchanges.changeFont()."""
@@ -315,7 +299,6 @@ class SampleLabels:
     def _change_font_size(self, fontSize, ctrl):
         logger.debug("Font size '%s'", fontSize.getString())
         fontSize.changeCtrlProp(ctrl, always_change=True)
-
 
 class ButtonNextInput(StyleChangeControlHandler,
                       evt_handler.ActionEventHandler):
@@ -361,7 +344,6 @@ class ButtonNextInput(StyleChangeControlHandler,
             self.samples.sampleIndex -= 1
         self.nextInputSample()
 
-
 class CheckboxShowConverted(StyleChangeControlHandler,
                             evt_handler.ItemEventHandler):
     """Display converted text if checked."""
@@ -389,7 +371,6 @@ class CheckboxShowConverted(StyleChangeControlHandler,
         self.app.userVars.store(
             'DisplayConverted', str(self.chkShowConverted.getState()))
 
-
 class FontControls(AggregateControlHandler):
     def __init__(self, ctrl_getter, app, step2Master, style_type_handler):
         AggregateControlHandler.__init__(self, ctrl_getter, app, step2Master)
@@ -401,7 +382,6 @@ class FontControls(AggregateControlHandler):
             ctrl_getter, app, step2Master)
         self.controls_objects = (
             font_name_handler, font_type_handler, font_size_handler)
-
 
 class FontNameHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, style_type_handler):
@@ -458,7 +438,6 @@ class FontNameHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
         self.style_type_handler.update_item_changes(style_item)
         self.app.update_list(self.style_type_handler)
 
-
 class FontTypeHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
     def __init__(self, ctrl_getter, app, step2Master, font_name_handler):
         StyleChangeControlHandler.__init__(self, ctrl_getter, app, step2Master)
@@ -489,9 +468,11 @@ class FontTypeHandler(StyleChangeControlHandler, evt_handler.ItemEventHandler):
     def copy_change(self, change_from, change_to):
         change_from.fontType = change_to.fontType
 
-    def fill(self, fontType, *dummy_args):
+    def fill(self, *args):
+        if not args:
+            return
+        fontType = args[0]
         dutil.selectRadio(self.radios, fontType)
-
 
 class FontSizeHandler(StyleChangeControlHandler, evt_handler.TextEventHandler):
     def __init__(self, ctrl_getter, app, step2Master):
@@ -526,7 +507,6 @@ class FontSizeHandler(StyleChangeControlHandler, evt_handler.TextEventHandler):
         sampleControls.change_font_size(
             self.app.selected_item())
 
-
 class StyleControls(AggregateControlHandler):
     def __init__(self, ctrl_getter, app, step2Master):
         AggregateControlHandler.__init__(self, ctrl_getter, app, step2Master)
@@ -544,7 +524,6 @@ class StyleControls(AggregateControlHandler):
 
     def get_style_type_handler(self):
         return self.style_type_handler
-
 
 def getFontOfStyle(styleInfo, unoObjs):
     styleFonts = styles.StyleFonts(unoObjs)
@@ -643,7 +622,6 @@ class StyleNameHandler(StyleChangeControlHandler,
         change_from.styleName = change_to.styleName
         change_from.styleDisplayName = change_to.styleDisplayName
 
-
 class StyleList:
     """Manage the control and dictionary for a list of styles."""
     def __init__(self, styleType, ctrl, unoObjs):
@@ -658,7 +636,7 @@ class StyleList:
             family = 'CharacterStyles'
         namesList = styles.getListOfStyles(family, self.unoObjs)
         self.styleNames.update(dict(namesList))
-        displayNames = tuple([dispName for dispName, dummy_name in namesList])
+        displayNames = tuple(dispName for dispName, dummy_name in namesList)
         dutil.fill_list_ctrl(self.ctrl, displayNames)
 
     def update_change(self, styleChange):
@@ -676,7 +654,6 @@ class StyleList:
 
     def same_type(self, styleType):
         return styleType == self.styleType
-
 
 class StyleTypeHandler(StyleChangeControlHandler,
                        evt_handler.ItemEventHandler):
@@ -719,13 +696,15 @@ class StyleTypeHandler(StyleChangeControlHandler,
     def _fill_for_item_no_change(self, styleItem):
         self.fill(StyleType.NO_CHANGE)
 
-    def fill(self, styleType, *dummy_args):
+    def fill(self, *args):
+        if not args:
+            return
+        styleType = args[0]
         dutil.selectRadio(self.radios, styleType)
         self.style_checkbox_handler.enableDisable(styleType)
 
     def copy_change(self, change_from, change_to):
         change_from.styleType = change_to.styleType
-
 
 class StyleCheckboxHandler(StyleChangeControlHandler,
                            evt_handler.ItemEventHandler):
@@ -757,9 +736,7 @@ class StyleCheckboxHandler(StyleChangeControlHandler,
             change_from.remove_custom_formatting)
 
     def enableDisable(self, styleType):
-        if (styleType == StyleType.NO_CHANGE
-                or styleType == StyleType.CUSTOM):
+        if styleType in (StyleType.NO_CHANGE, StyleType.CUSTOM):
             self.chkRemoveCustom.getModel().Enabled = False
-        elif (styleType == StyleType.PARA
-              or styleType == StyleType.CHAR):
+        elif styleType in (StyleType.PARA, StyleType.CHAR):
             self.chkRemoveCustom.getModel().Enabled = True

@@ -1,11 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created December 24 2015 by Jim Kornelsen
-#
-# 28-Apr-16 JDK  Organize classes by controls.
-# 15-Jul-16 JDK  Instead of fonts, use StyleItems that depend on scope type.
-# 06-Mar-17 JDK  Fixed bug: User var requires string, not int.
-
 """
 Bulk Conversion dialog step 1.
 
@@ -222,8 +214,10 @@ class OutputTo(evt_handler.ActionEventHandler):
     def store_results(self):
         self.app.userVars.store(self.USERVAR, self.read())
 
-    def fill(self, new_val, *dummy_args):
-        self.outdir = new_val
+    def fill(self, *args):
+        if not args:
+            return
+        self.outdir = args[0]
         self.txtOutputTo.setText(self.outdir)
 
     def read(self):

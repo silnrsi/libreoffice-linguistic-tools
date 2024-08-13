@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Dialog to read from data files and create a word list in Calc.
 
@@ -214,7 +212,7 @@ class DlgWordList:
     def set_listboxColOrder_values(self, selItemPos=-1):
         listbox = self.dlgCtrls.listboxColOrder
         selectedValue = ""
-        if selItemPos >= 0 and selItemPos < listbox.getItemCount():
+        if 0 <= selItemPos < listbox.getItemCount():
             selectedValue = self.columnOrder.getTitle(selItemPos)
         dutil.fill_list_ctrl(
             listbox, self.columnOrder.getTitles(), selectedValue)
@@ -270,7 +268,7 @@ class DlgControls:
 
         varname = 'Punctuation'
         if userVars.isEmpty(varname) and len(fileItems) == 0:
-            punctToRemove = u" ".join(letters.PUNCTUATION)
+            punctToRemove = " ".join(letters.PUNCTUATION)
             userVars.store(varname, punctToRemove)
         else:
             punctToRemove = userVars.get(varname)
@@ -321,4 +319,4 @@ class DlgEventHandler(XActionListener, unohelper.Base):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)

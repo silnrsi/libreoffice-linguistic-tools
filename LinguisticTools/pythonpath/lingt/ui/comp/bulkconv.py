@@ -1,13 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created April 6 2015 by Jim Kornelsen
-#
-# 01-Jul-15 JDK  Refactor controls and events into separate classes.
-# 16-Dec-15 JDK  Use folder picker.
-# 04-Feb-16 JDK  Catch error messages for doConversion().
-# 07-Mar-16 JDK  Write code for remaining itemStateChanged events.
-# 18-Apr-16 JDK  Handle which step in a separate class.
-
 """
 Bulk OpenOffice document conversion dialog,
 with a blank Writer document used to store settings.
@@ -163,4 +153,4 @@ class ClosingButtons(evt_handler.ActionEventHandler):
 
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
-g_exportedScripts = showDlg,
+g_exportedScripts = (showDlg,)
