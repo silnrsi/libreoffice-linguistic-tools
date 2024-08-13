@@ -6,18 +6,7 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-To implement:
-    modify dialog to add word gloss checkbox
-    and python front end code
-then run pylint
-
-
 ## 2024-07-17
-
-Check "Move PoS above gloss" by default.
-
-Doesn't fileitemlist.InterlinInputSettings need a bunch more attrs,
-such as showWordText1?
 
 checkboxes order in dialog:
 show interlinear lines
@@ -29,6 +18,7 @@ show interlinear lines
     Morpheme Gloss              default
     Word Gloss
 
+Also explain in documentation that AOO is no longer supported.
 
 ## Testing
 
@@ -37,8 +27,6 @@ get all tests to pass again
     get an ICU converter to run in FW first
     maybe not all tests need to pass on ubuntu
 keep things simple and test on 1 win machine + 1 ubuntu VM
-also test in AOO.
-
 
 ## Linux Data Conversion GTK3
 
@@ -56,7 +44,6 @@ dpkg --list | awk '/ii/&&/libreoffice/{print $2}' | sudo xargs apt purge --yes
 sudo apt autoremove --yes
 sudo apt install libreoffice libreoffice-gtk3 libreoffice-sdbc-hsqldb libreoffice-help-en-us --yes
 
-
 ## Linux Data Conversion path problem 09-Mar-2017
 
 This is probably a SilConverters ECDriver error, not a LingTools error.
@@ -64,29 +51,12 @@ Can be fixed with ldconfig.
 
 Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such file or directory. 
 
-
 ## Tests finish but then LibreOffice crashes.  
 
 For example run_dlg_bulkstep1.
 Commenting out the following line in runTestSuite.run_suite() avoids the problem:
     testutil.blankWriterDoc()
 Perhaps the unoObjs paramater needs to be specified.
-
-
-## Compare Spelling dialog fails to save user vars in Python 2
-
-2021-11-30 12:56:11,335 - evt_handler.py 197 - 'ascii' codec can't encode character u'\u0905' in position 0: ordinal not in range(128)
-Traceback (most recent call last):
-  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\common\evt_handler.py", line 195, in wrapper
-    func(*args, **kwargs)
-  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\comp\spellingadjustments.py", line 336, in actionPerformed
-    self.mainForm.getFormResults()
-  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\ui\comp\spellingadjustments.py", line 152, in getFormResults
-    self.userVars.store("CharComparison", charcompString)
-  File "C:\Users\JimStandard\AppData\Roaming\OpenOffice\4\user\Scripts\python\pythonpath\lingt\access\writer\uservars.py", line 67, in store
-    stringVal = str(val)
-UnicodeEncodeError: 'ascii' codec can't encode character u'\u0905' in position 0: ordinal not in range(128)
-
 
 ## Packaging
 
@@ -96,14 +66,12 @@ Perhaps caused by renaming MkoxtSettings.xdl to Mkoxt.xdl
 
 Succeeds when installed in a fresh user directory.
 
-
 ## Powerful parser like LXML
 
 Perhaps something like this could be useful for future mkoxt changes:
 
     oDom=createUnoService("com.sun.star.xml.dom.DocumentBuilder").parse(oZip.getByName("meta.xml"))
     GetOfficeVersion=oDom.FirstChild.getAttribute("version")
-
 
 ## Complete (but not exhaustive) set of tests
 
@@ -128,18 +96,12 @@ Script Practice             # result: (text box contents)
 
 Use bigExamples.xml in a grammar test.
 
+## Pull senses from lexicon as separate entries if found.
 
-##
+## Get odt_converter_test.py to pass.
 
-Pull senses from lexicon as separate entries if found.
-
-
-## 
-
-Get odt_converter_test.py to pass.
-    "Whole Document" didn't make any changes.
+"Whole Document" didn't make any changes.
 Include "Default Style" in list box when searching for para styles.
-
 
 ## simplify the bulk converter
 
@@ -156,7 +118,6 @@ with document defaults except using the specified font.
 
 Texts with more than one font type will still need to be split up.
 
-
 ## Thought 21-Jul-2016
 
 In odt_converter.py,
@@ -170,7 +131,6 @@ Instead, perhaps OdtChanger should:
 Or, we could just always set the font name, style name, and
 size that are specified in StyleChange.
 Yes, just set it, based on scope type and the step 2 check boxes.
-
 
 ## Possible Problem 15-Feb-2016
 
@@ -235,7 +195,6 @@ assume it is whatever type the surrounding text is.
 Base the assumption on the preceding character,
 in order to make the code easier -- no lookahead required.
 
-
 -- D. Are fonts such as Annapurna considered complex? --
 
 No, they are considered Western.
@@ -244,7 +203,6 @@ the Unicode block.
 
 Unicode IPA (Doulos SIL) is also considered western.
 CTL: Devanagari (Mangal), Tamil (Latha), Malayalam (Kartika)
-
 
 -- E. A recommended solution. --
 
@@ -318,7 +276,6 @@ First implement everything separated, and then get various joins working.
 But design the code in preparation for joining.
 If the checkbox is named "Join" then it would better reflect what this
 code would be doing.
- 
 
 ## Bulk Data Conversion
 
@@ -375,7 +332,6 @@ Perhaps put such files in the Temp folder instead.
 Maybe this will help in Bulk Conversion for .doc files:
 libreoffice --convert-to
 
-
 ## Data Conversion string type problem
 
 On Linux, SEC_wrapper is returning bytes rather than unicode string.
@@ -383,7 +339,6 @@ This is a problem in Python 3.
 Perhaps the reverse is true for Windows and Python 2?
 Anyway either make bytes work, or convert to unicode strings.
 LibreOffice seems to accept either one, but it would be good to test this.
-
 
 ## Default complex font size for interlinear examples
 
@@ -393,15 +348,6 @@ So a punctuation character by itself will be smaller size,
 which does not line up well.
 This can be changed by editing the style manually,
 but people may not know to do that.
-
-
-##
-
-Menu could be "LingTools" rather than "Linguistics" to avoid confusion with
-Writer built-in features.
-However there is no other "Linguistics" menu option, and probably no one
-has gotten confused about this.
-
 
 ## reorganizing idea 28-Apr-16
 
@@ -438,17 +384,14 @@ Perhaps:
 Methods that use multiple documents would use variables that are more
 local than util.mainDoc.
 
-
 ## Dialog controls font
 
 Changed column to Gautami font for Telegu. However in Step
 through List, still shows up as boxes.
 
-
 ## Faster updates?
 
 Freezing screen is done with method lockControllers() of the document's Model.
-
 
 ## Spelling split up words
 
@@ -457,11 +400,9 @@ For example if the good word list contains "big" and "dog" and it finds a
 word "bigdog", then suggest "big dog" as a replacement.
 Likewise if it finds "big-dog" or "big,dog".
 
-
 ## XSLT partial matches
 
 Match whole words like a full CC table does, or better.
-
 
 ## Update optimizing problem
 
@@ -474,7 +415,6 @@ Result: Second example is optimized badly.
 Could not reproduce this problem starting with a new document.
 This problem does not occur with Windows OpenOffice.
 
-
 ## Font display size problem
 
 In Step Through List, some words are really small in Tamil.
@@ -483,7 +423,6 @@ For example AA is small but A is fine.
 The words appear this way in the formula, so this is not a simple problem.
 Setting font size 14 at least makes the smaller size not so small,
 even though the size still keeps changing.
-
 
 ## CTL font wrapping problem
 
@@ -495,15 +434,12 @@ Changing font from Latha to Lohit Tamil fixes the problem.
 Probably there will not be a problem with Latha on Windows.
 The best solution may be to use a font that works right for your system.
 
-
 ## Updating does not find first example if at very top of document (no space).
-
 
 ## Updating on failing to copy old ex num pastes whatever might be in clipboard.
 
 Should check to see if what was copied is 0-length, or maybe if it failed or
 something.
-
 
 ## Grab Examples changing radio buttons crashed.
 
@@ -512,11 +448,9 @@ Version: LO 5.0.3
 Maybe happening because control labels are changing,
 and it is having a hard time rendering the changes.
 
-
 ## Disposing
 
 Do not crash if blank document gets closed.
-
 
 ## Ignore button presses
 
@@ -524,12 +458,10 @@ Disable dialog so that the user does not keep clicking on buttons
 while a macro is executing.
 - I accidentally did once.
 
-
 ## Don't show uno.exe crash
 
 Is this possible to avoid?
 It would be nice to show an error message about rebooting.
-
 
 ## Testing a deployed file
 
@@ -541,7 +473,6 @@ Question: When the extension is installed, where does the python code go?
           How to call it?
           The menu calls it by its service name.
           Can a button call it that way too?
-
 
 ## Possible new major version
 
@@ -558,43 +489,6 @@ Would also be nice to have a way to automatically add reference numbers.
 Perhaps the connection could be used to modify the FW databse.
 Or ref numbers could be added in LO in a place that does not affect the
 FW database.
-
-
-#------------------------------------------------------------------------------
-# Version compatibility
-#------------------------------------------------------------------------------
-OOo 3.0.0 on Win uses Python version 2.3.4
-set(fontList) does not work.  Instead use Utils.uniqueList().
-RuntimeError, IOError as exc -- change to (RuntimeError, IOError), exc
-    'as' exceptions require Python 2.6
-In older versions of python it is illegal to add () after a class declaration.
-The @staticmethod decorator is new in version 2.4, so it does not work.
-sort(key = ) does not work. Instead pass a function that compares values.
-FilePicker must be initialized for OOo 3.0
-
-
-#------------------------------------------------------------------------------
-# Importing
-#------------------------------------------------------------------------------
-
-importing hierarchy:
-Components.py
-    loads UI.DlgSettings
-        imports File.Utils
-            imports File.Locale
-        imports App.Phonology
-            imports Data.PhonEx
-            imports Writer.TabbedPara
-                imports Data.PhonEx (or just uses such objects)
-            imports Writer.Search
-            imports File.Utils
-                imports File.Locale
-        imports App.Grammar
-    loads UI.DlgGrabEx
-        imports App.Phonology
-        imports App.Grammar
-
-We could possibly use inheritance in the matter of grabbing examples.
 
 #------------------------------------------------------------------------------
 # bugs
@@ -722,7 +616,6 @@ A small Python project that I wrote is an entirely different matter:
   navigate with a couple
   of keypresses than to have to browse to things with several clicks.
 - The IDE may not be able to run the project from within LO.
-
 
 #------------------------------------------------------------------------------
 # Done
@@ -1183,7 +1076,6 @@ Let's think of how Zotero functions.
     - this sets or modifies styles
 3. A button to insert a single example.
 4. Another button to insert a whole set.
-
 
 Grammar
     wrapping
