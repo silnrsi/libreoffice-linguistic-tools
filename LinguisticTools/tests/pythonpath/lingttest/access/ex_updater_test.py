@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 import copy
 import logging
 import unittest

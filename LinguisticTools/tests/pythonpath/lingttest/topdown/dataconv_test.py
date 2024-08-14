@@ -1,6 +1,3 @@
-# -*- coding: Latin-1 -*-
-# pylint: disable=no-self-use
-
 """
 Test all features accessed by Data Conversion dialog controls.
 Start from UI which calls App and Access layers (top-down).
@@ -8,7 +5,8 @@ Start from UI which calls App and Access layers (top-down).
 As of November 2015, this test suite crashes on linux,
 perhaps due to the ecdriver.
 """
-from __future__ import unicode_literals
+# pylint: disable=no-self-use
+
 import collections
 import logging
 import os
@@ -28,7 +26,6 @@ from lingt.utils import util
 logger = logging.getLogger("lingttest.dataconv_test")
 addedConverters = set()  # which converters have we added
 
-
 def getSuite():
     testutil.modifyClass_showDlg(DlgDataConversion)
     testutil.modifyMsgboxDisplay()
@@ -43,7 +40,6 @@ def getSuite():
         ):
         suite.addTest(DataConvTestCase(method_name))
     return suite
-
 
 # If your system uses a font that is not here then manually add it
 # as a key, and specify a different font as the value.
@@ -72,7 +68,6 @@ ROMAN_PARAGRAPHS = [
     (r"\g eoiksj feoi", "s3jsd.  Dgjsdh sdk", "slekj selkj."),
     (r"\hh End",),
     ]
-
 
 class DataConvTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -496,7 +491,6 @@ class DataConvTestCase(unittest.TestCase):
         #unoObjs = testutil.unoObjsForCurrentDoc()
         #testutil.blankWriterDoc(unoObjs)
 
-
 def addConverter(convName, msgbox, userVars):
     """Add an ICU translterator converter.
     :param convName: name of ICU transliterator or filename of TECkit map
@@ -521,7 +515,6 @@ def addConverter(convName, msgbox, userVars):
         "", "", processFlags)
     addedConverters.add(convName)
 
-
 FILTER = ''.join([(len(repr(chr(x))) == 3) and chr(x) or '.'
                   for x in range(256)])
 
@@ -539,7 +532,6 @@ def dumpUnicodeString(src, length=8):
 def anyToHex(inChar):
     """Return what ICU Any-Hex should give."""
     return "\\u%s" % dumpUnicodeString(inChar).upper()
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

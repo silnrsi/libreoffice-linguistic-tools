@@ -1,29 +1,9 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created by Jim Kornelsen on April 29, 2013
-#
-# 13-May-13 JDK  Store context globally.
-# 10-Jul-13 JDK  Write displayed messages to file.
-# 11-Jul-13 JDK  Added verifyRegexMethods().
-# 20-Aug-15 JDK  Added class CommonUnoObjs instead of global statements.
-# 07-Sep-15 JDK  Exec with the class's module dict rather than globals().
-# 11-Sep-15 JDK  Added do_dispose().
-# 15-Sep-15 JDK  Fixed modifyFilePicker() assimilation problem.
-# 28-Sep-15 JDK  Added run_suite().
-# 29-Sep-15 JDK  Added getDefaultStyle().
-# 30-Sep-15 JDK  Match dlg.execute$ for DlgSpellingReplace.
-# 09-Dec-15 JDK  Added clear_messages_sent()
-# 09-Aug-16 JDK  Added output_path().
-# 01-Mar-17 JDK  Fixed bug: MsgSentException arguments must now be unpacked.
-# 23-Jul-20 JDK  Added methods for Draw.
-
-# Disable warnings related to modifying code dynamically, useful for testing.
-# pylint: disable=exec-used,unused-argument
-
 """
 Utilities for the test suite.
 Also consider using unittest.mock.
 """
+# Disable warnings related to modifying code dynamically, useful for testing.
+# pylint: disable=exec-used,unused-argument
 
 import inspect
 import logging
@@ -47,7 +27,6 @@ from lingt.ui.common.messagebox import MessageBox, FourButtonDialog
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.testutil")
-
 
 class CommonUnoObjs:
     """Store some UNO objects for all tests.
@@ -137,7 +116,6 @@ def blankDrawing(unoObjs=None):
     stored.draw_doc = drawUnoObjs.document
     return drawUnoObjs
 
-
 def unoObjsForCurrentDoc():
     return _unoObjsForDoc(stored.doc, util.UnoObjs.DOCTYPE_WRITER)
 
@@ -151,7 +129,6 @@ def _unoObjsForDoc(document, doctype):
     unoObjs = util.UnoObjs(stored.getContext(), loadDocObjs=False)
     unoObjs.loadDocObjs(document, doctype)
     return unoObjs
-
 
 def setupTestLogging():
     """Further setup in addition to what's in lingt.utils.util"""
@@ -181,7 +158,6 @@ def setupTestLogging():
 # Executes when this module is loaded for the first time.
 setupTestLogging()
 
-
 class MyActionEvent:
     """Objects to pass to DlgEventHandler.actionPerformed()."""
     def __init__(self, actionCommand):
@@ -191,7 +167,6 @@ class MyTextEvent:
     """Objects to pass to DlgEventHandler.textChanged()."""
     def __init__(self, source):
         self.Source = source
-
 
 # Don't inspect the same function twice, because the second time the
 # source code is just a string rather than stored in a file.
@@ -236,7 +211,6 @@ def modifyClass_showDlg(klass, methodName="showDlg"):
         klass_globals = globals()
     exec(code, klass_globals)
     setattr(klass, methodName, klass_globals[modifiedMethodName])
-
 
 # List of tuples (msg, msg_args).
 messages_sent = []
@@ -320,7 +294,6 @@ def modifyMsgboxYesNoCancel(retval):
         return retval
     MessageBox.displayYesNoCancel = newFunc
 
-
 def modifyFilePicker(retval):
     """Modify lingt.ui.filepicker.showFilePicker() to return the specified
     value instead of actually displaying a message.
@@ -333,7 +306,6 @@ def modifyFilePicker(retval):
     # assimilate: global showFilePicker
     filepicker.showFilePicker = newFunc
     logger.debug(util.funcName('end'))
-
 
 def verifyRegexMethods(selfParam):
     """unittest prior to 2.7 was very incomplete.
@@ -354,7 +326,6 @@ def verifyRegexMethods(selfParam):
         except AttributeError:
             selfParam.fail("Please use unittest2 for Python 2.6.")
 
-
 def normalize_newlines(strval):
     """Returns string with normalized newlines.  The result uses Unix style
     newlines, although the main goal of this function is simply to ensure
@@ -367,7 +338,6 @@ def normalize_newlines(strval):
     strval = strval.replace("\r", "\n")
     return strval
 
-
 def do_dispose(modified_dlg):
     """
     :param modified_dlg: a dialog whose class has been modified by
@@ -378,11 +348,9 @@ def do_dispose(modified_dlg):
         modified_dlg.dlgDispose()
     # pylint: enable=no-member
 
-
 def run_suite(test_suite):
     """Run a test suite."""
     unittest.TextTestRunner(verbosity=2).run(test_suite)
-
 
 def getDefaultFont(fontType='Western'):
     """Change these values to your system's default font."""
@@ -409,15 +377,13 @@ def getDefaultStyle():
     """Change these values to your system's default style."""
     if stored.getProductName() == "LibreOffice":
         return "Default Style"
-    else:
-        return "Default"
+    return "Default"
 
 def getDefaultStyles():
     return [
         "Default Style",
         "Default",
         "Standard"]
-
 
 def output_path(filename):
     """Write files here for testing.  These can be deleted when finished,

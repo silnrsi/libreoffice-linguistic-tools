@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Test generating various kinds of word lists using
 lingt.app.svc.wordlist.WordList.
@@ -9,7 +7,6 @@ See also:
     lingttest.ui.wordlistfile_test
     lingttest.app.spellingchecks_test  # tests empty list
 """
-
 import logging
 import os
 import unittest
@@ -27,13 +24,11 @@ logger = logging.getLogger("lingttest.app.wordlist_test")
 
 FILEPATH = os.path.join(util.TESTDATA_FOLDER, "styles and fonts.odt")
 
-
 def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
     suite.addTest(WordListTestCase('test1_paragraphStyles'))
     return suite
-
 
 class WordListTestCase(unittest.TestCase):
 
@@ -86,7 +81,6 @@ class WordListTestCase(unittest.TestCase):
             testutil.stored.getContext(), loadDocObjs=False)
         testutil.blankWriterDoc(unoObjs)
 
-
 def getColumnStringList(unoObjs, col="A"):
     doclist = unoObjs.getOpenDocs(util.UnoObjs.DOCTYPE_CALC)
     wordListDoc = doclist[0]
@@ -96,7 +90,6 @@ def getColumnStringList(unoObjs, col="A"):
     # so that getCurrentController() works
     unoObjs.window.setFocus()
     return stringList
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

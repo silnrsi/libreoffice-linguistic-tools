@@ -1,10 +1,9 @@
-# -*- coding: Latin-1 -*-
-# pylint: disable=no-self-use
-
 """
 Test all features accessed by Phonology Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
+# pylint: disable=no-self-use
+
 import collections
 import os
 import unittest
@@ -511,14 +510,12 @@ class PhonologyTestCase(unittest.TestCase):
         unoObjs = testutil.unoObjsForCurrentDoc()
         testutil.blankWriterDoc(unoObjs)
 
-
 def useDialog_insertEx(refNum):
     def useDialog(innerSelf):
         innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
         innerSelf.dlgCtrls.comboRefnum.setText(refNum)
         innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
     return useDialog
-
 
 def useDialog_writingSys(testObj, wsDisplay, wsIndex):
     """
@@ -531,7 +528,6 @@ def useDialog_writingSys(testObj, wsDisplay, wsIndex):
         testObj.assertEqual(innerSelf.listbox.getSelectedItemPos(), wsIndex)
         innerSelf.actionPerformed(MyActionEvent("OK"))
     return useDialog
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

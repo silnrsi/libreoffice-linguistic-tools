@@ -1,11 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created March 23, 2010 by Jim Kornelsen
-#
-# 26-Oct-10 JDK  Updated to use with assimilated scripts.
-# 23-Apr-13 JDK  Change paths for Linux.
-# 24-Nov-15 JDK  Integrated into test suite.
-
 """
 Test grabbing phonology examples by setting user var values.
 
@@ -80,7 +72,6 @@ class VisPhonologyTestCase(unittest.TestCase):
         msgr.unoObjs = None
         logger.debug("----Manual Test END----------------------------------")
 
-
 def doTests(filepath, allRefNums, unoObjs):
     msgr.endl()
     msgr.write(DASHES)
@@ -102,7 +93,6 @@ def doTests(filepath, allRefNums, unoObjs):
                 app.insertByRefnum(exrefnum)
                 #return  # run only the first example
 
-
 def resetUserVars(userVars):
     varValues1 = {
         'Leftmost' : 'phonemic',
@@ -119,7 +109,6 @@ def resetUserVars(userVars):
     for key in varValues1:
         userVars.store(key, varValues1[key])
 
-
 class MessageWriter:
     def __init__(self):
         # Caller must set unoObjs before using the methods of this class.
@@ -133,7 +122,6 @@ class MessageWriter:
             self.unoObjs.viewcursor, testutil.PARAGRAPH_BREAK, 0)
 
 msgr = MessageWriter()
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

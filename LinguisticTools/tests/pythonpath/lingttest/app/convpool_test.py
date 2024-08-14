@@ -1,6 +1,3 @@
-# -*- coding: Latin-1 -*-
-# pylint: disable=protected-access
-
 """
 Test using multiple SEC calls.
 In most of LOLT there is a one to one correspondence between calls and
@@ -9,6 +6,8 @@ Make sure converters get removed from the pool if no longer used.
 
 Tests ConvPool and Samples.  Also tests BulkConversion.convert_vals().
 """
+# pylint: disable=protected-access
+
 from __future__ import unicode_literals
 import logging
 import platform
@@ -27,7 +26,6 @@ from lingt.utils import util
 logger = logging.getLogger("lingttest.convpool_test")
 CONV_NAME = "capsTest.tec"
 
-
 def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
@@ -37,7 +35,6 @@ def getSuite():
         ):
         suite.addTest(ConvPoolTestCase(method_name))
     return suite
-
 
 class SelectSettingsCache:
     """A cache to hold settings for selecting a converter.
@@ -64,7 +61,6 @@ def loadLibrary(self):
 # Modify SEC_wrapper class to use an alternative funcSelectConverter.
 SEC_wrapper.loadLibrary0 = SEC_wrapper.loadLibrary
 SEC_wrapper.loadLibrary = loadLibrary
-
 
 class ConvPoolTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -110,7 +106,6 @@ class ConvPoolTestCase(unittest.TestCase):
         with self.assertRaises(KeyError):
             sec_call = convPool["doesn't exist"]
 
-
     def test2_double(self):
         """Test two converters in the pool."""
         self.addConverter(CONV_NAME)
@@ -153,7 +148,6 @@ class ConvPoolTestCase(unittest.TestCase):
     def tearDown(self):
         unoObjs = testutil.unoObjsForCurrentDoc()
         testutil.blankWriterDoc(unoObjs)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

@@ -1,14 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created 18-Apr-11 by Jim Kornelsen
-#
-# 08-Apr-13 JDK  Make into a standard test with unittest.
-# 23-Apr-13 JDK  Move cursor to safe place when finished.
-# 14-May-13 JDK  Close all open docs rather than searching for opened file.
-# 28-Sep-15 JDK  Added getSuite().
-# 11-Nov-15 JDK  Select something in test1_selection().
-# 10-Dec-15 JDK  Do not display ranges for automated testing.
-
 """
 Originally this was used with "nested tables.odt"
 """
@@ -26,7 +15,6 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.search_test")
 
-
 def getSuite():
     suite = unittest.TestSuite()
     for method_name in (
@@ -35,7 +23,6 @@ def getSuite():
         ):
         suite.addTest(SearchTestCase(method_name))
     return suite
-
 
 class SearchTestCase(unittest.TestCase):
 
@@ -96,7 +83,6 @@ class SearchTestCase(unittest.TestCase):
         #    testutil.stored.getContext(), loadDocObjs=False)
         unoObjs = testutil.unoObjsForCurrentDoc()
         testutil.blankWriterDoc(unoObjs)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

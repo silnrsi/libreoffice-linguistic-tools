@@ -1,9 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created 23-Oct-2010 by Jim Kornelsen
-#
-# 29-Sep-15 Expect exception to allow automated testing.
-
 """
 Verify that the message box seems to be working.
 
@@ -18,13 +12,11 @@ from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.messagebox_test")
 
-
 def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
     suite.addTest(MessageBoxTestCase('testMessageBox'))
     return suite
-
 
 class MessageBoxTestCase(unittest.TestCase):
 
@@ -41,7 +33,6 @@ class MessageBoxTestCase(unittest.TestCase):
 
         # The constructor should fail if we don't pass any unoObjs.
         self.assertRaises(AttributeError, messagebox.MessageBox, None)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

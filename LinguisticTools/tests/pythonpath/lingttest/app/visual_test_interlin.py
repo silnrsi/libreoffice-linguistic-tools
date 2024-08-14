@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 Test grabbing interlinear examples by setting user var values.
 
@@ -61,7 +59,6 @@ class VisInterlinTestCase(unittest.TestCase):
         msgr.unoObjs.viewcursor.gotoEnd(False)
         msgr.unoObjs = None
         logger.debug("----Manual Test END----------------------------------")
-
 
 def doTests():
     unoObjs = testutil.unoObjsForCurrentDoc()
@@ -165,11 +162,9 @@ def doTests():
                 userVars.store('NumberingColWidth', numberingColWidth)
                 doCall(exrefnum, unoObjs)
 
-
 def doCall(exrefnum, unoObjs):
     app = ExServices(EXTYPE_INTERLINEAR, unoObjs)
     app.insertByRefnum(exrefnum)
-
 
 def resetUserVars(userVars):
     varValues1 = {
@@ -216,7 +211,6 @@ def resetUserVars(userVars):
     for key in varValues1:
         userVars.store(key, varValues1[key])
 
-
 class MessageWriter:
     def __init__(self):
         # Caller must set unoObjs before using the methods of this class.
@@ -230,7 +224,6 @@ class MessageWriter:
             self.unoObjs.viewcursor, testutil.PARAGRAPH_BREAK, 0)
 
 msgr = MessageWriter()
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

@@ -1,19 +1,10 @@
-# -*- coding: Latin-1 -*-
-
 """
 Verify that lists can add and remove items and stay the correct size.
 Check that user vars get stored using mock objects.
 """
-from __future__ import unicode_literals
 import logging
 import unittest
-try:
-    # Python 3.3 and higher (LibreOffice)
-    from unittest import mock
-    HAS_MOCK = True
-except ImportError:
-    # Python 2.7 (Apache OpenOffice)
-    HAS_MOCK = False
+from unittest import mock
 
 from lingttest.utils import testutil
 
@@ -24,7 +15,6 @@ from lingt.ui.common.messagebox import MessageBox
 
 logger = logging.getLogger("lingttest.fileitemlist_test")
 
-
 def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
@@ -34,11 +24,8 @@ def getSuite():
             'test3_add_items',
             'test4_uservars',
         ):
-        if not HAS_MOCK and method_name == 'test4_uservars':
-            continue
         suite.addTest(FileItemListTestCase(method_name))
     return suite
-
 
 class FileItemListTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -51,10 +38,7 @@ class FileItemListTestCase(unittest.TestCase):
         self.msgbox = MessageBox(self.unoObjs)
 
     def test1_item_types(self):
-        if HAS_MOCK:
-            userVars = mock.Mock()
-        else:
-            userVars = None
+        userVars = mock.Mock()
         dummy_item = fileitemlist.BulkFileItem(userVars)
         dummy_item = fileitemlist.WordListFileItem(userVars)
         dummy_item = fileitemlist.LingExFileItem(userVars)
@@ -156,13 +140,11 @@ class FileItemListTestCase(unittest.TestCase):
                 "b.txt",
                 "c.txt"])
 
-
 def add_new_item(itemlist, filepath):
     item = itemlist.makeNewItem()
     item.filepath = filepath
     itemlist.addItem(item)
     return item
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

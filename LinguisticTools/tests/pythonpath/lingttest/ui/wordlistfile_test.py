@@ -1,12 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created October 17, 2015 by Jim Kornelsen
-#
-# 09-Dec-15 JDK  list.clear() does not work in python 2.
-# 12-Dec-15 JDK  Use listbox_items() instead of getItems().
-
-# pylint: disable=no-self-use
-
 """
 Test the Word List File dialog.
 Test that the form works, including controls, events, and changing values.
@@ -14,7 +5,8 @@ Also test dialog results, both passing input arguments and getting output.
 
 Creates file temp.odt which can be manually deleted later.
 """
-from __future__ import unicode_literals
+# pylint: disable=no-self-use
+
 import collections
 import logging
 import unittest
@@ -38,7 +30,6 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.wordlistfile_test")
 
-
 def getSuite():
     for klass in DlgWordListFile, DlgWritingSystem:
         testutil.modifyClass_showDlg(klass)
@@ -55,7 +46,6 @@ def getSuite():
         ):
         suite.addTest(WordListFileTestCase(method_name))
     return suite
-
 
 class WordListFileTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -512,7 +502,6 @@ class WordListFileTestCase(unittest.TestCase):
                 testutil.do_dispose(self.dlg)
                 self.dlg = None
 
-
 class FileType:
     (DOC, SPREADSHEET, PARATEXT, LIFT, TBX_PHON, PAXML, FLEX, TBX_INTERLIN,
      SFM) = range(9)
@@ -524,7 +513,6 @@ class FileType:
         PAXML : 'paxml',
         }
     NAME_TO_INDEX = {v: k for k, v in INDEX_TO_NAME.items()}
-
 
 def assert_fileitems_notequal(fileItem1, fileItem2, testObj, msg=""):
     assert_fileitems_equal(
@@ -562,7 +550,6 @@ def assert_fileitems_equal(fileItem1, fileItem2, testObj, expect=True, msg=""):
             if pair[0] != pair[1]:
                 return
         testObj.fail(msg=msg)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

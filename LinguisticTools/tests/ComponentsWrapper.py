@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 """
 This is like Components.py but for code run from the user directory,
 useful for catching exceptions while testing and debugging.
@@ -102,7 +100,6 @@ class SimpleLogManager:
 
 logManager = SimpleLogManager()
 
-
 @logManager.log_exceptions
 def doShowDlg(showDlgFunc):
     """
@@ -112,7 +109,6 @@ def doShowDlg(showDlgFunc):
     logManager.spacer()
     ctx = uno.getComponentContext()
     showDlgFunc(ctx)
-
 
 def abbreviations(dummy_int=0):
     doShowDlg(abbrevs.showDlg)
@@ -162,7 +158,6 @@ def spellingStepper(dummy_int=0):
 def wordList(dummy_int=0):
     doShowDlg(wordlist.showDlg)
 
-
 @logManager.log_exceptions
 def aaa_del_sys_modules(dummy_int=0):
     """Normally it is necessary to restart Office in order to reload modules.
@@ -196,7 +191,6 @@ def aab_disp_sys_modules(dummy_int=0):
     uno_objs = util.UnoObjs(ctx)
     msgbox = messagebox.MessageBox(uno_objs)
     msgbox.display(sorted(sys.modules.keys()))
-
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
 g_exportedScripts = (

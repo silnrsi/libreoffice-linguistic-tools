@@ -1,15 +1,7 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created July 10, 2013 by Jim Kornelsen
-#
-# 07-Sep-15 JDK  Added test for updating when selection is changed.
-# 28-Sep-15 JDK  Added getSuite().
-
 """
 Test all features accessed by Abbreviations dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
-
 import logging
 import unittest
 
@@ -306,7 +298,6 @@ class AbbrevsTestCase(unittest.TestCase):
     #def tearDownClass(cls):
     #    unoObjs = testutil.unoObjsForCurrentDoc()
     #    testutil.blankWriterDoc(unoObjs)
-
 
 def addAbbrev(*args, **kwargs):
     dlg = args[0]

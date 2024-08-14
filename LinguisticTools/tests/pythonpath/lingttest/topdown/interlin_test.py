@@ -1,10 +1,9 @@
-# -*- coding: Latin-1 -*-
-# pylint: disable=no-self-use
-
 """
 Test all features accessed by Interlinear Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
+# pylint: disable=no-self-use
+
 import collections
 import logging
 import unittest
@@ -758,14 +757,12 @@ class InterlinTestCase(unittest.TestCase):
     #    unoObjs = testutil.unoObjsForCurrentDoc()
     #    testutil.blankWriterDoc(unoObjs)
 
-
 def useDialog_insertEx(refNum):
     def useDialog(innerSelf):
         innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
         innerSelf.dlgCtrls.comboRefnum.setText(refNum)
         innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
     return useDialog
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

@@ -1,13 +1,7 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created February 22 2016 by Jim Kornelsen
-#
-
 """
 A fake UNO file needed to make PyLint happy.
 docs.libreoffice.org/pyuno/html/unohelper_8py.html
 """
-
 class ImplementationHelper:
     def addImplementation(self, ctor, implementationName, serviceNames):
         pass

@@ -1,12 +1,7 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created November 12, 2015 by Jim Kornelsen
-
 """
 Exercise the Spelling Character Comparison and Spelling Step dialog controls,
 and verify Calc contents.
 """
-from __future__ import unicode_literals
 import logging
 import unittest
 
@@ -19,7 +14,6 @@ from lingt.ui.comp.spellingadjustments import DlgSpellingAdjustments
 from lingt.utils import util
 
 logger = logging.getLogger("lingttest.step_through_list")
-
 
 def getSuite():
     testutil.modifyClass_showDlg(DlgSpellingAdjustments)
@@ -35,7 +29,6 @@ def getSuite():
         ):
         suite.addTest(StepThroughTestCase(method_name))
     return suite
-
 
 class CharCompareTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -137,16 +130,13 @@ class CharCompareTestCase(unittest.TestCase):
         #testutil.blankWriterDoc(unoObjs)
         pass
 
-
 class StepThroughTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
         unittest.TestCase.__init__(self, testCaseName)
 
-
 def clear_sheet(calcUnoObjs, numRows=100):
     """Deletes rows of the current sheet."""
     calcUnoObjs.sheet.Rows.removeByIndex(0, numRows)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
