@@ -1,12 +1,9 @@
-# -*- coding: Latin-1 -*-
-
 """
 This file runs a suite of automated tests all together.
 Otherwise you can run each test individually from its file.
 
 See build/README_build.txt for instructions to run this code.
 """
-import io
 import os
 import unittest
 # pylint: disable=import-error
@@ -43,7 +40,6 @@ from lingttest.ui import wordlistfile_test
 
 from lingt.utils import util
 
-
 def get_master_suite():
     masterSuite = unittest.TestSuite()
     for module in (
@@ -74,7 +70,6 @@ def get_master_suite():
     # Uncomment to run a specific test.
     #masterSuite = visual_test_phonology.getSuite()
     return masterSuite
-
 
 def run_to_outfile(suite):
     run_suite(suite, True)
@@ -108,28 +103,19 @@ def run_suite(suite, outputToFile):
 
 def run_suite_to_outfile(suite):
     outfilepath = os.path.join(util.BASE_FOLDER, "testResults.txt")
-    if isinstance("", type(u"")):
-        # Python 3
-        outfile = io.open(outfilepath, mode='w', encoding='UTF8')
-    else:
-        # Python 2
-        outfile = open(outfilepath, mode='w')
-    outfile.write("Calling TextTestRunner...\n")
-    outfile.flush()
-    unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)
-    outfile.write("\nFinished!\n")
-    outfile.close()
-
+    with open(outfilepath, mode='w', encoding='UTF8') as outfile:
+        outfile.write("Calling TextTestRunner...\n")
+        outfile.flush()
+        unittest.TextTestRunner(stream=outfile, verbosity=2).run(suite)
+        outfile.write("\nFinished!\n")
 
 if __name__ == '__main__':
     testutil.stored.getContext()
     run_to_stdout(get_master_suite())
 
-
 def aaa_run_all_tests():
     testutil.stored.ctx = uno.getComponentContext()
     run_to_outfile(get_master_suite())
-
 
 def run_module_suite(module):
     """Run tests from a single module only."""
@@ -210,7 +196,6 @@ def run_messagebox_test():
 
 def run_wordlistfile_test():
     run_module_suite(wordlistfile_test)
-
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
 g_exportedScripts = (

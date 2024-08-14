@@ -1,7 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created 22-Feb-13 by Jim Kornelsen
-
 import logging
 import unittest
 

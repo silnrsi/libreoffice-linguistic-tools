@@ -1,16 +1,7 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created February 22 2016 by Jim Kornelsen
-#
-# 23-Feb-2016 JDK  Add classes.
-# 03-May-2016 JDK  Add classes.
-# 15-Dec-2017 JDK  Classes for APSO add-on.
-
 """
-A fake UNO file needed to make PyLint happy.
-https://www.openoffice.org/api/docs/common/ref/com/sun/star/awt/module-ix.html
+A fake UNO interface needed to make PyLint happy.
+https://api.libreoffice.org/docs/idl/ref/namespacecom_1_1sun_1_1star_1_1awt.html
 """
-
 class Point:
     def __init__(self, dummy_x, dummy_y):
         pass
@@ -25,6 +16,15 @@ class Selection(self):
 
 class Size:
     pass
+
+class WindowDescriptor:
+    def __init__(self):
+        self.Type = 0
+        self.WindowServiceName = 0
+        self.Parent = 0
+        self.ParentIndex = 0
+        self.Bounds = 0
+        self.WindowAttributes = 0
 
 class XActionListener():
     pass

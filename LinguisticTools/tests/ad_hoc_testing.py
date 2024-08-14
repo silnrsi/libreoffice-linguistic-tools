@@ -1,26 +1,39 @@
-#-*- coding: Latin-1 -*-
-
 """
 Use this to quickly run some code.
 In Basic this is easy using the editor, but in python it is not always easy,
 so you can use this file instead.
 
 To run in Windows:
-  If not done yet, close OpenOffice and run start_soffice_listening.bat.
-  Now drag this file to "run_test.bat"
+If not done yet, close LibreOffice and run start_soffice_listening.bat.
+Now drag this file to "run_test.bat"
 """
-import uno
 import logging
+import threading
 import time
 
+# pylint: disable=import-error
+import uno
+# pylint: enable=import-error
+#from com.sun.star.awt import Rectangle
+from com.sun.star.awt import VclWindowPeerAttribute
+from com.sun.star.awt import WindowClass
+from com.sun.star.awt import WindowDescriptor
+from com.sun.star.lang import IllegalArgumentException
+from com.sun.star.uno import RuntimeException
+
+from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
+from lingt.access.writer.textsearch import TxRanger
 from lingt.access.writer import styles
-from lingt.app import exceptions
-from lingt.ui.common import dutil
-from lingt.ui.common.messagebox import MessageBox
+#from lingt.ui.common import dutil
+#from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
+#from lingt.access.writer import uservars
+#from lingt.app.fileitemlist import WordListFileItem
+#from lingt.ui.dep.wordlistfile import DlgWordListFile
 
 logger = logging.getLogger("lingttest.ad_hoc_testing")
-
+msgbox = None
+unoObjs = None
 
 def timeGetBigString():
     textCursor = unoObjs.text.createTextCursorByRange(
@@ -31,7 +44,7 @@ def timeGetBigString():
     textCursor.goRight(30000, True)    # works; apparently takes an int
     textCursor.goRight(30000, True)
     textCursor.goRight(30000, True)
-    for rep in range(0, 500):
+    for _ in range(500):
         strval = textCursor.getString()
         textCursor.goRight(1, True)
     time2 = time.time()
@@ -44,21 +57,23 @@ def timeGoRight():
     textCursor.goRight(5, True)
     #util.xray(textCursor, unoObjs)
     time1 = time.time()
-    REPS = 1000     # number of repetitions
+    REPS = 1000  # number of repetitions
     DISTANCE = 10
-    for rep in range(0, REPS):
+    for _ in range(REPS):
         textCursor.goRight(DISTANCE, True)
         textCursor.goLeft(DISTANCE, False)
     time2 = time.time()
     msgbox.display("Elapsed time: %2.1f seconds" % (time2 - time1))
 
     time1 = time.time()
-    for i in range(0, REPS):
-        for j in range(0, DISTANCE): textCursor.goRight(1, False)
-        for j in range(0, DISTANCE): textCursor.goLeft(1, False)
+    for _ in range(REPS):
+        for _ in range(DISTANCE):
+            textCursor.goRight(1, False)
+        for _ in range(DISTANCE):
+            textCursor.goLeft(1, False)
     time2 = time.time()
     msgbox.display("Elapsed time: %2.1f seconds" % (time2 - time1))
-    
+
 def testChangingRanges():
     oVC = unoObjs.viewcursor
     textCursor = unoObjs.text.createTextCursorByRange(oVC.getStart())
@@ -66,10 +81,9 @@ def testChangingRanges():
     textCursor.goRight(10, True)
     msgbox.display(textCursor.getString())
 
-    from lingt.Access.Writer.Search import TextSearch
-    textSearch = TextSearch(unoObjs, None)
-    textSearch.addRange(textCursor)
-    textRanges = textSearch.getRanges()
+    ranger = TxRanger(unoObjs, True)
+    ranger.addRange(textCursor)
+    textRanges = ranger.getRanges()
     #textCursor.goRight(0, False)
 
     #oVC.goRight(9, False)
@@ -99,11 +113,10 @@ def copyAll():
     oVC = unoObjs.viewcursor
     oVC.gotoStart(False)
     oVC.gotoEnd(True)
-    selectedContent = unoObjs.controller.getTransferable() 
+    selectedContent = unoObjs.controller.getTransferable()
     newWriterDoc.controller.insertTransferable(selectedContent)
 
 def testCellEnumeration():
-    from lingt.Access.Calc.SpreadsheetReader import SpreadsheetReader
     reader = SpreadsheetReader(unoObjs)
     stringList = reader.getColumnStringList('A', skipFirstRow=False)
     print(repr(stringList))
@@ -143,19 +156,17 @@ def testSelString():
     #oVC.goRight(4, True)
 
 def testReadInsertUnicode():
-    """
-    On Windows, LO / OOo only works correctly when given unicode strings.
+    """On Windows, LO only works correctly when given unicode strings.
     On Linux, LO accepts byte data in byte strings (e.g. b"\xe0") as well.
 
     To be safe, it's probably best just to assume Office always requires
     unicode strings.
     """
     oVC = unoObjs.viewcursor
-    oVC.getText().insertString(oVC, b"1. \u0bae\n", False)
-    oVC.getText().insertString(oVC, u"2. \u0bae\n", False)
-    oVC.getText().insertString(oVC, b"3. \xe0\xae\xae\n", False)
-    oVC.getText().insertString(oVC, b"4. " + u"\u0bae".encode("utf-8") + b"\n",
-                               False)
+    oVC.getText().insertString(oVC, "1. \u0bae\n", False)  # Unicode string
+    oVC.getText().insertString(oVC, b"2. \xe0\xae\xae\n", False)  # Byte string
+    oVC.getText().insertString(oVC, b"3. " + "\u0bae".encode("utf-8") + b"\n",
+                               False)  # UTF-8 bytes converted from Unicode
 
 def impress():
     print("isRunning() == %s" % unoObjs.presentation.isRunning())
@@ -220,9 +231,6 @@ def displayAttrs():
 
     util.xray(unoObjs.document, unoObjs)
 
-    #from lingt.access.writer import uservars
-    #from lingt.ui.dep.wordlistfile import DlgWordListFile
-    #from lingt.app.fileitemlist import WordListFileItem
     #userVars = uservars.UserVars("LTw_", unoObjs.document, logger)
     #newItem = WordListFileItem(userVars)
     #dlgFile = DlgWordListFile(newItem, unoObjs, userVars)
@@ -276,83 +284,71 @@ def displayAttrs():
     # Globalscope.BasicLibraries.LoadLibrary( "MRILib" )
     # Mri ThisComponent
 
-
 def fs2_GoToTimestamp(*args):
-    #get doc from scripting context which is made available to all scripts
-    #desktop = XSCRIPTCONTEXT.getDesktop()
+    """from https://stackoverflow.com/questions/44703487/"""
+    # Get doc from scripting context which is made available to all scripts
     desktop = unoObjs.desktop
     model = desktop.getCurrentComponent()
     oSelected = model.getCurrentSelection()
-    #access annotations for the whole document
-    oEnum = model.getTextFields().createEnumeration()
     cursor = desktop.getCurrentComponent().getCurrentController().getViewCursor()
     util.xray(cursor, unoObjs)
-    while oEnum.hasMoreElements():
-        oField = oEnum.nextElement()
-        if oField.supportsService('com.sun.star.text.TextField.Annotation'):
-            xTextRange = oField.getAnchor()
-            cursor.gotoRange(xTextRange, False)
-    oText = ""
-    try:  #Grab the text selected/highlighted
-        oSel = oSelected.getByIndex(0)
-        oText= oSel.getString()
-    except:pass
-    try:
-        if oText == "":  # Nothing selected grab the whole line
-            cursor = desktop.getCurrentComponent().getCurrentController().getViewCursor()
-            cursor.gotoStartOfLine(False)  #move cursor to start without selecting (False)
-            cursor.gotoEndOfLine(True)  #now move cursor to end of line selecting all (True)
-            oSelected = model.getCurrentSelection()
+
+    def get_selected_text(oSelected, cursor):
+        oText = ""
+        try:
             oSel = oSelected.getByIndex(0)
-            oText= oSel.getString()
-            # Deselect line to avoid inadvertently deleting it on next keystroke
-            cursor.gotoStartOfLine(False)
-    except:pass
-    time = str(oText)
-    valid_chars=('0123456789:')
-    time = ''.join(char for char in time if char in valid_chars)
-    if time.count(":") == 1:
-        oM, oS = time.split(":")
-        oH = "00"
-    elif time.count(":") == 2:
-        oH,oM,oS = time.split(":")
-    else:
-        return None
-    if len(oS) != 2:
-        oS=oS[:2]
-    try:
-        secs = int(oS)
-        secs = secs + int(oM) * 60
-        secs = secs + int(oH) *3600
-    except:
-        return None
-    seek_instruction = 'seek'+str(secs)+'\n'
-    #Now do something with the seek instruction 
+            oText = oSel.getString()
+        except (RuntimeException, IllegalArgumentException):
+            pass
+        if oText == "":
+            cursor.gotoStartOfLine(False)  # Move cursor to start without selecting (False)
+            cursor.gotoEndOfLine(True)  # Now move cursor to end of line selecting all (True)
+            try:
+                oSelected = model.getCurrentSelection()
+                oSel = oSelected.getByIndex(0)
+                oText = oSel.getString()
+                cursor.gotoStartOfLine(False)  # Deselect line
+            except (RuntimeException, IllegalArgumentException):
+                pass
+        return oText
 
+    def extract_time(oText):
+        valid_chars = '0123456789:'
+        timestamp = ''.join(char for char in oText if char in valid_chars)
+        if timestamp.count(":") == 1:
+            oM, oS = timestamp.split(":")
+            oH = "00"
+        elif timestamp.count(":") == 2:
+            oH, oM, oS = timestamp.split(":")
+        else:
+            return None
+        if len(oS) != 2:
+            oS = oS[:2]
+        try:
+            secs = int(oS) + int(oM) * 60 + int(oH) * 3600
+            return secs
+        except ValueError:
+            return None
 
-import threading
-import time
-
-import uno
-import unohelper
-from com.sun.star.awt import Rectangle
-from com.sun.star.awt import WindowDescriptor
-from com.sun.star.awt.WindowClass import MODALTOP
+    oText = get_selected_text(oSelected, cursor)
+    timestamp = extract_time(oText)
+    if timestamp is not None:
+        seek_instruction = f'seek{timestamp}\n'
+        print(seek_instruction)
 
 def create_dlg(toolkit, parent):
-    from com.sun.star.awt.VclWindowPeerAttribute import OK, OK_CANCEL, YES_NO, YES_NO_CANCEL, RETRY_CANCEL, DEF_OK, DEF_CANCEL, DEF_RETRY, DEF_YES, DEF_NO
     #describe window properties.
     aDescriptor = WindowDescriptor()
-    aDescriptor.Type = MODALTOP
+    aDescriptor.Type = WindowClass.MODALTOP
     aDescriptor.WindowServiceName = "messbox"
     aDescriptor.ParentIndex = -1
     aDescriptor.Parent = parent
     #aDescriptor.Bounds = Rectangle()
-    aDescriptor.WindowAttributes = OK
-    tk = parent.getToolkit()
-    msgbox = tk.createWindow(aDescriptor)
-    #msgbox.setMessageText("Hi there!")
-    #msgbox.setCaptionText("a title")
+    aDescriptor.WindowAttributes = VclWindowPeerAttribute.OK
+    #tk = parent.getToolkit()
+    #msgbox_tk = tk.createWindow(aDescriptor)
+    #msgbox_tk.setMessageText("Hi there!")
+    #msgbox_tk.setCaptionText("a title")
     dlg = toolkit.createWindow(aDescriptor)
     return dlg
 
@@ -368,7 +364,7 @@ class DialogThread(threading.Thread):
     def run(self):
         print("run() begin")
         self.dlg = create_dlg(self.toolkit, self.parent)
-        xray(self.dlg)
+        util.xray(self.dlg, unoObjs)
         print("run() 2")
         self.val = 2
         #self.dlg.execute()
@@ -381,11 +377,11 @@ class DialogThread(threading.Thread):
 def show_mdlg():
     doc = unoObjs.document
     util.xray(doc, unoObjs)
-    #xray(doc)
+    #util.xray(doc, unoObjs)
     #parent = doc.CurrentController.Frame.ContainerWindow
     #toolkit = parent.getToolkit()
     #dlg = create_dlg(toolkit, parent)
-    #xray(dlg)
+    #util.xray(dlg, unoObjs)
     #doc = XSCRIPTCONTEXT.getDocument()
     #t = DialogThread(doc)
     #t.start()
@@ -395,30 +391,29 @@ def show_mdlg():
     #if t.dlg:
     #    print("t.dlg =...")
     #    dir(t.dlg)
-    #    #xray(t.dlg)
+    #    #util.xray(t.dlg, unoObjs)
     #else:
     #    print("t.dlg not")
     #t.dlg.endExecute()
 
-
 #------------------------------------------------------------------------------
 # Main routine
 #------------------------------------------------------------------------------
-print("Starting...")
-ctx = util.UnoObjs.getCtxFromSocket()
-unoObjs = util.UnoObjs(ctx)
-#unoObjs = util.UnoObjs(ctx, 'calc')
-#unoObjs = util.UnoObjs(ctx, 'impress')
-#msgbox = MessageBox(unoObjs)
+if __name__ == '__main__':
+    print("Starting...")
+    ctx = util.UnoObjs.getCtxFromSocket()
+    unoObjs = util.UnoObjs(ctx)
+    #unoObjs = util.UnoObjs(ctx, 'calc')
+    #unoObjs = util.UnoObjs(ctx, 'impress')
+    #msgbox = MessageBox(unoObjs)
 
-#copyAll()
-#testSelString()
-#testReadInsertUnicode()
-#impress()
-#fs2_GoToTimestamp()
-show_mdlg()
-#underlying_style_names()
-#displayAttrs()
-#doReplace()
-print("Finished!")
-
+    #copyAll()
+    #testSelString()
+    #testReadInsertUnicode()
+    #impress()
+    #fs2_GoToTimestamp()
+    show_mdlg()
+    #underlying_style_names()
+    #displayAttrs()
+    #doReplace()
+    print("Finished!")

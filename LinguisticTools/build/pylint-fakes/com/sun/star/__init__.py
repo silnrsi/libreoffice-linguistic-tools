@@ -1,4 +1,3 @@
-#
-# A fake package needed to make PyLint happy.
-#
-
+"""
+A fake package needed to make PyLint happy.
+"""

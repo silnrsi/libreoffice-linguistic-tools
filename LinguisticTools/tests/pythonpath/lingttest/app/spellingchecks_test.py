@@ -1,5 +1,3 @@
-# -*- coding: Latin-1 -*-
-
 import logging
 import unittest
 # pylint: disable=import-error
@@ -21,7 +19,6 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.spellingchecks_test")
 
-
 def getSuite():
     testutil.modifyClass_showDlg(
         DlgSpellingReplace, methodName="makeDlg")
@@ -29,7 +26,6 @@ def getSuite():
     suite = unittest.TestSuite()
     suite.addTest(SpellingChecksTestCase('testAffixesEN'))
     return suite
-
 
 class SpellingChecksTestCase(unittest.TestCase):
 
@@ -108,7 +104,6 @@ class SpellingChecksTestCase(unittest.TestCase):
         wordListDoc.document.storeAsURL(
             uno.systemPathToFileUrl(FILEPATH), props)
         return wordListDoc
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

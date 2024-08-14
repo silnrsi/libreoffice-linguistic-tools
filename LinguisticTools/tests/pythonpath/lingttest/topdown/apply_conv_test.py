@@ -1,7 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created October 16, 2015 by Jim Kornelsen
-
 """
 Test all features accessed by Apply Converter dialog controls.
 Start from UI which calls App and Access layers (top-down).
@@ -22,14 +18,12 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.applyconv_test")
 
-
 def getSuite():
     testutil.modifyClass_showDlg(DlgApplyConverter)
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
     suite.addTest(ApplyConvTestCase('test1'))
     return suite
-
 
 class ApplyConvTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -125,11 +119,9 @@ class ApplyConvTestCase(unittest.TestCase):
         unoObjs = testutil.unoObjsForCurrentDoc()
         testutil.blankWriterDoc(unoObjs)
 
-
 def clear_sheet(calcUnoObjs, numRows=100):
     """Deletes rows of the current sheet."""
     calcUnoObjs.sheet.Rows.removeByIndex(0, numRows)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

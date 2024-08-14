@@ -1,39 +1,45 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created February 22 2016 by Jim Kornelsen
-#
-
 """
 A fake UNO file needed to make PyLint happy.
 docs.libreoffice.org/pyuno/html/uno_8py.html
 """
-
 class BaseFakeInstance:
     """Complains if None is unexpectedly returned,
     so create one of these instead.
     """
     pass
 
-class FakeUnoUrlResolver(BaseFakeInstance):
-    def resolve(self, uno_url):
-        return "dummy_ctx"
-
 class FakeInstance(BaseFakeInstance):
     """General purpose fake instance"""
     pass
+
+class UnoUrlResolver(BaseFakeInstance):
+    def resolve(self, uno_url):
+        return getComponentContext()
+
+class ConfigurationAccess(BaseFakeInstance):
+    def getByName(self, name):
+        return FakeInstance()
+
+class ConfigurationProvider(BaseFakeInstance):
+    def createInstanceWithArguments(self, service_name, arguments):
+        if service_name == "com.sun.star.configuration.ConfigurationAccess":
+            return ConfigurationAccess()
+        return FakeInstance()
 
 def getComponentContext():
 
     class ServiceManager:
         def createInstanceWithContext(self, service_name, context):
             if service_name == "com.sun.star.bridge.UnoUrlResolver":
-                return FakeUnoUrlResolver()
+                return UnoUrlResolver()
+            if service_name == "com.sun.star.configuration.ConfigurationProvider":
+                return ConfigurationProvider()
             return FakeInstance()
 
         def createInstanceWithArgumentsAndContext(
                 self, service_name, arguments, context):
             if service_name == "com.sun.star.bridge.UnoUrlResolver":
-                return FakeUnoUrlResolver()
+                return UnoUrlResolver()
             return FakeInstance()
 
         def getAvailableServiceNames(self):
@@ -53,14 +59,12 @@ def getConstantByName():
 def getTypeByName():
     pass
 
-
 def createUnoStruct(dummy_structname):
 
     class ArbitraryUnoStruct:
         pass
 
     return ArbitraryUnoStruct()
-
 
 def getClass():
     pass

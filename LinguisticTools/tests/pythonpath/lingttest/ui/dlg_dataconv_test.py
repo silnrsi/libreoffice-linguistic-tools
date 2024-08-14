@@ -1,10 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created 23-Oct-2010 by Jim Kornelsen
-#
-# 23-Apr-13 JDK  Font names are different on Linux.
-# 29-Sep-15 JDK  Verify font name in test_scope2().
-
 import logging
 import platform
 import unittest
@@ -14,7 +7,6 @@ from lingt.ui.comp.dataconv import DlgDataConversion
 from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.dlg_dataconv_test")
-
 
 def getSuite():
     suite = unittest.TestSuite()
@@ -31,7 +23,6 @@ def getSuite():
         ):
         suite.addTest(DlgDataConvTestCase(method_name))
     return suite
-
 
 class DlgDataConvTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -178,7 +169,6 @@ class DlgDataConvTestCase(unittest.TestCase):
             if hasattr(self.dlg, "dlgDispose"):
                 testutil.do_dispose(self.dlg)
 
-
 def fillDefaultValues(innerSelf):
     innerSelf.dlgCtrls.comboScopeFont.setText(testutil.getDefaultFont())
     defaultStyleName = testutil.getDefaultStyle()
@@ -186,7 +176,6 @@ def fillDefaultValues(innerSelf):
         innerSelf.dlgCtrls.comboScopeParaStyle.setText(defaultStyleName)
     if defaultStyleName in innerSelf.charStyleNames:
         innerSelf.dlgCtrls.comboScopeCharStyle.setText(defaultStyleName)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

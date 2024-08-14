@@ -1,13 +1,6 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created August 3 2016 by Jim Kornelsen
-#
-# 30-Sep-16 JDK  Get most datasets to pass.
-
 """
 Reads and modifies content.xml and styles.xml.
 """
-
 import os
 import logging
 import shutil
@@ -24,13 +17,11 @@ logger = logging.getLogger("lingttest.odt_converter_test")
 
 REPLACED_VAL = "__REPLACED_VAL__"
 
-
 def getSuite():
     suite = unittest.TestSuite()
     suite.addTest(BulkReaderTestCase('testReader'))
     suite.addTest(BulkWriterTestCase('testWriter'))
     return suite
-
 
 class BulkReaderTestCase(unittest.TestCase):
 
@@ -55,7 +46,6 @@ class BulkReaderTestCase(unittest.TestCase):
             self.assertEqual(
                 len(processingStylesFound), num_expected,
                 msg=ScopeType.TO_STRING[scopeType])
-
 
 class BulkWriterTestCase(unittest.TestCase):
 
@@ -108,7 +98,6 @@ class BulkWriterTestCase(unittest.TestCase):
         debug_msg = ScopeType.TO_STRING[scopeType] + "/" + str(style_to_find)
         self.assertEqual(count, num_expected, msg=debug_msg)
 
-
 def getStyleChanges(styleItems, style_to_find):
     styleChanges = []
     for item in styleItems:
@@ -121,7 +110,6 @@ def getStyleChange(item, styleChanges):
     for instr in item.inputData:
         item.change.converted_data[instr] = REPLACED_VAL
     styleChanges.append(item.change)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())

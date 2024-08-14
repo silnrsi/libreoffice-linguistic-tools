@@ -1,9 +1,3 @@
-# -*- coding: Latin-1 -*-
-#
-# This file created 11-Feb-2016 by Jim Kornelsen
-#
-# 21-May-16 JDK  Updated because step 1 ctrls have their own classes now.
-
 """
 Tests the bulk conversion step 1 dialog.
 Does not test the "Scan Files" button, because that goes beyond the UI.
@@ -19,7 +13,6 @@ from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.dlg_bulkstep1_test")
 
-
 def getSuite():
     suite = unittest.TestSuite()
     for method_name in (
@@ -27,7 +20,6 @@ def getSuite():
         ):
         suite.addTest(DlgBulkStep1TestCase(method_name))
     return suite
-
 
 class DlgBulkStep1TestCase(unittest.TestCase):
     def __init__(self, testCaseName):
@@ -64,7 +56,6 @@ class DlgBulkStep1TestCase(unittest.TestCase):
         DlgBulkConversion.useDialog = useDialog
         #self.dlg.showDlg()
         self.runDlg(True)
-
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
