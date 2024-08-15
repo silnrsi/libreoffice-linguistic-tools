@@ -1,13 +1,13 @@
 import logging
 import unittest
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import PARAGRAPH_BREAK
-
 from lingt.access.writer import styles
 from lingt.access.writer import tables
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import PARAGRAPH_BREAK
 
 logger = logging.getLogger("lingttest.tables_test")
 

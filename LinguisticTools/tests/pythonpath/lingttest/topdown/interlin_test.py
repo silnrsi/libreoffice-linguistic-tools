@@ -2,16 +2,10 @@
 Test all features accessed by Interlinear Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
-# pylint: disable=no-self-use
-
 import collections
 import logging
 import unittest
 import os
-
-from lingttest.utils import testutil
-from lingttest.utils.testutil import (
-    MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
 
 from lingt.access.writer import styles
 from lingt.access.writer.uservars import InterlinTags
@@ -19,6 +13,10 @@ from lingt.app.svc.lingexamples import EXTYPE_INTERLINEAR
 from lingt.ui.comp.grabex import DlgGrabExamples
 from lingt.ui.comp.interlinsettings import DlgInterlinSettings
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import (
+    MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
 
 logger = logging.getLogger("lingttest.interlin_test")
 
@@ -70,18 +68,18 @@ class InterlinTestCase(unittest.TestCase):
             'filename', 'refNum', 'numFrames', 'firstWord', 'ft'])
         dataSets = [
             Test1Data(
-                "TbxIntJPDN60.xml", "JPDN60.01", 9, u"ce\u028bu\u027eu",
+                "TbxIntJPDN60.xml", "JPDN60.01", 9, "ceʋuɾu",
                 "The wall is white."),
             Test1Data(
-                "TbxIntJPDN60.xml", "JPDN61.08", 11, u"ce\u027e\u027eune",
+                "TbxIntJPDN60.xml", "JPDN61.08", 11, "ceɾɾune",
                 "Bring the chair."),
             Test1Data(
-                "Sena Int.flextext", "1.2", 13, u"Tonsene",
-                u"[1.2 ft]"),
+                "Sena Int.flextext", "1.2", 13, "Tonsene",
+                "[1.2 ft]"),
             Test1Data(
-                "Sena Int.flextext", "1.1", 20, u"Pisapha,",
-                u"Estas coisas doem mas o que é necessário é ter coragem. "
-                u"Pois nós todos vamos morrer.")]
+                "Sena Int.flextext", "1.1", 20, "Pisapha,",
+                "Estas coisas doem mas o que é necessário é ter coragem. "
+                "Pois nós todos vamos morrer.")]
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         for dataSet in dataSets:
             useDialog = self._test1_make_useDialog(dataSet)
@@ -236,8 +234,8 @@ class InterlinTestCase(unittest.TestCase):
             oVC.gotoStartOfLine(False)
 
     def _test2_verify_ex(self, data):
-        firstWord = u"o\u027eu"
-        ft = u" \u200e\u200eIn a village there was a headman."
+        firstWord = "oɾu"
+        ft = " ‎‎In a village there was a headman."
         numFrames = 11
         newTableCount = self.unoObjs.document.getTextTables().getCount()
         if data.useFrames:
@@ -355,11 +353,11 @@ class InterlinTestCase(unittest.TestCase):
         tablesAdded = newTableCount - self.prevTableCount
         self.assertGreaterEqual(tablesAdded, numTables)
         self.assertLessEqual(tablesAdded, numTablesMax)
-        ipaOru = u"o\u027eu"  # used in text and mb lines
+        ipaOru = "oɾu"  # used in text and mb lines
         if setting == 'word1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
-                tamOru = u"\u0b92\u0bb0\u0bc1"  # Tamil /oru/
+                tamOru = "ஒரு"  # Tamil /oru/
                 self.verifyTable(numTables, 0, 0, tamOru)  # orth
                 self.verifyTable(numTables, 0, 1, ipaOru)  # text
             else:
@@ -376,10 +374,10 @@ class InterlinTestCase(unittest.TestCase):
         elif setting == 'morph1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
-                tamTi = u"-\u0ba4\u0bbf"  # Tamil /-ti/
+                tamTi = "-தி"  # Tamil /-ti/
                 self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
             else:
-                self.verifyTable(numTables, 2, 1, u"-d\u032ai")  # mb
+                self.verifyTable(numTables, 2, 1, "-d̪i")  # mb
         elif setting == 'morph2':
             self.verifyTableHasCell(numTables, "A3", setVal)
             if setVal:
@@ -397,10 +395,10 @@ class InterlinTestCase(unittest.TestCase):
             self.verifyTableHasCell(numTables, "I2", setVal)
             if setVal:
                 self.verifyTable(
-                    numTables, 1, 1, u"u\u02d0\u027eu")  # mb
+                    numTables, 1, 1, "uːɾu")  # mb
             else:
                 self.verifyTable(
-                    numTables, 1, 1, u"u\u02d0\u027eu-d\u032ai")  # mb
+                    numTables, 1, 1, "uːɾu-d̪i")  # mb
         elif setting == 'psAbove':
             self.verifyTableHasCell(numTables, "A4", True)
             if setVal:
@@ -430,12 +428,12 @@ class InterlinTestCase(unittest.TestCase):
             'refNum', 'numFrames', 'firstWord', 'ft'])
         dataSets = [
             Test4Data(
-                "A1.1", 20, u"Pisapha,",
-                u"Estas coisas doem mas o que é necessário é ter coragem. "
-                u"Pois nós todos vamos morrer."),
+                "A1.1", 20, "Pisapha,",
+                "Estas coisas doem mas o que é necessário é ter coragem. "
+                "Pois nós todos vamos morrer."),
             Test4Data(
-                "BP1.S1", 11, u"o\u027eu",
-                u" \u200e\u200eIn a village there was a headman.")]
+                "BP1.S1", 11, "oɾu",
+                " ‎‎In a village there was a headman.")]
         useDialog = self._test4_make_useDialog_interlinSettingsA()
         DlgInterlinSettings.useDialog = useDialog
         self.runDlgSettings(True)
@@ -526,15 +524,15 @@ class InterlinTestCase(unittest.TestCase):
             'refNum', 'numFrames', 'firstWord', 'attrName', 'attrVal'])
         dataSets = [
             Test5Data(
-                "AJPDN60.01", 9, u"ce\u028bu\u027eu", 'Default', ''),
+                "AJPDN60.01", 9, "ceʋuɾu", 'Default', ''),
             Test5Data(
-                "AJPDN61.08", 11, u"ce\u027e\u027eune", 'ParaStyleName',
+                "AJPDN61.08", 11, "ceɾɾune", 'ParaStyleName',
                 "Caption"),
             Test5Data(
-                "B1.1", 11, u"o\u027eu", 'CharStyleName',
+                "B1.1", 11, "oɾu", 'CharStyleName',
                 "Caption characters"),
             Test5Data(
-                "B1.2", 21, u"a\u028bant\u032au", 'CharFontName',
+                "B1.2", 21, "aʋantu", 'CharFontName',
                 "Arial Black")]
         self._test5_insert_original_examples(dataSets)
         self._test5_update_examples()
@@ -746,7 +744,7 @@ class InterlinTestCase(unittest.TestCase):
             "Latha", "Complex", styles.FONT_ORTH.fontSize)
         interlinStyles = styles.InterlinStyles(self.unoObjs, userVars)
         interlinStyles.createStyles()
-        logger.debug(util.funcName() + ": Created interlinear styles.")
+        logger.debug("%s: Created interlinear styles.", util.funcName())
         styleFonts = styles.StyleFonts(
             self.unoObjs, interlinStyles.styleNames)
         styleFonts.setParaStyleWithFont(fontDef, styleKey="word2")

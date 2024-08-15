@@ -8,6 +8,7 @@ import logging
 import unittest
 
 from lingt.ui.common import messagebox
+
 from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.messagebox_test")

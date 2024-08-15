@@ -12,12 +12,12 @@ import logging
 import os
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.writer.styles import PhonologyStyles
 from lingt.access.writer.uservars import UserVars, PhonologyTags
 from lingt.app.svc.lingexamples import ExServices, EXTYPE_PHONOLOGY
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.visual_test_phonology")
 DASHES = "-" * 20
@@ -94,7 +94,7 @@ def doTests(filepath, allRefNums, unoObjs):
                 #return  # run only the first example
 
 def resetUserVars(userVars):
-    varValues1 = {
+    varValues = {
         'Leftmost' : 'phonemic',
         'ShowBrackets' : '1',
 
@@ -106,8 +106,8 @@ def resetUserVars(userVars):
 
         'PhoneticWritingSystem' : 'iru-x-X_ETIC'
     }
-    for key in varValues1:
-        userVars.store(key, varValues1[key])
+    for key, val in varValues.items():
+        userVars.store(key, val)
 
 class MessageWriter:
     def __init__(self):

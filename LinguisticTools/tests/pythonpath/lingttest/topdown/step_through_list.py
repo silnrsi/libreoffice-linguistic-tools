@@ -5,13 +5,13 @@ and verify Calc contents.
 import logging
 import unittest
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent
-
 #from lingt.access.calc import spreadsheet_output
 #from lingt.access.calc import spreadsheet_reader
 from lingt.ui.comp.spellingadjustments import DlgSpellingAdjustments
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent
 
 logger = logging.getLogger("lingttest.step_through_list")
 

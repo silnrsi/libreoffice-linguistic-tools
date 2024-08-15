@@ -72,7 +72,7 @@ class LingInterlinExample:
         m.pos = morphPS
         self._morphList.append(m)
 
-    def appendWord(self, wordText1, wordText2, wordGl):
+    def appendWord(self, wordText1, wordText2, wordGl=""):
         if len(self._morphList) == 0:
             ## add an entry so that the word shows up
             self.appendMorphObj(LingInterlinMorph())

@@ -2,14 +2,14 @@ import os
 import logging
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.xml import interlin_reader
 from lingt.access.xml import phon_reader
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
 from lingt.app.data.fileitemlist import InterlinInputSettings, LingExFileItem
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.xml_readers_test")
 
@@ -221,18 +221,18 @@ class InterlinTestCase(unittest.TestCase):
             xmlReader.get_filetype(filepath, xmlReader.dom), "fieldworks")
 
         self.assertTrue("Prefix-1.1".lower() in exampleDict)
-        self.assertTrue(not "Prefix-1".lower() in exampleDict)
+        self.assertTrue("Prefix-1".lower() not in exampleDict)
         self.assertTrue("Prefix-1.2".lower() in exampleDict)
-        self.assertTrue(not "Prefix-1.3".lower() in exampleDict)
+        self.assertTrue("Prefix-1.3".lower() not in exampleDict)
         self.assertTrue("Prefix-2".lower() in exampleDict)
-        self.assertTrue(not "Prefix-2.1".lower() in exampleDict)
-        self.assertTrue(not "Prefix-2.2".lower() in exampleDict)
+        self.assertTrue("Prefix-2.1".lower() not in exampleDict)
+        self.assertTrue("Prefix-2.2".lower() not in exampleDict)
 
         interlinEx = exampleDict["Prefix-1.2".lower()]
         self.assertEqual(interlinEx.refText, "Prefix-1.2")
         self.assertEqual(
             interlinEx.freeTrans,
-            u" \u200e\u200eIn his house he kept one pig and one fox ")
+            " ‎‎In his house he kept one pig and one fox ")
         self.assertEqual(len(interlinEx.wordList), 7)
 
         word2 = interlinEx.wordList[1]
@@ -263,7 +263,7 @@ class InterlinTestCase(unittest.TestCase):
 
         self.assertTrue("ABC 1.1".lower() in exampleDict)
         self.assertTrue("ABC 1.2".lower() in exampleDict)
-        self.assertTrue(not "ABC 2.1".lower() in exampleDict)
+        self.assertTrue("ABC 2.1".lower() not in exampleDict)
 
         interlinEx = exampleDict["ABC 1.2".lower()]
         self.assertEqual(interlinEx.refText, "ABC 1.2")
@@ -286,7 +286,7 @@ class InterlinTestCase(unittest.TestCase):
 class TestHelpersTestCase(unittest.TestCase):
 
     def testPhonFieldHelper(self):
-        exDict = dict()
+        exDict = {}
         helper = phon_reader.PhonFieldHelper(exDict, False)
         self.assertTrue(not helper.hasContents())
         helper.add("ref", "ABC")

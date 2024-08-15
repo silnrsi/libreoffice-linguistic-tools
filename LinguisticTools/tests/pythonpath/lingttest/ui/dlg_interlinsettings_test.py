@@ -2,12 +2,12 @@ import logging
 import unittest
 import os
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, MyTextEvent
-
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.ui.comp.interlinsettings import DlgInterlinSettings
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent, MyTextEvent
 
 logger = logging.getLogger("lingttest.dlg_interlinsettings_test")
 
@@ -51,24 +51,24 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
         self.assertEqual(
             self.dlg.dlgCtrls.chkMorphsSeparate.getModel().Enabled, True)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkPOS_aboveGloss.getModel().Enabled, False)
+            self.dlg.dlgCtrls.chkMorphPosBelowGloss.getModel().Enabled, False)
 
     def test2_enableDisable(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkMorphLine1.setState(0)
-            innerSelf.dlgCtrls.chkPOS_Line.setState(1)
+            innerSelf.dlgCtrls.chkMorphText1.setState(0)
+            innerSelf.dlgCtrls.chkMorphPOS.setState(1)
             innerSelf.dlgCtrls.chkOuterTable.setState(0)
             innerSelf.dlgCtrls.optTables.setState(0)
         DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
         self.dlg.dlgCtrls.enableDisable()
-        self.assertEqual(self.dlg.dlgCtrls.chkMorphLine1.getState(), 0)
+        self.assertEqual(self.dlg.dlgCtrls.chkMorphText1.getState(), 0)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkMorphLine1.getModel().Enabled, True)
+            self.dlg.dlgCtrls.chkMorphText1.getModel().Enabled, True)
         self.assertEqual(
             self.dlg.dlgCtrls.chkMorphsSeparate.getModel().Enabled, False)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkPOS_aboveGloss.getModel().Enabled, True)
+            self.dlg.dlgCtrls.chkMorphPosBelowGloss.getModel().Enabled, True)
         self.assertEqual(
             self.dlg.dlgCtrls.txtNumColWidth.getModel().Enabled, False)
         self.assertEqual(
@@ -76,8 +76,8 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
 
     def test3_enableDisable(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkMorphLine1.setState(1)
-            innerSelf.dlgCtrls.chkPOS_Line.setState(0)
+            innerSelf.dlgCtrls.chkMorphText1.setState(1)
+            innerSelf.dlgCtrls.chkMorphPOS.setState(0)
             innerSelf.dlgCtrls.chkOuterTable.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
         DlgInterlinSettings.useDialog = useDialog
@@ -86,7 +86,7 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
         self.assertEqual(
             self.dlg.dlgCtrls.chkMorphsSeparate.getModel().Enabled, True)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkPOS_aboveGloss.getModel().Enabled, False)
+            self.dlg.dlgCtrls.chkMorphPosBelowGloss.getModel().Enabled, False)
         self.assertEqual(
             self.dlg.dlgCtrls.txtNumColWidth.getModel().Enabled, True)
         self.assertEqual(
@@ -94,16 +94,16 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
 
     def test4_interlinLines(self):
         def useDialog(innerSelf):
-            innerSelf.dlgCtrls.chkWordLine1.setState(0)
-            innerSelf.dlgCtrls.chkWordLine2.setState(1)
-            innerSelf.dlgCtrls.chkMorphLine1.setState(1)
-            innerSelf.dlgCtrls.chkMorphLine2.setState(1)
-            innerSelf.dlgCtrls.chkPOS_Line.setState(1)
+            innerSelf.dlgCtrls.chkWordText1.setState(0)
+            innerSelf.dlgCtrls.chkWordText2.setState(1)
+            innerSelf.dlgCtrls.chkMorphText1.setState(1)
+            innerSelf.dlgCtrls.chkMorphText2.setState(1)
+            innerSelf.dlgCtrls.chkMorphPOS.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
         DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
-        self.assertEqual(self.dlg.dlgCtrls.chkPOS_Line.getState(), 1)
-        self.assertEqual(self.dlg.dlgCtrls.chkWordLine2.getState(), 1)
+        self.assertEqual(self.dlg.dlgCtrls.chkMorphPOS.getState(), 1)
+        self.assertEqual(self.dlg.dlgCtrls.chkWordText2.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.optFrames.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optTables.getState(), 1)
         self.dlg.evtHandler.actionPerformed(MyActionEvent("OK"))

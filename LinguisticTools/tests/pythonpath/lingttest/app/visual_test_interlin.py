@@ -19,12 +19,12 @@ import logging
 import os
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.writer.styles import InterlinStyles
 from lingt.access.writer.uservars import UserVars, InterlinTags
 from lingt.app.svc.lingexamples import ExServices, EXTYPE_INTERLINEAR
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.visual_test_interlin")
 DASHES = "-" * 20
@@ -46,10 +46,8 @@ class VisInterlinTestCase(unittest.TestCase):
         msgr.write(DASHES + "Running tests" + DASHES)
         msgr.endl()
 
-    # pylint: disable=no-self-use
     def test1(self):
         doTests()
-        # pylint: enable=no-self-use
 
     @classmethod
     def tearDownClass(cls):
@@ -167,7 +165,7 @@ def doCall(exrefnum, unoObjs):
     app.insertByRefnum(exrefnum)
 
 def resetUserVars(userVars):
-    varValues1 = {
+    varValues = {
         'ShowOrthoTextLine' : '0',
         'ShowText' : '1',
         'SeparateMorphColumns' : '1',
@@ -208,8 +206,8 @@ def resetUserVars(userVars):
             util.TESTDATA_FOLDER, 'FWtextPigFox.xml'),
         'XML_filePrefix02' : 'FW-'
     }
-    for key in varValues1:
-        userVars.store(key, varValues1[key])
+    for key, val in varValues.items():
+        userVars.store(key, val)
 
 class MessageWriter:
     def __init__(self):

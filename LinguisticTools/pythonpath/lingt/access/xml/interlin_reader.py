@@ -229,9 +229,9 @@ class ToolboxXML:
                 mergedMorphemes.getMorph(
                     self.config.get_showMorphemeBreaks()))
         if self.config.SFM_baseline_word1:
-            self.ex.appendWord(wordText, orthoWord, "")
+            self.ex.appendWord(wordText, orthoWord)
         else:
-            self.ex.appendWord(orthoWord, wordText, "")
+            self.ex.appendWord(orthoWord, wordText)
 
 
 class ToolboxBaseline:
@@ -387,7 +387,7 @@ class FieldworksXML:
             if self.ex.wordList:
                 self.ex.addPunctuation(punct)
             else:
-                self.ex.appendWord(punct, punct, "")
+                self.ex.appendWord(punct, punct)
             #logger.debug(util.funcName('return', args=punct))
             return
         morphemes = word.getElementsByTagName("morph")

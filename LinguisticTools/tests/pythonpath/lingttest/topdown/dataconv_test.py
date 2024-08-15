@@ -5,15 +5,10 @@ Start from UI which calls App and Access layers (top-down).
 As of November 2015, this test suite crashes on linux,
 perhaps due to the ecdriver.
 """
-# pylint: disable=no-self-use
-
 import collections
 import logging
 import os
 import unittest
-
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
 
 from lingt.access import sec_wrapper
 from lingt.access.sec_wrapper import ConvType
@@ -22,6 +17,9 @@ from lingt.access.sec_wrapper import ProcessTypeFlags
 from lingt.access.writer import styles
 from lingt.ui.comp.dataconv import DlgDataConversion
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
 
 logger = logging.getLogger("lingttest.dataconv_test")
 addedConverters = set()  # which converters have we added
@@ -499,7 +497,7 @@ def addConverter(convName, msgbox, userVars):
         # Converter has already been added.
         return
     convType = ConvType.Unicode_to_from_Unicode
-    if convName == "Annapurna.tec" or convName == "SAGIPA2Uni.tec":
+    if convName in ('Annapurna.tec', 'SAGIPA2Uni.tec'):
         convType = ConvType.Legacy_to_from_Unicode
     processFlags = ProcessTypeFlags.UnicodeEncodingConversion
     convSpec = convName

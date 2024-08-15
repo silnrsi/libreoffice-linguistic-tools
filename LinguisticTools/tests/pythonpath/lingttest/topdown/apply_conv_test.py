@@ -7,14 +7,14 @@ import collections
 import logging
 import unittest
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent
-from lingttest.topdown import dataconv_test
-
 from lingt.access.calc import spreadsheet_output
 from lingt.access.calc import spreadsheet_reader
 from lingt.ui.comp.applyconv import DlgApplyConverter
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent
+from lingttest.topdown import dataconv_test
 
 logger = logging.getLogger("lingttest.applyconv_test")
 
