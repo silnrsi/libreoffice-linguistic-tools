@@ -5,13 +5,13 @@ import logging
 import os
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.writer.doc_reader import DocReader
 from lingt.access.writer.textsearch import TextSearch
 from lingt.app.data import fileitemlist
 from lingt.ui.common.progressbar import ProgressBar
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.search_test")
 

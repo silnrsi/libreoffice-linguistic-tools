@@ -5,11 +5,11 @@ Start from UI which calls App and Access layers (top-down).
 import logging
 import unittest
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
-
 from lingt.ui.comp.abbrevs import DlgAbbreviations
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
 
 logger = logging.getLogger("lingttest.topdown.abbrevs_test")
 

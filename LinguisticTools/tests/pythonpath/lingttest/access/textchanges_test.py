@@ -1,10 +1,10 @@
 import logging
 import unittest
 
+from lingt.access.writer import textchanges
+
 from lingttest.utils import testutil
 from lingttest.utils.testutil import PARAGRAPH_BREAK
-
-from lingt.access.writer import textchanges
 
 logger = logging.getLogger("lingttest.textchanges_test")
 

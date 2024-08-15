@@ -6,12 +6,12 @@ import logging
 import unittest
 from unittest import mock
 
-from lingttest.utils import testutil
-
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
 from lingt.app import exceptions
 from lingt.ui.common.messagebox import MessageBox
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.fileitemlist_test")
 

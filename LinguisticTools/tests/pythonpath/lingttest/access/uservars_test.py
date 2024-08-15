@@ -1,9 +1,9 @@
 import logging
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.writer.uservars import Prefix, UserVars
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.uservars_test")
 

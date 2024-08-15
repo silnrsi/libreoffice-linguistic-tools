@@ -2,14 +2,14 @@ import copy
 import logging
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.writer import styles
 from lingt.access.writer.ex_updater import ExUpdater
 from lingt.access.writer.outputmanager import InterlinMgr
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import lingex_structs
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.ex_updater_test")
 
@@ -108,7 +108,7 @@ class ExUpdaterTestCase(unittest.TestCase):
         while oParEnumeration.hasMoreElements():
             oPar = oParEnumeration.nextElement()
             i += 1
-            logger.debug("par " + str(i) + ": " + oPar.ImplementationName)
+            logger.debug("par %d: %s", i, oPar.ImplementationName)
             self.enumeratePar(oPar)
         return self.frameCount
 
@@ -131,12 +131,12 @@ class ExUpdaterTestCase(unittest.TestCase):
                         self.enumeratePar(oFrame)
         elif oPar.supportsService("com.sun.star.text.TextTable"):
             oTable = oPar
-            logger.debug("table " + oTable.getName())
+            logger.debug("table %s", oTable.getName())
             self.tableCount += 1
             self.unoObjs.controller.select(oTable)  # go to first cell
             sNames = oTable.getCellNames()
             for sName in sNames:
-                logger.debug("cell " + oTable.getName() + ":" + sName)
+                logger.debug("cell %s:%s", oTable.getName(), sName)
                 oCell = oTable.getCellByName(sName)
                 oParEnum = oCell.createEnumeration()
                 while oParEnum.hasMoreElements():
@@ -144,7 +144,7 @@ class ExUpdaterTestCase(unittest.TestCase):
                     self.enumeratePar(oPar2)
         elif oPar.supportsService("com.sun.star.text.TextFrame"):
             oFrame = oPar
-            logger.debug("frame " + oFrame.getName())
+            logger.debug("frame %s", oFrame.getName())
             self.frameCount += 1
             oParEnum = oFrame.createEnumeration()
             while oParEnum.hasMoreElements():

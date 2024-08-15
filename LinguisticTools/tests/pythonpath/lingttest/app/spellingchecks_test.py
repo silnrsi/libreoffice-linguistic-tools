@@ -4,9 +4,6 @@ import unittest
 import uno
 # pylint: enable=import-error
 
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
-
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
@@ -16,6 +13,9 @@ from lingt.app.svc.wordlist import WordList
 from lingt.ui.common.messagebox import MessageBox
 from lingt.ui.dep.spellreplace import DlgSpellingReplace
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
 
 logger = logging.getLogger("lingttest.spellingchecks_test")
 

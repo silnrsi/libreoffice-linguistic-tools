@@ -11,14 +11,14 @@ import logging
 import os
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.data import fileitemlist
 from lingt.app.data.wordlist_structs import ColumnOrder, WhatToGrab
 from lingt.app.svc.wordlist import WordList
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.app.wordlist_test")
 

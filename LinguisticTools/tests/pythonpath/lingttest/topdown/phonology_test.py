@@ -2,8 +2,6 @@
 Test all features accessed by Phonology Settings dialog controls.
 Start from UI which calls App and Access layers (top-down).
 """
-# pylint: disable=no-self-use
-
 import collections
 import os
 import unittest
@@ -89,15 +87,15 @@ class PhonologyTestCase(unittest.TestCase):
             Test1AData(
                 # IPA
                 "Irula (Phonetic) (iru-x-X_ETIC)", 2, "iru-x-X_ETIC",
-                u"amman"),
+                "amman"),
             Test1AData(
                 # Tamil script
                 "Vette Kada Irula (iru)", 3, "iru",
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc6"), # Tamil /amme/
+                "அம்மெ"), # Tamil /amme/
             Test1AData(
                 "(none)", 0, "",
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc6")]  # Tamil /amme/
-        pht = u"amm\u025b"
+                "அம்மெ")]  # Tamil /amme/
+        pht = "ammɛ"
         for data in dataSets:
             DlgWritingSystem.useDialog = useDialog_writingSys(
                 self, data.wsDisplay, data.wsIndex)
@@ -129,17 +127,17 @@ class PhonologyTestCase(unittest.TestCase):
             Test1BData(
                 # IPA
                 "Irula (Phonetic) (iru-x-X_ETIC)", 2, "iru-x-X_ETIC",
-                u"amman",
-                u"ammanCitForm"),
+                "amman",
+                "ammanCitForm"),
             Test1BData(
                 # Tamil script
                 "Vette Kada Irula (iru)", 3, "iru",
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc6",  # Tamil /amme/
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc7"),  # Tamil /ammee/
+                "அம்மெ",  # Tamil /amme/
+                "அம்மே"),  # Tamil /ammee/
             Test1BData(
                 "(none)", 0, "",
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc6",  # Tamil /amme/
-                u"\u0b85\u0bae\u0bcd\u0bae\u0bc7")]  # Tamil /ammee/
+                "அம்மெ",  # Tamil /amme/
+                "அம்மே")]  # Tamil /ammee/
         for data in dataSets:
             DlgWritingSystem.useDialog = useDialog_writingSys(
                 self, data.wsDisplay, data.wsIndex)
@@ -161,16 +159,16 @@ class PhonologyTestCase(unittest.TestCase):
             'filename', 'refNum', 'phm', 'pht', 'ge'])
         dataSets = [
             Test2Data(
-                "TbxPhonCorpus.xml", "JPDN37.6", u"a\u0256upa",
-                u"a\u0256\u0268pa", "kitchen.stove"),
+                "TbxPhonCorpus.xml", "JPDN37.6", "aɖupa",
+                "aɖɨpa", "kitchen.stove"),
             Test2Data(
-                "TbxPhonCorpus.xml", "JPDN37.4", u"pane", u"pæne",
+                "TbxPhonCorpus.xml", "JPDN37.4", "pane", "pæne",
                 "vessel.to.store.rice"),
             Test2Data(
-                "PAdata.paxml", "JPDN23.1", u"mat\u0283t\u0283æ",
-                u"m\u0259t\u0283\u025b", "unmarried cousin"),
+                "PAdata.paxml", "JPDN23.1", "matʃtʃæ",
+                "mətʃɛ", "unmarried cousin"),
             Test2Data(
-                "PAdata.paxml", "JPDN58.02", u"bod\u032ae", u"boðe",
+                "PAdata.paxml", "JPDN58.02", "bod̪e", "boðe",
                 "bush")]
         for data in dataSets:
             useDialog = self._test2_make_useDialog(data)
@@ -241,7 +239,7 @@ class PhonologyTestCase(unittest.TestCase):
         return useDialog
 
     def _test3_do_grabExamples(self, action, refNum):
-        firstStr = u"pane"
+        firstStr = "pane"
         oVC = self.unoObjs.viewcursor
         for blankLine in True, False:
             for attrName, attrVal in [
@@ -316,8 +314,8 @@ class PhonologyTestCase(unittest.TestCase):
     def test4_settingsOptions(self):
         """Test phonology checkboxes and radio buttons."""
         oVC = self.unoObjs.viewcursor
-        pht = u"age"  # phonetic
-        phm = u"agge"  # phonemic
+        pht = "age"  # phonetic
+        phm = "agge"  # phonemic
         for phonemicFirst in True, False:
             for brackets in True, False:
                 useDialog = self._test4_make_useDialog(phonemicFirst, brackets)
@@ -375,14 +373,14 @@ class PhonologyTestCase(unittest.TestCase):
             'pht', 'phm', 'refNum', 'attrName', 'attrVal'])
         dataSets = [
             Test5Data(
-                u"a\u0256\u0268pa", u"a\u0256upa", "JPDN37.6", 'Default', ''),
+                "aɖɨpa", "aɖupa", "JPDN37.6", 'Default', ''),
             Test5Data(
-                u"age", u"agge", "JPDN21.3", 'ParaStyleName', "Caption"),
+                "age", "agge", "JPDN21.3", 'ParaStyleName', "Caption"),
             Test5Data(
-                u"ak\u02b0e", u"akke", "JPDN21.5", 'CharStyleName',
+                "akʰe", "akke", "JPDN21.5", 'CharStyleName',
                 "Caption characters"),
             Test5Data(
-                u"pæne", u"pane", "JPDN37.4", 'CharFontName', "Arial Black")]
+                "pæne", "pane", "JPDN37.4", 'CharFontName', "Arial Black")]
         self._test5_insert_original_examples(dataSets)
         self._test5_update_examples()
         self._test5_check_examples(dataSets)

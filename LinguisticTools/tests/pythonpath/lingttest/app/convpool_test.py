@@ -13,15 +13,15 @@ import logging
 import platform
 import unittest
 
-from lingttest.utils import testutil
-from lingttest.topdown import dataconv_test
-
 from lingt.access.sec_wrapper import ConverterSettings
 from lingt.access.sec_wrapper import SEC_wrapper
 from lingt.access.writer.uservars import Prefix, UserVars
 from lingt.app.svc.bulkconversion import ConvPool
 from lingt.ui.common.messagebox import MessageBox
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.topdown import dataconv_test
 
 logger = logging.getLogger("lingttest.convpool_test")
 CONV_NAME = "capsTest.tec"

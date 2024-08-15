@@ -5,8 +5,6 @@ Also test dialog results, both passing input arguments and getting output.
 
 Creates file temp.odt which can be manually deleted later.
 """
-# pylint: disable=no-self-use
-
 import collections
 import logging
 import unittest
@@ -14,10 +12,6 @@ import os
 # pylint: disable=import-error
 import uno
 # pylint: enable=import-error
-
-from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent
-from lingttest.topdown import phonology_test
 
 from lingt.app import exceptions
 from lingt.app.data.fileitemlist import WordListFileItem
@@ -27,6 +21,10 @@ from lingt.ui.common import dutil
 from lingt.ui.dep.wordlistfile import DlgWordListFile
 from lingt.ui.dep.writingsystem import DlgWritingSystem
 from lingt.utils import util
+
+from lingttest.utils import testutil
+from lingttest.utils.testutil import MyActionEvent
+from lingttest.topdown import phonology_test
 
 logger = logging.getLogger("lingttest.wordlistfile_test")
 
@@ -457,7 +455,7 @@ class WordListFileTestCase(unittest.TestCase):
                         whatToGrab.whichOne = field[0]
                 self.assertNotEqual(
                     whatToGrab.whichOne, "",
-                    msg=("[Error: could not parse %s]" % grabDisp))
+                    msg="[Error: could not parse %s]" % grabDisp)
                 formValues.thingsToGrab.append(whatToGrab)
             formValues.includeMisspellings = bool(
                 innerSelf.dlgCtrls.checkboxMiss.getState())

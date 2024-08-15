@@ -6,12 +6,12 @@ import logging
 import shutil
 import unittest
 
-from lingttest.utils import testutil
-
 from lingt.access.xml import odt_converter
 from lingt.app.data.bulkconv_structs import ScopeType
 from lingt.app.svc.bulkconversion import UniqueStyles
 from lingt.utils import util
+
+from lingttest.utils import testutil
 
 logger = logging.getLogger("lingttest.odt_converter_test")
 
@@ -92,9 +92,9 @@ class BulkWriterTestCase(unittest.TestCase):
         styleChanges = getStyleChanges(styleItems, style_to_find)
         changer = odt_converter.OdtChanger(reader, styleChanges)
         changer.makeChanges()
-        resultfile = open(
-            os.path.join(self.outdir, "content.xml"), 'r', encoding="utf-8")
-        count = resultfile.read().count(REPLACED_VAL)
+        with open(os.path.join(self.outdir, "content.xml"), 'r',
+                encoding="utf-8") as resultfile:
+            count = resultfile.read().count(REPLACED_VAL)
         debug_msg = ScopeType.TO_STRING[scopeType] + "/" + str(style_to_find)
         self.assertEqual(count, num_expected, msg=debug_msg)
 
