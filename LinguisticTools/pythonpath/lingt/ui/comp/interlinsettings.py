@@ -1,5 +1,9 @@
 """
 Dialog for settings to import interlinear examples for grammar write-ups.
+Stores persistent settings as explained in the uservars module.
+
+Later, when the Grab Examples dialog is opened,
+the lingexamples module loads these settings.
 
 This module exports:
     showDlg()
@@ -27,7 +31,6 @@ from lingt.ui.common.dlgdefs import DlgInterlinSettings as _dlgdef
 from lingt.utils import util
 
 logger = logging.getLogger("lingt.ui.dlginterlinsettings")
-
 
 def showDlg(ctx=uno.getComponentContext()):
     """Main method to show a dialog window.
@@ -227,7 +230,6 @@ class DlgInterlinSettings:
             return
         self.dlgClose()
 
-
 class DlgControls:
     """Store dialog controls."""
 
@@ -243,12 +245,12 @@ class DlgControls:
         self.chkMorphText1 = ctrl_getter.get(_dlgdef.CHK_MORPH_TEXT1)
         self.chkMorphText2 = ctrl_getter.get(_dlgdef.CHK_MORPH_TEXT2)
         self.chkMorphGloss = ctrl_getter.get(_dlgdef.CHK_MORPH_GLOSS)
-        self.chkMorphsSeparate = ctrl_getter.get(
-            _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
-        self.chkMorphPOS = ctrl_getter.get(_dlgdef.CHK_MORPH_POS)
-        self.chkFT_inQuotes = ctrl_getter.get(_dlgdef.CHK_FT_IN_QUOTES)
+        self.chkMorphPos = ctrl_getter.get(_dlgdef.CHK_MORPH_POS)
         self.chkMorphPosBelowGloss = ctrl_getter.get(
             _dlgdef.CHK_MORPH_POS_BELOW_GLOSS)
+        self.chkMorphsSeparate = ctrl_getter.get(
+            _dlgdef.CHK_MORPHEMES_SEPARATE_COLS)
+        self.chkFT_inQuotes = ctrl_getter.get(_dlgdef.CHK_FT_IN_QUOTES)
         self.chkNumbering = ctrl_getter.get(_dlgdef.CHK_INSERT_NUMBERING)
         self.chkOuterTable = ctrl_getter.get(_dlgdef.CHK_OUTER_TABLE)
         self.listboxFiles = ctrl_getter.get(_dlgdef.LISTBOX_FILES)
@@ -279,10 +281,10 @@ class DlgControls:
             (self.chkMorphText1, "ShowMorphText1"),
             (self.chkMorphText2, "ShowMorphText2"),
             (self.chkMorphGloss, "ShowMorphGloss"),
+            (self.chkMorphPos, "ShowMorphPartOfSpeech"),
+            (self.chkMorphPosBelowGloss, "MorphPartOfSpeechBelowGloss"),
             (self.chkMorphsSeparate, "SeparateMorphColumns"),
-            (self.chkMorphPOS, "ShowMorphPartOfSpeech"),
             (self.chkFT_inQuotes, "FreeTransInQuotes"),
-            (self.chkMorphPosBelowGloss, "MorphPOS_BelowGloss"),
             (self.chkNumbering, "InsertNumbering"),
             (self.chkOuterTable, "MakeOuterTable")]
 
@@ -337,7 +339,8 @@ class DlgControls:
         they could have side effects during loadValues().
         """
         for ctrl in (
-                self.chkMorphText1, self.chkMorphText2, self.chkMorphPOS,
+                self.chkMorphText1, self.chkMorphText2, self.chkMorphGloss,
+                self.chkMorphPos,
                 self.optTables, self.optFrames, self.chkOuterTable,
                 self.chkDontUseSegnum):
             ctrl.addItemListener(self.evtHandler)
@@ -347,12 +350,17 @@ class DlgControls:
 
     def verifyCheckboxVarList(self):
         """An assertion check to make sure the code is kept in sync."""
-        checkboxList = sorted(
-            [varname for dummy_ctrl, varname in self.CHECKBOX_VAR_LIST])
-        attrsList = sorted(
-            [varname for dummy_attr, varname
-             in lingex_structs.InterlinOutputSettings.USERVAR_BOOLEAN_ATTRS])
-        assert checkboxList == attrsList
+        checkboxSet = {
+            varname for dummy_ctrl, varname in self.CHECKBOX_VAR_LIST}
+        attrsSet = {
+            varname for dummy_attr, varname in
+            lingex_structs.InterlinOutputSettings.USERVAR_BOOLEAN_ATTRS}
+        missingAttrs = checkboxSet - attrsSet
+        extraAttrs = attrsSet - checkboxSet
+        assert checkboxSet == attrsSet, (
+            f"Assertion failed:\n"
+            f"Items in checkboxSet but not in attrsSet: {missingAttrs}\n"
+            f"Items in attrsSet but not in checkboxSet: {extraAttrs}")
 
     def enableDisable(self):
         """Enable or disable controls as appropriate."""
@@ -361,18 +369,18 @@ class DlgControls:
             self.chkMorphsSeparate.getModel().Enabled = True
         else:
             self.chkMorphsSeparate.getModel().Enabled = False
-        if (self.chkOuterTable.getState() == 1 or
-                self.optTables.getState() == 1):
+        if (self.chkOuterTable.getState() == 1
+                or self.optTables.getState() == 1):
             self.txtNumColWidth.getModel().Enabled = True
             self.lblNumColWidth.getModel().Enabled = True
         else:
             self.txtNumColWidth.getModel().Enabled = False
             self.lblNumColWidth.getModel().Enabled = False
-        if self.chkMorphPOS.getState() == 1:
+        if (self.chkMorphPos.getState() == 1
+                and self.chkMorphGloss.getState() == 1):
             self.chkMorphPosBelowGloss.getModel().Enabled = True
         else:
             self.chkMorphPosBelowGloss.getModel().Enabled = False
-
 
 class DlgEventHandler(XActionListener, XItemListener, XTextListener,
                       unohelper.Base):
@@ -403,7 +411,8 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             return
         for ctrl in (
                 self.dlgCtrls.chkMorphText1, self.dlgCtrls.chkMorphText2,
-                self.dlgCtrls.chkMorphPOS, self.dlgCtrls.optTables,
+                self.dlgCtrls.chkMorphGloss, self.dlgCtrls.chkMorphPos,
+                self.dlgCtrls.optTables,
                 self.dlgCtrls.optFrames, self.dlgCtrls.chkOuterTable):
             if evt_handler.sameName(src, ctrl):
                 self.dlgCtrls.enableDisable()
@@ -437,7 +446,6 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.mainForm.dlgClose()
         else:
             evt_handler.raise_unknown_action(event.ActionCommand)
-
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
 g_exportedScripts = (showDlg,)

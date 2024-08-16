@@ -27,7 +27,7 @@
   <dlg:checkbox dlg:id="chkWordText2" dlg:tab-index="1" dlg:left="12" dlg:top="134" dlg:width="92" dlg:height="9" dlg:value="&amp;200.DlgInterlinSettings.chkWordText2.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="ChkMorphText1" dlg:tab-index="2" dlg:left="12" dlg:top="145" dlg:width="92" dlg:height="9" dlg:value="&amp;180.DlgInterlinSettings.ChkMorphText1.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="ChkMorphText2" dlg:tab-index="3" dlg:left="12" dlg:top="156" dlg:width="92" dlg:height="9" dlg:value="&amp;181.DlgInterlinSettings.ChkMorphText2.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="ChkMorphPOS" dlg:tab-index="4" dlg:left="12" dlg:top="167" dlg:width="92" dlg:height="9" dlg:value="&amp;182.DlgInterlinSettings.ChkMorphPOS.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="ChkMorphPos" dlg:tab-index="4" dlg:left="12" dlg:top="167" dlg:width="92" dlg:height="9" dlg:value="&amp;182.DlgInterlinSettings.ChkMorphPos.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="ChkMorphGloss" dlg:tab-index="4" dlg:left="12" dlg:top="178" dlg:width="92" dlg:height="9" dlg:value="&amp;420.DlgInterlinSettings.ChkMorphGloss.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="ChkWordGloss" dlg:tab-index="4" dlg:left="12" dlg:top="189" dlg:width="92" dlg:height="9" dlg:value="&amp;421.DlgInterlinSettings.ChkWordGloss.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkFT_inQuotes" dlg:tab-index="5" dlg:left="115" dlg:top="123" dlg:width="105" dlg:height="17" dlg:value="&amp;194.DlgInterlinSettings.chkFT_inQuotes.Value" dlg:multiline="true" dlg:checked="true"/>

@@ -1,23 +1,22 @@
-#!/usr/bin/python
-# -*- coding: Latin-1 -*-
-
 """
 Handles the events from the Linguistics menu, defined in Addons.xcu.
 
-Python OpenOffice scripts in extensions must be implemented as PyUNO
+Python scripts in LibreOffice extensions must be implemented as PyUNO
 components, and this file contains the component definitions.
 
 Scripts are imported from the pythonpath subfolder,
-which OpenOffice automatically adds to the path.
+which LibreOffice automatically adds to the path.
 The import from this file must be done at runtime or else it
-leads to a failure while adding the extension to OpenOffice.
-Scripts in the pythonpath subfolder will not be reloaded until OpenOffice is
+leads to a failure while adding the extension to LibreOffice.
+Scripts in the pythonpath subfolder will not be reloaded until LibreOffice is
 completely closed and restarted.
 
-There are no functions in this file to be run from Tools -> Macros -> Run.
+There are no functions in this file to be run from Tools > Macros > Run Macro.
 Instead, run one of the component showDlg() functions, for example in
-pythonpath/lingt/ui/components/abbrevs.py.
+pythonpath/lingt/ui/comp/abbrevs.py.
 """
+# pylint: disable=import-outside-toplevel
+
 import logging
 import os
 import platform
@@ -41,10 +40,8 @@ from name.JimK.LinguisticTools.CalcFunctions import XCalcFunctions
 LOGGING_ENABLED = False
 #LOGGING_ENABLED = True  # Uncomment to turn on.
 if platform.system() == "Windows":
-    #BASE_FOLDER = r"C:\OurDocs\LOLT_dev_extra"
     BASE_FOLDER = r"C:\OurDocs\computing\Office\LOLT_dev_extra"
 else:
-    #BASE_FOLDER = "/mnt/sf_OurDocs"
     BASE_FOLDER = "/home/jkornels/LOLT_dev_extra"
 TOPLEVEL_LOGGER_FILEPATH = os.path.join(BASE_FOLDER, "debug.txt")
 
@@ -101,7 +98,6 @@ class SimpleLogManager:
 
 logManager = SimpleLogManager()
 
-
 class JobWrapper(unohelper.Base, XJobExecutor):
     """A base class that can be used as the job for an UNO component.
     Catches exceptions that happen while running showDialog().
@@ -123,7 +119,6 @@ class JobWrapper(unohelper.Base, XJobExecutor):
     def showDialog(self):
         # Pylint will be upset if this method is not implemented.
         raise NotImplementedError()
-
 
 class PhonologySettingsJob(JobWrapper):
     def __init__(self, ctx):
@@ -253,7 +248,6 @@ class DrawConverterJob(JobWrapper):
         from lingt.ui.comp.dataconv_draw import showDlg
         showDlg(self.ctx)
 
-
 class StringReverserAddIn(unohelper.Base, XCalcFunctions):
     def __init__(self, ctx):
         self.ctx = ctx
@@ -262,14 +256,12 @@ class StringReverserAddIn(unohelper.Base, XCalcFunctions):
     def factory(ctx):
         return StringReverserAddIn(ctx)
 
-    # pylint: disable=no-self-use
     def reverse(self, inString):
         """Note: For some reason decorating with @logManager.log_exceptions
         makes it not work in Calc.
         """
         from lingt.app.calcfunctions import reverseString
         return reverseString(inString)
-
 
 ## Define the components in this module.
 

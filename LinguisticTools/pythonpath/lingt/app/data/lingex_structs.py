@@ -201,6 +201,8 @@ class InterlinOutputSettings(Syncable):
     Show rows and other options.
     """
     USERVAR_BOOLEAN_ATTRS = [
+        # first element is the attribute (e.g. inSettings.makeOuterTable)
+        # second element is the uservar name for storing in a document
         ('makeOuterTable', "MakeOuterTable"),
         ('insertNumbering', "InsertNumbering"),
         ('showWordText1', "ShowWordText1"),

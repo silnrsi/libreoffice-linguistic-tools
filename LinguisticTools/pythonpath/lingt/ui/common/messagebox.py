@@ -11,7 +11,8 @@ import logging
 import unohelper
 from com.sun.star.awt import Rectangle
 from com.sun.star.awt import XActionListener
-from com.sun.star.awt import MessageBoxType
+from com.sun.star.awt.MessageBoxType import (
+    INFOBOX, WARNINGBOX, ERRORBOX, QUERYBOX)
 from com.sun.star.lang import IllegalArgumentException
 
 from lingt.app import exceptions
@@ -50,7 +51,7 @@ class MessageBox:
         self._showDialog(
             message, msg_args,
             title=kwargs.get('title', ""), buttons=buttons,
-            etype=MessageBoxType.INFOBOX)
+            etype=INFOBOX)
 
     def displayExc(self, exc):
         if isinstance(exc, exceptions.MessageError):
@@ -68,7 +69,7 @@ class MessageBox:
         r = self._showDialog(
             message, msg_args,
             title=kwargs.get('title', ""), buttons=buttons,
-            etype=MessageBoxType.WARNINGBOX)
+            etype=WARNINGBOX)
         if r == MessageBox.RESULT_OK:
             return True
         return False
@@ -83,7 +84,7 @@ class MessageBox:
         result = self._showDialog(
             message, msg_args,
             title=kwargs.get('title', ""), buttons=buttons,
-            etype=MessageBoxType.QUERYBOX)
+            etype=QUERYBOX)
         if result == MessageBox.RESULT_YES:
             return "yes"
         if result == MessageBox.RESULT_NO:
@@ -105,13 +106,13 @@ class MessageBox:
         except IllegalArgumentException:
             # old API before AOO 4.0
             stype = 'messbox'  # string type
-            if etype == MessageBoxType.QUERYBOX:
+            if etype == QUERYBOX:
                 stype = 'querybox'
-            elif etype == MessageBoxType.WARNINGBOX:
+            elif etype == WARNINGBOX:
                 stype = 'warningbox'
-            elif etype == MessageBoxType.ERRORBOX:
+            elif etype == ERRORBOX:
                 stype = 'errorbox'
-            elif etype == MessageBoxType.INFOBOX:
+            elif etype == INFOBOX:
                 stype = 'infobox'  # info always shows one OK button alone!
             rect = Rectangle()
             box = self.toolkit.createMessageBox(

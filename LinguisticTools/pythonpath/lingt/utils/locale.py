@@ -57,8 +57,8 @@ class Locale:
         ## Make the English key values case insensitive
 
         translationsLower = {}
-        for en, translation in self.translations:
-            translationsLower[en.lower()] = translation
+        for en, translation_dict in self.translations.items():
+            translationsLower[en.lower()] = translation_dict
         self.translations.update(translationsLower)
         return theLocale
 
@@ -632,14 +632,17 @@ class Locale:
             'fr' :
             "EncConverters semble être mal installé",
         },
-        "Error parsing %s user variable.  Please go to Insert -> Field -> "
-        "More Fields and fix the problem." : {
+        "Error parsing user defined property %s. Please go to "
+        "File > Properties > Custom Properties "
+        "and fix the problem." : {
             'es' :
-            "Error al analizar %s variable de usuario.  Por favor, vaya a "
-            "Insertar -> Campos y solucionar el problema.",
+            "Error al analizar la propiedad definida por el usuario %s. Por "
+            "favor, vaya a Archivo > Propiedades > Propiedades Personalizadas "
+            "y solucione el problema.",
             'fr' :
-            "Erreur en analysant la variable utilisateur %s.  Veuillez "
-            "atteindre Insertion -> Champs pour résoudre le problème.",
+            "Erreur en analysant la propriété définie par l'utilisateur %s. "
+            "Veuillez aller dans Fichier > Propriétés > Propriétés personnalisées "
+            "pour résoudre le problème.",
         },
         "Error reading file %s" : {
             'es' :
