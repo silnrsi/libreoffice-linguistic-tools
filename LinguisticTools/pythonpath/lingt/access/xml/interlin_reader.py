@@ -143,7 +143,6 @@ class InterlinReader(FileReader):
         logger.debug("File type is %s", filetype)
         return filetype
 
-
 class ToolboxXML:
     """Toolbox XML seems to follow this rule:
     If a marker has children, then it occurs within a group named after
@@ -233,7 +232,6 @@ class ToolboxXML:
         else:
             self.ex.appendWord(orthoWord, wordText)
 
-
 class ToolboxBaseline:
     """Baseline means which words the morphemes are grouped by."""
 
@@ -282,7 +280,6 @@ class ToolboxBaseline:
             self.word_group,
             self.userVars.getVarName("SFMarker_Word"), current_wordline,
             self.userVars.getVarName("SFM_Baseline"), other_wordline)
-
 
 def singleMorphemeWord(word):
     """For words consisting of a single morpheme, get word-level
@@ -363,25 +360,26 @@ class FieldworksXML:
 
     def handleWord(self, word):
         #logger.debug(util.funcName('begin'))
-        wordText1 = ""
-        wordText2 = ""
+        text1 = ""
+        text2 = ""
+        gloss = ""
         punct = None
         is_first_text = True
         for childNode in word.childNodes:
             if not childNode.attributes:
                 continue
             itemType = childNode.getAttribute("type")
-            itemText = xmlutil.getElemText(childNode)
+            elemText = xmlutil.getElemText(childNode)
             if itemType == "txt":
                 if is_first_text:
-                    wordText1 = itemText
+                    text1 = elemText
                     is_first_text = False
                 else:
-                    wordText2 = itemText
+                    text2 = elemText
             elif itemType == "gls":
-                gloss = itemText
+                gloss = elemText
             elif itemType == "punct":
-                punct = itemText
+                punct = elemText
                 break
         if punct:
             if self.ex.wordList:
@@ -395,8 +393,8 @@ class FieldworksXML:
             self.handleWordMorphemes(morphemes)
         else:
             self.ex.appendMorphObj(singleMorphemeWord(word))
-        self.ex.appendWord(wordText1, wordText2, gloss)
-        #logger.debug(util.funcName('end', args=wordText))
+        self.ex.appendWord(text1, text2, gloss)
+        #logger.debug(util.funcName('end', args=text1))
 
     def handleWordMorphemes(self, morphemes):
         #logger.debug(util.funcName('begin'))
@@ -410,12 +408,12 @@ class FieldworksXML:
                     continue
                 itemType = item.getAttribute("type")
                 if itemType == "txt":
-                    text = xmlutil.getElemText(item)
+                    elemText = xmlutil.getElemText(item)
                     if is_first_text:
-                        morph.text1 = text
+                        morph.text1 = elemText
                         is_first_text = False
                     else:
-                        morph.text2 = text
+                        morph.text2 = elemText
                 elif itemType == "cf":
                     # lex entry, typically same as morph text
                     pass
@@ -435,7 +433,6 @@ class FieldworksXML:
             self.ex.appendMorphObj(
                 mergedMorphemes.getMorph(
                     self.config.get_showMorphemeBreaks()))
-
 
 class MergedMorphemes(lingex_structs.LingInterlinMorph):
     """Merge morphemes into a single dash-separated string."""

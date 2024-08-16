@@ -1,26 +1,19 @@
-# vim: set filetype=conf :
-#
-# Created on 18-Jul-2011 by Jim Kornelsen.
-# 12-Dec-15 JDK  Added info about dialogs and releasing a new version.
-# 03-May-16 JDK  No need to assimilate code.
-# 07-Mar-17 JDK  Add testing information.
-# 09-Mar-17 JDK  Moved testing information to README_testing.txt.
-
 #------------------------------------------------------------------------------
 # Building the code
 #------------------------------------------------------------------------------
-
-I use three different methods for building and running the LOLT extension.  The
+I use three different methods for building and running the LOLT extension. The
 first is to manually select the folders, zip it up, rename as .oxt and then
-double-click to deploy in LibreOffice.  This is simple but somewhat tedious.
+double-click to deploy in LibreOffice. This is simple but somewhat tedious
+and error-prone.
 
-The second method is similar but more automated.  Run create_oxt.ps1,
+The second method is similar but more automated. Run create_oxt.ps1,
 which zips up the folders and deploys them.
 This is a good general purpose method.
 
-For the third method, do not zip it.  Run it from the user directory:
+For the third method, do not zip the code. Run from the user directory.
 1. Go to Tools -> Extension Manager and remove Linguistic Tools if it exists.
-2. Go to Tools -> Macros -> Organize Dialogs.
+2. If the LingToolsBasic library doesn't exist yet,
+   go to Tools -> Macros -> Organize Dialogs.
    Under the Library tab, create a library named LingToolsBasic.
    Also, under the Dialogs tab, select LingToolsBasic and create a new
    dialog, because otherwise it doesn't recognize the new library.
@@ -39,7 +32,7 @@ The benefits of the third approach are:
 - No need to restart LibreOffice to deploy changes.
   However, to avoid restarting, it is necessary to run aaa_del_sys_modules().
   See tests/ComponentsWrapper.py for details about this function.
-
+  It may still be easier to restart LO to load new code changes.
 
 #------------------------------------------------------------------------------
 # Releasing
@@ -50,7 +43,6 @@ When releasing a new .oxt file:
 3. Increment the version in description.xml
 4. Update README.txt with the version history and date.
 5. Rename the generated .oxt file as LinguistcTools-#.#.oxt
-
 
 #------------------------------------------------------------------------------
 # Dialog notes
@@ -68,13 +60,11 @@ To modify the dialog:
    Also grab the new translated strings from the .properties files.
 3. Compare or replace files in LingToolsBasic.
 
-
 #------------------------------------------------------------------------------
 # Localization
 #------------------------------------------------------------------------------
 To search for changes needed, see read_error_messages.pl and
 dialog_strings_read.py in the generating_code directory.
-
 
 #------------------------------------------------------------------------------
 # Testing and Debugging
@@ -82,7 +72,7 @@ dialog_strings_read.py in the generating_code directory.
 See tests/README_testing.py.
 
 To enable debugging, set LOGGING_ENABLED and specify a path that exists on
-your system.  These settings are located in the following files:
+your system. These settings are located in the following files:
 1. lingt/utils/util.py
 2. Components.py
 3. tests/ComponentsWrapper.py

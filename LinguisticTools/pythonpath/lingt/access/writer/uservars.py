@@ -1,8 +1,13 @@
 """
 Store persistent settings in user defined properties of a document.
+The properties can be managed manually by going to
+File > Properties > Custom Properties.
 
-User defined properties can be managed manually by going to
-File -> Properties -> Custom Properties.
+Previously, LOLT stored these settings in user field variables,
+as shown under Insert > Fields > More Fields > Variables.
+That's where this module's name comes from.
+The reason for the change was that they could be stored in Writer but
+not in some other components.
 """
 import logging
 from com.sun.star.beans.PropertyAttribute import REMOVEABLE
@@ -30,10 +35,9 @@ class Prefix:
     MAKE_OXT = "LTmk_"
     TESTING = "LTtest_"
 
-
 class UserVars:
-    """Access to the user variables of the document.
-    These can be viewed using Insert -> Field -> More Fields.
+    """Access to the user defined properties of the document.
+    These can be viewed using File > Properties > Custom Properties.
     """
     def __init__(self, VAR_PREFIX, oDoc, otherLogger):
         """
@@ -120,7 +124,6 @@ class UserVars:
         """UserVar objects are only one per document, so return this one."""
         return self
 
-
 def setHasSettings(userVars):
     """Sets HasSettings. Returns True if HasSettings was set previously."""
     varname = "HasSettings"
@@ -204,7 +207,6 @@ class SettingsDocPreparer:
         self.unoObjs.text.insertString(oVC, message, 0)
         self.unoObjs.text.insertControlCharacter(oVC, PARAGRAPH_BREAK, 0)
 
-
 class Syncable:
     """Interface for classes that are able to be synced with user vars."""
     def __init__(self, userVars):
@@ -235,9 +237,8 @@ class Syncable:
     @staticmethod
     def noUserVarData(varName):
         return exceptions.DataNotFoundError(
-            "Error parsing %s user variable.  Please go to Insert -> "
-            "Field -> More Fields and fix the problem.", varName)
-
+            "Error parsing user defined property %s. Please go to File > "
+            "Properties > Custom Properties and fix the problem.", varName)
 
 class FieldTags:
     """Handle various names for markers and fields.
@@ -269,7 +270,6 @@ class FieldTags:
             self.tags[key] = markerName
         return self.tags
 
-
 class InterlinTags(FieldTags):
     TAG_VARS = [
         ['ref', "SFMarker_RefNum"],
@@ -290,7 +290,6 @@ class InterlinTags(FieldTags):
         'morphGloss' : "ge",
         'morphPos' : "ps",
         'ft' : "ft"}
-
 
 class PhonologyTags(FieldTags):
     TAG_VARS = [

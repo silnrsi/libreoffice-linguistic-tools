@@ -44,5 +44,5 @@ Foreach ($subpath in $SUBPATHS) {
     While (-Not $myjob.IsCompleted) {}
     $ps.EndInvoke($myjob)
     $ps.Dispose()
-    Start-Sleep -Milliseconds 250
+    Start-Sleep -Milliseconds 350
 }

@@ -288,8 +288,9 @@ class InterlinTestCase(unittest.TestCase):
         testutil.blankWriterDoc(self.unoObjs)
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
-        for setting in ['word1', 'word2', 'morph1', 'morph2', 'ps', 'sepCols',
-                        'psAbove', 'numbering']:
+        for setting in ['word1', 'word2', 'wordGloss',
+                'morph1', 'morph2', 'morphGloss', 'morphPos',
+                'posBelow', 'sepCols', 'numbering']:
             for setVal in True, False:
                 useDialog = self._test3_make_useDialog(setting, setVal)
                 DlgInterlinSettings.useDialog = useDialog
@@ -314,33 +315,42 @@ class InterlinTestCase(unittest.TestCase):
             innerSelf.userVars.store(TAG_VARS['word2'], 'tx')
             innerSelf.userVars.store(TAG_VARS['morph1'], 'mbor')
             innerSelf.userVars.store(TAG_VARS['morph2'], 'mb')
-            innerSelf.userVars.store("SFM_Baseline", "WordLine2")
-            innerSelf.dlgCtrls.chkWordLine1.setState(0)
-            innerSelf.dlgCtrls.chkWordLine2.setState(1)
-            innerSelf.dlgCtrls.chkMorphLine1.setState(0)
-            innerSelf.dlgCtrls.chkMorphLine2.setState(1)
-            innerSelf.dlgCtrls.chkPOS_Line.setState(0)
+            innerSelf.userVars.store("SFM_Baseline", "WordText2")
+            innerSelf.dlgCtrls.chkWordText1.setState(0)
+            innerSelf.dlgCtrls.chkWordText2.setState(1)
+            innerSelf.dlgCtrls.chkWordGloss.setState(0)
+            innerSelf.dlgCtrls.chkMorphText1.setState(0)
+            innerSelf.dlgCtrls.chkMorphText2.setState(1)
+            innerSelf.dlgCtrls.chkMorphGloss.setState(1)
+            innerSelf.dlgCtrls.chkMorphPos.setState(0)
             innerSelf.dlgCtrls.chkMorphsSeparate.setState(1)
-            innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(0)
+            innerSelf.dlgCtrls.chkMorphPosBelowGloss.setState(0)
             innerSelf.dlgCtrls.chkNumbering.setState(1)
             newState = int(setVal)
             if setting == 'word1':
-                innerSelf.dlgCtrls.chkWordLine1.setState(newState)
+                innerSelf.dlgCtrls.chkWordText1.setState(newState)
             elif setting == 'word2':
-                innerSelf.dlgCtrls.chkWordLine2.setState(newState)
+                innerSelf.dlgCtrls.chkWordText2.setState(newState)
+            elif setting == 'wordGloss':
+                innerSelf.dlgCtrls.chkWordGloss.setState(newState)
             elif setting == 'morph1':
-                innerSelf.dlgCtrls.chkMorphLine1.setState(newState)
+                innerSelf.dlgCtrls.chkMorphText1.setState(newState)
             elif setting == 'morph2':
-                innerSelf.dlgCtrls.chkMorphLine2.setState(newState)
-            elif setting == 'ps':
-                innerSelf.dlgCtrls.chkPOS_Line.setState(newState)
+                innerSelf.dlgCtrls.chkMorphText2.setState(newState)
+            elif setting == 'morphGloss':
+                innerSelf.dlgCtrls.chkMorphGloss.setState(newState)
+            elif setting == 'morphPos':
+                innerSelf.dlgCtrls.chkMorphPos.setState(newState)
+            elif setting == 'posBelow':
+                innerSelf.dlgCtrls.chkMorphGloss.setState(1)
+                innerSelf.dlgCtrls.chkMorphPos.setState(1)
+                innerSelf.dlgCtrls.chkMorphPosBelowGloss.setState(newState)
             elif setting == 'sepCols':
                 innerSelf.dlgCtrls.chkMorphsSeparate.setState(newState)
-            elif setting == 'psAbove':
-                innerSelf.dlgCtrls.chkPOS_Line.setState(1)
-                innerSelf.dlgCtrls.chkPOS_aboveGloss.setState(newState)
             elif setting == 'numbering':
                 innerSelf.dlgCtrls.chkNumbering.setState(newState)
+            else:
+                self.fail("Unexpected setting: %s" % setting)
             innerSelf.dlgCtrls.optTables.setState(1)
             self.setOrthographicFont(innerSelf.userVars)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
@@ -354,10 +364,11 @@ class InterlinTestCase(unittest.TestCase):
         self.assertGreaterEqual(tablesAdded, numTables)
         self.assertLessEqual(tablesAdded, numTablesMax)
         ipaOru = "oɾu"  # used in text and mb lines
+        tamOru = "ஒரு"  # Tamil /oru/
+        tamTi = "-தி"  # Tamil /-ti/
         if setting == 'word1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
-                tamOru = "ஒரு"  # Tamil /oru/
                 self.verifyTable(numTables, 0, 0, tamOru)  # orth
                 self.verifyTable(numTables, 0, 1, ipaOru)  # text
             else:
@@ -371,10 +382,13 @@ class InterlinTestCase(unittest.TestCase):
             else:
                 self.verifyTable(numTables, 0, 0, ipaOru)  # mb
                 self.verifyTable(numTables, 0, 1, "a")  # gloss
+        elif setting == 'wordGloss':
+            self.verifyTableHasCell(numTables, "A4", setVal)
+            if setVal:
+                self.verifyTable(numTables, 0, 1, "a")  # gloss
         elif setting == 'morph1':
             self.verifyTableHasCell(numTables, "A4", setVal)
             if setVal:
-                tamTi = "-தி"  # Tamil /-ti/
                 self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
             else:
                 self.verifyTable(numTables, 2, 1, "-d̪i")  # mb
@@ -383,6 +397,10 @@ class InterlinTestCase(unittest.TestCase):
             if setVal:
                 self.verifyTable(numTables, 0, 1, ipaOru)  # mb
             else:
+                self.verifyTable(numTables, 0, 1, "a")  # gloss
+        elif setting == 'morphGloss':
+            self.verifyTableHasCell(numTables, "A4", setVal)
+            if setVal:
                 self.verifyTable(numTables, 0, 1, "a")  # gloss
         elif setting == 'ps':
             self.verifyTableHasCell(numTables, "A4", setVal)
@@ -394,12 +412,10 @@ class InterlinTestCase(unittest.TestCase):
             self.verifyTableHasCell(numTables, "F2", True)
             self.verifyTableHasCell(numTables, "I2", setVal)
             if setVal:
-                self.verifyTable(
-                    numTables, 1, 1, "uːɾu")  # mb
+                self.verifyTable(numTables, 1, 1, "uːɾu")  # mb
             else:
-                self.verifyTable(
-                    numTables, 1, 1, "uːɾu-d̪i")  # mb
-        elif setting == 'psAbove':
+                self.verifyTable(numTables, 1, 1, "uːɾu-d̪i")  # mb
+        elif setting == 'posBelow':
             self.verifyTableHasCell(numTables, "A4", True)
             if setVal:
                 self.verifyTable(numTables, 0, 2, "det")  # ps
@@ -419,6 +435,8 @@ class InterlinTestCase(unittest.TestCase):
                 self.assertRegex(celltext, r"^\(\d+\)$")
             else:
                 self.verifyTable(1, 0, 0, "()")  # number
+        else:
+            self.fail("Unexpected setting: %s" % setting)
         self.prevTableCount = newTableCount
 
     def test4_prefixAndColWidth(self):
@@ -512,8 +530,7 @@ class InterlinTestCase(unittest.TestCase):
             oVC.goDown(3, False)
 
     def test5_updating(self):
-        """
-        Test updating examples.  Verify that:
+        """Test updating examples.  Verify that:
         - the example is actually updated
         - the correct example number is updated
         - the old example isn't still there
