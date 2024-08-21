@@ -229,15 +229,16 @@ class InterlinMgr(ExampleManager):
         interlinFrames.createOuterFrame()
         frame_count += 1
         logger.debug("Adding %d morphemes.", len(word.morphList))
-        isFirstMorph = True
-        for morph in word.morphList:
+        for morph_i, morph in enumerate(word.morphList):
             wordOneMorph = lingex_structs.LingInterlinWord()
             wordOneMorph.text1 = word.text1
             wordOneMorph.text2 = word.text2
+            wordOneMorph.gloss = word.gloss
             wordOneMorph.morph = morph
-            interlinFrames.insertInnerFrameData(wordOneMorph, isFirstMorph)
+            isFirst = morph_i == 0
+            isLast = morph_i == len(word.morphList) - 1
+            interlinFrames.insertInnerFrameData(wordOneMorph, isFirst, isLast)
             frame_count += 1
-            isFirstMorph = False
         if len(word.morphList) == 1:
             interlinFrames.insertInnerTempSpace(useOuterTable=False)
         if frame_count >= INSERT_AFTER:

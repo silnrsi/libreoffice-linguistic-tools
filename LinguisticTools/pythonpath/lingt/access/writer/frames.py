@@ -57,7 +57,7 @@ class InterlinFrames:
         self.frameOuter = frameOuter
         self.framecursorOuter = frameOuter.createTextCursor()
 
-    def insertInnerFrameData(self, word, firstMorph):
+    def insertInnerFrameData(self, word, isFirst, isLast):
         """Insert data into the outer frame.
         Optionally creates an inner frame for morpheme breaks.
         Expects word.morph to be set.
@@ -71,11 +71,15 @@ class InterlinFrames:
 
         ## Word Text Lines 1 and 2
 
-        if firstMorph:
-            self._insertWordData(
-                self.config.showWordText1, 'wordTx1', word.text1)
-            self._insertWordData(
-                self.config.showWordText2, 'wordTx2', word.text2)
+        if isFirst:
+            if self.config.showWordText1:
+                self._insertFrameData(
+                    self.frameOuter, self.framecursorOuter, 'wordTx1',
+                    word.text1)
+            if self.config.showWordText2:
+                self._insertFrameData(
+                    self.frameOuter, self.framecursorOuter, 'wordTx2',
+                    word.text2)
 
         frameForMorph = None    # either outer or inner frame
         if self.config.separateMorphColumns:
@@ -100,12 +104,12 @@ class InterlinFrames:
 
         ## Morpheme Text Lines 1 and 2
 
-        self._insertMorphData(
-            self.config.showMorphText1, frameForMorph, framecursor, 'morphTx1',
-            word.morph.text1)
-        self._insertMorphData(
-            self.config.showMorphText2, frameForMorph, framecursor, 'morphTx2',
-            word.morph.text2)
+        if self.config.showMorphText1:
+            self._insertFrameData(
+                frameForMorph, framecursor, 'morphTx1', word.morph.text1)
+        if self.config.showMorphText2:
+            self._insertFrameData(
+                frameForMorph, framecursor, 'morphTx2', word.morph.text2)
 
         ## Morpheme Part of Speech - first option
 
@@ -129,22 +133,12 @@ class InterlinFrames:
 
         ## Word Gloss
 
-        if firstMorph:
-            self._insertWordData(
-                self.config.showWordGloss, 'wordGloss', word.gloss)
+        if isLast:
+            if self.config.showWordGloss:
+                self._insertFrameData(
+                    self.frameOuter, self.framecursorOuter, 'wordGloss',
+                    word.gloss, parabreak='before')
         logger.debug(util.funcName('end'))
-
-    def _insertWordData(self, show_line, paraStyleKey, strData):
-        if show_line:
-            self._insertFrameData(
-                self.frameOuter, self.framecursorOuter, paraStyleKey, strData)
-            self.framecursorOuter.setPropertyValue(
-                "ParaStyleName", "Standard")
-
-    def _insertMorphData(self, show_line, frame, framecursor, paraStyleKey,
-                         strData):
-        if show_line:
-            self._insertFrameData(frame, framecursor, paraStyleKey, strData)
 
     def _insertFrameData(self, frame, frameCursor, paraStyleKey, strData,
                          parabreak='after'):
