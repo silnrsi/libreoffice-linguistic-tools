@@ -184,8 +184,8 @@ class InterlinTestCase(unittest.TestCase):
         config.fileList = [fileItem]
         config.separateMorphColumns = True
         config.showMorphemeBreaks = True
-        self.userVars.store("SFMarker_Word2", "or")
-        self.userVars.store("SFMarker_Morpheme2", "mbtam")
+        self.userVars.store("SFMarker_WordText2", "or")
+        self.userVars.store("SFMarker_MorphemeText2", "mbtam")
 
         xmlReader = interlin_reader.InterlinReader(
             self.unoObjs, self.userVars, config)
@@ -201,8 +201,8 @@ class InterlinTestCase(unittest.TestCase):
         morph1 = word4.morphList[0]
         self.assertNotEqual(morph1.text2, "")
 
-        self.userVars.store("SFMarker_Word2", "")          # reset
-        self.userVars.store("SFMarker_Morpheme2", "")     # reset
+        self.userVars.store("SFMarker_WordText2", "")  # reset
+        self.userVars.store("SFMarker_MorphemeText2", "")  # reset
 
     def testFw(self):
         filepath = os.path.join(util.TESTDATA_FOLDER, "FWtextPigFox.xml")

@@ -8,11 +8,6 @@ Rem
 Rem Most of the code in this extension is in Python, but there are a few
 Rem things implemented in Basic.
 Rem
-Rem 09-Sep-10 JDK  Created OpenExtensionHelp routine.
-Rem 21-Sep-10 JDK  Added GoToTableInOtherDoc routine.
-Rem 04-Oct-10 JDK  Don't try to go to the table if the main doc is closed.
-Rem 09-Apr-13 JDK  Use mainDoc instead of ThisComponent in GoToTableInOtherDoc.
-Rem
 Rem ----------------------------------------------------------------------------
 
 Rem ----------------------------------------------------------------------------
