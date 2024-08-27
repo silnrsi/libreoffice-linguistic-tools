@@ -278,7 +278,7 @@ class ToolboxBaseline:
             "Try changing %s%d to use a different marker, "
             "or change %s to 'WordLine%d'.",
             self.word_group,
-            self.userVars.getVarName("SFMarker_Word"), current_wordline,
+            self.userVars.getVarName("SFMarker_WordText"), current_wordline,
             self.userVars.getVarName("SFM_Baseline"), other_wordline)
 
 def singleMorphemeWord(word):

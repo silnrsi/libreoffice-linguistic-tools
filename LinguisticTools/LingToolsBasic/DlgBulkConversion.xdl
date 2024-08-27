@@ -2,8 +2,7 @@
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgBulkConversion" dlg:left="113" dlg:top="52" dlg:width="311" dlg:height="252" dlg:page="2" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;42.DlgBulkConversion.Title">
  <dlg:styles>
-  <dlg:style dlg:style-id="0" dlg:background-color="0xd8e4f8"/>
-  <dlg:style dlg:style-id="1" dlg:border="simple"/>
+  <dlg:style dlg:style-id="0" dlg:border="simple"/>
  </dlg:styles>
  <dlg:bulletinboard>
   <dlg:text dlg:id="LabelFiles" dlg:tab-index="0" dlg:left="9" dlg:top="7" dlg:width="222" dlg:height="12" dlg:page="1" dlg:value="&amp;41.DlgBulkConversion.LabelFiles.Value"/>
@@ -35,11 +34,11 @@
   </dlg:titledbox>
   <dlg:text dlg:id="sampleNum" dlg:tab-index="34" dlg:left="11" dlg:top="181" dlg:width="36" dlg:height="12" dlg:page="2" dlg:value="&amp;82.DlgBulkConversion.sampleNum.Value" dlg:align="center"/>
   <dlg:button dlg:id="btnNextInput" dlg:tab-index="14" dlg:left="49" dlg:top="181" dlg:width="41" dlg:height="12" dlg:page="2" dlg:value="&amp;48.DlgBulkConversion.btnNextInput.Value"/>
-  <dlg:text dlg:style-id="1" dlg:id="inputDisplay" dlg:tab-index="15" dlg:left="10" dlg:top="195" dlg:width="133" dlg:height="14" dlg:page="2" dlg:value="&amp;64.DlgBulkConversion.inputDisplay.Value"/>
+  <dlg:text dlg:style-id="0" dlg:id="inputDisplay" dlg:tab-index="15" dlg:left="10" dlg:top="195" dlg:width="133" dlg:height="14" dlg:page="2" dlg:value="&amp;64.DlgBulkConversion.inputDisplay.Value"/>
   <dlg:checkbox dlg:id="chkShowConverted" dlg:tab-index="17" dlg:left="9" dlg:top="213" dlg:width="133" dlg:height="12" dlg:page="2" dlg:value="&amp;58.DlgBulkConversion.chkShowConverted.Value" dlg:checked="false"/>
-  <dlg:text dlg:style-id="1" dlg:id="convertedDisplay" dlg:tab-index="16" dlg:left="10" dlg:top="226" dlg:width="133" dlg:height="14" dlg:page="2" dlg:value="&amp;60.DlgBulkConversion.convertedDisplay.Value"/>
+  <dlg:text dlg:style-id="0" dlg:id="convertedDisplay" dlg:tab-index="16" dlg:left="10" dlg:top="226" dlg:width="133" dlg:height="14" dlg:page="2" dlg:value="&amp;60.DlgBulkConversion.convertedDisplay.Value"/>
   <dlg:text dlg:id="lblConverter" dlg:tab-index="39" dlg:left="152" dlg:top="6" dlg:width="135" dlg:height="12" dlg:page="2" dlg:value="&amp;65.DlgBulkConversion.lblConverter.Value"/>
-  <dlg:textfield dlg:style-id="0" dlg:id="txtConvName" dlg:tab-index="11" dlg:left="151" dlg:top="19" dlg:width="94" dlg:height="12" dlg:page="2" dlg:value="&amp;84.DlgBulkConversion.txtConvName.Value"/>
+  <dlg:textfield dlg:id="txtConvName" dlg:tab-index="11" dlg:left="151" dlg:top="19" dlg:width="94" dlg:height="12" dlg:page="2" dlg:value="&amp;84.DlgBulkConversion.txtConvName.Value"/>
   <dlg:button dlg:id="btnChooseConv" dlg:tab-index="12" dlg:left="245" dlg:top="19" dlg:width="53" dlg:height="12" dlg:page="2" dlg:value="&amp;46.DlgBulkConversion.btnChooseConv.Value"/>
   <dlg:checkbox dlg:id="chkReverse" dlg:tab-index="13" dlg:left="151" dlg:top="34" dlg:width="67" dlg:height="12" dlg:page="2" dlg:value="&amp;57.DlgBulkConversion.chkReverse.Value" dlg:checked="false"/>
   <dlg:button dlg:id="btnNoConverter" dlg:tab-index="40" dlg:left="245" dlg:top="33" dlg:width="53" dlg:height="12" dlg:page="2" dlg:value="&amp;49.DlgBulkConversion.btnNoConverter.Value"/>

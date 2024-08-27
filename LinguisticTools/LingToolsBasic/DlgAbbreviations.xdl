@@ -3,7 +3,6 @@
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgAbbreviations" dlg:left="142" dlg:top="41" dlg:width="336" dlg:height="197" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;18.DlgAbbreviations.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:font-name="Courier New" dlg:font-height="10" dlg:font-stylename="Regular" dlg:font-family="modern"/>
-  <dlg:style dlg:style-id="1" dlg:background-color="0xffffff" dlg:text-color="0x0" dlg:font-name="Tahoma" dlg:font-height="8"/>
  </dlg:styles>
  <dlg:bulletinboard>
   <dlg:text dlg:id="LabelPossible" dlg:tab-index="0" dlg:left="6" dlg:top="9" dlg:width="118" dlg:height="10" dlg:help-text="" dlg:value="&amp;15.DlgAbbreviations.LabelPossible.Value"/>
@@ -24,7 +23,7 @@
   <dlg:text dlg:id="LabelSearchUsed" dlg:tab-index="15" dlg:left="184" dlg:top="10" dlg:width="136" dlg:height="9" dlg:help-text="" dlg:value="&amp;16.DlgAbbreviations.LabelSearchUsed.Value"/>
   <dlg:checkbox dlg:id="chkStartFromBeginning" dlg:tab-index="16" dlg:left="184" dlg:top="25" dlg:width="77" dlg:height="9" dlg:help-text="" dlg:value="&amp;22.DlgAbbreviations.chkStartFromBeginning.Value" dlg:checked="true"/>
   <dlg:text dlg:id="LabelLook" dlg:tab-index="17" dlg:left="184" dlg:top="42" dlg:width="50" dlg:height="9" dlg:help-text="" dlg:value="&amp;12.DlgAbbreviations.LabelLook.Value"/>
-  <dlg:combobox dlg:style-id="1" dlg:id="cmbxSearchParaStyle" dlg:tab-index="18" dlg:left="234" dlg:top="42" dlg:width="87" dlg:height="11" dlg:help-text="" dlg:tabstop="true" dlg:value="&amp;23.DlgAbbreviations.cmbxSearchParaStyle.Value" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:combobox dlg:id="cmbxSearchParaStyle" dlg:tab-index="18" dlg:left="234" dlg:top="42" dlg:width="87" dlg:height="11" dlg:help-text="" dlg:tabstop="true" dlg:value="&amp;23.DlgAbbreviations.cmbxSearchParaStyle.Value" dlg:spin="true" dlg:linecount="15"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="optSearchSuffix" dlg:tab-index="19" dlg:left="188" dlg:top="64" dlg:width="65" dlg:height="9" dlg:help-text="" dlg:value="&amp;26.DlgAbbreviations.optSearchSuffix.Value" dlg:checked="true"/>
    <dlg:radio dlg:id="optSearchPrefix" dlg:tab-index="20" dlg:left="188" dlg:top="74" dlg:width="65" dlg:height="9" dlg:help-text="" dlg:value="&amp;25.DlgAbbreviations.optSearchPrefix.Value"/>

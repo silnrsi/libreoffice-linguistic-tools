@@ -1,6 +1,7 @@
-# created by Jim K on 10-Dec-12
-#
-# 27-Apr-13 JDK  Added option to start headless.
+#------------------------------------------------------------------------------
+# Start LibreOffice listening on a socket,
+# so scripts can connect to it and execute UNO commands.
+#------------------------------------------------------------------------------
 
 if [ "$1" == "-headless" ]; then
     echo "Opening headless (use 'pkill loffice' and 'pkill soffice.bin' to end"

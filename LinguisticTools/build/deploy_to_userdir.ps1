@@ -1,31 +1,15 @@
-# vim: set filetype=conf :
 #------------------------------------------------------------------------------
-#
-# Created by Jim Kornelsen on 16-Sep-2015.
-#
-# 24-Sep-15 JDK  Allow execution from a different location.
-# 04-Nov-15 JDK  Do not pause if run from command line.
-# 03-May-16 JDK  Copy to pythonpath instead of assimilating.
-# 15-Feb-17 JDK  Also copy dialogs.
-# 06-Mar-17 JDK  Flag for AOO.
-#
-# Copy code to LO/AOO user directory, so it can be run from Tools -> Macros.
+# Copy code to LO user directory, so it can be run from Tools > Macros.
 #
 # The file ComponentsWrapper.py uses all of the lingt package.
 # Likewise runTestSuite.py uses all of lingttest.
 #
 # Before running on a new user directory,
-# go into Tools -> Macros -> Organize Dialogs,
+# go into Tools > Macros > Organize Dialogs,
 # and create a library called LingToolsBasic.
 # Close LibreOffice, which will modify basic/dialog.xlc.
-#
 #------------------------------------------------------------------------------
-if($args[0] -eq "-openoffice")
-{
-    $OFFICEAPP = "OpenOffice\4"
-} else {
-    $OFFICEAPP = "LibreOffice\4"
-}
+$OFFICEAPP = "LibreOffice\4"
 $DEPLOYDIR = "$env:APPDATA\$OFFICEAPP\user"
 $DEPLOY_PY = "$DEPLOYDIR\Scripts\python"
 $DEPLOY_PYTHONPATH = "$DEPLOY_PY\pythonpath"
@@ -63,4 +47,3 @@ if ((Get-ExecutionPolicy -Scope Process) -eq 'Bypass')
     # than from a command line.
     pause
 }
-

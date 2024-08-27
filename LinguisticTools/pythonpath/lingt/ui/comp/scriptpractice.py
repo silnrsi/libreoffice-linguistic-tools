@@ -13,7 +13,6 @@ from com.sun.star.awt import XItemListener
 from com.sun.star.awt import XTextListener
 from com.sun.star.uno import RuntimeException
 
-
 from lingt.access.writer import uservars
 from lingt.app.svc import scriptpractice
 from lingt.ui.common import dutil
@@ -28,6 +27,7 @@ from lingt.utils.locale import theLocale
 
 logger = logging.getLogger("lingt.ui.dlgscriptpractice")
 
+RESET_COLOR_TO_DEFAULT = -1
 
 def showDlg(ctx=uno.getComponentContext()):
     """Main method to show a dialog window.
@@ -229,8 +229,8 @@ class DlgScriptPractice:
 
     def prepareAnswerBox(self):
         self.dlgCtrls.txtAnswer.setText("")
-        self.dlgCtrls.txtAnswer.getModel().BackgroundColor = \
-            int("FFFFFF", 16)  # White
+        self.dlgCtrls.txtAnswer.getModel().BackgroundColor = (
+            RESET_COLOR_TO_DEFAULT)
         self.dlgCtrls.txtAnswer.setEditable(True)
         self.dlgCtrls.txtAnswer.setFocus()
 
@@ -262,7 +262,6 @@ class DlgScriptPractice:
         self.dlgCtrls.dispNumWords.setText(self.stats.getTotalQuestions())
         self.dlgCtrls.dispAvgTime.setText(self.stats.getAvgTime())
         self.dlgCtrls.txtAnswer.setEditable(False)
-
 
 class DlgControls:
     """Store dialog controls."""
@@ -459,7 +458,6 @@ class DlgControls:
             control.getModel().Enabled = self.optGenerate.getState()
         self.btnFiles.getModel().Enabled = self.optWordlist.getState()
 
-
 class DlgEventHandler(XActionListener, XItemListener, XTextListener,
                       unohelper.Base):
     """Handles dialog events."""
@@ -527,7 +525,6 @@ class DlgEventHandler(XActionListener, XItemListener, XTextListener,
             self.mainForm.dlgClose()
         else:
             evt_handler.raise_unknown_action(event.ActionCommand)
-
 
 # Functions that can be called from Tools -> Macros -> Run Macro.
 g_exportedScripts = (showDlg,)

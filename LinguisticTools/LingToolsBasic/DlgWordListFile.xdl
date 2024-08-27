@@ -2,20 +2,19 @@
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWordListFile" dlg:left="9" dlg:top="32" dlg:width="301" dlg:height="261" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;396.DlgWordListFile.Title">
  <dlg:styles>
-  <dlg:style dlg:style-id="0" dlg:background-color="0xffffcc"/>
-  <dlg:style dlg:style-id="1" dlg:font-slant="italic"/>
+  <dlg:style dlg:style-id="0" dlg:font-slant="italic"/>
  </dlg:styles>
  <dlg:bulletinboard>
   <dlg:text dlg:id="LabelFiles" dlg:tab-index="0" dlg:left="7" dlg:top="7" dlg:width="33" dlg:height="12" dlg:value="&amp;394.DlgWordListFile.LabelFiles.Value"/>
   <dlg:filecontrol dlg:id="FilePicker" dlg:tab-index="1" dlg:left="60" dlg:top="5" dlg:width="155" dlg:height="14"/>
   <dlg:button dlg:id="btnCurrentDoc" dlg:tab-index="2" dlg:left="217" dlg:top="5" dlg:width="60" dlg:height="14" dlg:value="&amp;399.DlgWordListFile.btnCurrentDoc.Value"/>
   <dlg:text dlg:id="LabelFiletype" dlg:tab-index="3" dlg:left="7" dlg:top="23" dlg:width="46" dlg:height="12" dlg:value="&amp;395.DlgWordListFile.LabelFiletype.Value"/>
-  <dlg:menulist dlg:style-id="0" dlg:id="listBoxTypeOfFile" dlg:tab-index="4" dlg:left="60" dlg:top="21" dlg:width="99" dlg:height="14" dlg:spin="true" dlg:linecount="15"/>
+  <dlg:menulist dlg:id="listBoxTypeOfFile" dlg:tab-index="4" dlg:left="60" dlg:top="21" dlg:width="99" dlg:height="14" dlg:spin="true" dlg:linecount="15"/>
   <dlg:text dlg:id="lblWS" dlg:tab-index="5" dlg:left="6" dlg:top="39" dlg:width="54" dlg:height="12" dlg:value="&amp;413.DlgWordListFile.lblWS.Value"/>
   <dlg:textfield dlg:id="txtWS" dlg:tab-index="6" dlg:left="60" dlg:top="37" dlg:width="50" dlg:height="14"/>
   <dlg:button dlg:id="btnSelect" dlg:tab-index="7" dlg:left="112" dlg:top="37" dlg:width="50" dlg:height="14" dlg:value="&amp;402.DlgWordListFile.btnSelect.Value"/>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="8" dlg:left="6" dlg:top="58" dlg:width="288" dlg:height="133"/>
-  <dlg:text dlg:style-id="1" dlg:id="lblAddItem" dlg:tab-index="9" dlg:left="11" dlg:top="66" dlg:width="137" dlg:height="12" dlg:value="&amp;407.DlgWordListFile.lblAddItem.Value"/>
+  <dlg:text dlg:style-id="0" dlg:id="lblAddItem" dlg:tab-index="9" dlg:left="11" dlg:top="66" dlg:width="137" dlg:height="12" dlg:value="&amp;407.DlgWordListFile.lblAddItem.Value"/>
   <dlg:text dlg:id="lblAddField" dlg:tab-index="10" dlg:left="10" dlg:top="83" dlg:width="55" dlg:height="12" dlg:value="&amp;406.DlgWordListFile.lblAddField.Value"/>
   <dlg:menulist dlg:id="listAddField" dlg:tab-index="11" dlg:left="70" dlg:top="82" dlg:width="95" dlg:height="12" dlg:spin="true" dlg:linecount="10"/>
   <dlg:text dlg:id="lblParaStyle" dlg:tab-index="12" dlg:left="10" dlg:top="97" dlg:width="55" dlg:height="12" dlg:value="&amp;411.DlgWordListFile.lblParaStyle.Value"/>
