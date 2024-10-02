@@ -10,6 +10,7 @@ The reason for the change was that they could be stored in Writer but
 not in some other components.
 """
 import logging
+import uno
 from com.sun.star.beans.PropertyAttribute import REMOVEABLE
 from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
 

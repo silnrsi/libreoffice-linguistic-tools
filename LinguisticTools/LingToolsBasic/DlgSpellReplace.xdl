@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellReplace" dlg:left="200" dlg:top="25" dlg:width="264" dlg:height="168" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;319.DlgSpellReplace.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgSpellReplace" dlg:left="150" dlg:top="100" dlg:width="264" dlg:height="168" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;319.DlgSpellReplace.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:font-height="14"/>
  </dlg:styles>

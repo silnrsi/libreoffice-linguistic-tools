@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWritingSystem" dlg:left="127" dlg:top="16" dlg:width="120" dlg:height="55" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;418.DlgWritingSystem.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgWritingSystem" dlg:left="150" dlg:top="100" dlg:width="120" dlg:height="55" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;418.DlgWritingSystem.Title">
  <dlg:bulletinboard>
   <dlg:button dlg:id="BtnOK" dlg:tab-index="1" dlg:left="34" dlg:top="34" dlg:width="40" dlg:height="14" dlg:value="&amp;417.DlgWritingSystem.BtnOK.Value"/>
   <dlg:menulist dlg:id="WSListBox" dlg:tab-index="0" dlg:left="9" dlg:top="12" dlg:width="101" dlg:height="16" dlg:value="&amp;330.DlgWritingSystem.WSListBox.Value" dlg:spin="true" dlg:linecount="15"/>

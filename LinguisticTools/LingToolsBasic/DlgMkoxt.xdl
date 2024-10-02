@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxt" dlg:left="180" dlg:top="29" dlg:width="326" dlg:height="313" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;202.DlgMkoxt.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgMkoxt" dlg:left="150" dlg:top="100" dlg:width="326" dlg:height="313" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;202.DlgMkoxt.Title">
  <dlg:bulletinboard>
   <dlg:titledbox dlg:id="frameBasicSettings" dlg:tab-index="0" dlg:left="5" dlg:top="5" dlg:width="315" dlg:height="103" dlg:help-text="">
    <dlg:title dlg:value="&amp;208.DlgMkoxt.frameBasicSettings.Value"/>
