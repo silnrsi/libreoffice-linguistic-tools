@@ -228,6 +228,7 @@ ModelManifest.xml
 # can ignore changes with: git update-index --assume-unchanged
 testMessages.txt
 testResults.txt
+temp.odt
 edit_code.lnk
 pylint.bat.lnk
 pack nodeploy.lnk

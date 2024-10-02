@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgPhnlgySettings" dlg:left="127" dlg:top="16" dlg:width="201" dlg:height="199" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;272.DlgPhnlgySettings.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgPhnlgySettings" dlg:left="150" dlg:top="100" dlg:width="201" dlg:height="199" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;272.DlgPhnlgySettings.Title">
  <dlg:bulletinboard>
   <dlg:text dlg:id="LabelSelectFile" dlg:tab-index="0" dlg:left="9" dlg:top="8" dlg:width="163" dlg:height="8" dlg:help-text="" dlg:value="&amp;268.DlgPhnlgySettings.LabelSelectFile.Value"/>
   <dlg:filecontrol dlg:id="InputFile" dlg:tab-index="1" dlg:left="8" dlg:top="18" dlg:width="181" dlg:height="14" dlg:help-text=""/>

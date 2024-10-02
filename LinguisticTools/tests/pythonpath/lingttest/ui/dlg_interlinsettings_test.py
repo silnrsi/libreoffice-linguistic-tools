@@ -51,12 +51,12 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
         self.assertEqual(
             self.dlg.dlgCtrls.chkMorphsSeparate.getModel().Enabled, True)
         self.assertEqual(
-            self.dlg.dlgCtrls.chkMorphPosBelowGloss.getModel().Enabled, False)
+            self.dlg.dlgCtrls.chkMorphPosBelowGloss.getModel().Enabled, True)
 
     def test2_enableDisable(self):
         def useDialog(innerSelf):
             innerSelf.dlgCtrls.chkMorphText1.setState(0)
-            innerSelf.dlgCtrls.chkMorphPOS.setState(1)
+            innerSelf.dlgCtrls.chkMorphPos.setState(1)
             innerSelf.dlgCtrls.chkOuterTable.setState(0)
             innerSelf.dlgCtrls.optTables.setState(0)
         DlgInterlinSettings.useDialog = useDialog
@@ -77,7 +77,7 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
     def test3_enableDisable(self):
         def useDialog(innerSelf):
             innerSelf.dlgCtrls.chkMorphText1.setState(1)
-            innerSelf.dlgCtrls.chkMorphPOS.setState(0)
+            innerSelf.dlgCtrls.chkMorphPos.setState(0)
             innerSelf.dlgCtrls.chkOuterTable.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
         DlgInterlinSettings.useDialog = useDialog
@@ -98,18 +98,19 @@ class DlgInterlinSettingsTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkWordText2.setState(1)
             innerSelf.dlgCtrls.chkMorphText1.setState(1)
             innerSelf.dlgCtrls.chkMorphText2.setState(1)
-            innerSelf.dlgCtrls.chkMorphPOS.setState(1)
+            innerSelf.dlgCtrls.chkMorphPos.setState(1)
             innerSelf.dlgCtrls.optTables.setState(1)
         DlgInterlinSettings.useDialog = useDialog
         self.dlg.showDlg()
-        self.assertEqual(self.dlg.dlgCtrls.chkMorphPOS.getState(), 1)
+        self.assertEqual(self.dlg.dlgCtrls.chkMorphPos.getState(), 1)
+        self.assertEqual(self.dlg.dlgCtrls.chkMorphGloss.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.chkWordText2.getState(), 1)
         self.assertEqual(self.dlg.dlgCtrls.optFrames.getState(), 0)
         self.assertEqual(self.dlg.dlgCtrls.optTables.getState(), 1)
         self.dlg.evtHandler.actionPerformed(MyActionEvent("OK"))
         self.dlg = None
         self.assertEqual(self.userVars.get("Method"), "tables")
-        self.assertEqual(self.userVars.getInt("ShowPartOfSpeech"), 1)
+        self.assertEqual(self.userVars.getInt("ShowMorphPartOfSpeech"), 1)
 
     def test5_fileList(self):
         def useDialog(dummy_innerSelf):

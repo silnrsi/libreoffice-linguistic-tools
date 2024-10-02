@@ -105,7 +105,7 @@ def doTests():
                     for showOrtho in ["0", "1"]:
                         msgr.write("ShowOrthoTextLine = " + showOrtho)
                         for showPOS in ["1", "0"]:
-                            msgr.write("ShowPartOfSpeech = " + showPOS)
+                            msgr.write("ShowMorphPartOfSpeech = " + showPOS)
                             for aboveGloss in ["0", "1"]:
                                 if showPOS == 0 and aboveGloss != 0:
                                     continue
@@ -116,7 +116,7 @@ def doTests():
                                     userVars.store('ShowText', showText)
                                     userVars.store(
                                         'ShowMorphBreaks', showMorphBreaks)
-                                    userVars.store('ShowPartOfSpeech', showPOS)
+                                    userVars.store('ShowMorphPartOfSpeech', showPOS)
                                     userVars.store(
                                         'POS_AboveGloss', aboveGloss)
                                     userVars.store("SeparateMorphColumns",
@@ -170,7 +170,7 @@ def resetUserVars(userVars):
         'ShowText' : '1',
         'SeparateMorphColumns' : '1',
         'ShowMorphBreaks' : '1',
-        'ShowPartOfSpeech' : '1',
+        'ShowMorphPartOfSpeech' : '1',
 
         'InsertNumbering' : '1',
         'MakeOuterTable' : '1',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgInterlinSettings" dlg:left="123" dlg:top="12" dlg:width="226" dlg:height="291" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;191.DlgInterlinSettings.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgInterlinSettings" dlg:left="150" dlg:top="100" dlg:width="226" dlg:height="291" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;191.DlgInterlinSettings.Title">
  <dlg:styles>
   <dlg:style dlg:style-id="0" dlg:font-name="Courier New" dlg:font-height="10" dlg:font-stylename="Regular" dlg:font-family="modern"/>
  </dlg:styles>
@@ -27,9 +27,9 @@
   <dlg:checkbox dlg:id="chkWordText2" dlg:tab-index="1" dlg:left="12" dlg:top="134" dlg:width="92" dlg:height="9" dlg:value="&amp;200.DlgInterlinSettings.chkWordText2.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="ChkMorphText1" dlg:tab-index="2" dlg:left="12" dlg:top="145" dlg:width="92" dlg:height="9" dlg:value="&amp;180.DlgInterlinSettings.ChkMorphText1.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="ChkMorphText2" dlg:tab-index="3" dlg:left="12" dlg:top="156" dlg:width="92" dlg:height="9" dlg:value="&amp;181.DlgInterlinSettings.ChkMorphText2.Value" dlg:checked="false"/>
-  <dlg:checkbox dlg:id="ChkMorphPos" dlg:tab-index="4" dlg:left="12" dlg:top="167" dlg:width="92" dlg:height="9" dlg:value="&amp;182.DlgInterlinSettings.ChkMorphPos.Value" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="ChkMorphPos" dlg:tab-index="4" dlg:left="12" dlg:top="167" dlg:width="92" dlg:height="9" dlg:value="&amp;182.DlgInterlinSettings.ChkMorphPos.Value" dlg:checked="true"/>
   <dlg:checkbox dlg:id="ChkMorphGloss" dlg:tab-index="4" dlg:left="12" dlg:top="178" dlg:width="92" dlg:height="9" dlg:value="&amp;420.DlgInterlinSettings.ChkMorphGloss.Value" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="ChkWordGloss" dlg:tab-index="4" dlg:left="12" dlg:top="189" dlg:width="92" dlg:height="9" dlg:value="&amp;421.DlgInterlinSettings.ChkWordGloss.Value" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="ChkWordGloss" dlg:tab-index="4" dlg:left="12" dlg:top="189" dlg:width="92" dlg:height="9" dlg:value="&amp;421.DlgInterlinSettings.ChkWordGloss.Value" dlg:checked="false"/>
   <dlg:checkbox dlg:id="chkFT_inQuotes" dlg:tab-index="5" dlg:left="115" dlg:top="123" dlg:width="105" dlg:height="17" dlg:value="&amp;194.DlgInterlinSettings.chkFT_inQuotes.Value" dlg:multiline="true" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkMorphemesSeparateCols" dlg:tab-index="6" dlg:left="115" dlg:top="142" dlg:width="105" dlg:height="17" dlg:value="&amp;196.DlgInterlinSettings.chkMorphemesSeparateCols.Value" dlg:multiline="true" dlg:checked="true"/>
   <dlg:checkbox dlg:id="chkMorphPosBelowGloss" dlg:tab-index="7" dlg:disabled="true" dlg:left="115" dlg:top="161" dlg:width="105" dlg:height="17" dlg:value="&amp;198.DlgInterlinSettings.chkMorphPosBelowGloss.Value" dlg:multiline="true" dlg:checked="false"/>

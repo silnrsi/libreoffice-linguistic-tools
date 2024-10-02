@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConv_Draw" dlg:left="111" dlg:top="12" dlg:width="296" dlg:height="197" dlg:help-text="&amp;106.DlgDataConv_Draw.DlgDataConv_Draw.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;109.DlgDataConv_Draw.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgDataConv_Draw" dlg:left="150" dlg:top="100" dlg:width="296" dlg:height="197" dlg:help-text="&amp;106.DlgDataConv_Draw.DlgDataConv_Draw.HelpText" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;109.DlgDataConv_Draw.Title">
  <dlg:bulletinboard>
   <dlg:text dlg:id="LabelSEC" dlg:tab-index="0" dlg:left="10" dlg:top="8" dlg:width="194" dlg:height="10" dlg:value="&amp;107.DlgDataConv_Draw.LabelSEC.Value"/>
   <dlg:textfield dlg:id="txtCnvtrName" dlg:tab-index="1" dlg:left="10" dlg:top="20" dlg:width="194" dlg:height="14" dlg:value="&amp;127.DlgDataConv_Draw.txtCnvtrName.Value"/>

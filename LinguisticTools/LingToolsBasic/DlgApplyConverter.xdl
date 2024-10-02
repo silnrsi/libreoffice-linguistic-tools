@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgApplyConverter" dlg:left="101" dlg:top="67" dlg:width="250" dlg:height="156" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;30.DlgApplyConverter.Title">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DlgApplyConverter" dlg:left="150" dlg:top="100" dlg:width="250" dlg:height="156" dlg:help-text="" dlg:closeable="true" dlg:moveable="true" dlg:title="&amp;30.DlgApplyConverter.Title">
  <dlg:bulletinboard>
   <dlg:text dlg:id="lblSourceColumn" dlg:tab-index="0" dlg:left="4" dlg:top="14" dlg:width="98" dlg:height="12" dlg:value="&amp;38.DlgApplyConverter.lblSourceColumn.Value" dlg:align="right"/>
   <dlg:textfield dlg:id="txtSourceColumn" dlg:tab-index="1" dlg:left="107" dlg:top="12" dlg:width="19" dlg:height="12" dlg:value="&amp;39.DlgApplyConverter.txtSourceColumn.Value"/>
