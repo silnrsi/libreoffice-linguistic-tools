@@ -8,17 +8,7 @@
 
 ## 2024-07-17
 
-checkboxes order in dialog:
-show interlinear lines
-    Word Text 1                 default
-    Word Text 2
-    Morpheme Text 1             default
-    Morpheme Text 2
-    Morpheme Part of Speech     default
-    Morpheme Gloss              default
-    Word Gloss
-
-Also explain in documentation that AOO is no longer supported.
+explain in documentation that AOO is no longer supported.
 
 ## Testing
 

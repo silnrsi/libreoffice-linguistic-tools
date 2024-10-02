@@ -60,3 +60,7 @@ The tab indexes must be sequential with nothing in between.
 Then there must be a break in the tab order before starting another set of
 radio buttons.
 
+Importing a constant such as 
+`from com.sun.star.beans.PropertyAttribute import REMOVEABLE`,
+will raise ModuleNotFoundError unless uno is imported first.
+It could be imported in the same module, but that makes code harder to read.
