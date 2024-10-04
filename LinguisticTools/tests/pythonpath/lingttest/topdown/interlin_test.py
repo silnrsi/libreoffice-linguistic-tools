@@ -46,6 +46,7 @@ class InterlinTestCase(unittest.TestCase):
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.dlgSettings = None
         self.dlgGrabEx = None
+        self.fixture_display = ""
 
     def runDlgSettings(self, dispose):
         self.dlgSettings = DlgInterlinSettings(self.unoObjs)
@@ -82,8 +83,8 @@ class InterlinTestCase(unittest.TestCase):
                 "Pois nós todos vamos morrer.")]
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         for dataSet in dataSets:
-            useDialog = self._test1_make_useDialog(dataSet)
-            DlgInterlinSettings.useDialog = useDialog
+            DlgInterlinSettings.useDialog = (
+                self._test1_useDialog_interlinSettings(dataSet))
             DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
             self.runDlgSettings(True)
             self.runDlgGrabEx(True)
@@ -95,7 +96,7 @@ class InterlinTestCase(unittest.TestCase):
             self.verifyFreeTrans(dataSet.ft, True)
             self.prevFrameCount = newFrameCount
 
-    def _test1_make_useDialog(self, data):
+    def _test1_useDialog_interlinSettings(self, data):
         def useDialog(innerSelf):
             filepath = os.path.join(util.TESTDATA_FOLDER, data.filename)
             testutil.modifyFilePicker(filepath)
@@ -127,17 +128,17 @@ class InterlinTestCase(unittest.TestCase):
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
         for dataSet in dataSets:
-            useDialog = self._test2_make_useDialog_interlinSettings(dataSet)
-            DlgInterlinSettings.useDialog = useDialog
+            DlgInterlinSettings.useDialog = (
+                self._test2_useDialog_interlinSettings(dataSet))
             self.runDlgSettings(True)
             for action in 'inserting', 'replacing':
+                self.fixture_display = f"dataSet={dataSet}, action={action}"
                 refNum = "1.1"
-                useDialog = self._test2_make_useDialog_grabExamples(
-                    action, refNum)
-                DlgGrabExamples.useDialog = useDialog
+                DlgGrabExamples.useDialog = (
+                    self._test2_useDialog_grabExamples(action, refNum))
                 self._test2_do_grabExamples(dataSet, action, refNum)
 
-    def _test2_make_useDialog_interlinSettings(self, data):
+    def _test2_useDialog_interlinSettings(self, data):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "FWtextPigFox.xml")
@@ -159,7 +160,7 @@ class InterlinTestCase(unittest.TestCase):
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
-    def _test2_make_useDialog_grabExamples(self, action, refNum):
+    def _test2_useDialog_grabExamples(self, action, refNum):
         def useDialog(innerSelf):
             if action == 'inserting':
                 innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
@@ -260,20 +261,23 @@ class InterlinTestCase(unittest.TestCase):
 
     def _test2_verify_surroundings(self, data, blankLine, action):
         """Verify that beginning and ending strings were not changed."""
-        exLines = 1  # number of lines used by example according to viewcursor
+        # Vertical distance the view cursor moves over the example.
+        ex_cursor_lines = 1
         if not data.outerTable:
-            exLines += 1  # ft and ref no.
             if not data.useFrames:
-                exLines += 3  # wordTx, morphTx, morphPoS, morphGloss = 1 + 3
-        oVC = self.unoObjs.viewcursor   # shorthand variable name
-        oVC.goUp(exLines + 2, False)
+                # Test 2 inserts an example with 4 interlinear lines:
+                # wordTx, morphTx, morphPoS, morphGloss.
+                ex_cursor_lines += 3
+            ex_cursor_lines += 1  # ft and ref no.
+        oVC = self.unoObjs.viewcursor
+        oVC.goUp(ex_cursor_lines + 2, False)
         oVC.gotoStartOfLine(False)
         oVC.gotoEndOfLine(True)
         curs = oVC.getText().createTextCursorByRange(oVC)
         numStr = str(self.surroundNum)
         self.assertEqual(curs.getString(), "begin" + numStr)
         oVC.gotoStartOfLine(False)
-        oVC.goDown(exLines + 2, False)
+        oVC.goDown(ex_cursor_lines + 2, False)
         if blankLine and action == 'inserting':
             oVC.goDown(1, False)
         oVC.gotoEndOfLine(True)
@@ -295,15 +299,17 @@ class InterlinTestCase(unittest.TestCase):
                 'morphTx1', 'morphTx2', 'morphGloss', 'morphPos',
                 'posBelow', 'sepCols', 'numbering']:
             for setVal in True, False:
-                useDialog = self._test3_make_useDialog(setting, setVal)
-                DlgInterlinSettings.useDialog = useDialog
+                self.fixture_display = f"setting={setting}, setVal={setVal}"
+                DlgInterlinSettings.useDialog = (
+                    self._test3_useDialog_interlinSettings(setting, setVal))
                 self.runDlgSettings(True)
                 refNum = "Hunt01"
-                DlgGrabExamples.useDialog = useDialog_insertEx(refNum)
+                DlgGrabExamples.useDialog = useDialog_insertEx(
+                    refNum, self.fixture_display)
                 self.runDlgGrabEx(True)
                 self._test3_verify(setting, setVal)
 
-    def _test3_make_useDialog(self, setting, setVal):
+    def _test3_useDialog_interlinSettings(self, setting, setVal):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "TbxIntHunt06.xml")
@@ -366,66 +372,104 @@ class InterlinTestCase(unittest.TestCase):
         tablesAdded = newTableCount - self.prevTableCount
         self.assertGreaterEqual(tablesAdded, numTables)
         self.assertLessEqual(tablesAdded, numTablesMax)
-        ipaOru = "oɾu"  # used in text and mb lines
-        tamOru = "ஒரு"  # Tamil /oru/
-        tamTi = "-தி"  # Tamil /-ti/
+        class Lexeme:
+            tamOru = "ஒரு"  # Tamil script /oɾu/, text1 and morph1 lines
+            ipaOru = "oɾu"  # text2 and morph2 lines
+            en = "a"  # English gloss
+            pos = "det"  # part of speech
+        lex = Lexeme  # the first morpheme in this example data
+        # Lines set by default in _test3_useDialog_interlinSettings() are
+        # WordText2, MorphText2, and MorphGloss.
+        DEFAULT_ROWS = 3
+        # If a line is not set by default, then turning on adds a row.
+        MAX_ROWS_FOR_DEFAULT_OFF = DEFAULT_ROWS + 1
+        # If a line is set by default, then turning off loses a row.
+        MAX_ROWS_FOR_DEFAULT_ON = DEFAULT_ROWS
+        def verifyColumn(forms, lines, row=0, col=0):
+            for index, (form, line) in enumerate(zip(forms, lines)):
+                base_fixture = self.fixture_display
+                self.fixture_display += f" checking {line}"
+                self.verifyTable(numTables, col, row + index, form)
+                self.fixture_display = base_fixture
         if setting == 'wordTx1':
-            self.verifyTableHasCell(numTables, "A4", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 0, tamOru)  # orth
-                self.verifyTable(numTables, 0, 1, ipaOru)  # text
+                verifyColumn(
+                    [lex.tamOru, lex.ipaOru],
+                    [setting, "word text 2"])
             else:
-                self.verifyTableHasCell(numTables, "A4", False)
-                self.verifyTable(numTables, 0, 0, ipaOru)  # text
+                # This checks all default values --
+                # other checks are variations of this.
+                verifyColumn(
+                    [lex.ipaOru, lex.ipaOru, lex.en],
+                    ["word text 2", "morph text 2", "morph gloss"])
         elif setting == 'wordTx2':
-            self.verifyTableHasCell(numTables, "A3", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 0, ipaOru)  # text
-                self.verifyTable(numTables, 0, 1, ipaOru)  # mb
+                verifyColumn(
+                    [lex.ipaOru, lex.ipaOru],
+                    [setting, "morph text 2"])
             else:
-                self.verifyTable(numTables, 0, 0, ipaOru)  # mb
-                self.verifyTable(numTables, 0, 1, "a")  # gloss
+                verifyColumn(
+                    [lex.ipaOru, lex.en],
+                    ["morph text 2", "morph gloss"])
         elif setting == 'wordGloss':
-            self.verifyTableHasCell(numTables, "A4", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 1, "a")  # gloss
+                # no word gloss in the test data so we'll check morph gloss
+                verifyColumn([lex.en], ["morph gloss"], row=2)
         elif setting == 'morphTx1':
-            self.verifyTableHasCell(numTables, "A4", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                self.verifyTable(numTables, 2, 1, tamTi)  # mb orth
+                tamTi = "-தி"  # Tamil -d̪i
+                verifyColumn(
+                    [tamTi, "-d̪i"],
+                    [setting, "morph text 2"],
+                    row=1, col=2)
             else:
-                self.verifyTable(numTables, 2, 1, "-d̪i")  # mb
+                verifyColumn(["-d̪i"], ["morph text 2"], row=1, col=2)
         elif setting == 'morphTx2':
-            self.verifyTableHasCell(numTables, "A3", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 1, ipaOru)  # mb
+                verifyColumn([lex.ipaOru], [setting], row=1)
             else:
-                self.verifyTable(numTables, 0, 1, "a")  # gloss
+                verifyColumn([lex.en], ["morph gloss"], row=1)
         elif setting == 'morphGloss':
-            self.verifyTableHasCell(numTables, "A4", setVal)
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 1, "a")  # gloss
-        elif setting == 'ps':
-            self.verifyTableHasCell(numTables, "A4", setVal)
+                verifyColumn([lex.en], [setting], row=2)
+        elif setting == 'morphPos':
+            self.verifyTableHasCell(
+                numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                self.verifyTable(numTables, 0, 3, "det")  # ps
+                verifyColumn([lex.pos], [setting], row=3)
+        elif setting == 'posBelow':
+            self.verifyTableHasCell(numTables, "A4", True)
+            if setVal:
+                verifyColumn(
+                    [lex.pos, lex.en],
+                    [ "morph part of speech", "morph gloss"],
+                    row=2)
+            else:
+                verifyColumn(
+                    [lex.en, lex.pos],
+                    ["morph gloss", "morph part of speech"],
+                    row=2)
         elif setting == 'sepCols':
             self.verifyTableHasCell(numTables, "F1", True)
             self.verifyTableHasCell(numTables, "G1", False)
             self.verifyTableHasCell(numTables, "F2", True)
             self.verifyTableHasCell(numTables, "I2", setVal)
             if setVal:
-                self.verifyTable(numTables, 1, 1, "uːɾu")  # mb
+                verifyColumn(["uːɾu"], ["morph text 2"], row=1, col=1)
             else:
-                self.verifyTable(numTables, 1, 1, "uːɾu-d̪i")  # mb
-        elif setting == 'posBelow':
-            self.verifyTableHasCell(numTables, "A4", True)
-            if setVal:
-                self.verifyTable(numTables, 0, 2, "det")  # ps
-                self.verifyTable(numTables, 0, 3, "a")  # gloss
-            else:
-                self.verifyTable(numTables, 0, 2, "a")  # gloss
-                self.verifyTable(numTables, 0, 3, "det")  # ps
+                verifyColumn(["uːɾu-d̪i"], ["morph text 2"], row=1, col=1)
         elif setting == 'numbering':
             self.verifyTableHasCell(1, "A1", True)
             if setVal:
@@ -456,16 +500,16 @@ class InterlinTestCase(unittest.TestCase):
             Test4Data(
                 "BP1.S1", 11, "oɾu",
                 " ‎‎In a village there was a headman.")]
-        useDialog = self._test4_make_useDialog_interlinSettingsA()
-        DlgInterlinSettings.useDialog = useDialog
+        DlgInterlinSettings.useDialog = (
+            self._test4_useDialog_interlinSettings())
         self.runDlgSettings(True)
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
         for dataSet in dataSets:
+            self.fixture_display = f"dataSet={dataSet}"
             DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
             self.runDlgGrabEx(True)
-
             newFrameCount = self.unoObjs.document.getTextFrames().getCount()
             self.assertEqual(
                 newFrameCount - self.prevFrameCount, dataSet.numFrames)
@@ -474,7 +518,7 @@ class InterlinTestCase(unittest.TestCase):
             self.prevFrameCount = newFrameCount
         self._test4_verify_resize(dataSets)
 
-    def _test4_make_useDialog_interlinSettingsA(self):
+    def _test4_useDialog_interlinSettings(self):
         def useDialog(innerSelf):
             filepath = os.path.join(
                 util.TESTDATA_FOLDER, "Sena Int.flextext")
@@ -504,8 +548,7 @@ class InterlinTestCase(unittest.TestCase):
             self.unoObjs.frame, ".uno:DeleteTable", "", 0, ())
         for resize in False, True:
             if resize:
-
-                def useDialog(innerSelf):
+                def useDialog_interlinSettings(innerSelf):
                     # This value may need to be adjusted depending on your
                     # default system settings.
                     # If the test fails, adjust the value until the table
@@ -513,8 +556,7 @@ class InterlinTestCase(unittest.TestCase):
                     RESIZE_PERCENT = 50
                     innerSelf.dlgCtrls.txtNumColWidth.setText(RESIZE_PERCENT)
                     innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
-
-                DlgInterlinSettings.useDialog = useDialog
+                DlgInterlinSettings.useDialog = useDialog_interlinSettings
                 self.runDlgSettings(True)
             oVC.goLeft(2, False)  # move into first table after ref num
             ft = dataSets[1].ft
@@ -556,21 +598,21 @@ class InterlinTestCase(unittest.TestCase):
             Test5Data(
                 "B1.2", 21, "aʋant̪u", 'CharFontName',
                 "Arial Black")]
-        self._test5_insert_original_examples(dataSets)
-        self._test5_update_examples()
-        self._test5_check_comparisondoc(dataSets)
-        self._test5_check_examples(dataSets)
+        self._test5a_insert_original_examples(dataSets)
+        self._test5b_update_examples()
+        self._test5c_check_comparisondoc(dataSets)
+        self._test5d_check_examples(dataSets)
 
-    def _test5_insert_original_examples(self, dataSets):
-        useDialog = self._test5_make_useDialoga()
-        DlgInterlinSettings.useDialog = useDialog
+    def _test5a_insert_original_examples(self, dataSets):
+        DlgInterlinSettings.useDialog = (
+            self._test5a_useDialog_interlinSettings())
         self.surroundNum = 0
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
         for data in dataSets:
+            self.fixture_display = f"dataSet={dataSet}"
             DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
             self.runDlgSettings(True)
-
             self.surroundNum += 1
             numStr = str(self.surroundNum)
             if data.attrName != 'Default':
@@ -595,7 +637,7 @@ class InterlinTestCase(unittest.TestCase):
         tables = self.unoObjs.document.getTextTables()
         self.assertEqual(tables.getCount(), len(dataSets))
 
-    def _test5_make_useDialoga(self):
+    def _test5a_useDialog_interlinSettings(self):
         def useDialog(innerSelf):
             if len(innerSelf.fileItems) == 0:
                 filepath = os.path.join(
@@ -619,15 +661,12 @@ class InterlinTestCase(unittest.TestCase):
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
         return useDialog
 
-    def _test5_update_examples(self):
-
+    def _test5b_update_examples(self):
         def useDialog_interlinSettings(innerSelf):
             innerSelf.dlgCtrls.optTables.setState(1)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
-
         DlgInterlinSettings.useDialog = useDialog_interlinSettings
         self.runDlgSettings(True)
-
         def useDialog_grabExamples(innerSelf):
             innerSelf.dlgCtrls.optSearchExisting.setState(1)
             innerSelf.dlgCtrls.enableDisable(innerSelf.app, innerSelf.userVars)
@@ -639,11 +678,10 @@ class InterlinTestCase(unittest.TestCase):
                 self.assertTrue(exc.msg.startswith("Updated"))
             else:
                 self.fail("Expected error message.")
-
         DlgGrabExamples.useDialog = useDialog_grabExamples
         self.runDlgGrabEx(False)
 
-    def _test5_check_comparisondoc(self, dataSets):
+    def _test5c_check_comparisondoc(self, dataSets):
         compDoc = self.dlgGrabEx.app.operations.exUpdater.compDoc
         self.assertIsNotNone(compDoc)
         self.assertIsNotNone(compDoc.writerDoc)
@@ -651,20 +689,21 @@ class InterlinTestCase(unittest.TestCase):
         numTables = compDoc.writerDoc.document.getTextTables().getCount()
         multiLineExs = 1  # number of examples that have another line
         self.assertEqual(numTables, 3 * len(dataSets) + multiLineExs)
+        self.fixture_display = f"len(dataSets)={len(dataSets)}"
         compDoc.writerDoc.document.close(True)
         testutil.do_dispose(self.dlgGrabEx)
         self.dlgGrabEx = None
 
-    def _test5_check_examples(self, dataSets):
+    def _test5d_check_examples(self, dataSets):
         tables = self.unoObjs.document.getTextTables()
         multiLineExs = 1  # number of examples that have another line
         self.assertEqual(tables.getCount(), 2 * len(dataSets) + multiLineExs)
-
         oVC = self.unoObjs.viewcursor
         oVC.gotoStart(False)
         self.surroundNum = 0
         tableNum = 1
         for data in dataSets:
+            self.fixture_display = f"dataSet={dataSet}"
             self.verifyTable(tableNum + 1, 0, 0, data.firstWord)
             self.surroundNum += 1
             numStr = str(self.surroundNum)
@@ -771,14 +810,44 @@ class InterlinTestCase(unittest.TestCase):
         styleFonts.setParaStyleWithFont(fontDef, styleKey="wordTx2")
         styleFonts.setParaStyleWithFont(fontDef, styleKey="morphTx2")
 
-def useDialog_insertEx(refNum):
+    def assertEqual(self, first, second, msg=None):
+        try:
+            super().assertEqual(first, second, msg)
+        except AssertionError as e:
+            if self.fixture_display:
+                raise AssertionError(
+                    f"{e}\nFixture: {self.fixture_display}") from e
+            raise e
+
+    def assertIn(self, member, container, msg=None):
+        try:
+            super().assertIn(member, container, msg)
+        except AssertionError as e:
+            if self.fixture_display:
+                raise AssertionError(
+                    f"{e}\nFixture: {self.fixture_display}") from e
+            raise e
+
+    def assertNotIn(self, member, container, msg=None):
+        try:
+            super().assertNotIn(member, container, msg)
+        except AssertionError as e:
+            if self.fixture_display:
+                raise AssertionError(
+                    f"{e}\nFixture: {self.fixture_display}") from e
+            raise e
+
+def useDialog_insertEx(refNum, fixture=""):
     def useDialog(innerSelf):
         try:
             innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
             innerSelf.dlgCtrls.comboRefnum.setText(refNum)
             innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
         except testutil.MsgSentException as exc:
-            print(f"Unexpected MsgSentException: {exc}")
+            print(f"\nUnexpected MsgSentException: {exc}")
+            if fixture:
+                logger.debug("Fixture: %s", fixture)
+                print(f"Fixture: {fixture}")
     return useDialog
 
 if __name__ == '__main__':
