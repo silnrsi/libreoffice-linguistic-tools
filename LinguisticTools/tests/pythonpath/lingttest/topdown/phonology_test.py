@@ -34,7 +34,6 @@ def getSuite():
 class PhonologyTestCase(unittest.TestCase):
     def __init__(self, testCaseName):
         unittest.TestCase.__init__(self, testCaseName)
-        testutil.verifyRegexMethods(self)
         self.surroundNum = 0  # number for surroundings
 
     def setUp(self):

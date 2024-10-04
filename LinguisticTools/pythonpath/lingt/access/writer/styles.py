@@ -8,6 +8,7 @@ Note on terminology:
 """
 import logging
 from operator import itemgetter
+import uno  #pylint: disable=unused-import
 
 from com.sun.star.style import TabStop
 from com.sun.star.style.TabAlign import LEFT

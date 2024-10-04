@@ -5,4 +5,4 @@
 
 c:
 chdir "%ProgramFiles%\LibreOffice\program\"
-start soffice -accept=socket,host=localhost,port=2002;urp; %1
+start soffice --accept=socket,host=localhost,port=2002;urp; %1

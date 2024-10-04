@@ -6,9 +6,7 @@ See build/README_build.txt for instructions to run this code.
 """
 import os
 import unittest
-# pylint: disable=import-error
-import uno
-# pylint: enable=import-error
+import uno  # pylint: disable=import-error
 
 from lingttest.utils import testutil
 

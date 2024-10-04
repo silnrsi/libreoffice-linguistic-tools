@@ -208,11 +208,11 @@ class InterlinTables:
             morphPosRow = row + 1
         if self.config.showMorphGloss:
             self._insertCellData(
-                morphRow_col, morphGlossRow, 'gloss', word.morph.gloss)
+                morphRow_col, morphGlossRow, 'morphGloss', word.morph.gloss)
             row += 1
         if self.config.showMorphPos:
             self._insertCellData(
-                morphRow_col, morphPosRow, 'pos', word.morph.pos)
+                morphRow_col, morphPosRow, 'morphPos', word.morph.pos)
             row += 1
 
         # Word Gloss
@@ -302,7 +302,7 @@ class WrappingManager:
             self.config.showMorphText1,
             self.config.showMorphText2,
             self.config.showMorphGloss,
-            self.config.showMorphPartOfSpeech))
+            self.config.showMorphPos))
         firstInnerTable = False
         if self.innerTable is None:
             firstInnerTable = True

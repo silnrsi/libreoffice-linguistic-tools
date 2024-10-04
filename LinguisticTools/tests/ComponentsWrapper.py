@@ -10,9 +10,7 @@ import logging
 import os
 import platform
 import sys
-# pylint: disable=import-error
-import uno
-# pylint: enable=import-error
+import uno  # pylint: disable=import-error
 
 from lingt.ui.common import messagebox
 from lingt.ui.comp import abbrevs
