@@ -182,43 +182,42 @@ class InterlinTables:
         logger.debug(
             "Adding data '%s' to word col %d, morph col %d",
             word.morph.gloss, wordRow_col, morphRow_col)
+        lines = [  # in order of output
+            ('wordTx1', 'showWordText1', 'text1'),
+            ('wordTx2', 'showWordText2', 'text2'),
+            ('morphTx1', 'showMorphText1', 'text1'),
+            ('morphTx2', 'showMorphText2', 'text2'),
+            ('morphGloss', 'showMorphGloss', 'gloss'),
+            ('morphPos', 'showMorphPos', 'pos'),  # part of speech
+            ('wordGloss', 'showWordGloss', 'gloss'),
+            ]
+        if not self.config.morphPosBelowGloss:
+            line_names = [line[0] for line in lines]
+            idx_gloss = line_names.index('morphGloss')
+            idx_pos = line_names.index('morphPos')
+            # Swap them
+            lines[idx_gloss], lines[idx_pos] = lines[idx_pos], lines[idx_gloss]
         row = 0
-
-        # Word Text Line 1 and 2
-        row = self._insertWordData(
-            self.config.showWordText1, wordRow_col, row, 'wordTx1', word.text1,
-            isFirstMorph)
-        row = self._insertWordData(
-            self.config.showWordText2, wordRow_col, row, 'wordTx2', word.text2,
-            isFirstMorph)
-
-        # Morpheme Text Line 1 and 2
-        row = self._insertMorphData(
-            self.config.showMorphText1, morphRow_col, row, 'morphTx1',
-            word.morph.text1)
-        row = self._insertMorphData(
-            self.config.showMorphText2, morphRow_col, row, 'morphTx2',
-            word.morph.text2)
-
-        # Morpheme Gloss and Part of Speech
-        morphPosRow = row
-        morphGlossRow = row + 1
-        if self.config.morphPosBelowGloss:
-            morphGlossRow = row
-            morphPosRow = row + 1
-        if self.config.showMorphGloss:
-            self._insertCellData(
-                morphRow_col, morphGlossRow, 'morphGloss', word.morph.gloss)
-            row += 1
-        if self.config.showMorphPos:
-            self._insertCellData(
-                morphRow_col, morphPosRow, 'morphPos', word.morph.pos)
-            row += 1
-
-        # Word Gloss
-        row = self._insertWordData(
-            self.config.showWordGloss, wordRow_col, row, 'wordGloss',
-            word.gloss, isFirstMorph)
+        for line_name, line_show, line_val in lines:
+            if line_name.startswith('word'):
+                row = self._insertWordData(
+                    getattr(self.config, line_show),
+                    wordRow_col,
+                    row,
+                    line_name,
+                    getattr(word, line_val),
+                    isFirstMorph
+                    )
+            elif line_name.startswith('morph'):
+                row = self._insertMorphData(
+                    getattr(self.config, line_show),
+                    morphRow_col,
+                    row,
+                    line_name,
+                    getattr(word.morph, line_val)
+                    )
+            else:
+                raise ValueError(f"Unexpected line '{line_name}'.")
         logger.debug(util.funcName('end'))
 
     def _insertWordData(self, show_line, col, row, paraStyleKey, strData,
