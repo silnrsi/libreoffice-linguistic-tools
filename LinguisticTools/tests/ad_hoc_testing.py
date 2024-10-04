@@ -11,9 +11,7 @@ import logging
 import threading
 import time
 
-# pylint: disable=import-error
-import uno
-# pylint: enable=import-error
+import uno  # pylint: disable=import-error
 #from com.sun.star.awt import Rectangle
 from com.sun.star.awt import VclWindowPeerAttribute
 from com.sun.star.awt import WindowClass

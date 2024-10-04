@@ -89,12 +89,12 @@ class AbbrevsTestCase(unittest.TestCase):
         """Test controls that search for new abbreviations."""
         testutil.modifyMsgboxYesNoCancel("yes")
         dataSets = [
-            ("Quotations", 'any', 5, 0, ["DIG", "pig"]),
+            ("Comment", 'any', 5, 0, ["DIG", "pig"]),
             ("Caption", 'any', 5, 0, ["BIG", "Fig"]),
-            ("Quotations", 'any', 5, 1, ["DIG"]),
-            ("Quotations", 'any', 6, 0, ["DIG", "pig", "wiggle"]),
-            ("Quotations", 'suffix', 5, 0, ["DIG"]),
-            ("Quotations", 'prefix', 5, 0, ["DIG", "pig"])]
+            ("Comment", 'any', 5, 1, ["DIG"]),
+            ("Comment", 'any', 6, 0, ["DIG", "pig", "wiggle"]),
+            ("Comment", 'suffix', 5, 0, ["DIG"]),
+            ("Comment", 'prefix', 5, 0, ["DIG", "pig"])]
         for dataSet in dataSets:
             self.setDocContentsForSearch()
             func = self.make_test2_useDialog(*dataSet)
@@ -222,13 +222,12 @@ class AbbrevsTestCase(unittest.TestCase):
         oVC.setPropertyValue("ParaStyleName", "Caption")
         oVC.getText().insertString(oVC, "BIG Fig", 0)
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-        oVC.setPropertyValue("ParaStyleName", "Quotations")
+        oVC.setPropertyValue("ParaStyleName", "Comment")
         oVC.getText().insertString(oVC, "pig-DIG-wiggle", 0)
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
 
     def verifySelectedItem(self, dlg, displayStripped):
-        logger.debug("hi there! %r", displayStripped)
-        #print("listbox_value=" + repr(displayStripped))
+        logger.debug("displayStripped=%r", displayStripped)
         strDisplay = dlg.dlgCtrls.listboxAbbrevs.getSelectedItem()
         self.assertEqual(strDisplay.strip(), displayStripped)
 

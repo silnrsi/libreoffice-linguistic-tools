@@ -1,8 +1,6 @@
 import logging
 import unittest
-# pylint: disable=import-error
-import uno
-# pylint: enable=import-error
+import uno  # pylint: disable=import-error
 
 from lingt.access.calc.spreadsheet_reader import SpreadsheetReader
 from lingt.access.writer.uservars import Prefix, UserVars

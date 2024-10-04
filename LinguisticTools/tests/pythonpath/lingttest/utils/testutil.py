@@ -12,14 +12,11 @@ import platform
 import re
 import sys
 import unittest
-# pylint: disable=import-error,unused-import
-import uno
-# pylint: enable=import-error,unused-import
+import uno  # pylint: disable=import-error,unused-import
 
 # Used in modules that import testutil.
-# pylint: disable=unused-import
-from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
-# pylint: enable=unused-import
+from com.sun.star.text.ControlCharacter import (
+    PARAGRAPH_BREAK)  # pylint: disable=unused-import
 
 from lingt.app import exceptions
 from lingt.ui.common import filepicker
@@ -306,25 +303,6 @@ def modifyFilePicker(retval):
     # assimilate: global showFilePicker
     filepicker.showFilePicker = newFunc
     logger.debug(util.funcName('end'))
-
-def verifyRegexMethods(selfParam):
-    """unittest prior to 2.7 was very incomplete.
-    In newer versions names of some methods have changed as well.
-    This function renames some methods to support different python versions.
-    """
-    try:
-        # python 3.2 names
-        # pylint: disable=pointless-statement
-        selfParam.assertRegex
-        selfParam.assertNotRegex
-        # pylint: enable=pointless-statement
-    except AttributeError:
-        try:
-            # python 2.7 names
-            selfParam.assertRegex = selfParam.assertRegexpMatches
-            selfParam.assertNotRegex = selfParam.assertNotRegexpMatches
-        except AttributeError:
-            selfParam.fail("Please use unittest2 for Python 2.6.")
 
 def normalize_newlines(strval):
     """Returns string with normalized newlines.  The result uses Unix style
