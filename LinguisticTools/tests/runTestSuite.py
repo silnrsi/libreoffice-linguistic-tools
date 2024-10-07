@@ -1,8 +1,6 @@
 """
-This file runs a suite of automated tests all together.
-Otherwise you can run each test individually from its file.
-
-See build/README_build.txt for instructions to run this code.
+Run a suite of automated tests, either all together or individually.
+See build/README_build.txt for instructions.
 """
 import os
 import unittest
@@ -65,8 +63,6 @@ def get_master_suite():
             step_through_list,
         ):
         masterSuite.addTest(module.getSuite())
-    # Uncomment to run a specific test.
-    #masterSuite = visual_test_phonology.getSuite()
     return masterSuite
 
 def run_to_outfile(suite):

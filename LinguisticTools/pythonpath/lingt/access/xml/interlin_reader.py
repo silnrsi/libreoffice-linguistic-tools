@@ -199,6 +199,7 @@ class ToolboxXML:
 
     def handleWord(self, word, num_words, orthoText, orthoWords):
         wordText = xmlutil.getTextByTagName(word, self.baseline.word_tag)
+        wordGloss = xmlutil.getTextByTagName(word, self.fieldTags['wordGloss'])
         orthoWord = ""
         if orthoWords:
             if num_words == 1:
@@ -228,9 +229,9 @@ class ToolboxXML:
                 mergedMorphemes.getMorph(
                     self.config.get_showMorphemeBreaks()))
         if self.config.SFM_baseline_word1:
-            self.ex.appendWord(wordText, orthoWord)
+            self.ex.appendWord(wordText, orthoWord, wordGloss)
         else:
-            self.ex.appendWord(orthoWord, wordText)
+            self.ex.appendWord(orthoWord, wordText, wordGloss)
 
 class ToolboxBaseline:
     """Baseline means which words the morphemes are grouped by."""

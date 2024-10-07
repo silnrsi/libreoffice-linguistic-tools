@@ -67,7 +67,7 @@ class InterlinTestCase(unittest.TestCase):
         Test1Data = collections.namedtuple(
             'Test1Data', [
             'filename', 'refNum', 'numFrames', 'firstWord', 'ft'])
-        dataSets = [
+        data_sets = [
             Test1Data(
                 "TbxIntJPDN60.xml", "JPDN60.01", 9, "ceʋuɾu",
                 "The wall is white."),
@@ -82,18 +82,18 @@ class InterlinTestCase(unittest.TestCase):
                 "Estas coisas doem mas o que é necessário é ter coragem. "
                 "Pois nós todos vamos morrer.")]
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
-        for dataSet in dataSets:
+        for data in data_sets:
             DlgInterlinSettings.useDialog = (
-                self._test1_useDialog_interlinSettings(dataSet))
-            DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
+                self._test1_useDialog_interlinSettings(data))
+            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
             self.runDlgSettings(True)
             self.runDlgGrabEx(True)
 
             newFrameCount = self.unoObjs.document.getTextFrames().getCount()
             self.assertEqual(
-                newFrameCount - self.prevFrameCount, dataSet.numFrames)
-            self.verifyFrame(1, dataSet.firstWord)
-            self.verifyFreeTrans(dataSet.ft, True)
+                newFrameCount - self.prevFrameCount, data.numFrames)
+            self.verifyFrame(1, data.firstWord)
+            self.verifyFreeTrans(data.ft, True)
             self.prevFrameCount = newFrameCount
 
     def _test1_useDialog_interlinSettings(self, data):
@@ -117,7 +117,7 @@ class InterlinTestCase(unittest.TestCase):
         Test2Data = collections.namedtuple(
             'Test2Data', [
             'outerTable', 'useFrames', 'numbering', 'ftQuoted'])
-        dataSets = [
+        data_sets = [
             Test2Data(True, True, True, True),  # 1 to 8
             Test2Data(True, False, False, False),  # 9 to 16
             Test2Data(False, True, True, True),  # 17 to 24
@@ -127,16 +127,16 @@ class InterlinTestCase(unittest.TestCase):
             ]
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         self.prevTableCount = self.unoObjs.document.getTextTables().getCount()
-        for dataSet in dataSets:
+        for data in data_sets:
             DlgInterlinSettings.useDialog = (
-                self._test2_useDialog_interlinSettings(dataSet))
+                self._test2_useDialog_interlinSettings(data))
             self.runDlgSettings(True)
             for action in 'inserting', 'replacing':
-                self.fixture_display = f"dataSet={dataSet}, action={action}"
+                self.fixture_display = f"data={data}, action={action}"
                 refNum = "1.1"
                 DlgGrabExamples.useDialog = (
                     self._test2_useDialog_grabExamples(action, refNum))
-                self._test2_do_grabExamples(dataSet, action, refNum)
+                self._test2_do_grabExamples(data, action, refNum)
 
     def _test2_useDialog_interlinSettings(self, data):
         def useDialog(innerSelf):
@@ -372,12 +372,27 @@ class InterlinTestCase(unittest.TestCase):
         tablesAdded = newTableCount - self.prevTableCount
         self.assertGreaterEqual(tablesAdded, numTables)
         self.assertLessEqual(tablesAdded, numTablesMax)
-        class Lexeme:
-            tamOru = "ஒரு"  # Tamil script /oɾu/, text1 and morph1 lines
-            ipaOru = "oɾu"  # text2 and morph2 lines
-            en = "a"  # English gloss
-            pos = "det"  # part of speech
-        lex = Lexeme  # the first morpheme in this example data
+        class Lex1:  # only morph of first lexeme
+            text1 = "ஒரு"
+            text2 = "oɾu"
+            morph1 = text1
+            morph2 = text2  # second morph line (writing sys) of first morph
+            ge = "a"
+            wge = "a"
+            pos = "det"
+        class Lex2:  # first morph of second lexeme
+            text1 = "ஊரிதி"
+            text2 = "uːɾu-d̪i"
+            morph1 = "ஊரு"
+            morph2 = "uːɾu"
+            ge = "village"
+            wge = "village.in"
+            pos = "n"
+        class Lex2Morph2:
+            morph1 = "-தி"
+            morph2 = "-d̪i"
+            ge = "-LOC.in"
+            pos = "-case"
         # Lines set by default in _test3_useDialog_interlinSettings() are
         # WordText2, MorphText2, and MorphGloss.
         DEFAULT_ROWS = 3
@@ -396,70 +411,77 @@ class InterlinTestCase(unittest.TestCase):
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
                 verifyColumn(
-                    [lex.tamOru, lex.ipaOru],
+                    [Lex1.text1, Lex1.text2],
                     [setting, "word text 2"])
             else:
-                # This checks all default values --
-                # other checks are variations of this.
+                # This checks all default values.
+                # Other checks are variations of this.
                 verifyColumn(
-                    [lex.ipaOru, lex.ipaOru, lex.en],
+                    [Lex1.text2, Lex1.morph2, Lex1.ge],
                     ["word text 2", "morph text 2", "morph gloss"])
         elif setting == 'wordTx2':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
                 verifyColumn(
-                    [lex.ipaOru, lex.ipaOru],
+                    [Lex1.text2, Lex1.morph2],
                     [setting, "morph text 2"])
             else:
                 verifyColumn(
-                    [lex.ipaOru, lex.en],
+                    [Lex1.text2, Lex1.ge],
                     ["morph text 2", "morph gloss"])
         elif setting == 'wordGloss':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                # no word gloss in the test data so we'll check morph gloss
-                verifyColumn([lex.en], ["morph gloss"], row=2)
+                verifyColumn(
+                    [Lex2.ge, Lex2.wge],
+                    ["morph gloss", setting],
+                    row=2, col=1)
         elif setting == 'morphTx1':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                tamTi = "-தி"  # Tamil -d̪i
                 verifyColumn(
-                    [tamTi, "-d̪i"],
+                    [Lex2Morph2.morph1, Lex2Morph2.morph2],
                     [setting, "morph text 2"],
                     row=1, col=2)
             else:
-                verifyColumn(["-d̪i"], ["morph text 2"], row=1, col=2)
+                verifyColumn(
+                    [Lex2Morph2.morph2],
+                    ["morph text 2"],
+                    row=1, col=2)
         elif setting == 'morphTx2':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
-                verifyColumn([lex.ipaOru], [setting], row=1)
+                verifyColumn([Lex1.morph2], [setting], row=1)
             else:
-                verifyColumn([lex.en], ["morph gloss"], row=1)
+                verifyColumn([Lex1.ge], ["morph gloss"], row=1)
         elif setting == 'morphGloss':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_ON}", setVal)
             if setVal:
-                verifyColumn([lex.en], [setting], row=2)
+                verifyColumn([Lex1.ge], [setting], row=2)
         elif setting == 'morphPos':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
             if setVal:
-                verifyColumn([lex.pos], [setting], row=3)
+                verifyColumn(
+                    [Lex1.pos, Lex1.ge],
+                    [setting, "morph gloss"],
+                    row=2)
         elif setting == 'posBelow':
             self.verifyTableHasCell(numTables, "A4", True)
             if setVal:
                 verifyColumn(
-                    [lex.pos, lex.en],
-                    [ "morph part of speech", "morph gloss"],
+                    [Lex1.ge, Lex1.pos],
+                    ["morph gloss", "morph part of speech"],
                     row=2)
             else:
                 verifyColumn(
-                    [lex.en, lex.pos],
-                    ["morph gloss", "morph part of speech"],
+                    [Lex1.pos, Lex1.ge],
+                    ["morph part of speech", "morph gloss"],
                     row=2)
         elif setting == 'sepCols':
             self.verifyTableHasCell(numTables, "F1", True)
@@ -467,9 +489,15 @@ class InterlinTestCase(unittest.TestCase):
             self.verifyTableHasCell(numTables, "F2", True)
             self.verifyTableHasCell(numTables, "I2", setVal)
             if setVal:
-                verifyColumn(["uːɾu"], ["morph text 2"], row=1, col=1)
+                verifyColumn(
+                    [Lex2.morph2],
+                    ["morph text 2"],
+                    row=1, col=1)
             else:
-                verifyColumn(["uːɾu-d̪i"], ["morph text 2"], row=1, col=1)
+                verifyColumn(
+                    [Lex2.text2],
+                    ["word text 1"],
+                    row=1, col=1)
         elif setting == 'numbering':
             self.verifyTableHasCell(1, "A1", True)
             if setVal:
@@ -492,7 +520,7 @@ class InterlinTestCase(unittest.TestCase):
         Test4Data = collections.namedtuple(
             'Test4Data', [
             'refNum', 'numFrames', 'firstWord', 'ft'])
-        dataSets = [
+        data_sets = [
             Test4Data(
                 "A1.1", 20, "Pisapha,",
                 "Estas coisas doem mas o que é necessário é ter coragem. "
@@ -506,17 +534,17 @@ class InterlinTestCase(unittest.TestCase):
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
-        for dataSet in dataSets:
-            self.fixture_display = f"dataSet={dataSet}"
-            DlgGrabExamples.useDialog = useDialog_insertEx(dataSet.refNum)
+        for data in data_sets:
+            self.fixture_display = f"data={data}"
+            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
             self.runDlgGrabEx(True)
             newFrameCount = self.unoObjs.document.getTextFrames().getCount()
             self.assertEqual(
-                newFrameCount - self.prevFrameCount, dataSet.numFrames)
-            self.verifyFrame(1, dataSet.firstWord)
-            self.verifyFreeTrans(dataSet.ft, True)
+                newFrameCount - self.prevFrameCount, data.numFrames)
+            self.verifyFrame(1, data.firstWord)
+            self.verifyFreeTrans(data.ft, True)
             self.prevFrameCount = newFrameCount
-        self._test4_verify_resize(dataSets)
+        self._test4_verify_resize(data_sets)
 
     def _test4_useDialog_interlinSettings(self):
         def useDialog(innerSelf):
@@ -536,10 +564,15 @@ class InterlinTestCase(unittest.TestCase):
             innerSelf.dlgCtrls.chkDontUseSegnum.setState(False)
             innerSelf.evtHandler.textChanged(
                 MyTextEvent(innerSelf.dlgCtrls.txtPrefix))
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
+            try:
+                testutil.modifyMsgboxOkCancel(True)  # as if user clicked OK
+                innerSelf.evtHandler.actionPerformed(MyActionEvent("OK"))
+            except testutil.MsgSentException as exc:
+                self.assertTrue(exc.msg.startswith(
+                    "The following Ref Numbers have duplicates"))
         return useDialog
 
-    def _test4_verify_resize(self, dataSets):
+    def _test4_verify_resize(self, data_sets):
         oVC = self.unoObjs.viewcursor
         oVC.goUp(2, False)   # move into second table
         self.unoObjs.dispatcher.executeDispatch(
@@ -559,7 +592,7 @@ class InterlinTestCase(unittest.TestCase):
                 DlgInterlinSettings.useDialog = useDialog_interlinSettings
                 self.runDlgSettings(True)
             oVC.goLeft(2, False)  # move into first table after ref num
-            ft = dataSets[1].ft
+            ft = data_sets[1].ft
             oVC.goLeft(len(ft), False)
             oVC.gotoStartOfLine(False)
             tableName = "Table1"
@@ -586,7 +619,7 @@ class InterlinTestCase(unittest.TestCase):
         Test5Data = collections.namedtuple(
             'Test5Data', [
             'refNum', 'numFrames', 'firstWord', 'attrName', 'attrVal'])
-        dataSets = [
+        data_sets = [
             Test5Data(
                 "AJPDN60.01", 9, "ceʋuɾu", 'Default', ''),
             Test5Data(
@@ -598,19 +631,19 @@ class InterlinTestCase(unittest.TestCase):
             Test5Data(
                 "B1.2", 21, "aʋant̪u", 'CharFontName',
                 "Arial Black")]
-        self._test5a_insert_original_examples(dataSets)
+        self._test5a_insert_original_examples(data_sets)
         self._test5b_update_examples()
-        self._test5c_check_comparisondoc(dataSets)
-        self._test5d_check_examples(dataSets)
+        self._test5c_check_comparisondoc(data_sets)
+        self._test5d_check_examples(data_sets)
 
-    def _test5a_insert_original_examples(self, dataSets):
+    def _test5a_insert_original_examples(self, data_sets):
         DlgInterlinSettings.useDialog = (
             self._test5a_useDialog_interlinSettings())
         self.surroundNum = 0
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
-        for data in dataSets:
-            self.fixture_display = f"dataSet={dataSet}"
+        for data in data_sets:
+            self.fixture_display = f"data={data}"
             DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
             self.runDlgSettings(True)
             self.surroundNum += 1
@@ -635,7 +668,7 @@ class InterlinTestCase(unittest.TestCase):
             oVC.setPropertyToDefault("CharFontName")
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
         tables = self.unoObjs.document.getTextTables()
-        self.assertEqual(tables.getCount(), len(dataSets))
+        self.assertEqual(tables.getCount(), len(data_sets))
 
     def _test5a_useDialog_interlinSettings(self):
         def useDialog(innerSelf):
@@ -681,29 +714,29 @@ class InterlinTestCase(unittest.TestCase):
         DlgGrabExamples.useDialog = useDialog_grabExamples
         self.runDlgGrabEx(False)
 
-    def _test5c_check_comparisondoc(self, dataSets):
+    def _test5c_check_comparisondoc(self, data_sets):
         compDoc = self.dlgGrabEx.app.operations.exUpdater.compDoc
         self.assertIsNotNone(compDoc)
         self.assertIsNotNone(compDoc.writerDoc)
         self.assertIsNotNone(compDoc.writerDoc.document)
         numTables = compDoc.writerDoc.document.getTextTables().getCount()
         multiLineExs = 1  # number of examples that have another line
-        self.assertEqual(numTables, 3 * len(dataSets) + multiLineExs)
-        self.fixture_display = f"len(dataSets)={len(dataSets)}"
+        self.assertEqual(numTables, 3 * len(data_sets) + multiLineExs)
+        self.fixture_display = f"len(data_sets)={len(data_sets)}"
         compDoc.writerDoc.document.close(True)
         testutil.do_dispose(self.dlgGrabEx)
         self.dlgGrabEx = None
 
-    def _test5d_check_examples(self, dataSets):
+    def _test5d_check_examples(self, data_sets):
         tables = self.unoObjs.document.getTextTables()
         multiLineExs = 1  # number of examples that have another line
-        self.assertEqual(tables.getCount(), 2 * len(dataSets) + multiLineExs)
+        self.assertEqual(tables.getCount(), 2 * len(data_sets) + multiLineExs)
         oVC = self.unoObjs.viewcursor
         oVC.gotoStart(False)
         self.surroundNum = 0
         tableNum = 1
-        for data in dataSets:
-            self.fixture_display = f"dataSet={dataSet}"
+        for data in data_sets:
+            self.fixture_display = f"data={data}"
             self.verifyTable(tableNum + 1, 0, 0, data.firstWord)
             self.surroundNum += 1
             numStr = str(self.surroundNum)
