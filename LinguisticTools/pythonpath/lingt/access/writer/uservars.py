@@ -278,18 +278,19 @@ class InterlinTags(FieldTags):
         ['wordTx2', "SFMarker_WordText2"],
         ['morphTx1', "SFMarker_MorphemeText1"],
         ['morphTx2', "SFMarker_MorphemeText2"],
-        ['morphGloss', "SFMarker_MorphemeGloss"],
         ['morphPos', "SFMarker_MorphemePOS"],
+        ['morphGloss', "SFMarker_MorphemeGloss"],
+        ['wordGloss', "SFMarker_WordGloss"],
         ['ft', "SFMarker_FreeTxln"]]
     DEFAULT_TAGS = {
         'ref' : "ref",
         'wordTx1' : "tx",
         'wordTx2' : "tor",
-        'wordGloss' : "wge",
         'morphTx1' : "mb",
         'morphTx2' : "mor",
-        'morphGloss' : "ge",
         'morphPos' : "ps",
+        'morphGloss' : "ge",
+        'wordGloss' : "wge",
         'ft' : "ft"}
 
 class PhonologyTags(FieldTags):
