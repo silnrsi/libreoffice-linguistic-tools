@@ -16,7 +16,7 @@ from lingt.utils import util
 
 from lingttest.utils import testutil
 from lingttest.utils.testutil import (
-    MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
+    TestCaseWithFixture, MyActionEvent, MyTextEvent, PARAGRAPH_BREAK)
 
 logger = logging.getLogger("lingttest.interlin_test")
 
@@ -26,27 +26,27 @@ def getSuite():
     testutil.modifyMsgboxDisplay()
     suite = unittest.TestSuite()
     for method_name in (
-            #'test1_filetypes',
-            #'test2_surroundings',
+            'test1_filetypes',
+            'test2_surroundings',
             'test3_checkboxes',
-            #'test4_prefixAndColWidth',
-            #'test5_updating',
+            'test4_prefixAndColWidth',
+            'test5_updating',
         ):
         suite.addTest(InterlinTestCase(method_name))
     return suite
 
-class InterlinTestCase(unittest.TestCase):
+class InterlinTestCase(TestCaseWithFixture):
     def __init__(self, testCaseName):
-        unittest.TestCase.__init__(self, testCaseName)
+        super().__init__(testCaseName)
         self.surroundNum = 0  # number for surroundings
         self.prevFrameCount = 0
         self.prevTableCount = 0
 
     def setUp(self):
+        super().setUp()
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.dlgSettings = None
         self.dlgGrabEx = None
-        self.fixture_display = ""
 
     def runDlgSettings(self, dispose):
         self.dlgSettings = DlgInterlinSettings(self.unoObjs)
@@ -85,7 +85,7 @@ class InterlinTestCase(unittest.TestCase):
         for data in data_sets:
             DlgInterlinSettings.useDialog = (
                 self._test1_useDialog_interlinSettings(data))
-            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
+            DlgGrabExamples.useDialog = self.useDialog_insertEx(data.refNum)
             self.runDlgSettings(True)
             self.runDlgGrabEx(True)
 
@@ -132,7 +132,7 @@ class InterlinTestCase(unittest.TestCase):
                 self._test2_useDialog_interlinSettings(data))
             self.runDlgSettings(True)
             for action in 'inserting', 'replacing':
-                self.fixture_display = f"data={data}, action={action}"
+                self.fixture_report = f"data={data}, action={action}"
                 refNum = "1.1"
                 DlgGrabExamples.useDialog = (
                     self._test2_useDialog_grabExamples(action, refNum))
@@ -299,13 +299,12 @@ class InterlinTestCase(unittest.TestCase):
                 'morphTx1', 'morphTx2', 'morphGloss', 'morphPos',
                 'posBelow', 'sepCols', 'numbering']:
             for setVal in True, False:
-                self.fixture_display = f"setting={setting}, setVal={setVal}"
+                self.fixture_report = f"setting={setting}, setVal={setVal}"
                 DlgInterlinSettings.useDialog = (
                     self._test3_useDialog_interlinSettings(setting, setVal))
                 self.runDlgSettings(True)
                 refNum = "Hunt01"
-                DlgGrabExamples.useDialog = useDialog_insertEx(
-                    refNum, self.fixture_display)
+                DlgGrabExamples.useDialog = self.useDialog_insertEx(refNum)
                 self.runDlgGrabEx(True)
                 self._test3_verify(setting, setVal)
 
@@ -402,10 +401,10 @@ class InterlinTestCase(unittest.TestCase):
         MAX_ROWS_FOR_DEFAULT_ON = DEFAULT_ROWS
         def verifyColumn(forms, lines, row=0, col=0):
             for index, (form, line) in enumerate(zip(forms, lines)):
-                base_fixture = self.fixture_display
-                self.fixture_display += f" checking {line}"
+                base_fixture_report = self.fixture_report
+                self.fixture_report += f" checking {line}"
                 self.verifyTable(numTables, col, row + index, form)
-                self.fixture_display = base_fixture
+                self.fixture_report = base_fixture_report
         if setting == 'wordTx1':
             self.verifyTableHasCell(
                 numTables, f"A{MAX_ROWS_FOR_DEFAULT_OFF}", setVal)
@@ -535,8 +534,8 @@ class InterlinTestCase(unittest.TestCase):
         oVC = self.unoObjs.viewcursor
         oVC.getText().insertControlCharacter(oVC, PARAGRAPH_BREAK, False)
         for data in data_sets:
-            self.fixture_display = f"data={data}"
-            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
+            self.fixture_report = f"data={data}"
+            DlgGrabExamples.useDialog = self.useDialog_insertEx(data.refNum)
             self.runDlgGrabEx(True)
             newFrameCount = self.unoObjs.document.getTextFrames().getCount()
             self.assertEqual(
@@ -643,8 +642,8 @@ class InterlinTestCase(unittest.TestCase):
         self.prevFrameCount = self.unoObjs.document.getTextFrames().getCount()
         oVC = self.unoObjs.viewcursor
         for data in data_sets:
-            self.fixture_display = f"data={data}"
-            DlgGrabExamples.useDialog = useDialog_insertEx(data.refNum)
+            self.fixture_report = f"data={data}"
+            DlgGrabExamples.useDialog = self.useDialog_insertEx(data.refNum)
             self.runDlgSettings(True)
             self.surroundNum += 1
             numStr = str(self.surroundNum)
@@ -722,7 +721,7 @@ class InterlinTestCase(unittest.TestCase):
         numTables = compDoc.writerDoc.document.getTextTables().getCount()
         multiLineExs = 1  # number of examples that have another line
         self.assertEqual(numTables, 3 * len(data_sets) + multiLineExs)
-        self.fixture_display = f"len(data_sets)={len(data_sets)}"
+        self.fixture_report = f"len(data_sets)={len(data_sets)}"
         compDoc.writerDoc.document.close(True)
         testutil.do_dispose(self.dlgGrabEx)
         self.dlgGrabEx = None
@@ -736,7 +735,7 @@ class InterlinTestCase(unittest.TestCase):
         self.surroundNum = 0
         tableNum = 1
         for data in data_sets:
-            self.fixture_display = f"data={data}"
+            self.fixture_report = f"data={data}"
             self.verifyTable(tableNum + 1, 0, 0, data.firstWord)
             self.surroundNum += 1
             numStr = str(self.surroundNum)
@@ -843,45 +842,18 @@ class InterlinTestCase(unittest.TestCase):
         styleFonts.setParaStyleWithFont(fontDef, styleKey="wordTx2")
         styleFonts.setParaStyleWithFont(fontDef, styleKey="morphTx2")
 
-    def assertEqual(self, first, second, msg=None):
-        try:
-            super().assertEqual(first, second, msg)
-        except AssertionError as e:
-            if self.fixture_display:
-                raise AssertionError(
-                    f"{e}\nFixture: {self.fixture_display}") from e
-            raise e
-
-    def assertIn(self, member, container, msg=None):
-        try:
-            super().assertIn(member, container, msg)
-        except AssertionError as e:
-            if self.fixture_display:
-                raise AssertionError(
-                    f"{e}\nFixture: {self.fixture_display}") from e
-            raise e
-
-    def assertNotIn(self, member, container, msg=None):
-        try:
-            super().assertNotIn(member, container, msg)
-        except AssertionError as e:
-            if self.fixture_display:
-                raise AssertionError(
-                    f"{e}\nFixture: {self.fixture_display}") from e
-            raise e
-
-def useDialog_insertEx(refNum, fixture=""):
-    def useDialog(innerSelf):
-        try:
-            innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
-            innerSelf.dlgCtrls.comboRefnum.setText(refNum)
-            innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
-        except testutil.MsgSentException as exc:
-            print(f"\nUnexpected MsgSentException: {exc}")
-            if fixture:
-                logger.debug("Fixture: %s", fixture)
-                print(f"Fixture: {fixture}")
-    return useDialog
+    def useDialog_insertEx(self, refNum):
+        def useDialog(innerSelf):
+            try:
+                innerSelf.dlgCtrls.chkSelectMultiple.setState(False)
+                innerSelf.dlgCtrls.comboRefnum.setText(refNum)
+                innerSelf.evtHandler.actionPerformed(MyActionEvent("InsertEx"))
+            except testutil.MsgSentException as exc:
+                print(f"\nUnexpected MsgSentException: {exc}")
+                if self.fixture_report:
+                    logger.debug("Fixture: %s", self.fixture_report)
+                    print(f"Fixture: {self.fixture_report}")
+        return useDialog
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
