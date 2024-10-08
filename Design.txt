@@ -8,15 +8,16 @@
 
 ## 2024-07-17
 
-explain in documentation that AOO is no longer supported.
+test code that hasn't passed on Windows yet:
+    lingttest.ui.dlg_dataconv_test
+    lingttest.topdown.step_through_list
 
-## Testing
-
-get all tests to pass again
+tests on Linux
     primary difficulty is data conversion
     get an ICU converter to run in FW first
-    maybe not all tests need to pass on ubuntu
-keep things simple and test on 1 win machine + 1 ubuntu VM
+    maybe not all tests need to pass
+
+explain in documentation that AOO is no longer supported.
 
 ## Linux Data Conversion GTK3
 
@@ -41,12 +42,14 @@ Can be fixed with ldconfig.
 
 Library error: libmonoboehm-2.0.so.1: cannot open shared object file: No such file or directory. 
 
-## Tests finish but then LibreOffice crashes.  
+## Tests all pass but then LibreOffice crashes.  
 
 For example run_dlg_bulkstep1.
 Commenting out the following line in runTestSuite.run_suite() avoids the problem:
     testutil.blankWriterDoc()
 Perhaps the unoObjs paramater needs to be specified.
+
+Unable to load DLL 'IcuTranslitEC.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)  # 2020-08-20
 
 ## Packaging
 
@@ -62,29 +65,6 @@ Perhaps something like this could be useful for future mkoxt changes:
 
     oDom=createUnoService("com.sun.star.xml.dom.DocumentBuilder").parse(oZip.getByName("meta.xml"))
     GetOfficeVersion=oDom.FirstChild.getAttribute("version")
-
-## Complete (but not exhaustive) set of tests
-
-Phonology Examples          # result: writer contents  # DONE
-    Phonology Settings
-        Writing Systems
-Grammar Examples            # result: writer contents  # DONE
-    Grammar Settings
-Abbrevs                     # result: writer contents  # DONE
-Data Conv                   # result: writer contents  # DONE (suite fails)
-    Apply Conv              # result: Calc contents    # DONE
-Make Spelling Changes       # result: writer contents  # part done -- app
-    Spelling Replacements
-Word List                   # result: Calc contents    # part done: app, ui
-    Word List File          # ui test only             # implemented
-Step Through List           # result: Calc contents    # TODO
-    Spelling Comparisons    # result: Calc contents
-Export Changer File         # result: text file        # TODO
-Script Practice             # result: (text box contents)
-    Word List
-        Word List File
-
-Use bigExamples.xml in a grammar test.
 
 ## Pull senses from lexicon as separate entries if found.
 

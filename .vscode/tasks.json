@@ -1,0 +1,20 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start LibreOffice listening on a socket",
+            "type": "process",
+            "command": "${env:ProgramFiles}\\LibreOffice\\program\\soffice.exe",
+            "args": [
+                "--accept=socket,host=localhost,port=2002;urp;"
+            ],
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": ["-Command"]
+                }
+            }
+        }
+    ]
+}

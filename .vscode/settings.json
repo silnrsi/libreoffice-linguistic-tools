@@ -1,0 +1,8 @@
+{
+    "python.analysis.logLevel": "Trace",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/LinguisticTools/pythonpath",
+        "${workspaceFolder}/tests/LinguisticTools/pythonpath",
+        "${workspaceFolder}/LinguisticTools/build/pylint-fakes"
+    ]
+}
