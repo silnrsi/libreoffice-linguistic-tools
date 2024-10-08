@@ -25,6 +25,37 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.testutil")
 
+class TestCaseWithFixture(unittest.TestCase):
+    """Keep track of which fixture we're using and include it in
+    failure reports.
+    """
+    def __init__(self, testCaseName):
+        super().__init__(testCaseName)
+
+    def setUp(self):
+        self.fixture_report = ""
+
+    def _do_assertion(self, assertion_method, *args, **kwargs):
+        try:
+            assertion_method(*args, **kwargs)
+        except AssertionError as ex:
+            if self.fixture_report:
+                ex.args = (f"{ex.args[0]}\nFixture: {self.fixture_report}",)
+                raise
+            raise
+
+    def assertEqual(self, *args, **kwargs):
+        self._do_assertion(super().assertEqual, *args, **kwargs)
+
+    def assertNotEqual(self, *args, **kwargs):
+        self._do_assertion(super().assertNotEqual, *args, **kwargs)
+
+    def assertIn(self, *args, **kwargs):
+        self._do_assertion(super().assertIn, *args, **kwargs)
+
+    def assertNotIn(self, *args, **kwargs):
+        self._do_assertion(super().assertNotIn, *args, **kwargs)
+
 class CommonUnoObjs:
     """Store some UNO objects for all tests.
     We could use property decorators but it would make it harder to follow how
@@ -331,18 +362,25 @@ def run_suite(test_suite):
     unittest.TextTestRunner(verbosity=2).run(test_suite)
 
 def getDefaultFont(fontType='Western'):
-    """Change these values to your system's default font."""
+    """Uncomment or otherwise change the values below to match your system's
+    default font. Although instead of calling this method, it would be better
+    to read in the font from unstyled text, as dataconv_test.py does.
+
+    Be sure that Asian and CTL support (says "defaults") are checked under
+    Tools > Options > Languages and Locales > General.
+    """
     fontName = ""
     if fontType == 'Complex':
         if platform.system() == "Windows":
+            fontName = "Arial"
             #fontName = "Mangal"
-            fontName = "Ezra SIL"
+            #fontName = "Ezra SIL"
         else:
-            #fontName = "Lohit Hindi"
             fontName = "FreeSans"
+            #fontName = "Lohit Hindi"
     elif fontType == 'Asian':
-        #fontName = "SimSun"
         fontName = "NSimSun"
+        #fontName = "SimSun"
     else:
         if (stored.getProductName() == "OpenOffice"
                 and platform.system() == "Windows"):

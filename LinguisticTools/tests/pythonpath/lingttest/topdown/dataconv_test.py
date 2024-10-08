@@ -10,6 +10,7 @@ import logging
 import os
 import unittest
 
+from lingt.app.exceptions import FileAccessError
 from lingt.access import sec_wrapper
 from lingt.access.sec_wrapper import ConvType
 from lingt.access.sec_wrapper import ConverterSettings
@@ -19,7 +20,8 @@ from lingt.ui.comp.dataconv import DlgDataConversion
 from lingt.utils import util
 
 from lingttest.utils import testutil
-from lingttest.utils.testutil import MyActionEvent, PARAGRAPH_BREAK
+from lingttest.utils.testutil import (
+    MyActionEvent, TestCaseWithFixture, PARAGRAPH_BREAK)
 
 logger = logging.getLogger("lingttest.dataconv_test")
 addedConverters = set()  # which converters have we added
@@ -35,7 +37,7 @@ def getSuite():
             'test4_charstyles',
             'test5_targetFont',
             'test6_encTypes',
-        ):
+            ):
         suite.addTest(DataConvTestCase(method_name))
     return suite
 
@@ -46,7 +48,7 @@ CHANGED_FONT = {
     "Liberation Sans": "Verdana",  # western LibreOffice
     "Times New Roman": "Verdana",  # western OpenOffice
     "Arial": "Verdana",  # western OpenOffice
-    "Mangal": "Latha",  # complex Windows
+    "Mangal": "Nirmala UI",  # complex Windows
     "FreeSans": "Lohit Tamil",  # complex Linux
     "Microsoft YaHei": "NSimSun",  # asian Windows
     "SimSun": "NSimSun",  # asian Windows
@@ -67,9 +69,9 @@ ROMAN_PARAGRAPHS = [
     (r"\hh End",),
     ]
 
-class DataConvTestCase(unittest.TestCase):
+class DataConvTestCase(TestCaseWithFixture):
     def __init__(self, testCaseName):
-        unittest.TestCase.__init__(self, testCaseName)
+        super().__init__(testCaseName)
         self.unoObjs = None
         self.dlg = None
 
@@ -80,6 +82,7 @@ class DataConvTestCase(unittest.TestCase):
         testutil.blankWriterDoc(unoObjs)
 
     def setUp(self):
+        super().setUp()
         self.unoObjs = testutil.unoObjsForCurrentDoc()
         self.dlg = DlgDataConversion(self.unoObjs)
         self.availableFonts = styles.getListOfFonts(self.unoObjs)
@@ -101,6 +104,7 @@ class DataConvTestCase(unittest.TestCase):
         self.addConverter(convName)
         textContent = "abCde\rFghI jkl"
         for reverse in False, True:
+            self.fixture_report = f"reverse={reverse}"
             self.setTextContent(textContent)
             func = self._test1_make_useDialog(reverse, convName)
             self.runDlg(func)
@@ -136,8 +140,10 @@ class DataConvTestCase(unittest.TestCase):
             # Tamil letter Ma
             Test2Data("Complex", "optScopeFontComplex", "\u0bae"),
             # a Chinese character
-            Test2Data("Asian", "optScopeFontAsian", "\ua000")]
+            Test2Data("Asian", "optScopeFontAsian", "\ua000")
+            ]
         for dataSet in dataSets:
+            self.fixture_report = f"dataSet={dataSet}"
             self._test2_do_dataSet(dataSet, convName)
 
     def _test2_do_dataSet(self, data, convName):
@@ -149,10 +155,12 @@ class DataConvTestCase(unittest.TestCase):
         oVC.gotoStart(False)
         oVC.goRight(FORMAT_AT_INDEX, False)
         oVC.goRight(1, True)  # select
-        fontName = testutil.getDefaultFont(data.fontType)
-        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
+        font_from = testutil.getDefaultFont(data.fontType)
+        if font_from not in CHANGED_FONT:
+            raise ValueError(f"Test setup is not correct: {font_from}.")
+        self.assertIn(CHANGED_FONT[font_from], self.availableFonts)
         fontDef = styles.FontDefStruct(
-            CHANGED_FONT[fontName], data.fontType)
+            CHANGED_FONT[font_from], data.fontType)
         # change font for one character
         styles.setFontAttrs(oVC, fontDef)
         oVC.goRight(0, False)  # deselect
@@ -190,6 +198,7 @@ class DataConvTestCase(unittest.TestCase):
             Test3Data(True, "optScopeSFMs"),
             ]
         for dataSet in dataSets:
+            self.fixture_report = f"dataSet={dataSet}"
             self._test3_do_dataSet(dataSet, markers, CONVERT_PARAGRAPHS)
 
     def _test3_do_dataSet(self, data, markers, CONVERT_PARAGRAPHS):
@@ -243,6 +252,7 @@ class DataConvTestCase(unittest.TestCase):
         target character style.
         """
         for ctrlName in ("optScopeSelection", "optScopeCharStyle"):
+            self.fixture_report = f"ctrlName={ctrlName}"
             self._test4_do_dataSet(ctrlName)
 
     def _test4_do_dataSet(self, ctrlName):
@@ -292,7 +302,6 @@ class DataConvTestCase(unittest.TestCase):
         stringsToFind.extend(
             [para[MID] for para in ROMAN_PARAGRAPHS if len(para) > MID])
         search.SearchString = "|".join(stringsToFind)
-        #print("/%s/" % search.SearchString)
         selsFound = self.unoObjs.document.findAll(search)
         self.assertEqual(selsFound.getCount(), len(stringsToFind))
         oVC = self.unoObjs.viewcursor
@@ -300,13 +309,6 @@ class DataConvTestCase(unittest.TestCase):
         self.assertEqual(
             self.unoObjs.controller.getSelection().getCount(),
             len(stringsToFind))
-        #oSels = self.unoObjs.controller.getSelection()
-        #for oSls in (selsFound, oSels):
-        #    print("selection: ")
-        #    for oSel in iteruno.byIndex(oSls):
-        #        print("%d," % len(oSel.getString()), end="")
-        #    print()
-        #return
         if ctrlName == "optScopeCharStyle":
             oVC.setPropertyValue("CharStyleName", CHARSTYLE_FROM)
             oVC.goRight(0, False)  # deselect
@@ -322,71 +324,88 @@ class DataConvTestCase(unittest.TestCase):
             # Tamil letter Ma
             Test5Data("Complex", "optTargetFontComplex", "\u0bae"),
             # a Chinese character
-            Test5Data("Asian", "optTargetFontAsian", "\ua000")]
+            Test5Data("Asian", "optTargetFontAsian", "\ua000")
+            ]
         for dataSet in dataSets:
             if dataSet != dataSets[0]:
                 # Get a fresh document.
                 self.unoObjs = testutil.unoObjsForCurrentDoc()
                 self.dlg = DlgDataConversion(self.unoObjs)
-            for ctrlName in ("optTargetNoChange", "optTargetFontOnly",
-                             "optTargetParaStyle"):
+            for ctrlName in (
+                    "optTargetNoChange",
+                    "optTargetFontOnly",
+                    "optTargetParaStyle"):
                 self._test5_do_dataSet(dataSet, ctrlName)
 
     def _test5_do_dataSet(self, data, ctrlName):
-        CHANGED_SIZE = 15.5
-        PARASTYLE_FROM = "Heading 5"  # source para style
-        PARASTYLE_TO = "Heading 4"  # target para style
-        styleFonts = styles.StyleFonts(self.unoObjs)
-        #print("%s %s" % (data.fontType, ctrlName))
-        fontName, dummy = styleFonts.getFontOfStyle(
-            styleName=PARASTYLE_TO, fontType=data.fontType)
-        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
         paragraphs = [("Begin",), (data.testChar,), ("End",), ]
         self.setTextContent(paragraphs, True)
         oVC = self.unoObjs.viewcursor
         oVC.gotoStart(False)
+        styleFonts = styles.StyleFonts(self.unoObjs)
+        class Config:
+            PARASTYLE_FROM = "Heading 5"  # source para style
+            PARASTYLE_TO = "Heading 4"  # target para style
+            PARASTYLE_DEFAULT = oVC.getPropertyValue("ParaStyleName")
+            FONT_DEFAULT, size_obj = styleFonts.getFontOfStyle(
+                styleName=PARASTYLE_DEFAULT, fontType=data.fontType
+                )
+            SIZE_DEFAULT = size_obj.size
+            FONT_FROM, size_obj = styleFonts.getFontOfStyle(
+                styleName=PARASTYLE_FROM, fontType=data.fontType)
+            SIZE_FROM = size_obj.size
+            SIZE_TO = 15.5
+            CONVERT_PARA = 1  # we change only the second paragraph
+        if Config.FONT_FROM not in CHANGED_FONT:
+            raise ValueError(f"Test setup is not correct: {Config.FONT_FROM}.")
+        self.fixture_report = (
+            f"data={data}, ctrlName={ctrlName}, FONT_FROM={Config.FONT_FROM}")
+        self.assertIn(CHANGED_FONT[Config.FONT_FROM], self.availableFonts)
         oVC.goDown(1, False)
-        oVC.setPropertyValue("ParaStyleName", PARASTYLE_FROM)
+        oVC.setPropertyValue("ParaStyleName", Config.PARASTYLE_FROM)
 
         def useDialog(innerSelf):
             innerSelf.evtHandler.actionPerformed(MyActionEvent("NoConverter"))
             innerSelf.dlgCtrls.optScopeParaStyle.setState(1)
-            innerSelf.dlgCtrls.comboScopeParaStyle.setText(PARASTYLE_FROM)
-            innerSelf.dlgCtrls.comboTargetParaStyle.setText(PARASTYLE_TO)
+            innerSelf.dlgCtrls.comboScopeParaStyle.setText(
+                Config.PARASTYLE_FROM)
+            innerSelf.dlgCtrls.comboTargetParaStyle.setText(
+                Config.PARASTYLE_TO)
             getattr(innerSelf.dlgCtrls, data.type_ctrl).setState(1)
             innerSelf.dlgCtrls.listTargetStyleFont.selectItem(
-                CHANGED_FONT[fontName], True)
-            innerSelf.dlgCtrls.txtFontSize.setText(str(CHANGED_SIZE))
+                CHANGED_FONT[Config.FONT_FROM], True)
+            innerSelf.dlgCtrls.txtFontSize.setText(str(Config.SIZE_TO))
             getattr(innerSelf.dlgCtrls, ctrlName).setState(1)
             innerSelf.evtHandler.actionPerformed(
                 MyActionEvent("Close_and_Convert"))
 
         self.runDlg(useDialog)
         oVC.gotoStart(False)
-        self._test5_check_dataSet(data, paragraphs, ctrlName, fontName)
+        self._test5_check_dataSet(data, paragraphs, ctrlName, Config)
 
-    def _test5_check_dataSet(self, data, paragraphs, ctrlName, fontName):
-        CHANGED_SIZE = 15.5
-        CONVERT_PARA = 1  # we change only the second paragraph
-        PARASTYLE_TO = "Heading 4"  # target para style
+    def _test5_check_dataSet(self, data, paragraphs, ctrlName, config):
         oVC = self.unoObjs.viewcursor
-        self.assertIn(CHANGED_FONT[fontName], self.availableFonts)
+        self.assertIn(CHANGED_FONT[config.FONT_FROM], self.availableFonts)
         for para_index in range(0, len(paragraphs)):
             paraStyle2 = oVC.getPropertyValue("ParaStyleName")
             fontName2, fontSize2 = self._get_target_font(
                 paraStyle2, data, ctrlName)
-            if ctrlName == "optTargetNoChange" or para_index != CONVERT_PARA:
-                self.assertNotEqual(paraStyle2, PARASTYLE_TO)
-                self.assertNotEqual(fontName2, CHANGED_FONT[fontName])
-                self.assertNotEqual(fontSize2, CHANGED_SIZE)
+            if para_index != config.CONVERT_PARA:  # "Begin" and "End"
+                self.assertEqual(paraStyle2, config.PARASTYLE_DEFAULT)
+                self.assertEqual(fontName2, config.FONT_DEFAULT)
+                self.assertEqual(fontSize2, config.SIZE_DEFAULT)
+            elif ctrlName == "optTargetNoChange":
+                self.assertEqual(paraStyle2, config.PARASTYLE_FROM)
+                self.assertEqual(fontName2, config.FONT_FROM)
+                self.assertEqual(fontSize2, config.SIZE_FROM)
             elif ctrlName == "optTargetFontOnly":
-                self.assertNotEqual(paraStyle2, PARASTYLE_TO)
-                self.assertEqual(fontName2, CHANGED_FONT[fontName])
-                self.assertEqual(fontSize2, CHANGED_SIZE)
+                self.assertEqual(paraStyle2, config.PARASTYLE_FROM)
+                self.assertEqual(fontName2, CHANGED_FONT[config.FONT_FROM])
+                self.assertEqual(fontSize2, config.SIZE_TO)
             elif ctrlName == "optTargetParaStyle":
-                self.assertEqual(paraStyle2, PARASTYLE_TO)
-                self.assertEqual(fontName2, CHANGED_FONT[fontName])
-                self.assertEqual(fontSize2, CHANGED_SIZE)
+                self.assertEqual(paraStyle2, config.PARASTYLE_TO)
+                self.assertEqual(fontName2, CHANGED_FONT[config.FONT_FROM])
+                self.assertEqual(fontSize2, config.SIZE_TO)
             oVC.goDown(1, False)
 
     def _get_target_font(self, paraStyle2, data, ctrlName):
@@ -426,12 +445,13 @@ class DataConvTestCase(unittest.TestCase):
             # Unicode to Unicode - Tamil to Malayalam script (Tamil language)
             Test6Data(
                 "MalUniToTam.tec",
-                "Latha", "\u0b87\u0b9f\u0bc1 \u0ba8\u0bb2\u0bcd\u0bb2"
+                "Nirmala UI", "\u0b87\u0b9f\u0bc1 \u0ba8\u0bb2\u0bcd\u0bb2"
                 "\u0b9f\u0bc1 \u0b87\u0bb2\u0bcd\u0bb2\u0bc6.",
                 "Kartika", "\u0d07\u0d21\u0d4d \u0d28\u0d32\u0d4d\u0d32"
                 "\u0d21\u0d4d \u0d07\u0d32\u0d4d\u0d32\u0d46."),
             ]
         for dataSet in dataSets:
+            self.fixture_report = f"dataSet={dataSet}"
             self._test6_do_dataSet(dataSet)
 
     def _test6_do_dataSet(self, data):
@@ -440,7 +460,7 @@ class DataConvTestCase(unittest.TestCase):
 
         def useDialog(innerSelf):
             innerSelf.dlgCtrls.txtConverterName.setText(data.convName)
-            if data.fromFont == "Latha" and data.toFont == "Kartika":
+            if data.fromFont == "Nirmala UI" and data.toFont == "Kartika":
                 innerSelf.dlgCtrls.chkDirectionReverse.setState(True)
             innerSelf.dlgCtrls.optScopeWholeDoc.setState(True)
             innerSelf.evtHandler.actionPerformed(
@@ -457,8 +477,6 @@ class DataConvTestCase(unittest.TestCase):
         oVC = self.unoObjs.viewcursor
         if paragraphs:
             textParagraphs = textContent
-            #oVC.gotoRange(self.unoObjs.text.getStart(), False)
-            #oVC.gotoRange(self.unoObjs.text.getEnd(), True)  # select
             oVC.gotoStart(False)
             oVC.gotoEnd(True)  # select
             oVC.setString("")
@@ -481,13 +499,7 @@ class DataConvTestCase(unittest.TestCase):
         oVC.gotoStart(False)
         oVC.gotoEnd(True)
         textContent = oVC.getString().strip()
-        #print("[%s] cmp [%s]" % (dumpUnicodeString(textContent),
-        #                         dumpUnicodeString(textExpected)))
         self.assertEqual(textContent, textExpected)
-
-    #def tearDown(self):
-        #unoObjs = testutil.unoObjsForCurrentDoc()
-        #testutil.blankWriterDoc(unoObjs)
 
 def addConverter(convName, msgbox, userVars):
     """Add an ICU translterator converter.
@@ -508,9 +520,15 @@ def addConverter(convName, msgbox, userVars):
             ProcessTypeFlags.Transliteration |
             ProcessTypeFlags.ICUTransliteration)
     sec_call = sec_wrapper.SEC_wrapper(msgbox, userVars)
-    sec_call.addConverter(
-        convName, convSpec, convType,
-        "", "", processFlags)
+    try:
+        sec_call.addConverter(
+            convName, convSpec, convType,
+            "", "", processFlags)
+    except FileAccessError as ex:
+        raise ValueError(
+            f"Could not add '{convName}'. Instead of trying to get it to "
+            "add automatically, it may be easier to open SIL Converters "
+            "and add the converter manually.") from ex
     addedConverters.add(convName)
 
 FILTER = ''.join([(len(repr(chr(x))) == 3) and chr(x) or '.'
