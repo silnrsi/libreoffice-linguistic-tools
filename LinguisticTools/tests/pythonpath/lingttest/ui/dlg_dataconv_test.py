@@ -171,11 +171,11 @@ class DlgDataConvTestCase(unittest.TestCase):
 
 def fillDefaultValues(innerSelf):
     innerSelf.dlgCtrls.comboScopeFont.setText(testutil.getDefaultFont())
-    defaultStyleName = testutil.getDefaultStyle()
-    if defaultStyleName in innerSelf.paraStyleNames:
-        innerSelf.dlgCtrls.comboScopeParaStyle.setText(defaultStyleName)
-    if defaultStyleName in innerSelf.charStyleNames:
-        innerSelf.dlgCtrls.comboScopeCharStyle.setText(defaultStyleName)
+    for defaultStyleName in testutil.getDefaultStyles():
+        if defaultStyleName in innerSelf.paraStyleNames:
+            innerSelf.dlgCtrls.comboScopeParaStyle.setText(defaultStyleName)
+        if defaultStyleName in innerSelf.charStyleNames:
+            innerSelf.dlgCtrls.comboScopeCharStyle.setText(defaultStyleName)
 
 if __name__ == '__main__':
     testutil.run_suite(getSuite())
