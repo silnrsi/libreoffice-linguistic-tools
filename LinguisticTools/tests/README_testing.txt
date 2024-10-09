@@ -7,10 +7,9 @@ tests slowly, one at a time.
 Start LibreOffice listening on a socket, then run a module from outside of LO.
 VS Code can be configured to do these things and run a debugger.
     Use the .vs_code/json files in the dev_extra branch.
-    Start LO listening via Terminal > Run Task.
-    For Intellisense, in File > Preferences > Settings, search for 'Extra Paths'
-    and add full paths of pythonpath, tests/pythonpath, and pylint-fakes.
-Or, run start_soffice_listening.bat and then drag a module onto run_test.bat.
+    Start LO listening by going to Terminal > Run Task.
+    Then press F5 to run currently opened test file.
+Or, run start_soffice_listening.bat and drag a module onto run_test.bat.
 
 The second is to run from the user directory,
 like the third method described in build/README_build.py.

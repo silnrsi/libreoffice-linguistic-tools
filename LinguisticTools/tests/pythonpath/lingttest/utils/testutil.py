@@ -25,6 +25,43 @@ from lingt.utils import util
 
 logger = logging.getLogger("lingttest.testutil")
 
+def getDefaultFont(fontType='Western'):
+    """Uncomment or otherwise change the values below to match your system's
+    default font.
+    
+    When possible, instead of calling this method, read from unstyled text
+    so that the test passes on any system without adjustments.
+
+    Be sure that Asian and CTL support (says "defaults") are checked under
+    Tools > Options > Languages and Locales > General.
+    """
+    if fontType == 'Complex':
+        if platform.system() == "Windows":
+            return "Arial"
+            #return "Mangal"
+            #return "Ezra SIL"
+        else:
+            return "FreeSans"
+            #return "Lohit Hindi"
+    elif fontType == 'Asian':
+        return "NSimSun"
+        #return "SimSun"
+    else:
+        return "Liberation Serif"
+        #return "Times New Roman"
+
+def getDefaultStyles():
+    """Make sure the name of your default style is included in this list.
+    The name varies by system and version, although 'Standard' should always
+    be the underlying name.
+    """
+    return [
+        "Default Paragraph Style",
+        "No Character Style",
+        "Default Style",
+        "Default",
+        "Standard"]
+
 class TestCaseWithFixture(unittest.TestCase):
     """Keep track of which fixture we're using and include it in
     failure reports.
@@ -360,46 +397,6 @@ def do_dispose(modified_dlg):
 def run_suite(test_suite):
     """Run a test suite."""
     unittest.TextTestRunner(verbosity=2).run(test_suite)
-
-def getDefaultFont(fontType='Western'):
-    """Uncomment or otherwise change the values below to match your system's
-    default font. Although instead of calling this method, it would be better
-    to read in the font from unstyled text, as dataconv_test.py does.
-
-    Be sure that Asian and CTL support (says "defaults") are checked under
-    Tools > Options > Languages and Locales > General.
-    """
-    fontName = ""
-    if fontType == 'Complex':
-        if platform.system() == "Windows":
-            fontName = "Arial"
-            #fontName = "Mangal"
-            #fontName = "Ezra SIL"
-        else:
-            fontName = "FreeSans"
-            #fontName = "Lohit Hindi"
-    elif fontType == 'Asian':
-        fontName = "NSimSun"
-        #fontName = "SimSun"
-    else:
-        if (stored.getProductName() == "OpenOffice"
-                and platform.system() == "Windows"):
-            fontName = "Times New Roman"
-        else:
-            fontName = "Liberation Serif"
-    return fontName
-
-def getDefaultStyle():
-    """Change these values to your system's default style."""
-    if stored.getProductName() == "LibreOffice":
-        return "Default Style"
-    return "Default"
-
-def getDefaultStyles():
-    return [
-        "Default Style",
-        "Default",
-        "Standard"]
 
 def output_path(filename):
     """Write files here for testing.  These can be deleted when finished,

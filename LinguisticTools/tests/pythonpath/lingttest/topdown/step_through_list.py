@@ -67,7 +67,7 @@ class CharCompareTestCase(unittest.TestCase):
             ('chkVowelLength', "CompareVowelLength",
              "\u0905  \u0906"),
             ('chkVowelGlides', "CompareVowelGlides",
-             "\u0905  \u0910  \u0914"),
+             "\u0905  \u0910  \u0914  \uA8FE"),
             ('chkNasals', "CompareNasals",
              "\u0919  \u091e  \u0923  \u0928  \u092e"),
             ('chkAspiration', "CompareAspiration",
