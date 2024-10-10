@@ -6,19 +6,6 @@
 # However this file is still useful for a more ad hoc approach.
 #------------------------------------------------------------------------------
 
-## 2024-07-17
-
-test code that hasn't passed on Windows yet:
-    lingttest.ui.dlg_dataconv_test
-    lingttest.topdown.step_through_list
-
-tests on Linux
-    primary difficulty is data conversion
-    get an ICU converter to run in FW first
-    maybe not all tests need to pass
-
-explain in documentation that AOO is no longer supported.
-
 ## Linux Data Conversion GTK3
 
 Occurs if the path problem is fixed manually with ldconfig.
