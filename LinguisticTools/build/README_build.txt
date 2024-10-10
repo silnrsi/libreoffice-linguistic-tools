@@ -73,9 +73,10 @@ To modify the dialog:
 #------------------------------------------------------------------------------
 # Releasing
 #------------------------------------------------------------------------------
-When releasing a new .oxt file:
+To release a new .oxt file:
 1. Make sure debugging is turned off (see above)
 2. It may help to run clean.ps1
 3. Increment the version in description.xml
 4. Update README.txt with the version history and date.
-5. Rename the generated .oxt file as LinguistcTools-#.#.oxt
+5. Run create_oxt.ps1
+6. Rename the generated .oxt file as LinguisticTools-#.#.oxt
