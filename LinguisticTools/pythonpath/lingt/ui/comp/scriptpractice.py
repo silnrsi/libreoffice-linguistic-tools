@@ -249,6 +249,9 @@ class DlgScriptPractice:
                 self.dlgCtrls.txtAnswer.setText(given)
         else:
             given = self.dlgCtrls.txtAnswer.getText()
+        # Shifting focus to a button stops further input to the answer box,
+        # without triggering Keyman to change keyboards (which setting the
+        # box to read-only could do).
         if self.questions.questionMatches(given):
             self.dlgCtrls.dispCorrect.setText(self.stats.answerCorrect())
             self.dlgCtrls.txtAnswer.getModel().BackgroundColor = \
@@ -261,7 +264,6 @@ class DlgScriptPractice:
             self.dlgCtrls.btnRetry.setFocus()
         self.dlgCtrls.dispNumWords.setText(self.stats.getTotalQuestions())
         self.dlgCtrls.dispAvgTime.setText(self.stats.getAvgTime())
-        self.dlgCtrls.txtAnswer.setEditable(False)
 
 class DlgControls:
     """Store dialog controls."""
