@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description xmlns = "http://openoffice.org/extensions/description/2006"
-             xmlns:l="http://libreoffice.org/extensions/description/2011" 
-             xmlns:dep="http://openoffice.org/extensions/description/2006"
              xmlns:xlink="http://www.w3.org/1999/xlink">
   <identifier value="name.JimK.LinguisticTools"/>
-  <version value="4.1.0" />
+  <version value="4.1.1"/>
   <platform value="all"/>
-  <dependencies>
-    <!--
-    From the information I could find,
-    LibreOffice 6.1 shipped with Python 3.7 on Windows,
-    while LibreOffice 6.0 shipped with Python 2.7.
-    Also, Apache OpenOffice (AOO) versions are no longer supported.
-    So require 6.1.
-    However, that doesn't seem to work with the new numbering scheme 24.8,
-    so we'll comment it out for now.
-    -->
-    <!--
-    <l:LibreOffice-minimal-version value="6.1"/>
-    -->
-  </dependencies>
   <display-name>
     <name lang="en">Linguistic Tools</name>
   </display-name>
