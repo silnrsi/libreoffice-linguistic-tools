@@ -16,6 +16,7 @@ or download the help file in PDF format.
 
 To see which version is installed, go to Tools -> Extension manager.
 
+4.1.1 03-Jul-2025  Keyman switched to default keyboard in Script Practice.
 4.1   10-Oct-2024  Interlinear word glosses.
                    Requires LibreOffice 6.1 or higher.
                    Apache OpenOffice is now too far behind.
